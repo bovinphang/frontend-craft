@@ -1,6 +1,9 @@
 import { execSync } from "node:child_process";
 import { platform } from "node:os";
 
+process.stdin.resume();
+process.stdin.on("data", () => {});
+
 const os = platform();
 
 try {

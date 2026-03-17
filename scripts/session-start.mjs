@@ -1,5 +1,7 @@
 import { existsSync, readFileSync } from "node:fs";
-import { execSync } from "node:child_process";
+
+process.stdin.resume();
+process.stdin.on("data", () => {});
 
 if (!existsSync("package.json")) process.exit(0);
 
