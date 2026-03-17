@@ -1,6 +1,6 @@
 # frontend-craft
 
-面向企业级前端团队的 Claude Code 共享插件，集成代码审查、安全审查、设计稿还原、无障碍检查、自动化质量保障和项目规范模板。
+面向企业级前端团队的 Claude Code 共享插件，集成代码审查、安全审查、设计稿还原（Figma/Sketch/MasterGo/Pixso/墨刀/摹客）、无障碍检查、自动化质量保障和项目规范模板。
 
 ## 安装
 
@@ -79,7 +79,7 @@ git submodule update --init --recursive
 | `accessibility-check` | WCAG 2.1 AA 无障碍检查 |
 | `react-project-standard` | React + TypeScript 项目工程规范（结构、组件、路由、状态、API 层） |
 | `vue3-project-standard` | Vue 3 + TypeScript 项目工程规范（结构、组件、路由、Pinia、API 层） |
-| `implement-from-design` | 基于 Figma/Sketch 设计稿实现 UI |
+| `implement-from-design` | 基于 Figma/Sketch/MasterGo/Pixso/墨刀/摹客设计稿实现 UI |
 | `test-and-fix` | 执行 lint、type-check、test、build 并修复失败 |
 | `legacy-web-standard` | JS + jQuery + HTML 传统项目的开发与维护规范 |
 
@@ -90,7 +90,7 @@ git submodule update --init --recursive
 | `frontend-architect` | 页面拆分、组件架构、状态流设计、目录规划、大型重构 |
 | `performance-optimizer` | 分析性能瓶颈（打包体积、渲染性能、网络请求），输出量化优化方案 |
 | `ui-checker` | UI 视觉问题排查、设计还原度评估 |
-| `figma-implementer` | 按 Figma/Sketch 设计稿精确实现 UI |
+| `figma-implementer` | 按 Figma/Sketch/MasterGo/Pixso/墨刀/摹客设计稿精确实现 UI |
 | `design-token-mapper` | 将设计变量映射到项目 Design Token |
 
 ### Hooks（自动执行）
@@ -110,6 +110,10 @@ git submodule update --init --recursive
 | Figma | 读取设计上下文、变量定义 |
 | Figma Desktop | Figma 桌面端集成 |
 | Sketch | 读取设计选区截图 |
+| MasterGo | 读取 DSL 结构数据、组件层级和样式 |
+| Pixso | 本地 MCP 获取帧数据、代码片段和图片资源 |
+| 墨刀 | 获取原型数据、生成设计描述、导入 HTML |
+| 摹客 | 无 MCP 集成，通过用户提供的截图/标注/导出 CSS 支持 |
 
 ### 项目模板（通过 `/init` 初始化）
 
@@ -133,13 +137,25 @@ git submodule update --init --recursive
 
 ### MCP 服务器
 
-使用设计稿相关功能前，需要设置环境变量：
+使用设计稿相关功能前，根据团队使用的设计工具设置对应环境变量：
+
+| 环境变量 | 对应工具 | 获取方式 |
+|----------|----------|----------|
+| `FIGMA_API_KEY` | Figma / Figma Desktop | Figma 账户设置 > Personal Access Tokens |
+| `SKETCH_API_KEY` | Sketch | Sketch 开发者设置 |
+| `MG_MCP_TOKEN` | MasterGo | MasterGo 账户设置 > 安全设置 > 生成 Token |
+| `MODAO_TOKEN` | 墨刀 | 墨刀 AI 功能页面获取访问令牌 |
+
+> Pixso 使用本地 MCP 服务，需在 Pixso 客户端中启用 MCP 功能，无需额外环境变量。
+> 摹客暂无 MCP 集成，通过用户提供截图/标注方式工作。
 
 **macOS / Linux:**
 
 ```bash
 export FIGMA_API_KEY="your-figma-api-key"
 export SKETCH_API_KEY="your-sketch-api-key"
+export MG_MCP_TOKEN="your-mastergo-token"
+export MODAO_TOKEN="your-modao-token"
 ```
 
 **Windows (PowerShell):**
@@ -147,6 +163,8 @@ export SKETCH_API_KEY="your-sketch-api-key"
 ```powershell
 $env:FIGMA_API_KEY = "your-figma-api-key"
 $env:SKETCH_API_KEY = "your-sketch-api-key"
+$env:MG_MCP_TOKEN = "your-mastergo-token"
+$env:MODAO_TOKEN = "your-modao-token"
 ```
 
 建议将环境变量添加到 shell 配置文件（`~/.bashrc`、`~/.zshrc`）或 Windows 系统环境变量中。

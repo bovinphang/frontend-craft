@@ -18,7 +18,7 @@
 - 构建工具：Vite
 - 测试工具: Vitest + Testing Library
 - UI 体系：优先复用现有组件库和设计 Token
-- 设计实现流程：如有条件，优先使用 Figma 或 Sketch MCP 上下文
+- 设计实现流程：如有条件，优先使用设计工具 MCP（Figma / MasterGo / Pixso / 墨刀 / Sketch）上下文
 
 ## 常用命令
 
@@ -70,7 +70,7 @@
 
 当存在设计上下文时：
 
-1. 先通过 MCP 读取 Figma 或 Sketch 上下文
+1. 先通过 MCP 读取设计上下文（Figma / MasterGo / Pixso / 墨刀 / Sketch，摹客则使用截图/标注）
 2. 检查项目现有组件体系
 3. 先产出简短实现计划
 4. 分步骤实现

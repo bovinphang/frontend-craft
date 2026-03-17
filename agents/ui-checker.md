@@ -1,10 +1,17 @@
 ---
 name: ui-checker
-description: 使用该子代理排查前端 UI 中的视觉缺陷、布局错乱、CSS 问题、响应式异常以及交互与设计不一致的问题。对比设计稿与实现结果，评估还原度并给出具体差异报告。
-tools: Read, Edit, Write, MultiEdit, Glob, Grep, LS, Bash, WebFetch, mcp__figma__get_design_context, mcp__sketch__get_selection_as_image
+description: 使用该子代理排查前端 UI 中的视觉缺陷、布局错乱、CSS 问题、响应式异常以及交互与设计不一致的问题。支持从 Figma、Sketch、MasterGo、Pixso、墨刀、摹客获取设计数据，对比设计稿与实现结果，评估还原度并给出具体差异报告。
+tools: Read, Edit, Write, MultiEdit, Glob, Grep, LS, Bash, WebFetch, mcp__figma__get_design_context, mcp__sketch__get_selection_as_image, mcp__mastergo__*, mcp__pixso__*, mcp__modao__*
 model: sonnet
 permissionMode: default
 maxTurns: 10
+mcpServers:
+  - figma
+  - figma-desktop
+  - sketch
+  - mastergo
+  - pixso
+  - modao
 skills:
   - frontend-code-review
   - accessibility-check
@@ -37,7 +44,10 @@ skills:
 
 ## 检查流程
 
-1. 从 Figma/Sketch 获取设计数据（颜色、字体、间距、尺寸）
+1. 从可用的设计工具获取设计数据（颜色、字体、间距、尺寸）
+   - Figma / MasterGo / Pixso / 墨刀：通过 MCP 获取结构化数据
+   - Sketch：通过 MCP 获取选区截图
+   - 摹客：从用户提供的截图或标注中获取
 2. 读取对应的实现代码
 3. 逐项对比以下维度:
 

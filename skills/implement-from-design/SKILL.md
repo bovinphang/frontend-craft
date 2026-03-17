@@ -1,16 +1,27 @@
 ---
 name: implement-from-design
-description: 基于 Figma 或 Sketch 的设计上下文实现页面或组件，强调复用、设计 Token 映射以及面向生产的前端实现方式。当用户提供 Figma 链接、Sketch 设计选区、或要求按设计稿实现组件/页面时自动激活。
-version: 1.0.0
+description: 基于 Figma、Sketch、MasterGo、Pixso、墨刀或摹客的设计上下文实现页面或组件，强调复用、设计 Token 映射以及面向生产的前端实现方式。当用户提供设计稿链接、设计选区、截图或要求按设计稿实现组件/页面时自动激活。
+version: 1.1.0
 ---
 
 # 按设计稿实现
 
 在以下场景使用该 Skill：
 
-- 用户希望根据 Figma 或 Sketch 设计实现页面、组件、弹窗、表单、表格、卡片、仪表盘、设置页或业务流程界面
+- 用户希望根据 Figma、Sketch、MasterGo、Pixso、墨刀或摹客设计实现页面、组件、弹窗、表单、表格、卡片、仪表盘、设置页或业务流程界面
 - 仓库中已经存在组件库、设计 Token 或应优先复用的 UI 模式
 - 任务要求在编码前通过 MCP 读取设计上下文
+
+## 支持的设计工具
+
+| 工具 | MCP 集成 | 获取设计数据方式 |
+|------|----------|------------------|
+| Figma | `figma` / `figma-desktop` | API 获取设计结构、变量定义 |
+| Sketch | `sketch` | MCP 获取设计选区截图 |
+| MasterGo | `mastergo` | API 获取 DSL 结构数据 |
+| Pixso | `pixso` | 本地 MCP 获取帧数据和代码 |
+| 墨刀 | `modao` | MCP 获取原型数据、生成设计描述 |
+| 摹客 | 无 MCP | 通过用户提供的截图、标注或导出的 CSS 获取 |
 
 ## 目标
 
@@ -22,16 +33,21 @@ version: 1.0.0
 
 ## 必需工作流
 
-1. 先识别可用的设计来源：
-   - 优先使用 `figma`
-   - 否则使用 `figma-desktop`
-   - 再否则使用 `sketch`
+1. 先识别可用的设计来源（按优先级）：
+   - `figma` — Figma API 集成
+   - `figma-desktop` — Figma 桌面端集成
+   - `mastergo` — MasterGo DSL 数据
+   - `pixso` — Pixso 本地 MCP
+   - `modao` — 墨刀原型数据
+   - `sketch` — Sketch 选区截图
+   - 如以上 MCP 均不可用，请求用户提供设计截图或标注（适用于摹客等无 MCP 工具）
 
-2. 先通过 MCP 读取设计上下文。
+2. 先通过 MCP 或用户提供的设计数据读取设计上下文。
    - 检查布局结构
    - 检查间距、字体、颜色、变量、状态、图标和组件层级
    - 如果 MCP 提供了资源文件或 SVG / 图片源，直接使用
    - 如果 MCP 已提供真实资源，不要自行造占位资源
+   - 如果用户提供截图而非 MCP 数据，从截图中推断布局、颜色、字体等视觉信息
 
 3. 在创建新组件前先搜索代码库中的可复用组件。
    重点检查：
@@ -85,7 +101,8 @@ version: 1.0.0
 
 ## 强约束
 
-- 如果已有设计上下文，不要绕过 MCP 靠猜来实现 UI
+- 如果已有设计上下文（MCP 或截图），不要靠猜来实现 UI
 - 如果项目已有 UI 体系，不要再引入一套新的 UI Kit
 - 除非有合理理由，不要用硬编码替代已 Token 化的样式
 - 不要忽略 hover、active、disabled、loading、empty、error 等状态
+- 摹客等无 MCP 工具场景下，主动向用户索要关键截图和标注信息，不要凭空编造视觉数据
