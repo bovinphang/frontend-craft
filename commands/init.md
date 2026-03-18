@@ -26,10 +26,11 @@ description: 将 frontend-craft 的项目模板（CLAUDE.md、settings.json、ru
    - `templates/rules/error-handling.md` → `.claude/rules/error-handling.md`
    - `templates/rules/naming-conventions.md` → `.claude/rules/naming-conventions.md`
    - `templates/rules/ci-cd.md` → `.claude/rules/ci-cd.md`
+   - `templates/rules/refactoring.md` → `.claude/rules/refactoring.md`
 
 4. 复制完成后，提醒用户：
    - 根据项目实际技术栈修改 `CLAUDE.md` 中的项目基础信息和常用命令
-   - 在 `CLAUDE.md` 底部的规则导入部分，删除项目不使用的规则（如纯 React 项目删除 `@./rules/vue.md`，不需要 i18n 的项目删除 `@./rules/i18n.md`）；若项目有 CI/CD 流水线，可添加 `@./rules/ci-cd.md`
+   - 在 `CLAUDE.md` 底部的规则导入部分，删除项目不使用的规则（如纯 React 项目删除 `@./rules/vue.md`，不需要 i18n 的项目删除 `@./rules/i18n.md`）；若项目有 CI/CD 流水线可保留 `@./rules/ci-cd.md`，若涉及从现有项目重构可保留 `@./rules/refactoring.md`
    - 根据项目实际情况修改 `rules/react.md` 或 `rules/vue.md` 中的技术栈配置
    - 检查 `settings.json` 中的权限列表是否符合项目需求
 

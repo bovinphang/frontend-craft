@@ -5,7 +5,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased]
+## [1.1.0] - 2025-03-18
 
 ### Added
 
@@ -15,6 +15,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `nuxt-project-standard` skill — Nuxt 3 项目规范（SSR/SSG）
 - `monorepo-project-standard` skill — Monorepo 项目规范
 - `rules/ci-cd.md` 模板 — CI/CD 流水线规范
+- `rules/refactoring.md` 模板 — 重构项目约束（图片、样式、功能等价）
 - CONTRIBUTING.md — 贡献指南
 - CHANGELOG.md — 版本变更记录
 
@@ -22,10 +23,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - `testing.md` — 补充 E2E 测试规则
 - `frontend-architect` agent — 增加 `legacy-to-modern-migration` skill 引用
+- `legacy-to-modern-migration` skill — 新增重构实施要求：图片（使用原项目资源、禁止内联 SVG）、样式（参考效果不照搬 CSS、优先 flex、禁止内联样式）、目标（视觉交互一致、功能等价、代码更简洁易维护）
 
 ---
 
-## [1.0.0] - 2025-03-17
+## [1.0.0] - 2025-03-18
 
 ### Added
 

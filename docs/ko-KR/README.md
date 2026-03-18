@@ -284,6 +284,7 @@ claude --plugin-dir .claude/plugins/frontend-craft
 | `rules/error-handling.md` | 오류 계층화, Error Boundary, 폴백 UI, 리포팅 규약 |
 | `rules/naming-conventions.md` | 파일, 컴포넌트, 변수, 라우트, API, CSS 통일 명명 규약 |
 | `rules/ci-cd.md` | CI/CD 파이프라인 단계, GitHub Actions / GitLab CI 예시, 시크릿 관리 |
+| `rules/refactoring.md` | 리팩터링 제약: 이미지, 스타일, 인라인 SVG/스타일 금지, flex 레이아웃 우선, 기능 동등 |
 
 ---
 

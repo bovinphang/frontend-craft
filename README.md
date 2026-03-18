@@ -284,6 +284,7 @@ claude --plugin-dir .claude/plugins/frontend-craft
 | `rules/error-handling.md` | Error layering, Error Boundary, fallback UI, reporting standards |
 | `rules/naming-conventions.md` | Unified naming for files, components, variables, routes, API, CSS |
 | `rules/ci-cd.md` | CI/CD pipeline stages, GitHub Actions / GitLab CI examples, secrets handling |
+| `rules/refactoring.md` | Refactoring constraints: images, styles, no inline SVG/styles, flex layout, feature parity |
 
 ---
 

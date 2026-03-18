@@ -99,3 +99,4 @@
 @./rules/error-handling.md
 @./rules/naming-conventions.md
 @./rules/ci-cd.md
+@./rules/refactoring.md
