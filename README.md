@@ -1,25 +1,145 @@
 # frontend-craft
 
-面向企业级前端团队的 Claude Code 共享插件，集成代码审查、安全审查、设计稿还原（Figma/Sketch/MasterGo/Pixso/墨刀/摹客）、无障碍检查、自动化质量保障和项目规范模板。所有审查、分析和评估报告均自动保存为 Markdown 文件至项目 `reports/` 目录，便于存档、追溯和团队共享。
+[![Stars](https://img.shields.io/github/stars/bovinphang/frontend-craft?style=flat)](https://github.com/bovinphang/frontend-craft/stargazers)
+[![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+![TypeScript](https://img.shields.io/badge/-TypeScript-3178C6?logo=typescript&logoColor=white)
+![React](https://img.shields.io/badge/-React-61DAFB?logo=react&logoColor=black)
+![Vue](https://img.shields.io/badge/-Vue-4FC08D?logo=vue.js&logoColor=white)
+![Figma](https://img.shields.io/badge/-Figma-F24E1E?logo=figma&logoColor=white)
+![Node](https://img.shields.io/badge/-Node.js-339933?logo=node.js&logoColor=white)
 
-## 安装
+---
 
-> 要求 Claude Code **v1.0.33+**（运行 `claude --version` 查看版本）。
+<div align="center">
 
-### 方式一：通过 Marketplace 安装（推荐）
+**🌐 Language / 语言 / 語言 / 言語 / 언어**
 
-在 Claude Code 会话中执行以下命令，先添加 Marketplace，再安装插件：
+[**English**](README.md) | [简体中文](README.zh-CN.md)| [繁體中文](docs/zh-TW/README.md) | [日本語](docs/ja-JP/README.md) | [한국어](docs/ko-KR/README.md)
+
+</div>
+
+---
+
+**A shared Claude Code plugin for enterprise frontend teams.**
+
+Integrates code review, security review, design-to-code (Figma/Sketch/MasterGo/Pixso/墨刀/摹客), accessibility checks, automated quality assurance, and project templates. All review, analysis, and evaluation reports are automatically saved as Markdown files to the project `reports/` directory for archiving, traceability, and team sharing.
+
+---
+
+## 🚀 Quick Start
+
+Get started in 2 minutes:
+
+### Step 1: Install the plugin
+
+```bash
+# Add marketplace
+/plugin marketplace add bovinphang/frontend-craft
+
+# Install plugin
+/plugin install frontend-craft@bovinphang-frontend-craft
+
+# Activate
+/reload-plugins
+```
+
+### Step 2: Initialize project config (recommended)
+
+```bash
+# Copy project templates to .claude/ directory
+/frontend-craft:init
+```
+
+After initialization, customize `.claude/CLAUDE.md`, `rules/`, and `settings.json` for your project.
+
+### Step 3: Start using
+
+```bash
+# Code review (outputs to reports/code-review-*.md)
+/frontend-craft:review
+
+# Create page/feature/component by convention
+/frontend-craft:scaffold page UserDetail
+/frontend-craft:scaffold component DataTable
+
+# List available commands
+/plugin list frontend-craft@bovinphang-frontend-craft
+```
+
+✨ **Done!** You now have access to 5 agents, 8 skills, and 3 commands.
+
+---
+
+## 🌐 Cross-platform support
+
+This plugin fully supports **Windows, macOS, and Linux**. All hooks and scripts are implemented in Node.js for cross-platform compatibility.
+
+---
+
+## 📦 What's inside
+
+This repository is a **Claude Code plugin** that can be installed directly or loaded locally via `--plugin-dir`.
 
 ```
+frontend-craft/
+|-- .claude-plugin/   # Plugin and marketplace manifests
+|   |-- plugin.json         # Plugin metadata
+|   |-- marketplace.json    # Marketplace directory for /plugin marketplace add
+|
+|-- agents/           # Specialized sub-agents for delegation
+|   |-- frontend-architect.md    # Page splitting, component architecture, state flow
+|   |-- performance-optimizer.md # Performance bottleneck analysis and optimization
+|   |-- ui-checker.md            # UI visual issues, design fidelity evaluation
+|   |-- figma-implementer.md     # Precise UI implementation from design
+|   |-- design-token-mapper.md   # Map design variables to Design Tokens
+|
+|-- skills/           # Workflow definitions and domain knowledge
+|   |-- frontend-code-review/    # Architecture, types, rendering, styles, a11y
+|   |-- security-review/         # XSS, CSRF, sensitive data, input validation
+|   |-- accessibility-check/     # WCAG 2.1 AA accessibility
+|   |-- react-project-standard/  # React + TypeScript project standards
+|   |-- vue3-project-standard/   # Vue 3 + TypeScript project standards
+|   |-- implement-from-design/   # Implement UI from design files
+|   |-- test-and-fix/            # lint, type-check, test, build and fix
+|   |-- legacy-web-standard/     # JS + jQuery + HTML legacy project standards
+|
+|-- commands/         # Slash commands for quick execution
+|   |-- init.md        # /init - Initialize project templates
+|   |-- review.md      # /review - Code review
+|   |-- scaffold.md    # /scaffold - Create page/feature/component
+|
+|-- hooks/            # Event-driven automation
+|   |-- hooks.json     # PreToolUse, PostToolUse, Stop, Notification, etc.
+|
+|-- scripts/          # Cross-platform Node.js scripts
+|   |-- security-check.mjs      # Block dangerous commands
+|   |-- format-changed-file.mjs # Auto Prettier formatting
+|   |-- run-tests.mjs           # Run checks on session end
+|   |-- session-start.mjs       # Detect framework on session start
+|   |-- notify.mjs              # Cross-platform desktop notifications
+|
+|-- templates/        # Project config templates (copied via /init)
+|   |-- CLAUDE.md
+|   |-- settings.json
+|   |-- rules/         # vue, react, design-system, testing, etc.
+|
+|-- .mcp.json         # MCP server config (Figma, Sketch, MasterGo, Pixso, 墨刀)
+```
+
+---
+
+## 📥 Installation
+
+> **Requirements:** Claude Code v1.0.33+, Node.js >= 18, npm/pnpm/yarn.
+
+### Option 1: Install as plugin (recommended)
+
+```bash
 /plugin marketplace add bovinphang/frontend-craft
 /plugin install frontend-craft@bovinphang-frontend-craft
 ```
 
-安装后执行 `/reload-plugins` 激活插件。
-
-### 方式二：团队项目级自动安装（推荐团队使用）
-
-在项目根目录的 `.claude/settings.json` 中添加 Marketplace 配置，团队成员 trust 项目目录后自动提示安装：
+Or add to `~/.claude/settings.json` or project `.claude/settings.json`:
 
 ```json
 {
@@ -34,263 +154,137 @@
 }
 ```
 
-### 方式三：本地开发 / 测试
+### Option 2: Team project-level auto-install
 
-克隆仓库后使用 `--plugin-dir` 加载（不需要安装，适合开发调试）：
+Add the `extraKnownMarketplaces` config above to `.claude/settings.json` in the project root. Team members will be prompted to install when they trust the project directory.
+
+### Option 3: Local development / testing
 
 ```bash
 git clone https://github.com/bovinphang/frontend-craft.git
 claude --plugin-dir ./frontend-craft
 ```
 
-### 方式四：作为 Git Submodule（项目级共享）
+### Option 4: Git Submodule (project-level sharing)
 
 ```bash
-# 在项目根目录下添加为 submodule
 git submodule add https://github.com/bovinphang/frontend-craft.git .claude/plugins/frontend-craft
-
-git add .gitmodules .claude/plugins/frontend-craft
-git commit -m "feat: add frontend-craft as shared Claude Code plugin"
+# Team: git submodule update --init --recursive
+# Load: claude --plugin-dir .claude/plugins/frontend-craft
 ```
 
-团队成员克隆项目后执行：
+---
+
+## 📋 Feature overview
+
+### Commands
+
+| Command | Purpose | Report output |
+|---------|---------|----------------|
+| `/frontend-craft:init` | Initialize project templates to `.claude/` | — |
+| `/frontend-craft:review` | Code review for specified or recently changed files | `code-review-*.md` |
+| `/frontend-craft:scaffold` | Create page / feature / component structure | — |
+
+### Skills (auto-activated)
+
+| Skill | Purpose | Report output |
+|-------|---------|----------------|
+| `frontend-code-review` | Architecture, types, rendering, styles, a11y | `code-review-*.md` |
+| `security-review` | XSS, CSRF, sensitive data, input validation | `security-review-*.md` |
+| `accessibility-check` | WCAG 2.1 AA accessibility | `accessibility-review-*.md` |
+| `react-project-standard` | React + TypeScript project standards | — |
+| `vue3-project-standard` | Vue 3 + TypeScript project standards | — |
+| `implement-from-design` | Implement UI from design files | `design-plan-*.md` |
+| `test-and-fix` | lint, type-check, test, build and fix | `test-fix-*.md` |
+| `legacy-web-standard` | JS + jQuery + HTML legacy standards | — |
+
+### Agents
+
+| Agent | Purpose | Report output |
+|-------|---------|----------------|
+| `frontend-architect` | Page splitting, component architecture, state flow, refactoring | `architecture-proposal-*.md` |
+| `performance-optimizer` | Performance analysis, optimization recommendations | `performance-review-*.md` |
+| `ui-checker` | UI visual issues, design fidelity evaluation | `ui-fidelity-review-*.md` |
+| `figma-implementer` | Precise UI implementation from design | `design-implementation-*.md` |
+| `design-token-mapper` | Map design variables to Design Tokens | `token-mapping-*.md` |
+
+### Hooks (auto-executed)
+
+| Event | Behavior |
+|-------|----------|
+| `SessionStart` | Detect project framework and package manager |
+| `PreToolUse(Bash)` | Block dangerous commands (rm -rf, force push, etc.) |
+| `PostToolUse(Write/Edit)` | Auto Prettier on modified files |
+| `Stop` | Run lint, type-check, test, build on session end |
+| `Notification` | Cross-platform desktop notifications |
+
+### MCP integration
+
+| Service | Purpose |
+|---------|---------|
+| Figma / Figma Desktop | Design context, variable definitions |
+| Sketch | Design selection screenshots |
+| MasterGo | DSL structure data |
+| Pixso | Local MCP for frame data, code snippets |
+| 墨刀 (Modao) | Prototype data, design descriptions |
+| 摹客 (Mockplus) | No MCP; user screenshots/annotations |
+
+---
+
+## 📄 Report output
+
+All review, analysis, and evaluation outputs are saved as Markdown files to the project `reports/` directory.
+
+| Report type | Filename pattern | Source |
+|-------------|------------------|--------|
+| Code review | `code-review-*.md` | `/review`, `frontend-code-review` |
+| Security review | `security-review-*.md` | `security-review` |
+| Accessibility | `accessibility-review-*.md` | `accessibility-check` |
+| Performance | `performance-review-*.md` | `performance-optimizer` |
+| Architecture | `architecture-proposal-*.md` | `frontend-architect` |
+| Design fidelity | `ui-fidelity-review-*.md` | `ui-checker` |
+| Design implementation | `design-implementation-*.md` | `figma-implementer` |
+| Token mapping | `token-mapping-*.md` | `design-token-mapper` |
+| Design plan | `design-plan-*.md` | `implement-from-design` |
+| Test fix | `test-fix-*.md` | `test-and-fix` |
+
+> **Tip:** Add `reports/` to `.gitignore` or commit as needed for history.
+
+---
+
+## ⚙️ Configuration
+
+### MCP environment variables
+
+| Variable | Tool | How to get |
+|----------|------|------------|
+| `FIGMA_API_KEY` | Figma | Figma account > Personal Access Tokens |
+| `SKETCH_API_KEY` | Sketch | Sketch developer settings |
+| `MG_MCP_TOKEN` | MasterGo | MasterGo account > Security settings |
+| `MODAO_TOKEN` | 墨刀 | 墨刀 AI page |
+
+Pixso uses local MCP (enable in client); 摹客 works via user screenshots/annotations.
+
+---
+
+## 📥 Update
 
 ```bash
-git submodule update --init --recursive
-```
-
-然后使用 `--plugin-dir` 加载：
-
-```bash
-claude --plugin-dir .claude/plugins/frontend-craft
-```
-
-## 快速开始：初始化项目配置
-
-安装插件后，在 Claude Code 中运行 `/frontend-craft:init` 命令，将项目模板初始化到当前项目的 `.claude/` 目录：
-
-```
-> /frontend-craft:init
-```
-
-初始化后请根据项目实际情况修改：
-
-1. `.claude/CLAUDE.md` — 修改项目基础信息、包管理器、常用命令
-2. `.claude/rules/` — 删除不适用的规则文件（如纯 React 项目删除 `vue.md`，不需要 i18n 的项目删除 `i18n.md`）
-3. `.claude/settings.json` — 调整权限白名单
-
-> **为什么需要这一步？** 插件提供的是可复用的 Skills、Agents 和 Hooks，而 CLAUDE.md 和 rules 是项目级配置，必须位于项目根目录的 `.claude/` 下才能被 Claude Code 识别。`/init` 命令帮你快速完成这个配置。
-
-## 功能概览
-
-### Commands（斜杠命令）
-
-| 命令 | 用途 | 输出报告 |
-|------|------|----------|
-| `/frontend-craft:init` | 将项目模板初始化到当前项目的 `.claude/` 目录 | — |
-| `/frontend-craft:review` | 对指定文件或最近变更的代码执行规范化评审，输出分级报告 | `code-review-*.md` |
-| `/frontend-craft:scaffold` | 按项目规范创建 page / feature / component 标准目录结构和样板文件 | — |
-
-### Skills（自动激活）
-
-| Skill | 用途 | 输出报告 |
-|-------|------|----------|
-| `frontend-code-review` | 从架构、类型、渲染、样式、可访问性等维度审查代码 | `code-review-*.md` |
-| `security-review` | XSS、CSRF、敏感数据泄露、输入校验等安全审查 | `security-review-*.md` |
-| `accessibility-check` | WCAG 2.1 AA 无障碍检查 | `accessibility-review-*.md` |
-| `react-project-standard` | React + TypeScript 项目工程规范（结构、组件、路由、状态、API 层） | — |
-| `vue3-project-standard` | Vue 3 + TypeScript 项目工程规范（结构、组件、路由、Pinia、API 层） | — |
-| `implement-from-design` | 基于 Figma/Sketch/MasterGo/Pixso/墨刀/摹客设计稿实现 UI | `design-plan-*.md` |
-| `test-and-fix` | 执行 lint、type-check、test、build 并修复失败 | `test-fix-*.md` |
-| `legacy-web-standard` | JS + jQuery + HTML 传统项目的开发与维护规范 | — |
-
-### Agents（子代理）
-
-| Agent | 用途 | 输出报告 |
-|-------|------|----------|
-| `frontend-architect` | 页面拆分、组件架构、状态流设计、目录规划、大型重构 | `architecture-proposal-*.md` |
-| `performance-optimizer` | 分析性能瓶颈（打包体积、渲染性能、网络请求），输出量化优化方案 | `performance-review-*.md` |
-| `ui-checker` | UI 视觉问题排查、设计还原度评估 | `ui-fidelity-review-*.md` |
-| `figma-implementer` | 按 Figma/Sketch/MasterGo/Pixso/墨刀/摹客设计稿精确实现 UI | `design-implementation-*.md` |
-| `design-token-mapper` | 将设计变量映射到项目 Design Token | `token-mapping-*.md` |
-
-### Hooks（自动执行）
-
-| 事件 | 行为 |
-|------|------|
-| `SessionStart` | 自动检测项目框架和包管理器 |
-| `PreToolUse(Bash)` | 拦截危险命令（rm -rf、force push 等） |
-| `PostToolUse(Write/Edit)` | 对修改的文件自动执行 Prettier |
-| `Stop` | 会话结束时执行 lint、type-check、test、build |
-| `Notification` | 跨平台桌面通知（macOS / Linux / Windows） |
-
-### MCP 集成
-
-| 服务 | 用途 |
-|------|------|
-| Figma | 读取设计上下文、变量定义 |
-| Figma Desktop | Figma 桌面端集成 |
-| Sketch | 读取设计选区截图 |
-| MasterGo | 读取 DSL 结构数据、组件层级和样式 |
-| Pixso | 本地 MCP 获取帧数据、代码片段和图片资源 |
-| 墨刀 | 获取原型数据、生成设计描述、导入 HTML |
-| 摹客 | 无 MCP 集成，通过用户提供的截图/标注/导出 CSS 支持 |
-
-### 项目模板（通过 `/init` 初始化）
-
-| 文件 | 用途 |
-|------|------|
-| `CLAUDE.md` | 项目说明、常用命令、工作原则、安全要求 |
-| `settings.json` | 权限白名单/黑名单、环境变量 |
-| `rules/vue.md` | Vue 3 组件规范和反模式 |
-| `rules/react.md` | React 组件规范和反模式 |
-| `rules/design-system.md` | 设计系统、Token、可访问性规则 |
-| `rules/testing.md` | 测试与校验规则 |
-| `rules/git-conventions.md` | Conventional Commits 提交规范 |
-| `rules/i18n.md` | 国际化文案规范 |
-| `rules/performance.md` | 前端性能优化规则 |
-| `rules/api-layer.md` | API 层类型化、错误处理规范 |
-| `rules/state-management.md` | 状态分类、管理策略、反模式 |
-| `rules/error-handling.md` | 错误分层、Error Boundary、降级 UI、上报规范 |
-| `rules/naming-conventions.md` | 文件、组件、变量、路由、API、CSS 统一命名规范 |
-
-## 配置
-
-### MCP 服务器
-
-使用设计稿相关功能前，根据团队使用的设计工具设置对应环境变量：
-
-| 环境变量 | 对应工具 | 获取方式 |
-|----------|----------|----------|
-| `FIGMA_API_KEY` | Figma / Figma Desktop | Figma 账户设置 > Personal Access Tokens |
-| `SKETCH_API_KEY` | Sketch | Sketch 开发者设置 |
-| `MG_MCP_TOKEN` | MasterGo | MasterGo 账户设置 > 安全设置 > 生成 Token |
-| `MODAO_TOKEN` | 墨刀 | 墨刀 AI 功能页面获取访问令牌 |
-
-> Pixso 使用本地 MCP 服务，需在 Pixso 客户端中启用 MCP 功能，无需额外环境变量。
-> 摹客暂无 MCP 集成，通过用户提供截图/标注方式工作。
-
-**macOS / Linux:**
-
-```bash
-export FIGMA_API_KEY="your-figma-api-key"
-export SKETCH_API_KEY="your-sketch-api-key"
-export MG_MCP_TOKEN="your-mastergo-token"
-export MODAO_TOKEN="your-modao-token"
-```
-
-**Windows (PowerShell):**
-
-```powershell
-$env:FIGMA_API_KEY = "your-figma-api-key"
-$env:SKETCH_API_KEY = "your-sketch-api-key"
-$env:MG_MCP_TOKEN = "your-mastergo-token"
-$env:MODAO_TOKEN = "your-modao-token"
-```
-
-建议将环境变量添加到 shell 配置文件（`~/.bashrc`、`~/.zshrc`）或 Windows 系统环境变量中。
-
-### 前置依赖
-
-- Node.js >= 18
-- npm、pnpm 或 yarn
-- Git Bash（Windows 用户需要，用于执行 hook 脚本）
-
-## 目录结构
-
-```
-frontend-craft/
-├── .claude-plugin/
-│   ├── plugin.json            # 插件清单
-│   └── marketplace.json       # Marketplace 发布配置
-├── commands/                   # 斜杠命令
-│   ├── init.md
-│   ├── review.md
-│   └── scaffold.md
-├── agents/                     # 子代理定义
-│   ├── frontend-architect.md
-│   ├── performance-optimizer.md
-│   ├── ui-checker.md
-│   ├── figma-implementer.md
-│   └── design-token-mapper.md
-├── skills/                     # 自动激活的技能
-│   ├── frontend-code-review/
-│   ├── security-review/
-│   ├── accessibility-check/
-│   ├── react-project-standard/
-│   ├── vue3-project-standard/
-│   ├── implement-from-design/
-│   ├── test-and-fix/
-│   └── legacy-web-standard/
-├── hooks/
-│   └── hooks.json              # 事件钩子配置
-├── scripts/                    # 辅助脚本（Node.js，跨平台）
-│   ├── security-check.mjs
-│   ├── format-changed-file.mjs
-│   ├── run-tests.mjs
-│   ├── session-start.mjs
-│   └── notify.mjs
-├── templates/                  # 项目级配置模板
-│   ├── CLAUDE.md
-│   ├── settings.json
-│   └── rules/
-│       ├── vue.md
-│       ├── react.md
-│       ├── design-system.md
-│       ├── testing.md
-│       ├── git-conventions.md
-│       ├── i18n.md
-│       ├── performance.md
-│       ├── api-layer.md
-│       ├── state-management.md
-│       ├── error-handling.md
-│       └── naming-conventions.md
-├── .mcp.json                   # MCP 服务器配置
-└── README.md
-```
-
-## 报告输出
-
-所有审查、分析和评估功能均自动将报告保存为 Markdown 文件至项目根目录下的 `reports/` 目录。
-
-| 报告类型 | 文件名模式 | 来源 |
-|----------|-----------|------|
-| 代码审查 | `code-review-YYYY-MM-DD-HHmmss.md` | `/review` 命令、`frontend-code-review` skill |
-| 安全审查 | `security-review-YYYY-MM-DD-HHmmss.md` | `security-review` skill |
-| 无障碍检查 | `accessibility-review-YYYY-MM-DD-HHmmss.md` | `accessibility-check` skill |
-| 性能分析 | `performance-review-YYYY-MM-DD-HHmmss.md` | `performance-optimizer` agent |
-| 架构方案 | `architecture-proposal-YYYY-MM-DD-HHmmss.md` | `frontend-architect` agent |
-| 设计还原度 | `ui-fidelity-review-YYYY-MM-DD-HHmmss.md` | `ui-checker` agent |
-| 设计实现 | `design-implementation-YYYY-MM-DD-HHmmss.md` | `figma-implementer` agent |
-| Token 映射 | `token-mapping-YYYY-MM-DD-HHmmss.md` | `design-token-mapper` agent |
-| 设计计划 | `design-plan-YYYY-MM-DD-HHmmss.md` | `implement-from-design` skill |
-| 测试修复 | `test-fix-YYYY-MM-DD-HHmmss.md` | `test-and-fix` skill |
-
-> **建议**：在 `.gitignore` 中添加 `reports/` 以避免将自动生成的报告提交到代码仓库，或保留提交以便团队成员查看历史审查记录。
-
-## 更新
-
-通过 Marketplace 安装的插件，在 Claude Code 中执行：
-
-```
+# Marketplace install
 /plugin marketplace update bovinphang-frontend-craft
-```
 
-或开启自动更新，每次启动 Claude Code 时自动拉取最新版本：
+# Enable auto-update: /plugin → Marketplaces → select → Enable auto-update
 
-1. 在 Claude Code 中执行 `/plugin` 打开插件管理器
-2. 切换到 **Marketplaces** 标签页
-3. 选中 `bovinphang-frontend-craft`
-4. 选择 **Enable auto-update**
-
-> 第三方 Marketplace 默认不开启自动更新，需手动启用。启用后 Claude Code 每次启动时会自动刷新 Marketplace 数据并更新已安装的插件。
-
-如果使用 Git submodule 方式安装：
-
-```bash
+# Submodule install
 git submodule update --remote .claude/plugins/frontend-craft
 ```
 
-## 许可证
+---
 
-MIT
+## 📄 License
+
+MIT — Use freely, modify as needed, contribute back if you can.
+
+---
+
+**If this repo helps you, give it a Star. Build something great.**
