@@ -72,7 +72,7 @@ After initialization, customize for your project:
 /plugin list frontend-craft@bovinphang-frontend-craft
 ```
 
-✨ **Done!** You now have access to 5 agents, 8 skills, and 3 commands.
+✨ **Done!** You now have access to 5 agents, 9 skills, and 3 commands.
 
 ---
 
@@ -108,6 +108,7 @@ frontend-craft/
 |   |-- implement-from-design/   # Implement UI from design files
 |   |-- test-and-fix/            # lint, type-check, test, build and fix
 |   |-- legacy-web-standard/     # JS + jQuery + HTML legacy project standards
+|   |-- legacy-to-modern-migration/  # jQuery/MPA migration to React/Vue strategy and workflow
 |
 |-- commands/         # Slash commands for quick execution
 |   |-- init.md        # /init - Initialize project templates
@@ -223,6 +224,7 @@ claude --plugin-dir .claude/plugins/frontend-craft
 | `implement-from-design` | Implement UI from Figma/Sketch/MasterGo/Pixso/墨刀/摹客 design files | `design-plan-*.md` |
 | `test-and-fix` | Run lint, type-check, test, build and fix failures | `test-fix-*.md` |
 | `legacy-web-standard` | Development and maintenance standards for JS + jQuery + HTML legacy projects | — |
+| `legacy-to-modern-migration` | Strategy, concept mapping, and phased workflow for jQuery/MPA → React/Vue 3 + TS | `migration-plan-*.md` |
 
 ### Agents
 
@@ -336,6 +338,7 @@ All review, analysis, and evaluation outputs are saved as Markdown files to the 
 | Token mapping | `token-mapping-YYYY-MM-DD-HHmmss.md` | `design-token-mapper` agent |
 | Design plan | `design-plan-YYYY-MM-DD-HHmmss.md` | `implement-from-design` skill |
 | Test fix | `test-fix-YYYY-MM-DD-HHmmss.md` | `test-and-fix` skill |
+| Migration plan | `migration-plan-YYYY-MM-DD-HHmmss.md` | `legacy-to-modern-migration` skill |
 
 > **Tip:** Add `reports/` to `.gitignore` to avoid committing auto-generated reports, or keep them committed for team history.
 

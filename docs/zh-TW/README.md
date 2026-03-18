@@ -72,7 +72,7 @@
 /plugin list frontend-craft@bovinphang-frontend-craft
 ```
 
-✨ **完成！** 您現在可使用 5 個代理、8 個技能與 3 個指令。
+✨ **完成！** 您現在可使用 5 個代理、9 個技能與 3 個指令。
 
 ---
 
@@ -108,6 +108,7 @@ frontend-craft/
 |   |-- implement-from-design/   # 依設計稿實作 UI
 |   |-- test-and-fix/           # lint、type-check、test、build 並修復
 |   |-- legacy-web-standard/    # JS + jQuery + HTML 傳統專案規範
+|   └-- legacy-to-modern-migration/  # jQuery/MPA 遷移至 React/Vue 策略與流程
 |
 |-- commands/         # 斜線指令
 |   |-- init.md        # /init - 初始化專案範本
@@ -223,6 +224,7 @@ claude --plugin-dir .claude/plugins/frontend-craft
 | `implement-from-design` | 基於 Figma/Sketch/MasterGo/Pixso/墨刀/摹客設計稿實作 UI | `design-plan-*.md` |
 | `test-and-fix` | 執行 lint、type-check、test、build 並修復失敗 | `test-fix-*.md` |
 | `legacy-web-standard` | JS + jQuery + HTML 傳統專案的開發與維護規範 | — |
+| `legacy-to-modern-migration` | jQuery/MPA 遷移至 React/Vue 3 + TS 的策略、概念對應與分階段流程 | `migration-plan-*.md` |
 
 ### Agents（子代理）
 
@@ -336,6 +338,7 @@ $env:MODAO_TOKEN = "your-modao-token"
 | Token 對應 | `token-mapping-YYYY-MM-DD-HHmmss.md` | `design-token-mapper` agent |
 | 設計計畫 | `design-plan-YYYY-MM-DD-HHmmss.md` | `implement-from-design` skill |
 | 測試修復 | `test-fix-YYYY-MM-DD-HHmmss.md` | `test-and-fix` skill |
+| 遷移計畫 | `migration-plan-YYYY-MM-DD-HHmmss.md` | `legacy-to-modern-migration` skill |
 
 > **建議：** 於 `.gitignore` 中加入 `reports/` 以避免將自動產生的報告提交至程式碼倉庫，或保留提交以便團隊成員檢視歷史審查記錄。
 

@@ -9,6 +9,7 @@ skills:
   - frontend-code-review
   - vue3-project-standard
   - react-project-standard
+  - legacy-to-modern-migration
 ---
 
 你是一名资深前端架构专家。

@@ -72,7 +72,7 @@
 /plugin list frontend-craft@bovinphang-frontend-craft
 ```
 
-✨ **完了！** 5 つのエージェント、8 つのスキル、3 つのコマンドが利用可能です。
+✨ **完了！** 5 つのエージェント、9 つのスキル、3 つのコマンドが利用可能です。
 
 ---
 
@@ -108,6 +108,7 @@ frontend-craft/
 |   |-- implement-from-design/   # デザインから UI を実装
 |   |-- test-and-fix/           # lint、type-check、test、build と修正
 |   |-- legacy-web-standard/     # JS + jQuery + HTML レガシープロジェクト規約
+|   └-- legacy-to-modern-migration/  # jQuery/MPA から React/Vue への移行戦略とワークフロー
 |
 |-- commands/         # スラッシュコマンド
 |   |-- init.md        # /init - プロジェクトテンプレート初期化
@@ -223,6 +224,7 @@ claude --plugin-dir .claude/plugins/frontend-craft
 | `implement-from-design` | Figma/Sketch/MasterGo/Pixso/墨刀/摹客 のデザインから UI を実装 | `design-plan-*.md` |
 | `test-and-fix` | lint、type-check、test、build を実行し失敗を修正 | `test-fix-*.md` |
 | `legacy-web-standard` | JS + jQuery + HTML レガシープロジェクトの開発・保守規約 | — |
+| `legacy-to-modern-migration` | jQuery/MPA から React/Vue 3 + TS への移行戦略、概念マッピング、段階的ワークフロー | `migration-plan-*.md` |
 
 ### Agents（サブエージェント）
 
@@ -336,6 +338,7 @@ $env:MODAO_TOKEN = "your-modao-token"
 | Token マッピング | `token-mapping-YYYY-MM-DD-HHmmss.md` | `design-token-mapper` エージェント |
 | デザイン計画 | `design-plan-YYYY-MM-DD-HHmmss.md` | `implement-from-design` スキル |
 | テスト修正 | `test-fix-YYYY-MM-DD-HHmmss.md` | `test-and-fix` スキル |
+| 移行計画 | `migration-plan-YYYY-MM-DD-HHmmss.md` | `legacy-to-modern-migration` スキル |
 
 > **ヒント：** `.gitignore` に `reports/` を追加して自動生成レポートのコミットを避けるか、チームの履歴のためにコミットを残してください。
 

@@ -72,7 +72,7 @@
 /plugin list frontend-craft@bovinphang-frontend-craft
 ```
 
-✨ **완료!** 5개의 에이전트, 8개의 스킬, 3개의 명령어를 사용할 수 있습니다.
+✨ **완료!** 5개의 에이전트, 9개의 스킬, 3개의 명령어를 사용할 수 있습니다.
 
 ---
 
@@ -108,6 +108,7 @@ frontend-craft/
 |   |-- implement-from-design/   # 디자인에서 UI 구현
 |   |-- test-and-fix/           # lint, type-check, test, build 및 수정
 |   |-- legacy-web-standard/     # JS + jQuery + HTML 레거시 프로젝트 규약
+|   └-- legacy-to-modern-migration/  # jQuery/MPA → React/Vue 마이그레이션 전략 및 워크플로우
 |
 |-- commands/         # 슬래시 명령어
 |   |-- init.md        # /init - 프로젝트 템플릿 초기화
@@ -223,6 +224,7 @@ claude --plugin-dir .claude/plugins/frontend-craft
 | `implement-from-design` | Figma/Sketch/MasterGo/Pixso/墨刀/摹客 디자인에서 UI 구현 | `design-plan-*.md` |
 | `test-and-fix` | lint, type-check, test, build 실행 및 실패 수정 | `test-fix-*.md` |
 | `legacy-web-standard` | JS + jQuery + HTML 레거시 프로젝트 개발·유지보수 규약 | — |
+| `legacy-to-modern-migration` | jQuery/MPA → React/Vue 3 + TS 마이그레이션 전략, 개념 매핑, 단계별 워크플로우 | `migration-plan-*.md` |
 
 ### Agents (서브 에이전트)
 
@@ -336,6 +338,7 @@ $env:MODAO_TOKEN = "your-modao-token"
 | Token 매핑 | `token-mapping-YYYY-MM-DD-HHmmss.md` | `design-token-mapper` 에이전트 |
 | 디자인 계획 | `design-plan-YYYY-MM-DD-HHmmss.md` | `implement-from-design` 스킬 |
 | 테스트 수정 | `test-fix-YYYY-MM-DD-HHmmss.md` | `test-and-fix` 스킬 |
+| 마이그레이션 계획 | `migration-plan-YYYY-MM-DD-HHmmss.md` | `legacy-to-modern-migration` 스킬 |
 
 > **팁:** `.gitignore`에 `reports/`를 추가해 자동 생성 보고서 커밋을 피하거나, 팀 기록을 위해 커밋을 유지하세요.
 
