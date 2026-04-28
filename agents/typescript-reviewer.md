@@ -103,6 +103,11 @@ skills:
 - **Magic Number / Magic String** — 业务状态、类型、标识等使用裸数字/裸字符串；应对齐 `templates/rules/typescript.md`「禁止 Magic Number / Magic String」
 - **深层可选链无兜底** `??`
 - **命名不一致**（camelCase / PascalCase 约定）
+- **单文件规模失控** — 单文件显著超过约 300 行且承担多重职责，未体现可维护拆分；应对齐 `templates/rules/typescript.md`「单文件规模与模块拆分」
+- **类型定义与实现耦合过重** — 大段可复用类型堆在 `*.tsx`/实现文件内，未抽取 `*.types.ts`；应对齐 `templates/rules/typescript.md`「类型资产分层与命名」
+- **全局声明边界不清** — 将模块私有类型放入 `global.d.ts` 或把 ambient 声明写入实现文件；应对齐 `templates/rules/typescript.md`「类型资产分层与命名」
+- **类型导入导出语义混用** — 仅类型用途仍使用值导入/导出，缺 `import type` / `export type`；应对齐 `templates/rules/typescript.md`「类型资产分层与命名」
+- **可用类型收窄却滥用断言** — 通过 `as` 消错而非 `typeof` / `in` / predicate 收窄；应对齐 `templates/rules/typescript.md`「工程化与惯用法补充」
 
 ## 诊断命令（按项目选用）
 

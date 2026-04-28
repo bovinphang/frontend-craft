@@ -117,6 +117,13 @@ function UserCard({ user, onSelect }: UserCardProps) {
 }
 ```
 
+## 单文件规模与模块拆分
+
+- `.ts` / `.tsx` / `.js` / `.jsx` 单文件建议控制在 **约 300 行以内**。该阈值是可维护性与评审效率的经验上限，不是机械的硬限制。
+- 当文件明显超过该规模且承担多重职责时，应优先按职责拆分：如数据访问、业务规则、视图渲染、适配层、常量与映射。
+- 超阈值优先提取：纯函数、子组件、自定义 Hook、`*.types.ts` 类型模块、常量表，不要仅为压行数做无意义切分。
+- 可接受例外：生成代码、极薄的 re-export 聚合文件、经团队评审确认的高内聚模块；例外建议在文件头简短注明原因。
+
 ### 仍为 JavaScript 的文件
 
 - 在 `.js` / `.jsx` 中，若短期无法迁 TS，可用 **JSDoc** 补类型，并与运行时行为一致。
@@ -239,6 +246,38 @@ type UserInput = z.infer<typeof userSchema>;
 
 const validated: UserInput = userSchema.parse(input);
 ```
+
+## 类型资产分层与命名
+
+- 模块或特性专属类型使用 `*.types.ts`，并与实现文件同目录或同 feature 目录放置，例如 `user.types.ts`、`billing.types.ts`。
+- 全局与环境相关声明放在 `global.d.ts`、`env.d.ts` 或 `types/*.d.ts`，仅用于真全局或 ambient 声明，不将可模块化类型放入全局。
+- 仅用于类型的导入导出优先使用 `import type` 与 `export type`，减少值空间歧义并提升编译语义清晰度。
+- 与 API DTO 同源的类型，放在对应 feature 或 API 子目录的 `*.types.ts`，避免在页面或组件实现内散落大型匿名类型。
+
+```typescript
+// user.types.ts
+export interface UserProfile {
+  id: string;
+  email: string;
+  status: "active" | "disabled";
+}
+
+// user.service.ts
+import type { UserProfile } from "./user.types";
+export type { UserProfile };
+```
+
+## 工程化与惯用法补充
+
+- 使用**判别式联合**配合 `never` 穷尽检查，确保分支新增成员时编译期可发现遗漏。
+- 需要同时满足「字面量保留」与「结构校验」时优先使用 `satisfies`，再考虑类型断言。
+- 优先使用类型收窄（`typeof` / `in` / 自定义 predicate）而非 `as` 强转；`as` 应用于边界互操作而非消错。
+- 对不应被修改的数据优先建模为 `readonly` / `Readonly<T>`，与不可变更新规则协同。
+- 新业务代码默认采用 ES Module；`namespace` 与三斜线指令仅用于声明合并或遗留互操作场景。
+- `index.ts` 聚合导出应保持浅层且按 feature 边界组织，避免深层 barrel 引发循环依赖与不必要的耦合。
+- 扩展第三方类型时使用独立声明文件（如 `types/vendor-foo.d.ts`）并通过 `declare module "pkg"` 局部扩展，避免污染全局实现文件。
+- `tsconfig` 应保持 `strict` 族能力；若为兼容遗留场景需要放宽严格项，必须在评审中明确说明范围、风险与回收计划。
+- 可在消费项目使用 lint（如 `max-lines`）辅助识别超长文件，但规则设计应服务可维护性，而非追求机械达标。
 
 ## 日志与 `console.log`
 
