@@ -1,0 +1,17 @@
+{
+  "target": "codex",
+  "minCompatibleVersion": "0.2.0",
+  "conversionRules": {
+    "agentFormat": "toml",
+    "commandPrefix": "/",
+    "configFileName": "AGENTS.md"
+  },
+  "source": {
+    "agentsDir": "agents",
+    "skillsDir": "skills",
+    "commandsDir": "commands",
+    "hooksDir": "hooks",
+    "templatesDir": "templates"
+  },
+  "generatedFrom": "targets.manifest.json"
+}

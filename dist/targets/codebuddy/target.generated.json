@@ -1,0 +1,17 @@
+{
+  "target": "codebuddy",
+  "minCompatibleVersion": "1.0.0",
+  "conversionRules": {
+    "agentFormat": "markdown",
+    "commandPrefix": "/",
+    "configFileName": "codebuddy.yml"
+  },
+  "source": {
+    "agentsDir": "agents",
+    "skillsDir": "skills",
+    "commandsDir": "commands",
+    "hooksDir": "hooks",
+    "templatesDir": "templates"
+  },
+  "generatedFrom": "targets.manifest.json"
+}
