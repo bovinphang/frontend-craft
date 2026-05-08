@@ -474,3 +474,55 @@ MIT - 自由使用、依需求修改，歡迎回饋。
 ---
 
 **若本倉庫對您有幫助，請給予 Star。打造出色的前端。**
+
+---
+
+## 🧭 Monorepo 發佈流程
+
+### 1）來源目錄作為唯一真相
+
+以下目錄是所有目標產物的唯一輸入來源：
+
+- `agents/`
+- `skills/`
+- `commands/`
+- `templates/`
+
+所有建置與發佈產物都應由上述目錄產生，不應直接修改產物目錄。
+
+### 2）一鍵建置多目標
+
+本地與 CI 可使用統一命令：
+
+```bash
+./scripts/build-targets.sh
+```
+
+建議輸出：
+
+- `dist/claude-plugin/`
+- `dist/skills-cli/`
+- `dist/docs/`
+
+### 3）CI 階段
+
+建議至少包含：
+
+1. **Schema 驗證**
+2. **產物 diff 檢查**
+3. **版本一致性檢查**
+
+可參考 `.github/workflows/build-targets.yml`。
+
+### 4）發佈階段
+
+- **依 target 打 tag**：例如 `plugin/vX.Y.Z`、`skills/vX.Y.Z`、`docs/vX.Y.Z`
+- **依 target 產生 release 資產**：打包 `dist/<target>/` 並上傳
+
+可參考 `.github/workflows/release-targets.yml`。
+
+### 5）回滾策略與相容矩陣維護
+
+- 每個 target 保留不可變發佈產物，方便快速回滾。
+- 文件中維護相容矩陣（工具/代理版本 × plugin/skills 版本 × 平台）。
+- 回滾時同步更新矩陣與 changelog，記錄原因、影響範圍、恢復版本。

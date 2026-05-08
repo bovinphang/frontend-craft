@@ -474,3 +474,53 @@ MIT — 자유롭게 사용, 필요에 따라 수정, 가능하면 기여해 주
 ---
 
 **이 저장소가 도움이 되었다면 Star를 눌러 주세요. 멋진 프론트엔드를 만드세요.**
+
+---
+
+## 🧭 Monorepo 릴리스 프로세스
+
+### 1) 소스 디렉터리를 단일 진실 원본(SSOT)으로 유지
+
+다음 디렉터리를 모든 타깃 산출물의 공식 입력으로 사용합니다.
+
+- `agents/`
+- `skills/`
+- `commands/`
+- `templates/`
+
+산출물 디렉터리를 직접 수정하지 말고 위 소스에서만 생성합니다.
+
+### 2) 원커맨드 멀티 타깃 빌드
+
+```bash
+./scripts/build-targets.sh
+```
+
+권장 출력 경로:
+
+- `dist/claude-plugin/`
+- `dist/skills-cli/`
+- `dist/docs/`
+
+### 3) CI 단계
+
+최소 검증 항목:
+
+1. **Schema 검증**
+2. **산출물 diff 검사**
+3. **버전 일관성 검사**
+
+기본 예시는 `.github/workflows/build-targets.yml`을 참고하세요.
+
+### 4) 배포 단계
+
+- **타깃별 태그**: `plugin/vX.Y.Z`, `skills/vX.Y.Z`, `docs/vX.Y.Z`
+- **타깃별 릴리스 자산**: `dist/<target>/` 압축 업로드
+
+예시는 `.github/workflows/release-targets.yml`을 참고하세요.
+
+### 5) 롤백 전략 및 호환성 매트릭스 운영
+
+- 타깃별 불변 릴리스 산출물을 보관해 최근 안정 태그로 신속 롤백합니다.
+- 문서에 호환성 매트릭스(도구/에이전트 버전 × plugin/skills 버전 × 플랫폼)를 유지합니다.
+- 롤백 시 원인, 영향 범위, 복구 버전을 changelog/매트릭스에 함께 기록합니다.
