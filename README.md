@@ -113,6 +113,22 @@ This updates all installed skills to their latest versions. You can run `npx ski
 
 **Telemetry:** The CLI may collect anonymous telemetry by default. To disable it, set `DISABLE_TELEMETRY=1`. Details: [skills.sh CLI docs](https://skills.sh/docs/cli).
 
+
+### Single-repo multi-target build artifacts
+
+Generate agent/skill artifacts into in-repo `.dist/` folders (default) with a unified builder:
+
+```bash
+# Build Codex artifacts -> .dist/codex/.codex/{agents,skills}
+node scripts/build-targets.mjs --target codex
+
+# Build OpenClaw artifacts -> .dist/openclaw/.openclaw/{agents,skills}
+node scripts/build-targets.mjs --target openclaw
+
+# Override output directory (still recommended to keep relative to this repo)
+OUTPUT_DIR=.dist/custom/codex node scripts/build-targets.mjs --target codex
+```
+
 ---
 
 ## 📦 What's inside
