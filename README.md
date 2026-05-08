@@ -113,6 +113,22 @@ This updates all installed skills to their latest versions. You can run `npx ski
 
 **Telemetry:** The CLI may collect anonymous telemetry by default. To disable it, set `DISABLE_TELEMETRY=1`. Details: [skills.sh CLI docs](https://skills.sh/docs/cli).
 
+
+### Single-repo multi-target build artifacts
+
+Generate agent/skill artifacts into in-repo `.dist/` folders (default) with a unified builder:
+
+```bash
+# Build Codex artifacts -> .dist/codex/.codex/{agents,skills}
+node scripts/build-targets.mjs --target codex
+
+# Build OpenClaw artifacts -> .dist/openclaw/.openclaw/{agents,skills}
+node scripts/build-targets.mjs --target openclaw
+
+# Override output directory (still recommended to keep relative to this repo)
+OUTPUT_DIR=.dist/custom/codex node scripts/build-targets.mjs --target codex
+```
+
 ---
 
 ## 📦 What's inside
@@ -475,3 +491,57 @@ MIT — Use freely, modify as needed, contribute back if you can.
 ---
 
 **If this repo helps you, give it a Star. Build something great.**
+
+---
+
+## 🧭 Monorepo release workflow
+
+### 1) Source directories are the single source of truth
+
+Treat the following directories as canonical inputs for all targets:
+
+- `agents/`
+- `skills/`
+- `commands/`
+- `templates/`
+
+Build and release artifacts should always be generated from these directories rather than edited in-place in output folders.
+
+### 2) One-command multi-target build
+
+Example (local/CI) build command:
+
+```bash
+./scripts/build-targets.sh
+```
+
+Suggested output layout:
+
+- `dist/claude-plugin/` (plugin package and marketplace metadata)
+- `dist/skills-cli/` (skills bundles for Skills CLI consumers)
+- `dist/docs/` (published multilingual docs snapshots)
+
+### 3) CI stages
+
+Recommended CI gates:
+
+1. **Schema validation**: validate plugin manifests and any release metadata JSON/YAML schemas.
+2. **Artifact diff check**: regenerate artifacts and fail if generated content differs from committed snapshot unexpectedly.
+3. **Version consistency check**: ensure all target manifests/docs/changelog versions are aligned.
+
+See `.github/workflows/build-targets.yml` for a baseline implementation.
+
+### 4) Release stages
+
+Recommended release patterns:
+
+- **Tag by target**: create tags such as `plugin/vX.Y.Z`, `skills/vX.Y.Z`, `docs/vX.Y.Z`.
+- **Release assets by target**: publish zipped artifacts from `dist/<target>/` as release assets.
+
+See `.github/workflows/release-targets.yml` for an example target-aware release workflow.
+
+### 5) Rollback and compatibility matrix
+
+- Keep immutable release artifacts per target for quick rollback to the last known-good tag.
+- Maintain a compatibility matrix in docs (agent/tool version × plugin/skills version × supported platform).
+- During rollback, update the matrix and changelog with explicit rollback reason, scope, and recovery version.

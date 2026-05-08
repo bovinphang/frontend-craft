@@ -113,6 +113,22 @@ npx skills update
 
 **遥测：** CLI 默认可能采集匿名遥测。若需关闭，请设置环境变量 `DISABLE_TELEMETRY=1`。说明见 [skills.sh CLI 文档](https://skills.sh/docs/cli)。
 
+
+### 单仓构建多端产物
+
+使用统一构建脚本将 Agent/Skill 产物输出到仓库内 `.dist/`（默认）目录：
+
+```bash
+# 生成 Codex 产物 -> .dist/codex/.codex/{agents,skills}
+node scripts/build-targets.mjs --target codex
+
+# 生成 OpenClaw 产物 -> .dist/openclaw/.openclaw/{agents,skills}
+node scripts/build-targets.mjs --target openclaw
+
+# 覆盖输出目录（仍建议使用仓内相对路径）
+OUTPUT_DIR=.dist/custom/codex node scripts/build-targets.mjs --target codex
+```
+
 ---
 
 ## 📦 里面有什么
@@ -474,3 +490,57 @@ MIT - 自由使用，根据需要修改，如果可以请回馈。
 ---
 
 **如果这个仓库有帮助，请给它一个 Star。构建一些很棒的前端。**
+
+---
+
+## 🧭 Monorepo 发布流程
+
+### 1）源目录作为唯一真相
+
+以下目录是所有目标产物的唯一输入来源：
+
+- `agents/`
+- `skills/`
+- `commands/`
+- `templates/`
+
+所有构建与发布产物都应由这些目录生成，不应直接修改产物目录中的文件。
+
+### 2）一键构建多端目标
+
+本地或 CI 可使用统一命令：
+
+```bash
+./scripts/build-targets.sh
+```
+
+建议输出目录：
+
+- `dist/claude-plugin/`（插件包与 marketplace 元数据）
+- `dist/skills-cli/`（供 Skills CLI 使用的技能包）
+- `dist/docs/`（多语言文档快照）
+
+### 3）CI 阶段
+
+建议至少包含以下关卡：
+
+1. **Schema 校验**：校验插件清单与发布元数据 JSON/YAML。
+2. **产物 diff 检查**：重新生成产物并检查是否与已提交快照一致。
+3. **版本一致性检查**：确保各 target 的 manifest / docs / changelog 版本一致。
+
+参考 `.github/workflows/build-targets.yml`。
+
+### 4）发布阶段
+
+建议发布策略：
+
+- **按 target 打 tag**：例如 `plugin/vX.Y.Z`、`skills/vX.Y.Z`、`docs/vX.Y.Z`。
+- **按 target 生成 release 资产**：将 `dist/<target>/` 目录打包并上传。
+
+参考 `.github/workflows/release-targets.yml`。
+
+### 5）回滚策略与兼容矩阵维护
+
+- 为每个 target 保留不可变发布产物，便于快速回滚到最近稳定 tag。
+- 在文档中维护兼容矩阵（工具/代理版本 × plugin/skills 版本 × 平台支持）。
+- 回滚时必须在兼容矩阵与 changelog 中记录回滚原因、影响范围与恢复版本。

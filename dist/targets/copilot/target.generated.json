@@ -1,0 +1,17 @@
+{
+  "target": "copilot",
+  "minCompatibleVersion": "1.0.0",
+  "conversionRules": {
+    "agentFormat": "markdown",
+    "commandPrefix": "/",
+    "configFileName": "copilot-instructions.md"
+  },
+  "source": {
+    "agentsDir": "agents",
+    "skillsDir": "skills",
+    "commandsDir": "commands",
+    "hooksDir": "hooks",
+    "templatesDir": "templates"
+  },
+  "generatedFrom": "targets.manifest.json"
+}

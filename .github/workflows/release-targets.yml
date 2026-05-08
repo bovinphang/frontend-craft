@@ -1,0 +1,64 @@
+name: Release Targets
+
+on:
+  push:
+    tags:
+      - 'plugin/v*'
+      - 'skills/v*'
+      - 'docs/v*'
+
+permissions:
+  contents: write
+
+jobs:
+  release-by-target:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Detect target from tag
+        id: target
+        run: |
+          TAG="${GITHUB_REF_NAME}"
+          TARGET="${TAG%%/*}"
+          VERSION="${TAG#*/v}"
+          echo "target=$TARGET" >> "$GITHUB_OUTPUT"
+          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+
+      - name: Build target asset
+        run: |
+          rm -rf release
+          mkdir -p release
+          case "${{ steps.target.outputs.target }}" in
+            plugin)
+              mkdir -p release/plugin
+              cp -R .claude-plugin/* release/plugin/
+              ;;
+            skills)
+              mkdir -p release/skills
+              cp -R skills/* release/skills/
+              ;;
+            docs)
+              mkdir -p release/docs
+              cp README.md README.zh-CN.md release/docs/
+              cp -R docs/* release/docs/
+              ;;
+            *)
+              echo "Unsupported target"
+              exit 1
+              ;;
+          esac
+
+      - name: Archive asset
+        run: |
+          cd release
+          tar -czf "${{ steps.target.outputs.target }}-v${{ steps.target.outputs.version }}.tar.gz" "${{ steps.target.outputs.target }}"
+
+      - name: Create GitHub release
+        uses: softprops/action-gh-release@v2
+        with:
+          name: ${{ github.ref_name }}
+          tag_name: ${{ github.ref_name }}
+          files: release/${{ steps.target.outputs.target }}-v${{ steps.target.outputs.version }}.tar.gz
+          generate_release_notes: true

@@ -1,0 +1,35 @@
+{
+  "version": "1.0.0",
+  "schema": "./schemas/targets.manifest.schema.json",
+  "generatedAt": "2026-05-08",
+  "defaults": {
+    "source": {
+      "agentsDir": "agents",
+      "skillsDir": "skills",
+      "commandsDir": "commands",
+      "hooksDir": "hooks",
+      "templatesDir": "templates"
+    },
+    "conversionRules": {
+      "agentFormat": "markdown",
+      "commandPrefix": "/",
+      "configFileName": "AGENTS.md"
+    }
+  },
+  "targets": [
+    {"id":"claude-code","artifactPath":".claude-plugin","conversionRules":{"agentFormat":"markdown","commandPrefix":"/","configFileName":"CLAUDE.md"},"minCompatibleVersion":"1.0.0"},
+    {"id":"opencode","artifactPath":"dist/targets/opencode","conversionRules":{"agentFormat":"markdown","commandPrefix":"/","configFileName":"opencode.json"},"minCompatibleVersion":"0.9.0"},
+    {"id":"gemini-cli","artifactPath":"dist/targets/gemini-cli","conversionRules":{"agentFormat":"markdown","commandPrefix":"gemini ","configFileName":"gemini.json"},"minCompatibleVersion":"1.0.0"},
+    {"id":"kilo","artifactPath":"dist/targets/kilo","conversionRules":{"agentFormat":"markdown","commandPrefix":"kilo ","configFileName":"kilo.json"},"minCompatibleVersion":"1.0.0"},
+    {"id":"codex","artifactPath":"dist/targets/codex","conversionRules":{"agentFormat":"toml","commandPrefix":"/","configFileName":"AGENTS.md"},"minCompatibleVersion":"0.2.0"},
+    {"id":"copilot","artifactPath":"dist/targets/copilot","conversionRules":{"agentFormat":"markdown","commandPrefix":"/","configFileName":"copilot-instructions.md"},"minCompatibleVersion":"1.0.0"},
+    {"id":"cursor","artifactPath":"dist/targets/cursor","conversionRules":{"agentFormat":"markdown","commandPrefix":"/","configFileName":".cursorrules"},"minCompatibleVersion":"1.0.0"},
+    {"id":"windsurf","artifactPath":"dist/targets/windsurf","conversionRules":{"agentFormat":"markdown","commandPrefix":"/","configFileName":".windsurfrules"},"minCompatibleVersion":"1.0.0"},
+    {"id":"antigravity","artifactPath":"dist/targets/antigravity","conversionRules":{"agentFormat":"markdown","commandPrefix":"/","configFileName":"antigravity.yml"},"minCompatibleVersion":"1.0.0"},
+    {"id":"augment","artifactPath":"dist/targets/augment","conversionRules":{"agentFormat":"markdown","commandPrefix":"/","configFileName":"augment.json"},"minCompatibleVersion":"1.0.0"},
+    {"id":"trae","artifactPath":"dist/targets/trae","conversionRules":{"agentFormat":"markdown","commandPrefix":"/","configFileName":"trae.json"},"minCompatibleVersion":"1.0.0"},
+    {"id":"codebuddy","artifactPath":"dist/targets/codebuddy","conversionRules":{"agentFormat":"markdown","commandPrefix":"/","configFileName":"codebuddy.yml"},"minCompatibleVersion":"1.0.0"},
+    {"id":"cline","artifactPath":"dist/targets/cline","conversionRules":{"agentFormat":"markdown","commandPrefix":"/","configFileName":"cline_mcp_settings.json"},"minCompatibleVersion":"1.0.0"},
+    {"id":"openclaw","artifactPath":"dist/targets/openclaw","conversionRules":{"agentFormat":"markdown","commandPrefix":"/","configFileName":"openclaw.json"},"minCompatibleVersion":"1.0.0"}
+  ]
+}
