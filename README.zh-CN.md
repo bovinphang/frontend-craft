@@ -113,6 +113,22 @@ npx skills update
 
 **遥测：** CLI 默认可能采集匿名遥测。若需关闭，请设置环境变量 `DISABLE_TELEMETRY=1`。说明见 [skills.sh CLI 文档](https://skills.sh/docs/cli)。
 
+
+### 单仓构建多端产物
+
+使用统一构建脚本将 Agent/Skill 产物输出到仓库内 `.dist/`（默认）目录：
+
+```bash
+# 生成 Codex 产物 -> .dist/codex/.codex/{agents,skills}
+node scripts/build-targets.mjs --target codex
+
+# 生成 OpenClaw 产物 -> .dist/openclaw/.openclaw/{agents,skills}
+node scripts/build-targets.mjs --target openclaw
+
+# 覆盖输出目录（仍建议使用仓内相对路径）
+OUTPUT_DIR=.dist/custom/codex node scripts/build-targets.mjs --target codex
+```
+
 ---
 
 ## 📦 里面有什么
