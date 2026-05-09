@@ -1,0 +1,62 @@
+{
+    "$schema": "https://json.schemastore.org/claude-code-settings.json",
+    "enableAllProjectMcpServers": true,
+    "permissions": {
+        "allow": [
+            "Bash(pnpm install)",
+            "Bash(pnpm dev)",
+            "Bash(pnpm lint)",
+            "Bash(pnpm lint *)",
+            "Bash(pnpm type-check)",
+            "Bash(pnpm type-check *)",
+            "Bash(pnpm typecheck)",
+            "Bash(pnpm typecheck *)",
+            "Bash(pnpm test)",
+            "Bash(pnpm test *)",
+            "Bash(pnpm build)",
+            "Bash(pnpm build *)",
+            "Bash(pnpm exec eslint *)",
+            "Bash(pnpm exec prettier *)",
+            "Bash(npm run lint)",
+            "Bash(npm run lint *)",
+            "Bash(npm run lint:fix)",
+            "Bash(npm run type-check)",
+            "Bash(npm run test)",
+            "Bash(npm run test *)",
+            "Bash(npm run build)",
+            "Bash(npm run build *)",
+            "Bash(yarn lint)",
+            "Bash(yarn lint *)",
+            "Bash(yarn type-check)",
+            "Bash(yarn typecheck)",
+            "Bash(yarn test)",
+            "Bash(yarn test *)",
+            "Bash(yarn build)",
+            "Bash(yarn build *)",
+            "Bash(npx prettier --write *)",
+            "Bash(git diff --stat)",
+            "Bash(git log *)"
+        ],
+        "deny": [
+            "Read(./.env)",
+            "Read(./.env.*)",
+            "Read(./secrets/**)",
+            "Read(./config/credentials.json)",
+            "Read(./*.pem)",
+            "Read(./*.key)",
+            "Read(./*.p12)",
+            "Read(./*.jks)",
+            "Bash(curl * | *sh*)",
+            "Bash(wget * | *sh*)",
+            "Bash(rm -rf /)",
+            "Bash(rm -rf /*)",
+            "Bash(git push * --force*)",
+            "Bash(npm publish)",
+            "Bash(sudo *)"
+        ]
+    },
+    "env": {
+        "BASH_DEFAULT_TIMEOUT_MS": "120000",
+        "BASH_MAX_OUTPUT_LENGTH": "30000"
+    }
+}

@@ -8,13 +8,15 @@ import { fileURLToPath } from "url";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const agentsDir = path.resolve(__dirname, "../agents");
-const outDir = process.env.CODEX_AGENTS_DIR ?? "D:/code/frontend-craft-codex/.codex/agents";
+const outDir = process.env.CODEX_AGENTS_DIR ?? path.resolve(__dirname, "../dist/codex/.codex/agents");
 
 function escTomlBasic(s) {
   return s.replace(/\\/g, "\\\\").replace(/"/g, '\\"');
 }
 
 const files = fs.readdirSync(agentsDir).filter((f) => f.endsWith(".md"));
+
+fs.mkdirSync(outDir, { recursive: true });
 
 for (const f of files) {
   const raw = fs.readFileSync(path.join(agentsDir, f), "utf8");

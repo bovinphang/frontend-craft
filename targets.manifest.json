@@ -1,0 +1,19 @@
+{
+  "version": 1,
+  "targets": [
+    { "id": "claude-code", "enabled": true, "adapter": "claude-code", "outputDir": "dist/claude-code" },
+    { "id": "codex", "enabled": true, "adapter": "codex", "outputDir": "dist/codex" },
+    { "id": "openclaw", "enabled": true, "adapter": "openclaw", "outputDir": "dist/openclaw" },
+    { "id": "cursor", "enabled": true, "adapter": "cursor", "outputDir": "dist/cursor" },
+    { "id": "copilot", "enabled": true, "adapter": "copilot", "outputDir": "dist/copilot" },
+    { "id": "gemini-cli", "enabled": true, "adapter": "gemini-cli", "outputDir": "dist/gemini-cli" },
+    { "id": "opencode", "enabled": true, "adapter": "opencode", "outputDir": "dist/opencode" },
+    { "id": "kilo", "enabled": true, "adapter": "kilo", "outputDir": "dist/kilo" },
+    { "id": "windsurf", "enabled": true, "adapter": "windsurf", "outputDir": "dist/windsurf" },
+    { "id": "antigravity", "enabled": true, "adapter": "antigravity", "outputDir": "dist/antigravity" },
+    { "id": "augment", "enabled": true, "adapter": "augment", "outputDir": "dist/augment" },
+    { "id": "trae", "enabled": true, "adapter": "trae", "outputDir": "dist/trae" },
+    { "id": "codebuddy", "enabled": true, "adapter": "codebuddy", "outputDir": "dist/codebuddy" },
+    { "id": "cline", "enabled": true, "adapter": "cline", "outputDir": "dist/cline" }
+  ]
+}

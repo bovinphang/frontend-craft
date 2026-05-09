@@ -82,6 +82,25 @@ This plugin fully supports **Windows, macOS, and Linux**. All hooks and scripts 
 
 ---
 
+## Single-repo multi-target build
+
+To support **Claude Code, OpenCode, Gemini CLI, Kilo, Codex, Copilot, Cursor, Windsurf, Antigravity, Augment, Trae, CodeBuddy, Cline, and OpenClaw** from one repository, this repo now includes a target manifest and build script:
+
+- `targets.manifest.json` — enabled targets and output directories
+- `scripts/build-targets.mjs` — generates per-target artifacts into `dist/`
+
+Build all enabled targets:
+
+```bash
+node scripts/build-targets.mjs
+```
+
+Build only one target (example: codex):
+
+```bash
+node scripts/build-targets.mjs --target codex
+```
+
 ## Multi-agent skills (Skills CLI)
 
 If your team uses **Claude Code**, **OpenAI Codex**, **Cursor**, **OpenCode**, **Gemini CLI**, **OpenClaw**, **Continue**, **CodeBuddy**, **Trae**, **Kimi Code CLI**, or other AI coding agents, you can install the **workflow skills** from this repo into each tool’s skills directory using the [Skills CLI](https://skills.sh/docs/cli) (`npx skills`). The CLI supports dozens of agents; the exact list appears in interactive prompts or in the upstream documentation.
