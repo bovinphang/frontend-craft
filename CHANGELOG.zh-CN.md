@@ -8,6 +8,16 @@
 
 自 **2.0.0** 起，面向发布的说明以英文 `CHANGELOG.md` 为权威来源；历史条目可能保留最初撰写语言。
 
+## [2.0.1] - 2026-05-14
+
+### 修复
+
+- **Claude Code 插件 hooks：** `hooks/hooks.json` 中引用内置 `scripts/*.mjs` 时使用 **`${CLAUDE_PLUGIN_ROOT}`**，以便在 Marketplace 与 **`--plugin-dir`** 加载时由 Claude Code 正确替换插件根路径。运行时**不会**替换 **`${FRONTEND_CRAFT_ROOT}`**，在 **Windows + Git Bash** 下可能导致 hook 解析到 Git 安装目录下的错误路径。
+
+### 变更
+
+- **版本号：** 根 npm 包、`.claude-plugin` 清单、`openclaw.plugin.json` 以及 `npm-packages/openclaw/` 中的 **`frontend-craft-openclaw`** 暂存包均升至 **2.0.1**。
+
 ## [2.0.0] - 2026-05-14
 
 ### 新增

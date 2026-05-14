@@ -54,7 +54,7 @@ npx frontend-craft@latest install --all --dry-run --global
 
 支持的 runtime：`claude`、`codex`、`cursor`、`windsurf`、`opencode`、`kilo`、`gemini`、`copilot`、`antigravity`、`augment`、`trae`、`codebuddy`、`cline`、`openclaw`。
 
-各工具说明见 [`docs/runtimes/`](docs/runtimes/)。OpenClaw 独立 npm 包可在本仓库中通过 `npm run pack:openclaw` 构建并校验，产物为**仓库根目录**下的 **`frontend-craft-openclaw-<version>.tgz`**（例如 `frontend-craft-openclaw-2.0.0.tgz`）。
+各工具说明见 [`docs/runtimes/`](docs/runtimes/)。OpenClaw 独立 npm 包可在本仓库中通过 `npm run pack:openclaw` 构建并校验，产物为**仓库根目录**下的 **`frontend-craft-openclaw-<version>.tgz`**（例如 `frontend-craft-openclaw-2.0.1.tgz`）。
 
 ---
 

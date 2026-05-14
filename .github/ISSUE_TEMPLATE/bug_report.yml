@@ -20,7 +20,7 @@ body:
     id: version
     attributes:
       label: frontend-craft version
-      placeholder: "2.0.0 or latest"
+      placeholder: "2.0.1 or latest"
     validations:
       required: true
   - type: input

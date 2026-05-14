@@ -140,7 +140,7 @@ skills:
 
 1. 更新 `hooks/hooks.json`。
 2. 如需脚本，放在 `scripts/` 下，并优先使用跨平台 Node.js。
-3. 包根路径使用 `${FRONTEND_CRAFT_ROOT}`；安装 `claude` runtime 时会展开为绝对路径。
+3. 在 `hooks/hooks.json` 中，引用内置 `scripts/` 入口请使用 **`${CLAUDE_PLUGIN_ROOT}`**（Claude Code 会在运行时替换；见官方 [Plugins reference](https://code.claude.com/docs/en/plugins-reference)）。本仓库的 Claude 安装器在将 `hooks.json` 写入 `.claude/` 时，也会把 **`${CLAUDE_PLUGIN_ROOT}`** 及旧占位符 **`${FRONTEND_CRAFT_ROOT}`** 展开为绝对路径。
 4. 更新 `README.md` 的 Hooks 表格。
 
 ## Pull Request 自检
