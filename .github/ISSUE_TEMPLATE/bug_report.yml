@@ -1,0 +1,72 @@
+name: Bug report
+description: Report a reproducible problem with frontend-craft.
+title: "fix: "
+labels:
+  - bug
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for reporting a bug. Please avoid posting security-sensitive details here; use SECURITY.md for private vulnerability reports.
+  - type: input
+    id: runtime
+    attributes:
+      label: Runtime
+      description: Which AI coding runtime is affected?
+      placeholder: claude, codex, cursor, windsurf, openclaw, etc.
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: frontend-craft version
+      placeholder: "2.0.0 or latest"
+    validations:
+      required: true
+  - type: input
+    id: node
+    attributes:
+      label: Node.js version
+      placeholder: "v22.x"
+    validations:
+      required: true
+  - type: dropdown
+    id: os
+    attributes:
+      label: Operating system
+      options:
+        - Windows
+        - macOS
+        - Linux
+        - Other
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Reproduction steps
+      description: Include the exact command, runtime, and minimal project context when possible.
+      placeholder: |
+        1. Run `npx frontend-craft@latest install cursor`
+        2. ...
+        3. ...
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual behavior
+      description: Paste relevant logs or terminal output. Remove secrets before posting.
+    validations:
+      required: true
+  - type: textarea
+    id: extra
+    attributes:
+      label: Additional context
+      description: Links, screenshots, affected files, or a minimal reproduction repository.

@@ -1,5 +1,5 @@
 ---
-name: legacy-web-standard
+name: fec-legacy-web-standard
 description: 针对 JavaScript + jQuery + HTML/CSS 传统前端项目的开发与维护规范。当用户在非框架项目中工作，涉及 jQuery、原生 JS、传统多页面应用（MPA）、模板引擎渲染页面、或维护遗留代码时自动激活。
 version: 1.0.0
 ---

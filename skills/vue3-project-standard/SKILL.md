@@ -1,5 +1,5 @@
 ---
-name: vue3-project-standard
+name: fec-vue3-project-standard
 description: Vue 3 + TypeScript 项目的完整工程规范，涵盖项目结构、组件设计、Composables、路由、Pinia 状态管理、API 层、错误处理、测试和性能优化。当用户在 Vue 项目中创建、修改组件或模块，涉及架构设计、代码编写时自动激活。
 version: 2.0.0
 ---

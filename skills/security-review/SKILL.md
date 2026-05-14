@@ -1,5 +1,5 @@
 ---
-name: security-review
+name: fec-security-review
 description: 前端代码安全审查，检测 XSS、CSRF、敏感数据泄露、不安全的用户输入处理和依赖风险，并将报告保存为 Markdown 文件。当用户要求安全检查、安全审查，或代码涉及用户输入、认证、支付、文件上传等敏感操作时自动激活。
 version: 1.2.0
 ---

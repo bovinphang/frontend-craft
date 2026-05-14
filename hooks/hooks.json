@@ -6,7 +6,7 @@
                 "hooks": [
                     {
                         "type": "command",
-                        "command": "node \"${CLAUDE_PLUGIN_ROOT}/scripts/security-check.mjs\"",
+                        "command": "node \"${FRONTEND_CRAFT_ROOT}/scripts/security-check.mjs\"",
                         "timeout": 20,
                         "statusMessage": "Checking command safety..."
                     }
@@ -19,7 +19,7 @@
                 "hooks": [
                     {
                         "type": "command",
-                        "command": "node \"${CLAUDE_PLUGIN_ROOT}/scripts/format-changed-file.mjs\"",
+                        "command": "node \"${FRONTEND_CRAFT_ROOT}/scripts/format-changed-file.mjs\"",
                         "timeout": 180,
                         "statusMessage": "Running formatter..."
                     }
@@ -32,7 +32,7 @@
                 "hooks": [
                     {
                         "type": "command",
-                        "command": "node \"${CLAUDE_PLUGIN_ROOT}/scripts/session-start.mjs\"",
+                        "command": "node \"${FRONTEND_CRAFT_ROOT}/scripts/session-start.mjs\"",
                         "timeout": 10
                     }
                 ]
@@ -44,7 +44,7 @@
                 "hooks": [
                     {
                         "type": "command",
-                        "command": "node \"${CLAUDE_PLUGIN_ROOT}/scripts/run-tests.mjs\"",
+                        "command": "node \"${FRONTEND_CRAFT_ROOT}/scripts/run-tests.mjs\"",
                         "timeout": 300,
                         "statusMessage": "Running final validation..."
                     }
@@ -57,7 +57,7 @@
                 "hooks": [
                     {
                         "type": "command",
-                        "command": "node \"${CLAUDE_PLUGIN_ROOT}/scripts/notify.mjs\""
+                        "command": "node \"${FRONTEND_CRAFT_ROOT}/scripts/notify.mjs\""
                     }
                 ]
             }

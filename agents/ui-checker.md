@@ -13,9 +13,9 @@ mcpServers:
   - pixso
   - modao
 skills:
-  - frontend-code-review
-  - accessibility-check
-  - test-and-fix
+  - fec-frontend-code-review
+  - fec-accessibility-check
+  - fec-test-and-fix
 ---
 
 # UI 问题排查与设计还原度评估

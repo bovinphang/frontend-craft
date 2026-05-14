@@ -1,0 +1,83 @@
+{
+  "name": "frontend-craft",
+  "version": "2.0.0",
+  "description": "Universal frontend plugin for Claude Code, Codex, Cursor, OpenCode, Gemini CLI, Windsurf, Copilot, OpenClaw, and more — skills, agents, commands, hooks, and MCP templates.",
+  "type": "module",
+  "license": "MIT",
+  "author": {
+    "name": "Bovin Phang",
+    "email": "pengbaowen@msn.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/bovinphang/frontend-craft"
+  },
+  "homepage": "https://github.com/bovinphang/frontend-craft",
+  "bugs": {
+    "url": "https://github.com/bovinphang/frontend-craft/issues"
+  },
+  "engines": {
+    "node": ">=22.0.0"
+  },
+  "bin": {
+    "frontend-craft": "bin/frontend-craft.mjs"
+  },
+  "files": [
+    "bin",
+    "src/install",
+    "src/openclaw",
+    "agents",
+    "skills",
+    "commands",
+    "hooks",
+    "scripts",
+    "templates",
+    ".mcp.json",
+    ".claude-plugin",
+    "openclaw.plugin.json",
+    "README.md",
+    "README.zh-CN.md",
+    "CHANGELOG.zh-CN.md",
+    "CODE_OF_CONDUCT.zh-CN.md",
+    "CONTRIBUTING.zh-CN.md",
+    "SECURITY.zh-CN.md",
+    "CONTRIBUTING.md",
+    "CHANGELOG.md",
+    "CODE_OF_CONDUCT.md",
+    "SECURITY.md",
+    "LICENSE",
+    "docs"
+  ],
+  "scripts": {
+    "test": "node --test tests/converters/codex-agents.test.mjs tests/install/cli.test.mjs tests/install/end-to-end.test.mjs tests/install/all-runtimes-dry.test.mjs",
+    "build:openclaw": "node scripts/openclaw/build.mjs",
+    "typecheck:openclaw": "tsc --noEmit -p tsconfig.openclaw.json",
+    "check:openclaw-dist": "node scripts/openclaw/verify-openclaw-dist.mjs",
+    "pack:openclaw": "npm run build:openclaw && npm run check:openclaw-dist && node scripts/openclaw/pack-openclaw.mjs",
+    "prepublishOnly": "npm test"
+  },
+  "devDependencies": {
+    "@sinclair/typebox": "^0.34.49",
+    "@types/node": "^22.19.15",
+    "esbuild": "^0.28.0",
+    "openclaw": "^2026.4.20",
+    "prettier": "^3.5.0",
+    "typescript": "^5.7.3"
+  },
+  "keywords": [
+    "frontend",
+    "claude-code",
+    "codex",
+    "cursor",
+    "opencode",
+    "gemini-cli",
+    "windsurf",
+    "copilot",
+    "openclaw",
+    "mcp",
+    "design-to-code",
+    "i18n",
+    "playwright",
+    "eslint"
+  ]
+}

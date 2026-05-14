@@ -1,5 +1,5 @@
 ---
-name: test-and-fix
+name: fec-test-and-fix
 description: 执行项目校验命令（lint、type-check、test、build），分析失败原因，安全修复问题，并将总结报告保存为 Markdown 文件。当用户要求检查、验证、测试代码改动时自动激活。
 version: 1.1.0
 ---

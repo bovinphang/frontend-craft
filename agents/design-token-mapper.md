@@ -13,7 +13,7 @@ mcpServers:
   - pixso
   - modao
 skills:
-  - implement-from-design
+  - fec-implement-from-design
 ---
 
 你是一名设计 Token 映射专家。

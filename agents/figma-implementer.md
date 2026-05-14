@@ -6,8 +6,8 @@ model: sonnet
 permissionMode: acceptEdits
 maxTurns: 12
 skills:
-  - implement-from-design
-  - accessibility-check
+  - fec-implement-from-design
+  - fec-accessibility-check
 mcpServers:
   - figma
   - figma-desktop

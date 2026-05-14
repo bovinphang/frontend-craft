@@ -6,10 +6,10 @@ model: sonnet
 permissionMode: default
 maxTurns: 14
 skills:
-  - frontend-code-review
-  - test-and-fix
-  - react-project-standard
-  - vue3-project-standard
+  - fec-frontend-code-review
+  - fec-test-and-fix
+  - fec-react-project-standard
+  - fec-vue3-project-standard
 ---
 
 # 前端性能优化专家
@@ -136,7 +136,7 @@ const sorted = useMemo(
 - [ ] 长列表虚拟化（如 `@tanstack/react-virtual`、react-window）
 - [ ] 路由与重型组件 `lazy` + `Suspense`
 
-**Vue**：与 `vue3-project-standard` 一致——`computed` 缓存、`shallowRef` 大对象、`v-for` 稳定 key、避免 `v-for` 套 `v-if` 等。
+**Vue**：与 `fec-vue3-project-standard` 一致——`computed` 缓存、`shallowRef` 大对象、`v-for` 稳定 key、避免 `v-for` 套 `v-if` 等。
 
 ## 打包体积策略
 
@@ -277,7 +277,7 @@ onLCP(console.log);
 ## 强约束
 
 - 不做无收益的过早优化；每项建议尽量**可量化**或**可对比构建产物**。
-- 不牺牲可维护性换极端技巧；与 `react-project-standard` / `vue3-project-standard` 一致。
+- 不牺牲可维护性换极端技巧；与 `fec-react-project-standard` / `fec-vue3-project-standard` 一致。
 - 保存报告后告知用户路径。
 
 ---
