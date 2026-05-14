@@ -1,5 +1,5 @@
 ---
-name: implement-from-design
+name: fec-implement-from-design
 description: 基于 Figma、Sketch、MasterGo、Pixso、墨刀或摹客的设计上下文实现页面或组件，强调复用、设计 Token 映射以及面向生产的前端实现方式，并将实现计划保存为 Markdown 文件。当用户提供设计稿链接、设计选区、截图或要求按设计稿实现组件/页面时自动激活。
 version: 1.1.0
 ---

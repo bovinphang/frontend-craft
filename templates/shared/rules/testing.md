@@ -60,7 +60,7 @@
 - 失败时保留 **截图、Trace、视频**，CI 用 **artifact** 上传 HTML 报告与产物
 - 高风险/资金类流程：**勿在生产跑真实 E2E**；staging 或 mock，必要时 `test.skip`
 
-详细模式与示例见插件 **`e2e-testing`** skill。
+详细模式与示例见插件 **`fec-e2e-testing`** skill。
 
 ## 重构规则
 

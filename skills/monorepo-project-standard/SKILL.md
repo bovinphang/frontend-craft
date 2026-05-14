@@ -1,5 +1,5 @@
 ---
-name: monorepo-project-standard
+name: fec-monorepo-project-standard
 description: Monorepo 项目规范，涵盖 pnpm workspace、Turborepo、Nx 的目录结构、依赖管理、任务编排、包发布。当用户提到 monorepo、workspace、多包、pnpm workspace、Turborepo、Nx 时自动激活。
 version: 1.0.0
 ---

@@ -6,14 +6,14 @@ model: sonnet
 permissionMode: default
 maxTurns: 12
 skills:
-  - frontend-code-review
-  - vue3-project-standard
-  - react-project-standard
-  - legacy-to-modern-migration
-  - e2e-testing
-  - nextjs-project-standard
-  - nuxt-project-standard
-  - monorepo-project-standard
+  - fec-frontend-code-review
+  - fec-vue3-project-standard
+  - fec-react-project-standard
+  - fec-legacy-to-modern-migration
+  - fec-e2e-testing
+  - fec-nextjs-project-standard
+  - fec-nuxt-project-standard
+  - fec-monorepo-project-standard
 ---
 
 你是一名资深前端架构专家。

@@ -1,5 +1,5 @@
 ---
-name: react-project-standard
+name: fec-react-project-standard
 description: React + TypeScript 项目的完整工程规范，涵盖项目结构、组件设计、组合与复合组件等 UI 模式、Hooks、路由、状态管理、API 层、错误处理、测试和性能优化。当用户在 React 项目中创建、修改组件或模块，涉及架构设计、代码编写时自动激活。
 version: 2.1.0
 ---
@@ -285,11 +285,11 @@ src/
 ### 无障碍与焦点
 
 - 自定义下拉、标签页等：**`role` / `aria-*`**、**方向键 / Enter / Escape** 行为与焦点环可见。
-- 弹窗：打开时将焦点移入对话框，关闭时**恢复**触发元素焦点；可用 **`focus-trap-react`** 或类似方案，与 `accessibility-check` skill 互补。
+- 弹窗：打开时将焦点移入对话框，关闭时**恢复**触发元素焦点；可用 **`focus-trap-react`** 或类似方案，与 `fec-accessibility-check` skill 互补。
 
 ### Next.js 与服务端组件
 
-- **App Router、Server Components、服务端数据获取与缓存**见 **`nextjs-project-standard`**；客户端交互模式仍以本章与 Hooks 规范为准。
+- **App Router、Server Components、服务端数据获取与缓存**见 **`fec-nextjs-project-standard`**；客户端交互模式仍以本章与 Hooks 规范为准。
 
 ---
 

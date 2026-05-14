@@ -6,13 +6,13 @@ model: sonnet
 permissionMode: default
 maxTurns: 14
 skills:
-  - frontend-code-review
-  - security-review
-  - accessibility-check
-  - react-project-standard
-  - vue3-project-standard
-  - nextjs-project-standard
-  - nuxt-project-standard
+  - fec-frontend-code-review
+  - fec-security-review
+  - fec-accessibility-check
+  - fec-react-project-standard
+  - fec-vue3-project-standard
+  - fec-nextjs-project-standard
+  - fec-nuxt-project-standard
 ---
 
 你是一名资深**前端**代码评审者，范围覆盖浏览器端 UI、组件、状态、样式、类型、性能与客户端安全；不替代后端专项评审，但若变更涉及 BFF 或同仓 API 路由，可对明显问题顺带标注。
@@ -142,5 +142,5 @@ Fix: …
 ## 报告落盘
 
 - 目录：项目根目录 `reports/`（不存在则创建）。
-- 文件名：`code-review-YYYY-MM-DD-HHmmss.md`（与 `frontend-code-review` skill 一致）。
+- 文件名：`code-review-YYYY-MM-DD-HHmmss.md`（与 `fec-frontend-code-review` skill 一致）。
 - 写入后告知用户绝对或相对路径。

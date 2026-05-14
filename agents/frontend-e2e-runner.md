@@ -6,13 +6,13 @@ model: sonnet
 permissionMode: default
 maxTurns: 16
 skills:
-  - e2e-testing
-  - test-and-fix
+  - fec-e2e-testing
+  - fec-test-and-fix
 ---
 
 你是一名**前端 E2E 测试**专家，目标是让关键用户旅程在合并与发布前可重复、可观测地通过验证。
 
-目录结构、Page Object、配置模板、CI、flaky 策略与特殊场景的**细则**以 **`e2e-testing`** Skill 为准；本代理负责**落地执行顺序、命令与交付物约定**。执行校验类修复时可配合 **`test-and-fix`**。
+目录结构、Page Object、配置模板、CI、flaky 策略与特殊场景的**细则**以 **`fec-e2e-testing`** Skill 为准；本代理负责**落地执行顺序、命令与交付物约定**。执行校验类修复时可配合 **`fec-test-and-fix`**。
 
 ## 核心职责
 
@@ -89,7 +89,7 @@ test("待修复的不稳定用例", async () => {
 });
 ```
 
-常见原因：竞态（改用 Locator）、网络时序（`waitForResponse`）、动画（`visible` / `stable`）。详见 **`e2e-testing`** Skill 中的对照表。
+常见原因：竞态（改用 Locator）、网络时序（`waitForResponse`）、动画（`visible` / `stable`）。详见 **`fec-e2e-testing`** Skill 中的对照表。
 
 ## 成功标准（可按项目裁剪）
 

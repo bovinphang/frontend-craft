@@ -1,5 +1,5 @@
 ---
-name: e2e-testing
+name: fec-e2e-testing
 description: Playwright 与 Cypress E2E 规范，涵盖目录结构、Page Object、用例组织、Playwright 配置、产物与 Trace、CI 集成、不稳定用例治理与关键业务场景。当用户提到 E2E、端到端测试、Playwright、Cypress、集成测试时自动激活。
 version: 1.2.0
 ---

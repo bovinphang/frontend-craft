@@ -1,5 +1,5 @@
 ---
-name: nuxt-project-standard
+name: fec-nuxt-project-standard
 description: Nuxt 3 项目规范，涵盖目录结构、SSR/SSG、组合式 API、数据获取、路由、中间件、插件与模块。当用户在 Nuxt 3 项目中创建、修改页面或模块时自动激活。
 version: 1.0.0
 ---

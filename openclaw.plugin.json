@@ -1,0 +1,23 @@
+{
+  "id": "frontend-craft",
+  "name": "Frontend Craft",
+  "description": "Frontend team skills, OpenClaw workspace templates, optional init tool, exec safety hooks, and design MCP reference.",
+  "version": "2.0.0",
+  "skills": ["skills", "commands"],
+  "configSchema": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "notifyOnAgentEnd": {
+        "type": "boolean",
+        "default": true,
+        "description": "Bell + log line when an agent run completes successfully (no OS notification; avoids plugin-install security scan issues)"
+      },
+      "formatAfterWrite": {
+        "type": "boolean",
+        "default": true,
+        "description": "Run Prettier on files touched by write/edit tools (after_tool_call)"
+      }
+    }
+  }
+}

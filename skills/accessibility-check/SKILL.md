@@ -1,5 +1,5 @@
 ---
-name: accessibility-check
+name: fec-accessibility-check
 description: 审查或改进前端 UI 的语义结构、键盘支持、焦点管理、标签以及常见的 WCAG 相关问题，并将报告保存为 Markdown 文件。当用户提到无障碍、accessibility、a11y、WCAG，或在实现交互组件时自动激活。
 version: 1.1.0
 ---

@@ -1,5 +1,5 @@
 ---
-name: frontend-code-review
+name: fec-frontend-code-review
 description: 从架构、可维护性、类型安全、可访问性、样式一致性、性能和可测试性等角度审查前端代码，并将报告保存为 Markdown 文件。当用户要求代码审查、Review、评审代码质量时自动激活。
 version: 1.2.0
 ---

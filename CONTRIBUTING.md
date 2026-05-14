@@ -1,82 +1,109 @@
-# 贡献指南
+# Contributing Guide
 
-感谢你对 frontend-craft 插件的关注。欢迎通过 Issue 和 Pull Request 参与贡献。
+Thanks for your interest in `frontend-craft`. Issues, pull requests, documentation fixes, runtime adapters, and better examples are all welcome.
 
-## 开发环境
+**Simplified Chinese:** [CONTRIBUTING.zh-CN.md](CONTRIBUTING.zh-CN.md)
 
-- Node.js >= 18
-- Git
+## Development Setup
 
-## 分支策略
+- Node.js >= 22 for the universal installer and OpenClaw package build.
+- Git.
+- Run `npm install` before local development.
 
-- `main` — 稳定发布分支
-- `develop` — 开发分支（如有）
-- `feature/xxx` — 新功能
-- `fix/xxx` — Bug 修复
-- `docs/xxx` — 文档更新
+Useful checks:
 
-## 提交规范
-
-遵循 [Conventional Commits](https://www.conventionalcommits.org/)：
-
+```bash
+npm test
+npm run typecheck:openclaw
 ```
+
+## Branch Strategy
+
+- `main` - stable release branch.
+- `develop` - development branch, if used.
+- `feature/<name>` - new features.
+- `fix/<name>` - bug fixes.
+- `docs/<name>` - documentation updates.
+
+## Commit Convention
+
+Use [Conventional Commits](https://www.conventionalcommits.org/):
+
+```text
 <type>(<scope>): <description>
 
 [optional body]
 [optional footer]
 ```
 
-**type 示例：**
+Common types:
 
-| type | 说明 |
-|------|------|
-| `feat` | 新功能 |
-| `fix` | Bug 修复 |
-| `docs` | 文档 |
-| `refactor` | 重构 |
-| `chore` | 构建、配置等 |
+| Type       | Meaning                        |
+| ---------- | ------------------------------ |
+| `feat`     | New feature                    |
+| `fix`      | Bug fix                        |
+| `docs`     | Documentation                  |
+| `refactor` | Refactoring                    |
+| `test`     | Tests                          |
+| `chore`    | Build, tooling, or maintenance |
 
-**示例：**
+Examples:
 
-```
-feat(skills): add e2e-testing skill
-fix(hooks): resolve Windows path in run-tests.mjs
+```text
+feat(skills): add e2e testing skill
+fix(hooks): resolve Windows path handling
 docs(readme): update installation steps
 ```
 
-## 如何添加 Skill
+## Language and Documentation Policy
 
-1. 在 `skills/` 下创建目录，如 `skills/my-skill/`
-2. 创建 `SKILL.md`，包含 YAML frontmatter 和正文：
+English is the source language for public project governance, runtime documentation, release notes, and GitHub collaboration templates. Localized README files should stay user-focused and link back to English docs for detailed contributor or maintainer workflows.
+
+When a pull request changes public behavior, installation steps, runtimes, agents, skills, commands, or hooks:
+
+- Update `README.md` and `CHANGELOG.md` first (and [`CHANGELOG.zh-CN.md`](CHANGELOG.zh-CN.md) when the change is release-noteworthy for Chinese readers).
+- Sync user-facing summaries in `README.zh-CN.md`, `docs/zh-TW/README.md`, `docs/ja-JP/README.md`, and `docs/ko-KR/README.md` when the change affects users.
+- Claude Code Marketplace install and update steps are maintained in [`docs/runtimes/claude.md`](docs/runtimes/claude.md) and [`docs/runtimes/claude.zh-CN.md`](docs/runtimes/claude.zh-CN.md). When that flow changes, update those files (the root README and localized READMEs only link there).
+- If translations cannot be completed in the same pull request, open or link a follow-up issue and mention it in the PR description.
+- Keep code examples, runtime names, command names, file paths, and package names consistent across languages.
+
+Issues and pull requests are easiest to review in English. If you are more comfortable writing in Chinese, that is also welcome; maintainers can help translate titles and summaries when needed.
+
+## Adding a Skill
+
+1. Create a directory under `skills/`, for example `skills/my-skill/`.
+2. Add `SKILL.md` with YAML frontmatter and concise instructions:
 
 ```markdown
 ---
 name: my-skill
-description: 简短描述，说明何时自动激活。当用户提到 xxx 时自动激活。
+description: Use when the user needs ...
 version: 1.0.0
 ---
 
-# 技能标题
+# Skill Title
 
-## 适用场景
+## When to Use
+
 - ...
 
-## 核心规则
+## Core Rules
+
 - ...
 ```
 
-3. 在 README 的 Skills 表格中新增一行
-4. 在 README 的目录结构中补充对应条目
+1. Add the skill to the Skills table in `README.md`.
+2. Update the repository tree in `README.md` and localized README files if the visible structure changes.
 
-## 如何添加 Agent
+## Adding an Agent
 
-1. 在 `agents/` 下创建 `my-agent.md`
-2. 使用 YAML frontmatter 定义：
+1. Create `agents/my-agent.md`.
+2. Define the YAML frontmatter:
 
 ```markdown
 ---
 name: my-agent
-description: 当任务涉及 xxx 时，使用该子代理。
+description: Use this agent when ...
 tools: Read, Edit, Write, Glob, Grep, Bash
 model: sonnet
 skills:
@@ -84,42 +111,59 @@ skills:
 ---
 ```
 
-3. 在 README 的 Agents 表格中新增一行（并同步 **README.zh-CN.md**、**docs/*/README.md** 中目录树与表格、**`.claude-plugin/marketplace.json`** 中的 agent 数量描述，如适用）
+1. Update the Agents table in `README.md`.
+2. Sync `README.zh-CN.md`, `docs/*/README.md`, and `.claude-plugin/marketplace.json` when counts or user-facing descriptions change.
 
-## 如何添加 Command
+## Adding a Command
 
-1. 在 `commands/` 下创建 `my-command.md`
-2. 使用 YAML frontmatter 和 Markdown 描述执行步骤
-3. 在 README 的 Commands 表格中新增一行
+1. Create `commands/my-command.md`.
+2. Use YAML frontmatter and Markdown steps.
+3. Update the Commands table in `README.md` and localized user-facing summaries as needed.
 
-## 如何添加 Rule 模板
+## Adding a Rule Template
 
-1. 在 `templates/rules/` 下创建 `my-rule.md`
-2. 在 `commands/init.md` 的复制清单中新增该文件
-3. 在 `templates/CLAUDE.md` 的规则导入示例中补充（如适用）
+1. Create `templates/shared/rules/my-rule.md`.
+2. Add it to the copy list in `commands/fec-init.md`.
+3. Update `templates/claude/CLAUDE.md` rule import examples when applicable.
 
-## 如何添加 Hook
+## Universal Installer
 
-1. 在 `hooks/hooks.json` 中新增配置
-2. 如需脚本，在 `scripts/` 下创建 `.mjs` 文件（跨平台优先 Node.js）
-3. 在 README 的 Hooks 表格中更新
+- Entry point: `bin/frontend-craft.mjs`.
+- Implementation: `src/install/` (converters, registry, path helpers).
+- Interactive prompts and input parsing: `src/install/interactive.mjs` (tests may set `FRONTEND_CRAFT_FORCE_INTERACTIVE=1` to exercise stdin-fed prompts).
+- Register a new runtime in `src/install/registry.mjs`.
+- Add the runtime installer under `src/install/converters/`.
+- Follow global directory conventions from `src/install/runtime-homes.mjs`.
+- Add or update tests under `tests/install/`.
 
-## Pull Request 流程
+## Adding a Hook
 
-1. Fork 本仓库
-2. 从 `main` 拉取最新代码，创建 `feature/xxx` 或 `fix/xxx` 分支
-3. 完成修改，确保符合提交规范
-4. 提交 PR，描述变更内容和动机
-5. 等待维护者 Review，根据反馈修改
-6. 合并后删除分支
+1. Update `hooks/hooks.json`.
+2. Put hook scripts under `scripts/` and prefer cross-platform Node.js.
+3. Use `${FRONTEND_CRAFT_ROOT}` for package-root paths; the `claude` installer expands it to an absolute path.
+4. Update the Hooks table in `README.md`.
 
-## 代码风格
+## Pull Request Checklist
 
-- Markdown：使用标准 Markdown 语法，表格对齐
-- 中文与英文、数字之间加空格（如：`使用 React 18`）
-- 技能描述简洁，避免冗长
+Before opening a pull request:
 
-## 问题反馈
+- [ ] The change is scoped and described clearly.
+- [ ] `npm test` passes.
+- [ ] `npm run typecheck:openclaw` passes when OpenClaw code or templates are affected.
+- [ ] `README.md` and `CHANGELOG.md` are updated when user-facing behavior changes (and `CHANGELOG.zh-CN.md` when you ship Chinese-facing release notes).
+- [ ] Localized README files are synced, or a follow-up translation issue is linked.
+- [ ] New runtime, agent, skill, command, hook, or template changes include relevant tests or dry-run coverage.
+- [ ] Security-sensitive changes have been reviewed against `SECURITY.md`.
 
-- 使用 [GitHub Issues](https://github.com/bovinphang/frontend-craft/issues) 提交 Bug 或功能建议
-- 描述清晰，包含复现步骤或使用场景
+## Code Style
+
+- Prefer clear Markdown with stable headings and tables.
+- Keep skill and agent descriptions concise because model routing depends on them.
+- Use cross-platform Node.js scripts for automation.
+- Avoid shell-specific assumptions unless a runtime explicitly requires them.
+
+## Reporting Issues
+
+Use [GitHub Issues](https://github.com/bovinphang/frontend-craft/issues) for bugs and feature requests. Include the runtime, operating system, Node.js version, exact command, expected behavior, and actual behavior whenever possible.
+
+Do not file security-sensitive vulnerabilities as public issues. Follow [SECURITY.md](SECURITY.md) instead.
