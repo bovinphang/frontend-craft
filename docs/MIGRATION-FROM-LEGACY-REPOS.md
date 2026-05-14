@@ -16,7 +16,7 @@ npx frontend-craft@latest install --local codex
 
 ## OpenClaw 用户
 
-1. 使用本仓库打出的 **`frontend-craft-openclaw`** npm 包：执行 `npm run pack:openclaw` 后，在**仓库根目录**取得 `frontend-craft-openclaw-<version>.tgz` 再安装（例如 `npm install ./frontend-craft-openclaw-2.0.0.tgz`）。
+1. 使用本仓库打出的 **`frontend-craft-openclaw`** npm 包：执行 `npm run pack:openclaw` 后，在**仓库根目录**取得 `frontend-craft-openclaw-<version>.tgz` 再安装（例如 `npm install ./frontend-craft-openclaw-2.0.1.tgz`）。
 2. 或安装主包 **`frontend-craft`** 后按 OpenClaw 文档配置 `extensions` 指向 `node_modules/frontend-craft/dist/openclaw/index.js`（若发布中包含该路径）。
 
 ## 归档旧仓库

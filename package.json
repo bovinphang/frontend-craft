@@ -1,6 +1,6 @@
 {
   "name": "frontend-craft",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "Universal frontend plugin for Claude Code, Codex, Cursor, OpenCode, Gemini CLI, Windsurf, Copilot, OpenClaw, and more — skills, agents, commands, hooks, and MCP templates.",
   "type": "module",
   "license": "MIT",

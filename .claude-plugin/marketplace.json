@@ -14,7 +14,7 @@
             "name": "frontend-craft",
             "source": "./",
             "description": "Enterprise frontend team Claude Code plugin — 9 agents, 13 skills, 3 commands, shared rule templates, and production-ready hooks for code review, typescript-reviewer, frontend code-reviewer, frontend-security-reviewer, and frontend-e2e-runner agents, security review skill, performance optimization, scaffolding, design-to-code (Figma/Sketch/MasterGo/Pixso/墨刀/摹客), legacy-to-modern migration with refactoring constraints (images, styles, flex, no inline SVG/styles), E2E testing skill, Next.js/Nuxt/monorepo standards, CI/CD, architecture planning, and UI debugging with multi-design-tool MCP integration. All reports auto-saved as Markdown files to reports/ directory.",
-            "version": "2.0.0",
+            "version": "2.0.1",
             "author": {
                 "name": "Bovin Phang",
                 "email": "pengbaowen@msn.com"

@@ -54,7 +54,7 @@ npx frontend-craft@latest install --all --dry-run --global
 
 Supported runtimes: `claude`, `codex`, `cursor`, `windsurf`, `opencode`, `kilo`, `gemini`, `copilot`, `antigravity`, `augment`, `trae`, `codebuddy`, `cline`, `openclaw`.
 
-Per-runtime notes live in [`docs/runtimes/`](docs/runtimes/). The OpenClaw npm package can be packed from this repo with `npm run pack:openclaw`, which builds and verifies, then writes **`frontend-craft-openclaw-<version>.tgz`** to the **repository root** (for example `frontend-craft-openclaw-2.0.0.tgz`).
+Per-runtime notes live in [`docs/runtimes/`](docs/runtimes/). The OpenClaw npm package can be packed from this repo with `npm run pack:openclaw`, which builds and verifies, then writes **`frontend-craft-openclaw-<version>.tgz`** to the **repository root** (for example `frontend-craft-openclaw-2.0.1.tgz`).
 
 ---
 

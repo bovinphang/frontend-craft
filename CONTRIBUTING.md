@@ -140,7 +140,7 @@ skills:
 
 1. Update `hooks/hooks.json`.
 2. Put hook scripts under `scripts/` and prefer cross-platform Node.js.
-3. Use `${FRONTEND_CRAFT_ROOT}` for package-root paths; the `claude` installer expands it to an absolute path.
+3. In `hooks/hooks.json`, use **`${CLAUDE_PLUGIN_ROOT}`** for paths to bundled `scripts/` entrypoints (Claude Code substitutes this at runtime; see the official [Plugins reference](https://code.claude.com/docs/en/plugins-reference)). The Claude installer in this repo also expands **`${CLAUDE_PLUGIN_ROOT}`** and legacy **`${FRONTEND_CRAFT_ROOT}`** to absolute paths when it writes `hooks.json` under `.claude/`.
 4. Update the Hooks table in `README.md`.
 
 ## Pull Request Checklist

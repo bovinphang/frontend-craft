@@ -9,6 +9,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 Project-facing release notes are maintained in English from 2.0.0 onward. Historical entries may preserve their original language.
 
+## [2.0.1] - 2026-05-14
+
+### Fixed
+
+- **Claude Code plugin hooks:** `hooks/hooks.json` now references bundled scripts with **`${CLAUDE_PLUGIN_ROOT}`**, which Claude Code substitutes for marketplace and `--plugin-dir` loads. **`${FRONTEND_CRAFT_ROOT}`** is not substituted by the runtime and could break hooks on **Windows + Git Bash** (an empty prefix made `/scripts/...` resolve under the Git for Windows installation directory).
+
+### Changed
+
+- **Version:** 2.0.1 across the root npm package, `.claude-plugin` manifests, `openclaw.plugin.json`, and the **`frontend-craft-openclaw`** staging package under `npm-packages/openclaw/`.
+
 ## [2.0.0] - 2026-05-14
 
 ### Added
