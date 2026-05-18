@@ -6,6 +6,16 @@ version: 1.1.0
 
 # 无障碍实现规范（WCAG 2.1 AA）
 
+## Purpose
+
+确保前端 UI 对残障用户可访问，满足 WCAG 2.1 AA 标准，涵盖语义结构、键盘支持、焦点管理和 ARIA 规范。
+
+## When to Use
+
+- 实现或评审表单、对话框、菜单、表格、标签页、树、抽屉和自定义组件
+- 将设计稿转换为代码
+- 页面上线前做 QA 或发布前检查
+
 ## 必须项
 
 - 所有图片必须有有意义的 `alt` 文字
@@ -72,3 +82,10 @@ version: 1.1.0
 - 保存后告知用户报告文件路径
 
 务求实用。优先使用原生语义，不要过度依赖 ARIA。
+
+## Expected Output
+
+- 所有交互元素可键盘访问（Tab/Enter/Space/Esc）
+- 语义化 HTML 结构（正确的标题层级、landmark、label）
+- ARIA 属性仅在原生语义不足时使用
+- 无障碍检查报告保存为 `reports/accessibility-review-YYYY-MM-DD-HHmmss.md`

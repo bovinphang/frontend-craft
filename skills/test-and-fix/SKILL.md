@@ -6,7 +6,11 @@ version: 1.1.0
 
 # 测试并修复
 
-在以下场景使用该 Skill：
+## Purpose
+
+自动化执行 lint、类型检查、单元测试和构建命令，分析失败原因并安全修复，确保代码质量达标。
+
+## When to Use
 
 - 用户希望 Claude 对前端改动进行校验
 - 重构后需要补一轮安全检查
@@ -64,3 +68,9 @@ version: 1.1.0
 - 不要盲目关闭规则来消除报错
 - 除非有明确理由，不要为了通过检查而降低类型安全
 - 不要因为附近测试失败就顺手重写无关模块
+
+## Expected Output
+
+- lint / type-check / test / build 四项全部通过
+- 失败项已修复或给出明确原因和后续行动
+- 修复报告保存为 `reports/test-fix-YYYY-MM-DD-HHmmss.md`

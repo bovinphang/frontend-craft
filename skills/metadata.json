@@ -1,0 +1,164 @@
+[
+  {
+    "id": "fec-accessibility-check",
+    "name": "无障碍检查",
+    "category": "quality",
+    "tags": ["a11y", "wcag", "accessibility", "audit"]
+  },
+  {
+    "id": "fec-browser-storage",
+    "name": "浏览器存储",
+    "category": "frontend",
+    "tags": [
+      "storage",
+      "localStorage",
+      "indexedDB",
+      "cookie",
+      "client-persistence"
+    ]
+  },
+  {
+    "id": "fec-canvas-threejs",
+    "name": "Canvas 与 Three.js",
+    "category": "frontend",
+    "tags": ["canvas", "webgl", "three.js", "3d", "visualization", "r3f"]
+  },
+  {
+    "id": "fec-data-fetching",
+    "name": "TanStack Query 数据获取",
+    "category": "frontend",
+    "tags": [
+      "react-query",
+      "tanstack",
+      "caching",
+      "optimistic-update",
+      "server-state"
+    ]
+  },
+  {
+    "id": "fec-e2e-testing",
+    "name": "E2E 测试规范",
+    "category": "testing",
+    "tags": ["playwright", "cypress", "e2e", "visual-regression", "ci", "pom"]
+  },
+  {
+    "id": "fec-form-handling",
+    "name": "表单处理",
+    "category": "frontend",
+    "tags": [
+      "react-hook-form",
+      "zod",
+      "validation",
+      "dynamic-forms",
+      "file-upload"
+    ]
+  },
+  {
+    "id": "fec-frontend-code-review",
+    "name": "前端代码审查",
+    "category": "quality",
+    "tags": ["code-review", "architecture", "quality", "best-practices"]
+  },
+  {
+    "id": "fec-implement-from-design",
+    "name": "设计稿实现",
+    "category": "design",
+    "tags": ["figma", "sketch", "mastergo", "pixso", "design-to-code", "mcp"]
+  },
+  {
+    "id": "fec-legacy-to-modern-migration",
+    "name": "遗留系统迁移",
+    "category": "architecture",
+    "tags": ["migration", "jquery", "mpa", "react", "vue", "modernization"]
+  },
+  {
+    "id": "fec-legacy-web-standard",
+    "name": "传统前端规范",
+    "category": "architecture",
+    "tags": ["jquery", "mpa", "legacy", "vanilla-js"]
+  },
+  {
+    "id": "fec-list-virtualization",
+    "name": "列表虚拟化优化",
+    "category": "performance",
+    "tags": [
+      "virtualization",
+      "windowing",
+      "react-window",
+      "tanstack-virtual",
+      "performance"
+    ]
+  },
+  {
+    "id": "fec-monorepo-project-standard",
+    "name": "Monorepo 项目规范",
+    "category": "architecture",
+    "tags": ["monorepo", "pnpm", "turborepo", "nx", "workspace"]
+  },
+  {
+    "id": "fec-nextjs-project-standard",
+    "name": "Next.js 项目规范",
+    "category": "framework",
+    "tags": ["nextjs", "app-router", "ssr", "rsc", "react"]
+  },
+  {
+    "id": "fec-nuxt-project-standard",
+    "name": "Nuxt 项目规范",
+    "category": "framework",
+    "tags": ["nuxt", "vue", "ssr", "ssg", "data-fetching"]
+  },
+  {
+    "id": "fec-pwa-implementation",
+    "name": "PWA 实现",
+    "category": "frontend",
+    "tags": ["pwa", "service-worker", "offline", "workbox", "installable"]
+  },
+  {
+    "id": "fec-react-project-standard",
+    "name": "React 项目规范",
+    "category": "framework",
+    "tags": ["react", "typescript", "hooks", "components", "architecture"]
+  },
+  {
+    "id": "fec-security-review",
+    "name": "前端安全审查",
+    "category": "security",
+    "tags": ["xss", "csrf", "csp", "security", "owasp", "dompurify"]
+  },
+  {
+    "id": "fec-storybook-component-doc",
+    "name": "Storybook 组件文档化",
+    "category": "documentation",
+    "tags": [
+      "storybook",
+      "design-system",
+      "component-doc",
+      "visual-testing",
+      "mdx"
+    ]
+  },
+  {
+    "id": "fec-test-and-fix",
+    "name": "测试与修复",
+    "category": "testing",
+    "tags": ["lint", "typecheck", "test", "build", "fix"]
+  },
+  {
+    "id": "fec-vue3-project-standard",
+    "name": "Vue 3 项目规范",
+    "category": "framework",
+    "tags": ["vue3", "typescript", "composition-api", "pinia", "components"]
+  },
+  {
+    "id": "fec-web-workers",
+    "name": "Web Workers",
+    "category": "performance",
+    "tags": [
+      "worker",
+      "background-thread",
+      "comlink",
+      "transferable",
+      "performance"
+    ]
+  }
+]

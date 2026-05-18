@@ -49,6 +49,123 @@
 - 检查 hover、active、focus、disabled、selected 等状态
 - 除非没有合适 Token 或刻度值，否则不要使用 magic number
 
+## 暗色模式
+
+提供与系统主题同步的手动切换能力，减少视觉疲劳并满足可访问性要求。
+
+### CSS 变量方案
+
+```css
+:root {
+  --color-bg-primary: #ffffff;
+  --color-bg-secondary: #f5f5f5;
+  --color-text-primary: #1a1a1a;
+  --color-text-secondary: #666666;
+  --color-border: #e0e0e0;
+}
+
+[data-theme="dark"] {
+  --color-bg-primary: #1a1a1a;
+  --color-bg-secondary: #2a2a2a;
+  --color-text-primary: #f0f0f0;
+  --color-text-secondary: #a0a0a0;
+  --color-border: #404040;
+}
+
+body {
+  background-color: var(--color-bg-primary);
+  color: var(--color-text-primary);
+}
+```
+
+### Tailwind 方案
+
+```js
+// tailwind.config.js
+module.exports = {
+  darkMode: "class", // 通过 .dark 类控制，而非 prefers-color-scheme
+};
+```
+
+```html
+<div class="bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100">
+  <!-- 内容 -->
+</div>
+```
+
+### 主题切换 Hook
+
+```tsx
+import { useState, useEffect } from "react";
+
+function useTheme() {
+  const [theme, setTheme] = useState<"light" | "dark">("light");
+
+  useEffect(() => {
+    // 1. 优先读取用户保存的偏好
+    const saved = localStorage.getItem("theme") as "light" | "dark" | null;
+    if (saved) {
+      setTheme(saved);
+      return;
+    }
+    // 2. 回退到系统偏好
+    const prefersDark = window.matchMedia(
+      "(prefers-color-scheme: dark)",
+    ).matches;
+    setTheme(prefersDark ? "dark" : "light");
+  }, []);
+
+  useEffect(() => {
+    const root = document.documentElement;
+    if (theme === "dark") {
+      root.classList.add("dark");
+      root.setAttribute("data-theme", "dark");
+    } else {
+      root.classList.remove("dark");
+      root.setAttribute("data-theme", "light");
+    }
+    localStorage.setItem("theme", theme);
+  }, [theme]);
+
+  const toggle = () => setTheme((t) => (t === "light" ? "dark" : "light"));
+
+  return { theme, toggle };
+}
+```
+
+### FOUC 防护（主题闪烁）
+
+在 `<head>` 中同步执行主题初始化脚本（阻塞渲染），避免首次加载时出现错误的主题色：
+
+```html
+<head>
+  <script>
+    // 同步执行 — 在 body 渲染前确定主题
+    (function () {
+      const theme =
+        localStorage.getItem("theme") ||
+        (window.matchMedia("(prefers-color-scheme: dark)").matches
+          ? "dark"
+          : "light");
+      if (theme === "dark") {
+        document.documentElement.classList.add("dark");
+        document.documentElement.setAttribute("data-theme", "dark");
+      }
+    })();
+  </script>
+</head>
+```
+
+### 暗色模式注意事项
+
+- **图片**: 亮色图片在暗色模式下刺眼，使用 `filter: brightness(0.8)` 降低亮度
+- **阴影**: 暗色模式下阴影不明显，改用 `box-shadow: 0 0 15px rgba(255,255,255,0.05)` 或边框替代
+- **颜色对比度**: 确保暗色模式下文本与背景的对比度 ≥ 4.5:1（WCAG AA）
+- **表单控件**: 输入框、下拉框、开关等原生控件在暗色模式下需要自定义样式
+- **第三方组件**: 检查 UI 组件库是否支持暗色模式，必要时用 CSS 变量覆盖
+
+---
+
 ## 可访问性基线
 
 优先使用语义化 HTML。
