@@ -21,7 +21,7 @@
 
 ---
 
-**面向 Claude Code、Codex、Cursor、OpenCode、Gemini CLI、Windsurf、Copilot、OpenClaw 等工具的通用前端插件。**
+**面向 Claude Code、Codex、Cursor、OpenCode、Gemini CLI、Kilo、Windsurf、Copilot、Antigravity、Augment、Trae、CodeBuddy、Cline、OpenClaw 等工具的通用前端插件。**
 
 `frontend-craft` 将前端评审 agents、工作流 skills、斜杠命令、hooks、MCP 模板和项目规范集中在一个仓库中维护。推荐通过 CLI 将同一套前端工程规范安装到 14 种 AI 编程运行时。若你**仅通过 Claude Code Marketplace**（原生插件流程）安装，说明见 [docs/runtimes/claude.zh-CN.md](docs/runtimes/claude.zh-CN.md) · [English](docs/runtimes/claude.md)。
 
@@ -54,7 +54,7 @@ npx frontend-craft@latest install --all --dry-run --global
 
 支持的 runtime：`claude`、`codex`、`cursor`、`windsurf`、`opencode`、`kilo`、`gemini`、`copilot`、`antigravity`、`augment`、`trae`、`codebuddy`、`cline`、`openclaw`。
 
-各工具说明见 [`docs/runtimes/`](docs/runtimes/)。OpenClaw 独立 npm 包可在本仓库中通过 `npm run pack:openclaw` 构建并校验，产物为**仓库根目录**下的 **`frontend-craft-openclaw-<version>.tgz`**（例如 `frontend-craft-openclaw-2.0.1.tgz`）。
+各工具说明见 [`docs/runtimes/`](docs/runtimes/)。OpenClaw 独立 npm 包可在本仓库中通过 `npm run pack:openclaw` 构建并校验，产物为**仓库根目录**下的 **`frontend-craft-openclaw-<version>.tgz`**（例如 `frontend-craft-openclaw-2.1.1.tgz`）。
 
 ---
 
@@ -142,6 +142,14 @@ frontend-craft/
 |   |-- nextjs-project-standard/    # Next.js 14+ App Router、SSR/SSG 规范
 |   |-- nuxt-project-standard/      # Nuxt 3 SSR/SSG、组合式 API 规范
 |   |-- monorepo-project-standard/  # pnpm workspace、Turborepo、Nx 规范
+|   |-- data-fetching/              # TanStack Query 与服务端状态工作流
+|   |-- form-handling/              # React Hook Form + Zod 表单工作流
+|   |-- route-protection/           # 登录态与权限路由保护
+|   |-- component-testing/          # RTL / Vue Test Utils 组件测试
+|   |-- pwa-implementation/         # PWA manifest、Service Worker、离线能力
+|   |-- web-workers/                # Worker 集成与后台计算
+|   |-- canvas-threejs/             # Canvas、Three.js、React Three Fiber
+|   |-- svg-animation/              # SVG 动画与 reduced-motion 降级
 |
 |-- commands/         # 用于快速执行的斜杠命令
 |   |-- fec-init.md     # /fec-init - 初始化项目模板
@@ -176,16 +184,16 @@ frontend-craft/
 
 ### Commands（斜杠命令）
 
-| 命令                       | 用途                                                             | 输出报告           |
-| -------------------------- | ---------------------------------------------------------------- | ------------------ |
+| 命令            | 用途                                                             | 输出报告           |
+| --------------- | ---------------------------------------------------------------- | ------------------ |
 | `/fec-init`     | 将项目模板初始化到当前项目的 `.claude/` 目录                     | —                  |
 | `/fec-review`   | 对指定文件或最近变更的代码执行规范化评审，输出分级报告           | `code-review-*.md` |
 | `/fec-scaffold` | 按项目规范创建 page / feature / component 标准目录结构和样板文件 | —                  |
 
 ### Skills（自动激活）
 
-| Skill                        | 用途                                                               | 输出报告                    |
-| ---------------------------- | ------------------------------------------------------------------ | --------------------------- |
+| Skill                            | 用途                                                               | 输出报告                    |
+| -------------------------------- | ------------------------------------------------------------------ | --------------------------- |
 | `fec-frontend-code-review`       | 从架构、类型、渲染、样式、可访问性等维度审查代码                   | `code-review-*.md`          |
 | `fec-security-review`            | XSS、CSRF、敏感数据泄露、输入校验等安全审查                        | `security-review-*.md`      |
 | `fec-accessibility-check`        | WCAG 2.1 AA 无障碍检查                                             | `accessibility-review-*.md` |
@@ -199,6 +207,17 @@ frontend-craft/
 | `fec-nextjs-project-standard`    | Next.js 14+ App Router、SSR/SSG、流式渲染、元数据规范              | —                           |
 | `fec-nuxt-project-standard`      | Nuxt 3 SSR/SSG、组合式 API、数据获取、路由、中间件规范             | —                           |
 | `fec-monorepo-project-standard`  | pnpm workspace、Turborepo、Nx：目录结构、依赖管理、任务编排        | —                           |
+| `fec-data-fetching`              | TanStack Query / 服务端状态获取、缓存、失效、乐观更新              | —                           |
+| `fec-form-handling`              | React Hook Form + Zod 表单、动态字段、上传、多步流程               | —                           |
+| `fec-browser-storage`            | localStorage/sessionStorage/IndexedDB/Cookies 选型与安全持久化     | —                           |
+| `fec-route-protection`           | React Router、Next.js、Vue Router、Nuxt 的登录态与权限路由保护     | —                           |
+| `fec-component-testing`          | React Testing Library / Vue Test Utils 组件测试与回归用例          | —                           |
+| `fec-storybook-component-doc`    | Storybook 组件文档、Addon、MDX、交互测试与视觉测试集成             | —                           |
+| `fec-list-virtualization`        | react-window / TanStack Virtual 大列表虚拟滚动与测量策略           | —                           |
+| `fec-pwa-implementation`         | manifest、Service Worker、离线缓存、安装提示与更新管理             | —                           |
+| `fec-web-workers`                | Web Worker、Transferable、Comlink、Worker 池                       | —                           |
+| `fec-canvas-threejs`             | Canvas 2D、Three.js、React Three Fiber、WebGL 性能与可访问性       | —                           |
+| `fec-svg-animation`              | CSS、Framer Motion、GSAP SVG 动画与 reduced-motion 降级            | —                           |
 
 ### Agents（子代理）
 
@@ -307,21 +326,21 @@ $env:MODAO_TOKEN = "your-modao-token"
 
 所有审查、分析和评估功能均自动将报告保存为 Markdown 文件至项目根目录下的 `reports/` 目录。
 
-| 报告类型       | 文件名模式                                   | 来源                                                                         |
-| -------------- | -------------------------------------------- | ---------------------------------------------------------------------------- |
+| 报告类型       | 文件名模式                                   | 来源                                                                                 |
+| -------------- | -------------------------------------------- | ------------------------------------------------------------------------------------ |
 | 代码审查       | `code-review-YYYY-MM-DD-HHmmss.md`           | `/fec-review` 命令、`fec-frontend-code-review` skill、`frontend-code-reviewer` agent |
-| TS/JS 专项评审 | `typescript-review-YYYY-MM-DD-HHmmss.md`     | `typescript-reviewer` agent                                                  |
-| 安全审查       | `security-review-YYYY-MM-DD-HHmmss.md`       | `fec-security-review` skill、`frontend-security-reviewer` agent                  |
-| 无障碍检查     | `accessibility-review-YYYY-MM-DD-HHmmss.md`  | `fec-accessibility-check` skill                                                  |
-| 性能分析       | `performance-review-YYYY-MM-DD-HHmmss.md`    | `performance-optimizer` agent                                                |
-| 架构方案       | `architecture-proposal-YYYY-MM-DD-HHmmss.md` | `frontend-architect` agent                                                   |
-| 设计还原度     | `ui-fidelity-review-YYYY-MM-DD-HHmmss.md`    | `ui-checker` agent                                                           |
-| 设计实现       | `design-implementation-YYYY-MM-DD-HHmmss.md` | `figma-implementer` agent                                                    |
-| Token 映射     | `token-mapping-YYYY-MM-DD-HHmmss.md`         | `design-token-mapper` agent                                                  |
-| 设计计划       | `design-plan-YYYY-MM-DD-HHmmss.md`           | `fec-implement-from-design` skill                                                |
-| 测试修复       | `test-fix-YYYY-MM-DD-HHmmss.md`              | `fec-test-and-fix` skill                                                         |
-| E2E 运行摘要   | `e2e-summary-YYYY-MM-DD-HHmmss.md`           | `frontend-e2e-runner` agent（可选）                                          |
-| 迁移计划       | `migration-plan-YYYY-MM-DD-HHmmss.md`        | `fec-legacy-to-modern-migration` skill                                           |
+| TS/JS 专项评审 | `typescript-review-YYYY-MM-DD-HHmmss.md`     | `typescript-reviewer` agent                                                          |
+| 安全审查       | `security-review-YYYY-MM-DD-HHmmss.md`       | `fec-security-review` skill、`frontend-security-reviewer` agent                      |
+| 无障碍检查     | `accessibility-review-YYYY-MM-DD-HHmmss.md`  | `fec-accessibility-check` skill                                                      |
+| 性能分析       | `performance-review-YYYY-MM-DD-HHmmss.md`    | `performance-optimizer` agent                                                        |
+| 架构方案       | `architecture-proposal-YYYY-MM-DD-HHmmss.md` | `frontend-architect` agent                                                           |
+| 设计还原度     | `ui-fidelity-review-YYYY-MM-DD-HHmmss.md`    | `ui-checker` agent                                                                   |
+| 设计实现       | `design-implementation-YYYY-MM-DD-HHmmss.md` | `figma-implementer` agent                                                            |
+| Token 映射     | `token-mapping-YYYY-MM-DD-HHmmss.md`         | `design-token-mapper` agent                                                          |
+| 设计计划       | `design-plan-YYYY-MM-DD-HHmmss.md`           | `fec-implement-from-design` skill                                                    |
+| 测试修复       | `test-fix-YYYY-MM-DD-HHmmss.md`              | `fec-test-and-fix` skill                                                             |
+| E2E 运行摘要   | `e2e-summary-YYYY-MM-DD-HHmmss.md`           | `frontend-e2e-runner` agent（可选）                                                  |
+| 迁移计划       | `migration-plan-YYYY-MM-DD-HHmmss.md`        | `fec-legacy-to-modern-migration` skill                                               |
 
 > **建议**：在 `.gitignore` 中添加 `reports/` 以避免将自动生成的报告提交到代码仓库，或保留提交以便团队成员查看历史审查记录。
 

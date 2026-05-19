@@ -8,6 +8,17 @@ version: 2.0.0
 
 适用于使用 Vue 3 + TypeScript 的仓库。
 
+## Purpose
+
+为 Vue 3 + TypeScript 项目提供完整的工程规范，涵盖项目结构、组件设计、Composables、路由、Pinia 状态管理、API 层、错误处理、测试和性能优化，确保约定式开发和类型安全。
+
+## When to Use
+
+- 新建或修改 Vue 3 页面、功能模块或组件
+- 设计 Composables、Pinia Store 或 API 层
+- 配置路由、状态管理、错误处理
+- 为现有 Vue 3 项目补齐测试、性能优化方案
+
 ## 项目结构
 
 以下为中大型 Vue 3 项目的业界最佳实践结构，按项目实际情况裁剪：
@@ -159,18 +170,18 @@ src/
 ```vue
 <script setup lang="ts">
 interface Props {
-    title: string;
-    items: Item[];
-    loading?: boolean;
+  title: string;
+  items: Item[];
+  loading?: boolean;
 }
 
 interface Emits {
-    (e: 'select', item: Item): void;
-    (e: 'delete', id: string): void;
+  (e: "select", item: Item): void;
+  (e: "delete", id: string): void;
 }
 
 const props = withDefaults(defineProps<Props>(), {
-    loading: false,
+  loading: false,
 });
 
 const emit = defineEmits<Emits>();
@@ -193,26 +204,33 @@ const emit = defineEmits<Emits>();
 
 ```typescript
 export function useUserList(params: MaybeRef<QueryParams>) {
-    const data = ref<User[]>([]);
-    const loading = ref(false);
-    const error = ref<Error | null>(null);
+  const data = ref<User[]>([]);
+  const loading = ref(false);
+  const error = ref<Error | null>(null);
 
-    async function fetch() {
-        loading.value = true;
-        error.value = null;
-        try {
-            const res = await getUserList(toValue(params));
-            data.value = res.list;
-        } catch (e) {
-            error.value = e as Error;
-        } finally {
-            loading.value = false;
-        }
+  async function fetch() {
+    loading.value = true;
+    error.value = null;
+    try {
+      const res = await getUserList(toValue(params));
+      data.value = res.list;
+    } catch (e) {
+      error.value = e as Error;
+    } finally {
+      loading.value = false;
     }
+  }
 
-    watchEffect(() => { fetch(); });
+  watchEffect(() => {
+    fetch();
+  });
 
-    return { data: readonly(data), loading: readonly(loading), error: readonly(error), refetch: fetch };
+  return {
+    data: readonly(data),
+    loading: readonly(loading),
+    error: readonly(error),
+    refetch: fetch,
+  };
 }
 ```
 
@@ -233,14 +251,14 @@ export function useUserList(params: MaybeRef<QueryParams>) {
 
 ```vue
 <template>
-    <div class="card">
-        <div class="card-header">
-            <slot name="header">{{ title }}</slot>
-        </div>
-        <div class="card-body">
-            <slot :data="processedData" :loading="loading" />
-        </div>
+  <div class="card">
+    <div class="card-header">
+      <slot name="header">{{ title }}</slot>
     </div>
+    <div class="card-body">
+      <slot :data="processedData" :loading="loading" />
+    </div>
+  </div>
 </template>
 ```
 
@@ -252,7 +270,7 @@ export function useUserList(params: MaybeRef<QueryParams>) {
 
 ```typescript
 // keys.ts
-export const ThemeKey: InjectionKey<Ref<Theme>> = Symbol('theme');
+export const ThemeKey: InjectionKey<Ref<Theme>> = Symbol("theme");
 
 // Provider.vue
 provide(ThemeKey, theme);
@@ -268,18 +286,42 @@ const theme = inject(ThemeKey);
 ```typescript
 // app/router.ts
 const routes: RouteRecordRaw[] = [
-    {
-        path: '/',
-        component: MainLayout,
-        children: [
-            { path: '', name: 'Dashboard', component: () => import('@/pages/Dashboard/DashboardPage.vue') },
-            { path: 'users', name: 'UserList', component: () => import('@/pages/UserList/UserListPage.vue') },
-            { path: 'users/:id', name: 'UserDetail', component: () => import('@/pages/UserDetail/UserDetailPage.vue') },
-            { path: 'settings', name: 'Settings', component: () => import('@/pages/Settings/SettingsPage.vue') },
-        ],
-    },
-    { path: '/login', name: 'Login', component: () => import('@/pages/Login/LoginPage.vue') },
-    { path: '/:pathMatch(.*)*', name: 'NotFound', component: () => import('@/pages/NotFound.vue') },
+  {
+    path: "/",
+    component: MainLayout,
+    children: [
+      {
+        path: "",
+        name: "Dashboard",
+        component: () => import("@/pages/Dashboard/DashboardPage.vue"),
+      },
+      {
+        path: "users",
+        name: "UserList",
+        component: () => import("@/pages/UserList/UserListPage.vue"),
+      },
+      {
+        path: "users/:id",
+        name: "UserDetail",
+        component: () => import("@/pages/UserDetail/UserDetailPage.vue"),
+      },
+      {
+        path: "settings",
+        name: "Settings",
+        component: () => import("@/pages/Settings/SettingsPage.vue"),
+      },
+    ],
+  },
+  {
+    path: "/login",
+    name: "Login",
+    component: () => import("@/pages/Login/LoginPage.vue"),
+  },
+  {
+    path: "/:pathMatch(.*)*",
+    name: "NotFound",
+    component: () => import("@/pages/NotFound.vue"),
+  },
 ];
 ```
 
@@ -293,22 +335,22 @@ const routes: RouteRecordRaw[] = [
 ```typescript
 // 导航守卫
 router.beforeEach((to) => {
-    const authStore = useAuthStore();
-    if (to.meta.requiresAuth && !authStore.isLoggedIn) {
-        return { name: 'Login', query: { redirect: to.fullPath } };
-    }
+  const authStore = useAuthStore();
+  if (to.meta.requiresAuth && !authStore.isLoggedIn) {
+    return { name: "Login", query: { redirect: to.fullPath } };
+  }
 });
 ```
 
 ## 状态管理（Pinia）
 
-| 状态类型 | 推荐方案 |
-|----------|----------|
-| 组件内临时 UI 状态 | `ref` / `reactive` |
-| 跨组件共享业务状态 | Pinia store |
-| 服务端数据缓存 | VueQuery / 自定义 composable |
-| URL 驱动状态 | 路由参数 / `useRoute().query` |
-| 表单状态 | VeeValidate / FormKit |
+| 状态类型           | 推荐方案                      |
+| ------------------ | ----------------------------- |
+| 组件内临时 UI 状态 | `ref` / `reactive`            |
+| 跨组件共享业务状态 | Pinia store                   |
+| 服务端数据缓存     | VueQuery / 自定义 composable  |
+| URL 驱动状态       | 路由参数 / `useRoute().query` |
+| 表单状态           | VeeValidate / FormKit         |
 
 ### Pinia Store 规范
 
@@ -316,26 +358,26 @@ router.beforeEach((to) => {
 
 ```typescript
 // stores/authStore.ts
-export const useAuthStore = defineStore('auth', () => {
-    const user = ref<User | null>(null);
-    const token = ref<string | null>(localStorage.getItem('token'));
+export const useAuthStore = defineStore("auth", () => {
+  const user = ref<User | null>(null);
+  const token = ref<string | null>(localStorage.getItem("token"));
 
-    const isLoggedIn = computed(() => !!token.value);
+  const isLoggedIn = computed(() => !!token.value);
 
-    async function login(credentials: LoginParams) {
-        const res = await authApi.login(credentials);
-        user.value = res.user;
-        token.value = res.token;
-        localStorage.setItem('token', res.token);
-    }
+  async function login(credentials: LoginParams) {
+    const res = await authApi.login(credentials);
+    user.value = res.user;
+    token.value = res.token;
+    localStorage.setItem("token", res.token);
+  }
 
-    function logout() {
-        user.value = null;
-        token.value = null;
-        localStorage.removeItem('token');
-    }
+  function logout() {
+    user.value = null;
+    token.value = null;
+    localStorage.removeItem("token");
+  }
 
-    return { user: readonly(user), isLoggedIn, login, logout };
+  return { user: readonly(user), isLoggedIn, login, logout };
 });
 ```
 
@@ -353,28 +395,28 @@ export const useAuthStore = defineStore('auth', () => {
 ```typescript
 // services/request.ts
 const request = axios.create({
-    baseURL: import.meta.env.VITE_API_BASE_URL,
-    timeout: 10000,
+  baseURL: import.meta.env.VITE_API_BASE_URL,
+  timeout: 10000,
 });
 
 request.interceptors.request.use((config) => {
-    const authStore = useAuthStore();
-    if (authStore.token) {
-        config.headers.Authorization = `Bearer ${authStore.token}`;
-    }
-    return config;
+  const authStore = useAuthStore();
+  if (authStore.token) {
+    config.headers.Authorization = `Bearer ${authStore.token}`;
+  }
+  return config;
 });
 
 request.interceptors.response.use(
-    (res) => res.data,
-    (error) => {
-        if (error.response?.status === 401) {
-            const authStore = useAuthStore();
-            authStore.logout();
-            router.push({ name: 'Login' });
-        }
-        return Promise.reject(normalizeError(error));
-    },
+  (res) => res.data,
+  (error) => {
+    if (error.response?.status === 401) {
+      const authStore = useAuthStore();
+      authStore.logout();
+      router.push({ name: "Login" });
+    }
+    return Promise.reject(normalizeError(error));
+  },
 );
 ```
 
@@ -382,12 +424,14 @@ request.interceptors.response.use(
 
 ```typescript
 // features/user/api.ts
-export function getUserList(params: UserQueryParams): Promise<PageResult<User>> {
-    return request.get('/users', { params });
+export function getUserList(
+  params: UserQueryParams,
+): Promise<PageResult<User>> {
+  return request.get("/users", { params });
 }
 
 export function updateUser(id: string, data: UpdateUserDTO): Promise<User> {
-    return request.put(`/users/${id}`, data);
+  return request.put(`/users/${id}`, data);
 }
 ```
 
@@ -402,7 +446,7 @@ export function updateUser(id: string, data: UpdateUserDTO): Promise<User> {
 ```typescript
 // main.ts
 app.config.errorHandler = (err, instance, info) => {
-    reportError(err, { component: instance?.$options.name, info });
+  reportError(err, { component: instance?.$options.name, info });
 };
 ```
 
@@ -417,12 +461,12 @@ app.config.errorHandler = (err, instance, info) => {
 ```typescript
 // directives/vPermission.ts
 export const vPermission: Directive<HTMLElement, string> = {
-    mounted(el, binding) {
-        const authStore = useAuthStore();
-        if (!authStore.hasPermission(binding.value)) {
-            el.parentNode?.removeChild(el);
-        }
-    },
+  mounted(el, binding) {
+    const authStore = useAuthStore();
+    if (!authStore.hasPermission(binding.value)) {
+      el.parentNode?.removeChild(el);
+    }
+  },
 };
 ```
 
@@ -452,35 +496,35 @@ export const vPermission: Directive<HTMLElement, string> = {
 ### 测试风格
 
 ```typescript
-describe('UserForm', () => {
-    it('should emit submit with valid data', async () => {
-        const wrapper = mount(UserForm);
+describe("UserForm", () => {
+  it("should emit submit with valid data", async () => {
+    const wrapper = mount(UserForm);
 
-        await wrapper.find('[data-testid="username"]').setValue('test');
-        await wrapper.find('form').trigger('submit');
+    await wrapper.find('[data-testid="username"]').setValue("test");
+    await wrapper.find("form").trigger("submit");
 
-        expect(wrapper.emitted('submit')?.[0]).toEqual([{ username: 'test' }]);
-    });
+    expect(wrapper.emitted("submit")?.[0]).toEqual([{ username: "test" }]);
+  });
 
-    it('should show validation error on empty submit', async () => {
-        const wrapper = mount(UserForm);
-        await wrapper.find('form').trigger('submit');
-        expect(wrapper.text()).toContain('用户名不能为空');
-    });
+  it("should show validation error on empty submit", async () => {
+    const wrapper = mount(UserForm);
+    await wrapper.find("form").trigger("submit");
+    expect(wrapper.text()).toContain("用户名不能为空");
+  });
 });
 ```
 
 ### Store 测试
 
 ```typescript
-describe('authStore', () => {
-    beforeEach(() => setActivePinia(createPinia()));
+describe("authStore", () => {
+  beforeEach(() => setActivePinia(createPinia()));
 
-    it('should login and set user', async () => {
-        const store = useAuthStore();
-        await store.login({ username: 'admin', password: 'pass' });
-        expect(store.isLoggedIn).toBe(true);
-    });
+  it("should login and set user", async () => {
+    const store = useAuthStore();
+    await store.login({ username: "admin", password: "pass" });
+    expect(store.isLoggedIn).toBe(true);
+  });
 });
 ```
 
@@ -520,3 +564,24 @@ describe('authStore', () => {
 - [ ] API 调用有类型约束和统一错误处理
 - [ ] 样式使用 scoped 隔离
 - [ ] 关键行为有测试覆盖
+
+## Constraints
+
+- 使用 `<script setup lang="ts">`，禁止使用 Options API 新增组件
+- 组件文件规模宜约 **300 行**内；逾 **500 行**或复杂度过高须拆子组件与 Composables
+- Props / Emits 必须使用 TypeScript interface 定义，禁止使用 `any`
+- Composable 返回 `readonly` 引用，防止外部意外修改
+- 不要在 store 中存放 UI 临时状态（modal 开关、表单输入等）
+- 服务端数据优先用请求库管理，而非手动存入 Pinia
+- 避免在 `v-for` 中使用 `v-if`（提取为 computed 过滤）
+- 禁止直接从 feature 内部深层路径导入，绕过 `index.ts`
+
+## Expected Output
+
+- 组件使用 `<script setup lang="ts">`，Props / Emits 类型完整
+- 可复用逻辑已提取到 composable，返回 `readonly` 引用
+- Loading / Error / Empty / Data 状态均已处理
+- 路由组件使用动态 import 加载，状态管理符合就近原则
+- API 调用有类型约束和统一错误处理
+- 样式使用 scoped 隔离，关键行为有测试覆盖
+- 文件结构与项目约定一致（pages / features / components 分离）

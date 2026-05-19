@@ -21,6 +21,8 @@ description: 将 frontend-craft 的项目模板（CLAUDE.md、settings.json、ru
    - `templates/shared/rules/git-conventions.md` → `.claude/rules/git-conventions.md`
    - `templates/shared/rules/i18n.md` → `.claude/rules/i18n.md`
    - `templates/shared/rules/performance.md` → `.claude/rules/performance.md`
+   - `templates/shared/rules/responsive-design.md` → `.claude/rules/responsive-design.md`
+   - `templates/shared/rules/rendering-patterns.md` → `.claude/rules/rendering-patterns.md`
    - `templates/shared/rules/api-layer.md` → `.claude/rules/api-layer.md`
    - `templates/shared/rules/state-management.md` → `.claude/rules/state-management.md`
    - `templates/shared/rules/error-handling.md` → `.claude/rules/error-handling.md`

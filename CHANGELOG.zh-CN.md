@@ -8,6 +8,22 @@
 
 自 **2.0.0** 起，面向发布的说明以英文 `CHANGELOG.md` 为权威来源；历史条目可能保留最初撰写语言。
 
+## [2.1.1] - 2026-05-18
+
+### 新增
+
+- **11 个新技能**：`fec-data-fetching`（TanStack Query）、`fec-form-handling`（React Hook Form + Zod）、`fec-browser-storage`（客户端持久化）、`fec-route-protection`（权限路由）、`fec-component-testing`（RTL / Vue Test Utils）、`fec-storybook-component-doc`（Storybook 文档）、`fec-list-virtualization`（react-window / TanStack Virtual）、`fec-pwa-implementation`（PWA）、`fec-web-workers`（Web Worker）、`fec-canvas-threejs`（Canvas/Three.js/R3F）、`fec-svg-animation`（SVG 动画）。
+- **共享规则**：`responsive-design.md`、`rendering-patterns.md` — 通过 `/fec-init` 部署。
+- **metadata 一致性测试**：`tests/install/metadata-consistency.test.mjs` 校验 `skills/metadata.json`、README 表格与 Marketplace 描述保持同步。
+
+### 变更
+
+- **Agent 行为（`frontend-code-reviewer`）**：默认只输出评审报告，不再修改业务文件，除非用户明确要求。
+- **Skill 结构**：React、Vue、Next.js、Nuxt、Monorepo、legacy-web、legacy-migration、implement-from-design 等技能统一为五段式结构：Purpose / When to Use / Procedure / Constraints / Expected Output。
+- **脚手架模板**：修正 React CSS import（`import './<Name>.styles.css'` 替代模块化导入）；Vue 模板使用 `<slot />` 替代裸组件标签。
+- **Marketplace 描述**：skills 数量从 13 → 24，补充新能力（组件测试、路由保护、PWA、Web Workers、Canvas/Three.js、SVG 动画）。
+- **Skills 融合评估报告**（`docs/skills-fusion-assessment.md`）：从 399 行精简为 64 行结论版，附覆盖矩阵。
+
 ## [2.0.1] - 2026-05-14
 
 ### 修复

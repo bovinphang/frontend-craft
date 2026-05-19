@@ -105,12 +105,12 @@ The bundled `.mcp.json` is a reference for Figma, Sketch, MasterGo, Pixso, and M
 
 Common environment variables:
 
-| Variable | Tool |
-| --- | --- |
-| `FIGMA_API_KEY` | Figma / Desktop |
-| `SKETCH_API_KEY` | Sketch |
-| `MG_MCP_TOKEN` | MasterGo |
-| `MODAO_TOKEN` | Modao |
+| Variable         | Tool            |
+| ---------------- | --------------- |
+| `FIGMA_API_KEY`  | Figma / Desktop |
+| `SKETCH_API_KEY` | Sketch          |
+| `MG_MCP_TOKEN`   | MasterGo        |
+| `MODAO_TOKEN`    | Modao           |
 
 Pixso uses the local MCP URL shown in `.mcp.json`. MockingBot has no MCP integration; use screenshots or exported specs.
 
@@ -136,29 +136,40 @@ frontend-craft-openclaw/
 
 ### Commands
 
-| File | Purpose |
-| --- | --- |
-| `commands/fec-init.md` | Initialize frontend-craft workspace templates |
-| `commands/fec-review.md` | Guided frontend code review |
-| `commands/fec-scaffold.md` | Page / feature / component scaffolding guide |
+| File                       | Purpose                                       |
+| -------------------------- | --------------------------------------------- |
+| `commands/fec-init.md`     | Initialize frontend-craft workspace templates |
+| `commands/fec-review.md`   | Guided frontend code review                   |
+| `commands/fec-scaffold.md` | Page / feature / component scaffolding guide  |
 
 ### Skills
 
-| Skill | Purpose |
-| --- | --- |
-| `fec-frontend-code-review` | Architecture, type safety, rendering, styles, accessibility, tests, security |
-| `fec-security-review` | XSS, CSRF, sensitive data leakage, unsafe input handling |
-| `fec-accessibility-check` | WCAG-oriented semantic structure, keyboard support, focus, labels |
-| `fec-react-project-standard` | React + TypeScript project standards |
-| `fec-vue3-project-standard` | Vue 3 + TypeScript project standards |
-| `fec-implement-from-design` | Implement UI from Figma, Sketch, MasterGo, Pixso, Modao, or screenshots |
-| `fec-test-and-fix` | Run validation commands, diagnose failures, and fix safely |
-| `fec-legacy-web-standard` | JavaScript + jQuery + HTML/CSS legacy frontend standards |
-| `fec-legacy-to-modern-migration` | jQuery / MPA migration strategy to React or Vue + TypeScript |
-| `fec-e2e-testing` | Playwright / Cypress E2E structure, artifacts, CI, and flaky test handling |
-| `fec-nextjs-project-standard` | Next.js App Router, SSR/SSG, routing, metadata, middleware |
-| `fec-nuxt-project-standard` | Nuxt 3 SSR/SSG, composables, routing, middleware |
-| `fec-monorepo-project-standard` | pnpm workspace, Turborepo, Nx structure and task orchestration |
+| Skill                            | Purpose                                                                              |
+| -------------------------------- | ------------------------------------------------------------------------------------ |
+| `fec-frontend-code-review`       | Architecture, type safety, rendering, styles, accessibility, tests, security         |
+| `fec-security-review`            | XSS, CSRF, sensitive data leakage, unsafe input handling                             |
+| `fec-accessibility-check`        | WCAG-oriented semantic structure, keyboard support, focus, labels                    |
+| `fec-react-project-standard`     | React + TypeScript project standards                                                 |
+| `fec-vue3-project-standard`      | Vue 3 + TypeScript project standards                                                 |
+| `fec-implement-from-design`      | Implement UI from Figma, Sketch, MasterGo, Pixso, Modao, or screenshots              |
+| `fec-test-and-fix`               | Run validation commands, diagnose failures, and fix safely                           |
+| `fec-legacy-web-standard`        | JavaScript + jQuery + HTML/CSS legacy frontend standards                             |
+| `fec-legacy-to-modern-migration` | jQuery / MPA migration strategy to React or Vue + TypeScript                         |
+| `fec-e2e-testing`                | Playwright / Cypress E2E structure, artifacts, CI, and flaky test handling           |
+| `fec-nextjs-project-standard`    | Next.js App Router, SSR/SSG, routing, metadata, middleware                           |
+| `fec-nuxt-project-standard`      | Nuxt 3 SSR/SSG, composables, routing, middleware                                     |
+| `fec-monorepo-project-standard`  | pnpm workspace, Turborepo, Nx structure and task orchestration                       |
+| `fec-data-fetching`              | TanStack Query / server-state fetching, caching, invalidation, optimistic updates    |
+| `fec-form-handling`              | React Hook Form + Zod forms, dynamic fields, uploads, multi-step flows               |
+| `fec-browser-storage`            | localStorage/sessionStorage/IndexedDB/Cookies selection and safe client persistence  |
+| `fec-route-protection`           | Authenticated and permissioned routes for React Router, Next.js, Vue Router, Nuxt    |
+| `fec-component-testing`          | React Testing Library / Vue Test Utils component tests and regression scenarios      |
+| `fec-storybook-component-doc`    | Storybook component docs, addons, MDX, interaction and visual test integration       |
+| `fec-list-virtualization`        | Large-list windowing with react-window / TanStack Virtual and measurement strategies |
+| `fec-pwa-implementation`         | Manifest, service worker, offline cache, install prompts, update handling            |
+| `fec-web-workers`                | Web Worker integration, transferable objects, Comlink, worker pools                  |
+| `fec-canvas-threejs`             | Canvas 2D, Three.js, React Three Fiber, WebGL performance and accessibility          |
+| `fec-svg-animation`              | SVG animation with CSS, Framer Motion, GSAP, reduced-motion fallbacks                |
 
 ### Using skills (scenarios & examples)
 
@@ -172,47 +183,57 @@ Skills live under `skills/<id>/SKILL.md`. OpenClaw exposes them as plugin skill 
 
 **Scenarios and example prompts**
 
-| Scenario | Skill (reference) | Example prompt (no skill names) |
-| --- | --- | --- |
-| PR or branch review before merge | `fec-frontend-code-review` | “Please review `src/features/checkout/` before I merge: architecture, types, a11y, and tests. Save a markdown report under `reports/`.” |
-| Focus on XSS, secrets, dangerous DOM | `fec-security-review` | “Audit `src/lib/auth.ts` and anything that renders or stores user-controlled HTML for XSS and secret leaks; list fixes by severity.” |
-| New dialog / form — keyboard & ARIA | `fec-accessibility-check` | “Check `src/components/ConfirmDialog.tsx` for keyboard traps, focus order, labels, and ARIA; suggest concrete fixes.” |
-| Align a React module with team conventions | `fec-react-project-standard` | “We use React 18 and TanStack Query. Review `src/pages/Dashboard/` against solid React + TS patterns and our existing abstractions.” |
-| Align a Vue module with team conventions | `fec-vue3-project-standard` | “Review `src/views/Settings.vue` and its composables for Vue 3 + TS best practices and consistency with the rest of the app.” |
-| Implement from Figma / screenshot | `fec-implement-from-design` | “Implement this screen from Figma node `123:456`: match spacing and design tokens, reuse our `Button`, and note any assumptions.” |
-| CI red or local script failures | `fec-test-and-fix` | “`pnpm lint` and `pnpm test` are failing—find the root causes, fix them, and don’t weaken types or skip checks.” |
-| Maintain jQuery / MPA legacy pages | `fec-legacy-web-standard` | “For `public/js/legacy/*.js`, suggest safe refactors and patterns that keep current behavior; we still ship this in production.” |
-| Plan jQuery → React/Vue migration | `fec-legacy-to-modern-migration` | “We have `static/app.js` in jQuery + MPA. Outline a phased migration to React + TypeScript with risks and milestones.” |
-| Add or stabilize E2E | `fec-e2e-testing` | “Add a Playwright smoke test for login; use a clear folder layout and Page Objects, and mention how to run it in CI.” |
-| Next.js App Router feature | `fec-nextjs-project-standard` | “Review `app/(dashboard)/reports/page.tsx` and related server actions for Next.js App Router best practices (data fetching, errors, metadata).” |
-| Nuxt 3 feature or layout | `fec-nuxt-project-standard` | “Review `pages/admin/*.vue` and `composables/useApi.ts` for Nuxt 3 SSR/data/composables conventions.” |
-| Monorepo boundaries and tasks | `fec-monorepo-project-standard` | “`apps/web` depends on `packages/ui`—check package boundaries, workspace config, and Turborepo task graph for issues.” |
+| Scenario                                   | Skill (reference)                | Example prompt (no skill names)                                                                                                                 |
+| ------------------------------------------ | -------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------- |
+| PR or branch review before merge           | `fec-frontend-code-review`       | “Please review `src/features/checkout/` before I merge: architecture, types, a11y, and tests. Save a markdown report under `reports/`.”         |
+| Focus on XSS, secrets, dangerous DOM       | `fec-security-review`            | “Audit `src/lib/auth.ts` and anything that renders or stores user-controlled HTML for XSS and secret leaks; list fixes by severity.”            |
+| New dialog / form — keyboard & ARIA        | `fec-accessibility-check`        | “Check `src/components/ConfirmDialog.tsx` for keyboard traps, focus order, labels, and ARIA; suggest concrete fixes.”                           |
+| Align a React module with team conventions | `fec-react-project-standard`     | “We use React 18 and TanStack Query. Review `src/pages/Dashboard/` against solid React + TS patterns and our existing abstractions.”            |
+| Align a Vue module with team conventions   | `fec-vue3-project-standard`      | “Review `src/views/Settings.vue` and its composables for Vue 3 + TS best practices and consistency with the rest of the app.”                   |
+| Implement from Figma / screenshot          | `fec-implement-from-design`      | “Implement this screen from Figma node `123:456`: match spacing and design tokens, reuse our `Button`, and note any assumptions.”               |
+| CI red or local script failures            | `fec-test-and-fix`               | “`pnpm lint` and `pnpm test` are failing—find the root causes, fix them, and don’t weaken types or skip checks.”                                |
+| Maintain jQuery / MPA legacy pages         | `fec-legacy-web-standard`        | “For `public/js/legacy/*.js`, suggest safe refactors and patterns that keep current behavior; we still ship this in production.”                |
+| Plan jQuery → React/Vue migration          | `fec-legacy-to-modern-migration` | “We have `static/app.js` in jQuery + MPA. Outline a phased migration to React + TypeScript with risks and milestones.”                          |
+| Add or stabilize E2E                       | `fec-e2e-testing`                | “Add a Playwright smoke test for login; use a clear folder layout and Page Objects, and mention how to run it in CI.”                           |
+| Next.js App Router feature                 | `fec-nextjs-project-standard`    | “Review `app/(dashboard)/reports/page.tsx` and related server actions for Next.js App Router best practices (data fetching, errors, metadata).” |
+| Nuxt 3 feature or layout                   | `fec-nuxt-project-standard`      | “Review `pages/admin/*.vue` and `composables/useApi.ts` for Nuxt 3 SSR/data/composables conventions.”                                           |
+| Monorepo boundaries and tasks              | `fec-monorepo-project-standard`  | “`apps/web` depends on `packages/ui`—check package boundaries, workspace config, and Turborepo task graph for issues.”                          |
+| Server-state data fetching                 | `fec-data-fetching`              | “Review `src/queries/useReports.ts` for TanStack Query patterns: caching keys, invalidation, and optimistic updates.”                           |
+| Complex form with validation               | `fec-form-handling`              | “Build a multi-step registration form with Zod validation, file upload, and dynamic conditional fields using React Hook Form.”                  |
+| Add route guards to an app                 | `fec-route-protection`           | “Secure the `/admin` routes in our React Router app: redirect unauthenticated users and enforce role-based access.”                             |
+| Write component unit tests                 | `fec-component-testing`          | “Add RTL tests for `src/components/UserCard.tsx`: render, user-event interactions, and snapshot for regression.”                                |
+| Document a component library               | `fec-storybook-component-doc`    | “Set up Storybook for `packages/ui/` with MDX docs, accessibility addon, and interaction tests.”                                                |
+| Render thousands of list rows              | `fec-list-virtualization`        | “Our `ProductList` renders 10k items—virtualize it with react-window or TanStack Virtual and measure scroll performance.”                       |
+| Add offline support                        | `fec-pwa-implementation`         | “Make this React app a PWA: manifest, service worker, offline cache strategy, and install prompt.”                                              |
+| Heavy computation off main thread          | `fec-web-workers`                | “Move the image-processing logic to a Web Worker with Comlink to keep the UI responsive.”                                                       |
+| Build an interactive 3D scene              | `fec-canvas-threejs`             | “Add a Three.js product viewer to `src/components/ProductViewer.tsx` with performance and fallback considerations.”                             |
+| Add SVG motion to a landing page           | `fec-svg-animation`              | “Animate the hero SVG with Framer Motion, and ensure reduced-motion users get a static fallback.”                                               |
 
 **Slash commands (markdown under `commands/`)**
 
 These are loaded as command specs; use them when you want a **fixed checklist** instead of free-form matching. In chat, describe what you want—the agent can follow the matching command doc without you naming it.
 
-| Command doc | When to use | Example (plain language) |
-| --- | --- | --- |
-| `fec-init.md` | Bootstrap **Claude-style** `.claude/` templates in a **project repo** (paths in the doc target `.claude/`). | “Initialize this repo’s `.claude/` with the frontend-craft templates and rules from the plugin; ask before overwriting.” |
-| `fec-review.md` | Guided review + save `reports/code-review-*.md`. | “Review the files changed in my last commit and write a structured markdown report under `reports/`.” |
-| `fec-scaffold.md` | Page / feature / component folder layout. | “Scaffold a new React page `UserDetail` with the usual `src/pages/...` layout and empty `components/` and `hooks/` folders.” |
+| Command doc       | When to use                                                                                                 | Example (plain language)                                                                                                     |
+| ----------------- | ----------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------- |
+| `fec-init.md`     | Bootstrap **Claude-style** `.claude/` templates in a **project repo** (paths in the doc target `.claude/`). | “Initialize this repo’s `.claude/` with the frontend-craft templates and rules from the plugin; ask before overwriting.”     |
+| `fec-review.md`   | Guided review + save `reports/code-review-*.md`.                                                            | “Review the files changed in my last commit and write a structured markdown report under `reports/`.”                        |
+| `fec-scaffold.md` | Page / feature / component folder layout.                                                                   | “Scaffold a new React page `UserDetail` with the usual `src/pages/...` layout and empty `components/` and `hooks/` folders.” |
 
 ### Hooks
 
-| Hook | Behavior |
-| --- | --- |
-| `before_tool_call` | Blocks dangerous shell / exec-style commands |
-| `after_tool_call` | Optionally runs Prettier on write/edit targets (`formatAfterWrite`, default on) |
-| `before_prompt_build` | Prepends a one-time framework and package-manager hint per session |
-| `agent_end` | Emits a completion bell/log line when a run succeeds (`notifyOnAgentEnd`, default on) |
+| Hook                  | Behavior                                                                              |
+| --------------------- | ------------------------------------------------------------------------------------- |
+| `before_tool_call`    | Blocks dangerous shell / exec-style commands                                          |
+| `after_tool_call`     | Optionally runs Prettier on write/edit targets (`formatAfterWrite`, default on)       |
+| `before_prompt_build` | Prepends a one-time framework and package-manager hint per session                    |
+| `agent_end`           | Emits a completion bell/log line when a run succeeds (`notifyOnAgentEnd`, default on) |
 
 ### Plugin Config
 
-| Key | Type | Default | Meaning |
-| --- | --- | --- | --- |
-| `formatAfterWrite` | boolean | `true` | Run Prettier after write/edit tool calls |
-| `notifyOnAgentEnd` | boolean | `true` | Emit a completion bell/log line when an agent run succeeds |
+| Key                | Type    | Default | Meaning                                                    |
+| ------------------ | ------- | ------- | ---------------------------------------------------------- |
+| `formatAfterWrite` | boolean | `true`  | Run Prettier after write/edit tool calls                   |
+| `notifyOnAgentEnd` | boolean | `true`  | Emit a completion bell/log line when an agent run succeeds |
 
 ---
 

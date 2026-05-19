@@ -8,7 +8,11 @@ version: 1.0.0
 
 适用于将 JavaScript + jQuery + HTML/CSS 多页面应用（MPA）或服务端模板渲染项目，迁移至 React + TypeScript 或 Vue 3 + TypeScript 单页面应用（SPA）的场景。
 
-## 适用场景
+## Purpose
+
+指导将 jQuery/MPA 传统前端项目渐进迁移至 React + TypeScript 或 Vue 3 + TypeScript，提供迁移策略、概念映射、分阶段步骤和实施约束，确保功能等价和风险可控。
+
+## When to Use
 
 - 用户明确要求将 jQuery/MPA 项目重构为 React 或 Vue
 - 讨论技术栈升级、遗留系统现代化
@@ -16,10 +20,10 @@ version: 1.0.0
 
 ## 迁移策略选择
 
-| 策略 | 适用情况 | 优点 | 风险 |
-|------|----------|------|------|
+| 策略                        | 适用情况                             | 优点                         | 风险                         |
+| --------------------------- | ------------------------------------ | ---------------------------- | ---------------------------- |
 | **渐进式（Strangler Fig）** | 大型项目、需持续交付、团队熟悉度不足 | 风险可控、可分批上线、可回滚 | 新旧并存期长、需维护两套代码 |
-| **一次性重写** | 中小型项目、业务稳定、有充足时间窗口 | 目标架构清晰、无历史包袱 | 周期长、上线压力大、回滚困难 |
+| **一次性重写**              | 中小型项目、业务稳定、有充足时间窗口 | 目标架构清晰、无历史包袱     | 周期长、上线压力大、回滚困难 |
 
 **推荐**：优先考虑渐进式，除非项目规模小且业务简单。
 
@@ -27,39 +31,39 @@ version: 1.0.0
 
 ### jQuery → React
 
-| 遗留模式 | React 对应 |
-|----------|-------------|
-| `$(selector).html(content)` | 声明式 JSX + state 驱动渲染 |
-| `$(document).on('click', '.btn', handler)` | `onClick` + 事件委托由 React 处理 |
-| `$.ajax()` / `$.get()` | `fetch` / `axios` + React Query 或 SWR |
-| 全局变量 / 命名空间存储状态 | `useState` / `useContext` / Zustand |
-| `$(el).show()` / `$(el).hide()` | 条件渲染 `{visible && <Component />}` |
-| 手动 DOM 操作 `append` / `remove` | 数据驱动，通过 setState 触发重渲染 |
-| 模板字符串拼接 HTML | JSX 组件 + props |
-| 多页面 + 服务端路由 | React Router 客户端路由 |
+| 遗留模式                                   | React 对应                             |
+| ------------------------------------------ | -------------------------------------- |
+| `$(selector).html(content)`                | 声明式 JSX + state 驱动渲染            |
+| `$(document).on('click', '.btn', handler)` | `onClick` + 事件委托由 React 处理      |
+| `$.ajax()` / `$.get()`                     | `fetch` / `axios` + React Query 或 SWR |
+| 全局变量 / 命名空间存储状态                | `useState` / `useContext` / Zustand    |
+| `$(el).show()` / `$(el).hide()`            | 条件渲染 `{visible && <Component />}`  |
+| 手动 DOM 操作 `append` / `remove`          | 数据驱动，通过 setState 触发重渲染     |
+| 模板字符串拼接 HTML                        | JSX 组件 + props                       |
+| 多页面 + 服务端路由                        | React Router 客户端路由                |
 
 ### jQuery → Vue 3
 
-| 遗留模式 | Vue 3 对应 |
-|----------|------------|
-| `$(selector).html(content)` | 模板 + `ref` / `reactive` 驱动渲染 |
-| `$(document).on('click', '.btn', handler)` | `@click` + 事件修饰符 |
-| `$.ajax()` / `$.get()` | `fetch` / `axios` + VueUse `useFetch` 或 Vue Query |
-| 全局变量 / 命名空间存储状态 | `ref` / `reactive` / Pinia |
-| `$(el).show()` / `$(el).hide()` | `v-show` / `v-if` |
-| 手动 DOM 操作 | 数据驱动，通过响应式更新视图 |
-| 模板字符串拼接 HTML | 单文件组件 `<template>` + props |
-| 多页面 + 服务端路由 | Vue Router 客户端路由 |
+| 遗留模式                                   | Vue 3 对应                                         |
+| ------------------------------------------ | -------------------------------------------------- |
+| `$(selector).html(content)`                | 模板 + `ref` / `reactive` 驱动渲染                 |
+| `$(document).on('click', '.btn', handler)` | `@click` + 事件修饰符                              |
+| `$.ajax()` / `$.get()`                     | `fetch` / `axios` + VueUse `useFetch` 或 Vue Query |
+| 全局变量 / 命名空间存储状态                | `ref` / `reactive` / Pinia                         |
+| `$(el).show()` / `$(el).hide()`            | `v-show` / `v-if`                                  |
+| 手动 DOM 操作                              | 数据驱动，通过响应式更新视图                       |
+| 模板字符串拼接 HTML                        | 单文件组件 `<template>` + props                    |
+| 多页面 + 服务端路由                        | Vue Router 客户端路由                              |
 
 ### 通用映射
 
-| 遗留概念 | 现代对应 |
-|----------|----------|
-| 页面级 JS 入口（每页一个 script） | 路由 + 懒加载页面组件 |
-| 公共 JS 模块（utils、ajax 封装） | `services/`、`utils/`、类型化 API 层 |
-| 内联样式 / 页面级 CSS | CSS Modules / Tailwind / styled-components |
-| 服务端模板变量 | 通过 API 获取 + 前端状态管理 |
-| 表单提交 + 整页刷新 | 表单库 + 客户端校验 + API 调用 |
+| 遗留概念                          | 现代对应                                   |
+| --------------------------------- | ------------------------------------------ |
+| 页面级 JS 入口（每页一个 script） | 路由 + 懒加载页面组件                      |
+| 公共 JS 模块（utils、ajax 封装）  | `services/`、`utils/`、类型化 API 层       |
+| 内联样式 / 页面级 CSS             | CSS Modules / Tailwind / styled-components |
+| 服务端模板变量                    | 通过 API 获取 + 前端状态管理               |
+| 表单提交 + 整页刷新               | 表单库 + 客户端校验 + API 调用             |
 
 ## 迁移前分析
 
@@ -158,7 +162,7 @@ version: 1.0.0
 - [ ] 视觉与交互与原项目一致，代码更简洁易维护
 - [ ] 新代码路径文案已 i18n；遗留层未扩大硬编码；locales 检索与多语言同步已完成（参见 i18n 规则迁移补充清单）
 
-## 强约束
+## Constraints
 
 - 迁移前必须先输出迁移分析报告，明确策略、优先级和风险
 - 不要在一次迁移中同时改架构、改 UI、改接口
@@ -176,6 +180,15 @@ version: 1.0.0
 - 目录：项目根目录下的 `reports/`（如不存在则创建）
 - 文件名：`migration-plan-YYYY-MM-DD-HHmmss.md`（使用当前时间戳）
 - 报告应包含：策略选择、存量盘点、依赖关系、迁移优先级、分阶段步骤、风险与回滚方案
+
+## Expected Output
+
+- 迁移分析报告保存为 `reports/migration-plan-YYYY-MM-DD-HHmmss.md`，包含策略选择、存量盘点、依赖关系、分阶段步骤、风险与回滚方案
+- 迁移后的业务功能与原项目完全等价，无功能缺失
+- 视觉与交互与原项目一致，用户无感知差异
+- 类型定义完整，无 `any` 滥用，API 调用统一且类型安全
+- 图片使用原项目资源，样式使用 flex 布局，无内联样式
+- 新代码文案已 i18n，关键路径有测试覆盖
 
 ## 相关技能
 

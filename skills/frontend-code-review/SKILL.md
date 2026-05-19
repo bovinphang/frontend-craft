@@ -6,7 +6,11 @@ version: 1.2.0
 
 # 前端代码评审
 
-在以下场景使用该 Skill：
+## Purpose
+
+从架构、类型安全、可访问性、样式一致性、性能和可测试性等 8 个维度审查前端代码质量，输出分级评审报告。
+
+## When to Use
 
 - 评审 Vue、React、TypeScript、样式、hooks/composables 以及 UI 层代码
 - 检查新代码是否符合团队标准
@@ -125,3 +129,10 @@ version: 1.2.0
 ## 与子代理的配合
 
 需要基于 **git diff**、按 **CRITICAL / HIGH / MEDIUM / LOW** 分级、合并同类问题并输出 **Review Summary 表** 时，可委托插件内置的 **`frontend-code-reviewer`** 子代理；报告文件命名与本 Skill 相同（`code-review-YYYY-MM-DD-HHmmss.md`）。
+
+## Expected Output
+
+- 分级评审报告（CRITICAL / HIGH / MEDIUM / LOW）
+- 每个问题关联具体文件和行号，附修复建议
+- 阻塞项（CRITICAL）修复前不建议合并
+- 评审报告保存为 `reports/code-review-YYYY-MM-DD-HHmmss.md`
