@@ -21,7 +21,7 @@
 
 ---
 
-**面向 Claude Code、Codex、Cursor、OpenCode、Gemini CLI、Windsurf、Copilot、OpenClaw 等工具的通用前端插件。**
+**面向 Claude Code、Codex、Cursor、OpenCode、Gemini CLI、Kilo、Windsurf、Copilot、Antigravity、Augment、Trae、CodeBuddy、Cline、OpenClaw 等工具的通用前端插件。**
 
 `frontend-craft` 將前端評審 agents、工作流 skills、斜線指令、hooks、MCP 範本和專案規範集中在同一倉庫中維護。推薦透過 CLI 將同一套前端工程規範安裝到 14 種 AI 程式設計 runtime。若你**僅透過 Claude Code Marketplace**（原生插件流程）安裝，請見 [docs/runtimes/claude.md](../runtimes/claude.md)（[簡體中文](../runtimes/claude.zh-CN.md)）。
 
@@ -175,16 +175,16 @@ frontend-craft/
 
 ### Commands（斜線指令）
 
-| 指令                       | 用途                                                             | 輸出報告           |
-| -------------------------- | ---------------------------------------------------------------- | ------------------ |
+| 指令            | 用途                                                             | 輸出報告           |
+| --------------- | ---------------------------------------------------------------- | ------------------ |
 | `/fec-init`     | 將專案範本初始化至 `.claude/` 目錄                               | —                  |
 | `/fec-review`   | 對指定或最近變更的檔案執行程式碼規範化審查，輸出分級報告         | `code-review-*.md` |
 | `/fec-scaffold` | 依專案規範建立 page / feature / component 標準目錄結構與樣板檔案 | —                  |
 
 ### Skills（自動啟用）
 
-| Skill                        | 用途                                                               | 輸出報告                    |
-| ---------------------------- | ------------------------------------------------------------------ | --------------------------- |
+| Skill                            | 用途                                                               | 輸出報告                    |
+| -------------------------------- | ------------------------------------------------------------------ | --------------------------- |
 | `fec-frontend-code-review`       | 從架構、型別、渲染、樣式、無障礙等維度審查程式碼                   | `code-review-*.md`          |
 | `fec-security-review`            | XSS、CSRF、敏感資料外洩、輸入驗證等安全審查                        | `security-review-*.md`      |
 | `fec-accessibility-check`        | WCAG 2.1 AA 無障礙檢查                                             | `accessibility-review-*.md` |
@@ -305,21 +305,21 @@ $env:MODAO_TOKEN = "your-modao-token"
 
 所有審查、分析與評估功能均自動將報告儲存為 Markdown 檔案至專案根目錄下的 `reports/` 目錄。
 
-| 報告類型     | 檔名模式                                     | 來源                                                                         |
-| ------------ | -------------------------------------------- | ---------------------------------------------------------------------------- |
+| 報告類型     | 檔名模式                                     | 來源                                                                                 |
+| ------------ | -------------------------------------------- | ------------------------------------------------------------------------------------ |
 | 程式碼審查   | `code-review-YYYY-MM-DD-HHmmss.md`           | `/fec-review` 指令、`fec-frontend-code-review` skill、`frontend-code-reviewer` agent |
-| TS/JS 審查   | `typescript-review-YYYY-MM-DD-HHmmss.md`     | `typescript-reviewer` agent                                                  |
-| 安全審查     | `security-review-YYYY-MM-DD-HHmmss.md`       | `fec-security-review` skill、`frontend-security-reviewer` agent                  |
-| 無障礙檢查   | `accessibility-review-YYYY-MM-DD-HHmmss.md`  | `fec-accessibility-check` skill                                                  |
-| 效能分析     | `performance-review-YYYY-MM-DD-HHmmss.md`    | `performance-optimizer` agent                                                |
-| 架構方案     | `architecture-proposal-YYYY-MM-DD-HHmmss.md` | `frontend-architect` agent                                                   |
-| 設計還原度   | `ui-fidelity-review-YYYY-MM-DD-HHmmss.md`    | `ui-checker` agent                                                           |
-| 設計實作     | `design-implementation-YYYY-MM-DD-HHmmss.md` | `figma-implementer` agent                                                    |
-| Token 對應   | `token-mapping-YYYY-MM-DD-HHmmss.md`         | `design-token-mapper` agent                                                  |
-| 設計計畫     | `design-plan-YYYY-MM-DD-HHmmss.md`           | `fec-implement-from-design` skill                                                |
-| 測試修復     | `test-fix-YYYY-MM-DD-HHmmss.md`              | `fec-test-and-fix` skill                                                         |
-| E2E 執行摘要 | `e2e-summary-YYYY-MM-DD-HHmmss.md`           | `frontend-e2e-runner` agent（可選）                                          |
-| 遷移計畫     | `migration-plan-YYYY-MM-DD-HHmmss.md`        | `fec-legacy-to-modern-migration` skill                                           |
+| TS/JS 審查   | `typescript-review-YYYY-MM-DD-HHmmss.md`     | `typescript-reviewer` agent                                                          |
+| 安全審查     | `security-review-YYYY-MM-DD-HHmmss.md`       | `fec-security-review` skill、`frontend-security-reviewer` agent                      |
+| 無障礙檢查   | `accessibility-review-YYYY-MM-DD-HHmmss.md`  | `fec-accessibility-check` skill                                                      |
+| 效能分析     | `performance-review-YYYY-MM-DD-HHmmss.md`    | `performance-optimizer` agent                                                        |
+| 架構方案     | `architecture-proposal-YYYY-MM-DD-HHmmss.md` | `frontend-architect` agent                                                           |
+| 設計還原度   | `ui-fidelity-review-YYYY-MM-DD-HHmmss.md`    | `ui-checker` agent                                                                   |
+| 設計實作     | `design-implementation-YYYY-MM-DD-HHmmss.md` | `figma-implementer` agent                                                            |
+| Token 對應   | `token-mapping-YYYY-MM-DD-HHmmss.md`         | `design-token-mapper` agent                                                          |
+| 設計計畫     | `design-plan-YYYY-MM-DD-HHmmss.md`           | `fec-implement-from-design` skill                                                    |
+| 測試修復     | `test-fix-YYYY-MM-DD-HHmmss.md`              | `fec-test-and-fix` skill                                                             |
+| E2E 執行摘要 | `e2e-summary-YYYY-MM-DD-HHmmss.md`           | `frontend-e2e-runner` agent（可選）                                                  |
+| 遷移計畫     | `migration-plan-YYYY-MM-DD-HHmmss.md`        | `fec-legacy-to-modern-migration` skill                                               |
 
 > **建議：** 於 `.gitignore` 中加入 `reports/` 以避免將自動產生的報告提交至程式碼倉庫，或保留提交以便團隊成員檢視歷史審查記錄。
 

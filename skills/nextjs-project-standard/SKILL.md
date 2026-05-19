@@ -8,13 +8,17 @@ version: 1.0.0
 
 适用于使用 Next.js 14+ 与 App Router 的仓库。
 
-## 适用场景
+## Purpose
+
+规范 Next.js 14+ 项目中 App Router、SSR/SSG/ISR 渲染模式、数据获取、路由布局、中间件和 SEO 元数据的工程实践，确保服务端优先、性能优化和可维护性。
+
+## When to Use
 
 - 新建或修改 App Router 页面
-- 配置 SSR / SSG / ISR
+- 配置 SSR / SSG / ISR 渲染模式
 - 使用流式渲染、Suspense
 - 数据获取、缓存、中间件
-- 元数据与 SEO
+- 元数据与 SEO 优化
 
 ## 项目结构
 
@@ -56,12 +60,12 @@ src/
 
 ## 渲染模式
 
-| 模式 | 使用场景 | 实现方式 |
-|------|----------|----------|
-| **SSR** | 动态、需实时数据 | 默认，`fetch` 不缓存或 `cache: 'no-store'` |
-| **SSG** | 静态内容 | `generateStaticParams` + 静态 `fetch` |
-| **ISR** | 定期更新 | `revalidate` 或 `revalidatePath` |
-| **CSR** | 客户端交互 | `'use client'` + `useEffect` 或 SWR/React Query |
+| 模式    | 使用场景         | 实现方式                                        |
+| ------- | ---------------- | ----------------------------------------------- |
+| **SSR** | 动态、需实时数据 | 默认，`fetch` 不缓存或 `cache: 'no-store'`      |
+| **SSG** | 静态内容         | `generateStaticParams` + 静态 `fetch`           |
+| **ISR** | 定期更新         | `revalidate` 或 `revalidatePath`                |
+| **CSR** | 客户端交互       | `'use client'` + `useEffect` 或 SWR/React Query |
 
 ## 数据获取
 
@@ -89,7 +93,7 @@ src/
 - 支持 `title`、`description`、`openGraph`、`twitter` 等
 - 动态路由用 `generateMetadata(params)` 生成
 
-## 强约束
+## Constraints
 
 - 服务端组件默认，仅在需要客户端交互时加 `'use client'`
 - 不在服务端组件中直接使用 `useState`、`useEffect`、浏览器 API
@@ -100,3 +104,10 @@ src/
 
 - **服务端**：渲染模式、数据获取与缓存、`loading.tsx` / `error.tsx`、路由与布局等以本 skill 为准。
 - **`'use client'` 组件**：组合与复合组件、表单、客户端状态、列表虚拟化、动效与键盘/焦点等，与纯 React 项目一致，遵循 **`fec-react-project-standard`** skill 及项目中的 React 规则（如 `.claude/rules/react.md`）。
+
+## Expected Output
+
+- 页面组件按 App Router 约定组织（`app/` 目录、`page.tsx`、`layout.tsx`、`loading.tsx`、`error.tsx`）
+- 渲染模式选择正确（SSR/SSG/ISR/CSR），数据获取路径清晰
+- 元数据和 SEO 配置完整（title、description、openGraph）
+- 敏感逻辑在服务端，客户端组件仅处理交互

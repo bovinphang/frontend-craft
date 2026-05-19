@@ -21,7 +21,7 @@
 
 ---
 
-**Claude Code、Codex、Cursor、OpenCode、Gemini CLI、Windsurf、Copilot、OpenClaw などに対応する汎用フロントエンドプラグイン。**
+**Claude Code、Codex、Cursor、OpenCode、Gemini CLI、Kilo、Windsurf、Copilot、Antigravity、Augment、Trae、CodeBuddy、Cline、OpenClaw などに対応する汎用フロントエンドプラグイン。**
 
 `frontend-craft` は、フロントエンドレビュー agents、ワークフロー skills、スラッシュコマンド、hooks、MCP テンプレート、プロジェクトルールを 1 つのリポジトリで管理します。CLI で同じ標準を 14 種類の AI コーディング runtime に導入できます。**Claude Code Marketplace のみ**でネイティブプラグインとして入れる手順は [docs/runtimes/claude.md](../runtimes/claude.md)（[簡体字中国語](../runtimes/claude.zh-CN.md)）を参照してください。
 
@@ -175,16 +175,16 @@ frontend-craft/
 
 ### Commands（スラッシュコマンド）
 
-| コマンド                   | 用途                                                                     | レポート出力       |
-| -------------------------- | ------------------------------------------------------------------------ | ------------------ |
+| コマンド        | 用途                                                                     | レポート出力       |
+| --------------- | ------------------------------------------------------------------------ | ------------------ |
 | `/fec-init`     | プロジェクトテンプレートを `.claude/` に初期化                           | —                  |
 | `/fec-review`   | 指定または最近変更したファイルのコードレビュー、段階別レポート出力       | `code-review-*.md` |
 | `/fec-scaffold` | 規約に従い page / feature / component の標準構造とボイラープレートを作成 | —                  |
 
 ### Skills（自動有効化）
 
-| Skill                        | 用途                                                                                     | レポート出力                |
-| ---------------------------- | ---------------------------------------------------------------------------------------- | --------------------------- |
+| Skill                            | 用途                                                                                     | レポート出力                |
+| -------------------------------- | ---------------------------------------------------------------------------------------- | --------------------------- |
 | `fec-frontend-code-review`       | アーキテクチャ、型、レンダリング、スタイル、a11y の観点でコードレビュー                  | `code-review-*.md`          |
 | `fec-security-review`            | XSS、CSRF、機密データ漏洩、入力検証などのセキュリティレビュー                            | `security-review-*.md`      |
 | `fec-accessibility-check`        | WCAG 2.1 AA アクセシビリティチェック                                                     | `accessibility-review-*.md` |
@@ -305,21 +305,21 @@ $env:MODAO_TOKEN = "your-modao-token"
 
 すべてのレビュー・分析・評価結果はプロジェクトの `reports/` ディレクトリに Markdown ファイルとして自動保存されます。
 
-| レポート種別         | ファイル名パターン                           | ソース                                                                                   |
-| -------------------- | -------------------------------------------- | ---------------------------------------------------------------------------------------- |
+| レポート種別         | ファイル名パターン                           | ソース                                                                                           |
+| -------------------- | -------------------------------------------- | ------------------------------------------------------------------------------------------------ |
 | コードレビュー       | `code-review-YYYY-MM-DD-HHmmss.md`           | `/fec-review` コマンド、`fec-frontend-code-review` スキル、`frontend-code-reviewer` エージェント |
-| TS/JS レビュー       | `typescript-review-YYYY-MM-DD-HHmmss.md`     | `typescript-reviewer` エージェント                                                       |
-| セキュリティレビュー | `security-review-YYYY-MM-DD-HHmmss.md`       | `fec-security-review` スキル、`frontend-security-reviewer` エージェント                      |
-| アクセシビリティ     | `accessibility-review-YYYY-MM-DD-HHmmss.md`  | `fec-accessibility-check` スキル                                                             |
-| パフォーマンス       | `performance-review-YYYY-MM-DD-HHmmss.md`    | `performance-optimizer` エージェント                                                     |
-| アーキテクチャ       | `architecture-proposal-YYYY-MM-DD-HHmmss.md` | `frontend-architect` エージェント                                                        |
-| デザイン忠実度       | `ui-fidelity-review-YYYY-MM-DD-HHmmss.md`    | `ui-checker` エージェント                                                                |
-| デザイン実装         | `design-implementation-YYYY-MM-DD-HHmmss.md` | `figma-implementer` エージェント                                                         |
-| Token マッピング     | `token-mapping-YYYY-MM-DD-HHmmss.md`         | `design-token-mapper` エージェント                                                       |
-| デザイン計画         | `design-plan-YYYY-MM-DD-HHmmss.md`           | `fec-implement-from-design` スキル                                                           |
-| テスト修正           | `test-fix-YYYY-MM-DD-HHmmss.md`              | `fec-test-and-fix` スキル                                                                    |
-| E2E 実行サマリー     | `e2e-summary-YYYY-MM-DD-HHmmss.md`           | `frontend-e2e-runner` エージェント（任意）                                               |
-| 移行計画             | `migration-plan-YYYY-MM-DD-HHmmss.md`        | `fec-legacy-to-modern-migration` スキル                                                      |
+| TS/JS レビュー       | `typescript-review-YYYY-MM-DD-HHmmss.md`     | `typescript-reviewer` エージェント                                                               |
+| セキュリティレビュー | `security-review-YYYY-MM-DD-HHmmss.md`       | `fec-security-review` スキル、`frontend-security-reviewer` エージェント                          |
+| アクセシビリティ     | `accessibility-review-YYYY-MM-DD-HHmmss.md`  | `fec-accessibility-check` スキル                                                                 |
+| パフォーマンス       | `performance-review-YYYY-MM-DD-HHmmss.md`    | `performance-optimizer` エージェント                                                             |
+| アーキテクチャ       | `architecture-proposal-YYYY-MM-DD-HHmmss.md` | `frontend-architect` エージェント                                                                |
+| デザイン忠実度       | `ui-fidelity-review-YYYY-MM-DD-HHmmss.md`    | `ui-checker` エージェント                                                                        |
+| デザイン実装         | `design-implementation-YYYY-MM-DD-HHmmss.md` | `figma-implementer` エージェント                                                                 |
+| Token マッピング     | `token-mapping-YYYY-MM-DD-HHmmss.md`         | `design-token-mapper` エージェント                                                               |
+| デザイン計画         | `design-plan-YYYY-MM-DD-HHmmss.md`           | `fec-implement-from-design` スキル                                                               |
+| テスト修正           | `test-fix-YYYY-MM-DD-HHmmss.md`              | `fec-test-and-fix` スキル                                                                        |
+| E2E 実行サマリー     | `e2e-summary-YYYY-MM-DD-HHmmss.md`           | `frontend-e2e-runner` エージェント（任意）                                                       |
+| 移行計画             | `migration-plan-YYYY-MM-DD-HHmmss.md`        | `fec-legacy-to-modern-migration` スキル                                                          |
 
 > **ヒント：** `.gitignore` に `reports/` を追加して自動生成レポートのコミットを避けるか、チームの履歴のためにコミットを残してください。
 

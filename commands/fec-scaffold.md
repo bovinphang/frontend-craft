@@ -111,7 +111,7 @@ src/components/<Name>/
 `<Name>.tsx` 内容：
 
 ```tsx
-import styles from './<Name>.styles.css';
+import './<Name>.styles.css';
 
 interface <Name>Props {
     // TODO: 定义 props
@@ -119,8 +119,8 @@ interface <Name>Props {
 
 export function <Name>({ }: <Name>Props) {
     return (
-        <div className={styles.root}>
-            <Name>
+        <div className="<name>">
+            TODO: implement <Name>
         </div>
     );
 }
@@ -192,7 +192,7 @@ const props = defineProps<Props>();
 
 <template>
     <div>
-        <Name>
+        <slot />
     </div>
 </template>
 

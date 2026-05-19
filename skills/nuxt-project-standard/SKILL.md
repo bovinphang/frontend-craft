@@ -8,7 +8,11 @@ version: 1.0.0
 
 适用于使用 Nuxt 3 + Vue 3 + TypeScript 的仓库。
 
-## 适用场景
+## Purpose
+
+规范 Nuxt 3 项目中 SSR/SSG 渲染模式、组合式 API、自动导入、数据获取、路由中间件和模块插件的工程实践，确保约定式开发和类型安全。
+
+## When to Use
 
 - 新建或修改页面
 - 配置 SSR / SSG（静态生成）
@@ -64,17 +68,17 @@ version: 1.0.0
 
 ## 渲染模式
 
-| 模式 | 配置 | 说明 |
-|------|------|------|
-| **SSR** | 默认 | `ssr: true` |
+| 模式    | 配置            | 说明           |
+| ------- | --------------- | -------------- |
+| **SSR** | 默认            | `ssr: true`    |
 | **SSG** | `nuxt generate` | 预渲染所有页面 |
-| **SPA** | `ssr: false` | 纯客户端渲染 |
+| **SPA** | `ssr: false`    | 纯客户端渲染   |
 
 ```ts
 // nuxt.config.ts
 export default defineNuxtConfig({
-  ssr: true,  // 或 false
-})
+  ssr: true, // 或 false
+});
 ```
 
 ## 数据获取
@@ -103,9 +107,16 @@ export default defineNuxtConfig({
 - 插件：`plugins/*.ts`，支持 `.client`、`.server` 后缀
 - 模块：`modules/` 或 `node_modules`，在 `nuxt.config` 中 `modules: []`
 
-## 强约束
+## Constraints
 
 - 服务端可访问的代码不要依赖 `window`、`document`
 - 使用 `useState` 共享状态时注意 SSR 序列化
 - 图片使用 `NuxtImg`，链接使用 `NuxtLink`
 - 避免在 `setup` 顶层使用 `await` 导致阻塞，优先用 `useAsyncData` / `useFetch`
+
+## Expected Output
+
+- 页面按 `pages/` 约定式路由组织，动态路由正确配置
+- 渲染模式（SSR/SSG/SPA）选择正确，`nuxt.config.ts` 配置清晰
+- 数据获取使用 `useFetch` / `useAsyncData`，自动去重和水合
+- Composables 和组件自动导入正确，服务端/客户端边界清晰

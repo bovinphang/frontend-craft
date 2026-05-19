@@ -8,7 +8,11 @@ version: 1.0.0
 
 适用于未使用现代框架（Vue / React / Angular）的传统前端项目，包括 jQuery 多页面应用、服务端模板渲染项目（JSP / Thymeleaf / PHP / Django Template / EJS / Handlebars 等）以及需要长期维护的遗留系统。
 
-## 适用场景
+## Purpose
+
+为 JavaScript + jQuery + HTML/CSS 传统前端项目提供开发与维护规范，确保遗留代码的可维护性、安全性和渐进改进。
+
+## When to Use
 
 - 基于 jQuery 的多页面应用（MPA）
 - 服务端渲染 + 前端增强的项目
@@ -36,28 +40,28 @@ version: 1.0.0
 
 ```javascript
 var App = App || {};
-App.UserModule = (function($) {
-    'use strict';
+App.UserModule = (function ($) {
+  "use strict";
 
-    var config = {
-        apiBase: '/api/v1'
-    };
+  var config = {
+    apiBase: "/api/v1",
+  };
 
-    function init() {
-        bindEvents();
-        loadData();
-    }
+  function init() {
+    bindEvents();
+    loadData();
+  }
 
-    function bindEvents() {
-        $(document).on('click', '.js-submit-btn', handleSubmit);
-    }
+  function bindEvents() {
+    $(document).on("click", ".js-submit-btn", handleSubmit);
+  }
 
-    function handleSubmit(e) {
-        e.preventDefault();
-        // ...
-    }
+  function handleSubmit(e) {
+    e.preventDefault();
+    // ...
+  }
 
-    return { init: init };
+  return { init: init };
 })(jQuery);
 ```
 
@@ -79,21 +83,24 @@ App.UserModule = (function($) {
 
 ```javascript
 function fetchUserList(params) {
-    return $.ajax({
-        url: config.apiBase + '/users',
-        method: 'GET',
-        data: params,
-        dataType: 'json'
-    }).done(function(res) {
-        if (res.code === 0) {
-            renderList(res.data);
-        } else {
-            showError(res.message);
-        }
-    }).fail(function(xhr) {
-        showError('网络错误，请稍后重试');
-    }).always(function() {
-        hideLoading();
+  return $.ajax({
+    url: config.apiBase + "/users",
+    method: "GET",
+    data: params,
+    dataType: "json",
+  })
+    .done(function (res) {
+      if (res.code === 0) {
+        renderList(res.data);
+      } else {
+        showError(res.message);
+      }
+    })
+    .fail(function (xhr) {
+      showError("网络错误，请稍后重试");
+    })
+    .always(function () {
+      hideLoading();
     });
 }
 ```
@@ -160,18 +167,18 @@ function fetchUserList(params) {
 
 ```javascript
 // 错误：XSS 风险
-$('.username').html(userData.name);
+$(".username").html(userData.name);
 
 // 正确：使用 .text() 转义
-$('.username').text(userData.name);
+$(".username").text(userData.name);
 
 // 正确：需要 HTML 时手动转义
 function escapeHtml(str) {
-    var div = document.createElement('div');
-    div.appendChild(document.createTextNode(str));
-    return div.innerHTML;
+  var div = document.createElement("div");
+  div.appendChild(document.createTextNode(str));
+  return div.innerHTML;
 }
-$('.comment').html('<p>' + escapeHtml(userData.comment) + '</p>');
+$(".comment").html("<p>" + escapeHtml(userData.comment) + "</p>");
 ```
 
 ### 其他安全项
@@ -217,6 +224,8 @@ project/
 
 ## 输出检查清单
 
+开发或维护完成后，确认：
+
 - [ ] 没有全局变量泄漏
 - [ ] 事件使用委托，绑定在合理的容器上
 - [ ] DOM 选择器已缓存
@@ -224,3 +233,20 @@ project/
 - [ ] 用户输入已转义，无 XSS 风险
 - [ ] 与项目已有代码风格保持一致
 - [ ] 如涉及新增第三方库，已确认必要性
+
+## Constraints
+
+- 在现有架构内改进，不要引入与项目格格不入的现代框架
+- 渐进增强优于推倒重来，保持与项目已有代码风格一致
+- **禁止**使用 `innerHTML` / `.html()` 直接插入用户输入
+- 避免全局变量污染，使用 IIFE 或命名空间模式隔离
+- 不要在一次改动中同时引入多项改进，每次聚焦一个点
+- 优先修复问题，而不是重构整个模块
+
+## Expected Output
+
+- 代码无全局变量污染，使用 IIFE 或命名空间模式隔离
+- 事件委托正确使用，选择器已缓存，DOM 操作批量处理
+- Ajax 请求具备 loading / error / 空状态处理和防重复提交
+- 用户输入已转义，无 XSS 风险，CSRF token 正确传递
+- 与项目已有代码风格一致，渐进改进不破坏现有功能

@@ -18,6 +18,18 @@
     ]
   },
   {
+    "id": "fec-component-testing",
+    "name": "组件测试",
+    "category": "quality",
+    "tags": [
+      "rtl",
+      "vue-test-utils",
+      "component-test",
+      "user-event",
+      "regression"
+    ]
+  },
+  {
     "id": "fec-canvas-threejs",
     "name": "Canvas 与 Three.js",
     "category": "frontend",
@@ -120,10 +132,35 @@
     "tags": ["react", "typescript", "hooks", "components", "architecture"]
   },
   {
+    "id": "fec-route-protection",
+    "name": "路由保护",
+    "category": "frontend",
+    "tags": [
+      "auth",
+      "rbac",
+      "route-guard",
+      "middleware",
+      "react-router",
+      "vue-router"
+    ]
+  },
+  {
     "id": "fec-security-review",
     "name": "前端安全审查",
     "category": "security",
     "tags": ["xss", "csrf", "csp", "security", "owasp", "dompurify"]
+  },
+  {
+    "id": "fec-svg-animation",
+    "name": "SVG 动画",
+    "category": "ui-design",
+    "tags": [
+      "svg",
+      "animation",
+      "framer-motion",
+      "gsap",
+      "micro-interaction"
+    ]
   },
   {
     "id": "fec-storybook-component-doc",

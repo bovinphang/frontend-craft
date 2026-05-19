@@ -21,7 +21,7 @@
 
 ---
 
-**A universal frontend plugin for Claude Code, Codex, Cursor, OpenCode, Gemini CLI, Windsurf, Copilot, OpenClaw, and more.**
+**A universal frontend plugin for Claude Code, Codex, Cursor, OpenCode, Gemini CLI, Kilo, Windsurf, Copilot, Antigravity, Augment, Trae, CodeBuddy, Cline, OpenClaw, and more.**
 
 `frontend-craft` packages frontend review agents, workflow skills, slash commands, hooks, MCP templates, and project rules into one repo. Use the CLI to install the same frontend standards into 14 supported AI coding runtimes. If you install only through **Claude Code Marketplace** (native plugin flow), see [docs/runtimes/claude.md](docs/runtimes/claude.md) · [简体中文](docs/runtimes/claude.zh-CN.md).
 
@@ -54,7 +54,7 @@ npx frontend-craft@latest install --all --dry-run --global
 
 Supported runtimes: `claude`, `codex`, `cursor`, `windsurf`, `opencode`, `kilo`, `gemini`, `copilot`, `antigravity`, `augment`, `trae`, `codebuddy`, `cline`, `openclaw`.
 
-Per-runtime notes live in [`docs/runtimes/`](docs/runtimes/). The OpenClaw npm package can be packed from this repo with `npm run pack:openclaw`, which builds and verifies, then writes **`frontend-craft-openclaw-<version>.tgz`** to the **repository root** (for example `frontend-craft-openclaw-2.0.1.tgz`).
+Per-runtime notes live in [`docs/runtimes/`](docs/runtimes/). The OpenClaw npm package can be packed from this repo with `npm run pack:openclaw`, which builds and verifies, then writes **`frontend-craft-openclaw-<version>.tgz`** to the **repository root** (for example `frontend-craft-openclaw-2.1.1.tgz`).
 
 ---
 
@@ -142,6 +142,14 @@ frontend-craft/
 |   |-- nextjs-project-standard/    # Next.js 14+ App Router, SSR/SSG standards
 |   |-- nuxt-project-standard/      # Nuxt 3 SSR/SSG, composables standards
 |   |-- monorepo-project-standard/  # pnpm workspace, Turborepo, Nx standards
+|   |-- data-fetching/              # TanStack Query and server-state workflows
+|   |-- form-handling/              # React Hook Form + Zod form workflows
+|   |-- route-protection/           # Authenticated and permissioned routes
+|   |-- component-testing/          # RTL / Vue Test Utils component tests
+|   |-- pwa-implementation/         # PWA manifest, service worker, offline
+|   |-- web-workers/                # Worker integration and background compute
+|   |-- canvas-threejs/             # Canvas, Three.js, React Three Fiber
+|   |-- svg-animation/              # SVG motion and reduced-motion fallbacks
 |
 |-- commands/         # Slash commands for quick execution
 |   |-- fec-init.md     # /fec-init - Initialize project templates
@@ -176,16 +184,16 @@ Slash commands in the tables below are shown **for Claude Code** as a familiar e
 
 ### Commands
 
-| Command                    | Purpose                                                                   | Report output      |
-| -------------------------- | ------------------------------------------------------------------------- | ------------------ |
+| Command         | Purpose                                                                   | Report output      |
+| --------------- | ------------------------------------------------------------------------- | ------------------ |
 | `/fec-init`     | Initialize project templates to `.claude/`                                | —                  |
 | `/fec-review`   | Code review for specified or recently changed files, output graded report | `code-review-*.md` |
 | `/fec-scaffold` | Create page / feature / component structure and boilerplate by convention | —                  |
 
 ### Skills (auto-activated)
 
-| Skill                        | Purpose                                                                                 | Report output               |
-| ---------------------------- | --------------------------------------------------------------------------------------- | --------------------------- |
+| Skill                            | Purpose                                                                                 | Report output               |
+| -------------------------------- | --------------------------------------------------------------------------------------- | --------------------------- |
 | `fec-frontend-code-review`       | Review code on architecture, types, rendering, styles, a11y                             | `code-review-*.md`          |
 | `fec-security-review`            | Security review: XSS, CSRF, sensitive data leakage, input validation                    | `security-review-*.md`      |
 | `fec-accessibility-check`        | WCAG 2.1 AA accessibility check                                                         | `accessibility-review-*.md` |
@@ -199,6 +207,17 @@ Slash commands in the tables below are shown **for Claude Code** as a familiar e
 | `fec-nextjs-project-standard`    | Next.js 14+ App Router, SSR/SSG, streaming, metadata, middleware standards              | —                           |
 | `fec-nuxt-project-standard`      | Nuxt 3 SSR/SSG, composables, data fetching, routing, middleware standards               | —                           |
 | `fec-monorepo-project-standard`  | pnpm workspace, Turborepo, Nx: structure, deps, task orchestration                      | —                           |
+| `fec-data-fetching`              | TanStack Query / server-state fetching, caching, invalidation, optimistic updates       | —                           |
+| `fec-form-handling`              | React Hook Form + Zod forms, dynamic fields, uploads, multi-step flows                  | —                           |
+| `fec-browser-storage`            | localStorage/sessionStorage/IndexedDB/Cookies selection and safe client persistence     | —                           |
+| `fec-route-protection`           | Authenticated and permissioned routes for React Router, Next.js, Vue Router, Nuxt       | —                           |
+| `fec-component-testing`          | React Testing Library / Vue Test Utils component tests and regression scenarios         | —                           |
+| `fec-storybook-component-doc`    | Storybook component docs, addons, MDX, interaction and visual test integration          | —                           |
+| `fec-list-virtualization`        | Large-list windowing with react-window / TanStack Virtual and measurement strategies    | —                           |
+| `fec-pwa-implementation`         | Manifest, service worker, offline cache, install prompts, update handling               | —                           |
+| `fec-web-workers`                | Web Worker integration, transferable objects, Comlink, worker pools                     | —                           |
+| `fec-canvas-threejs`             | Canvas 2D, Three.js, React Three Fiber, WebGL performance and accessibility             | —                           |
+| `fec-svg-animation`              | SVG animation with CSS, Framer Motion, GSAP, reduced-motion fallbacks                   | —                           |
 
 ### Agents
 
@@ -307,21 +326,21 @@ Add these to your shell config (`~/.bashrc`, `~/.zshrc`) or Windows system envir
 
 All review, analysis, and evaluation outputs are saved as Markdown files to the project `reports/` directory.
 
-| Report type            | Filename pattern                             | Source                                                                          |
-| ---------------------- | -------------------------------------------- | ------------------------------------------------------------------------------- |
+| Report type            | Filename pattern                             | Source                                                                                  |
+| ---------------------- | -------------------------------------------- | --------------------------------------------------------------------------------------- |
 | Code review            | `code-review-YYYY-MM-DD-HHmmss.md`           | `/fec-review` command, `fec-frontend-code-review` skill, `frontend-code-reviewer` agent |
-| TypeScript / JS review | `typescript-review-YYYY-MM-DD-HHmmss.md`     | `typescript-reviewer` agent                                                     |
-| Security review        | `security-review-YYYY-MM-DD-HHmmss.md`       | `fec-security-review` skill, `frontend-security-reviewer` agent                     |
-| Accessibility          | `accessibility-review-YYYY-MM-DD-HHmmss.md`  | `fec-accessibility-check` skill                                                     |
-| Performance            | `performance-review-YYYY-MM-DD-HHmmss.md`    | `performance-optimizer` agent                                                   |
-| Architecture           | `architecture-proposal-YYYY-MM-DD-HHmmss.md` | `frontend-architect` agent                                                      |
-| Design fidelity        | `ui-fidelity-review-YYYY-MM-DD-HHmmss.md`    | `ui-checker` agent                                                              |
-| Design implementation  | `design-implementation-YYYY-MM-DD-HHmmss.md` | `figma-implementer` agent                                                       |
-| Token mapping          | `token-mapping-YYYY-MM-DD-HHmmss.md`         | `design-token-mapper` agent                                                     |
-| Design plan            | `design-plan-YYYY-MM-DD-HHmmss.md`           | `fec-implement-from-design` skill                                                   |
-| Test fix               | `test-fix-YYYY-MM-DD-HHmmss.md`              | `fec-test-and-fix` skill                                                            |
-| E2E run summary        | `e2e-summary-YYYY-MM-DD-HHmmss.md`           | `frontend-e2e-runner` agent (optional)                                          |
-| Migration plan         | `migration-plan-YYYY-MM-DD-HHmmss.md`        | `fec-legacy-to-modern-migration` skill                                              |
+| TypeScript / JS review | `typescript-review-YYYY-MM-DD-HHmmss.md`     | `typescript-reviewer` agent                                                             |
+| Security review        | `security-review-YYYY-MM-DD-HHmmss.md`       | `fec-security-review` skill, `frontend-security-reviewer` agent                         |
+| Accessibility          | `accessibility-review-YYYY-MM-DD-HHmmss.md`  | `fec-accessibility-check` skill                                                         |
+| Performance            | `performance-review-YYYY-MM-DD-HHmmss.md`    | `performance-optimizer` agent                                                           |
+| Architecture           | `architecture-proposal-YYYY-MM-DD-HHmmss.md` | `frontend-architect` agent                                                              |
+| Design fidelity        | `ui-fidelity-review-YYYY-MM-DD-HHmmss.md`    | `ui-checker` agent                                                                      |
+| Design implementation  | `design-implementation-YYYY-MM-DD-HHmmss.md` | `figma-implementer` agent                                                               |
+| Token mapping          | `token-mapping-YYYY-MM-DD-HHmmss.md`         | `design-token-mapper` agent                                                             |
+| Design plan            | `design-plan-YYYY-MM-DD-HHmmss.md`           | `fec-implement-from-design` skill                                                       |
+| Test fix               | `test-fix-YYYY-MM-DD-HHmmss.md`              | `fec-test-and-fix` skill                                                                |
+| E2E run summary        | `e2e-summary-YYYY-MM-DD-HHmmss.md`           | `frontend-e2e-runner` agent (optional)                                                  |
+| Migration plan         | `migration-plan-YYYY-MM-DD-HHmmss.md`        | `fec-legacy-to-modern-migration` skill                                                  |
 
 > **Tip:** Add `reports/` to `.gitignore` to avoid committing auto-generated reports, or keep them committed for team history.
 

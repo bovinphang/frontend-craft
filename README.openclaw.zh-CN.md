@@ -105,12 +105,12 @@ OpenClaw 通常从代理工作区加载上下文，例如 `~/.openclaw/workspace
 
 常见环境变量：
 
-| 变量 | 工具 |
-| --- | --- |
-| `FIGMA_API_KEY` | Figma / Desktop |
-| `SKETCH_API_KEY` | Sketch |
-| `MG_MCP_TOKEN` | MasterGo |
-| `MODAO_TOKEN` | 墨刀 |
+| 变量             | 工具            |
+| ---------------- | --------------- |
+| `FIGMA_API_KEY`  | Figma / Desktop |
+| `SKETCH_API_KEY` | Sketch          |
+| `MG_MCP_TOKEN`   | MasterGo        |
+| `MODAO_TOKEN`    | 墨刀            |
 
 Pixso 使用 `.mcp.json` 中的本地 MCP URL。摹客暂无 MCP 集成，请使用截图或导出标注。
 
@@ -136,29 +136,40 @@ frontend-craft-openclaw/
 
 ### 命令
 
-| 文件 | 用途 |
-| --- | --- |
-| `commands/fec-init.md` | 初始化 frontend-craft 工作区模板 |
-| `commands/fec-review.md` | 引导式前端代码评审 |
-| `commands/fec-scaffold.md` | 页面 / 功能 / 组件脚手架指南 |
+| 文件                       | 用途                             |
+| -------------------------- | -------------------------------- |
+| `commands/fec-init.md`     | 初始化 frontend-craft 工作区模板 |
+| `commands/fec-review.md`   | 引导式前端代码评审               |
+| `commands/fec-scaffold.md` | 页面 / 功能 / 组件脚手架指南     |
 
 ### 技能
 
-| 技能 | 用途 |
-| --- | --- |
-| `fec-frontend-code-review` | 架构、类型安全、渲染、样式、可访问性、测试、安全评审 |
-| `fec-security-review` | XSS、CSRF、敏感数据泄露、不安全输入处理 |
-| `fec-accessibility-check` | 面向 WCAG 的语义结构、键盘支持、焦点、标签检查 |
-| `fec-react-project-standard` | React + TypeScript 项目规范 |
-| `fec-vue3-project-standard` | Vue 3 + TypeScript 项目规范 |
-| `fec-implement-from-design` | 基于 Figma、Sketch、MasterGo、Pixso、墨刀或截图实现 UI |
-| `fec-test-and-fix` | 执行校验命令、分析失败并安全修复 |
-| `fec-legacy-web-standard` | JavaScript + jQuery + HTML/CSS 传统前端规范 |
-| `fec-legacy-to-modern-migration` | jQuery / MPA 迁移到 React 或 Vue + TypeScript 的策略 |
-| `fec-e2e-testing` | Playwright / Cypress E2E 结构、产物、CI 与不稳定用例治理 |
-| `fec-nextjs-project-standard` | Next.js App Router、SSR/SSG、路由、元数据、中间件 |
-| `fec-nuxt-project-standard` | Nuxt 3 SSR/SSG、组合式函数、路由、中间件 |
-| `fec-monorepo-project-standard` | pnpm workspace、Turborepo、Nx 结构与任务编排 |
+| 技能                             | 用途                                                           |
+| -------------------------------- | -------------------------------------------------------------- |
+| `fec-frontend-code-review`       | 架构、类型安全、渲染、样式、可访问性、测试、安全评审           |
+| `fec-security-review`            | XSS、CSRF、敏感数据泄露、不安全输入处理                        |
+| `fec-accessibility-check`        | 面向 WCAG 的语义结构、键盘支持、焦点、标签检查                 |
+| `fec-react-project-standard`     | React + TypeScript 项目规范                                    |
+| `fec-vue3-project-standard`      | Vue 3 + TypeScript 项目规范                                    |
+| `fec-implement-from-design`      | 基于 Figma、Sketch、MasterGo、Pixso、墨刀或截图实现 UI         |
+| `fec-test-and-fix`               | 执行校验命令、分析失败并安全修复                               |
+| `fec-legacy-web-standard`        | JavaScript + jQuery + HTML/CSS 传统前端规范                    |
+| `fec-legacy-to-modern-migration` | jQuery / MPA 迁移到 React 或 Vue + TypeScript 的策略           |
+| `fec-e2e-testing`                | Playwright / Cypress E2E 结构、产物、CI 与不稳定用例治理       |
+| `fec-nextjs-project-standard`    | Next.js App Router、SSR/SSG、路由、元数据、中间件              |
+| `fec-nuxt-project-standard`      | Nuxt 3 SSR/SSG、组合式函数、路由、中间件                       |
+| `fec-monorepo-project-standard`  | pnpm workspace、Turborepo、Nx 结构与任务编排                   |
+| `fec-data-fetching`              | TanStack Query / 服务端状态获取、缓存、失效、乐观更新          |
+| `fec-form-handling`              | React Hook Form + Zod 表单、动态字段、上传、多步流程           |
+| `fec-browser-storage`            | localStorage/sessionStorage/IndexedDB/Cookies 选型与安全持久化 |
+| `fec-route-protection`           | React Router、Next.js、Vue Router、Nuxt 的权限路由保护         |
+| `fec-component-testing`          | RTL / Vue Test Utils 组件测试与回归用例                        |
+| `fec-storybook-component-doc`    | Storybook 组件文档、Addon、MDX、交互与视觉测试集成             |
+| `fec-list-virtualization`        | react-window / TanStack Virtual 大列表虚拟滚动                 |
+| `fec-pwa-implementation`         | PWA manifest、Service Worker、离线缓存与安装提示               |
+| `fec-web-workers`                | Web Worker、Transferable、Comlink、Worker 池                   |
+| `fec-canvas-threejs`             | Canvas 2D、Three.js、React Three Fiber、WebGL 性能与可访问性   |
+| `fec-svg-animation`              | CSS、Framer Motion、GSAP SVG 动画与 reduced-motion 降级        |
 
 ### 技能使用：场景与示例
 
@@ -172,46 +183,56 @@ frontend-craft-openclaw/
 
 **常见场景与示例话术**
 
-| 场景 | 技能（供查阅） | 示例话术（不出现技能名） |
-| --- | --- | --- |
-| 合并前做 PR / 分支评审 | `fec-frontend-code-review` | 「合并前请评审 `src/features/checkout/`：架构、类型、无障碍和测试；把 Markdown 报告写到 `reports/`。」 |
-| 聚焦 XSS、密钥、危险 DOM | `fec-security-review` | 「请审计 `src/lib/auth.ts` 以及所有渲染或存储用户 HTML 的代码，按严重程度列出 XSS 与密钥泄露风险及修复建议。」 |
-| 新弹窗 / 表单 — 键盘与 ARIA | `fec-accessibility-check` | 「检查 `src/components/ConfirmDialog.tsx` 的键盘陷阱、焦点顺序、标签与 ARIA，并给出可落地的修改建议。」 |
-| 对齐 React 工程约定 | `fec-react-project-standard` | 「我们使用 React 18 和 TanStack Query，请对照成熟 React + TS 实践评审 `src/pages/Dashboard/`，并贴合现有抽象。」 |
-| 对齐 Vue 工程约定 | `fec-vue3-project-standard` | 「请评审 `src/views/Settings.vue` 及相关 composables，是否符合 Vue 3 + TS 惯例并与项目其余部分一致。」 |
-| 按设计稿 / 截图实现 UI | `fec-implement-from-design` | 「请按 Figma 节点 `123:456` 实现该界面：间距与设计 Token 对齐，复用现有 `Button`，并说明假设条件。」 |
-| CI 或本地脚本失败 | `fec-test-and-fix` | 「`pnpm lint` 和 `pnpm test` 都挂了，请定位根因并修复，不要放宽类型或跳过检查。」 |
-| 维护 jQuery / MPA 老页面 | `fec-legacy-web-standard` | 「`public/js/legacy/*.js` 仍在生产使用，请在保持行为的前提下给出可维护性改进与模式建议。」 |
-| 规划 jQuery → React/Vue 迁移 | `fec-legacy-to-modern-migration` | 「我们有 `static/app.js` 的 jQuery + 多页应用，请输出迁到 React + TypeScript 的分阶段方案、风险与里程碑。」 |
-| 补充或稳定 E2E | `fec-e2e-testing` | 「请用 Playwright 给登录流程加冒烟用例：目录清晰、使用 Page Object，并说明如何在 CI 里跑。」 |
-| Next.js App Router 功能 | `fec-nextjs-project-standard` | 「请评审 `app/(dashboard)/reports/page.tsx` 及相关 server actions 是否符合 Next.js App Router 最佳实践（数据获取、错误、元数据等）。」 |
-| Nuxt 3 页面或布局 | `fec-nuxt-project-standard` | 「请评审 `pages/admin/*.vue` 与 `composables/useApi.ts` 是否符合 Nuxt 3 的 SSR、数据与组合式用法惯例。」 |
-| Monorepo 边界与任务编排 | `fec-monorepo-project-standard` | 「`apps/web` 依赖 `packages/ui`，请检查包边界、workspace 配置和 Turborepo 任务图是否有问题。」 |
+| 场景                         | 技能（供查阅）                   | 示例话术（不出现技能名）                                                                                                               |
+| ---------------------------- | -------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------- |
+| 合并前做 PR / 分支评审       | `fec-frontend-code-review`       | 「合并前请评审 `src/features/checkout/`：架构、类型、无障碍和测试；把 Markdown 报告写到 `reports/`。」                                 |
+| 聚焦 XSS、密钥、危险 DOM     | `fec-security-review`            | 「请审计 `src/lib/auth.ts` 以及所有渲染或存储用户 HTML 的代码，按严重程度列出 XSS 与密钥泄露风险及修复建议。」                         |
+| 新弹窗 / 表单 — 键盘与 ARIA  | `fec-accessibility-check`        | 「检查 `src/components/ConfirmDialog.tsx` 的键盘陷阱、焦点顺序、标签与 ARIA，并给出可落地的修改建议。」                                |
+| 对齐 React 工程约定          | `fec-react-project-standard`     | 「我们使用 React 18 和 TanStack Query，请对照成熟 React + TS 实践评审 `src/pages/Dashboard/`，并贴合现有抽象。」                       |
+| 对齐 Vue 工程约定            | `fec-vue3-project-standard`      | 「请评审 `src/views/Settings.vue` 及相关 composables，是否符合 Vue 3 + TS 惯例并与项目其余部分一致。」                                 |
+| 按设计稿 / 截图实现 UI       | `fec-implement-from-design`      | 「请按 Figma 节点 `123:456` 实现该界面：间距与设计 Token 对齐，复用现有 `Button`，并说明假设条件。」                                   |
+| CI 或本地脚本失败            | `fec-test-and-fix`               | 「`pnpm lint` 和 `pnpm test` 都挂了，请定位根因并修复，不要放宽类型或跳过检查。」                                                      |
+| 维护 jQuery / MPA 老页面     | `fec-legacy-web-standard`        | 「`public/js/legacy/*.js` 仍在生产使用，请在保持行为的前提下给出可维护性改进与模式建议。」                                             |
+| 规划 jQuery → React/Vue 迁移 | `fec-legacy-to-modern-migration` | 「我们有 `static/app.js` 的 jQuery + 多页应用，请输出迁到 React + TypeScript 的分阶段方案、风险与里程碑。」                            |
+| 补充或稳定 E2E               | `fec-e2e-testing`                | 「请用 Playwright 给登录流程加冒烟用例：目录清晰、使用 Page Object，并说明如何在 CI 里跑。」                                           |
+| Next.js App Router 功能      | `fec-nextjs-project-standard`    | 「请评审 `app/(dashboard)/reports/page.tsx` 及相关 server actions 是否符合 Next.js App Router 最佳实践（数据获取、错误、元数据等）。」 |
+| Nuxt 3 页面或布局            | `fec-nuxt-project-standard`      | 「请评审 `pages/admin/*.vue` 与 `composables/useApi.ts` 是否符合 Nuxt 3 的 SSR、数据与组合式用法惯例。」                               |
+| Monorepo 边界与任务编排      | `fec-monorepo-project-standard`  | 「`apps/web` 依赖 `packages/ui`，请检查包边界、workspace 配置和 Turborepo 任务图是否有问题。」                                         |
+| 服务端数据获取               | `fec-data-fetching`              | 「请评审 `src/queries/useReports.ts` 的 TanStack Query 模式：缓存 key、失效策略和乐观更新。」                                          |
+| 复杂表单与校验               | `fec-form-handling`              | 「用 React Hook Form + Zod 构建多步注册表单，包含文件上传和动态条件字段。」                                                            |
+| 为应用添加路由守卫           | `fec-route-protection`           | 「为 React Router 的 `/admin` 路由做权限保护：未登录用户重定向，基于角色控制访问。」                                                   |
+| 编写组件单元测试             | `fec-component-testing`          | 「为 `src/components/UserCard.tsx` 编写 RTL 测试：渲染、user-event 交互和快照回归用例。」                                              |
+| 组件库文档化                 | `fec-storybook-component-doc`    | 「为 `packages/ui/` 搭建 Storybook：MDX 文档、无障碍 addon 和交互测试。」                                                              |
+| 渲染上万条列表数据           | `fec-list-virtualization`        | 「`ProductList` 渲染上万行太卡，请用 react-window 或 TanStack Virtual 做虚拟滚动并测量滚动性能。」                                     |
+| 添加离线支持                 | `fec-pwa-implementation`         | 「把这个 React 应用做成 PWA：manifest、Service Worker、离线缓存策略和安装提示。」                                                      |
+| 重计算移出主线程             | `fec-web-workers`                | 「把图片处理逻辑移到 Web Worker，用 Comlink 通信，保持 UI 响应。」                                                                     |
+| 构建交互式 3D 场景           | `fec-canvas-threejs`             | 「在 `src/components/ProductViewer.tsx` 添加 Three.js 产品展示，兼顾性能和降级方案。」                                                 |
+| 为落地页添加 SVG 动效        | `fec-svg-animation`              | 「用 Framer Motion 为 hero 区 SVG 添加动画，并为 reduced-motion 用户提供静态降级方案。」                                               |
 
 **斜杠命令（`commands/` 下的 Markdown）**
 
 作为**固定步骤**的命令说明加载。对话里用自然语言描述要做的事即可，代理可按对应命令文档执行，**无需**说出命令文件名。
 
-| 命令文档 | 适用时机 | 示例（自然语言） |
-| --- | --- | --- |
-| `fec-init.md` | 在**业务仓库**里初始化 **Claude 风格** 的 `.claude/` 模板（文档内路径针对 `.claude/`）。 | 「请在本仓库初始化 `.claude/`，按插件提供的模板与规则复制；若已有文件请先问我是否覆盖。」 |
-| `fec-review.md` | 引导式评审并保存 `reports/code-review-*.md`。 | 「请评审我上一次提交里改动的文件，并写一份结构化 Markdown 报告到 `reports/`。」 |
-| `fec-scaffold.md` | 页面 / 功能 / 组件目录脚手架。 | 「请为 React 项目脚手架一个新页面 UserDetail：放在 `src/pages/...`，并带上空的 `components/` 与 `hooks/` 目录。」 |
+| 命令文档          | 适用时机                                                                                 | 示例（自然语言）                                                                                                  |
+| ----------------- | ---------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------- |
+| `fec-init.md`     | 在**业务仓库**里初始化 **Claude 风格** 的 `.claude/` 模板（文档内路径针对 `.claude/`）。 | 「请在本仓库初始化 `.claude/`，按插件提供的模板与规则复制；若已有文件请先问我是否覆盖。」                         |
+| `fec-review.md`   | 引导式评审并保存 `reports/code-review-*.md`。                                            | 「请评审我上一次提交里改动的文件，并写一份结构化 Markdown 报告到 `reports/`。」                                   |
+| `fec-scaffold.md` | 页面 / 功能 / 组件目录脚手架。                                                           | 「请为 React 项目脚手架一个新页面 UserDetail：放在 `src/pages/...`，并带上空的 `components/` 与 `hooks/` 目录。」 |
 
 ### Hooks
 
-| Hook | 行为 |
-| --- | --- |
-| `before_tool_call` | 拦截危险 shell / exec 类命令 |
-| `after_tool_call` | 可选地对 write/edit 目标运行 Prettier（`formatAfterWrite`，默认开启） |
-| `before_prompt_build` | 每个会话追加一次框架与包管理器提示 |
-| `agent_end` | 运行成功时输出完成提示音 / 日志行（`notifyOnAgentEnd`，默认开启） |
+| Hook                  | 行为                                                                  |
+| --------------------- | --------------------------------------------------------------------- |
+| `before_tool_call`    | 拦截危险 shell / exec 类命令                                          |
+| `after_tool_call`     | 可选地对 write/edit 目标运行 Prettier（`formatAfterWrite`，默认开启） |
+| `before_prompt_build` | 每个会话追加一次框架与包管理器提示                                    |
+| `agent_end`           | 运行成功时输出完成提示音 / 日志行（`notifyOnAgentEnd`，默认开启）     |
 
 ### 插件配置
 
-| 键 | 类型 | 默认 | 含义 |
-| --- | --- | --- | --- |
-| `formatAfterWrite` | boolean | `true` | write/edit 工具调用后运行 Prettier |
+| 键                 | 类型    | 默认   | 含义                                    |
+| ------------------ | ------- | ------ | --------------------------------------- |
+| `formatAfterWrite` | boolean | `true` | write/edit 工具调用后运行 Prettier      |
 | `notifyOnAgentEnd` | boolean | `true` | agent 运行成功时输出完成提示音 / 日志行 |
 
 ---

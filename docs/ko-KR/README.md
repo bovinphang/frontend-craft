@@ -21,7 +21,7 @@
 
 ---
 
-**Claude Code, Codex, Cursor, OpenCode, Gemini CLI, Windsurf, Copilot, OpenClaw 등을 위한 범용 프론트엔드 플러그인.**
+**Claude Code, Codex, Cursor, OpenCode, Gemini CLI, Kilo, Windsurf, Copilot, Antigravity, Augment, Trae, CodeBuddy, Cline, OpenClaw 등을 위한 범용 프론트엔드 플러그인.**
 
 `frontend-craft`는 프론트엔드 리뷰 agents, 워크플로 skills, 슬래시 명령, hooks, MCP 템플릿, 프로젝트 규칙을 하나의 저장소에서 관리합니다. CLI로 동일한 프론트엔드 표준을 14개 AI 코딩 runtime에 설치할 수 있습니다. **Claude Code Marketplace만** 사용하는 네이티브 플러그인 설치 절차는 [docs/runtimes/claude.md](../runtimes/claude.md) ([简体中文](../runtimes/claude.zh-CN.md))를 참고하세요.
 
@@ -175,16 +175,16 @@ frontend-craft/
 
 ### Commands (슬래시 명령어)
 
-| 명령어                     | 용도                                                                            | 보고서 출력        |
-| -------------------------- | ------------------------------------------------------------------------------- | ------------------ |
+| 명령어          | 용도                                                                            | 보고서 출력        |
+| --------------- | ------------------------------------------------------------------------------- | ------------------ |
 | `/fec-init`     | 프로젝트 템플릿을 `.claude/`에 초기화                                           | —                  |
 | `/fec-review`   | 지정 또는 최근 변경 파일의 코드 규약화 리뷰, 등급별 보고서 출력                 | `code-review-*.md` |
 | `/fec-scaffold` | 프로젝트 규약에 따라 page / feature / component 표준 구조와 보일러플레이트 생성 | —                  |
 
 ### Skills (자동 활성화)
 
-| Skill                        | 용도                                                                             | 보고서 출력                 |
-| ---------------------------- | -------------------------------------------------------------------------------- | --------------------------- |
+| Skill                            | 용도                                                                             | 보고서 출력                 |
+| -------------------------------- | -------------------------------------------------------------------------------- | --------------------------- |
 | `fec-frontend-code-review`       | 아키텍처, 타입, 렌더링, 스타일, 접근성 등 관점에서 코드 리뷰                     | `code-review-*.md`          |
 | `fec-security-review`            | XSS, CSRF, 민감 데이터 유출, 입력 검증 등 보안 리뷰                              | `security-review-*.md`      |
 | `fec-accessibility-check`        | WCAG 2.1 AA 접근성 검사                                                          | `accessibility-review-*.md` |
@@ -305,21 +305,21 @@ $env:MODAO_TOKEN = "your-modao-token"
 
 모든 리뷰·분석·평가 결과는 프로젝트 루트 `reports/` 디렉터리에 Markdown 파일로 자동 저장됩니다.
 
-| 보고서 유형       | 파일명 패턴                                  | 출처                                                                             |
-| ----------------- | -------------------------------------------- | -------------------------------------------------------------------------------- |
+| 보고서 유형       | 파일명 패턴                                  | 출처                                                                                     |
+| ----------------- | -------------------------------------------- | ---------------------------------------------------------------------------------------- |
 | 코드 리뷰         | `code-review-YYYY-MM-DD-HHmmss.md`           | `/fec-review` 명령어, `fec-frontend-code-review` 스킬, `frontend-code-reviewer` 에이전트 |
-| TS/JS 리뷰        | `typescript-review-YYYY-MM-DD-HHmmss.md`     | `typescript-reviewer` 에이전트                                                   |
-| 보안 리뷰         | `security-review-YYYY-MM-DD-HHmmss.md`       | `fec-security-review` 스킬, `frontend-security-reviewer` 에이전트                    |
-| 접근성            | `accessibility-review-YYYY-MM-DD-HHmmss.md`  | `fec-accessibility-check` 스킬                                                       |
-| 성능              | `performance-review-YYYY-MM-DD-HHmmss.md`    | `performance-optimizer` 에이전트                                                 |
-| 아키텍처          | `architecture-proposal-YYYY-MM-DD-HHmmss.md` | `frontend-architect` 에이전트                                                    |
-| 디자인 충실도     | `ui-fidelity-review-YYYY-MM-DD-HHmmss.md`    | `ui-checker` 에이전트                                                            |
-| 디자인 구현       | `design-implementation-YYYY-MM-DD-HHmmss.md` | `figma-implementer` 에이전트                                                     |
-| Token 매핑        | `token-mapping-YYYY-MM-DD-HHmmss.md`         | `design-token-mapper` 에이전트                                                   |
-| 디자인 계획       | `design-plan-YYYY-MM-DD-HHmmss.md`           | `fec-implement-from-design` 스킬                                                     |
-| 테스트 수정       | `test-fix-YYYY-MM-DD-HHmmss.md`              | `fec-test-and-fix` 스킬                                                              |
-| E2E 실행 요약     | `e2e-summary-YYYY-MM-DD-HHmmss.md`           | `frontend-e2e-runner` 에이전트 (선택)                                            |
-| 마이그레이션 계획 | `migration-plan-YYYY-MM-DD-HHmmss.md`        | `fec-legacy-to-modern-migration` 스킬                                                |
+| TS/JS 리뷰        | `typescript-review-YYYY-MM-DD-HHmmss.md`     | `typescript-reviewer` 에이전트                                                           |
+| 보안 리뷰         | `security-review-YYYY-MM-DD-HHmmss.md`       | `fec-security-review` 스킬, `frontend-security-reviewer` 에이전트                        |
+| 접근성            | `accessibility-review-YYYY-MM-DD-HHmmss.md`  | `fec-accessibility-check` 스킬                                                           |
+| 성능              | `performance-review-YYYY-MM-DD-HHmmss.md`    | `performance-optimizer` 에이전트                                                         |
+| 아키텍처          | `architecture-proposal-YYYY-MM-DD-HHmmss.md` | `frontend-architect` 에이전트                                                            |
+| 디자인 충실도     | `ui-fidelity-review-YYYY-MM-DD-HHmmss.md`    | `ui-checker` 에이전트                                                                    |
+| 디자인 구현       | `design-implementation-YYYY-MM-DD-HHmmss.md` | `figma-implementer` 에이전트                                                             |
+| Token 매핑        | `token-mapping-YYYY-MM-DD-HHmmss.md`         | `design-token-mapper` 에이전트                                                           |
+| 디자인 계획       | `design-plan-YYYY-MM-DD-HHmmss.md`           | `fec-implement-from-design` 스킬                                                         |
+| 테스트 수정       | `test-fix-YYYY-MM-DD-HHmmss.md`              | `fec-test-and-fix` 스킬                                                                  |
+| E2E 실행 요약     | `e2e-summary-YYYY-MM-DD-HHmmss.md`           | `frontend-e2e-runner` 에이전트 (선택)                                                    |
+| 마이그레이션 계획 | `migration-plan-YYYY-MM-DD-HHmmss.md`        | `fec-legacy-to-modern-migration` 스킬                                                    |
 
 > **팁:** `.gitignore`에 `reports/`를 추가해 자동 생성 보고서 커밋을 피하거나, 팀 기록을 위해 커밋을 유지하세요.
 

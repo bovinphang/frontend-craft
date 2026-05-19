@@ -9,6 +9,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 Project-facing release notes are maintained in English from 2.0.0 onward. Historical entries may preserve their original language.
 
+## [2.1.1] - 2026-05-18
+
+### Added
+
+- **11 new skills**: `fec-data-fetching` (TanStack Query), `fec-form-handling` (React Hook Form + Zod), `fec-browser-storage` (client persistence), `fec-route-protection` (auth/permission routes), `fec-component-testing` (RTL / Vue Test Utils), `fec-storybook-component-doc` (Storybook docs), `fec-list-virtualization` (react-window / TanStack Virtual), `fec-pwa-implementation` (PWA), `fec-web-workers` (Web Worker), `fec-canvas-threejs` (Canvas/Three.js/R3F), `fec-svg-animation` (SVG motion).
+- **Shared rules**: `responsive-design.md`, `rendering-patterns.md` — deployed via `/fec-init`.
+- **metadata consistency test**: `tests/install/metadata-consistency.test.mjs` validates that `skills/metadata.json`, README tables, and marketplace description stay in sync.
+
+### Changed
+
+- **Agent behavior (`frontend-code-reviewer`):** report-only by default — no longer modifies business files unless explicitly requested.
+- **Skill structure**: React, Vue, Next.js, Nuxt, Monorepo, legacy-web, legacy-migration, and implement-from-design skills aligned to a five-section template: Purpose / When to Use / Procedure / Constraints / Expected Output.
+- **Scaffold templates**: fixed React CSS import (`import './<Name>.styles.css'` instead of `import styles from ...`); Vue scaffold uses `<slot />` instead of bare component tag.
+- **Marketplace description**: skills count updated from 13 → 24, with new capabilities (component testing, route protection, PWA, Web Workers, Canvas/Three.js, SVG animation).
+- **Skills fusion assessment** (`docs/skills-fusion-assessment.md`): condensed from 399 lines to a 64-line reference with coverage matrix.
+
 ## [2.0.1] - 2026-05-14
 
 ### Fixed
