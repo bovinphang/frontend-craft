@@ -1,4 +1,4 @@
-# frontend-craft-openclaw
+# frontend-craft
 
 [![Stars](https://img.shields.io/github/stars/bovinphang/frontend-craft?style=flat)](https://github.com/bovinphang/frontend-craft/stargazers)
 [![CI](https://github.com/bovinphang/frontend-craft/actions/workflows/ci.yml/badge.svg)](https://github.com/bovinphang/frontend-craft/actions/workflows/ci.yml)
@@ -20,7 +20,7 @@
 
 **An OpenClaw native plugin build for frontend-craft.**
 
-`frontend-craft-openclaw` ships the OpenClaw-native package for [frontend-craft](https://github.com/bovinphang/frontend-craft): workflow skills, markdown commands, OpenClaw workspace templates, typed hooks, a design MCP reference, and the optional `frontend_craft_init_workspace` tool.
+`frontend-craft` ships the OpenClaw-native package for [frontend-craft](https://github.com/bovinphang/frontend-craft): workflow skills, markdown commands, OpenClaw workspace templates, typed hooks, a design MCP reference, and the optional `frontend_craft_init_workspace` tool.
 
 **Requirements:** Node.js **>= 22**, OpenClaw plugin API **>= 2026.4.20**.
 
@@ -39,7 +39,7 @@ openclaw plugins install clawhub:frontend-craft
 From npm:
 
 ```bash
-openclaw plugins install frontend-craft-openclaw
+openclaw plugins install frontend-craft
 ```
 
 From a local tarball built from the main repository:
@@ -47,7 +47,7 @@ From a local tarball built from the main repository:
 ```bash
 npm install
 npm run pack:openclaw
-openclaw plugins install ./frontend-craft-openclaw-<version>.tgz
+openclaw plugins install ./frontend-craft-<version>.tgz
 ```
 
 For local development, link the package directory:
@@ -58,7 +58,7 @@ openclaw plugins install -l /path/to/frontend-craft/npm-packages/openclaw
 
 ### 2. Enable The Plugin
 
-The plugin id is `frontend-craft` even when the npm package is `frontend-craft-openclaw`.
+The npm package name and plugin id are both `frontend-craft`.
 
 ```json5
 {
@@ -119,7 +119,7 @@ Pixso uses the local MCP URL shown in `.mcp.json`. MockingBot has no MCP integra
 ## Package Layout
 
 ```text
-frontend-craft-openclaw/
+frontend-craft/
 |-- dist/                  # Bundled OpenClaw plugin entry
 |-- skills/                # Workflow skills
 |-- commands/              # Markdown command specs loaded as skills
@@ -247,7 +247,7 @@ npm run typecheck:openclaw
 npm run pack:openclaw
 ```
 
-`npm run pack:openclaw` builds and verifies the OpenClaw bundle, refreshes `npm-packages/openclaw`, and writes `frontend-craft-openclaw-<version>.tgz` to the repository root.
+`npm run pack:openclaw` builds and verifies the OpenClaw bundle, refreshes `npm-packages/openclaw`, and writes `frontend-craft-<version>.tgz` to the `npm-packages/openclaw/` directory.
 
 ---
 

@@ -17,6 +17,114 @@ npm test
 npm run typecheck:openclaw
 ```
 
+## 项目结构
+
+```
+├── agents/          # Agent 定义（Markdown + YAML frontmatter）
+├── bin/             # CLI 入口 (frontend-craft.mjs)
+├── commands/        # 自定义命令定义 (fec-init, fec-review, fec-scaffold)
+├── docs/            # 各 runtime 安装文档与多语言 README
+├── hooks/           # Hook 配置 (hooks.json)
+├── scripts/         # 辅助脚本（格式化、通知、安全检查、测试运行等）
+├── skills/          # Skill 定义 (SKILL.md + metadata.json)
+├── src/             # 源代码
+│   ├── install/     # 安装器核心 (CLI、交互式向导、各 runtime 转换器)
+│   └── openclaw/    # OpenClaw runtime TypeScript 源码
+├── templates/       # 模板文件 (Claude/Codex/OpenClaw 配置 + 共享规则)
+├── tests/           # 测试用例
+│   ├── converters/  # 转换器测试
+│   └── install/     # 安装器测试 (CLI、端到端、全 runtime dry-run)
+└── package.json     # 项目配置与脚本
+```
+
+## 本地开发与调试
+
+```bash
+# 1. 安装依赖
+npm install
+
+# 2. 本地安装到指定 runtime（如 claude）
+node bin/frontend-craft.mjs install claude --local --dry-run  # 先 dry-run 预览
+node bin/frontend-craft.mjs install claude --local            # 实际安装
+
+# 3. 安装到所有 runtime
+node bin/frontend-craft.mjs install --all --dry-run
+
+# 4. 列出所有支持的 runtime
+node bin/frontend-craft.mjs list
+```
+
+## 测试指南
+
+测试使用 Node.js 内置 `node:test` + `assert/strict`。
+
+```bash
+# 运行所有测试
+npm test
+
+# 运行单个测试文件
+node --test tests/install/cli.test.mjs
+
+# 运行安装器相关测试
+node --test tests/install/*.mjs
+
+# 运行转换器相关测试
+node --test tests/converters/*.mjs
+
+# 运行全 runtime dry-run 测试
+node --test tests/install/all-runtimes-dry.test.mjs
+```
+
+测试交互式安装向导时，设置 `FRONTEND_CRAFT_FORCE_INTERACTIVE=1` 环境变量：
+
+```bash
+FRONTEND_CRAFT_FORCE_INTERACTIVE=1 node --test tests/install/cli.test.mjs
+```
+
+## OpenClaw 构建流程
+
+OpenClaw runtime 有独立的构建管线：
+
+```bash
+npm run build:openclaw          # 使用 esbuild 将 TypeScript 打包到 dist/openclaw/
+npm run typecheck:openclaw      # TypeScript 类型检查
+npm run check:openclaw-dist     # 验证 dist 完整性
+npm run pack:openclaw           # 完整构建 + 验证 + 打包
+```
+
+源码路径：`src/openclaw/`（TypeScript）→ `dist/openclaw/index.js`（打包后的 ESM）。
+TypeScript 配置：`tsconfig.openclaw.json`。
+
+## Scripts 目录说明
+
+| 脚本                                        | 用途                      |
+| ------------------------------------------- | ------------------------- |
+| `scripts/run-tests.mjs`                     | 测试运行辅助              |
+| `scripts/format-changed-file.mjs`           | 格式化变更文件            |
+| `scripts/security-check.mjs`                | 安全检查                  |
+| `scripts/notify.mjs`                        | 通知脚本                  |
+| `scripts/session-start.mjs`                 | 会话初始化                |
+| `scripts/sync-codex-agents-toml.mjs`        | 同步 Codex agents 配置    |
+| `scripts/openclaw/build.mjs`                | OpenClaw esbuild 打包     |
+| `scripts/openclaw/pack-openclaw.mjs`        | OpenClaw 打包             |
+| `scripts/openclaw/verify-openclaw-dist.mjs` | 验证 OpenClaw dist 完整性 |
+
+## 架构概览
+
+通用安装器的架构如下：
+
+```
+bin/frontend-craft.mjs
+  └─ src/install/cli.mjs              # CLI 入口（解析命令：install/list/version/uninstall）
+       ├─ src/install/registry.mjs    # runtime 注册表（名称 + 安装器映射）
+       ├─ src/install/converters/     # 各 runtime 适配器（claude, codex, cursor, copilot 等）
+       ├─ src/install/interactive.mjs # 交互式安装向导（runtime/位置选择）
+       ├─ src/install/runtime-homes.mjs # 全局/本地目录约定
+       └─ src/install/types.mjs       # 共享 TypeScript 类型
+```
+
+`src/install/converters/` 下的每个 runtime 转换器都实现了 `types.mjs` 中定义的 `InstallContext` 接口，将 skills、agents、commands、hooks 和模板写入目标 runtime 的配置目录。
+
 ## 分支策略
 
 - `main` — 稳定发布分支。
@@ -38,14 +146,14 @@ npm run typecheck:openclaw
 
 常见类型：
 
-| Type       | 含义                 |
-| ---------- | -------------------- |
-| `feat`     | 新功能               |
-| `fix`      | Bug 修复             |
-| `docs`     | 文档                 |
-| `refactor` | 重构                 |
-| `test`     | 测试                 |
-| `chore`    | 构建、工具或维护     |
+| Type       | 含义             |
+| ---------- | ---------------- |
+| `feat`     | 新功能           |
+| `fix`      | Bug 修复         |
+| `docs`     | 文档             |
+| `refactor` | 重构             |
+| `test`     | 测试             |
+| `chore`    | 构建、工具或维护 |
 
 示例：
 

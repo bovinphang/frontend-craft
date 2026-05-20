@@ -5,8 +5,11 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 import {
   buildRuntimePromptText,
+  createLocationPromptState,
+  createRuntimePromptState,
   parseLocationInput,
   parseRuntimeInput,
+  renderSelectablePrompt,
 } from "../../src/install/interactive.mjs";
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "../..");
@@ -68,8 +71,54 @@ test("location parser defaults to global and accepts local", () => {
 test("runtime prompt describes multi-select and all option", () => {
   const prompt = buildRuntimePromptText();
   assert.match(prompt, /Which runtime\(s\) would you like to install for\?/);
-  assert.match(prompt, /Select multiple: 1,2,6 or 1 2 6/);
+  assert.match(prompt, /Selected:\s+Claude Code/);
+  assert.match(prompt, /Search: \[type to filter\]/);
+  assert.match(prompt, /↑↓ navigate • Space toggle • Backspace remove • Enter confirm/);
+  assert.match(prompt, /◉ Claude Code \(selected\)/);
+  assert.match(prompt, /○ Codex/);
   assert.match(prompt, /Claude Code/);
   assert.match(prompt, /OpenClaw/);
-  assert.match(prompt, /All/);
+  assert.doesNotMatch(prompt, /\b1\)/);
+});
+
+test("runtime selectable prompt toggles, removes, filters, and confirms multiple values", () => {
+  const state = createRuntimePromptState();
+  assert.deepEqual(state.selected, ["claude"]);
+
+  state.move(1);
+  state.toggle();
+  assert.deepEqual(state.selected, ["claude", "codex"]);
+
+  state.backspace();
+  assert.deepEqual(state.selected, ["claude"]);
+
+  state.type("open");
+  assert.equal(state.visibleOptions()[0].value, "opencode");
+  state.toggle();
+  assert.deepEqual(state.confirm(), ["claude", "opencode"]);
+});
+
+test("location selectable prompt remains single-select", () => {
+  const state = createLocationPromptState(["claude"]);
+  assert.deepEqual(state.selected, ["global"]);
+
+  state.move(1);
+  state.toggle();
+  assert.deepEqual(state.selected, ["local"]);
+  assert.equal(state.confirm(), false);
+
+  state.move(-1);
+  state.toggle();
+  assert.deepEqual(state.selected, ["global"]);
+  assert.equal(state.confirm(), true);
+});
+
+test("selectable prompt render includes selected summary, search, controls, and pagination", () => {
+  const state = createRuntimePromptState({ pageSize: 2 });
+  const rendered = renderSelectablePrompt(state);
+  assert.match(rendered, /Selected:\s+Claude Code/);
+  assert.match(rendered, /Search: \[type to filter\]/);
+  assert.match(rendered, /↑↓ navigate • Space toggle • Backspace remove • Enter confirm/);
+  assert.match(rendered, /› ◉ Claude Code \(selected\)/);
+  assert.match(rendered, /\(1\/\d+\)/);
 });

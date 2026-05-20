@@ -17,6 +17,114 @@ npm test
 npm run typecheck:openclaw
 ```
 
+## Project Structure
+
+```
+├── agents/          # Agent definitions (Markdown + YAML frontmatter)
+├── bin/             # CLI entry point (frontend-craft.mjs)
+├── commands/        # Custom commands (fec-init, fec-review, fec-scaffold)
+├── docs/            # Runtime installation docs and localized READMEs
+├── hooks/           # Hook configuration (hooks.json)
+├── scripts/         # Helper scripts (formatting, notifications, security, testing)
+├── skills/          # Skill definitions (SKILL.md, metadata.json)
+├── src/             # Source code
+│   ├── install/     # Installer core (CLI, interactive wizard, runtime converters)
+│   └── openclaw/    # OpenClaw runtime TypeScript source
+├── templates/       # Templates (Claude/Codex/OpenClaw configs + shared rules)
+├── tests/           # Test suite
+│   ├── converters/  # Converter tests
+│   └── install/     # Installer tests (CLI, E2E, all-runtimes dry-run)
+└── package.json     # Project configuration and scripts
+```
+
+## Local Development and Debugging
+
+```bash
+# 1. Install dependencies
+npm install
+
+# 2. Install to a specific runtime (e.g., claude)
+node bin/frontend-craft.mjs install claude --local --dry-run  # preview first
+node bin/frontend-craft.mjs install claude --local            # actual install
+
+# 3. Install to all runtimes
+node bin/frontend-craft.mjs install --all --dry-run
+
+# 4. List all supported runtimes
+node bin/frontend-craft.mjs list
+```
+
+## Testing
+
+Tests use Node.js built-in `node:test` with `assert/strict`.
+
+```bash
+# Run all tests
+npm test
+
+# Run a single test file
+node --test tests/install/cli.test.mjs
+
+# Run installer tests
+node --test tests/install/*.mjs
+
+# Run converter tests
+node --test tests/converters/*.mjs
+
+# Run all-runtimes dry-run test
+node --test tests/install/all-runtimes-dry.test.mjs
+```
+
+For testing the interactive installation wizard, set `FRONTEND_CRAFT_FORCE_INTERACTIVE=1`:
+
+```bash
+FRONTEND_CRAFT_FORCE_INTERACTIVE=1 node --test tests/install/cli.test.mjs
+```
+
+## OpenClaw Build
+
+The OpenClaw runtime has its own build pipeline:
+
+```bash
+npm run build:openclaw          # Bundle TypeScript to dist/openclaw/ via esbuild
+npm run typecheck:openclaw      # TypeScript type checking
+npm run check:openclaw-dist     # Verify dist integrity
+npm run pack:openclaw           # Full build + verify + package
+```
+
+Source: `src/openclaw/` (TypeScript) → `dist/openclaw/index.js` (bundled ESM).
+TypeScript config: `tsconfig.openclaw.json`.
+
+## Scripts
+
+| Script                                      | Purpose                           |
+| ------------------------------------------- | --------------------------------- |
+| `scripts/run-tests.mjs`                     | Test runner helper                |
+| `scripts/format-changed-file.mjs`           | Format changed files              |
+| `scripts/security-check.mjs`                | Security scanning                 |
+| `scripts/notify.mjs`                        | Notification script               |
+| `scripts/session-start.mjs`                 | Session initialization            |
+| `scripts/sync-codex-agents-toml.mjs`        | Sync Codex agents configuration   |
+| `scripts/openclaw/build.mjs`                | OpenClaw esbuild bundler          |
+| `scripts/openclaw/pack-openclaw.mjs`        | OpenClaw packaging                |
+| `scripts/openclaw/verify-openclaw-dist.mjs` | Verify OpenClaw dist completeness |
+
+## Architecture Overview
+
+The universal installer follows this architecture:
+
+```
+bin/frontend-craft.mjs
+  └─ src/install/cli.mjs              # CLI entry (parse commands: install/list/version/uninstall)
+       ├─ src/install/registry.mjs    # Runtime registry (names + installer map)
+       ├─ src/install/converters/     # Per-runtime adapters (claude, codex, cursor, copilot, etc.)
+       ├─ src/install/interactive.mjs # Interactive wizard (runtime/location prompts)
+       ├─ src/install/runtime-homes.mjs # Global/local directory conventions
+       └─ src/install/types.mjs       # Shared TypeScript types
+```
+
+Each runtime converter under `src/install/converters/` implements the `InstallContext` interface from `types.mjs`, writing skills, agents, commands, hooks, and templates to the target runtime's configuration directory.
+
 ## Branch Strategy
 
 - `main` - stable release branch.

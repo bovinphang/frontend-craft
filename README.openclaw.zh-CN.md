@@ -1,4 +1,4 @@
-# frontend-craft-openclaw
+# frontend-craft
 
 [![Stars](https://img.shields.io/github/stars/bovinphang/frontend-craft?style=flat)](https://github.com/bovinphang/frontend-craft/stargazers)
 [![CI](https://github.com/bovinphang/frontend-craft/actions/workflows/ci.yml/badge.svg)](https://github.com/bovinphang/frontend-craft/actions/workflows/ci.yml)
@@ -20,7 +20,7 @@
 
 **面向 OpenClaw 的 frontend-craft 原生插件包。**
 
-`frontend-craft-openclaw` 是 [frontend-craft](https://github.com/bovinphang/frontend-craft) 的 OpenClaw 原生打包产物，包含工作流技能、Markdown 命令、OpenClaw 工作区模板、typed hooks、设计工具 MCP 参考配置，以及可选的 `frontend_craft_init_workspace` 初始化工具。
+`frontend-craft` 是 [frontend-craft](https://github.com/bovinphang/frontend-craft) 的 OpenClaw 原生打包产物，包含工作流技能、Markdown 命令、OpenClaw 工作区模板、typed hooks、设计工具 MCP 参考配置，以及可选的 `frontend_craft_init_workspace` 初始化工具。
 
 **环境要求：** Node.js **>= 22**，OpenClaw plugin API **>= 2026.4.20**。
 
@@ -39,7 +39,7 @@ openclaw plugins install clawhub:frontend-craft
 从 npm 安装：
 
 ```bash
-openclaw plugins install frontend-craft-openclaw
+openclaw plugins install frontend-craft
 ```
 
 从主仓库构建出的本地 tarball 安装：
@@ -47,7 +47,7 @@ openclaw plugins install frontend-craft-openclaw
 ```bash
 npm install
 npm run pack:openclaw
-openclaw plugins install ./frontend-craft-openclaw-<version>.tgz
+openclaw plugins install ./frontend-craft-<version>.tgz
 ```
 
 本地开发时可链接包目录：
@@ -58,7 +58,7 @@ openclaw plugins install -l /path/to/frontend-craft/npm-packages/openclaw
 
 ### 2. 启用插件
 
-npm 包名是 `frontend-craft-openclaw`，但 OpenClaw 插件 id 是 `frontend-craft`。
+npm 包名和 OpenClaw 插件 id 均为 `frontend-craft`。
 
 ```json5
 {
@@ -119,7 +119,7 @@ Pixso 使用 `.mcp.json` 中的本地 MCP URL。摹客暂无 MCP 集成，请使
 ## 包结构
 
 ```text
-frontend-craft-openclaw/
+frontend-craft/
 |-- dist/                  # 打包后的 OpenClaw 插件入口
 |-- skills/                # 工作流技能
 |-- commands/              # 作为技能加载的 Markdown 命令说明
@@ -247,7 +247,7 @@ npm run typecheck:openclaw
 npm run pack:openclaw
 ```
 
-`npm run pack:openclaw` 会构建并校验 OpenClaw bundle，刷新 `npm-packages/openclaw`，并在仓库根目录写出 `frontend-craft-openclaw-<version>.tgz`。
+`npm run pack:openclaw` 会构建并校验 OpenClaw bundle，刷新 `npm-packages/openclaw`，并在 `npm-packages/openclaw/` 目录下写出 `frontend-craft-<version>.tgz`。
 
 ---
 
