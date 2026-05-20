@@ -8,7 +8,17 @@
 
 自 **2.0.0** 起，面向发布的说明以英文 `CHANGELOG.md` 为权威来源；历史条目可能保留最初撰写语言。
 
-## [2.1.1] - 2026-05-18
+## [Unreleased]
+
+### 变更
+
+- **CONTRIBUTING 文档**：完善 `CONTRIBUTING.md` 与 `CONTRIBUTING.zh-CN.md`，新增项目结构概览、本地开发与调试指南、测试说明（Node.js `node:test`、单文件运行、通过 `FRONTEND_CRAFT_FORCE_INTERACTIVE=1` 测试交互模式）、OpenClaw 构建管线（`build`/`typecheck`/`pack`）、`scripts/` 目录参考表，以及安装器架构关系图。
+
+- **OpenClaw 包重命名**：`frontend-craft-openclaw` → `frontend-craft`。npm 包名、tarball 文件名及 README 引用全部更新。打包产物改写入 `npm-packages/openclaw/` 而非仓库根目录。影响 `scripts/openclaw/pack-openclaw.mjs`、`README.md`、`README.zh-CN.md`、`README.openclaw.md`、`README.openclaw.zh-CN.md` 及 `docs/MIGRATION-FROM-LEGACY-REPOS.md`。CHANGELOG 中 2.0.0/2.0.1 历史条目也已同步修正。
+
+- **交互式安装向导**：将数字选择提示升级为 TTY 交互式可选 prompt 系统，支持 ↑↓ 导航、Space 切换、Backspace 删除、搜索过滤和分页。影响 `src/install/interactive.mjs`，并在 `tests/install/cli.test.mjs` 中新增测试覆盖。
+
+## [2.1.1] - 2026-05-19
 
 ### 新增
 
@@ -32,7 +42,7 @@
 
 ### 变更
 
-- **版本号：** 根 npm 包、`.claude-plugin` 清单、`openclaw.plugin.json` 以及 `npm-packages/openclaw/` 中的 **`frontend-craft-openclaw`** 暂存包均升至 **2.0.1**。
+- **版本号：** 根 npm 包、`.claude-plugin` 清单、`openclaw.plugin.json` 以及 `npm-packages/openclaw/` 中的 **`frontend-craft`** 暂存包均升至 **2.0.1**。
 
 ## [2.0.0] - 2026-05-14
 
@@ -41,7 +51,7 @@
 - **通用 CLI** `frontend-craft`：`install`、`list`、`version`、`uninstall`（卸载仅为提示）；支持 runtime：Claude Code、Codex、Cursor、Windsurf、OpenCode、Kilo、Gemini CLI、Copilot、Antigravity、Augment、Trae、CodeBuddy、Cline、OpenClaw（`src/install/`、`bin/frontend-craft.mjs`）。在 TTY 下执行 `npx frontend-craft` / 无 runtime 的 `install` 可进入交互向导；支持 `--local` / `-l` 安装到当前项目。
 - **根目录 `package.json`**：Node 22+ `engines`、npm `files` 清单、通过 `node --test` 运行的测试。
 - **`templates/shared/rules`** 与 **`templates/claude/`** 布局；Codex 模板在 **`templates/codex/`**；OpenClaw 模板在 **`templates/openclaw/`**。
-- **`openclaw.plugin.json`** 与 **`src/openclaw/`** TypeScript 插件（由原 `frontend-craft-openclaw` 合并）；`npm run build:openclaw` 构建，`npm run pack:openclaw` 在**仓库根目录**生成 **`frontend-craft-openclaw-<version>.tgz`**（打包过程会暂存至 `npm-packages/openclaw/`）。
+- **`openclaw.plugin.json`** 与 **`src/openclaw/`** TypeScript 插件（由原 `frontend-craft-openclaw` 合并）；`npm run build:openclaw` 构建，`npm run pack:openclaw` 在 **`npm-packages/openclaw/`** 生成 **`frontend-craft-<version>.tgz`**（打包过程会暂存至 `npm-packages/openclaw/`）。
 - **`docs/runtimes/*.md`** 各 runtime 安装摘要（含非交互场景下 `--local` / `--global` 提示）。
 - **`LICENSE`**（MIT）。
 - **开源治理**：英文 `CONTRIBUTING.md`、简体中文 **CONTRIBUTING.zh-CN.md**、`SECURITY.md` / **SECURITY.zh-CN.md**、`CODE_OF_CONDUCT.md` / **CODE_OF_CONDUCT.zh-CN.md**、**CHANGELOG.zh-CN.md**、GitHub Issue 模板、PR 模板与 CI 工作流。

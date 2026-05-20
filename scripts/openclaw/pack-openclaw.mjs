@@ -1,5 +1,5 @@
 /**
- * Prepare npm-packages/openclaw for publishing frontend-craft-openclaw tarball.
+ * Prepare npm-packages/openclaw for publishing frontend-craft tarball.
  */
 import { cpSync, mkdirSync, rmSync, writeFileSync, readFileSync } from "node:fs";
 import path from "node:path";
@@ -16,7 +16,7 @@ mkdirSync(packRoot, { recursive: true });
 const mainPkg = JSON.parse(readFileSync(path.join(root, "package.json"), "utf8"));
 
 const pkg = {
-  name: "frontend-craft-openclaw",
+  name: "frontend-craft",
   version: mainPkg.version,
   description: "OpenClaw native plugin build for Frontend Craft (skills, hooks, workspace init).",
   type: "module",
@@ -52,6 +52,6 @@ cpSync(path.join(root, "LICENSE"), path.join(packRoot, "LICENSE"));
 
 writeFileSync(path.join(packRoot, "package.json"), JSON.stringify(pkg, null, 2), "utf8");
 
-execSync(`npm pack --pack-destination "${root}"`, { cwd: packRoot, stdio: "inherit" });
+execSync(`npm pack --pack-destination "${packRoot}"`, { cwd: packRoot, stdio: "inherit" });
 
-console.log("Packed frontend-craft-openclaw from", packRoot, "to", root);
+console.log("Packed frontend-craft from", packRoot, "to", packRoot);
