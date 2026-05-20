@@ -60,5 +60,5 @@
 
 - 不复制参考仓库原文、示例代码或 metadata；所有内容都必须按本插件语境重写。
 - 不引入参考仓库的平台绑定表达。
-- 新增 skill 必须同步：`skills/<name>/SKILL.md`、`skills/metadata.json`、README/中文 README、必要时 runtime 文档或 command 说明。
+- 新增 skill 必须同步：`skills/fec-<name>/SKILL.md`、`skills/metadata.json`、README/中文 README、必要时 runtime 文档或 command 说明。
 - 每次新增或重命名 skill 后运行 `npm test`。

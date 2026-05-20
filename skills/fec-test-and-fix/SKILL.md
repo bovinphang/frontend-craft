@@ -1,0 +1,75 @@
+---
+name: fec-test-and-fix
+description: Use when running project validation commands, analyzing failures, and fixing lint, type-check, unit test, integration test, or build errors after code changes; Chinese triggers include 测试, 验证, 检查, 修复失败.
+---
+
+# 测试并修复
+
+## Purpose
+
+自动化执行 lint、类型检查、单元测试和构建命令，分析失败原因并安全修复，确保代码质量达标。
+
+## When to Use
+
+- 用户希望 Claude 对前端改动进行校验
+- 重构后需要补一轮安全检查
+- 需要修复 lint、类型检查、单测或构建失败的问题
+
+## 必需流程
+
+1. 从 package.json 或仓库文档中识别可用命令。
+2. 优先按以下顺序执行：
+   - lint
+   - type-check
+   - unit tests
+   - build
+3. 仔细阅读失败输出。
+4. 先做范围最小且正确的修复。
+5. 每次关键修复后重新执行受影响命令。
+6. 最后按以下格式总结：
+
+## 输出格式
+
+```
+# 测试与修复报告
+
+> 生成时间: YYYY-MM-DD HH:mm
+> 评审工具: frontend-craft
+
+## 执行结果
+| 命令 | 状态 | 说明 |
+|------|------|------|
+| lint | ✅ 通过 / ❌ 失败 | ... |
+| type-check | ✅ 通过 / ❌ 失败 | ... |
+| test | ✅ 通过 / ❌ 失败 | ... |
+| build | ✅ 通过 / ❌ 失败 | ... |
+
+## 发现的问题与修复
+### 问题 1: ...
+- **根因**: ...
+- **修复**: ...
+- **变更文件**: ...
+
+## 剩余风险或未覆盖项
+- ...
+```
+
+## 报告文件输出
+
+修复完成后，必须将报告内容使用 Write 工具保存为 Markdown 文件：
+
+- 目录：项目根目录下的 `reports/`（如不存在则创建）
+- 文件名：`test-fix-YYYY-MM-DD-HHmmss.md`（使用当前时间戳）
+- 保存后告知用户报告文件路径
+
+## 强约束
+
+- 不要盲目关闭规则来消除报错
+- 除非有明确理由，不要为了通过检查而降低类型安全
+- 不要因为附近测试失败就顺手重写无关模块
+
+## Expected Output
+
+- lint / type-check / test / build 四项全部通过
+- 失败项已修复或给出明确原因和后续行动
+- 修复报告保存为 `reports/test-fix-YYYY-MM-DD-HHmmss.md`

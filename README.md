@@ -130,10 +130,10 @@ frontend-craft/
 |
 |-- skills/           # Workflow definitions and domain knowledge
 |   |-- frontend-code-review/    # Architecture, types, rendering, styles, a11y
-|   |-- security-review/         # XSS, CSRF, sensitive data, input validation
+|   |-- fec-security-review/     # XSS, CSRF, sensitive data, input validation
 |   |-- accessibility-check/     # WCAG 2.1 AA accessibility
-|   |-- react-project-standard/  # React + TypeScript project standards
-|   |-- vue3-project-standard/   # Vue 3 + TypeScript project standards
+|   |-- fec-react-project-standard/  # React + TypeScript project standards
+|   |-- fec-vue3-project-standard/   # Vue 3 + TypeScript project standards
 |   |-- implement-from-design/   # Implement UI from design files
 |   |-- test-and-fix/            # lint, type-check, test, build and fix
 |   |-- legacy-web-standard/     # JS + jQuery + HTML legacy project standards

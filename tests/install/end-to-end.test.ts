@@ -88,13 +88,18 @@ test("install claude into temp dir creates hooks and skills", () => {
       env: { ...process.env },
     });
     assert.ok(fs.existsSync(path.join(dir, ".claude", "hooks.json")));
-    assert.ok(fs.existsSync(path.join(dir, ".claude", "skills", "react-project-standard", "SKILL.md")));
+    assert.ok(fs.existsSync(path.join(dir, ".claude", "skills", "fec-react-project-standard", "SKILL.md")));
+    assert.ok(
+      fs.existsSync(
+        path.join(dir, ".claude", "skills", "fec-react-project-standard", "references", "react-project-details.md"),
+      ),
+    );
     const securitySkill = fs.readFileSync(
-      path.join(dir, ".claude", "skills", "security-review", "SKILL.md"),
+      path.join(dir, ".claude", "skills", "fec-security-review", "SKILL.md"),
       "utf8",
     );
     assert.match(securitySkill, /^name:\s*fec-security-review$/m, "skill frontmatter uses fec- prefix");
-    assert.doesNotMatch(securitySkill, /^name:\s*security-review$/m, "skill frontmatter must not use unprefixed name");
+    assert.doesNotMatch(securitySkill, /^version:/m, "skill frontmatter must not include version");
     assert.ok(fs.existsSync(path.join(dir, ".claude", "commands", "fec-init.md")));
     assert.ok(!fs.existsSync(path.join(dir, ".claude", "commands", "init.md")));
   } finally {
@@ -127,6 +132,16 @@ test("runtime command installers keep fec command names", () => {
         !fs.existsSync(path.join(commandsPath, "frontend-craft-fec-init.md")),
         `${runtime} does not add a second command prefix`,
       );
+      if (runtime === "opencode" || runtime === "kilo") {
+        assert.ok(
+          fs.existsSync(path.join(dir, baseDir, "skills", "fec-react-project-standard", "SKILL.md")),
+          `${runtime} installs fec-prefixed skill directories`,
+        );
+        assert.ok(
+          !fs.existsSync(path.join(dir, baseDir, "skills", "frontend-craft-fec-react-project-standard")),
+          `${runtime} does not add a second skill directory prefix`,
+        );
+      }
     } finally {
       fs.rmSync(dir, { recursive: true, force: true });
     }

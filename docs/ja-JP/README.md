@@ -129,10 +129,10 @@ frontend-craft/
 |
 |-- skills/           # ワークフロー定義とドメイン知識
 |   |-- frontend-code-review/    # アーキテクチャ、型、レンダリング、スタイル、a11y
-|   |-- security-review/         # XSS、CSRF、機密データ、入力検証
+|   |-- fec-security-review/     # XSS、CSRF、機密データ、入力検証
 |   |-- accessibility-check/     # WCAG 2.1 AA アクセシビリティ
-|   |-- react-project-standard/ # React + TypeScript プロジェクト規約
-|   |-- vue3-project-standard/   # Vue 3 + TypeScript プロジェクト規約
+|   |-- fec-react-project-standard/ # React + TypeScript プロジェクト規約
+|   |-- fec-vue3-project-standard/  # Vue 3 + TypeScript プロジェクト規約
 |   |-- implement-from-design/   # デザインから UI を実装
 |   |-- test-and-fix/           # lint、type-check、test、build と修正
 |   |-- legacy-web-standard/     # JS + jQuery + HTML レガシープロジェクト規約

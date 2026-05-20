@@ -129,10 +129,10 @@ frontend-craft/
 |
 |-- skills/           # 워크플로우 정의 및 도메인 지식
 |   |-- frontend-code-review/    # 아키텍처, 타입, 렌더링, 스타일, a11y
-|   |-- security-review/         # XSS, CSRF, 민감 데이터, 입력 검증
+|   |-- fec-security-review/     # XSS, CSRF, 민감 데이터, 입력 검증
 |   |-- accessibility-check/     # WCAG 2.1 AA 접근성
-|   |-- react-project-standard/ # React + TypeScript 프로젝트 규약
-|   |-- vue3-project-standard/   # Vue 3 + TypeScript 프로젝트 규약
+|   |-- fec-react-project-standard/ # React + TypeScript 프로젝트 규약
+|   |-- fec-vue3-project-standard/  # Vue 3 + TypeScript 프로젝트 규약
 |   |-- implement-from-design/   # 디자인에서 UI 구현
 |   |-- test-and-fix/           # lint, type-check, test, build 및 수정
 |   |-- legacy-web-standard/     # JS + jQuery + HTML 레거시 프로젝트 규약

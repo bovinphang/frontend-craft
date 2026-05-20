@@ -1,6 +1,32 @@
 # Skill 模板规范
 
-> 所有 Skill 文件必须遵循以下五段式结构，确保一致性和 AI 可理解度。
+> 所有 Skill 必须遵循 agentskills 结构：目录名、frontmatter `name` 和公开 skill id 保持一致；frontmatter 只保留 `name` 与 `description`。
+
+---
+
+## 目录结构
+
+```text
+skills/fec-[主题]/
+  SKILL.md
+  references/   # 可选：按需加载的详细规范、示例或清单
+  scripts/      # 可选：需要确定性执行的脚本
+  assets/       # 可选：输出会用到的模板或资源
+```
+
+## Frontmatter
+
+```yaml
+---
+name: fec-[主题]
+description: Use when ...
+---
+```
+
+- `name` 必须等于父目录名。
+- `description` 是主要触发依据，必须写清"做什么"和"什么时候用"。
+- 不要在 frontmatter 中加入 `version`、`metadata` 或触发说明以外的字段。
+- 使用 `Use when ...` 开头，并包含必要的英文/中文关键词。
 
 ---
 
@@ -56,9 +82,10 @@
 
 ### When to Use
 
-- 3-5 条触发条件，使用短列表
+- 3-5 条场景边界或执行后需要注意的适用条件，使用短列表
 - 每条以动词或名词开头，避免长句
 - 明确说明"什么时候不该用"（如有）
+- 触发条件优先写在 frontmatter `description`，不要只写在正文里
 - 示例:
   - 复杂表单（10+ 字段、动态字段、联动校验）
   - 需要高性能输入（避免受控组件的每次键入重渲染）
@@ -114,6 +141,7 @@
 
 ## 文件命名
 
-- 格式: `fec-{主题}.md`
+- 目录格式: `skills/fec-{主题}/`
+- 必备文件: `skills/fec-{主题}/SKILL.md`
 - 使用小写和连字符
-- 示例: `fec-storybook-component-doc.md`、`fec-list-virtualization.md`
+- 示例: `skills/fec-storybook-component-doc/`、`skills/fec-list-virtualization/`

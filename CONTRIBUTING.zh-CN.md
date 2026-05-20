@@ -179,14 +179,13 @@ Issue 与 PR 使用英文最便于全球社区检索与 Review。若你更习惯
 
 ## 如何添加 Skill
 
-1. 在 `skills/` 下创建目录，例如 `skills/my-skill/`。
+1. 在 `skills/` 下创建目录，例如 `skills/fec-my-skill/`。
 2. 创建 `SKILL.md`，包含 YAML frontmatter 与简洁说明：
 
 ```markdown
 ---
-name: my-skill
+name: fec-my-skill
 description: Use when the user needs ...
-version: 1.0.0
 ---
 
 # Skill Title

@@ -1,8 +1,6 @@
 ﻿import path from "node:path";
 import fs from "node:fs";
-import { ensureDir, readUtf8, writeUtf8 } from "../shared/fs.js";
-
-const PREFIX = "frontend-craft";
+import { copyDir, ensureDir, readUtf8, writeUtf8 } from "../shared/fs.js";
 
 /**
  * @param {import('../types.js').InstallContext} ctx
@@ -30,9 +28,8 @@ export async function installOpencodeFamily(ctx) {
     if (!fs.statSync(p).isDirectory()) continue;
     const skillMd = path.join(p, "SKILL.md");
     if (fs.existsSync(skillMd)) {
-      const destDir = path.join(skillsDest, `${PREFIX}-${name}`);
-      ensureDir(destDir);
-      writeUtf8(path.join(destDir, "SKILL.md"), readUtf8(skillMd));
+      const destDir = path.join(skillsDest, name);
+      copyDir(p, destDir);
     }
   }
 

@@ -129,10 +129,10 @@ frontend-craft/
 |
 |-- skills/           # 工作流程定義與領域知識
 |   |-- frontend-code-review/    # 架構、型別、渲染、樣式、無障礙審查
-|   |-- security-review/         # XSS、CSRF、敏感資料、輸入驗證
+|   |-- fec-security-review/     # XSS、CSRF、敏感資料、輸入驗證
 |   |-- accessibility-check/     # WCAG 2.1 AA 無障礙檢查
-|   |-- react-project-standard/ # React + TypeScript 專案規範
-|   |-- vue3-project-standard/  # Vue 3 + TypeScript 專案規範
+|   |-- fec-react-project-standard/ # React + TypeScript 專案規範
+|   |-- fec-vue3-project-standard/  # Vue 3 + TypeScript 專案規範
 |   |-- implement-from-design/   # 依設計稿實作 UI
 |   |-- test-and-fix/           # lint、type-check、test、build 並修復
 |   |-- legacy-web-standard/    # JS + jQuery + HTML 傳統專案規範

@@ -179,14 +179,13 @@ Issues and pull requests are easiest to review in English. If you are more comfo
 
 ## Adding a Skill
 
-1. Create a directory under `skills/`, for example `skills/my-skill/`.
+1. Create a directory under `skills/`, for example `skills/fec-my-skill/`.
 2. Add `SKILL.md` with YAML frontmatter and concise instructions:
 
 ```markdown
 ---
-name: my-skill
+name: fec-my-skill
 description: Use when the user needs ...
-version: 1.0.0
 ---
 
 # Skill Title
