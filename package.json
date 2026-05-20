@@ -20,12 +20,14 @@
         "node": ">=22.0.0"
     },
     "bin": {
-        "frontend-craft": "bin/frontend-craft.mjs"
+        "frontend-craft": "dist/bin/frontend-craft.js"
     },
     "files": [
+        "dist/bin",
+        "dist/src",
+        "dist/scripts",
         "bin",
-        "src/install",
-        "src/openclaw",
+        "src",
         "agents",
         "skills",
         "commands",
@@ -49,11 +51,13 @@
         "docs"
     ],
     "scripts": {
-        "test": "node --test tests/converters/codex-agents.test.mjs tests/install/cli.test.mjs tests/install/end-to-end.test.mjs tests/install/all-runtimes-dry.test.mjs tests/install/metadata-consistency.test.mjs",
-        "build:openclaw": "node scripts/openclaw/build.mjs",
+        "build": "tsc -p tsconfig.json",
+        "test": "npm run build && node --test dist/tests/converters/codex-agents.test.js dist/tests/install/cli.test.js dist/tests/install/end-to-end.test.js dist/tests/install/all-runtimes-dry.test.js dist/tests/install/metadata-consistency.test.js",
+        "build:openclaw": "npm run build && node dist/scripts/openclaw/build.js",
         "typecheck:openclaw": "tsc --noEmit -p tsconfig.openclaw.json",
-        "check:openclaw-dist": "node scripts/openclaw/verify-openclaw-dist.mjs",
-        "pack:openclaw": "npm run build:openclaw && npm run check:openclaw-dist && node scripts/openclaw/pack-openclaw.mjs",
+        "check:openclaw-dist": "npm run build && node dist/scripts/openclaw/verify-openclaw-dist.js",
+        "pack:openclaw": "npm run build:openclaw && npm run check:openclaw-dist && node dist/scripts/openclaw/pack-openclaw.js",
+        "prepack": "npm run build",
         "prepublishOnly": "npm test"
     },
     "devDependencies": {

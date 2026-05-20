@@ -38,7 +38,7 @@
 
 ## 通用安装（推荐）
 
-需要 **Node.js 22+**。CLI 会按各工具约定把文件写入对应目录（路径规则见 [`src/install/runtime-homes.mjs`](src/install/runtime-homes.mjs)）。
+需要 **Node.js 22+**。CLI 会按各工具约定把文件写入对应目录（路径规则见 [`src/install/runtime-homes.ts`](src/install/runtime-homes.ts)）。
 
 **在终端里交互安装（推荐）：** 直接运行 `npx frontend-craft@latest` 或 `npx frontend-craft@latest install` 不写 runtime，可按向导多选 runtime，并选择全局或当前项目。若已写 `install <runtime>` 但未带 `--global` / `--local`，在 **TTY** 下仍会询问安装位置。
 
@@ -160,11 +160,11 @@ frontend-craft/
 |   └-- hooks.json     # PreToolUse、PostToolUse、Stop、Notification 等
 |
 |-- scripts/          # 跨平台 Node.js 脚本
-|   |-- security-check.mjs      # 拦截危险命令
-|   |-- format-changed-file.mjs # 自动 Prettier 格式化
-|   |-- run-tests.mjs           # 会话结束执行校验
-|   |-- session-start.mjs       # 会话开始检测框架
-|   └-- notify.mjs              # 跨平台桌面通知
+|   |-- security-check.ts      # 拦截危险命令
+|   |-- format-changed-file.ts # 自动 Prettier 格式化
+|   |-- run-tests.ts           # 会话结束执行校验
+|   |-- session-start.ts       # 会话开始检测框架
+|   └-- notify.ts              # 跨平台桌面通知
 |
 |-- templates/        # 各 runtime 的项目级配置模板
 |   |-- claude/        # CLAUDE.md 与 settings.json
@@ -397,7 +397,7 @@ model: sonnet
 {
   "event": "PreToolUse",
   "matcher": "tool == \"Bash\"",
-  "command": "node \"${FRONTEND_CRAFT_ROOT}/scripts/security-check.mjs\""
+  "command": "node \"${FRONTEND_CRAFT_ROOT}/dist/scripts/security-check.js\""
 }
 ```
 

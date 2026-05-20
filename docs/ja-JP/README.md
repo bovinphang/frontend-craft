@@ -37,7 +37,7 @@
 
 ## Universal Install（推奨）
 
-**Node.js 22+** が必要です。CLI は各ツールの規約に沿ったレイアウトへファイルを書き込みます（パス規則は [`src/install/runtime-homes.mjs`](../../src/install/runtime-homes.mjs)）。
+**Node.js 22+** が必要です。CLI は各ツールの規約に沿ったレイアウトへファイルを書き込みます（パス規則は [`src/install/runtime-homes.ts`](../../src/install/runtime-homes.ts)）。
 
 **ターミナルでの対話インストール（推奨）：** `npx frontend-craft@latest` または `npx frontend-craft@latest install` を runtime なしで実行すると、複数 runtime の選択と Global / Local の選択に進みます。`install <runtime>` のみ指定し `--global` / `--local` を省略した場合も、**TTY** 上ではインストール先を確認します。
 
@@ -151,11 +151,11 @@ frontend-craft/
 |   |-- hooks.json     # PreToolUse、PostToolUse、Stop、Notification など
 |
 |-- scripts/          # クロスプラットフォーム Node.js スクリプト
-|   |-- security-check.mjs      # 危険なコマンドをブロック
-|   |-- format-changed-file.mjs # 自動 Prettier フォーマット
-|   |-- run-tests.mjs           # セッション終了時にチェック実行
-|   |-- session-start.mjs       # セッション開始時にフレームワーク検出
-|   |-- notify.mjs              # クロスプラットフォームデスクトップ通知
+|   |-- security-check.ts      # 危険なコマンドをブロック
+|   |-- format-changed-file.ts # 自動 Prettier フォーマット
+|   |-- run-tests.ts           # セッション終了時にチェック実行
+|   |-- session-start.ts       # セッション開始時にフレームワーク検出
+|   |-- notify.ts              # クロスプラットフォームデスクトップ通知
 |
 |-- templates/        # runtime 別のプロジェクトテンプレート
 |   |-- claude/        # CLAUDE.md と settings.json
@@ -376,7 +376,7 @@ model: sonnet
 {
   "event": "PreToolUse",
   "matcher": "tool == \"Bash\"",
-  "command": "node \"${FRONTEND_CRAFT_ROOT}/scripts/security-check.mjs\""
+  "command": "node \"${FRONTEND_CRAFT_ROOT}/dist/scripts/security-check.js\""
 }
 ```
 

@@ -21,7 +21,7 @@ npm run typecheck:openclaw
 
 ```
 ├── agents/          # Agent 定义（Markdown + YAML frontmatter）
-├── bin/             # CLI 入口 (frontend-craft.mjs)
+├── bin/             # CLI 入口 (frontend-craft.ts)
 ├── commands/        # 自定义命令定义 (fec-init, fec-review, fec-scaffold)
 ├── docs/            # 各 runtime 安装文档与多语言 README
 ├── hooks/           # Hook 配置 (hooks.json)
@@ -44,14 +44,14 @@ npm run typecheck:openclaw
 npm install
 
 # 2. 本地安装到指定 runtime（如 claude）
-node bin/frontend-craft.mjs install claude --local --dry-run  # 先 dry-run 预览
-node bin/frontend-craft.mjs install claude --local            # 实际安装
+node dist/bin/frontend-craft.js install claude --local --dry-run  # 先 dry-run 预览
+node dist/bin/frontend-craft.js install claude --local            # 实际安装
 
 # 3. 安装到所有 runtime
-node bin/frontend-craft.mjs install --all --dry-run
+node dist/bin/frontend-craft.js install --all --dry-run
 
 # 4. 列出所有支持的 runtime
-node bin/frontend-craft.mjs list
+node dist/bin/frontend-craft.js list
 ```
 
 ## 测试指南
@@ -63,22 +63,22 @@ node bin/frontend-craft.mjs list
 npm test
 
 # 运行单个测试文件
-node --test tests/install/cli.test.mjs
+node --test dist/tests/install/cli.test.js
 
 # 运行安装器相关测试
-node --test tests/install/*.mjs
+node --test dist/tests/install/*.js
 
 # 运行转换器相关测试
-node --test tests/converters/*.mjs
+node --test dist/tests/converters/*.js
 
 # 运行全 runtime dry-run 测试
-node --test tests/install/all-runtimes-dry.test.mjs
+node --test dist/tests/install/all-runtimes-dry.test.js
 ```
 
 测试交互式安装向导时，设置 `FRONTEND_CRAFT_FORCE_INTERACTIVE=1` 环境变量：
 
 ```bash
-FRONTEND_CRAFT_FORCE_INTERACTIVE=1 node --test tests/install/cli.test.mjs
+FRONTEND_CRAFT_FORCE_INTERACTIVE=1 node --test dist/tests/install/cli.test.js
 ```
 
 ## OpenClaw 构建流程
@@ -99,31 +99,31 @@ TypeScript 配置：`tsconfig.openclaw.json`。
 
 | 脚本                                        | 用途                      |
 | ------------------------------------------- | ------------------------- |
-| `scripts/run-tests.mjs`                     | 测试运行辅助              |
-| `scripts/format-changed-file.mjs`           | 格式化变更文件            |
-| `scripts/security-check.mjs`                | 安全检查                  |
-| `scripts/notify.mjs`                        | 通知脚本                  |
-| `scripts/session-start.mjs`                 | 会话初始化                |
-| `scripts/sync-codex-agents-toml.mjs`        | 同步 Codex agents 配置    |
-| `scripts/openclaw/build.mjs`                | OpenClaw esbuild 打包     |
-| `scripts/openclaw/pack-openclaw.mjs`        | OpenClaw 打包             |
-| `scripts/openclaw/verify-openclaw-dist.mjs` | 验证 OpenClaw dist 完整性 |
+| `scripts/run-tests.ts`                     | 测试运行辅助              |
+| `scripts/format-changed-file.ts`           | 格式化变更文件            |
+| `scripts/security-check.ts`                | 安全检查                  |
+| `scripts/notify.ts`                        | 通知脚本                  |
+| `scripts/session-start.ts`                 | 会话初始化                |
+| `scripts/sync-codex-agents-toml.ts`        | 同步 Codex agents 配置    |
+| `scripts/openclaw/build.ts`                | OpenClaw esbuild 打包     |
+| `scripts/openclaw/pack-openclaw.ts`        | OpenClaw 打包             |
+| `scripts/openclaw/verify-openclaw-dist.ts` | 验证 OpenClaw dist 完整性 |
 
 ## 架构概览
 
 通用安装器的架构如下：
 
 ```
-bin/frontend-craft.mjs
-  └─ src/install/cli.mjs              # CLI 入口（解析命令：install/list/version/uninstall）
-       ├─ src/install/registry.mjs    # runtime 注册表（名称 + 安装器映射）
+bin/frontend-craft.ts
+  └─ src/install/cli.ts              # CLI 入口（解析命令：install/list/version/uninstall）
+       ├─ src/install/registry.ts    # runtime 注册表（名称 + 安装器映射）
        ├─ src/install/converters/     # 各 runtime 适配器（claude, codex, cursor, copilot 等）
-       ├─ src/install/interactive.mjs # 交互式安装向导（runtime/位置选择）
-       ├─ src/install/runtime-homes.mjs # 全局/本地目录约定
-       └─ src/install/types.mjs       # 共享 TypeScript 类型
+       ├─ src/install/interactive.ts # 交互式安装向导（runtime/位置选择）
+       ├─ src/install/runtime-homes.ts # 全局/本地目录约定
+       └─ src/install/types.ts       # 共享 TypeScript 类型
 ```
 
-`src/install/converters/` 下的每个 runtime 转换器都实现了 `types.mjs` 中定义的 `InstallContext` 接口，将 skills、agents、commands、hooks 和模板写入目标 runtime 的配置目录。
+`src/install/converters/` 下的每个 runtime 转换器都实现了 `types.ts` 中定义的 `InstallContext` 接口，将 skills、agents、commands、hooks 和模板写入目标 runtime 的配置目录。
 
 ## 分支策略
 
@@ -236,12 +236,12 @@ skills:
 
 ## 多工具安装器
 
-- 入口：`bin/frontend-craft.mjs`。
+- 入口：`bin/frontend-craft.ts`。
 - 实现目录：`src/install/`（安装器、注册表、路径辅助）。
-- 交互向导与输入解析：`src/install/interactive.mjs`（测试可将 `FRONTEND_CRAFT_FORCE_INTERACTIVE` 设为 `1` 以模拟管道输入下的问答）。
-- 新增 runtime 时，在 `src/install/registry.mjs` 注册。
+- 交互向导与输入解析：`src/install/interactive.ts`（测试可将 `FRONTEND_CRAFT_FORCE_INTERACTIVE` 设为 `1` 以模拟管道输入下的问答）。
+- 新增 runtime 时，在 `src/install/registry.ts` 注册。
 - 在 `src/install/converters/` 下添加 runtime 安装器。
-- 参考 `src/install/runtime-homes.mjs` 中的全局目录约定。
+- 参考 `src/install/runtime-homes.ts` 中的全局目录约定。
 - 在 `tests/install/` 中新增或更新测试。
 
 ## 如何添加 Hook

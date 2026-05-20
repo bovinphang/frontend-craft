@@ -38,7 +38,7 @@
 
 ## Universal Install (Recommended)
 
-Requires **Node.js 22+**. The CLI writes files under each tool’s expected layout (see [`src/install/runtime-homes.mjs`](src/install/runtime-homes.mjs)).
+Requires **Node.js 22+**. The CLI writes files under each tool’s expected layout (see [`src/install/runtime-homes.ts`](src/install/runtime-homes.ts)).
 
 **Interactive (terminal):** run `npx frontend-craft@latest` or `npx frontend-craft@latest install` with no runtime to pick runtimes and Global vs Local. If you pass `install <runtime>` but omit `--global` / `--local`, the CLI asks where to install (**TTY only**).
 
@@ -160,11 +160,11 @@ frontend-craft/
 |   |-- hooks.json     # PreToolUse, PostToolUse, Stop, Notification, etc.
 |
 |-- scripts/          # Cross-platform Node.js scripts
-|   |-- security-check.mjs      # Block dangerous commands
-|   |-- format-changed-file.mjs # Auto Prettier formatting
-|   |-- run-tests.mjs           # Run checks on session end
-|   |-- session-start.mjs       # Detect framework on session start
-|   |-- notify.mjs              # Cross-platform desktop notifications
+|   |-- security-check.ts      # Block dangerous commands
+|   |-- format-changed-file.ts # Auto Prettier formatting
+|   |-- run-tests.ts           # Run checks on session end
+|   |-- session-start.ts       # Detect framework on session start
+|   |-- notify.ts              # Cross-platform desktop notifications
 |
 |-- templates/        # Runtime-specific project templates
 |   |-- claude/        # CLAUDE.md and settings.json
@@ -397,7 +397,7 @@ Hooks run on tool events. Example — block dangerous commands:
 {
   "event": "PreToolUse",
   "matcher": "tool == \"Bash\"",
-  "command": "node \"${FRONTEND_CRAFT_ROOT}/scripts/security-check.mjs\""
+  "command": "node \"${FRONTEND_CRAFT_ROOT}/dist/scripts/security-check.js\""
 }
 ```
 

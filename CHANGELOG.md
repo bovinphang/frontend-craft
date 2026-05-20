@@ -15,9 +15,9 @@ Project-facing release notes are maintained in English from 2.0.0 onward. Histor
 
 - **CONTRIBUTING docs:** expanded `CONTRIBUTING.md` and `CONTRIBUTING.zh-CN.md` with project structure overview, local development and debugging guide, testing instructions (Node.js `node:test`, single-file runs, interactive mode via `FRONTEND_CRAFT_FORCE_INTERACTIVE=1`), OpenClaw build pipeline (`build`/`typecheck`/`pack`), `scripts/` directory reference table, and installer architecture diagram.
 
-- **OpenClaw package renamed:** `frontend-craft-openclaw` → `frontend-craft`. The npm package name, tarball filename, and README references are all updated. The packed tarball is now written to `npm-packages/openclaw/` instead of the repository root. Affects `scripts/openclaw/pack-openclaw.mjs`, `README.md`, `README.zh-CN.md`, `README.openclaw.md`, `README.openclaw.zh-CN.md`, and `docs/MIGRATION-FROM-LEGACY-REPOS.md`. Historical CHANGELOG entries for 2.0.0/2.0.1 also corrected.
+- **OpenClaw package renamed:** `frontend-craft-openclaw` → `frontend-craft`. The npm package name, tarball filename, and README references are all updated. The packed tarball is now written to `npm-packages/openclaw/` instead of the repository root. Affects `scripts/openclaw/pack-openclaw.ts`, `README.md`, `README.zh-CN.md`, `README.openclaw.md`, `README.openclaw.zh-CN.md`, and `docs/MIGRATION-FROM-LEGACY-REPOS.md`. Historical CHANGELOG entries for 2.0.0/2.0.1 also corrected.
 
-- **Interactive installer:** replaced numeric-choice prompts with a TTY-interactive selectable prompt system featuring ↑↓ navigation, Space toggle, Backspace to remove, search filtering, and pagination. Affects `src/install/interactive.mjs` and adds new test coverage in `tests/install/cli.test.mjs`.
+- **Interactive installer:** replaced numeric-choice prompts with a TTY-interactive selectable prompt system featuring ↑↓ navigation, Space toggle, Backspace to remove, search filtering, and pagination. Affects `src/install/interactive.ts` and adds new test coverage in `tests/install/cli.test.ts`.
 
 ## [2.1.1] - 2026-05-19
 
@@ -25,7 +25,7 @@ Project-facing release notes are maintained in English from 2.0.0 onward. Histor
 
 - **11 new skills**: `fec-data-fetching` (TanStack Query), `fec-form-handling` (React Hook Form + Zod), `fec-browser-storage` (client persistence), `fec-route-protection` (auth/permission routes), `fec-component-testing` (RTL / Vue Test Utils), `fec-storybook-component-doc` (Storybook docs), `fec-list-virtualization` (react-window / TanStack Virtual), `fec-pwa-implementation` (PWA), `fec-web-workers` (Web Worker), `fec-canvas-threejs` (Canvas/Three.js/R3F), `fec-svg-animation` (SVG motion).
 - **Shared rules**: `responsive-design.md`, `rendering-patterns.md` — deployed via `/fec-init`.
-- **metadata consistency test**: `tests/install/metadata-consistency.test.mjs` validates that `skills/metadata.json`, README tables, and marketplace description stay in sync.
+- **metadata consistency test**: `tests/install/metadata-consistency.test.ts` validates that `skills/metadata.json`, README tables, and marketplace description stay in sync.
 
 ### Changed
 
@@ -49,7 +49,7 @@ Project-facing release notes are maintained in English from 2.0.0 onward. Histor
 
 ### Added
 
-- **Universal CLI** `frontend-craft`: `install`, `list`, `version`, `uninstall` (hints); supports runtimes: Claude Code, Codex, Cursor, Windsurf, OpenCode, Kilo, Gemini CLI, Copilot, Antigravity, Augment, Trae, CodeBuddy, Cline, OpenClaw (`src/install/`, `bin/frontend-craft.mjs`). Interactive wizard when you run `npx frontend-craft` / `install` with no runtime (TTY), plus `--local` / `-l` for project installs.
+- **Universal CLI** `frontend-craft`: `install`, `list`, `version`, `uninstall` (hints); supports runtimes: Claude Code, Codex, Cursor, Windsurf, OpenCode, Kilo, Gemini CLI, Copilot, Antigravity, Augment, Trae, CodeBuddy, Cline, OpenClaw (`src/install/`, `bin/frontend-craft.ts`). Interactive wizard when you run `npx frontend-craft` / `install` with no runtime (TTY), plus `--local` / `-l` for project installs.
 - **Root `package.json`** with Node 22+ engines, npm `files` manifest, tests via `node --test`.
 - **`templates/shared/rules`** + **`templates/claude/`** layout; Codex templates under **`templates/codex/`**; OpenClaw templates under **`templates/openclaw/`**.
 - **`openclaw.plugin.json`** and **`src/openclaw/`** TypeScript plugin (from former `frontend-craft-openclaw`); build via `npm run build:openclaw`, pack via `npm run pack:openclaw` → **`frontend-craft-<version>.tgz`** under **`npm-packages/openclaw/`** (staging uses `npm-packages/openclaw/` during the pack).
@@ -63,7 +63,7 @@ Project-facing release notes are maintained in English from 2.0.0 onward. Histor
 - **Hooks** and docs now use **`${FRONTEND_CRAFT_ROOT}`** for script paths (installer still expands legacy `${CLAUDE_PLUGIN_ROOT}` for compatibility).
 - **Slash commands** now use the collision-resistant **`/fec-*`** prefix: `/fec-init`, `/fec-review`, `/fec-scaffold`. Legacy root commands (`/init`, `/review`, `/scaffold`) and `/frontend-craft:*` command names are no longer published.
 - **`commands/fec-init.md`** updated for new template paths.
-- **`scripts/sync-codex-agents-toml.mjs`** requires **`CODEX_AGENTS_DIR`** (no longer writes into this repo by default).
+- **`scripts/sync-codex-agents-toml.ts`** requires **`CODEX_AGENTS_DIR`** (no longer writes into this repo by default).
 - **README files** now link to contributing, security, code of conduct, and CI status for international contributors.
 
 ### Removed

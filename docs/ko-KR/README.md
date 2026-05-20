@@ -37,7 +37,7 @@
 
 ## 범용 설치(권장)
 
-**Node.js 22+**가 필요합니다. CLI는 각 도구가 기대하는 레이아웃에 맞춰 파일을 설치합니다(경로 규칙: [`src/install/runtime-homes.mjs`](../../src/install/runtime-homes.mjs)).
+**Node.js 22+**가 필요합니다. CLI는 각 도구가 기대하는 레이아웃에 맞춰 파일을 설치합니다(경로 규칙: [`src/install/runtime-homes.ts`](../../src/install/runtime-homes.ts)).
 
 **터미널 대화형 설치(권장):** `npx frontend-craft@latest` 또는 `npx frontend-craft@latest install`을 runtime 없이 실행하면 여러 runtime 선택 후 Global / Local을 고를 수 있습니다. `install <runtime>`만 지정하고 `--global` / `--local`을 생략하면 **TTY**에서는 설치 위치를 묻습니다.
 
@@ -151,11 +151,11 @@ frontend-craft/
 |   |-- hooks.json     # PreToolUse, PostToolUse, Stop, Notification 등
 |
 |-- scripts/          # 크로스 플랫폼 Node.js 스크립트
-|   |-- security-check.mjs      # 위험한 명령어 차단
-|   |-- format-changed-file.mjs # 자동 Prettier 포맷팅
-|   |-- run-tests.mjs           # 세션 종료 시 검사 실행
-|   |-- session-start.mjs      # 세션 시작 시 프레임워크 감지
-|   |-- notify.mjs              # 크로스 플랫폼 데스크톱 알림
+|   |-- security-check.ts      # 위험한 명령어 차단
+|   |-- format-changed-file.ts # 자동 Prettier 포맷팅
+|   |-- run-tests.ts           # 세션 종료 시 검사 실행
+|   |-- session-start.ts      # 세션 시작 시 프레임워크 감지
+|   |-- notify.ts              # 크로스 플랫폼 데스크톱 알림
 |
 |-- templates/        # runtime별 프로젝트 템플릿
 |   |-- claude/        # CLAUDE.md 및 settings.json
@@ -376,7 +376,7 @@ model: sonnet
 {
   "event": "PreToolUse",
   "matcher": "tool == \"Bash\"",
-  "command": "node \"${FRONTEND_CRAFT_ROOT}/scripts/security-check.mjs\""
+  "command": "node \"${FRONTEND_CRAFT_ROOT}/dist/scripts/security-check.js\""
 }
 ```
 

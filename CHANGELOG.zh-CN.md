@@ -14,9 +14,9 @@
 
 - **CONTRIBUTING 文档**：完善 `CONTRIBUTING.md` 与 `CONTRIBUTING.zh-CN.md`，新增项目结构概览、本地开发与调试指南、测试说明（Node.js `node:test`、单文件运行、通过 `FRONTEND_CRAFT_FORCE_INTERACTIVE=1` 测试交互模式）、OpenClaw 构建管线（`build`/`typecheck`/`pack`）、`scripts/` 目录参考表，以及安装器架构关系图。
 
-- **OpenClaw 包重命名**：`frontend-craft-openclaw` → `frontend-craft`。npm 包名、tarball 文件名及 README 引用全部更新。打包产物改写入 `npm-packages/openclaw/` 而非仓库根目录。影响 `scripts/openclaw/pack-openclaw.mjs`、`README.md`、`README.zh-CN.md`、`README.openclaw.md`、`README.openclaw.zh-CN.md` 及 `docs/MIGRATION-FROM-LEGACY-REPOS.md`。CHANGELOG 中 2.0.0/2.0.1 历史条目也已同步修正。
+- **OpenClaw 包重命名**：`frontend-craft-openclaw` → `frontend-craft`。npm 包名、tarball 文件名及 README 引用全部更新。打包产物改写入 `npm-packages/openclaw/` 而非仓库根目录。影响 `scripts/openclaw/pack-openclaw.ts`、`README.md`、`README.zh-CN.md`、`README.openclaw.md`、`README.openclaw.zh-CN.md` 及 `docs/MIGRATION-FROM-LEGACY-REPOS.md`。CHANGELOG 中 2.0.0/2.0.1 历史条目也已同步修正。
 
-- **交互式安装向导**：将数字选择提示升级为 TTY 交互式可选 prompt 系统，支持 ↑↓ 导航、Space 切换、Backspace 删除、搜索过滤和分页。影响 `src/install/interactive.mjs`，并在 `tests/install/cli.test.mjs` 中新增测试覆盖。
+- **交互式安装向导**：将数字选择提示升级为 TTY 交互式可选 prompt 系统，支持 ↑↓ 导航、Space 切换、Backspace 删除、搜索过滤和分页。影响 `src/install/interactive.ts`，并在 `tests/install/cli.test.ts` 中新增测试覆盖。
 
 ## [2.1.1] - 2026-05-19
 
@@ -24,7 +24,7 @@
 
 - **11 个新技能**：`fec-data-fetching`（TanStack Query）、`fec-form-handling`（React Hook Form + Zod）、`fec-browser-storage`（客户端持久化）、`fec-route-protection`（权限路由）、`fec-component-testing`（RTL / Vue Test Utils）、`fec-storybook-component-doc`（Storybook 文档）、`fec-list-virtualization`（react-window / TanStack Virtual）、`fec-pwa-implementation`（PWA）、`fec-web-workers`（Web Worker）、`fec-canvas-threejs`（Canvas/Three.js/R3F）、`fec-svg-animation`（SVG 动画）。
 - **共享规则**：`responsive-design.md`、`rendering-patterns.md` — 通过 `/fec-init` 部署。
-- **metadata 一致性测试**：`tests/install/metadata-consistency.test.mjs` 校验 `skills/metadata.json`、README 表格与 Marketplace 描述保持同步。
+- **metadata 一致性测试**：`tests/install/metadata-consistency.test.ts` 校验 `skills/metadata.json`、README 表格与 Marketplace 描述保持同步。
 
 ### 变更
 
@@ -38,7 +38,7 @@
 
 ### 修复
 
-- **Claude Code 插件 hooks：** `hooks/hooks.json` 中引用内置 `scripts/*.mjs` 时使用 **`${CLAUDE_PLUGIN_ROOT}`**，以便在 Marketplace 与 **`--plugin-dir`** 加载时由 Claude Code 正确替换插件根路径。运行时**不会**替换 **`${FRONTEND_CRAFT_ROOT}`**，在 **Windows + Git Bash** 下可能导致 hook 解析到 Git 安装目录下的错误路径。
+- **Claude Code 插件 hooks：** `hooks/hooks.json` 中引用内置 `dist/scripts/*.js` 时使用 **`${CLAUDE_PLUGIN_ROOT}`**，以便在 Marketplace 与 **`--plugin-dir`** 加载时由 Claude Code 正确替换插件根路径。运行时**不会**替换 **`${FRONTEND_CRAFT_ROOT}`**，在 **Windows + Git Bash** 下可能导致 hook 解析到 Git 安装目录下的错误路径。
 
 ### 变更
 
@@ -48,7 +48,7 @@
 
 ### 新增
 
-- **通用 CLI** `frontend-craft`：`install`、`list`、`version`、`uninstall`（卸载仅为提示）；支持 runtime：Claude Code、Codex、Cursor、Windsurf、OpenCode、Kilo、Gemini CLI、Copilot、Antigravity、Augment、Trae、CodeBuddy、Cline、OpenClaw（`src/install/`、`bin/frontend-craft.mjs`）。在 TTY 下执行 `npx frontend-craft` / 无 runtime 的 `install` 可进入交互向导；支持 `--local` / `-l` 安装到当前项目。
+- **通用 CLI** `frontend-craft`：`install`、`list`、`version`、`uninstall`（卸载仅为提示）；支持 runtime：Claude Code、Codex、Cursor、Windsurf、OpenCode、Kilo、Gemini CLI、Copilot、Antigravity、Augment、Trae、CodeBuddy、Cline、OpenClaw（`src/install/`、`bin/frontend-craft.ts`）。在 TTY 下执行 `npx frontend-craft` / 无 runtime 的 `install` 可进入交互向导；支持 `--local` / `-l` 安装到当前项目。
 - **根目录 `package.json`**：Node 22+ `engines`、npm `files` 清单、通过 `node --test` 运行的测试。
 - **`templates/shared/rules`** 与 **`templates/claude/`** 布局；Codex 模板在 **`templates/codex/`**；OpenClaw 模板在 **`templates/openclaw/`**。
 - **`openclaw.plugin.json`** 与 **`src/openclaw/`** TypeScript 插件（由原 `frontend-craft-openclaw` 合并）；`npm run build:openclaw` 构建，`npm run pack:openclaw` 在 **`npm-packages/openclaw/`** 生成 **`frontend-craft-<version>.tgz`**（打包过程会暂存至 `npm-packages/openclaw/`）。
@@ -62,7 +62,7 @@
 - **Hooks** 与文档中的脚本路径改用 **`${FRONTEND_CRAFT_ROOT}`**（安装器仍会将旧占位符 `${CLAUDE_PLUGIN_ROOT}` 展开以兼容）。
 - **斜杠命令** 采用防冲突的 **`/fec-*`** 前缀：`/fec-init`、`/fec-review`、`/fec-scaffold`。旧根命令（`/init`、`/review`、`/scaffold`）及 `/frontend-craft:*` 名称不再发布。
 - **`commands/fec-init.md`** 已按新模板路径更新。
-- **`scripts/sync-codex-agents-toml.mjs`** 需要 **`CODEX_AGENTS_DIR`**（默认不再写入本仓库）。
+- **`scripts/sync-codex-agents-toml.ts`** 需要 **`CODEX_AGENTS_DIR`**（默认不再写入本仓库）。
 - **README** 已补充贡献、安全、行为准则与 CI 状态链接，便于国际贡献者。
 
 ### 移除
