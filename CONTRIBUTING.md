@@ -99,7 +99,7 @@ TypeScript config: `tsconfig.openclaw.json`.
 
 ## Standalone Skill Packages
 
-The canonical skill sources live under `skills/<skill-id>/`. Do not edit generated files under `dist/skill-packages/` by hand.
+The canonical skill sources live under `skills/<skill-id>/`. Do not edit generated files under `skill-packages/` by hand.
 
 ```bash
 npm run pack:skills            # Build one standalone package per skill
@@ -107,7 +107,7 @@ npm run check:skills-publish   # Verify package metadata, index, and copied refe
 npm run pack:all               # Full test + OpenClaw package + standalone skill packages
 ```
 
-`npm run pack:skills` writes `dist/skill-packages/<skill-id>/` with `SKILL.md`, only the referenced `references/` files, `metadata.json`, `package.json`, `README.md`, and `LICENSE`. It also writes `dist/skill-packages/index.json` for platform crawlers and release automation.
+`npm run pack:skills` writes `skill-packages/<skill-id>/` with `SKILL.md`, only the referenced `references/` files, `metadata.json`, `package.json`, `README.md`, and `LICENSE`. It also writes `skill-packages/index.json` for platform crawlers and release automation.
 
 When changing a skill, keep these source files aligned:
 

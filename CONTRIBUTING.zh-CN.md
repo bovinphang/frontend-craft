@@ -99,7 +99,7 @@ TypeScript 配置：`tsconfig.openclaw.json`。
 
 ## 独立 Skill 发布包
 
-Skill 的权威源文件位于 `skills/<skill-id>/`。不要手动修改 `dist/skill-packages/` 下的生成产物。
+Skill 的权威源文件位于 `skills/<skill-id>/`。不要手动修改 `skill-packages/` 下的生成产物。
 
 ```bash
 npm run pack:skills            # 为每个 skill 生成独立发布包
@@ -107,7 +107,7 @@ npm run check:skills-publish   # 校验包元数据、索引和引用文件
 npm run pack:all               # 完整测试 + OpenClaw 包 + 独立 skill 包
 ```
 
-`npm run pack:skills` 会生成 `dist/skill-packages/<skill-id>/`，其中包含 `SKILL.md`、该 skill 实际引用的 `references/` 文件、`metadata.json`、`package.json`、`README.md` 和 `LICENSE`。同时会生成 `dist/skill-packages/index.json`，供平台索引或发布自动化使用。
+`npm run pack:skills` 会生成 `skill-packages/<skill-id>/`，其中包含 `SKILL.md`、该 skill 实际引用的 `references/` 文件、`metadata.json`、`package.json`、`README.md` 和 `LICENSE`。同时会生成 `skill-packages/index.json`，供平台索引或发布自动化使用。
 
 修改 skill 时，请保持这些源文件一致：
 

@@ -25,6 +25,13 @@
 - **Agentskills 兼容的 skill 布局**：所有 skill 目录统一为 `fec-*` 命名，补充 frontmatter 与 references 文件结构，将 `skills/metadata.json` 扩展至 28 个 skills，并同步英文、简体中文、繁体中文、日文和韩文 README 的技能目录树。
 - **Runtime 能力模型**：新增显式的 runtime 能力分层，覆盖 skills、agents、commands、hooks、rules、templates、MCP、reports 与 init 行为，使安装器输出和文档能准确反映不同 runtime 的支持范围。
 - **Claude/OpenClaw 打包元数据**：刷新插件描述、支持的 runtime 关键词与 hook 命令示例，使其匹配 TypeScript 构建产物以及当前 10 agents / 28 skills / 4 commands 的能力范围。
+- **发布产物布局**：`pack:skills` 现在将独立 skill 发布包写入根目录 `skill-packages/`，不再写入 `dist/skill-packages/`，让独立发布包与 TypeScript 构建产物分离。
+- **干净的 TypeScript 构建**：`npm run build` 现在会在编译前清理 `dist/`，避免历史生成的 JavaScript 文件混入后续打包产物。
+
+### 修复
+
+- **根 npm 包内容**：收紧 npm `files` 清单，`npm pack` 只发布编译后的 `dist/` 运行时代码和插件资产，不再泄漏 `bin/`、`src/`、`scripts/` 下的 TypeScript 源码。
+- **打包回归测试**：新增 npm pack 校验，防止 TypeScript 源码泄漏、无对应源码的陈旧编译文件残留，以及根 npm 包误包含独立 `skill-packages/`。
 
 ### 移除
 

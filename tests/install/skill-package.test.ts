@@ -14,13 +14,15 @@ import {
 
 const root = resolvePluginRoot(import.meta.url);
 const skillsDir = path.join(root, "skills");
-const packageRoot = path.join(root, "dist", "skill-packages");
+const packageRoot = path.join(root, "skill-packages");
+const distPackageRoot = path.join(root, "dist", "skill-packages");
 
 test("pack:skills creates one standalone publish package per skill", () => {
   execFileSync(process.execPath, [path.join(root, "dist", "scripts", "pack-skills.js")], {
     cwd: root,
     encoding: "utf8",
   });
+  assert.ok(!fs.existsSync(path.join(distPackageRoot, "index.json")), "pack:skills should not write dist/skill-packages");
 
   const pkg = readJsonFile<{ version: string }>(path.join(root, "package.json"));
   const skillIds = listSkillIds(skillsDir);

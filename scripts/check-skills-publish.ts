@@ -16,7 +16,7 @@ import {
 
 const root = resolvePluginRoot(import.meta.url);
 const skillsDir = path.join(root, "skills");
-const packageRoot = path.join(root, "dist", "skill-packages");
+const packageRoot = path.join(root, "skill-packages");
 const pkg = readJsonFile<RootPackage>(path.join(root, "package.json"));
 const metadata = readJsonFile<SkillMetadata[]>(path.join(skillsDir, "metadata.json"));
 const metadataById = new Map(metadata.map((skill) => [skill.id, skill]));
@@ -93,4 +93,3 @@ function fail(message: string): never {
   console.error(`[check-skills-publish] ${message}`);
   process.exit(1);
 }
-
