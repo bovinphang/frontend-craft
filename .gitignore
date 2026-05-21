@@ -1,6 +1,7 @@
 node_modules/
 dist/
 npm-packages/
+skill-packages/
 *.tgz
 .DS_Store
 .env

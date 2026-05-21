@@ -26,6 +26,13 @@ Project-facing release notes are maintained in English from 2.0.0 onward. Histor
 - **Agentskills-compatible skill layout:** normalized all skill directories to the `fec-*` naming scheme, added frontmatter and reference-file structure, expanded `skills/metadata.json` to 28 skills, and synchronized README skill trees across English, Simplified Chinese, Traditional Chinese, Japanese, and Korean docs.
 - **Runtime capability model:** introduced explicit per-runtime capability tiers for skills, agents, commands, hooks, rules, templates, MCP, reports, and init behavior so installer output and docs reflect each runtime accurately.
 - **Claude/OpenClaw packaging metadata:** refreshed plugin descriptions, supported runtime keywords, and hook command examples to match the TypeScript build output and the current 10-agent / 28-skill / 4-command surface.
+- **Publish artifact layout:** `pack:skills` now writes standalone skill packages to root `skill-packages/` instead of `dist/skill-packages/`, keeping publishable skill packages separate from TypeScript build output.
+- **Clean TypeScript builds:** `npm run build` now removes `dist/` before compiling so stale generated JavaScript cannot survive into later package outputs.
+
+### Fixed
+
+- **Root npm package contents:** tightened the npm `files` manifest so `npm pack` publishes compiled `dist/` runtime JavaScript and plugin assets without leaking TypeScript source directories (`bin/`, `src/`, or `scripts/`).
+- **Packaging regression coverage:** added npm pack validation that rejects leaked TypeScript sources, stale compiled files without matching source files, and accidental inclusion of standalone `skill-packages/` in the root npm package.
 
 ### Removed
 
