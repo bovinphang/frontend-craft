@@ -270,6 +270,17 @@ function checkPublicMetadata(pluginRoot: string): string[] {
     if (actual !== pkg.version) issues.push(`${file} ${selector} is ${actual}, expected ${pkg.version}`);
   }
 
+  const skillsMetadata = JSON.parse(fs.readFileSync(path.join(pluginRoot, "skills", "metadata.json"), "utf8")) as Array<{
+    id: string;
+    version?: string;
+    license?: string;
+    homepage?: string;
+    repository?: string;
+  }>;
+  for (const skill of skillsMetadata) {
+    if (skill.version !== pkg.version) issues.push(`skills/metadata.json ${skill.id}.version is ${skill.version}, expected ${pkg.version}`);
+  }
+
   const commandCount = fs.readdirSync(path.join(pluginRoot, "commands")).filter((name) => name.endsWith(".md")).length;
   const skillCount = fs
     .readdirSync(path.join(pluginRoot, "skills"), { withFileTypes: true })

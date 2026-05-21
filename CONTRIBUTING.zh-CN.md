@@ -14,6 +14,8 @@
 
 ```bash
 npm test
+npm run pack:skills
+npm run check:skills-publish
 npm run typecheck:openclaw
 ```
 
@@ -25,7 +27,7 @@ npm run typecheck:openclaw
 ├── commands/        # 自定义命令定义 (fec-init, fec-review, fec-scaffold)
 ├── docs/            # 各 runtime 安装文档与多语言 README
 ├── hooks/           # Hook 配置 (hooks.json)
-├── scripts/         # 辅助脚本（格式化、通知、安全检查、测试运行等）
+├── scripts/         # 辅助脚本（格式化、打包、通知、安全检查、测试运行等）
 ├── skills/          # Skill 定义 (SKILL.md + metadata.json)
 ├── src/             # 源代码
 │   ├── install/     # 安装器核心 (CLI、交互式向导、各 runtime 转换器)
@@ -95,6 +97,25 @@ npm run pack:openclaw           # 完整构建 + 验证 + 打包
 源码路径：`src/openclaw/`（TypeScript）→ `dist/openclaw/index.js`（打包后的 ESM）。
 TypeScript 配置：`tsconfig.openclaw.json`。
 
+## 独立 Skill 发布包
+
+Skill 的权威源文件位于 `skills/<skill-id>/`。不要手动修改 `dist/skill-packages/` 下的生成产物。
+
+```bash
+npm run pack:skills            # 为每个 skill 生成独立发布包
+npm run check:skills-publish   # 校验包元数据、索引和引用文件
+npm run pack:all               # 完整测试 + OpenClaw 包 + 独立 skill 包
+```
+
+`npm run pack:skills` 会生成 `dist/skill-packages/<skill-id>/`，其中包含 `SKILL.md`、该 skill 实际引用的 `references/` 文件、`metadata.json`、`package.json`、`README.md` 和 `LICENSE`。同时会生成 `dist/skill-packages/index.json`，供平台索引或发布自动化使用。
+
+修改 skill 时，请保持这些源文件一致：
+
+- `skills/<skill-id>/SKILL.md` — runtime 使用的权威说明。
+- `skills/metadata.json` — 发布元数据、分类、标签、关键词、目标平台和包版本。
+- `skills/eval_queries.json` — 用于路由质量检查的正向/负向触发样例。
+- 当公开 skill 列表或用户可见行为变化时，同步 `README.md` 和各语言 README 摘要。
+
 ## Scripts 目录说明
 
 | 脚本                                        | 用途                      |
@@ -105,6 +126,9 @@ TypeScript 配置：`tsconfig.openclaw.json`。
 | `scripts/notify.ts`                        | 通知脚本                  |
 | `scripts/session-start.ts`                 | 会话初始化                |
 | `scripts/sync-codex-agents-toml.ts`        | 同步 Codex agents 配置    |
+| `scripts/pack-skills.ts`                   | 独立 skill 包构建         |
+| `scripts/check-skills-publish.ts`          | 独立 skill 包校验         |
+| `scripts/skill-packaging.ts`               | skill 打包共享辅助函数    |
 | `scripts/openclaw/build.ts`                | OpenClaw esbuild 打包     |
 | `scripts/openclaw/pack-openclaw.ts`        | OpenClaw 打包             |
 | `scripts/openclaw/verify-openclaw-dist.ts` | 验证 OpenClaw dist 完整性 |
@@ -199,8 +223,11 @@ description: Use when the user needs ...
 - ...
 ```
 
-3. 在 `README.md` 的 Skills 表格中新增一行。
-4. 若可见目录结构变化，同步 `README.md` 与各语言 README 的目录树。
+3. 在 `skills/metadata.json` 中新增条目，包括 `id`、展示名称 `name`、分类 `category`、`tags`、`summary`、发布元数据、`keywords` 和 `platforms`。其中 `version`、`license`、`homepage`、`repository` 应与 `package.json` 保持一致。
+4. 在 `skills/eval_queries.json` 中补充正向和负向触发样例。
+5. 在 `README.md` 的 Skills 表格中新增一行。
+6. 若可见目录结构变化，同步 `README.md` 与各语言 README 的目录树。
+7. 运行 `npm test`、`npm run pack:skills` 和 `npm run check:skills-publish`。
 
 ## 如何添加 Agent
 
@@ -256,6 +283,7 @@ skills:
 
 - [ ] 变更范围清晰，描述明确。
 - [ ] `npm test` 通过。
+- [ ] 修改 skill 时，`npm run pack:skills` 与 `npm run check:skills-publish` 通过。
 - [ ] 修改 OpenClaw 代码或模板时，`npm run typecheck:openclaw` 通过。
 - [ ] 用户可见行为变化已更新 `README.md` 与 `CHANGELOG.md`（及 [CHANGELOG.zh-CN.md](CHANGELOG.zh-CN.md) 如适用）。
 - [ ] 多语言 README 已同步，或已链接后续翻译 Issue。

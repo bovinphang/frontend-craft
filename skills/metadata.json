@@ -3,7 +3,34 @@
     "id": "fec-accessibility-check",
     "name": "无障碍检查",
     "category": "quality",
-    "tags": ["a11y", "wcag", "accessibility", "audit"]
+    "tags": [
+      "a11y",
+      "wcag",
+      "accessibility",
+      "audit"
+    ],
+    "summary": "Frontend Craft skill for 无障碍检查.",
+    "version": "2.1.2",
+    "license": "MIT",
+    "homepage": "https://github.com/bovinphang/frontend-craft",
+    "repository": "https://github.com/bovinphang/frontend-craft",
+    "keywords": [
+      "quality",
+      "a11y",
+      "wcag",
+      "accessibility",
+      "audit"
+    ],
+    "platforms": [
+      "skills-cli",
+      "skillreg",
+      "claude-code",
+      "codex",
+      "cursor",
+      "opencode",
+      "openclaw",
+      "generic-skill-runtime"
+    ]
   },
   {
     "id": "fec-browser-storage",
@@ -15,6 +42,29 @@
       "indexedDB",
       "cookie",
       "client-persistence"
+    ],
+    "summary": "Frontend Craft skill for 浏览器存储.",
+    "version": "2.1.2",
+    "license": "MIT",
+    "homepage": "https://github.com/bovinphang/frontend-craft",
+    "repository": "https://github.com/bovinphang/frontend-craft",
+    "keywords": [
+      "capability",
+      "storage",
+      "localStorage",
+      "indexedDB",
+      "cookie",
+      "client-persistence"
+    ],
+    "platforms": [
+      "skills-cli",
+      "skillreg",
+      "claude-code",
+      "codex",
+      "cursor",
+      "opencode",
+      "openclaw",
+      "generic-skill-runtime"
     ]
   },
   {
@@ -27,6 +77,29 @@
       "component-test",
       "user-event",
       "regression"
+    ],
+    "summary": "Frontend Craft skill for 组件测试.",
+    "version": "2.1.2",
+    "license": "MIT",
+    "homepage": "https://github.com/bovinphang/frontend-craft",
+    "repository": "https://github.com/bovinphang/frontend-craft",
+    "keywords": [
+      "quality",
+      "rtl",
+      "vue-test-utils",
+      "component-test",
+      "user-event",
+      "regression"
+    ],
+    "platforms": [
+      "skills-cli",
+      "skillreg",
+      "claude-code",
+      "codex",
+      "cursor",
+      "opencode",
+      "openclaw",
+      "generic-skill-runtime"
     ]
   },
   {
@@ -39,13 +112,67 @@
       "coverage",
       "risk",
       "quality-gate"
+    ],
+    "summary": "Frontend Craft skill for 测试策略.",
+    "version": "2.1.2",
+    "license": "MIT",
+    "homepage": "https://github.com/bovinphang/frontend-craft",
+    "repository": "https://github.com/bovinphang/frontend-craft",
+    "keywords": [
+      "quality",
+      "testing-strategy",
+      "test-plan",
+      "coverage",
+      "risk",
+      "quality-gate"
+    ],
+    "platforms": [
+      "skills-cli",
+      "skillreg",
+      "claude-code",
+      "codex",
+      "cursor",
+      "opencode",
+      "openclaw",
+      "generic-skill-runtime"
     ]
   },
   {
     "id": "fec-canvas-threejs",
     "name": "Canvas 与 Three.js",
     "category": "capability",
-    "tags": ["canvas", "webgl", "three.js", "3d", "visualization", "r3f"]
+    "tags": [
+      "canvas",
+      "webgl",
+      "three.js",
+      "3d",
+      "visualization",
+      "r3f"
+    ],
+    "summary": "Frontend Craft skill for Canvas 与 Three.js.",
+    "version": "2.1.2",
+    "license": "MIT",
+    "homepage": "https://github.com/bovinphang/frontend-craft",
+    "repository": "https://github.com/bovinphang/frontend-craft",
+    "keywords": [
+      "capability",
+      "canvas",
+      "webgl",
+      "three.js",
+      "3d",
+      "visualization",
+      "r3f"
+    ],
+    "platforms": [
+      "skills-cli",
+      "skillreg",
+      "claude-code",
+      "codex",
+      "cursor",
+      "opencode",
+      "openclaw",
+      "generic-skill-runtime"
+    ]
   },
   {
     "id": "fec-data-fetching",
@@ -57,13 +184,67 @@
       "caching",
       "optimistic-update",
       "server-state"
+    ],
+    "summary": "Frontend Craft skill for TanStack Query 数据获取.",
+    "version": "2.1.2",
+    "license": "MIT",
+    "homepage": "https://github.com/bovinphang/frontend-craft",
+    "repository": "https://github.com/bovinphang/frontend-craft",
+    "keywords": [
+      "capability",
+      "react-query",
+      "tanstack",
+      "caching",
+      "optimistic-update",
+      "server-state"
+    ],
+    "platforms": [
+      "skills-cli",
+      "skillreg",
+      "claude-code",
+      "codex",
+      "cursor",
+      "opencode",
+      "openclaw",
+      "generic-skill-runtime"
     ]
   },
   {
     "id": "fec-e2e-testing",
     "name": "E2E 测试规范",
     "category": "quality",
-    "tags": ["playwright", "cypress", "e2e", "visual-regression", "ci", "pom"]
+    "tags": [
+      "playwright",
+      "cypress",
+      "e2e",
+      "visual-regression",
+      "ci",
+      "pom"
+    ],
+    "summary": "Frontend Craft skill for E2E 测试规范.",
+    "version": "2.1.2",
+    "license": "MIT",
+    "homepage": "https://github.com/bovinphang/frontend-craft",
+    "repository": "https://github.com/bovinphang/frontend-craft",
+    "keywords": [
+      "quality",
+      "playwright",
+      "cypress",
+      "e2e",
+      "visual-regression",
+      "ci",
+      "pom"
+    ],
+    "platforms": [
+      "skills-cli",
+      "skillreg",
+      "claude-code",
+      "codex",
+      "cursor",
+      "opencode",
+      "openclaw",
+      "generic-skill-runtime"
+    ]
   },
   {
     "id": "fec-form-handling",
@@ -75,37 +256,204 @@
       "validation",
       "dynamic-forms",
       "file-upload"
+    ],
+    "summary": "Frontend Craft skill for 表单处理.",
+    "version": "2.1.2",
+    "license": "MIT",
+    "homepage": "https://github.com/bovinphang/frontend-craft",
+    "repository": "https://github.com/bovinphang/frontend-craft",
+    "keywords": [
+      "capability",
+      "react-hook-form",
+      "zod",
+      "validation",
+      "dynamic-forms",
+      "file-upload"
+    ],
+    "platforms": [
+      "skills-cli",
+      "skillreg",
+      "claude-code",
+      "codex",
+      "cursor",
+      "opencode",
+      "openclaw",
+      "generic-skill-runtime"
     ]
   },
   {
     "id": "fec-frontend-code-review",
     "name": "前端代码审查",
     "category": "quality",
-    "tags": ["code-review", "architecture", "quality", "best-practices"]
+    "tags": [
+      "code-review",
+      "architecture",
+      "quality",
+      "best-practices"
+    ],
+    "summary": "Frontend Craft skill for 前端代码审查.",
+    "version": "2.1.2",
+    "license": "MIT",
+    "homepage": "https://github.com/bovinphang/frontend-craft",
+    "repository": "https://github.com/bovinphang/frontend-craft",
+    "keywords": [
+      "quality",
+      "code-review",
+      "architecture",
+      "best-practices"
+    ],
+    "platforms": [
+      "skills-cli",
+      "skillreg",
+      "claude-code",
+      "codex",
+      "cursor",
+      "opencode",
+      "openclaw",
+      "generic-skill-runtime"
+    ]
   },
   {
     "id": "fec-implement-from-design",
     "name": "设计稿实现",
     "category": "migration-design",
-    "tags": ["figma", "sketch", "mastergo", "pixso", "design-to-code", "mcp"]
+    "tags": [
+      "figma",
+      "sketch",
+      "mastergo",
+      "pixso",
+      "design-to-code",
+      "mcp"
+    ],
+    "summary": "Frontend Craft skill for 设计稿实现.",
+    "version": "2.1.2",
+    "license": "MIT",
+    "homepage": "https://github.com/bovinphang/frontend-craft",
+    "repository": "https://github.com/bovinphang/frontend-craft",
+    "keywords": [
+      "migration-design",
+      "figma",
+      "sketch",
+      "mastergo",
+      "pixso",
+      "design-to-code",
+      "mcp"
+    ],
+    "platforms": [
+      "skills-cli",
+      "skillreg",
+      "claude-code",
+      "codex",
+      "cursor",
+      "opencode",
+      "openclaw",
+      "generic-skill-runtime"
+    ]
   },
   {
     "id": "fec-interface-polish",
     "name": "界面质感打磨",
     "category": "migration-design",
-    "tags": ["ui-polish", "spacing", "typography", "motion", "visual-qa"]
+    "tags": [
+      "ui-polish",
+      "spacing",
+      "typography",
+      "motion",
+      "visual-qa"
+    ],
+    "summary": "Frontend Craft skill for 界面质感打磨.",
+    "version": "2.1.2",
+    "license": "MIT",
+    "homepage": "https://github.com/bovinphang/frontend-craft",
+    "repository": "https://github.com/bovinphang/frontend-craft",
+    "keywords": [
+      "migration-design",
+      "ui-polish",
+      "spacing",
+      "typography",
+      "motion",
+      "visual-qa"
+    ],
+    "platforms": [
+      "skills-cli",
+      "skillreg",
+      "claude-code",
+      "codex",
+      "cursor",
+      "opencode",
+      "openclaw",
+      "generic-skill-runtime"
+    ]
   },
   {
     "id": "fec-legacy-to-modern-migration",
     "name": "遗留系统迁移",
     "category": "migration-design",
-    "tags": ["migration", "jquery", "mpa", "react", "vue", "modernization"]
+    "tags": [
+      "migration",
+      "jquery",
+      "mpa",
+      "react",
+      "vue",
+      "modernization"
+    ],
+    "summary": "Frontend Craft skill for 遗留系统迁移.",
+    "version": "2.1.2",
+    "license": "MIT",
+    "homepage": "https://github.com/bovinphang/frontend-craft",
+    "repository": "https://github.com/bovinphang/frontend-craft",
+    "keywords": [
+      "migration-design",
+      "migration",
+      "jquery",
+      "mpa",
+      "react",
+      "vue",
+      "modernization"
+    ],
+    "platforms": [
+      "skills-cli",
+      "skillreg",
+      "claude-code",
+      "codex",
+      "cursor",
+      "opencode",
+      "openclaw",
+      "generic-skill-runtime"
+    ]
   },
   {
     "id": "fec-legacy-web-standard",
     "name": "传统前端规范",
     "category": "migration-design",
-    "tags": ["jquery", "mpa", "legacy", "vanilla-js"]
+    "tags": [
+      "jquery",
+      "mpa",
+      "legacy",
+      "vanilla-js"
+    ],
+    "summary": "Frontend Craft skill for 传统前端规范.",
+    "version": "2.1.2",
+    "license": "MIT",
+    "homepage": "https://github.com/bovinphang/frontend-craft",
+    "repository": "https://github.com/bovinphang/frontend-craft",
+    "keywords": [
+      "migration-design",
+      "jquery",
+      "mpa",
+      "legacy",
+      "vanilla-js"
+    ],
+    "platforms": [
+      "skills-cli",
+      "skillreg",
+      "claude-code",
+      "codex",
+      "cursor",
+      "opencode",
+      "openclaw",
+      "generic-skill-runtime"
+    ]
   },
   {
     "id": "fec-list-virtualization",
@@ -117,37 +465,205 @@
       "react-window",
       "tanstack-virtual",
       "performance"
+    ],
+    "summary": "Frontend Craft skill for 列表虚拟化优化.",
+    "version": "2.1.2",
+    "license": "MIT",
+    "homepage": "https://github.com/bovinphang/frontend-craft",
+    "repository": "https://github.com/bovinphang/frontend-craft",
+    "keywords": [
+      "capability",
+      "virtualization",
+      "windowing",
+      "react-window",
+      "tanstack-virtual",
+      "performance"
+    ],
+    "platforms": [
+      "skills-cli",
+      "skillreg",
+      "claude-code",
+      "codex",
+      "cursor",
+      "opencode",
+      "openclaw",
+      "generic-skill-runtime"
     ]
   },
   {
     "id": "fec-monorepo-project-standard",
     "name": "Monorepo 项目规范",
     "category": "project-standard",
-    "tags": ["monorepo", "pnpm", "turborepo", "nx", "workspace"]
+    "tags": [
+      "monorepo",
+      "pnpm",
+      "turborepo",
+      "nx",
+      "workspace"
+    ],
+    "summary": "Frontend Craft skill for Monorepo 项目规范.",
+    "version": "2.1.2",
+    "license": "MIT",
+    "homepage": "https://github.com/bovinphang/frontend-craft",
+    "repository": "https://github.com/bovinphang/frontend-craft",
+    "keywords": [
+      "project-standard",
+      "monorepo",
+      "pnpm",
+      "turborepo",
+      "nx",
+      "workspace"
+    ],
+    "platforms": [
+      "skills-cli",
+      "skillreg",
+      "claude-code",
+      "codex",
+      "cursor",
+      "opencode",
+      "openclaw",
+      "generic-skill-runtime"
+    ]
   },
   {
     "id": "fec-nextjs-project-standard",
     "name": "Next.js 项目规范",
     "category": "project-standard",
-    "tags": ["nextjs", "app-router", "ssr", "rsc", "react"]
+    "tags": [
+      "nextjs",
+      "app-router",
+      "ssr",
+      "rsc",
+      "react"
+    ],
+    "summary": "Frontend Craft skill for Next.js 项目规范.",
+    "version": "2.1.2",
+    "license": "MIT",
+    "homepage": "https://github.com/bovinphang/frontend-craft",
+    "repository": "https://github.com/bovinphang/frontend-craft",
+    "keywords": [
+      "project-standard",
+      "nextjs",
+      "app-router",
+      "ssr",
+      "rsc",
+      "react"
+    ],
+    "platforms": [
+      "skills-cli",
+      "skillreg",
+      "claude-code",
+      "codex",
+      "cursor",
+      "opencode",
+      "openclaw",
+      "generic-skill-runtime"
+    ]
   },
   {
     "id": "fec-nuxt-project-standard",
     "name": "Nuxt 项目规范",
     "category": "project-standard",
-    "tags": ["nuxt", "vue", "ssr", "ssg", "data-fetching"]
+    "tags": [
+      "nuxt",
+      "vue",
+      "ssr",
+      "ssg",
+      "data-fetching"
+    ],
+    "summary": "Frontend Craft skill for Nuxt 项目规范.",
+    "version": "2.1.2",
+    "license": "MIT",
+    "homepage": "https://github.com/bovinphang/frontend-craft",
+    "repository": "https://github.com/bovinphang/frontend-craft",
+    "keywords": [
+      "project-standard",
+      "nuxt",
+      "vue",
+      "ssr",
+      "ssg",
+      "data-fetching"
+    ],
+    "platforms": [
+      "skills-cli",
+      "skillreg",
+      "claude-code",
+      "codex",
+      "cursor",
+      "opencode",
+      "openclaw",
+      "generic-skill-runtime"
+    ]
   },
   {
     "id": "fec-pwa-implementation",
     "name": "PWA 实现",
     "category": "capability",
-    "tags": ["pwa", "service-worker", "offline", "workbox", "installable"]
+    "tags": [
+      "pwa",
+      "service-worker",
+      "offline",
+      "workbox",
+      "installable"
+    ],
+    "summary": "Frontend Craft skill for PWA 实现.",
+    "version": "2.1.2",
+    "license": "MIT",
+    "homepage": "https://github.com/bovinphang/frontend-craft",
+    "repository": "https://github.com/bovinphang/frontend-craft",
+    "keywords": [
+      "capability",
+      "pwa",
+      "service-worker",
+      "offline",
+      "workbox",
+      "installable"
+    ],
+    "platforms": [
+      "skills-cli",
+      "skillreg",
+      "claude-code",
+      "codex",
+      "cursor",
+      "opencode",
+      "openclaw",
+      "generic-skill-runtime"
+    ]
   },
   {
     "id": "fec-react-project-standard",
     "name": "React 项目规范",
     "category": "project-standard",
-    "tags": ["react", "typescript", "hooks", "components", "architecture"]
+    "tags": [
+      "react",
+      "typescript",
+      "hooks",
+      "components",
+      "architecture"
+    ],
+    "summary": "Frontend Craft skill for React 项目规范.",
+    "version": "2.1.2",
+    "license": "MIT",
+    "homepage": "https://github.com/bovinphang/frontend-craft",
+    "repository": "https://github.com/bovinphang/frontend-craft",
+    "keywords": [
+      "project-standard",
+      "react",
+      "typescript",
+      "hooks",
+      "components",
+      "architecture"
+    ],
+    "platforms": [
+      "skills-cli",
+      "skillreg",
+      "claude-code",
+      "codex",
+      "cursor",
+      "opencode",
+      "openclaw",
+      "generic-skill-runtime"
+    ]
   },
   {
     "id": "fec-route-protection",
@@ -160,13 +676,68 @@
       "middleware",
       "react-router",
       "vue-router"
+    ],
+    "summary": "Frontend Craft skill for 路由保护.",
+    "version": "2.1.2",
+    "license": "MIT",
+    "homepage": "https://github.com/bovinphang/frontend-craft",
+    "repository": "https://github.com/bovinphang/frontend-craft",
+    "keywords": [
+      "capability",
+      "auth",
+      "rbac",
+      "route-guard",
+      "middleware",
+      "react-router",
+      "vue-router"
+    ],
+    "platforms": [
+      "skills-cli",
+      "skillreg",
+      "claude-code",
+      "codex",
+      "cursor",
+      "opencode",
+      "openclaw",
+      "generic-skill-runtime"
     ]
   },
   {
     "id": "fec-security-review",
     "name": "前端安全审查",
     "category": "quality",
-    "tags": ["xss", "csrf", "csp", "security", "owasp", "dompurify"]
+    "tags": [
+      "xss",
+      "csrf",
+      "csp",
+      "security",
+      "owasp",
+      "dompurify"
+    ],
+    "summary": "Frontend Craft skill for 前端安全审查.",
+    "version": "2.1.2",
+    "license": "MIT",
+    "homepage": "https://github.com/bovinphang/frontend-craft",
+    "repository": "https://github.com/bovinphang/frontend-craft",
+    "keywords": [
+      "quality",
+      "xss",
+      "csrf",
+      "csp",
+      "security",
+      "owasp",
+      "dompurify"
+    ],
+    "platforms": [
+      "skills-cli",
+      "skillreg",
+      "claude-code",
+      "codex",
+      "cursor",
+      "opencode",
+      "openclaw",
+      "generic-skill-runtime"
+    ]
   },
   {
     "id": "fec-svg-animation",
@@ -178,6 +749,29 @@
       "framer-motion",
       "gsap",
       "micro-interaction"
+    ],
+    "summary": "Frontend Craft skill for SVG 动画.",
+    "version": "2.1.2",
+    "license": "MIT",
+    "homepage": "https://github.com/bovinphang/frontend-craft",
+    "repository": "https://github.com/bovinphang/frontend-craft",
+    "keywords": [
+      "capability",
+      "svg",
+      "animation",
+      "framer-motion",
+      "gsap",
+      "micro-interaction"
+    ],
+    "platforms": [
+      "skills-cli",
+      "skillreg",
+      "claude-code",
+      "codex",
+      "cursor",
+      "opencode",
+      "openclaw",
+      "generic-skill-runtime"
     ]
   },
   {
@@ -190,31 +784,172 @@
       "component-doc",
       "visual-testing",
       "mdx"
+    ],
+    "summary": "Frontend Craft skill for Storybook 组件文档化.",
+    "version": "2.1.2",
+    "license": "MIT",
+    "homepage": "https://github.com/bovinphang/frontend-craft",
+    "repository": "https://github.com/bovinphang/frontend-craft",
+    "keywords": [
+      "migration-design",
+      "storybook",
+      "design-system",
+      "component-doc",
+      "visual-testing",
+      "mdx"
+    ],
+    "platforms": [
+      "skills-cli",
+      "skillreg",
+      "claude-code",
+      "codex",
+      "cursor",
+      "opencode",
+      "openclaw",
+      "generic-skill-runtime"
     ]
   },
   {
     "id": "fec-validation-fix",
     "name": "验证与修复",
     "category": "quality",
-    "tags": ["validation", "lint", "typecheck", "test", "build", "fix"]
+    "tags": [
+      "validation",
+      "lint",
+      "typecheck",
+      "test",
+      "build",
+      "fix"
+    ],
+    "summary": "Frontend Craft skill for 验证与修复.",
+    "version": "2.1.2",
+    "license": "MIT",
+    "homepage": "https://github.com/bovinphang/frontend-craft",
+    "repository": "https://github.com/bovinphang/frontend-craft",
+    "keywords": [
+      "quality",
+      "validation",
+      "lint",
+      "typecheck",
+      "test",
+      "build",
+      "fix"
+    ],
+    "platforms": [
+      "skills-cli",
+      "skillreg",
+      "claude-code",
+      "codex",
+      "cursor",
+      "opencode",
+      "openclaw",
+      "generic-skill-runtime"
+    ]
   },
   {
     "id": "fec-ui-design-direction",
     "name": "UI 设计方向",
     "category": "migration-design",
-    "tags": ["ui-design", "visual-direction", "layout", "product-design"]
+    "tags": [
+      "ui-design",
+      "visual-direction",
+      "layout",
+      "product-design"
+    ],
+    "summary": "Frontend Craft skill for UI 设计方向.",
+    "version": "2.1.2",
+    "license": "MIT",
+    "homepage": "https://github.com/bovinphang/frontend-craft",
+    "repository": "https://github.com/bovinphang/frontend-craft",
+    "keywords": [
+      "migration-design",
+      "ui-design",
+      "visual-direction",
+      "layout",
+      "product-design"
+    ],
+    "platforms": [
+      "skills-cli",
+      "skillreg",
+      "claude-code",
+      "codex",
+      "cursor",
+      "opencode",
+      "openclaw",
+      "generic-skill-runtime"
+    ]
   },
   {
     "id": "fec-vite-project-standard",
     "name": "Vite 项目规范",
     "category": "project-standard",
-    "tags": ["vite", "build", "hmr", "env", "bundle", "dev-server"]
+    "tags": [
+      "vite",
+      "build",
+      "hmr",
+      "env",
+      "bundle",
+      "dev-server"
+    ],
+    "summary": "Frontend Craft skill for Vite 项目规范.",
+    "version": "2.1.2",
+    "license": "MIT",
+    "homepage": "https://github.com/bovinphang/frontend-craft",
+    "repository": "https://github.com/bovinphang/frontend-craft",
+    "keywords": [
+      "project-standard",
+      "vite",
+      "build",
+      "hmr",
+      "env",
+      "bundle",
+      "dev-server"
+    ],
+    "platforms": [
+      "skills-cli",
+      "skillreg",
+      "claude-code",
+      "codex",
+      "cursor",
+      "opencode",
+      "openclaw",
+      "generic-skill-runtime"
+    ]
   },
   {
     "id": "fec-vue3-project-standard",
     "name": "Vue 3 项目规范",
     "category": "project-standard",
-    "tags": ["vue3", "typescript", "composition-api", "pinia", "components"]
+    "tags": [
+      "vue3",
+      "typescript",
+      "composition-api",
+      "pinia",
+      "components"
+    ],
+    "summary": "Frontend Craft skill for Vue 3 项目规范.",
+    "version": "2.1.2",
+    "license": "MIT",
+    "homepage": "https://github.com/bovinphang/frontend-craft",
+    "repository": "https://github.com/bovinphang/frontend-craft",
+    "keywords": [
+      "project-standard",
+      "vue3",
+      "typescript",
+      "composition-api",
+      "pinia",
+      "components"
+    ],
+    "platforms": [
+      "skills-cli",
+      "skillreg",
+      "claude-code",
+      "codex",
+      "cursor",
+      "opencode",
+      "openclaw",
+      "generic-skill-runtime"
+    ]
   },
   {
     "id": "fec-web-workers",
@@ -226,6 +961,29 @@
       "comlink",
       "transferable",
       "performance"
+    ],
+    "summary": "Frontend Craft skill for Web Workers.",
+    "version": "2.1.2",
+    "license": "MIT",
+    "homepage": "https://github.com/bovinphang/frontend-craft",
+    "repository": "https://github.com/bovinphang/frontend-craft",
+    "keywords": [
+      "capability",
+      "worker",
+      "background-thread",
+      "comlink",
+      "transferable",
+      "performance"
+    ],
+    "platforms": [
+      "skills-cli",
+      "skillreg",
+      "claude-code",
+      "codex",
+      "cursor",
+      "opencode",
+      "openclaw",
+      "generic-skill-runtime"
     ]
   }
 ]

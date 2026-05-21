@@ -51,6 +51,29 @@ test("skills metadata uses the four public taxonomy categories", () => {
   }
 });
 
+test("skills metadata includes standalone publish fields", () => {
+  const pkg = JSON.parse(fs.readFileSync(path.join(root, "package.json"), "utf8"));
+  const metadata = JSON.parse(fs.readFileSync(path.join(root, "skills", "metadata.json"), "utf8"));
+  const expectedPlatforms = ["skills-cli", "skillreg", "claude-code", "codex", "cursor", "opencode", "openclaw", "generic-skill-runtime"];
+
+  for (const skill of metadata) {
+    assert.equal(skill.version, pkg.version, `version should follow package.json: ${skill.id}`);
+    assert.equal(skill.license, pkg.license, `license should follow package.json: ${skill.id}`);
+    assert.equal(skill.homepage, pkg.homepage, `homepage should follow package.json: ${skill.id}`);
+    assert.equal(skill.repository, pkg.repository.url, `repository should follow package.json: ${skill.id}`);
+    assert.equal(typeof skill.summary, "string", `missing summary: ${skill.id}`);
+    assert.ok(skill.summary.length > 0, `empty summary: ${skill.id}`);
+    assert.ok(Array.isArray(skill.tags), `missing tags: ${skill.id}`);
+    assert.ok(skill.tags.length > 0, `empty tags: ${skill.id}`);
+    assert.ok(Array.isArray(skill.keywords), `missing keywords: ${skill.id}`);
+    assert.ok(skill.keywords.includes(skill.category), `keywords should include category: ${skill.id}`);
+    for (const tag of skill.tags) {
+      assert.ok(skill.keywords.includes(tag), `keywords should include tag ${tag}: ${skill.id}`);
+    }
+    assert.deepEqual(skill.platforms, expectedPlatforms, `platforms mismatch: ${skill.id}`);
+  }
+});
+
 test("skill trigger eval queries cover every skill with positive and negative examples", () => {
   const skillsDir = path.join(root, "skills");
   const metadata = JSON.parse(fs.readFileSync(path.join(skillsDir, "metadata.json"), "utf8"));
@@ -89,6 +112,11 @@ test("public metadata versions follow package.json", () => {
   assert.equal(plugin.version, pkg.version);
   assert.equal(marketplace.plugins[0].version, pkg.version);
   assert.equal(openclaw.version, pkg.version);
+
+  const skills = JSON.parse(fs.readFileSync(path.join(root, "skills", "metadata.json"), "utf8"));
+  for (const skill of skills) {
+    assert.equal(skill.version, pkg.version);
+  }
 });
 
 test("tracked source and docs do not contain mojibake markers", () => {

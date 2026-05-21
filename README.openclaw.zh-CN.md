@@ -134,15 +134,6 @@ frontend-craft/
 
 ## 功能概览
 
-### 命令
-
-| 文件                       | 用途                             |
-| -------------------------- | -------------------------------- |
-| `commands/fec-init.md`     | 初始化 frontend-craft 工作区模板 |
-| `commands/fec-review.md`   | 引导式前端代码评审               |
-| `commands/fec-test-plan.md` | 前端测试策略与覆盖矩阵           |
-| `commands/fec-scaffold.md` | 页面 / 功能 / 组件脚手架指南     |
-
 ### 技能
 
 | 技能                             | 用途                                                           |
@@ -172,6 +163,9 @@ frontend-craft/
 | `fec-web-workers`                | Web Worker、Transferable、Comlink、Worker 池                   |
 | `fec-canvas-threejs`             | Canvas 2D、Three.js、React Three Fiber、WebGL 性能与可访问性   |
 | `fec-svg-animation`              | CSS、Framer Motion、GSAP SVG 动画与 reduced-motion 降级        |
+| `fec-ui-design-direction`        | 产品化 UI 方向、首屏层级、业务语气与视觉策略                   |
+| `fec-interface-polish`           | 间距、排版、圆角、阴影、命中区域、状态与动效细节打磨           |
+| `fec-vite-project-standard`      | Vite 配置、环境变量安全、HMR、开发代理、构建优化与库模式       |
 
 ### 技能使用：场景与示例
 
@@ -196,7 +190,7 @@ frontend-craft/
 | CI 或本地脚本失败            | `fec-validation-fix`             | 「`pnpm lint` 和 `pnpm test` 都挂了，请定位根因并修复，不要放宽类型或跳过检查。」                                                      |
 | 维护 jQuery / MPA 老页面     | `fec-legacy-web-standard`        | 「`public/js/legacy/*.js` 仍在生产使用，请在保持行为的前提下给出可维护性改进与模式建议。」                                             |
 | 规划 jQuery → React/Vue 迁移 | `fec-legacy-to-modern-migration` | 「我们有 `static/app.js` 的 jQuery + 多页应用，请输出迁到 React + TypeScript 的分阶段方案、风险与里程碑。」                            |
-| 规划前端测试覆盖             | `fec-testing-strategy`           | 「这次 checkout 重构先别急着写测试，请把风险映射到静态检查、单元/组件、E2E、视觉、无障碍和安全覆盖。」                                |
+| 规划前端测试覆盖             | `fec-testing-strategy`           | 「这次 checkout 重构先别急着写测试，请把风险映射到静态检查、单元/组件、E2E、视觉、无障碍和安全覆盖。」                                 |
 | 补充或稳定 E2E               | `fec-e2e-testing`                | 「请用 Playwright 给登录流程加冒烟用例：目录清晰、使用 Page Object，并说明如何在 CI 里跑。」                                           |
 | Next.js App Router 功能      | `fec-nextjs-project-standard`    | 「请评审 `app/(dashboard)/reports/page.tsx` 及相关 server actions 是否符合 Next.js App Router 最佳实践（数据获取、错误、元数据等）。」 |
 | Nuxt 3 页面或布局            | `fec-nuxt-project-standard`      | 「请评审 `pages/admin/*.vue` 与 `composables/useApi.ts` 是否符合 Nuxt 3 的 SSR、数据与组合式用法惯例。」                               |
@@ -211,16 +205,20 @@ frontend-craft/
 | 重计算移出主线程             | `fec-web-workers`                | 「把图片处理逻辑移到 Web Worker，用 Comlink 通信，保持 UI 响应。」                                                                     |
 | 构建交互式 3D 场景           | `fec-canvas-threejs`             | 「在 `src/components/ProductViewer.tsx` 添加 Three.js 产品展示，兼顾性能和降级方案。」                                                 |
 | 为落地页添加 SVG 动效        | `fec-svg-animation`              | 「用 Framer Motion 为 hero 区 SVG 添加动画，并为 reduced-motion 用户提供静态降级方案。」                                               |
+| 设定 UI 视觉方向             | `fec-ui-design-direction`        | 「为我们的管理后台设定视觉方向：首屏层级、业务语气和间距策略。」                                                                       |
+| 打磨 UI 细节                 | `fec-interface-polish`           | 「请评审 `src/components/Dashboard.tsx` 的间距、排版、圆角、阴影、命中区域和动效，给出可落地的优化建议。」                             |
+| 优化 Vite 构建配置           | `fec-vite-project-standard`      | 「请审计 `vite.config.ts` 的 HMR、开发代理、环境变量安全和库模式最佳实践。」                                                           |
 
 **斜杠命令（`commands/` 下的 Markdown）**
 
 作为**固定步骤**的命令说明加载。对话里用自然语言描述要做的事即可，代理可按对应命令文档执行，**无需**说出命令文件名。
 
-| 命令文档          | 适用时机                                                                                 | 示例（自然语言）                                                                                                  |
-| ----------------- | ---------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------- |
-| `fec-init.md`     | 在**业务仓库**里初始化 **Claude 风格** 的 `.claude/` 模板（文档内路径针对 `.claude/`）。 | 「请在本仓库初始化 `.claude/`，按插件提供的模板与规则复制；若已有文件请先问我是否覆盖。」                         |
-| `fec-review.md`   | 引导式评审并保存 `reports/code-review-*.md`。                                            | 「请评审我上一次提交里改动的文件，并写一份结构化 Markdown 报告到 `reports/`。」                                   |
-| `fec-scaffold.md` | 页面 / 功能 / 组件目录脚手架。                                                           | 「请为 React 项目脚手架一个新页面 UserDetail：放在 `src/pages/...`，并带上空的 `components/` 与 `hooks/` 目录。」 |
+| 命令文档           | 适用时机                                                                                 | 示例（自然语言）                                                                                                  |
+| ------------------ | ---------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------- |
+| `fec-init.md`      | 在**业务仓库**里初始化 **Claude 风格** 的 `.claude/` 模板（文档内路径针对 `.claude/`）。 | 「请在本仓库初始化 `.claude/`，按插件提供的模板与规则复制；若已有文件请先问我是否覆盖。」                         |
+| `fec-review.md`    | 引导式评审并保存 `reports/code-review-*.md`。                                            | 「请评审我上一次提交里改动的文件，并写一份结构化 Markdown 报告到 `reports/`。」                                   |
+| `fec-test-plan.md` | 前端测试策略与覆盖矩阵。                                                                 | 「这次 checkout 重构，请把风险映射到静态检查、单元、E2E、视觉、无障碍和安全覆盖。」                               |
+| `fec-scaffold.md`  | 页面 / 功能 / 组件目录脚手架。                                                           | 「请为 React 项目脚手架一个新页面 UserDetail：放在 `src/pages/...`，并带上空的 `components/` 与 `hooks/` 目录。」 |
 
 ### Hooks
 

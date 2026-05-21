@@ -14,6 +14,8 @@ Useful checks:
 
 ```bash
 npm test
+npm run pack:skills
+npm run check:skills-publish
 npm run typecheck:openclaw
 ```
 
@@ -25,7 +27,7 @@ npm run typecheck:openclaw
 ├── commands/        # Custom commands (fec-init, fec-review, fec-scaffold)
 ├── docs/            # Runtime installation docs and localized READMEs
 ├── hooks/           # Hook configuration (hooks.json)
-├── scripts/         # Helper scripts (formatting, notifications, security, testing)
+├── scripts/         # Helper scripts (formatting, packaging, notifications, security, testing)
 ├── skills/          # Skill definitions (SKILL.md, metadata.json)
 ├── src/             # Source code
 │   ├── install/     # Installer core (CLI, interactive wizard, runtime converters)
@@ -95,6 +97,25 @@ npm run pack:openclaw           # Full build + verify + package
 Source: `src/openclaw/` (TypeScript) → `dist/openclaw/index.js` (bundled ESM).
 TypeScript config: `tsconfig.openclaw.json`.
 
+## Standalone Skill Packages
+
+The canonical skill sources live under `skills/<skill-id>/`. Do not edit generated files under `dist/skill-packages/` by hand.
+
+```bash
+npm run pack:skills            # Build one standalone package per skill
+npm run check:skills-publish   # Verify package metadata, index, and copied references
+npm run pack:all               # Full test + OpenClaw package + standalone skill packages
+```
+
+`npm run pack:skills` writes `dist/skill-packages/<skill-id>/` with `SKILL.md`, only the referenced `references/` files, `metadata.json`, `package.json`, `README.md`, and `LICENSE`. It also writes `dist/skill-packages/index.json` for platform crawlers and release automation.
+
+When changing a skill, keep these source files aligned:
+
+- `skills/<skill-id>/SKILL.md` — canonical runtime instruction.
+- `skills/metadata.json` — publish metadata, category, tags, keywords, platform targets, and package version.
+- `skills/eval_queries.json` — positive and negative trigger examples used by routing quality checks.
+- `README.md` and localized README summaries when the public skill list or user-facing behavior changes.
+
 ## Scripts
 
 | Script                                      | Purpose                           |
@@ -105,6 +126,9 @@ TypeScript config: `tsconfig.openclaw.json`.
 | `scripts/notify.ts`                        | Notification script               |
 | `scripts/session-start.ts`                 | Session initialization            |
 | `scripts/sync-codex-agents-toml.ts`        | Sync Codex agents configuration   |
+| `scripts/pack-skills.ts`                   | Standalone skill package builder  |
+| `scripts/check-skills-publish.ts`          | Standalone skill package verifier |
+| `scripts/skill-packaging.ts`               | Shared skill packaging helpers    |
 | `scripts/openclaw/build.ts`                | OpenClaw esbuild bundler          |
 | `scripts/openclaw/pack-openclaw.ts`        | OpenClaw packaging                |
 | `scripts/openclaw/verify-openclaw-dist.ts` | Verify OpenClaw dist completeness |
@@ -199,8 +223,11 @@ description: Use when the user needs ...
 - ...
 ```
 
-1. Add the skill to the Skills table in `README.md`.
-2. Update the repository tree in `README.md` and localized README files if the visible structure changes.
+3. Add an entry to `skills/metadata.json` with `id`, display `name`, taxonomy `category`, `tags`, `summary`, publish metadata, `keywords`, and `platforms`. The `version`, `license`, `homepage`, and `repository` fields should match `package.json`.
+4. Add positive and negative trigger examples to `skills/eval_queries.json`.
+5. Add the skill to the Skills table in `README.md`.
+6. Update the repository tree in `README.md` and localized README files if the visible structure changes.
+7. Run `npm test`, `npm run pack:skills`, and `npm run check:skills-publish`.
 
 ## Adding an Agent
 
@@ -256,6 +283,7 @@ Before opening a pull request:
 
 - [ ] The change is scoped and described clearly.
 - [ ] `npm test` passes.
+- [ ] Skill changes pass `npm run pack:skills` and `npm run check:skills-publish`.
 - [ ] `npm run typecheck:openclaw` passes when OpenClaw code or templates are affected.
 - [ ] `README.md` and `CHANGELOG.md` are updated when user-facing behavior changes (and `CHANGELOG.zh-CN.md` when you ship Chinese-facing release notes).
 - [ ] Localized README files are synced, or a follow-up translation issue is linked.

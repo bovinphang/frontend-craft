@@ -134,15 +134,6 @@ frontend-craft/
 
 ## Features
 
-### Commands
-
-| File                       | Purpose                                       |
-| -------------------------- | --------------------------------------------- |
-| `commands/fec-init.md`     | Initialize frontend-craft workspace templates |
-| `commands/fec-review.md`   | Guided frontend code review                   |
-| `commands/fec-test-plan.md` | Frontend testing strategy and coverage matrix |
-| `commands/fec-scaffold.md` | Page / feature / component scaffolding guide  |
-
 ### Skills
 
 | Skill                            | Purpose                                                                              |
@@ -172,6 +163,9 @@ frontend-craft/
 | `fec-web-workers`                | Web Worker integration, transferable objects, Comlink, worker pools                  |
 | `fec-canvas-threejs`             | Canvas 2D, Three.js, React Three Fiber, WebGL performance and accessibility          |
 | `fec-svg-animation`              | SVG animation with CSS, Framer Motion, GSAP, reduced-motion fallbacks                |
+| `fec-ui-design-direction`        | Product-specific UI direction, first-screen hierarchy, domain tone, visual strategy  |
+| `fec-interface-polish`           | Polish spacing, typography, radius, shadows, hit areas, states, transitions          |
+| `fec-vite-project-standard`      | Vite config, env safety, HMR, dev proxy, build optimization, library mode            |
 
 ### Using skills (scenarios & examples)
 
@@ -211,16 +205,20 @@ Skills live under `skills/<id>/SKILL.md`. OpenClaw exposes them as plugin skill 
 | Heavy computation off main thread          | `fec-web-workers`                | “Move the image-processing logic to a Web Worker with Comlink to keep the UI responsive.”                                                       |
 | Build an interactive 3D scene              | `fec-canvas-threejs`             | “Add a Three.js product viewer to `src/components/ProductViewer.tsx` with performance and fallback considerations.”                             |
 | Add SVG motion to a landing page           | `fec-svg-animation`              | “Animate the hero SVG with Framer Motion, and ensure reduced-motion users get a static fallback.”                                               |
+| Set UI visual direction                    | `fec-ui-design-direction`        | “Guide the visual direction for our dashboard: first-screen hierarchy, domain tone, and spacing strategy.”                                      |
+| Polish UI details                          | `fec-interface-polish`           | “Review `src/components/Dashboard.tsx` for spacing, typography, radius, shadows, hit areas, and motion polish.”                                 |
+| Optimize Vite build config                 | `fec-vite-project-standard`      | “Audit our `vite.config.ts` for HMR, dev proxy, env variable safety, and library mode best practices.”                                          |
 
 **Slash commands (markdown under `commands/`)**
 
 These are loaded as command specs; use them when you want a **fixed checklist** instead of free-form matching. In chat, describe what you want—the agent can follow the matching command doc without you naming it.
 
-| Command doc       | When to use                                                                                                 | Example (plain language)                                                                                                     |
-| ----------------- | ----------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------- |
-| `fec-init.md`     | Bootstrap **Claude-style** `.claude/` templates in a **project repo** (paths in the doc target `.claude/`). | “Initialize this repo’s `.claude/` with the frontend-craft templates and rules from the plugin; ask before overwriting.”     |
-| `fec-review.md`   | Guided review + save `reports/code-review-*.md`.                                                            | “Review the files changed in my last commit and write a structured markdown report under `reports/`.”                        |
-| `fec-scaffold.md` | Page / feature / component folder layout.                                                                   | “Scaffold a new React page `UserDetail` with the usual `src/pages/...` layout and empty `components/` and `hooks/` folders.” |
+| Command doc        | When to use                                                                                                 | Example (plain language)                                                                                                     |
+| ------------------ | ----------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------- |
+| `fec-init.md`      | Bootstrap **Claude-style** `.claude/` templates in a **project repo** (paths in the doc target `.claude/`). | “Initialize this repo’s `.claude/` with the frontend-craft templates and rules from the plugin; ask before overwriting.”     |
+| `fec-review.md`    | Guided review + save `reports/code-review-*.md`.                                                            | “Review the files changed in my last commit and write a structured markdown report under `reports/`.”                        |
+| `fec-test-plan.md` | Frontend testing strategy and coverage matrix.                                                              | “Map testing risks for our checkout refactor across static checks, unit, E2E, visual, a11y, and security.”                   |
+| `fec-scaffold.md`  | Page / feature / component folder layout.                                                                   | “Scaffold a new React page `UserDetail` with the usual `src/pages/...` layout and empty `components/` and `hooks/` folders.” |
 
 ### Hooks
 
