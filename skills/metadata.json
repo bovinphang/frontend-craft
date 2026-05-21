@@ -90,6 +90,12 @@
     "tags": ["figma", "sketch", "mastergo", "pixso", "design-to-code", "mcp"]
   },
   {
+    "id": "fec-interface-polish",
+    "name": "界面质感打磨",
+    "category": "migration-design",
+    "tags": ["ui-polish", "spacing", "typography", "motion", "visual-qa"]
+  },
+  {
     "id": "fec-legacy-to-modern-migration",
     "name": "遗留系统迁移",
     "category": "migration-design",
@@ -191,6 +197,18 @@
     "name": "验证与修复",
     "category": "quality",
     "tags": ["validation", "lint", "typecheck", "test", "build", "fix"]
+  },
+  {
+    "id": "fec-ui-design-direction",
+    "name": "UI 设计方向",
+    "category": "migration-design",
+    "tags": ["ui-design", "visual-direction", "layout", "product-design"]
+  },
+  {
+    "id": "fec-vite-project-standard",
+    "name": "Vite 项目规范",
+    "category": "project-standard",
+    "tags": ["vite", "build", "hmr", "env", "bundle", "dev-server"]
   },
   {
     "id": "fec-vue3-project-standard",

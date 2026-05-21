@@ -150,6 +150,9 @@ frontend-craft/
 |   |-- fec-browser-storage/            # localStorage/sessionStorage/IndexedDB/Cookies 선택 및 보안 영속화
 |   |-- fec-storybook-component-doc/    # Storybook 컴포넌트 문서, addons, MDX, 인터랙션 및 비주얼 테스트
 |   |-- fec-list-virtualization/        # 대용량 리스트 가상화 (react-window / TanStack Virtual)
+|   |-- fec-ui-design-direction/        # 제품별 UI 방향, 첫 화면 계층, 도메인 톤
+|   |-- fec-interface-polish/           # 간격, 타이포그래피, radius, 모션, 상태 등 UI 세부 polish
+|   |-- fec-vite-project-standard/      # Vite 설정, 환경 변수 안전, HMR, 프록시, 빌드 및 라이브러리 모드
 |   |-- fec-pwa-implementation/         # Manifest, 서비스 워커, 오프라인 캐시, 설치 프롬프트, 업데이트 처리
 |   |-- fec-web-workers/                # Web Worker 통합, 전달 가능 객체, Comlink, Worker 풀
 |   |-- fec-canvas-threejs/             # Canvas 2D, Three.js, React Three Fiber, WebGL 성능 및 접근성
@@ -221,6 +224,9 @@ frontend-craft/
 | `fec-component-testing`          | React Testing Library / Vue Test Utils 컴포넌트 테스트 및 리그레이션             | —                           |
 | `fec-storybook-component-doc`    | Storybook 컴포넌트 문서, Addon, MDX, 인터랙션·비주얼 테스트 통합                 | —                           |
 | `fec-list-virtualization`        | react-window / TanStack Virtual 대용량 리스트 가상화 및 측정 전략                | —                           |
+| `fec-ui-design-direction`        | 제품별 UI 방향, 첫 화면 계층, 도메인 톤, 시각 전략                              | —                           |
+| `fec-interface-polish`           | 간격, 타이포그래피, radius, 그림자, hit area, 상태, transition polish            | —                           |
+| `fec-vite-project-standard`      | Vite 설정, 환경 변수 안전, HMR, 개발 프록시, 빌드 최적화, 라이브러리 모드        | —                           |
 | `fec-pwa-implementation`         | Manifest, 서비스 워커, 오프라인 캐시, 설치 프롬프트, 업데이트 관리               | —                           |
 | `fec-web-workers`                | Web Worker, Transferable, Comlink, Worker 풀                                     | —                           |
 | `fec-canvas-threejs`             | Canvas 2D, Three.js, React Three Fiber, WebGL 성능 및 접근성                     | —                           |

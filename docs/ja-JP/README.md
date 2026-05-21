@@ -150,6 +150,9 @@ frontend-craft/
 |   |-- fec-browser-storage/            # localStorage/sessionStorage/IndexedDB/Cookies 選定と安全な永続化
 |   |-- fec-storybook-component-doc/    # Storybook コンポーネントドキュメント、addons、MDX、インタラクション・ビジュアルテスト
 |   |-- fec-list-virtualization/        # 大規模リストのウィンドイング（react-window / TanStack Virtual）
+|   |-- fec-ui-design-direction/        # プロダクト固有の UI 方向性、ファーストビュー階層、ドメイントーン
+|   |-- fec-interface-polish/           # 余白、タイポグラフィ、角丸、モーション、状態など UI 細部の磨き込み
+|   |-- fec-vite-project-standard/      # Vite 設定、環境変数安全性、HMR、プロキシ、ビルドとライブラリモード
 |   |-- fec-pwa-implementation/         # Manifest、サービスワーカー、オフラインキャッシュ、インストールプロンプト、更新処理
 |   |-- fec-web-workers/                # Web Worker 統合、転送可能オブジェクト、Comlink、Worker プール
 |   |-- fec-canvas-threejs/             # Canvas 2D、Three.js、React Three Fiber、WebGL パフォーマンスとアクセシビリティ
@@ -221,6 +224,9 @@ frontend-craft/
 | `fec-component-testing`          | React Testing Library / Vue Test Utils コンポーネントテストとリグレッション                    | —                           |
 | `fec-storybook-component-doc`    | Storybook コンポーネントドキュメント、Addon、MDX、インタラクションテスト・ビジュアルテスト統合 | —                           |
 | `fec-list-virtualization`        | react-window / TanStack Virtual 大規模リスト仮想化と測定戦略                                   | —                           |
+| `fec-ui-design-direction`        | プロダクト固有の UI 方向性、ファーストビュー階層、ドメイントーン、視覚戦略                    | —                           |
+| `fec-interface-polish`           | 余白、タイポグラフィ、角丸、影、ヒット領域、状態、トランジションの磨き込み                    | —                           |
+| `fec-vite-project-standard`      | Vite 設定、環境変数安全性、HMR、開発プロキシ、ビルド最適化、ライブラリモード                  | —                           |
 | `fec-pwa-implementation`         | Manifest、サービスワーカー、オフラインキャッシュ、インストールプロンプト、更新管理             | —                           |
 | `fec-web-workers`                | Web Worker、Transferable、Comlink、Worker プール                                               | —                           |
 | `fec-canvas-threejs`             | Canvas 2D、Three.js、React Three Fiber、WebGL パフォーマンスとアクセシビリティ                 | —                           |

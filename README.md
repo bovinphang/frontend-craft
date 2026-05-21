@@ -155,6 +155,9 @@ frontend-craft/
 |   |-- fec-browser-storage/            # localStorage/sessionStorage/IndexedDB/Cookies selection and safe client persistence
 |   |-- fec-list-virtualization/        # Large-list windowing with react-window / TanStack Virtual and measurement strategies
 |   |-- fec-storybook-component-doc/    # Storybook component docs, addons, MDX, interaction and visual test integration
+|   |-- fec-ui-design-direction/        # Product-specific UI direction, first-screen hierarchy, domain tone
+|   |-- fec-interface-polish/           # UI polish details: spacing, typography, radius, motion, states
+|   |-- fec-vite-project-standard/      # Vite config, env safety, HMR, proxy, build and library mode
 |
 |-- commands/         # Slash commands for quick execution
 |   |-- fec-init.md     # /fec-init - Initialize project templates
@@ -222,6 +225,9 @@ Slash commands in the tables below are shown **for Claude Code** as a familiar e
 | `fec-component-testing`          | React Testing Library / Vue Test Utils component tests and regression scenarios         | —                           |
 | `fec-storybook-component-doc`    | Storybook component docs, addons, MDX, interaction and visual test integration          | —                           |
 | `fec-list-virtualization`        | Large-list windowing with react-window / TanStack Virtual and measurement strategies    | —                           |
+| `fec-ui-design-direction`        | Product-specific UI direction, first-screen hierarchy, domain tone, visual strategy     | —                           |
+| `fec-interface-polish`           | Polish spacing, typography, radius, shadows, hit areas, states, transitions             | —                           |
+| `fec-vite-project-standard`      | Vite config, env safety, HMR, dev proxy, build optimization, library mode               | —                           |
 | `fec-pwa-implementation`         | Manifest, service worker, offline cache, install prompts, update handling               | —                           |
 | `fec-web-workers`                | Web Worker integration, transferable objects, Comlink, worker pools                     | —                           |
 | `fec-canvas-threejs`             | Canvas 2D, Three.js, React Three Fiber, WebGL performance and accessibility             | —                           |

@@ -155,6 +155,9 @@ frontend-craft/
 |   |-- fec-browser-storage/            # localStorage/sessionStorage/IndexedDB/Cookies 选型与安全持久化
 |   |-- fec-list-virtualization/        # 大数据列表虚拟化（react-window / TanStack Virtual）
 |   |-- fec-storybook-component-doc/    # Storybook 组件文档、addons、MDX、交互与视觉测试
+|   |-- fec-ui-design-direction/        # 产品化 UI 方向、首屏层级、业务语气
+|   |-- fec-interface-polish/           # 间距、排版、圆角、动效、状态等 UI 细节打磨
+|   |-- fec-vite-project-standard/      # Vite 配置、环境变量安全、HMR、代理、构建与库模式
 |
 |-- commands/         # 用于快速执行的斜杠命令
 |   |-- fec-init.md     # /fec-init - 初始化项目模板
@@ -222,6 +225,9 @@ frontend-craft/
 | `fec-component-testing`          | React Testing Library / Vue Test Utils 组件测试与回归用例          | —                           |
 | `fec-storybook-component-doc`    | Storybook 组件文档、Addon、MDX、交互测试与视觉测试集成             | —                           |
 | `fec-list-virtualization`        | react-window / TanStack Virtual 大列表虚拟滚动与测量策略           | —                           |
+| `fec-ui-design-direction`        | 产品化 UI 方向、首屏层级、业务语气与视觉策略                      | —                           |
+| `fec-interface-polish`           | 间距、排版、圆角、阴影、命中区域、状态与动效细节打磨               | —                           |
+| `fec-vite-project-standard`      | Vite 配置、环境变量安全、HMR、开发代理、构建优化与库模式           | —                           |
 | `fec-pwa-implementation`         | manifest、Service Worker、离线缓存、安装提示与更新管理             | —                           |
 | `fec-web-workers`                | Web Worker、Transferable、Comlink、Worker 池                       | —                           |
 | `fec-canvas-threejs`             | Canvas 2D、Three.js、React Three Fiber、WebGL 性能与可访问性       | —                           |

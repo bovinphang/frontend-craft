@@ -8,6 +8,7 @@
 - 减少首屏关键资源
 - 避免不必要的重渲染
 - 关注 Core Web Vitals
+- 前端构建必须同时验证开发体验和生产产物，不能只看 dev server 正常
 
 ## 代码分割与懒加载
 
@@ -52,6 +53,18 @@ const Dashboard = () => import('./pages/Dashboard.vue');
 - 字体按需加载，使用 `font-display: swap`
 - 第三方依赖按需导入（如 `import { Button } from 'antd'` 而非 `import antd from 'antd'`）
 
+## Vite 构建与开发性能
+
+使用 Vite 时额外遵守：
+
+- `vite build` 不做类型检查，CI 必须单独执行 `tsc --noEmit` 或接入 `vite-plugin-checker`
+- 慢启动先用 `vite --profile` 定位插件、解析或预构建瓶颈
+- 大项目可使用 `server.warmup.clientFiles` 预热核心入口
+- CJS/UMD 依赖互操作问题优先通过 `optimizeDeps.include` 处理
+- 手动分包优先使用稳定对象形式，不要把每个 `node_modules` 包拆成独立 chunk
+- 组件库模式必须 externalize peer dependencies，并单独产出类型声明
+- `vite preview` 只用于本地构建烟测，不是生产服务器
+
 ## 数据请求
 
 - 避免瀑布式请求（串行依赖），尽可能并行
@@ -67,6 +80,8 @@ const Dashboard = () => import('./pages/Dashboard.vue');
 - [ ] 图片是否使用现代格式和合理尺寸
 - [ ] 第三方库是否按需导入
 - [ ] 是否存在不必要的重渲染
+- [ ] Vite 项目是否单独执行 typecheck
+- [ ] Vite 构建产物是否经过 `vite build` 和本地预览烟测
 
 ## 反模式
 
@@ -75,3 +90,5 @@ const Dashboard = () => import('./pages/Dashboard.vue');
 - 在组件内重复创建相同的 API 请求
 - 大列表不做虚拟化直接渲染数千行 DOM
 - 频繁操作（如输入、滚动）不做防抖/节流
+- 认为 `vite build` 通过就代表 TypeScript 没有错误
+- 设置 `envPrefix: ""` 或把服务端密钥注入客户端 bundle

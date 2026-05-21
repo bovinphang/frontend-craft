@@ -150,6 +150,9 @@ frontend-craft/
 |   |-- fec-browser-storage/            # localStorage/sessionStorage/IndexedDB/Cookies 選型與安全持久化
 |   |-- fec-storybook-component-doc/    # Storybook 元件文件、addons、MDX、互動與視覺測試
 |   |-- fec-list-virtualization/        # 大數據列表虛擬化（react-window / TanStack Virtual）
+|   |-- fec-ui-design-direction/        # 產品化 UI 方向、首屏層級、業務語氣
+|   |-- fec-interface-polish/           # 間距、排版、圓角、動效、狀態等 UI 細節打磨
+|   |-- fec-vite-project-standard/      # Vite 設定、環境變數安全、HMR、代理、建置與函式庫模式
 |   |-- fec-pwa-implementation/         # Manifest、Service Worker、離線緩存、安裝提示、更新處理
 |   |-- fec-web-workers/                # Web Worker 整合、可傳輸物件、Comlink、Worker 池
 |   |-- fec-canvas-threejs/             # Canvas 2D、Three.js、React Three Fiber、WebGL 效能與無障礙
@@ -221,6 +224,9 @@ frontend-craft/
 | `fec-component-testing`          | React Testing Library / Vue Test Utils 元件測試與回歸用例          | —                           |
 | `fec-storybook-component-doc`    | Storybook 元件文件、Addon、MDX、互動測試與視覺測試整合             | —                           |
 | `fec-list-virtualization`        | react-window / TanStack Virtual 大數據列表虛擬滾動與測量策略       | —                           |
+| `fec-ui-design-direction`        | 產品化 UI 方向、首屏層級、業務語氣與視覺策略                      | —                           |
+| `fec-interface-polish`           | 間距、排版、圓角、陰影、命中區域、狀態與動效細節打磨               | —                           |
+| `fec-vite-project-standard`      | Vite 設定、環境變數安全、HMR、開發代理、建置最佳化與函式庫模式     | —                           |
 | `fec-pwa-implementation`         | Manifest、Service Worker、離線緩存、安裝提示與更新管理             | —                           |
 | `fec-web-workers`                | Web Worker、Transferable、Comlink、Worker 池                       | —                           |
 | `fec-canvas-threejs`             | Canvas 2D、Three.js、React Three Fiber、WebGL 效能與無障礙         | —                           |
