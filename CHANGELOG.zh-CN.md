@@ -8,6 +8,29 @@
 
 自 **2.0.0** 起，面向发布的说明以英文 `CHANGELOG.md` 为权威来源；历史条目可能保留最初撰写语言。
 
+## [2.2.0] - 2026-05-21
+
+### 新增
+
+- **Qoder runtime 支持**：新增 `qoder` 安装器、runtime 文档、能力元数据、README 说明和 Marketplace 关键词。通用安装器现在记录并支持 15 个 AI coding runtime。
+- **测试策略工作流**：新增 `frontend-test-planner`、`/fec-test-plan` 和 `fec-testing-strategy`，用于按风险规划前端测试层级，覆盖静态检查、单元、组件、集成、E2E、视觉、无障碍、安全与性能等维度。
+- **新前端工作流技能**：新增 `fec-ui-design-direction`、`fec-interface-polish` 和 `fec-vite-project-standard`；原验证修复流程改为 `fec-validation-fix`。
+- **独立 skill 发布管线**：新增 `scripts/pack-skills.ts`、`scripts/check-skills-publish.ts`、共享 skill 打包工具，以及 `npm run pack:skills`、`npm run check:skills-publish`、`npm run pack:all`，可为每个 skill 生成并校验独立可发布包。
+- **CLI 诊断与 metadata 检查**：新增 `frontend-craft matrix`、`frontend-craft doctor <runtime>` 和 `frontend-craft sync-metadata --check`，用于查看 runtime 能力矩阵、安装健康状态与公开 metadata 一致性。
+- **Skill 评估数据集**：新增 `skills/eval_queries.json`，用于验证 skill 发现与路由质量。
+
+### 变更
+
+- **TypeScript 迁移**：将通用 CLI、安装器、runtime 转换器、hook 脚本、OpenClaw 打包脚本和测试从 `.mjs` 迁移到 TypeScript，并通过 `dist/` 下的编译产物作为运行入口。
+- **Agentskills 兼容的 skill 布局**：所有 skill 目录统一为 `fec-*` 命名，补充 frontmatter 与 references 文件结构，将 `skills/metadata.json` 扩展至 28 个 skills，并同步英文、简体中文、繁体中文、日文和韩文 README 的技能目录树。
+- **Runtime 能力模型**：新增显式的 runtime 能力分层，覆盖 skills、agents、commands、hooks、rules、templates、MCP、reports 与 init 行为，使安装器输出和文档能准确反映不同 runtime 的支持范围。
+- **Claude/OpenClaw 打包元数据**：刷新插件描述、支持的 runtime 关键词与 hook 命令示例，使其匹配 TypeScript 构建产物以及当前 10 agents / 28 skills / 4 commands 的能力范围。
+
+### 移除
+
+- 迁移到 `fec-*` 布局后，移除旧的无前缀 skill 目录。
+- 移除已不匹配当前包结构的旧迁移文档与 skills fusion 评估文档。
+
 ## [2.1.2] - 2026-05-20
 
 ### 变更

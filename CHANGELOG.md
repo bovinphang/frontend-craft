@@ -9,6 +9,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 Project-facing release notes are maintained in English from 2.0.0 onward. Historical entries may preserve their original language.
 
+## [2.2.0] - 2026-05-21
+
+### Added
+
+- **Qoder runtime support:** added the `qoder` installer, runtime documentation, capability metadata, README coverage, and marketplace keywords. The universal installer now documents and supports 15 AI coding runtimes.
+- **Testing strategy workflow:** added `frontend-test-planner`, `/fec-test-plan`, and `fec-testing-strategy` for risk-based frontend test planning across static checks, unit, component, integration, E2E, visual, accessibility, security, and performance layers.
+- **New frontend workflow skills:** added `fec-ui-design-direction`, `fec-interface-polish`, and `fec-vite-project-standard`; replaced the former validation workflow with `fec-validation-fix`.
+- **Standalone skill publishing pipeline:** added `scripts/pack-skills.ts`, `scripts/check-skills-publish.ts`, shared skill packaging helpers, `npm run pack:skills`, `npm run check:skills-publish`, and `npm run pack:all` for generating and validating one publishable package per skill.
+- **CLI diagnostics and metadata checks:** added `frontend-craft matrix`, `frontend-craft doctor <runtime>`, and `frontend-craft sync-metadata --check` to inspect runtime capabilities, installation health, and public metadata consistency.
+- **Skill evaluation dataset:** added `skills/eval_queries.json` for validating skill discovery and routing quality.
+
+### Changed
+
+- **TypeScript migration:** migrated the universal CLI, installers, runtime converters, hook scripts, OpenClaw packaging scripts, and tests from `.mjs` to TypeScript, with compiled runtime entry points under `dist/`.
+- **Agentskills-compatible skill layout:** normalized all skill directories to the `fec-*` naming scheme, added frontmatter and reference-file structure, expanded `skills/metadata.json` to 28 skills, and synchronized README skill trees across English, Simplified Chinese, Traditional Chinese, Japanese, and Korean docs.
+- **Runtime capability model:** introduced explicit per-runtime capability tiers for skills, agents, commands, hooks, rules, templates, MCP, reports, and init behavior so installer output and docs reflect each runtime accurately.
+- **Claude/OpenClaw packaging metadata:** refreshed plugin descriptions, supported runtime keywords, and hook command examples to match the TypeScript build output and the current 10-agent / 28-skill / 4-command surface.
+
+### Removed
+
+- Removed legacy unprefixed skill directories after migrating them to the `fec-*` layout.
+- Removed stale migration and skills-fusion assessment documents that no longer matched the current package structure.
+
 ## [2.1.2] - 2026-05-20
 
 ### Changed
