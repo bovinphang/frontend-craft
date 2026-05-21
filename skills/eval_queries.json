@@ -1,0 +1,554 @@
+{
+  "fec-accessibility-check": {
+    "should_trigger": [
+      "检查这个弹窗的键盘焦点和 aria 是否正确",
+      "给这个表单做 WCAG 2.1 AA 无障碍审查",
+      "这个菜单能不能只用键盘操作",
+      "审查页面标题层级和 landmark",
+      "按钮只有图标，帮我补可访问名称",
+      "检查 table 语义和屏幕阅读器体验",
+      "抽屉关闭后焦点应该回到哪里",
+      "a11y review for this React component"
+    ],
+    "should_not_trigger": [
+      "给这个 PR 做整体代码评审",
+      "修复 TypeScript 编译错误",
+      "写一个 Playwright 登录流程",
+      "实现 React 项目目录结构",
+      "检查 XSS 和 token 存储风险",
+      "优化虚拟列表滚动性能",
+      "用 Storybook 写组件文档",
+      "把 jQuery 项目迁移到 Vue"
+    ]
+  },
+  "fec-browser-storage": {
+    "should_trigger": [
+      "localStorage 里该怎么存用户偏好",
+      "IndexedDB 适合缓存这个离线数据吗",
+      "设计浏览器端缓存清理策略",
+      "Cookie、sessionStorage、localStorage 选哪个",
+      "封装带命名空间的客户端持久化",
+      "审查 token 是否不该放 localStorage",
+      "大数据量本地缓存用什么方案",
+      "client persistence strategy for a web app"
+    ],
+    "should_not_trigger": [
+      "配置 Service Worker 离线 fallback",
+      "React Query queryKey 怎么设计",
+      "修复表单校验错误",
+      "写路由 RBAC 守卫",
+      "迁移 jQuery 页面",
+      "审查 CSP 和 XSS",
+      "优化 Canvas 渲染",
+      "配置 Next.js metadata"
+    ]
+  },
+  "fec-canvas-threejs": {
+    "should_trigger": [
+      "实现一个 Three.js 产品 3D 预览",
+      "Canvas 粒子动画卡顿怎么优化",
+      "React Three Fiber 场景如何清理资源",
+      "WebGL texture 太大导致掉帧",
+      "签名板 Canvas 适配高清屏",
+      "游戏渲染循环怎么写",
+      "3D 场景 dispose 有哪些必须做",
+      "build a canvas data visualization"
+    ],
+    "should_not_trigger": [
+      "普通 DOM 表单怎么实现",
+      "SVG 图标路径描边动画",
+      "Web Worker 解析大 JSON",
+      "React 项目模块边界设计",
+      "优化大列表 DOM 节点数量",
+      "Playwright 截图测试",
+      "PWA manifest 配置",
+      "检查按钮 aria-label"
+    ]
+  },
+  "fec-component-testing": {
+    "should_trigger": [
+      "给这个 React 组件补 RTL 单测",
+      "Vue Test Utils 测试 emits",
+      "给这个 composable 写单元测试",
+      "用 user-event 测试弹窗交互",
+      "组件 loading empty error 状态怎么测",
+      "避免 snapshot 测试脆弱断言",
+      "mock API 后测试组件渲染",
+      "表单组件加 Router Provider 的轻量集成测试",
+      "为这个 bug 补组件回归测试"
+    ],
+    "should_not_trigger": [
+      "规划这个功能的测试分层",
+      "写完整登录到支付的 E2E",
+      "配置 Storybook 文档站",
+      "跑 lint 并修复失败",
+      "审查 XSS 风险",
+      "设计 React 项目结构",
+      "检查 WCAG 键盘焦点",
+      "搭建 Playwright CI artifacts",
+      "迁移 jQuery 项目"
+    ]
+  },
+  "fec-testing-strategy": {
+    "should_trigger": [
+      "为这个前端功能制定测试策略",
+      "这次 PR 应该补哪些层级的测试",
+      "按风险给登录重构做测试覆盖矩阵",
+      "单元测试、组件测试、E2E 怎么分工",
+      "规划静态检查、组件测试和 E2E 的质量门禁",
+      "评估这个里程碑的测试债治理优先级",
+      "测试分层怎么设计",
+      "create a frontend testing strategy for this feature"
+    ],
+    "should_not_trigger": [
+      "给 Button 写 RTL 单测",
+      "写 Playwright 登录 E2E",
+      "运行 npm test 并修复失败",
+      "配置 Storybook stories",
+      "只检查 XSS 和 CSP",
+      "只做 WCAG 键盘焦点审查",
+      "实现 React 项目目录结构",
+      "优化虚拟列表滚动性能"
+    ]
+  },
+  "fec-data-fetching": {
+    "should_trigger": [
+      "TanStack Query queryKey 怎么设计",
+      "React Query mutation 成功后如何失效缓存",
+      "实现乐观更新失败回滚",
+      "无限滚动数据用 useInfiniteQuery",
+      "SSR hydration with React Query",
+      "封装 typed API hooks",
+      "替换 useEffect loading state 获取数据",
+      "server state caching strategy"
+    ],
+    "should_not_trigger": [
+      "Service Worker 缓存静态资源",
+      "localStorage 存用户偏好",
+      "表单字段联动校验",
+      "Pinia 本地 UI 状态设计",
+      "Next.js 服务端组件 fetch 缓存",
+      "Web Worker 后台解析 CSV",
+      "虚拟列表滚动渲染",
+      "审查 token 存储安全"
+    ]
+  },
+  "fec-e2e-testing": {
+    "should_trigger": [
+      "用 Playwright 写登录购买完整流程",
+      "治理 flaky E2E 用例",
+      "配置 Cypress 关键路径测试",
+      "上传 trace screenshot video 到 CI",
+      "Page Object 怎么组织",
+      "写移动端和桌面端 E2E",
+      "视觉回归测试怎么接入",
+      "debug a failing Playwright test"
+    ],
+    "should_not_trigger": [
+      "给 Button 写组件单测",
+      "Storybook 写组件示例",
+      "React 项目结构设计",
+      "修复 TypeScript 类型错误",
+      "审查 XSS 风险",
+      "配置 PWA manifest",
+      "选择 localStorage 还是 IndexedDB",
+      "写 Zod 表单校验"
+    ]
+  },
+  "fec-form-handling": {
+    "should_trigger": [
+      "用 React Hook Form 和 Zod 做复杂表单",
+      "动态字段 useFieldArray 怎么写",
+      "第三方 Select 如何接入 Controller",
+      "文件上传表单怎么校验大小和类型",
+      "多步表单 schema 怎么拆",
+      "表单输入很卡怎么优化",
+      "密码确认联动校验",
+      "build a typed validation form"
+    ],
+    "should_not_trigger": [
+      "React 项目目录怎么规划",
+      "mutation 成功后 invalidation",
+      "写表单组件单测",
+      "检查 label 和 aria 错误提示",
+      "路由未登录重定向",
+      "审查文件上传安全风险",
+      "普通两个字段搜索框",
+      "Vue 组件架构设计"
+    ]
+  },
+  "fec-frontend-code-review": {
+    "should_trigger": [
+      "帮我 review 这个前端 PR",
+      "做一次合并前代码评审",
+      "检查 React 组件架构和可维护性",
+      "看看这批改动有没有类型和状态风险",
+      "输出 frontend code review 报告",
+      "审查样式一致性和测试缺口",
+      "评估这个 UI 实现能不能合并",
+      "general frontend PR review"
+    ],
+    "should_not_trigger": [
+      "只检查 XSS 和 CSP",
+      "只做 WCAG 无障碍审查",
+      "只运行 test 并修复失败",
+      "写 Playwright E2E",
+      "设计 Next.js 路由结构",
+      "迁移 jQuery 到 React",
+      "优化 WebGL 帧率",
+      "编写 Storybook 文档"
+    ]
+  },
+  "fec-implement-from-design": {
+    "should_trigger": [
+      "按 Figma 设计稿实现这个页面",
+      "从截图还原一个 React 组件",
+      "把 MasterGo 选区转成前端代码",
+      "设计 token 应该怎么映射到 CSS 变量",
+      "实现设计稿里的弹窗和表格",
+      "检查设计稿和实现的视觉差异",
+      "用现有组件库还原 Pixso 页面",
+      "design-to-code implementation"
+    ],
+    "should_not_trigger": [
+      "创建 PWA Service Worker",
+      "写组件单元测试",
+      "做通用 PR review",
+      "配置 React Query",
+      "维护 jQuery 遗留页面",
+      "检查 XSS 风险",
+      "设计 monorepo package 边界",
+      "写 Web Worker"
+    ]
+  },
+  "fec-legacy-to-modern-migration": {
+    "should_trigger": [
+      "把 jQuery MPA 迁移到 React TypeScript",
+      "规划遗留 JSP 页面现代化",
+      "从服务端模板迁移到 Vue 3 SPA",
+      "做 legacy frontend migration plan",
+      "盘点旧系统页面和插件依赖",
+      "制定渐进式 Strangler Fig 迁移",
+      "迁移 $.ajax 到 typed request layer",
+      "jQuery 项目技术栈升级方案"
+    ],
+    "should_not_trigger": [
+      "在 jQuery 项目里修一个点击 bug",
+      "维护现有原生 JS 页面不迁移",
+      "审查 React PR",
+      "写 Playwright E2E",
+      "配置 Nuxt 路由",
+      "检查 Canvas 内存泄漏",
+      "设计浏览器存储策略",
+      "写 Storybook 文档"
+    ]
+  },
+  "fec-legacy-web-standard": {
+    "should_trigger": [
+      "维护一个 jQuery 多页面项目",
+      "修复原生 JS 事件委托问题",
+      "传统服务端模板页面怎么安全改",
+      "审查 .html() 插入用户输入",
+      "整理 legacy CSS 和 jQuery 插件初始化",
+      "MPA 页面 Ajax loading 怎么处理",
+      "不引入框架地改旧页面",
+      "vanilla JS legacy maintenance"
+    ],
+    "should_not_trigger": [
+      "把 jQuery 迁移到 React",
+      "制定 Vue 3 重构计划",
+      "设计 React 项目结构",
+      "写组件单元测试",
+      "配置 PWA 离线缓存",
+      "实现 Three.js 场景",
+      "做 Next.js App Router 页面",
+      "配置 TanStack Query"
+    ]
+  },
+  "fec-list-virtualization": {
+    "should_trigger": [
+      "十万行列表滚动卡顿怎么优化",
+      "react-window 固定高度列表",
+      "TanStack Virtual 动态高度",
+      "虚拟滚动和无限加载结合",
+      "表格行太多导致 DOM 爆炸",
+      "网格 virtualization 怎么做",
+      "variable row height measurement",
+      "large list windowing performance"
+    ],
+    "should_not_trigger": [
+      "React Query 无限分页数据源",
+      "Web Worker 计算布局",
+      "Canvas 绘制图表",
+      "普通短列表组件",
+      "写 E2E 滚动测试",
+      "检查 aria 表格语义",
+      "PWA 缓存图片",
+      "设计 Vue 项目结构"
+    ]
+  },
+  "fec-monorepo-project-standard": {
+    "should_trigger": [
+      "设计 pnpm workspace 前端 monorepo",
+      "Turborepo task pipeline 怎么配置",
+      "Nx 多包边界怎么划分",
+      "内部包用 workspace:*",
+      "检查 monorepo 循环依赖",
+      "多 package 发布规范",
+      "共享 UI 包和 app 边界",
+      "frontend monorepo restructuring"
+    ],
+    "should_not_trigger": [
+      "单个 React 组件架构",
+      "Next.js App Router 页面",
+      "写表单校验",
+      "配置 Playwright E2E",
+      "审查 XSS 风险",
+      "优化虚拟列表",
+      "PWA manifest",
+      "维护 jQuery 页面"
+    ]
+  },
+  "fec-nextjs-project-standard": {
+    "should_trigger": [
+      "Next.js App Router 项目结构",
+      "server component 和 client component 边界",
+      "配置 SSR SSG ISR",
+      "generateMetadata 怎么写",
+      "middleware 里做重定向",
+      "loading.tsx error.tsx 怎么组织",
+      "Next.js fetch cache 策略",
+      "Next 14 route layout design"
+    ],
+    "should_not_trigger": [
+      "普通 React 组件拆分",
+      "React Hook Form 表单",
+      "TanStack Query 客户端缓存",
+      "Vue 3 composable 设计",
+      "Nuxt 页面路由",
+      "Playwright E2E",
+      "PWA Service Worker",
+      "jQuery 迁移"
+    ]
+  },
+  "fec-nuxt-project-standard": {
+    "should_trigger": [
+      "Nuxt 3 项目结构怎么组织",
+      "useFetch 和 useAsyncData 选择",
+      "配置 Nuxt SSR SSG SPA",
+      "Nuxt route middleware 鉴权",
+      "plugins .client .server 怎么写",
+      "server/api 路由设计",
+      "Nuxt layouts 和 pages",
+      "Nuxt module setup"
+    ],
+    "should_not_trigger": [
+      "普通 Vue 3 组件边界",
+      "Next.js App Router",
+      "React Query 缓存",
+      "写组件单测",
+      "PWA manifest",
+      "jQuery 维护",
+      "Canvas 渲染",
+      "Web Worker 性能"
+    ]
+  },
+  "fec-pwa-implementation": {
+    "should_trigger": [
+      "给应用加 PWA manifest",
+      "配置 Service Worker 离线 fallback",
+      "Workbox 缓存策略怎么选",
+      "实现 beforeinstallprompt 安装提示",
+      "PWA 更新提示和 skipWaiting",
+      "maskable icon 怎么配置",
+      "iOS PWA 有哪些兼容问题",
+      "make this web app installable"
+    ],
+    "should_not_trigger": [
+      "React Query API 缓存",
+      "localStorage 持久化偏好",
+      "普通页面性能优化",
+      "Next.js metadata",
+      "写 Playwright E2E",
+      "Web Worker 后台计算",
+      "审查 XSS 风险",
+      "Vue 项目结构"
+    ]
+  },
+  "fec-react-project-standard": {
+    "should_trigger": [
+      "设计 React TypeScript 项目结构",
+      "React feature 模块边界怎么划分",
+      "组件、hooks、services 目录怎么放",
+      "Context 和局部状态怎么归属",
+      "React 页面重构成 features",
+      "设计复合组件 API",
+      "梳理 React 错误边界和状态层",
+      "React component architecture review"
+    ],
+    "should_not_trigger": [
+      "写 React Hook Form 动态表单",
+      "TanStack Query mutation 回滚",
+      "RTL 组件单测",
+      "只检查 a11y 焦点",
+      "Next.js App Router fetch cache",
+      "虚拟列表滚动性能",
+      "PWA Service Worker",
+      "XSS 安全审查"
+    ]
+  },
+  "fec-route-protection": {
+    "should_trigger": [
+      "实现未登录跳转登录页",
+      "RBAC 权限路由怎么设计",
+      "React Router 私有路由守卫",
+      "Next middleware 鉴权和 redirect",
+      "Vue Router beforeEach 权限判断",
+      "Nuxt route middleware 登录态",
+      "防止 open redirect",
+      "route guard with roles"
+    ],
+    "should_not_trigger": [
+      "审查 token 是否安全存储",
+      "设计 React 项目结构",
+      "配置 TanStack Query",
+      "写 E2E 登录流程",
+      "表单校验",
+      "PWA 离线缓存",
+      "普通菜单键盘可访问性",
+      "jQuery 迁移"
+    ]
+  },
+  "fec-security-review": {
+    "should_trigger": [
+      "检查 dangerouslySetInnerHTML 是否安全",
+      "审查 v-html XSS 风险",
+      "token 存储和刷新流程安全检查",
+      "文件上传前端安全风险",
+      "第三方脚本和 CSP 审查",
+      "检查 CSRF 防护",
+      "开放重定向风险",
+      "frontend security review"
+    ],
+    "should_not_trigger": [
+      "普通前端 PR 综合评审",
+      "WCAG 键盘焦点审查",
+      "React 组件架构设计",
+      "Playwright E2E",
+      "修复 TypeScript 错误",
+      "PWA install prompt",
+      "Storybook 组件文档",
+      "虚拟列表性能"
+    ]
+  },
+  "fec-storybook-component-doc": {
+    "should_trigger": [
+      "给组件写 Storybook stories",
+      "配置 Storybook addon-a11y",
+      "为设计系统写 MDX 文档",
+      "Storybook decorators 怎么处理 Provider",
+      "组件状态枚举文档",
+      "Chromatic 视觉回归接入",
+      "Storybook interaction test",
+      "document components in Storybook"
+    ],
+    "should_not_trigger": [
+      "RTL 组件单元测试",
+      "Playwright 跨页 E2E",
+      "React 项目结构设计",
+      "按 Figma 直接实现页面",
+      "安全审查",
+      "PWA 配置",
+      "Web Worker",
+      "jQuery 迁移"
+    ]
+  },
+  "fec-svg-animation": {
+    "should_trigger": [
+      "SVG 路径描边动画",
+      "logo SVG 动效怎么做",
+      "Framer Motion 驱动 SVG",
+      "GSAP 控制 icon motion",
+      "微交互 SVG 动画",
+      "prefers-reduced-motion 兜底",
+      "SMIL 和 CSS animation 选择",
+      "animate an SVG illustration"
+    ],
+    "should_not_trigger": [
+      "Three.js 3D 场景",
+      "Canvas 粒子系统",
+      "普通 CSS hover",
+      "PWA 图标配置",
+      "React 项目结构",
+      "写 E2E 测试",
+      "检查 XSS",
+      "虚拟列表性能"
+    ]
+  },
+  "fec-validation-fix": {
+    "should_trigger": [
+      "运行项目测试并修复失败",
+      "npm run build 报错帮我修",
+      "typecheck 失败怎么处理",
+      "lint failure after changes",
+      "跑验证命令并分析失败日志",
+      "修复单元测试失败",
+      "CI build failed locally",
+      "test and fix this frontend repo"
+    ],
+      "should_not_trigger": [
+        "给 Button 写组件单元测试",
+        "为登录流程编写 Playwright E2E",
+        "写新的 Playwright 测试计划",
+        "做代码 review 报告",
+        "设计 React 架构",
+        "PWA manifest",
+        "Web Worker 实现",
+        "迁移 jQuery"
+      ]
+  },
+  "fec-vue3-project-standard": {
+    "should_trigger": [
+      "设计 Vue 3 TypeScript 项目结构",
+      "Vue SFC 组件边界怎么拆",
+      "Composables 和 Pinia 怎么分工",
+      "Vue Router 页面组织",
+      "Provide Inject 适合这个场景吗",
+      "Vue 3 API 层和错误处理约定",
+      "Vue 组件架构 review",
+      "Composition API project conventions"
+    ],
+    "should_not_trigger": [
+      "Nuxt useFetch 和 SSR",
+      "React 组件架构",
+      "写 Vue Test Utils 单测",
+      "只做 WCAG 审查",
+      "TanStack Query 乐观更新",
+      "PWA Service Worker",
+      "jQuery 迁移",
+      "XSS 安全审查"
+    ]
+  },
+  "fec-web-workers": {
+    "should_trigger": [
+      "大 JSON 解析阻塞主线程",
+      "用 Web Worker 处理图片滤镜",
+      "Comlink 怎么封装 worker API",
+      "Transferable Objects 零拷贝",
+      "Worker pool 处理大量任务",
+      "SharedWorker 跨 Tab 通信",
+      "Vite worker import 怎么写",
+      "move heavy browser computation off main thread"
+    ],
+    "should_not_trigger": [
+      "虚拟列表减少 DOM 节点",
+      "Canvas 渲染循环",
+      "Service Worker 离线缓存",
+      "localStorage 存储",
+      "React 项目结构",
+      "普通 5ms 计算",
+      "操作 DOM 更新 UI",
+      "写组件测试"
+    ]
+  }
+}

@@ -39,12 +39,6 @@ description: Use when ...
 
 一句话说明这个 Skill 解决什么问题，面向什么场景。
 
-## When to Use
-
-- 触发条件 1
-- 触发条件 2
-- 触发条件 3
-
 ## Procedure
 
 分步骤实现指南，每步包含代码示例。
@@ -68,6 +62,10 @@ description: Use when ...
 ## Expected Output
 
 明确产出物是什么，如何验证。
+
+## Related Skills / Boundary
+
+- `fec-related-skill` — 说明什么时候应切换到该 skill。
 ```
 
 ---
@@ -80,15 +78,12 @@ description: Use when ...
 - 说明解决什么问题，而非如何解决
 - 示例: "管理表单状态、校验和提交，避免受控组件的性能问题"
 
-### When to Use
+### Trigger and Boundary
 
-- 3-5 条场景边界或执行后需要注意的适用条件，使用短列表
-- 每条以动词或名词开头，避免长句
-- 明确说明"什么时候不该用"（如有）
-- 触发条件优先写在 frontmatter `description`，不要只写在正文里
-- 示例:
-  - 复杂表单（10+ 字段、动态字段、联动校验）
-  - 需要高性能输入（避免受控组件的每次键入重渲染）
+- 触发条件主要写在 frontmatter `description`，正文不要再重复长篇 `When to Use`。
+- `description` 必须包含 should-trigger 场景和近邻 should-not-trigger 边界。
+- 对容易重叠的 skill，在正文添加 `Related Skills / Boundary`，说明什么时候应切换到专项 skill。
+- 示例: `Use when building substantial forms with React Hook Form and Zod. Do not use for trivial 1-3 field forms without validation.`
 
 ### Procedure
 
@@ -100,6 +95,8 @@ description: Use when ...
 - 涉及安装的步骤先给出安装命令
 - 代码示例遵循项目已有的编码规范
 - 优先展示完整的最小可运行示例，而非片段
+- `SKILL.md` 只保留每次使用都需要的核心流程；接近 **180-220 行**时优先拆到 `references/`。
+- 长代码、框架变体、进阶配置、评估清单放入一层 `references/` 文件，并从 `SKILL.md` 明确说明何时加载。
 
 ### Constraints
 
@@ -124,6 +121,25 @@ description: Use when ...
 - 变量和函数名语义化，避免缩写（除非是行业约定如 `ctx`、`ref`）
 - 关键行添加行内注释说明"为什么"而非"是什么"
 - 安装命令使用 `npm install`（不锁包管理器）
+
+---
+
+## Progressive Disclosure
+
+- `SKILL.md`：触发后每次都需要的操作顺序、约束、边界和最小示例。
+- `references/`：按需加载的详细示例、框架变体、配置模板和长检查清单。
+- 避免把同一说明同时写在 `SKILL.md` 和 reference 中；正文只做导航。
+- reference 只放一层，链接必须使用相对路径。
+
+---
+
+## 触发评估
+
+每个 skill 维护正负样例，用于 description 优化：
+
+- `should_trigger`：8-10 条真实用户问法。
+- `should_not_trigger`：8-10 条近邻误触发问法。
+- 高重叠 skill 优先覆盖 React/Vue/Next/Nuxt、review/security/a11y、component/E2E/Storybook、legacy/migration。
 
 ---
 

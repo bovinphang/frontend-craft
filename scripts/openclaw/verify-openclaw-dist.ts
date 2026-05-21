@@ -1,4 +1,4 @@
-﻿import { existsSync, readFileSync } from "node:fs";
+import { existsSync, readFileSync } from "node:fs";
 import path from "node:path";
 import { resolvePluginRoot } from "../../src/install/shared/resolve-plugin-root.js";
 

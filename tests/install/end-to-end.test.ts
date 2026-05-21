@@ -1,10 +1,13 @@
-﻿import test from "node:test";
+import test from "node:test";
 import assert from "node:assert/strict";
 import { execFileSync } from "node:child_process";
 import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import { ALL_RUNTIMES } from "../../src/install/registry.js";
+import { getInstallBaseDir } from "../../src/install/runtime-homes.js";
+import { RUNTIME_CAPABILITIES } from "../../src/install/runtime-capabilities.js";
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "../..");
 const cli = path.join(root, "bin", "frontend-craft.js");
@@ -114,6 +117,7 @@ test("runtime command installers keep fec command names", () => {
     ["opencode", ".opencode", "command"],
     ["kilo", ".kilo", "command"],
     ["openclaw", ".openclaw", "commands"],
+    ["qoder", ".qoder", "commands"],
   ];
 
   for (const [runtime, baseDir, commandDir] of cases) {
@@ -141,6 +145,74 @@ test("runtime command installers keep fec command names", () => {
           !fs.existsSync(path.join(dir, baseDir, "skills", "frontend-craft-fec-react-project-standard")),
           `${runtime} does not add a second skill directory prefix`,
         );
+      }
+    } finally {
+      fs.rmSync(dir, { recursive: true, force: true });
+    }
+  }
+});
+
+test("all runtime local installs match declared capabilities", () => {
+  for (const runtime of ALL_RUNTIMES) {
+    const dir = fs.mkdtempSync(path.join(os.tmpdir(), `fc-${runtime}-cap-`));
+    try {
+      execFileSync(process.execPath, [cli, "install", runtime, "--local"], {
+        cwd: dir,
+        encoding: "utf8",
+        env: { ...process.env },
+      });
+
+      const cap = RUNTIME_CAPABILITIES[runtime];
+      assert.ok(cap, `${runtime} has a capability declaration`);
+      const baseDir = getInstallBaseDir({ runtime, isGlobal: false, cwd: dir });
+
+      if (cap.skills) {
+        const expectedSkillsRoot =
+          runtime === "codex"
+            ? path.join(dir, ".agents", "skills")
+            : runtime === "gemini"
+              ? path.join(baseDir, "extensions", "frontend-craft", "skills")
+              : path.join(baseDir, "skills");
+        assert.ok(
+          fs.existsSync(path.join(expectedSkillsRoot, "fec-react-project-standard", "SKILL.md")),
+          `${runtime} installs skills`,
+        );
+      }
+      if (cap.agents) {
+        const agentDir = runtime === "codex" ? path.join(baseDir, "agents") : path.join(baseDir, "agents");
+        assert.ok(fs.existsSync(agentDir), `${runtime} installs agents`);
+      }
+      if (cap.commands) {
+        const commandDir =
+          runtime === "windsurf"
+            ? path.join(baseDir, "workflows")
+            : runtime === "opencode" || runtime === "kilo"
+              ? path.join(baseDir, "command")
+              : runtime === "copilot"
+                ? path.join(baseDir, "prompts")
+                : path.join(baseDir, "commands");
+        assert.ok(fs.existsSync(path.join(commandDir, "fec-init.md")), `${runtime} installs fec commands`);
+        assert.ok(!fs.existsSync(path.join(commandDir, "init.md")), `${runtime} does not install unprefixed commands`);
+      }
+      if (runtime === "qoder") {
+        assert.ok(
+          fs.existsSync(path.join(baseDir, "agents", "frontend-code-reviewer.md")),
+          "qoder installs markdown agents",
+        );
+        assert.ok(fs.existsSync(path.join(baseDir, "rules", "react.md")), "qoder installs shared rules");
+        assert.ok(fs.existsSync(path.join(baseDir, "hooks", "security-check.js")), "qoder installs hook scripts");
+        const settings = JSON.parse(fs.readFileSync(path.join(baseDir, "settings.json"), "utf8"));
+        assert.ok(settings.hooks, "qoder settings include hooks");
+        assert.ok(JSON.stringify(settings.hooks).includes(".qoder/hooks/security-check.js"));
+      }
+      if (cap.rules) {
+        const rulesDir =
+          runtime === "copilot"
+            ? path.join(baseDir, "instructions")
+            : runtime === "cline"
+              ? baseDir
+              : path.join(baseDir, "rules");
+        assert.ok(fs.existsSync(rulesDir), `${runtime} installs rules or instructions`);
       }
     } finally {
       fs.rmSync(dir, { recursive: true, force: true });

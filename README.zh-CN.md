@@ -21,9 +21,9 @@
 
 ---
 
-**面向 Claude Code、Codex、Cursor、OpenCode、Gemini CLI、Kilo、Windsurf、Copilot、Antigravity、Augment、Trae、CodeBuddy、Cline、OpenClaw 等工具的通用前端插件。**
+**面向 Claude Code、Codex、Cursor、OpenCode、Gemini CLI、Qoder、Kilo、Windsurf、Copilot、Antigravity、Augment、Trae、CodeBuddy、Cline、OpenClaw 等工具的通用前端插件。**
 
-`frontend-craft` 将前端评审 agents、工作流 skills、斜杠命令、hooks、MCP 模板和项目规范集中在一个仓库中维护。推荐通过 CLI 将同一套前端工程规范安装到 14 种 AI 编程运行时。若你**仅通过 Claude Code Marketplace**（原生插件流程）安装，说明见 [docs/runtimes/claude.zh-CN.md](docs/runtimes/claude.zh-CN.md) · [English](docs/runtimes/claude.md)。
+`frontend-craft` 将前端评审 agents、工作流 skills、斜杠命令、hooks、MCP 模板和项目规范集中在一个仓库中维护。推荐通过 CLI 将同一套前端工程规范安装到 15 种 AI 编程运行时。若你**仅通过 Claude Code Marketplace**（原生插件流程）安装，说明见 [docs/runtimes/claude.zh-CN.md](docs/runtimes/claude.zh-CN.md) · [English](docs/runtimes/claude.md)。
 
 ---
 
@@ -52,9 +52,9 @@ npx frontend-craft@latest install cursor --local
 npx frontend-craft@latest install --all --dry-run --global
 ```
 
-支持的 runtime：`claude`、`codex`、`cursor`、`windsurf`、`opencode`、`kilo`、`gemini`、`copilot`、`antigravity`、`augment`、`trae`、`codebuddy`、`cline`、`openclaw`。
+支持的 runtime：`claude`、`codex`、`cursor`、`windsurf`、`opencode`、`kilo`、`gemini`、`copilot`、`antigravity`、`augment`、`trae`、`codebuddy`、`cline`、`openclaw`、`qoder`。
 
-各工具说明见 [`docs/runtimes/`](docs/runtimes/)。OpenClaw 独立 npm 包可在本仓库中通过 `npm run pack:openclaw` 构建并校验，产物为 **`npm-packages/openclaw/`** 目录下的 **`frontend-craft-<version>.tgz`**（例如 `frontend-craft-2.1.1.tgz`）。
+各工具说明见 [`docs/runtimes/`](docs/runtimes/)。OpenClaw 独立 npm 包可在本仓库中通过 `npm run pack:openclaw` 构建并校验，产物为 **`npm-packages/openclaw/`** 目录下的 **`frontend-craft-<version>.tgz`**（例如 `frontend-craft-2.1.2.tgz`）。
 
 ---
 
@@ -121,6 +121,7 @@ frontend-craft/
 |   |-- frontend-architect.md    # 页面拆分、组件架构、状态流设计
 |   |-- frontend-code-reviewer.md # 专注前端的代码评审（质量、安全、无障碍）
 |   |-- frontend-security-reviewer.md # 前端攻击面：XSS、密钥、CSP、依赖
+|   |-- frontend-test-planner.md  # 测试策略、风险矩阵、覆盖规划
 |   |-- frontend-e2e-runner.md     # E2E 编写执行、flaky、产物与 CI
 |   |-- typescript-reviewer.md    # TS/JS 类型、异步、安全，只出报告
 |   |-- performance-optimizer.md # 性能瓶颈分析与优化方案
@@ -129,31 +130,36 @@ frontend-craft/
 |   └-- design-token-mapper.md   # 设计变量映射到 Design Token
 |
 |-- skills/           # 工作流定义和领域知识
-|   |-- frontend-code-review/    # 架构、类型、渲染、样式、可访问性审查
+|   |-- fec-frontend-code-review/    # 架构、类型、渲染、样式、可访问性审查
 |   |-- fec-security-review/     # XSS、CSRF、敏感数据、输入校验
-|   |-- accessibility-check/     # WCAG 2.1 AA 无障碍检查
+|   |-- fec-accessibility-check/     # WCAG 2.1 AA 无障碍检查
 |   |-- fec-react-project-standard/ # React + TypeScript 项目规范
 |   |-- fec-vue3-project-standard/  # Vue 3 + TypeScript 项目规范
-|   |-- implement-from-design/   # 基于设计稿实现 UI
-|   |-- test-and-fix/           # lint、type-check、test、build 并修复
-|   |-- legacy-web-standard/    # JS + jQuery + HTML 传统项目规范
-|   |-- legacy-to-modern-migration/  # jQuery/MPA 迁移至 React/Vue 策略与流程
-|   |-- e2e-testing/                # Playwright/Cypress E2E 测试规范
-|   |-- nextjs-project-standard/    # Next.js 14+ App Router、SSR/SSG 规范
-|   |-- nuxt-project-standard/      # Nuxt 3 SSR/SSG、组合式 API 规范
-|   |-- monorepo-project-standard/  # pnpm workspace、Turborepo、Nx 规范
-|   |-- data-fetching/              # TanStack Query 与服务端状态工作流
-|   |-- form-handling/              # React Hook Form + Zod 表单工作流
-|   |-- route-protection/           # 登录态与权限路由保护
-|   |-- component-testing/          # RTL / Vue Test Utils 组件测试
-|   |-- pwa-implementation/         # PWA manifest、Service Worker、离线能力
-|   |-- web-workers/                # Worker 集成与后台计算
-|   |-- canvas-threejs/             # Canvas、Three.js、React Three Fiber
-|   |-- svg-animation/              # SVG 动画与 reduced-motion 降级
+|   |-- fec-implement-from-design/   # 基于设计稿实现 UI
+|   |-- fec-validation-fix/           # lint、type-check、test、build 并修复
+|   |-- fec-legacy-web-standard/    # JS + jQuery + HTML 传统项目规范
+|   |-- fec-legacy-to-modern-migration/  # jQuery/MPA 迁移至 React/Vue 策略与流程
+|   |-- fec-testing-strategy/          # 测试层级选择与覆盖矩阵
+|   |-- fec-e2e-testing/                # Playwright/Cypress E2E 测试规范
+|   |-- fec-nextjs-project-standard/    # Next.js 14+ App Router、SSR/SSG 规范
+|   |-- fec-nuxt-project-standard/      # Nuxt 3 SSR/SSG、组合式 API 规范
+|   |-- fec-monorepo-project-standard/  # pnpm workspace、Turborepo、Nx 规范
+|   |-- fec-data-fetching/              # TanStack Query 与服务端状态工作流
+|   |-- fec-form-handling/              # React Hook Form + Zod 表单工作流
+|   |-- fec-route-protection/           # 登录态与权限路由保护
+|   |-- fec-component-testing/          # RTL / Vue Test Utils 组件测试
+|   |-- fec-pwa-implementation/         # PWA manifest、Service Worker、离线能力
+|   |-- fec-web-workers/                # Worker 集成与后台计算
+|   |-- fec-canvas-threejs/             # Canvas、Three.js、React Three Fiber
+|   |-- fec-svg-animation/              # SVG 动画与 reduced-motion 降级
+|   |-- fec-browser-storage/            # localStorage/sessionStorage/IndexedDB/Cookies 选型与安全持久化
+|   |-- fec-list-virtualization/        # 大数据列表虚拟化（react-window / TanStack Virtual）
+|   |-- fec-storybook-component-doc/    # Storybook 组件文档、addons、MDX、交互与视觉测试
 |
 |-- commands/         # 用于快速执行的斜杠命令
 |   |-- fec-init.md     # /fec-init - 初始化项目模板
 |   |-- fec-review.md   # /fec-review - 代码规范化评审
+|   |-- fec-test-plan.md # /fec-test-plan - 测试策略与覆盖矩阵
 |   └-- fec-scaffold.md # /fec-scaffold - 创建 page/feature/component
 |
 |-- hooks/            # 基于触发器的自动化
@@ -184,11 +190,12 @@ frontend-craft/
 
 ### Commands（斜杠命令）
 
-| 命令            | 用途                                                             | 输出报告           |
-| --------------- | ---------------------------------------------------------------- | ------------------ |
-| `/fec-init`     | 将项目模板初始化到当前项目的 `.claude/` 目录                     | —                  |
-| `/fec-review`   | 对指定文件或最近变更的代码执行规范化评审，输出分级报告           | `code-review-*.md` |
-| `/fec-scaffold` | 按项目规范创建 page / feature / component 标准目录结构和样板文件 | —                  |
+| 命令             | 用途                                                             | 输出报告           |
+| ---------------- | ---------------------------------------------------------------- | ------------------ |
+| `/fec-init`      | 将项目模板初始化到当前项目的 `.claude/` 目录                     | —                  |
+| `/fec-review`    | 对指定文件或最近变更的代码执行规范化评审，输出分级报告           | `code-review-*.md` |
+| `/fec-test-plan` | 规划前端测试分层、风险覆盖和执行顺序                             | `test-plan-*.md`   |
+| `/fec-scaffold`  | 按项目规范创建 page / feature / component 标准目录结构和样板文件 | —                  |
 
 ### Skills（自动激活）
 
@@ -200,9 +207,10 @@ frontend-craft/
 | `fec-react-project-standard`     | React + TypeScript 项目工程规范（结构、组件、路由、状态、API 层）  | —                           |
 | `fec-vue3-project-standard`      | Vue 3 + TypeScript 项目工程规范（结构、组件、路由、Pinia、API 层） | —                           |
 | `fec-implement-from-design`      | 基于 Figma/Sketch/MasterGo/Pixso/墨刀/摹客设计稿实现 UI            | `design-plan-*.md`          |
-| `fec-test-and-fix`               | 执行 lint、type-check、test、build 并修复失败                      | `test-fix-*.md`             |
+| `fec-validation-fix`             | 执行 lint、type-check、test、build 并修复失败                      | `validation-fix-*.md`       |
 | `fec-legacy-web-standard`        | JS + jQuery + HTML 传统项目的开发与维护规范                        | —                           |
 | `fec-legacy-to-modern-migration` | jQuery/MPA 迁移至 React/Vue 3 + TS 的策略、概念映射与分阶段流程    | `migration-plan-*.md`       |
+| `fec-testing-strategy`           | 在静态检查、单元、组件、集成、E2E、视觉和专项质量之间选择测试层级  | `test-plan-*.md`            |
 | `fec-e2e-testing`                | Playwright/Cypress E2E 测试规范：目录结构、Page Object、CI 集成    | —                           |
 | `fec-nextjs-project-standard`    | Next.js 14+ App Router、SSR/SSG、流式渲染、元数据规范              | —                           |
 | `fec-nuxt-project-standard`      | Nuxt 3 SSR/SSG、组合式 API、数据获取、路由、中间件规范             | —                           |
@@ -226,6 +234,7 @@ frontend-craft/
 | `frontend-architect`         | 页面拆分、组件架构、状态流设计、目录规划、大型重构                                           | `architecture-proposal-*.md` |
 | `frontend-code-reviewer`     | 前端代码评审：React/Vue/Next/Nuxt、TS、样式、客户端安全、按置信度降噪                        | `code-review-*.md`           |
 | `frontend-security-reviewer` | 前端安全：XSS、客户端密钥、危险 DOM/API、第三方脚本、CSP、依赖审计                           | `security-review-*.md`       |
+| `frontend-test-planner`      | 前端测试策略：按风险映射静态、单元、组件、E2E、视觉、无障碍、安全与性能覆盖                  | `test-plan-*.md`             |
 | `frontend-e2e-runner`        | E2E 编写与执行（Playwright/Cypress）、flaky 隔离、Trace/截图/视频、CI 对齐；可选摘要报告     | `e2e-summary-*.md`（可选）   |
 | `typescript-reviewer`        | TS/JS 专项：先跑 typecheck/eslint、PR 就绪检查、类型与异步与安全、惯用法；只报告不直接改代码 | `typescript-review-*.md`     |
 | `performance-optimizer`      | 分析性能瓶颈（打包体积、渲染性能、网络请求），输出量化优化方案                               | `performance-review-*.md`    |
@@ -338,7 +347,8 @@ $env:MODAO_TOKEN = "your-modao-token"
 | 设计实现       | `design-implementation-YYYY-MM-DD-HHmmss.md` | `figma-implementer` agent                                                            |
 | Token 映射     | `token-mapping-YYYY-MM-DD-HHmmss.md`         | `design-token-mapper` agent                                                          |
 | 设计计划       | `design-plan-YYYY-MM-DD-HHmmss.md`           | `fec-implement-from-design` skill                                                    |
-| 测试修复       | `test-fix-YYYY-MM-DD-HHmmss.md`              | `fec-test-and-fix` skill                                                             |
+| 测试计划       | `test-plan-YYYY-MM-DD-HHmmss.md`             | `/fec-test-plan`、`fec-testing-strategy` skill、`frontend-test-planner` agent        |
+| 验证修复       | `validation-fix-YYYY-MM-DD-HHmmss.md`        | `fec-validation-fix` skill                                                           |
 | E2E 运行摘要   | `e2e-summary-YYYY-MM-DD-HHmmss.md`           | `frontend-e2e-runner` agent（可选）                                                  |
 | 迁移计划       | `migration-plan-YYYY-MM-DD-HHmmss.md`        | `fec-legacy-to-modern-migration` skill                                               |
 

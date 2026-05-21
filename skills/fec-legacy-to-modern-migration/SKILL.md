@@ -1,6 +1,6 @@
 ---
 name: fec-legacy-to-modern-migration
-description: Use when planning or implementing migration from JavaScript, jQuery, HTML/CSS, server-rendered templates, or MPA legacy frontend code to React + TypeScript or Vue 3 + TypeScript while preserving behavior; Chinese triggers include 遗留项目, 技术栈升级, jQuery 迁移.
+description: Use when planning or implementing an intentional migration from JavaScript, jQuery, HTML/CSS, server-rendered templates, or MPA legacy frontend code to React + TypeScript or Vue 3 + TypeScript while preserving behavior. Do not use for routine legacy bug fixes that stay in the old stack; Chinese triggers include 遗留项目, 技术栈升级, jQuery 迁移.
 ---
 
 # 传统前端到现代框架迁移
@@ -10,12 +10,6 @@ description: Use when planning or implementing migration from JavaScript, jQuery
 ## Purpose
 
 指导将 jQuery/MPA 传统前端项目渐进迁移至 React + TypeScript 或 Vue 3 + TypeScript，提供迁移策略、概念映射、分阶段步骤和实施约束，确保功能等价和风险可控。
-
-## When to Use
-
-- 用户明确要求将 jQuery/MPA 项目重构为 React 或 Vue
-- 讨论技术栈升级、遗留系统现代化
-- 规划或执行从传统前端到 React/Vue 的迁移任务
 
 ## 迁移策略选择
 
@@ -172,13 +166,9 @@ description: Use when planning or implementing migration from JavaScript, jQuery
 - **样式**：参考原项目效果不照搬 CSS，优先 flex 布局，组件禁止内联样式
 - **目标**：视觉与交互一致、代码更简洁易维护，业务功能不得缺失
 
-## 输出格式
+## Detailed References
 
-迁移分析或迁移计划完成后，将报告保存为 Markdown 文件：
-
-- 目录：项目根目录下的 `reports/`（如不存在则创建）
-- 文件名：`migration-plan-YYYY-MM-DD-HHmmss.md`（使用当前时间戳）
-- 报告应包含：策略选择、存量盘点、依赖关系、迁移优先级、分阶段步骤、风险与回滚方案
+Load [references/migration-report-template.md](references/migration-report-template.md) when writing a migration analysis or migration plan report.
 
 ## Expected Output
 

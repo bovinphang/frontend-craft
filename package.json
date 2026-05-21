@@ -1,7 +1,7 @@
 {
     "name": "frontend-craft",
     "version": "2.1.2",
-    "description": "Universal frontend plugin for Claude Code, Codex, Cursor, OpenCode, Gemini CLI, Windsurf, Copilot, OpenClaw, and more — skills, agents, commands, hooks, and MCP templates.",
+    "description": "Universal frontend plugin for Claude Code, Codex, Cursor, OpenCode, Gemini CLI, Qoder, Windsurf, Copilot, OpenClaw, and more — skills, agents, commands, hooks, and MCP templates.",
     "type": "module",
     "license": "MIT",
     "author": {
@@ -54,6 +54,7 @@
         "build": "tsc -p tsconfig.json",
         "test": "npm run build && node --test dist/tests/converters/codex-agents.test.js dist/tests/install/cli.test.js dist/tests/install/end-to-end.test.js dist/tests/install/all-runtimes-dry.test.js dist/tests/install/metadata-consistency.test.js",
         "build:openclaw": "npm run build && node dist/scripts/openclaw/build.js",
+        "audit:skills": "npm run build && node dist/scripts/audit-skills.js",
         "typecheck:openclaw": "tsc --noEmit -p tsconfig.openclaw.json",
         "check:openclaw-dist": "npm run build && node dist/scripts/openclaw/verify-openclaw-dist.js",
         "pack:openclaw": "npm run build:openclaw && npm run check:openclaw-dist && node dist/scripts/openclaw/pack-openclaw.js",
@@ -75,6 +76,7 @@
         "cursor",
         "opencode",
         "gemini-cli",
+        "qoder",
         "windsurf",
         "copilot",
         "openclaw",

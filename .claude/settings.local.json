@@ -1,0 +1,17 @@
+{
+    "attribution": {
+        "commit": "Co-Authored-By: pengbaowen <pengbaowen@msn.com>"
+    },
+    "permissions": {
+        "allow": [
+            "Bash(wc -l __TRACKED_VAR__/SKILL.md)",
+            "Bash(head -5 __TRACKED_VAR__/SKILL.md)",
+            "Bash(git add *)",
+            "Bash(git commit -m ' *)",
+            "Bash(git commit *)",
+            "Bash(git push *)",
+            "Bash(npm run *)",
+            "Bash(npm test *)"
+        ]
+    }
+}

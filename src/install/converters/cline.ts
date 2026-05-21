@@ -1,4 +1,4 @@
-﻿import path from "node:path";
+import path from "node:path";
 import fs from "node:fs";
 import { readUtf8, writeUtf8 } from "../shared/fs.js";
 
@@ -10,7 +10,7 @@ export async function installCline(ctx) {
   if (dryRun) return console.log(`[dry-run] cline -> ${path.join(baseDir, ".clinerules")}`);
   const rulesSrc = path.join(pluginRoot, "templates", "shared", "rules");
   /** @type {string[]} */
-  const parts = ["# Frontend Craft 鈥?Cline rules\n"];
+  const parts = ["# Frontend Craft - Cline rules\n"];
   if (fs.existsSync(rulesSrc)) {
     for (const name of fs.readdirSync(rulesSrc)) {
       if (!name.endsWith(".md")) continue;

@@ -1,4 +1,4 @@
-﻿import path from "node:path";
+import path from "node:path";
 import fs from "node:fs";
 import { copyDir, copyFile, ensureDir, readUtf8, writeUtf8 } from "../shared/fs.js";
 
@@ -35,6 +35,14 @@ export async function installClaude(ctx) {
   copyDir(path.join(pluginRoot, "skills"), path.join(baseDir, "skills"));
   copyDir(path.join(pluginRoot, "agents"), path.join(baseDir, "agents"));
   copyDir(path.join(pluginRoot, "commands"), path.join(baseDir, "commands"));
+  copyDir(path.join(pluginRoot, "templates", "shared", "rules"), path.join(baseDir, "rules"));
+  const claudeTemplateDir = path.join(pluginRoot, "templates", "claude");
+  if (fs.existsSync(claudeTemplateDir)) {
+    for (const f of fs.readdirSync(claudeTemplateDir)) {
+      const dest = path.join(baseDir, f);
+      if (!fs.existsSync(dest)) copyFile(path.join(claudeTemplateDir, f), dest);
+    }
+  }
   writeUtf8(path.join(baseDir, "hooks.json"), buildHooksJson(pluginRoot));
   if (fs.existsSync(path.join(pluginRoot, ".mcp.json"))) {
     const destMcp = path.join(cwd, ".mcp.json");

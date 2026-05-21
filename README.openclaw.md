@@ -140,6 +140,7 @@ frontend-craft/
 | -------------------------- | --------------------------------------------- |
 | `commands/fec-init.md`     | Initialize frontend-craft workspace templates |
 | `commands/fec-review.md`   | Guided frontend code review                   |
+| `commands/fec-test-plan.md` | Frontend testing strategy and coverage matrix |
 | `commands/fec-scaffold.md` | Page / feature / component scaffolding guide  |
 
 ### Skills
@@ -152,9 +153,10 @@ frontend-craft/
 | `fec-react-project-standard`     | React + TypeScript project standards                                                 |
 | `fec-vue3-project-standard`      | Vue 3 + TypeScript project standards                                                 |
 | `fec-implement-from-design`      | Implement UI from Figma, Sketch, MasterGo, Pixso, Modao, or screenshots              |
-| `fec-test-and-fix`               | Run validation commands, diagnose failures, and fix safely                           |
+| `fec-validation-fix`             | Run validation commands, diagnose failures, and fix safely                           |
 | `fec-legacy-web-standard`        | JavaScript + jQuery + HTML/CSS legacy frontend standards                             |
 | `fec-legacy-to-modern-migration` | jQuery / MPA migration strategy to React or Vue + TypeScript                         |
+| `fec-testing-strategy`           | Testing layer selection, risk matrix, and coverage planning                          |
 | `fec-e2e-testing`                | Playwright / Cypress E2E structure, artifacts, CI, and flaky test handling           |
 | `fec-nextjs-project-standard`    | Next.js App Router, SSR/SSG, routing, metadata, middleware                           |
 | `fec-nuxt-project-standard`      | Nuxt 3 SSR/SSG, composables, routing, middleware                                     |
@@ -191,9 +193,10 @@ Skills live under `skills/<id>/SKILL.md`. OpenClaw exposes them as plugin skill 
 | Align a React module with team conventions | `fec-react-project-standard`     | “We use React 18 and TanStack Query. Review `src/pages/Dashboard/` against solid React + TS patterns and our existing abstractions.”            |
 | Align a Vue module with team conventions   | `fec-vue3-project-standard`      | “Review `src/views/Settings.vue` and its composables for Vue 3 + TS best practices and consistency with the rest of the app.”                   |
 | Implement from Figma / screenshot          | `fec-implement-from-design`      | “Implement this screen from Figma node `123:456`: match spacing and design tokens, reuse our `Button`, and note any assumptions.”               |
-| CI red or local script failures            | `fec-test-and-fix`               | “`pnpm lint` and `pnpm test` are failing—find the root causes, fix them, and don’t weaken types or skip checks.”                                |
+| CI red or local script failures            | `fec-validation-fix`             | “`pnpm lint` and `pnpm test` are failing—find the root causes, fix them, and don’t weaken types or skip checks.”                                |
 | Maintain jQuery / MPA legacy pages         | `fec-legacy-web-standard`        | “For `public/js/legacy/*.js`, suggest safe refactors and patterns that keep current behavior; we still ship this in production.”                |
 | Plan jQuery → React/Vue migration          | `fec-legacy-to-modern-migration` | “We have `static/app.js` in jQuery + MPA. Outline a phased migration to React + TypeScript with risks and milestones.”                          |
+| Plan frontend test coverage                | `fec-testing-strategy`           | “For this checkout refactor, map risks to static checks, unit/component tests, E2E, visual, a11y, and security coverage before we write tests.” |
 | Add or stabilize E2E                       | `fec-e2e-testing`                | “Add a Playwright smoke test for login; use a clear folder layout and Page Objects, and mention how to run it in CI.”                           |
 | Next.js App Router feature                 | `fec-nextjs-project-standard`    | “Review `app/(dashboard)/reports/page.tsx` and related server actions for Next.js App Router best practices (data fetching, errors, metadata).” |
 | Nuxt 3 feature or layout                   | `fec-nuxt-project-standard`      | “Review `pages/admin/*.vue` and `composables/useApi.ts` for Nuxt 3 SSR/data/composables conventions.”                                           |

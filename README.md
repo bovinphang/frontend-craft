@@ -21,9 +21,9 @@
 
 ---
 
-**A universal frontend plugin for Claude Code, Codex, Cursor, OpenCode, Gemini CLI, Kilo, Windsurf, Copilot, Antigravity, Augment, Trae, CodeBuddy, Cline, OpenClaw, and more.**
+**A universal frontend plugin for Claude Code, Codex, Cursor, OpenCode, Gemini CLI, Qoder, Kilo, Windsurf, Copilot, Antigravity, Augment, Trae, CodeBuddy, Cline, OpenClaw, and more.**
 
-`frontend-craft` packages frontend review agents, workflow skills, slash commands, hooks, MCP templates, and project rules into one repo. Use the CLI to install the same frontend standards into 14 supported AI coding runtimes. If you install only through **Claude Code Marketplace** (native plugin flow), see [docs/runtimes/claude.md](docs/runtimes/claude.md) · [简体中文](docs/runtimes/claude.zh-CN.md).
+`frontend-craft` packages frontend review agents, workflow skills, slash commands, hooks, MCP templates, and project rules into one repo. Use the CLI to install the same frontend standards into 15 supported AI coding runtimes. If you install only through **Claude Code Marketplace** (native plugin flow), see [docs/runtimes/claude.md](docs/runtimes/claude.md) · [简体中文](docs/runtimes/claude.zh-CN.md).
 
 ---
 
@@ -52,9 +52,9 @@ npx frontend-craft@latest install cursor --local
 npx frontend-craft@latest install --all --dry-run --global
 ```
 
-Supported runtimes: `claude`, `codex`, `cursor`, `windsurf`, `opencode`, `kilo`, `gemini`, `copilot`, `antigravity`, `augment`, `trae`, `codebuddy`, `cline`, `openclaw`.
+Supported runtimes: `claude`, `codex`, `cursor`, `windsurf`, `opencode`, `kilo`, `gemini`, `copilot`, `antigravity`, `augment`, `trae`, `codebuddy`, `cline`, `openclaw`, `qoder`.
 
-Per-runtime notes live in [`docs/runtimes/`](docs/runtimes/). The OpenClaw npm package can be packed from this repo with `npm run pack:openclaw`, which builds and verifies, then writes **`frontend-craft-<version>.tgz`** to **`npm-packages/openclaw/`** (for example `frontend-craft-2.1.1.tgz`).
+Per-runtime notes live in [`docs/runtimes/`](docs/runtimes/). The OpenClaw npm package can be packed from this repo with `npm run pack:openclaw`, which builds and verifies, then writes **`frontend-craft-<version>.tgz`** to **`npm-packages/openclaw/`** (for example `frontend-craft-2.1.2.tgz`).
 
 ---
 
@@ -121,6 +121,7 @@ frontend-craft/
 |   |-- frontend-architect.md    # Page splitting, component architecture, state flow
 |   |-- frontend-code-reviewer.md # Frontend-focused code review (quality, security, a11y)
 |   |-- frontend-security-reviewer.md # Frontend attack surface: XSS, secrets, CSP, deps
+|   |-- frontend-test-planner.md # Testing strategy, risk matrix, coverage planning
 |   |-- frontend-e2e-runner.md     # E2E authoring, execution, flaky handling, artifacts, CI
 |   |-- typescript-reviewer.md    # TS/JS type safety, async, security, report-only review
 |   |-- performance-optimizer.md # Performance bottleneck analysis and optimization
@@ -129,31 +130,36 @@ frontend-craft/
 |   |-- design-token-mapper.md   # Map design variables to Design Tokens
 |
 |-- skills/           # Workflow definitions and domain knowledge
-|   |-- frontend-code-review/    # Architecture, types, rendering, styles, a11y
+|   |-- fec-frontend-code-review/    # Architecture, types, rendering, styles, a11y
 |   |-- fec-security-review/     # XSS, CSRF, sensitive data, input validation
-|   |-- accessibility-check/     # WCAG 2.1 AA accessibility
+|   |-- fec-accessibility-check/     # WCAG 2.1 AA accessibility
 |   |-- fec-react-project-standard/  # React + TypeScript project standards
 |   |-- fec-vue3-project-standard/   # Vue 3 + TypeScript project standards
-|   |-- implement-from-design/   # Implement UI from design files
-|   |-- test-and-fix/            # lint, type-check, test, build and fix
-|   |-- legacy-web-standard/     # JS + jQuery + HTML legacy project standards
-|   |-- legacy-to-modern-migration/  # jQuery/MPA migration to React/Vue strategy and workflow
-|   |-- e2e-testing/                # Playwright/Cypress E2E testing standards
-|   |-- nextjs-project-standard/    # Next.js 14+ App Router, SSR/SSG standards
-|   |-- nuxt-project-standard/      # Nuxt 3 SSR/SSG, composables standards
-|   |-- monorepo-project-standard/  # pnpm workspace, Turborepo, Nx standards
-|   |-- data-fetching/              # TanStack Query and server-state workflows
-|   |-- form-handling/              # React Hook Form + Zod form workflows
-|   |-- route-protection/           # Authenticated and permissioned routes
-|   |-- component-testing/          # RTL / Vue Test Utils component tests
-|   |-- pwa-implementation/         # PWA manifest, service worker, offline
-|   |-- web-workers/                # Worker integration and background compute
-|   |-- canvas-threejs/             # Canvas, Three.js, React Three Fiber
-|   |-- svg-animation/              # SVG motion and reduced-motion fallbacks
+|   |-- fec-implement-from-design/   # Implement UI from design files
+|   |-- fec-validation-fix/            # lint, type-check, test, build and fix
+|   |-- fec-legacy-web-standard/     # JS + jQuery + HTML legacy project standards
+|   |-- fec-legacy-to-modern-migration/ # jQuery/MPA migration to React/Vue strategy and workflow
+|   |-- fec-testing-strategy/          # Testing layer selection and coverage matrix
+|   |-- fec-e2e-testing/                # Playwright/Cypress E2E testing standards
+|   |-- fec-nextjs-project-standard/    # Next.js 14+ App Router, SSR/SSG standards
+|   |-- fec-nuxt-project-standard/      # Nuxt 3 SSR/SSG, composables standards
+|   |-- fec-monorepo-project-standard/  # pnpm workspace, Turborepo, Nx standards
+|   |-- fec-data-fetching/              # TanStack Query and server-state workflows
+|   |-- fec-form-handling/              # React Hook Form + Zod form workflows
+|   |-- fec-route-protection/           # Authenticated and permissioned routes
+|   |-- fec-component-testing/          # RTL / Vue Test Utils component tests
+|   |-- fec-pwa-implementation/         # PWA manifest, service worker, offline
+|   |-- fec-web-workers/                # Worker integration and background compute
+|   |-- fec-canvas-threejs/             # Canvas, Three.js, React Three Fiber
+|   |-- fec-svg-animation/              # SVG motion and reduced-motion fallbacks
+|   |-- fec-browser-storage/            # localStorage/sessionStorage/IndexedDB/Cookies selection and safe client persistence
+|   |-- fec-list-virtualization/        # Large-list windowing with react-window / TanStack Virtual and measurement strategies
+|   |-- fec-storybook-component-doc/    # Storybook component docs, addons, MDX, interaction and visual test integration
 |
 |-- commands/         # Slash commands for quick execution
 |   |-- fec-init.md     # /fec-init - Initialize project templates
 |   |-- fec-review.md   # /fec-review - Code review
+|   |-- fec-test-plan.md # /fec-test-plan - Testing strategy and coverage matrix
 |   |-- fec-scaffold.md # /fec-scaffold - Create page/feature/component
 |
 |-- hooks/            # Event-driven automation
@@ -184,11 +190,12 @@ Slash commands in the tables below are shown **for Claude Code** as a familiar e
 
 ### Commands
 
-| Command         | Purpose                                                                   | Report output      |
-| --------------- | ------------------------------------------------------------------------- | ------------------ |
-| `/fec-init`     | Initialize project templates to `.claude/`                                | —                  |
-| `/fec-review`   | Code review for specified or recently changed files, output graded report | `code-review-*.md` |
-| `/fec-scaffold` | Create page / feature / component structure and boilerplate by convention | —                  |
+| Command          | Purpose                                                                   | Report output      |
+| ---------------- | ------------------------------------------------------------------------- | ------------------ |
+| `/fec-init`      | Initialize project templates to `.claude/`                                | —                  |
+| `/fec-review`    | Code review for specified or recently changed files, output graded report | `code-review-*.md` |
+| `/fec-test-plan` | Plan frontend testing layers, risk coverage, and execution order          | `test-plan-*.md`   |
+| `/fec-scaffold`  | Create page / feature / component structure and boilerplate by convention | —                  |
 
 ### Skills (auto-activated)
 
@@ -200,9 +207,10 @@ Slash commands in the tables below are shown **for Claude Code** as a familiar e
 | `fec-react-project-standard`     | React + TypeScript project standards (structure, components, routing, state, API layer) | —                           |
 | `fec-vue3-project-standard`      | Vue 3 + TypeScript project standards (structure, components, routing, Pinia, API layer) | —                           |
 | `fec-implement-from-design`      | Implement UI from Figma/Sketch/MasterGo/Pixso/墨刀/摹客 design files                    | `design-plan-*.md`          |
-| `fec-test-and-fix`               | Run lint, type-check, test, build and fix failures                                      | `test-fix-*.md`             |
+| `fec-validation-fix`             | Run lint, type-check, test, build and fix failures                                      | `validation-fix-*.md`       |
 | `fec-legacy-web-standard`        | Development and maintenance standards for JS + jQuery + HTML legacy projects            | —                           |
 | `fec-legacy-to-modern-migration` | Strategy, concept mapping, and phased workflow for jQuery/MPA → React/Vue 3 + TS        | `migration-plan-*.md`       |
+| `fec-testing-strategy`           | Testing layer selection across static checks, unit, component, integration, E2E, visual | `test-plan-*.md`            |
 | `fec-e2e-testing`                | Playwright/Cypress E2E standards: directory structure, Page Object, CI integration      | —                           |
 | `fec-nextjs-project-standard`    | Next.js 14+ App Router, SSR/SSG, streaming, metadata, middleware standards              | —                           |
 | `fec-nuxt-project-standard`      | Nuxt 3 SSR/SSG, composables, data fetching, routing, middleware standards               | —                           |
@@ -226,6 +234,7 @@ Slash commands in the tables below are shown **for Claude Code** as a familiar e
 | `frontend-architect`         | Page splitting, component architecture, state flow design, directory planning, large refactors                                    | `architecture-proposal-*.md`  |
 | `frontend-code-reviewer`     | Frontend code review: React/Vue/Next/Nuxt, TS, styles, client-side security, confidence-based findings                            | `code-review-*.md`            |
 | `frontend-security-reviewer` | Frontend security: XSS, client secrets, dangerous DOM/APIs, third-party scripts, CSP, dependency audit                            | `security-review-*.md`        |
+| `frontend-test-planner`      | Frontend testing strategy: risk-to-layer matrix across static, unit, component, E2E, visual, a11y, security, performance          | `test-plan-*.md`              |
 | `frontend-e2e-runner`        | E2E authoring & runs (Playwright/Cypress), flaky quarantine, traces/screenshots/videos, CI alignment; optional `e2e-summary-*.md` | `e2e-summary-*.md` (optional) |
 | `typescript-reviewer`        | TS/JS review: run typecheck/eslint, PR merge readiness, type safety, async, security, idiomatic patterns; report-only             | `typescript-review-*.md`      |
 | `performance-optimizer`      | Analyze performance bottlenecks (bundle size, render performance, network), output quantified optimization plan                   | `performance-review-*.md`     |
@@ -338,7 +347,8 @@ All review, analysis, and evaluation outputs are saved as Markdown files to the 
 | Design implementation  | `design-implementation-YYYY-MM-DD-HHmmss.md` | `figma-implementer` agent                                                               |
 | Token mapping          | `token-mapping-YYYY-MM-DD-HHmmss.md`         | `design-token-mapper` agent                                                             |
 | Design plan            | `design-plan-YYYY-MM-DD-HHmmss.md`           | `fec-implement-from-design` skill                                                       |
-| Test fix               | `test-fix-YYYY-MM-DD-HHmmss.md`              | `fec-test-and-fix` skill                                                                |
+| Test plan              | `test-plan-YYYY-MM-DD-HHmmss.md`             | `/fec-test-plan`, `fec-testing-strategy` skill, `frontend-test-planner` agent           |
+| Validation fix         | `validation-fix-YYYY-MM-DD-HHmmss.md`        | `fec-validation-fix` skill                                                              |
 | E2E run summary        | `e2e-summary-YYYY-MM-DD-HHmmss.md`           | `frontend-e2e-runner` agent (optional)                                                  |
 | Migration plan         | `migration-plan-YYYY-MM-DD-HHmmss.md`        | `fec-legacy-to-modern-migration` skill                                                  |
 

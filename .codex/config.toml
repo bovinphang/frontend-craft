@@ -1,0 +1,40 @@
+sandbox_mode = "workspace-write"
+[mcp_servers.figma]
+args = [
+    "-y",
+    "figma-developer-mcp",
+    "--stdio",
+]
+command = "npx"
+env_vars = ["FIGMA_API_KEY"]
+
+[mcp_servers.figma-desktop]
+args = [
+    "-y",
+    "@anthropic/figma-mcp",
+]
+command = "npx"
+env_vars = ["FIGMA_API_KEY"]
+
+[mcp_servers.modao]
+args = [
+    "-y",
+    "@modao-mcp/modao-proto-mcp",
+]
+command = "npx"
+env_vars = ["MODAO_TOKEN"]
+
+[mcp_servers.pixso]
+url = "http://localhost:3667/mcp"
+
+[mcp_servers.sketch]
+args = [
+    "-y",
+    "sketch-mcp-server",
+    "--stdio",
+]
+command = "npx"
+env_vars = ["SKETCH_API_KEY"]
+
+[sandbox_workspace_write]
+network_access = true

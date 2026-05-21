@@ -1,4 +1,4 @@
-﻿/**
+/**
  * Convert Claude-style agent markdown to Codex agent TOML.
  * @param {string} raw
  * @param {string} filename

@@ -7,84 +7,28 @@ description: Use when reviewing or improving frontend accessibility, semantic st
 
 ## Purpose
 
-确保前端 UI 对残障用户可访问，满足 WCAG 2.1 AA 标准，涵盖语义结构、键盘支持、焦点管理和 ARIA 规范。
+确保前端 UI 对残障用户可访问，满足 WCAG 2.1 AA 标准。
 
-## When to Use
+## Procedure
 
-- 实现或评审表单、对话框、菜单、表格、标签页、树、抽屉和自定义组件
-- 将设计稿转换为代码
-- 页面上线前做 QA 或发布前检查
+1. 检查语义结构：landmark、标题层级、表单 label、按钮/链接可访问名称、表格语义和图片 alt。
+2. 检查键盘路径：Tab 顺序、Enter/Space/Esc 行为、焦点可见、关闭后焦点恢复。
+3. 检查复杂组件：对话框、菜单、标签页、树、抽屉、表格和自定义控件的 ARIA 状态。
+4. 检查动态状态：loading、empty、error、toast 和异步更新需要被屏幕阅读器感知。
+5. 输出分级报告；报告格式见 [references/report-template.md](references/report-template.md)。
 
-## 必须项
+## Detailed References
 
-- 所有图片必须有有意义的 `alt` 文字
-- 交互元素必须可键盘访问（Tab、Enter、Space、Escape）
-- 表单元素必须有关联 `<label>`
-- 模态框必须捕获焦点并支持 Esc 关闭
+Load [references/report-template.md](references/report-template.md) when writing an accessibility review report.
 
-## ARIA 使用原则
+## Constraints
 
-- 优先使用语义化 HTML，而非 ARIA
-- `role` 属性不覆盖原生语义
-- 动态内容更新使用 `aria-live`
-
-# 可访问性检查
-
-在以下场景使用该 Skill：
-
-- 实现或评审表单、对话框、菜单、表格、标签页、树、抽屉和自定义组件
-- 将设计稿转换为代码
-- 页面上线前做 QA 或发布前检查
-
-## 检查清单
-
-- 语义地标和标题层级
-- 表单标签与描述
-- 按钮和链接命名
-- 键盘导航顺序
-- 焦点环是否可见
-- 对话框焦点锁定与关闭后焦点恢复
-- 在需要时正确使用 aria-expanded / aria-controls / aria-selected
-- 表格语义是否正确
-- 是否存在明显的颜色对比度风险
-- 纯图标控件是否具备可访问名称
-- 在需要时是否对 loading、empty、error 状态进行了提示
-
-## 输出格式
-
-```
-# 无障碍检查报告
-
-> 生成时间: YYYY-MM-DD HH:mm
-> 评审工具: frontend-craft
-> 标准: WCAG 2.1 AA
-
-## 🔴 必须修复 (N项)
-- **[文件:行号]** 问题描述 → 建议修改
-
-## 🟡 建议改进 (N项)
-- **[文件:行号]** 问题描述 → 建议修改
-
-## ✅ 已通过项
-- ...
-
-## 建议的代码修改
-- ...
-```
-
-## 报告文件输出
-
-检查完成后，必须将报告内容使用 Write 工具保存为 Markdown 文件：
-
-- 目录：项目根目录下的 `reports/`（如不存在则创建）
-- 文件名：`accessibility-review-YYYY-MM-DD-HHmmss.md`（使用当前时间戳）
-- 保存后告知用户报告文件路径
-
-务求实用。优先使用原生语义，不要过度依赖 ARIA。
+- 优先使用语义化 HTML，而不是 ARIA。
+- `role` 不应覆盖原生语义。
+- 交互元素必须可键盘访问。
+- 表单错误必须与字段关联。
+- 颜色对比度风险需要指出具体文本/背景组合。
 
 ## Expected Output
 
-- 所有交互元素可键盘访问（Tab/Enter/Space/Esc）
-- 语义化 HTML 结构（正确的标题层级、landmark、label）
-- ARIA 属性仅在原生语义不足时使用
-- 无障碍检查报告保存为 `reports/accessibility-review-YYYY-MM-DD-HHmmss.md`
+交互元素可键盘访问，语义和 ARIA 使用正确，焦点管理稳定；无障碍检查报告保存为 `reports/accessibility-review-YYYY-MM-DD-HHmmss.md`。

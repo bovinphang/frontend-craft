@@ -11,12 +11,13 @@ description: Use when creating, reviewing, or restructuring frontend monorepos w
 
 规范 Monorepo 项目的目录结构、依赖管理、任务编排和包发布流程，确保多包协作的构建效率和版本一致性。
 
-## When to Use
+## Procedure
 
-- 新建或调整 Monorepo 结构
-- 管理多包依赖与任务
-- 配置 Turborepo / Nx 任务编排
-- 包发布与版本管理
+1. 先确认仓库是否已使用 pnpm workspace、Turborepo 或 Nx，并沿用现有包命名与任务约定。
+2. 将应用放在 `apps/`，共享库、配置和工具放在 `packages/` 或既有等价目录。
+3. 内部依赖使用 `workspace:*`，通过依赖图驱动构建顺序。
+4. 为 build、lint、test 配置可缓存、可并行的根任务。
+5. 发布包前检查包边界、循环依赖、exports、peer dependencies 和版本策略。
 
 ## 工具选择
 

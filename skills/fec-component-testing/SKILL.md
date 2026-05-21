@@ -1,24 +1,25 @@
 ---
 name: fec-component-testing
-description: Use when writing or reviewing frontend component tests with React Testing Library, Vue Test Utils, user-event, accessible queries, mocks, interaction states, regression coverage, or component contracts; Chinese triggers include 组件测试, 组件单测, 交互测试.
+description: Use when authoring or reviewing frontend unit, component, or light integration tests close to UI code, including React Testing Library, Vue Test Utils, hooks/composables, props/emits, callbacks, accessible queries, user-event interactions, mocks, loading/error/empty states, and regression coverage. Use testing-strategy for layer planning, E2E for real-browser cross-page journeys, and validation-fix for running/fixing existing checks; Chinese triggers include 组件测试, 组件单测, 单元测试, 轻量集成测试.
 ---
 
 # 组件测试
 
 ## Purpose
 
-用贴近用户行为的测试验证组件契约，减少重构和 UI 交互回归。
-
-## When to Use
-
-- 新增或修改表单、弹窗、列表、导航、权限态等交互组件。
-- 修复前端 bug，需要先补回归测试。
-- 组件包含异步加载、错误态、空态或条件渲染。
-- 不用于覆盖完整业务链路；跨页面流程优先使用 `fec-e2e-testing`。
+用贴近代码和用户行为的测试验证纯逻辑、组件契约与轻量模块协作，减少重构和 UI 交互回归。
 
 ## Procedure
 
-### 1. 优先按用户可感知行为测试
+### 1. 先确定测试层级
+
+- 单元测试：纯函数、hooks/composables、utils、状态逻辑、schema。
+- 组件测试：props/emits、回调、用户交互、loading/error/empty、mock 边界。
+- 轻量集成测试：表单 + API mock + Router/Store/Provider 上下文。
+
+跨页面真实浏览器流程分流到 `fec-e2e-testing`；测试层选择不清楚时先用 `fec-testing-strategy`。
+
+### 2. 优先按用户可感知行为测试
 
 ```tsx
 import { render, screen } from "@testing-library/react";
@@ -38,7 +39,7 @@ test("submits the entered keyword", async () => {
 });
 ```
 
-### 2. Vue 组件使用可访问查询或明确文本断言
+### 3. Vue 组件使用可访问查询或明确文本断言
 
 ```ts
 import { mount } from "@vue/test-utils";
@@ -57,7 +58,7 @@ test("emits logout when the logout item is clicked", async () => {
 
 优先使用角色、标签和可见文本；仅在没有稳定语义时使用 `data-testid`。
 
-### 3. 控制 mock 边界
+### 4. 控制 mock 边界
 
 ```ts
 vi.mock("../api/users", () => ({
@@ -69,7 +70,7 @@ vi.mock("../api/users", () => ({
 - 不 mock 被测组件的内部函数。
 - 对设计系统基础组件只做轻量 mock，保留可访问行为。
 
-### 4. 覆盖关键状态
+### 5. 覆盖关键状态
 
 每个复杂组件至少覆盖：
 
@@ -79,7 +80,7 @@ vi.mock("../api/users", () => ({
 - 权限或禁用态。
 - 键盘交互和焦点行为（适用时）。
 
-### 5. 保持测试可维护
+### 6. 保持测试可维护
 
 ```ts
 function setup() {
@@ -99,6 +100,14 @@ function setup() {
 - 异步断言使用 `findBy*` 或 `waitFor`，不要用固定延迟。
 - 测试名称应描述用户场景，而不是函数名。
 - 组件测试不能替代 E2E；路由、真实浏览器兼容和跨页流程仍需 E2E。
+
+## Related Skills / Boundary
+
+- `fec-testing-strategy` — 选择静态检查、单元、组件、集成、E2E、视觉和专项质量层级。
+- `fec-e2e-testing` — 跨页面关键路径、真实浏览器、登录态和 CI artifacts。
+- `fec-storybook-component-doc` — 组件用法文档、视觉状态枚举和 Storybook interaction tests。
+- `fec-accessibility-check` — 键盘、焦点和 ARIA 的专项审查。
+- `fec-validation-fix` — 运行已有验证命令并修复 lint/typecheck/test/build 失败。
 
 ## Expected Output
 

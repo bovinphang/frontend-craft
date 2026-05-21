@@ -1,4 +1,4 @@
-﻿import { mkdir } from "node:fs/promises";
+import { mkdir } from "node:fs/promises";
 import path from "node:path";
 import { build } from "esbuild";
 import { resolvePluginRoot } from "../../src/install/shared/resolve-plugin-root.js";

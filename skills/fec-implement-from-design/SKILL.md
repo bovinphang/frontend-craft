@@ -9,13 +9,6 @@ description: Use when implementing UI from Figma, Sketch, MasterGo, Pixso, Modao
 
 基于设计工具（Figma、Sketch、MasterGo、Pixso、墨刀、摹客）的设计上下文，高保真实现页面或组件，强调组件复用、设计 Token 映射、可访问性和面向生产的前端实现。
 
-## When to Use
-
-- 用户提供了设计稿链接、选区截图或标注，要求按设计实现组件/页面
-- 仓库中已有组件库、设计 Token 或应优先复用的 UI 模式
-- 任务需要通过 MCP 读取设计上下文后再生成代码
-- 实现弹窗、表单、表格、卡片、仪表盘、设置页或业务流程界面
-
 ## 支持的设计工具
 
 | 工具     | MCP 集成                  | 获取设计数据方式                          |
@@ -109,48 +102,9 @@ description: Use when implementing UI from Figma, Sketch, MasterGo, Pixso, Modao
 - 如有测试，执行测试
 - 如果缺少测试，说明建议补充的最小测试范围
 
-## 输出格式
+## Detailed References
 
-```
-# 设计实现计划
-
-> 生成时间: YYYY-MM-DD HH:mm
-> 评审工具: frontend-craft
-> 设计工具: Figma / Sketch / MasterGo / Pixso / 墨刀 / 摹客
-
-## 实现概要
-- 设计稿来源: ...
-- 目标页面/组件: ...
-
-## 复用的组件
-- ...
-
-## 新建的组件
-- ...
-
-## 组件拆分方案
-- ...
-
-## 状态/数据流
-- ...
-
-## 与设计稿的偏差
-- ...
-
-## 缺失的资源 / Token / 交互细节
-- ...
-
-## 变更文件清单
-- ...
-```
-
-## 报告文件输出
-
-实现计划确定后，必须将计划内容使用 Write 工具保存为 Markdown 文件：
-
-- 目录：项目根目录下的 `reports/`（如不存在则创建）
-- 文件名：`design-plan-YYYY-MM-DD-HHmmss.md`（使用当前时间戳）
-- 保存后告知用户报告文件路径
+Load [references/design-plan-template.md](references/design-plan-template.md) when writing the implementation plan report.
 
 ## Constraints
 

@@ -1,4 +1,4 @@
-﻿import { installClaude } from "./converters/claude.js";
+import { installClaude } from "./converters/claude.js";
 import { installCodex } from "./converters/codex.js";
 import { installCursor } from "./converters/cursor.js";
 import { installWindsurf } from "./converters/windsurf.js";
@@ -10,6 +10,7 @@ import { installAntigravity, installAugment, installCodebuddy } from "./converte
 import { installTrae } from "./converters/trae.js";
 import { installCline } from "./converters/cline.js";
 import { installOpenclaw } from "./converters/openclaw.js";
+import { installQoder } from "./converters/qoder.js";
 import type { InstallContext } from "./types.js";
 
 export const ALL_RUNTIMES = [
@@ -27,6 +28,7 @@ export const ALL_RUNTIMES = [
   "codebuddy",
   "cline",
   "openclaw",
+  "qoder",
 ];
 
 export const INSTALLERS: Record<string, (ctx: InstallContext) => Promise<void>> = {
@@ -44,4 +46,5 @@ export const INSTALLERS: Record<string, (ctx: InstallContext) => Promise<void>> 
   codebuddy: installCodebuddy,
   cline: installCline,
   openclaw: installOpenclaw,
+  qoder: installQoder,
 };

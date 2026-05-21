@@ -8,7 +8,7 @@
   {
     "id": "fec-browser-storage",
     "name": "浏览器存储",
-    "category": "frontend",
+    "category": "capability",
     "tags": [
       "storage",
       "localStorage",
@@ -30,15 +30,27 @@
     ]
   },
   {
+    "id": "fec-testing-strategy",
+    "name": "测试策略",
+    "category": "quality",
+    "tags": [
+      "testing-strategy",
+      "test-plan",
+      "coverage",
+      "risk",
+      "quality-gate"
+    ]
+  },
+  {
     "id": "fec-canvas-threejs",
     "name": "Canvas 与 Three.js",
-    "category": "frontend",
+    "category": "capability",
     "tags": ["canvas", "webgl", "three.js", "3d", "visualization", "r3f"]
   },
   {
     "id": "fec-data-fetching",
     "name": "TanStack Query 数据获取",
-    "category": "frontend",
+    "category": "capability",
     "tags": [
       "react-query",
       "tanstack",
@@ -50,13 +62,13 @@
   {
     "id": "fec-e2e-testing",
     "name": "E2E 测试规范",
-    "category": "testing",
+    "category": "quality",
     "tags": ["playwright", "cypress", "e2e", "visual-regression", "ci", "pom"]
   },
   {
     "id": "fec-form-handling",
     "name": "表单处理",
-    "category": "frontend",
+    "category": "capability",
     "tags": [
       "react-hook-form",
       "zod",
@@ -74,25 +86,25 @@
   {
     "id": "fec-implement-from-design",
     "name": "设计稿实现",
-    "category": "design",
+    "category": "migration-design",
     "tags": ["figma", "sketch", "mastergo", "pixso", "design-to-code", "mcp"]
   },
   {
     "id": "fec-legacy-to-modern-migration",
     "name": "遗留系统迁移",
-    "category": "architecture",
+    "category": "migration-design",
     "tags": ["migration", "jquery", "mpa", "react", "vue", "modernization"]
   },
   {
     "id": "fec-legacy-web-standard",
     "name": "传统前端规范",
-    "category": "architecture",
+    "category": "migration-design",
     "tags": ["jquery", "mpa", "legacy", "vanilla-js"]
   },
   {
     "id": "fec-list-virtualization",
     "name": "列表虚拟化优化",
-    "category": "performance",
+    "category": "capability",
     "tags": [
       "virtualization",
       "windowing",
@@ -104,37 +116,37 @@
   {
     "id": "fec-monorepo-project-standard",
     "name": "Monorepo 项目规范",
-    "category": "architecture",
+    "category": "project-standard",
     "tags": ["monorepo", "pnpm", "turborepo", "nx", "workspace"]
   },
   {
     "id": "fec-nextjs-project-standard",
     "name": "Next.js 项目规范",
-    "category": "framework",
+    "category": "project-standard",
     "tags": ["nextjs", "app-router", "ssr", "rsc", "react"]
   },
   {
     "id": "fec-nuxt-project-standard",
     "name": "Nuxt 项目规范",
-    "category": "framework",
+    "category": "project-standard",
     "tags": ["nuxt", "vue", "ssr", "ssg", "data-fetching"]
   },
   {
     "id": "fec-pwa-implementation",
     "name": "PWA 实现",
-    "category": "frontend",
+    "category": "capability",
     "tags": ["pwa", "service-worker", "offline", "workbox", "installable"]
   },
   {
     "id": "fec-react-project-standard",
     "name": "React 项目规范",
-    "category": "framework",
+    "category": "project-standard",
     "tags": ["react", "typescript", "hooks", "components", "architecture"]
   },
   {
     "id": "fec-route-protection",
     "name": "路由保护",
-    "category": "frontend",
+    "category": "capability",
     "tags": [
       "auth",
       "rbac",
@@ -147,13 +159,13 @@
   {
     "id": "fec-security-review",
     "name": "前端安全审查",
-    "category": "security",
+    "category": "quality",
     "tags": ["xss", "csrf", "csp", "security", "owasp", "dompurify"]
   },
   {
     "id": "fec-svg-animation",
     "name": "SVG 动画",
-    "category": "ui-design",
+    "category": "capability",
     "tags": [
       "svg",
       "animation",
@@ -165,7 +177,7 @@
   {
     "id": "fec-storybook-component-doc",
     "name": "Storybook 组件文档化",
-    "category": "documentation",
+    "category": "migration-design",
     "tags": [
       "storybook",
       "design-system",
@@ -175,21 +187,21 @@
     ]
   },
   {
-    "id": "fec-test-and-fix",
-    "name": "测试与修复",
-    "category": "testing",
-    "tags": ["lint", "typecheck", "test", "build", "fix"]
+    "id": "fec-validation-fix",
+    "name": "验证与修复",
+    "category": "quality",
+    "tags": ["validation", "lint", "typecheck", "test", "build", "fix"]
   },
   {
     "id": "fec-vue3-project-standard",
     "name": "Vue 3 项目规范",
-    "category": "framework",
+    "category": "project-standard",
     "tags": ["vue3", "typescript", "composition-api", "pinia", "components"]
   },
   {
     "id": "fec-web-workers",
     "name": "Web Workers",
-    "category": "performance",
+    "category": "capability",
     "tags": [
       "worker",
       "background-thread",

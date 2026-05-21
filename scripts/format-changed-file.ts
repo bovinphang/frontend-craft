@@ -1,6 +1,6 @@
-﻿import { stdin } from "node:process";
+import { stdin } from "node:process";
 import { existsSync } from "node:fs";
-import { execSync } from "node:child_process";
+import { execFileSync } from "node:child_process";
 
 const chunks: Buffer[] = [];
 for await (const chunk of stdin) chunks.push(chunk);
@@ -20,7 +20,8 @@ const formattable = /\.(js|jsx|ts|tsx|vue|css|scss|less|json|md|html)$/;
 if (!formattable.test(filePath)) process.exit(0);
 
 try {
-  execSync(`npx prettier --write "${filePath}"`, { stdio: "ignore" });
+  const npxBin = process.platform === "win32" ? "npx.cmd" : "npx";
+  execFileSync(npxBin, ["prettier", "--write", filePath], { stdio: "ignore" });
 } catch {
   // prettier not available or failed, not blocking
 }

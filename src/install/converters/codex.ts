@@ -1,4 +1,4 @@
-﻿import path from "node:path";
+import path from "node:path";
 import fs from "node:fs";
 import os from "node:os";
 import { copyDir, copyFile, ensureDir, readUtf8, writeUtf8 } from "../shared/fs.js";
