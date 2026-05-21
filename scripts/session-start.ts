@@ -1,4 +1,4 @@
-﻿import { existsSync, readFileSync } from "node:fs";
+import { existsSync, readFileSync } from "node:fs";
 
 process.stdin.resume();
 process.stdin.on("data", () => {});

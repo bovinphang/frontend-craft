@@ -1,4 +1,4 @@
-﻿/**
+/**
  * Prepare npm-packages/openclaw for publishing frontend-craft tarball.
  */
 import { cpSync, mkdirSync, rmSync, writeFileSync, readFileSync } from "node:fs";

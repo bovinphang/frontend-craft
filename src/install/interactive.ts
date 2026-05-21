@@ -1,4 +1,4 @@
-﻿import fs from "node:fs";
+import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
 import readline from "node:readline";
@@ -44,6 +44,7 @@ const RUNTIME_LABELS: Record<string, string> = {
   codebuddy: "CodeBuddy",
   cline: "Cline",
   openclaw: "OpenClaw",
+  qoder: "Qoder",
 };
 
 function formatHome(p: string): string {

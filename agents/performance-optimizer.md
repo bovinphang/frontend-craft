@@ -7,7 +7,7 @@ permissionMode: default
 maxTurns: 14
 skills:
   - fec-frontend-code-review
-  - fec-test-and-fix
+  - fec-validation-fix
   - fec-react-project-standard
   - fec-vue3-project-standard
 ---

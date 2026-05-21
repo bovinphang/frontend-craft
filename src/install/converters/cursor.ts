@@ -1,4 +1,4 @@
-﻿import path from "node:path";
+import path from "node:path";
 import fs from "node:fs";
 import { copyDir, ensureDir, readUtf8, writeUtf8 } from "../shared/fs.js";
 
@@ -25,7 +25,7 @@ export async function installCursor(ctx) {
       const base = name.replace(/\.md$/, "");
       const mdc =
         `---\n` +
-        `description: Frontend Craft 鈥?${base}\n` +
+        `description: Frontend Craft - ${base}\n` +
         `globs: "**/*.{ts,tsx,vue,js,jsx,css,scss,less,html}"\n` +
         `---\n\n` +
         body +

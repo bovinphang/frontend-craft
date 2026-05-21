@@ -15,7 +15,7 @@ mcpServers:
 skills:
   - fec-frontend-code-review
   - fec-accessibility-check
-  - fec-test-and-fix
+  - fec-validation-fix
 ---
 
 # UI 问题排查与设计还原度评估

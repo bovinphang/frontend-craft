@@ -2,7 +2,7 @@
     "id": "frontend-craft",
     "name": "Frontend Craft",
     "description": "Frontend team skills, OpenClaw workspace templates, optional init tool, exec safety hooks, and design MCP reference.",
-    "version": "2.1.1",
+    "version": "2.1.2",
     "skills": [
         "skills",
         "commands"

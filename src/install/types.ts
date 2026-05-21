@@ -1,3 +1,5 @@
+import type { RuntimeCapabilities } from "./runtime-capabilities.js";
+
 export interface InstallContext {
   pluginRoot: string;
   cwd: string;
@@ -6,4 +8,6 @@ export interface InstallContext {
   baseDir: string;
   dryRun: boolean;
   force?: boolean;
+  capabilities?: RuntimeCapabilities;
+  projectFiles?: string[];
 }

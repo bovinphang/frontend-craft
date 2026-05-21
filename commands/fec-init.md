@@ -1,17 +1,40 @@
 ---
 name: fec-init
-description: 将 frontend-craft 的项目模板（CLAUDE.md、settings.json、rules）初始化到当前项目的 .claude 目录中。
+description: 按当前 AI runtime 初始化 frontend-craft 项目模板、rules 或降级说明。
 ---
 
-将 frontend-craft 提供的项目模板复制到当前项目的 `.claude/` 目录中。
+将 frontend-craft 提供的项目模板复制到当前项目对应 runtime 的配置目录中。优先根据当前目录已有配置判断 runtime；无法判断时，按用户正在使用的工具选择。
 
 ## 执行步骤
 
-1. 检查当前项目根目录下是否已存在 `.claude/` 目录。
+1. 检测 runtime：
+   - 存在 `.claude/` 或 Claude Code 插件环境 → `claude`
+   - 存在 `.codex/` 或 `AGENTS.md` → `codex`
+   - 存在 `.openclaw/`、`OPENCLAW-CONFIG.md` 或 `openclaw.plugin.json` → `openclaw`
+   - 存在 `.qoder/`、`.qoder/settings.json`、`.qoder/rules/` 或 `.qoder/skills/` → `qoder`
+   - 存在 `.cursor/` → `cursor`
+   - 存在 `.windsurf/` → `windsurf`
+   - 存在 `.opencode/` → `opencode`
+   - 存在 `.kilo/` → `kilo`
+   - 存在 `.gemini/` 或 `GEMINI.md` → `gemini`
+   - 存在 `.github/copilot-instructions.md` 或 `.github/instructions/` → `copilot`
+   - 存在 `.trae/`、`.augment/`、`.codebuddy/`、`.clinerules` 时按对应 runtime 处理
+   - 仍无法判断时，询问用户当前要初始化的 runtime。
 
-2. 如果 `.claude/CLAUDE.md` 已存在，提示用户确认是否覆盖。不要在未确认的情况下覆盖现有文件。
+2. 按 runtime 初始化，不要在未确认时覆盖已有文件：
+   - `claude`：复制 Claude 模板、hooks、commands、agents、skills 与 shared rules 到 `.claude/`；如 `.claude/CLAUDE.md` 已存在，先确认。
+   - `codex`：复制 `templates/codex/AGENTS.md` 到项目根目录（如不存在）、`templates/codex/config.toml` 到 `.codex/config.toml`、shared rules 到 `.codex/rules/`；skills/agents 应由 CLI 安装流程负责。
+   - `openclaw`：复制 `templates/openclaw/*.md` 到项目根目录、commands/skills 到 `.openclaw/`；如文件已存在，先确认。
+   - `qoder`：复制 skills 到 `.qoder/skills/`、commands 到 `.qoder/commands/`、agents 到 `.qoder/agents/`、shared rules 到 `.qoder/rules/`、hook scripts 到 `.qoder/hooks/`，并生成或合并 `.qoder/settings.json` 的 hooks 配置。
+   - `cursor`：复制 shared rules 到 `.cursor/rules/*.mdc`，保留 `fec-` skills 目录；说明 Cursor 不支持本插件 hooks。
+   - `windsurf`：复制 commands 到 `.windsurf/workflows/`、shared rules 到 `.windsurf/rules/`、skills 到 `.windsurf/skills/`。
+   - `opencode` / `kilo`：复制 commands 到 `.opencode/command/` 或 `.kilo/command/`，skills 到对应 `skills/`；OpenCode 可补 `.opencode/opencode.jsonc`。
+   - `gemini`：复制 skills 到 `.gemini/extensions/frontend-craft/skills/`，如无 `GEMINI.md` 则由 Claude 模板改写生成。
+   - `copilot`：合并 shared rules 到 `.github/instructions/frontend-craft.instructions.md`，commands 到 `.github/prompts/`。
+   - `trae` / `cline`：只写入规则 bundle，并明确这是 rules-only 降级模式。
+   - `antigravity` / `augment` / `codebuddy`：只安装 skills；输出“此 runtime 当前无 commands/hooks 原生适配”。
 
-3. 将以下模板文件从插件的 `${FRONTEND_CRAFT_ROOT}/templates/claude/` 与 `${FRONTEND_CRAFT_ROOT}/templates/shared/rules/` 复制到项目根目录的 `.claude/`：
+3. Claude runtime 下，将以下模板文件从插件的 `${FRONTEND_CRAFT_ROOT}/templates/claude/` 与 `${FRONTEND_CRAFT_ROOT}/templates/shared/rules/` 复制到项目根目录的 `.claude/`：
    - `templates/claude/CLAUDE.md` → `.claude/CLAUDE.md`
    - `templates/claude/settings.json` → `.claude/settings.json`
    - `templates/shared/rules/vue.md` → `.claude/rules/vue.md`

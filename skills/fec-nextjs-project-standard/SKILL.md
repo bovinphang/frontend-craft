@@ -1,6 +1,6 @@
 ---
 name: fec-nextjs-project-standard
-description: Use when creating or reviewing Next.js 14+ App Router projects, routes, layouts, server/client component boundaries, SSR/SSG/ISR, streaming, metadata, middleware, or Next.js data fetching; Chinese triggers include Next.js, App Router.
+description: Use when creating or reviewing Next.js 14+ App Router projects, file routes, layouts, server/client component boundaries, SSR/SSG/ISR, streaming, metadata, middleware, server actions, or Next-specific data fetching. Use fec-react-project-standard for generic client React component architecture; Chinese triggers include Next.js, App Router.
 ---
 
 # Next.js 项目规范
@@ -11,13 +11,13 @@ description: Use when creating or reviewing Next.js 14+ App Router projects, rou
 
 规范 Next.js 14+ 项目中 App Router、SSR/SSG/ISR 渲染模式、数据获取、路由布局、中间件和 SEO 元数据的工程实践，确保服务端优先、性能优化和可维护性。
 
-## When to Use
+## Procedure
 
-- 新建或修改 App Router 页面
-- 配置 SSR / SSG / ISR 渲染模式
-- 使用流式渲染、Suspense
-- 数据获取、缓存、中间件
-- 元数据与 SEO 优化
+1. 先识别目标属于 App Router、布局、服务端数据、middleware、metadata 还是客户端交互。
+2. 默认服务端组件优先；只有需要浏览器 API、交互状态或事件处理时才使用 `'use client'`。
+3. 明确 SSR / SSG / ISR / CSR 渲染模式和 Next fetch/cache 策略。
+4. 为路由补齐 `loading.tsx`、`error.tsx`、`not-found.tsx`、metadata 和敏感逻辑的服务端边界。
+5. 客户端组件架构问题分流到 `fec-react-project-standard`。
 
 ## 项目结构
 
@@ -103,6 +103,12 @@ src/
 
 - **服务端**：渲染模式、数据获取与缓存、`loading.tsx` / `error.tsx`、路由与布局等以本 skill 为准。
 - **`'use client'` 组件**：组合与复合组件、表单、客户端状态、列表虚拟化、动效与键盘/焦点等，与纯 React 项目一致，遵循 **`fec-react-project-standard`** skill 及项目中的 React 规则（如 `.claude/rules/react.md`）。
+
+## Related Skills / Boundary
+
+- `fec-react-project-standard` — 客户端 React 组件架构与 hooks 组织。
+- `fec-route-protection` — 鉴权、RBAC、redirect 与 middleware 安全边界。
+- `fec-data-fetching` — 客户端 TanStack Query server state；Next 服务端 fetch/cache 仍以本 skill 为准。
 
 ## Expected Output
 

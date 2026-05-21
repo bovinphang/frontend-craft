@@ -1,4 +1,4 @@
-﻿import { installOpencodeFamily } from "../shared/opencode-family.js";
+import { installOpencodeFamily } from "../shared/opencode-family.js";
 
 /**
  * @param {import('../types.js').InstallContext} ctx

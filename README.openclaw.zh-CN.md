@@ -140,6 +140,7 @@ frontend-craft/
 | -------------------------- | -------------------------------- |
 | `commands/fec-init.md`     | 初始化 frontend-craft 工作区模板 |
 | `commands/fec-review.md`   | 引导式前端代码评审               |
+| `commands/fec-test-plan.md` | 前端测试策略与覆盖矩阵           |
 | `commands/fec-scaffold.md` | 页面 / 功能 / 组件脚手架指南     |
 
 ### 技能
@@ -152,9 +153,10 @@ frontend-craft/
 | `fec-react-project-standard`     | React + TypeScript 项目规范                                    |
 | `fec-vue3-project-standard`      | Vue 3 + TypeScript 项目规范                                    |
 | `fec-implement-from-design`      | 基于 Figma、Sketch、MasterGo、Pixso、墨刀或截图实现 UI         |
-| `fec-test-and-fix`               | 执行校验命令、分析失败并安全修复                               |
+| `fec-validation-fix`             | 执行校验命令、分析失败并安全修复                               |
 | `fec-legacy-web-standard`        | JavaScript + jQuery + HTML/CSS 传统前端规范                    |
 | `fec-legacy-to-modern-migration` | jQuery / MPA 迁移到 React 或 Vue + TypeScript 的策略           |
+| `fec-testing-strategy`           | 测试层级选择、风险矩阵与覆盖规划                               |
 | `fec-e2e-testing`                | Playwright / Cypress E2E 结构、产物、CI 与不稳定用例治理       |
 | `fec-nextjs-project-standard`    | Next.js App Router、SSR/SSG、路由、元数据、中间件              |
 | `fec-nuxt-project-standard`      | Nuxt 3 SSR/SSG、组合式函数、路由、中间件                       |
@@ -191,9 +193,10 @@ frontend-craft/
 | 对齐 React 工程约定          | `fec-react-project-standard`     | 「我们使用 React 18 和 TanStack Query，请对照成熟 React + TS 实践评审 `src/pages/Dashboard/`，并贴合现有抽象。」                       |
 | 对齐 Vue 工程约定            | `fec-vue3-project-standard`      | 「请评审 `src/views/Settings.vue` 及相关 composables，是否符合 Vue 3 + TS 惯例并与项目其余部分一致。」                                 |
 | 按设计稿 / 截图实现 UI       | `fec-implement-from-design`      | 「请按 Figma 节点 `123:456` 实现该界面：间距与设计 Token 对齐，复用现有 `Button`，并说明假设条件。」                                   |
-| CI 或本地脚本失败            | `fec-test-and-fix`               | 「`pnpm lint` 和 `pnpm test` 都挂了，请定位根因并修复，不要放宽类型或跳过检查。」                                                      |
+| CI 或本地脚本失败            | `fec-validation-fix`             | 「`pnpm lint` 和 `pnpm test` 都挂了，请定位根因并修复，不要放宽类型或跳过检查。」                                                      |
 | 维护 jQuery / MPA 老页面     | `fec-legacy-web-standard`        | 「`public/js/legacy/*.js` 仍在生产使用，请在保持行为的前提下给出可维护性改进与模式建议。」                                             |
 | 规划 jQuery → React/Vue 迁移 | `fec-legacy-to-modern-migration` | 「我们有 `static/app.js` 的 jQuery + 多页应用，请输出迁到 React + TypeScript 的分阶段方案、风险与里程碑。」                            |
+| 规划前端测试覆盖             | `fec-testing-strategy`           | 「这次 checkout 重构先别急着写测试，请把风险映射到静态检查、单元/组件、E2E、视觉、无障碍和安全覆盖。」                                |
 | 补充或稳定 E2E               | `fec-e2e-testing`                | 「请用 Playwright 给登录流程加冒烟用例：目录清晰、使用 Page Object，并说明如何在 CI 里跑。」                                           |
 | Next.js App Router 功能      | `fec-nextjs-project-standard`    | 「请评审 `app/(dashboard)/reports/page.tsx` 及相关 server actions 是否符合 Next.js App Router 最佳实践（数据获取、错误、元数据等）。」 |
 | Nuxt 3 页面或布局            | `fec-nuxt-project-standard`      | 「请评审 `pages/admin/*.vue` 与 `composables/useApi.ts` 是否符合 Nuxt 3 的 SSR、数据与组合式用法惯例。」                               |

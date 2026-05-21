@@ -1,321 +1,80 @@
 ---
 name: fec-form-handling
-description: Use when building or reviewing forms with React Hook Form, Zod validation, dynamic fields, controlled third-party inputs, file upload, multi-step forms, dependent validation, or form performance; Chinese triggers include 表单, 表单校验, 动态字段.
+description: Use when building or reviewing substantial forms with React Hook Form, Zod schemas, typed validation, dynamic fields, controlled third-party inputs, file upload, multi-step flows, dependent validation, or form performance. Do not use for trivial 1-3 field forms without validation; Chinese triggers include 表单, 表单校验, 动态字段.
 ---
 
 # 表单处理
 
-使用 React Hook Form + Zod 构建高性能、类型安全、可访问的表单。
-
 ## Purpose
 
-管理表单状态、校验和提交流程，避免受控组件每次键入触发全表单重渲染，在复杂表单场景下保持输入流畅度。
-
-## When to Use
-
-- 复杂表单（10+ 字段、动态字段、嵌套对象、数组字段）
-- 需要实时校验反馈（必填、格式、联动校验）
-- 多步表单（Wizard）或动态增减字段
-- 文件上传表单
-- 受控组件出现输入延迟（typing lag）
-
-**不适用**：
-
-- 极简表单（2-3 个字段、无校验）可用原生受控组件 + 手动校验
+管理表单状态、校验和提交，避免复杂表单输入卡顿。
 
 ## Procedure
 
-### 1. 安装
+1. 先判断复杂度：10+ 字段、动态字段、联动校验、文件上传、多步流程或输入卡顿时使用 React Hook Form + Zod；极简表单可用原生受控组件。
+2. 用 Zod 定义运行时 schema，并用 `z.infer` 推导 TypeScript 类型；schema 是外部输入边界，不要只写 TS 类型。
+3. `useForm` 必须提供 `defaultValues`，通过 `zodResolver` 统一校验；错误提示用 `aria-invalid`、`aria-describedby` 和 `role="alert"`。
+4. 第三方受控组件用 `Controller`，原生 input 优先 `register`；不要混用两套状态源。
+5. 提交时处理 loading、服务端错误、重复提交和 reset；大型表单用局部订阅和子组件隔离控制重渲染。
 
-```bash
-npm install react-hook-form zod @hookform/resolvers
-```
-
-### 2. 定义 Schema + 基础表单
-
-Zod schema 同时提供运行时校验和 TypeScript 类型推导：
-
-```ts
-// schema.ts
-import { z } from "zod";
-
-export const loginSchema = z.object({
-  email: z.string().email("请输入有效的邮箱地址").min(1, "邮箱不能为空"),
-  password: z
-    .string()
-    .min(8, "密码至少 8 个字符")
-    .regex(/[A-Z]/, "密码需包含至少一个大写字母"),
-  rememberMe: z.boolean().optional(),
-});
-
-export type LoginForm = z.infer<typeof loginSchema>; // 自动推导类型
-```
+## Quick Start
 
 ```tsx
-// LoginForm.tsx
-import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { loginSchema, type LoginForm } from "./schema";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
 
-const LoginForm = () => {
+const loginSchema = z.object({
+  email: z.string().email("请输入有效的邮箱地址"),
+  password: z.string().min(8, "密码至少 8 个字符"),
+});
+
+type LoginForm = z.infer<typeof loginSchema>;
+
+export function LoginFormView() {
   const {
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
   } = useForm<LoginForm>({
     resolver: zodResolver(loginSchema),
-    defaultValues: {
-      email: "",
-      password: "",
-      rememberMe: false,
-    },
+    defaultValues: { email: "", password: "" },
   });
 
-  const onSubmit = async (data: LoginForm) => {
-    await api.login(data);
-  };
-
   return (
-    <form onSubmit={handleSubmit(onSubmit)} noValidate>
+    <form onSubmit={handleSubmit((data) => api.login(data))} noValidate>
       <label htmlFor="email">邮箱</label>
-      <input
-        id="email"
-        type="email"
-        {...register("email")}
-        aria-invalid={!!errors.email}
-        aria-describedby={errors.email ? "email-error" : undefined}
-      />
-      {errors.email && (
-        <span id="email-error" role="alert">
-          {errors.email.message}
-        </span>
-      )}
+      <input id="email" {...register("email")} aria-invalid={!!errors.email} />
+      {errors.email && <span role="alert">{errors.email.message}</span>}
 
       <label htmlFor="password">密码</label>
-      <input
-        id="password"
-        type="password"
-        {...register("password")}
-        aria-invalid={!!errors.password}
-      />
+      <input id="password" type="password" {...register("password")} />
       {errors.password && <span role="alert">{errors.password.message}</span>}
 
-      <input type="checkbox" {...register("rememberMe")} />
-      <label>记住我</label>
-
-      <button type="submit" disabled={isSubmitting}>
-        {isSubmitting ? "登录中..." : "登录"}
-      </button>
+      <button disabled={isSubmitting}>{isSubmitting ? "提交中..." : "提交"}</button>
     </form>
   );
-};
+}
 ```
 
-**关键约定**：
+## Detailed References
 
-- `noValidate` 禁用浏览器原生校验，统一走 Zod
-- `aria-invalid` + `aria-describedby` 确保屏幕阅读器可读校验错误
-- `id` + `htmlFor` 关联 label 和 input（可访问性）
-
-### 3. 第三方组件集成（Controller）
-
-对于不支持 `ref` 的 UI 库组件（Select、DatePicker、RichEditor），用 `Controller` 桥接：
-
-```tsx
-import { Controller, useForm } from "react-hook-form";
-import { Select } from "antd"; // 或任何第三方组件
-
-const UserForm = () => {
-  const { control, handleSubmit } = useForm<UserForm>({
-    /* ... */
-  });
-
-  return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      <Controller
-        name="role"
-        control={control}
-        rules={{ required: "请选择角色" }}
-        render={({ field, fieldState }) => (
-          <div>
-            <Select
-              {...field}
-              options={[
-                { label: "管理员", value: "admin" },
-                { label: "编辑", value: "editor" },
-              ]}
-              placeholder="选择角色"
-            />
-            {fieldState.error && (
-              <span role="alert">{fieldState.error.message}</span>
-            )}
-          </div>
-        )}
-      />
-    </form>
-  );
-};
-```
-
-### 4. 动态字段（useFieldArray）
-
-适用于可增减的列表型字段（联系人列表、标签、SKU 行）：
-
-```tsx
-import { useFieldArray, useForm } from "react-hook-form";
-
-const schema = z.object({
-  contacts: z.array(
-    z.object({
-      name: z.string().min(1),
-      phone: z.string().regex(/^1\d{10}$/),
-    }),
-  ),
-});
-
-const ContactForm = () => {
-  const { control, handleSubmit } = useForm({
-    resolver: zodResolver(schema),
-    defaultValues: { contacts: [{ name: "", phone: "" }] },
-  });
-
-  const { fields, append, remove } = useFieldArray({
-    control,
-    name: "contacts",
-  });
-
-  return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      {fields.map((field, index) => (
-        <div key={field.id}>
-          <input {...register(`contacts.${index}.name`)} placeholder="姓名" />
-          <input {...register(`contacts.${index}.phone`)} placeholder="手机" />
-          <button type="button" onClick={() => remove(index)}>
-            删除
-          </button>
-        </div>
-      ))}
-      <button type="button" onClick={() => append({ name: "", phone: "" })}>
-        添加联系人
-      </button>
-    </form>
-  );
-};
-```
-
-**注意**：`useFieldArray` 的 `key` 必须用 `field.id`（库内部生成），不要用 `index`。
-
-### 5. 联动校验（依赖字段）
-
-当某字段校验规则依赖另一字段值时：
-
-```ts
-const schema = z
-  .object({
-    password: z.string().min(8),
-    confirmPassword: z.string().min(8),
-  })
-  .refine((data) => data.password === data.confirmPassword, {
-    message: "两次密码不一致",
-    path: ["confirmPassword"],
-  });
-```
-
-或使用 Zod 的 `superRefine` 做多条件联动：
-
-```ts
-const schema = z
-  .object({
-    type: z.enum(["individual", "company"]),
-    idNumber: z.string(),
-    companyName: z.string().optional(),
-  })
-  .superRefine((data, ctx) => {
-    if (data.type === "company" && !data.companyName) {
-      ctx.addIssue({
-        code: z.ZodIssueCode.custom,
-        message: "企业类型必须填写公司名称",
-        path: ["companyName"],
-      });
-    }
-    if (data.type === "individual" && !data.idNumber) {
-      ctx.addIssue({
-        code: z.ZodIssueCode.custom,
-        message: "个人类型必须填写身份证号",
-        path: ["idNumber"],
-      });
-    }
-  });
-```
-
-### 6. 文件上传
-
-```tsx
-const schema = z.object({
-  avatar: z
-    .instanceof(FileList)
-    .refine((files) => files.length > 0, "请上传头像")
-    .refine((files) => files[0]?.size <= 5 * 1024 * 1024, "文件大小不超过 5MB")
-    .refine(
-      (files) => ["image/jpeg", "image/png"].includes(files[0]?.type),
-      "仅支持 JPG/PNG 格式",
-    ),
-});
-
-const UploadForm = () => {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm({
-    resolver: zodResolver(schema),
-  });
-
-  return (
-    <form
-      onSubmit={handleSubmit(async (data) => {
-        const formData = new FormData();
-        formData.append("avatar", data.avatar[0]);
-        await api.upload(formData);
-      })}
-    >
-      <input
-        type="file"
-        {...register("avatar")}
-        accept="image/jpeg,image/png"
-      />
-      {errors.avatar && <span role="alert">{errors.avatar.message}</span>}
-    </form>
-  );
-};
-```
-
-### 7. 表单性能优化
-
-对于大型表单（50+ 字段），减少不必要的重渲染：
-
-```tsx
-// 用 useController 或 watch 替代全表单订阅
-const { watch } = useForm();
-const emailValue = watch("email"); // 仅订阅 email 字段
-
-// 隔离输入组件，避免父表单重渲染
-const MemoInput = React.memo(({ register, name }: { name: string }) => (
-  <input {...register(name)} />
-));
-```
+Load [references/advanced-form-patterns.md](references/advanced-form-patterns.md) for `Controller`, `useFieldArray`, dependent validation, file upload, multi-step forms, async validation, and performance patterns.
 
 ## Constraints
 
-- **受控 vs 非受控**: 不要混合使用。React Hook Form 默认是非受控（uncontrolled），通过 `ref` 读取值。如需受控，用 `Controller`
-- **默认值**: 必须提供 `defaultValues`，否则首次渲染时字段值为 `undefined` 可能导致警告
-- **reset**: 调用 `reset()` 时用服务器返回的数据而非空对象，否则校验可能因字段缺失而失败
-- **异步校验**: 用 `register('field', { validate: asyncFn })`，但注意 debounce，避免每次键入都触发网络请求
-- **表单嵌套**: Zod `refine` / `superRefine` 的路径（`path`）必须准确指向报错字段，否则错误信息无法关联到 UI
+- React Hook Form 默认非受控；只有第三方受控组件才用 `Controller`。
+- `defaultValues` 必须完整，避免 undefined 触发受控/非受控警告。
+- `reset()` 应传服务器返回或明确的完整默认对象。
+- 异步校验必须 debounce 或放到提交边界，避免每次键入请求。
+- Zod `refine` / `superRefine` 的 `path` 必须指向实际字段。
 
 ## Expected Output
 
-- 类型安全的表单组件，Schema 和 TypeScript 类型自动同步
-- 实时校验反馈，输入时 60fps 无卡顿
-- 可访问的错误提示（aria-invalid + role="alert"）
-- 提交时自动阻止无效数据，按钮 loading 状态管理
+产出类型安全、可访问、提交状态明确的表单；复杂字段和文件上传有 schema 约束，输入过程无明显卡顿，服务端错误能回填到用户可理解的位置。
+
+## Related Skills / Boundary
+
+- `fec-component-testing` — 表单交互、校验错误和提交回调的组件测试。
+- `fec-data-fetching` — 提交后的 mutation、缓存失效和乐观更新。
+- `fec-accessibility-check` — 复杂表单的 label、错误提示和焦点顺序深审。

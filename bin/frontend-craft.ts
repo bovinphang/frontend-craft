@@ -1,4 +1,4 @@
-﻿#!/usr/bin/env node
+#!/usr/bin/env node
 import { main } from "../src/install/cli.js";
 
 main(process.argv.slice(2)).catch((err) => {

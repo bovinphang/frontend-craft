@@ -1,4 +1,4 @@
-﻿import { existsSync, readFileSync } from "node:fs";
+import { existsSync, readFileSync } from "node:fs";
 import { execSync } from "node:child_process";
 
 try {
@@ -7,6 +7,8 @@ try {
   process.stdin.on("data", () => {});
 
   if (!existsSync("package.json")) process.exit(0);
+  const blocking = process.env.FRONTEND_CRAFT_VALIDATION_MODE === "blocking";
+  let failed = false;
 
   let scripts = {};
   try {
@@ -29,6 +31,7 @@ try {
       });
     } catch {
       // non-zero exit, continue with other checks
+      failed = true;
     }
   }
 
@@ -37,8 +40,10 @@ try {
   else runIfExists("typecheck");
   runIfExists("test");
   runIfExists("build");
+  if (blocking && failed) process.exit(1);
 } catch {
   // top-level safety net: never crash with non-zero
+  if (process.env.FRONTEND_CRAFT_VALIDATION_MODE === "blocking") process.exit(1);
 }
 
 process.exit(0);

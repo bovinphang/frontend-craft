@@ -1,4 +1,4 @@
-﻿import os from "node:os";
+import os from "node:os";
 import path from "node:path";
 
 /**
@@ -57,6 +57,8 @@ export function getGlobalConfigDir(runtime) {
     }
     case "openclaw":
       return env.OPENCLAW_CONFIG_DIR ? expandTilde(env.OPENCLAW_CONFIG_DIR) : path.join(home, ".openclaw");
+    case "qoder":
+      return env.QODER_CONFIG_DIR ? expandTilde(env.QODER_CONFIG_DIR) : path.join(home, ".qoder");
     default:
       return env.CLAUDE_CONFIG_DIR ? expandTilde(env.CLAUDE_CONFIG_DIR) : path.join(home, ".claude");
   }
@@ -78,6 +80,7 @@ export const LOCAL_DIR = {
   codebuddy: ".codebuddy",
   cline: "",
   openclaw: ".openclaw",
+  qoder: ".qoder",
 };
 
 /**

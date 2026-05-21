@@ -1,4 +1,4 @@
-﻿import { stdin } from "node:process";
+import { stdin } from "node:process";
 
 const chunks: Buffer[] = [];
 for await (const chunk of stdin) chunks.push(chunk);
@@ -17,13 +17,24 @@ if (!command) process.exit(0);
 const dangerous = [
   /rm\s+-rf\s+\//i,
   /rm\s+-rf\s+\/\*/i,
+  /\bremove-item\b.*\b-recurse\b.*\b-force\b.*(?:[a-z]:\\|\/|~)/i,
+  /\brmdir\b.*\/s\b.*\/q\b/i,
+  /\bdel\b.*\/[fsq]\b/i,
+  /\bchmod\b\s+-R\s+777\b/i,
+  /\bchown\b\s+-R\b/i,
   /git\s+push\s+.*--force/i,
+  /\bgit\s+clean\b.*-[^\s]*f[^\s]*d/i,
   /\bmkfs\b/i,
   /\bdd\s+if=/i,
   /\bshutdown\b/i,
   /\breboot\b/i,
   /curl\s+.*\|\s*sh/i,
   /wget\s+.*\|\s*sh/i,
+  /\biwr\b.*\|\s*iex\b/i,
+  /\binvoke-webrequest\b.*\|\s*invoke-expression\b/i,
+  /\b(printenv|env|set)\b.*(TOKEN|SECRET|PASSWORD|API_KEY|PRIVATE_KEY)/i,
+  /\bcat\b.*\.(env|npmrc|pypirc)\b/i,
+  /\bnpm\s+run\b.*(?:postinstall|preinstall|prepare).*(?:curl|wget|iwr|iex|rm\s+-rf)/i,
   /DROP\s+TABLE/i,
   /DROP\s+DATABASE/i,
   /format\s+c:/i,

@@ -1,6 +1,6 @@
 ---
 name: fec-react-project-standard
-description: Use when creating, modifying, or reviewing React + TypeScript components, modules, hooks, routing, state management, API layers, error handling, styling, tests, accessibility, or performance patterns; Chinese triggers include React 项目规范, React 组件.
+description: Use when designing or reviewing React + TypeScript project structure, feature/module boundaries, component architecture, hooks organization, routing composition, state/API/error/styling defaults, or repository-wide React conventions. Prefer narrower skills for forms, data fetching, tests, accessibility, virtualization, animation, or security deep dives; Chinese triggers include React 项目规范, React 组件架构.
 ---
 
 # React 项目规范
@@ -9,33 +9,11 @@ description: Use when creating, modifying, or reviewing React + TypeScript compo
 
 ## Purpose
 
-为 React + TypeScript 项目提供完整的工程规范，涵盖项目结构、组件设计、Hooks、状态管理、API 层、错误处理、测试和性能优化，确保架构清晰、代码可维护。
+为 React + TypeScript 项目提供工程结构、模块边界和默认实现约定，确保架构清晰、代码可维护。
 
-## When to Use
+## Procedure
 
-- 新建页面、功能模块或业务域
-- 组件拆分与目录重构
-- React + TypeScript 工程结构梳理
-- 页面 / 模块 / 通用组件边界设计
-- hooks、API 层、状态管理分层设计
-- 为现有 React 项目补齐错误处理、测试、性能优化方案
-- 组合/复合组件、Render Props、Context + Reducer、列表虚拟化、表单与动效等模式选型
-
-## 使用说明
-
-本 skill 提供 React 工程化任务的推荐流程、目录结构、实现模式和检查清单。
-
-使用前提：
-
-- 默认遵守仓库现有全局规则和 React rule
-- 若仓库已有明确目录结构、样式体系、状态管理或请求封装，优先沿用仓库约定
-- 本 skill 主要解决”如何设计和落地”问题，而不是重复声明基础编码底线
-
----
-
-## 工作流程
-
-处理 React 工程化任务时，建议按以下顺序执行：
+本 skill 主要解决 React 工程任务“如何设计和落地”的问题，不重复声明基础编码底线。处理 React 工程化任务时，按以下顺序执行：
 
 1. 识别仓库已有约定
    - 目录组织方式
@@ -62,14 +40,20 @@ description: Use when creating, modifying, or reviewing React + TypeScript compo
    - loading / error / empty / data 状态
    - 错误处理与重试
    - 类型约束
-   - 关键测试
-   - 必要的性能优化
-
----
+   - 关键测试入口
+   - 必要的专项 skill 分流
 
 ## Detailed References
 
-Load [references/react-project-details.md](references/react-project-details.md) when the task needs concrete React project structure, component patterns, Hooks, routing, state, API layer, error handling, styling, TypeScript, testing, performance, or review checklists.
+Load [references/react-project-details.md](references/react-project-details.md) when the task needs concrete React project structure, component patterns, Hooks, routing, state ownership, API layer shape, error handling, styling defaults, TypeScript conventions, or review checklists.
+
+## Related Skills / Boundary
+
+- `fec-form-handling` — React Hook Form、Zod、动态字段、文件上传和表单性能。
+- `fec-data-fetching` — TanStack Query、server state、query key、mutation 和缓存失效。
+- `fec-component-testing` / `fec-e2e-testing` — 组件契约测试或跨页用户路径测试。
+- `fec-accessibility-check` / `fec-security-review` — 无障碍或安全专项深审。
+- `fec-list-virtualization` / `fec-svg-animation` / `fec-canvas-threejs` — 性能或视觉专项实现。
 
 ## Constraints
 
@@ -89,13 +73,6 @@ Load [references/react-project-details.md](references/react-project-details.md) 
 - API 层具备类型约束和统一错误处理，状态管理符合就近原则
 - 关键行为有测试覆盖，关键模块已用 `react-error-boundary` 包裹
 - 超长列表已评估虚拟化，弹窗/复合组件具备键盘与焦点支持
-
----
-
-## 输出要求
-
-在生成方案、代码或重构建议时：
-
 - 先尊重仓库现状，再给推荐结构
 - 给出必要的文件划分建议
 - 必要时说明为什么这样分层

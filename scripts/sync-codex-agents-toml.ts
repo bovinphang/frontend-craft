@@ -1,4 +1,4 @@
-﻿/**
+/**
  * Regenerate Codex agent TOML files from `agents/*.md` (optional dev helper).
  * Usage: CODEX_AGENTS_DIR=/path/to/out node scripts/sync-codex-agents-toml.js
  */

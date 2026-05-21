@@ -1,4 +1,4 @@
-﻿import path from "node:path";
+import path from "node:path";
 import fs from "node:fs";
 import { ensureDir, readUtf8, writeUtf8 } from "../shared/fs.js";
 
@@ -12,7 +12,7 @@ export async function installTrae(ctx) {
   ensureDir(rulesDir);
   const rulesSrc = path.join(pluginRoot, "templates", "shared", "rules");
   /** @type {string[]} */
-  const parts = ["# Frontend Craft 鈥?Trae rules bundle\n"];
+  const parts = ["# Frontend Craft - Trae rules bundle\n"];
   if (fs.existsSync(rulesSrc)) {
     for (const name of fs.readdirSync(rulesSrc)) {
       if (!name.endsWith(".md")) continue;

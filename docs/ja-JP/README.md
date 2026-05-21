@@ -21,9 +21,9 @@
 
 ---
 
-**Claude Code、Codex、Cursor、OpenCode、Gemini CLI、Kilo、Windsurf、Copilot、Antigravity、Augment、Trae、CodeBuddy、Cline、OpenClaw などに対応する汎用フロントエンドプラグイン。**
+**Claude Code、Codex、Cursor、OpenCode、Gemini CLI、Qoder、Kilo、Windsurf、Copilot、Antigravity、Augment、Trae、CodeBuddy、Cline、OpenClaw などに対応する汎用フロントエンドプラグイン。**
 
-`frontend-craft` は、フロントエンドレビュー agents、ワークフロー skills、スラッシュコマンド、hooks、MCP テンプレート、プロジェクトルールを 1 つのリポジトリで管理します。CLI で同じ標準を 14 種類の AI コーディング runtime に導入できます。**Claude Code Marketplace のみ**でネイティブプラグインとして入れる手順は [docs/runtimes/claude.md](../runtimes/claude.md)（[簡体字中国語](../runtimes/claude.zh-CN.md)）を参照してください。
+`frontend-craft` は、フロントエンドレビュー agents、ワークフロー skills、スラッシュコマンド、hooks、MCP テンプレート、プロジェクトルールを 1 つのリポジトリで管理します。CLI で同じ標準を 15 種類の AI コーディング runtime に導入できます。**Claude Code Marketplace のみ**でネイティブプラグインとして入れる手順は [docs/runtimes/claude.md](../runtimes/claude.md)（[簡体字中国語](../runtimes/claude.zh-CN.md)）を参照してください。
 
 ---
 
@@ -51,7 +51,7 @@ npx frontend-craft@latest install cursor --local
 npx frontend-craft@latest install --all --dry-run --global
 ```
 
-対応 runtime: `claude`, `codex`, `cursor`, `windsurf`, `opencode`, `kilo`, `gemini`, `copilot`, `antigravity`, `augment`, `trae`, `codebuddy`, `cline`, `openclaw`.
+対応 runtime: `claude`, `codex`, `cursor`, `windsurf`, `opencode`, `kilo`, `gemini`, `copilot`, `antigravity`, `augment`, `trae`, `codebuddy`, `cline`, `openclaw`, `qoder`.
 
 各 runtime のメモは [`docs/runtimes/`](../runtimes/) を参照してください。
 
@@ -120,6 +120,7 @@ frontend-craft/
 |   |-- frontend-architect.md    # ページ分割、コンポーネントアーキテクチャ、状態フロー
 |   |-- frontend-code-reviewer.md # フロントエンド特化コードレビュー（品質、セキュリティ、a11y）
 |   |-- frontend-security-reviewer.md # フロントエンド攻撃面：XSS、シークレット、CSP、依存関係
+|   |-- frontend-test-planner.md  # テスト戦略、リスクマトリクス、カバレッジ計画
 |   |-- frontend-e2e-runner.md     # E2E 作成・実行、flaky、成果物と CI
 |   |-- typescript-reviewer.md    # TS/JS 型・非同期・セキュリティ、レポートのみ
 |   |-- performance-optimizer.md # パフォーマンスボトルネック分析と最適化
@@ -128,23 +129,36 @@ frontend-craft/
 |   |-- design-token-mapper.md   # デザイン変数を Design Token にマッピング
 |
 |-- skills/           # ワークフロー定義とドメイン知識
-|   |-- frontend-code-review/    # アーキテクチャ、型、レンダリング、スタイル、a11y
+|   |-- fec-frontend-code-review/    # アーキテクチャ、型、レンダリング、スタイル、a11y
 |   |-- fec-security-review/     # XSS、CSRF、機密データ、入力検証
-|   |-- accessibility-check/     # WCAG 2.1 AA アクセシビリティ
+|   |-- fec-accessibility-check/     # WCAG 2.1 AA アクセシビリティ
 |   |-- fec-react-project-standard/ # React + TypeScript プロジェクト規約
 |   |-- fec-vue3-project-standard/  # Vue 3 + TypeScript プロジェクト規約
-|   |-- implement-from-design/   # デザインから UI を実装
-|   |-- test-and-fix/           # lint、type-check、test、build と修正
-|   |-- legacy-web-standard/     # JS + jQuery + HTML レガシープロジェクト規約
-|   |-- legacy-to-modern-migration/  # jQuery/MPA から React/Vue への移行戦略とワークフロー
-|   |-- e2e-testing/                # Playwright/Cypress E2E テスト規約
-|   |-- nextjs-project-standard/    # Next.js 14+ App Router、SSR/SSG 規約
-|   |-- nuxt-project-standard/      # Nuxt 3 SSR/SSG、Composition API 規約
-|   |-- monorepo-project-standard/  # pnpm workspace、Turborepo、Nx 規約
+|   |-- fec-implement-from-design/   # デザインから UI を実装
+|   |-- fec-validation-fix/           # lint、type-check、test、build と修正
+|   |-- fec-legacy-web-standard/     # JS + jQuery + HTML レガシープロジェクト規約
+|   |-- fec-legacy-to-modern-migration/  # jQuery/MPA から React/Vue への移行戦略とワークフロー
+|   |-- fec-testing-strategy/          # テスト階層戦略とカバレッジマトリクス
+|   |-- fec-e2e-testing/                # Playwright/Cypress E2E テスト規約
+|   |-- fec-nextjs-project-standard/    # Next.js 14+ App Router、SSR/SSG 規約
+|   |-- fec-nuxt-project-standard/      # Nuxt 3 SSR/SSG、Composition API 規約
+|   |-- fec-monorepo-project-standard/  # pnpm workspace、Turborepo、Nx 規約
+|   |-- fec-data-fetching/              # TanStack Query / サーバー状態取得、キャッシュ、無効化、楽観的更新
+|   |-- fec-form-handling/              # React Hook Form + Zod フォーム、動的フィールド、アップロード、マルチステップ
+|   |-- fec-route-protection/           # React Router / Next.js / Vue Router / Nuxt 認証・権限ルーティング
+|   |-- fec-component-testing/          # React Testing Library / Vue Test Utils コンポーネントテストとリグレッション
+|   |-- fec-browser-storage/            # localStorage/sessionStorage/IndexedDB/Cookies 選定と安全な永続化
+|   |-- fec-storybook-component-doc/    # Storybook コンポーネントドキュメント、addons、MDX、インタラクション・ビジュアルテスト
+|   |-- fec-list-virtualization/        # 大規模リストのウィンドイング（react-window / TanStack Virtual）
+|   |-- fec-pwa-implementation/         # Manifest、サービスワーカー、オフラインキャッシュ、インストールプロンプト、更新処理
+|   |-- fec-web-workers/                # Web Worker 統合、転送可能オブジェクト、Comlink、Worker プール
+|   |-- fec-canvas-threejs/             # Canvas 2D、Three.js、React Three Fiber、WebGL パフォーマンスとアクセシビリティ
+|   |-- fec-svg-animation/              # SVG アニメーション（CSS / Framer Motion / GSAP）と reduced-motion 代替
 |
 |-- commands/         # スラッシュコマンド
 |   |-- fec-init.md     # /fec-init - プロジェクトテンプレート初期化
 |   |-- fec-review.md   # /fec-review - コードレビュー
+|   |-- fec-test-plan.md # /fec-test-plan - テスト階層戦略とカバレッジマトリクス
 |   |-- fec-scaffold.md # /fec-scaffold - page/feature/component 作成
 |
 |-- hooks/            # イベント駆動の自動化
@@ -175,43 +189,57 @@ frontend-craft/
 
 ### Commands（スラッシュコマンド）
 
-| コマンド        | 用途                                                                     | レポート出力       |
-| --------------- | ------------------------------------------------------------------------ | ------------------ |
-| `/fec-init`     | プロジェクトテンプレートを `.claude/` に初期化                           | —                  |
-| `/fec-review`   | 指定または最近変更したファイルのコードレビュー、段階別レポート出力       | `code-review-*.md` |
-| `/fec-scaffold` | 規約に従い page / feature / component の標準構造とボイラープレートを作成 | —                  |
+| コマンド         | 用途                                                                     | レポート出力       |
+| ---------------- | ------------------------------------------------------------------------ | ------------------ |
+| `/fec-init`      | プロジェクトテンプレートを `.claude/` に初期化                           | —                  |
+| `/fec-review`    | 指定または最近変更したファイルのコードレビュー、段階別レポート出力       | `code-review-*.md` |
+| `/fec-test-plan` | フロントエンドテスト階層、リスクカバレッジ、実行順を計画                 | `test-plan-*.md`   |
+| `/fec-scaffold`  | 規約に従い page / feature / component の標準構造とボイラープレートを作成 | —                  |
 
 ### Skills（自動有効化）
 
-| Skill                            | 用途                                                                                     | レポート出力                |
-| -------------------------------- | ---------------------------------------------------------------------------------------- | --------------------------- |
-| `fec-frontend-code-review`       | アーキテクチャ、型、レンダリング、スタイル、a11y の観点でコードレビュー                  | `code-review-*.md`          |
-| `fec-security-review`            | XSS、CSRF、機密データ漏洩、入力検証などのセキュリティレビュー                            | `security-review-*.md`      |
-| `fec-accessibility-check`        | WCAG 2.1 AA アクセシビリティチェック                                                     | `accessibility-review-*.md` |
-| `fec-react-project-standard`     | React + TypeScript プロジェクト規約（構造、コンポーネント、ルーティング、状態、API 層）  | —                           |
-| `fec-vue3-project-standard`      | Vue 3 + TypeScript プロジェクト規約（構造、コンポーネント、ルーティング、Pinia、API 層） | —                           |
-| `fec-implement-from-design`      | Figma/Sketch/MasterGo/Pixso/墨刀/摹客 のデザインから UI を実装                           | `design-plan-*.md`          |
-| `fec-test-and-fix`               | lint、type-check、test、build を実行し失敗を修正                                         | `test-fix-*.md`             |
-| `fec-legacy-web-standard`        | JS + jQuery + HTML レガシープロジェクトの開発・保守規約                                  | —                           |
-| `fec-legacy-to-modern-migration` | jQuery/MPA から React/Vue 3 + TS への移行戦略、概念マッピング、段階的ワークフロー        | `migration-plan-*.md`       |
-| `fec-e2e-testing`                | Playwright/Cypress E2E テスト規約：ディレクトリ構造、Page Object、CI 統合                | —                           |
-| `fec-nextjs-project-standard`    | Next.js 14+ App Router、SSR/SSG、ストリーミング、メタデータ規約                          | —                           |
-| `fec-nuxt-project-standard`      | Nuxt 3 SSR/SSG、Composition API、データ取得、ルーティング、ミドルウェア規約              | —                           |
-| `fec-monorepo-project-standard`  | pnpm workspace、Turborepo、Nx：ディレクトリ構造、依存管理、タスク編成                    | —                           |
+| Skill                            | 用途                                                                                           | レポート出力                |
+| -------------------------------- | ---------------------------------------------------------------------------------------------- | --------------------------- |
+| `fec-frontend-code-review`       | アーキテクチャ、型、レンダリング、スタイル、a11y の観点でコードレビュー                        | `code-review-*.md`          |
+| `fec-security-review`            | XSS、CSRF、機密データ漏洩、入力検証などのセキュリティレビュー                                  | `security-review-*.md`      |
+| `fec-accessibility-check`        | WCAG 2.1 AA アクセシビリティチェック                                                           | `accessibility-review-*.md` |
+| `fec-react-project-standard`     | React + TypeScript プロジェクト規約（構造、コンポーネント、ルーティング、状態、API 層）        | —                           |
+| `fec-vue3-project-standard`      | Vue 3 + TypeScript プロジェクト規約（構造、コンポーネント、ルーティング、Pinia、API 層）       | —                           |
+| `fec-implement-from-design`      | Figma/Sketch/MasterGo/Pixso/墨刀/摹客 のデザインから UI を実装                                 | `design-plan-*.md`          |
+| `fec-validation-fix`             | lint、type-check、test、build を実行し失敗を修正                                               | `validation-fix-*.md`       |
+| `fec-legacy-web-standard`        | JS + jQuery + HTML レガシープロジェクトの開発・保守規約                                        | —                           |
+| `fec-legacy-to-modern-migration` | jQuery/MPA から React/Vue 3 + TS への移行戦略、概念マッピング、段階的ワークフロー              | `migration-plan-*.md`       |
+| `fec-testing-strategy`           | テスト階層選択、リスクマトリクス、カバレッジ計画                                               | `test-plan-*.md`            |
+| `fec-e2e-testing`                | Playwright/Cypress E2E テスト規約：ディレクトリ構造、Page Object、CI 統合                      | —                           |
+| `fec-nextjs-project-standard`    | Next.js 14+ App Router、SSR/SSG、ストリーミング、メタデータ規約                                | —                           |
+| `fec-nuxt-project-standard`      | Nuxt 3 SSR/SSG、Composition API、データ取得、ルーティング、ミドルウェア規約                    | —                           |
+| `fec-monorepo-project-standard`  | pnpm workspace、Turborepo、Nx：ディレクトリ構造、依存管理、タスク編成                          | —                           |
+| `fec-data-fetching`              | TanStack Query / サーバー状態取得、キャッシュ、無効化、楽観的更新                              | —                           |
+| `fec-form-handling`              | React Hook Form + Zod フォーム、動的フィールド、アップロード、マルチステップ                   | —                           |
+| `fec-browser-storage`            | localStorage/sessionStorage/IndexedDB/Cookies の選定と安全な永続化                             | —                           |
+| `fec-route-protection`           | React Router、Next.js、Vue Router、Nuxt の認証・権限ルーティング保護                           | —                           |
+| `fec-component-testing`          | React Testing Library / Vue Test Utils コンポーネントテストとリグレッション                    | —                           |
+| `fec-storybook-component-doc`    | Storybook コンポーネントドキュメント、Addon、MDX、インタラクションテスト・ビジュアルテスト統合 | —                           |
+| `fec-list-virtualization`        | react-window / TanStack Virtual 大規模リスト仮想化と測定戦略                                   | —                           |
+| `fec-pwa-implementation`         | Manifest、サービスワーカー、オフラインキャッシュ、インストールプロンプト、更新管理             | —                           |
+| `fec-web-workers`                | Web Worker、Transferable、Comlink、Worker プール                                               | —                           |
+| `fec-canvas-threejs`             | Canvas 2D、Three.js、React Three Fiber、WebGL パフォーマンスとアクセシビリティ                 | —                           |
+| `fec-svg-animation`              | CSS、Framer Motion、GSAP SVG アニメーションと reduced-motion 代替                              | —                           |
 
 ### Agents（サブエージェント）
 
-| Agent                        | 用途                                                                                               | レポート出力                 |
-| ---------------------------- | -------------------------------------------------------------------------------------------------- | ---------------------------- |
-| `frontend-architect`         | ページ分割、コンポーネントアーキテクチャ、状態フロー、ディレクトリ計画、大規模リファクタリング     | `architecture-proposal-*.md` |
-| `frontend-code-reviewer`     | フロントエンドコードレビュー：React/Vue/Next/Nuxt、TS、スタイル、クライアント側セキュリティ        | `code-review-*.md`           |
-| `frontend-security-reviewer` | フロントエンドセキュリティ：XSS、クライアントシークレット、危険な DOM/API、CSP、依存監査           | `security-review-*.md`       |
-| `frontend-e2e-runner`        | E2E 作成・実行（Playwright/Cypress）、flaky 隔離、Trace/スクリーンショット、CI；任意で要約レポート | `e2e-summary-*.md`（任意）   |
-| `typescript-reviewer`        | TS/JS レビュー：typecheck/eslint、PR マージ可否、型・非同期・セキュリティ；コード改変なし          | `typescript-review-*.md`     |
-| `performance-optimizer`      | パフォーマンスボトルネック分析（バンドルサイズ、レンダリング、ネットワーク）、定量化された最適化案 | `performance-review-*.md`    |
-| `ui-checker`                 | UI ビジュアル問題のデバッグ、デザイン忠実度評価                                                    | `ui-fidelity-review-*.md`    |
-| `figma-implementer`          | Figma/Sketch/MasterGo/Pixso/墨刀/摹客 のデザインから正確に UI を実装                               | `design-implementation-*.md` |
-| `design-token-mapper`        | デザイン変数をプロジェクトの Design Token にマッピング                                             | `token-mapping-*.md`         |
+| Agent                        | 用途                                                                                                        | レポート出力                 |
+| ---------------------------- | ----------------------------------------------------------------------------------------------------------- | ---------------------------- |
+| `frontend-architect`         | ページ分割、コンポーネントアーキテクチャ、状態フロー、ディレクトリ計画、大規模リファクタリング              | `architecture-proposal-*.md` |
+| `frontend-code-reviewer`     | フロントエンドコードレビュー：React/Vue/Next/Nuxt、TS、スタイル、クライアント側セキュリティ                 | `code-review-*.md`           |
+| `frontend-security-reviewer` | フロントエンドセキュリティ：XSS、クライアントシークレット、危険な DOM/API、CSP、依存監査                    | `security-review-*.md`       |
+| `frontend-test-planner`      | フロントエンドテスト戦略: リスクを静的、単体、コンポーネント、E2E、視覚、a11y、セキュリティ、性能に対応付け | `test-plan-*.md`             |
+| `frontend-e2e-runner`        | E2E 作成・実行（Playwright/Cypress）、flaky 隔離、Trace/スクリーンショット、CI；任意で要約レポート          | `e2e-summary-*.md`（任意）   |
+| `typescript-reviewer`        | TS/JS レビュー：typecheck/eslint、PR マージ可否、型・非同期・セキュリティ；コード改変なし                   | `typescript-review-*.md`     |
+| `performance-optimizer`      | パフォーマンスボトルネック分析（バンドルサイズ、レンダリング、ネットワーク）、定量化された最適化案          | `performance-review-*.md`    |
+| `ui-checker`                 | UI ビジュアル問題のデバッグ、デザイン忠実度評価                                                             | `ui-fidelity-review-*.md`    |
+| `figma-implementer`          | Figma/Sketch/MasterGo/Pixso/墨刀/摹客 のデザインから正確に UI を実装                                        | `design-implementation-*.md` |
+| `design-token-mapper`        | デザイン変数をプロジェクトの Design Token にマッピング                                                      | `token-mapping-*.md`         |
 
 ### Hooks（自動実行）
 
@@ -305,21 +333,23 @@ $env:MODAO_TOKEN = "your-modao-token"
 
 すべてのレビュー・分析・評価結果はプロジェクトの `reports/` ディレクトリに Markdown ファイルとして自動保存されます。
 
-| レポート種別         | ファイル名パターン                           | ソース                                                                                           |
-| -------------------- | -------------------------------------------- | ------------------------------------------------------------------------------------------------ |
-| コードレビュー       | `code-review-YYYY-MM-DD-HHmmss.md`           | `/fec-review` コマンド、`fec-frontend-code-review` スキル、`frontend-code-reviewer` エージェント |
-| TS/JS レビュー       | `typescript-review-YYYY-MM-DD-HHmmss.md`     | `typescript-reviewer` エージェント                                                               |
-| セキュリティレビュー | `security-review-YYYY-MM-DD-HHmmss.md`       | `fec-security-review` スキル、`frontend-security-reviewer` エージェント                          |
-| アクセシビリティ     | `accessibility-review-YYYY-MM-DD-HHmmss.md`  | `fec-accessibility-check` スキル                                                                 |
-| パフォーマンス       | `performance-review-YYYY-MM-DD-HHmmss.md`    | `performance-optimizer` エージェント                                                             |
-| アーキテクチャ       | `architecture-proposal-YYYY-MM-DD-HHmmss.md` | `frontend-architect` エージェント                                                                |
-| デザイン忠実度       | `ui-fidelity-review-YYYY-MM-DD-HHmmss.md`    | `ui-checker` エージェント                                                                        |
-| デザイン実装         | `design-implementation-YYYY-MM-DD-HHmmss.md` | `figma-implementer` エージェント                                                                 |
-| Token マッピング     | `token-mapping-YYYY-MM-DD-HHmmss.md`         | `design-token-mapper` エージェント                                                               |
-| デザイン計画         | `design-plan-YYYY-MM-DD-HHmmss.md`           | `fec-implement-from-design` スキル                                                               |
-| テスト修正           | `test-fix-YYYY-MM-DD-HHmmss.md`              | `fec-test-and-fix` スキル                                                                        |
-| E2E 実行サマリー     | `e2e-summary-YYYY-MM-DD-HHmmss.md`           | `frontend-e2e-runner` エージェント（任意）                                                       |
-| 移行計画             | `migration-plan-YYYY-MM-DD-HHmmss.md`        | `fec-legacy-to-modern-migration` スキル                                                          |
+| レポート種別         | ファイル名パターン                                       | ソース                                                                                           |
+| -------------------- | -------------------------------------------------------- | ------------------------------------------------------------------------------------------------ |
+| コードレビュー       | `code-review-YYYY-MM-DD-HHmmss.md`                       | `/fec-review` コマンド、`fec-frontend-code-review` スキル、`frontend-code-reviewer` エージェント |
+| `/fec-test-plan`     | フロントエンドテスト階層、リスクカバレッジ、実行順を計画 | `test-plan-*.md`                                                                                 |
+| TS/JS レビュー       | `typescript-review-YYYY-MM-DD-HHmmss.md`                 | `typescript-reviewer` エージェント                                                               |
+| セキュリティレビュー | `security-review-YYYY-MM-DD-HHmmss.md`                   | `fec-security-review` スキル、`frontend-security-reviewer` エージェント                          |
+| アクセシビリティ     | `accessibility-review-YYYY-MM-DD-HHmmss.md`              | `fec-accessibility-check` スキル                                                                 |
+| パフォーマンス       | `performance-review-YYYY-MM-DD-HHmmss.md`                | `performance-optimizer` エージェント                                                             |
+| アーキテクチャ       | `architecture-proposal-YYYY-MM-DD-HHmmss.md`             | `frontend-architect` エージェント                                                                |
+| デザイン忠実度       | `ui-fidelity-review-YYYY-MM-DD-HHmmss.md`                | `ui-checker` エージェント                                                                        |
+| デザイン実装         | `design-implementation-YYYY-MM-DD-HHmmss.md`             | `figma-implementer` エージェント                                                                 |
+| Token マッピング     | `token-mapping-YYYY-MM-DD-HHmmss.md`                     | `design-token-mapper` エージェント                                                               |
+| デザイン計画         | `design-plan-YYYY-MM-DD-HHmmss.md`                       | `fec-implement-from-design` スキル                                                               |
+| テスト計画           | `test-plan-YYYY-MM-DD-HHmmss.md`                         | `fec-testing-strategy` スキル / `frontend-test-planner` エージェント                             |
+| 検証修正             | `validation-fix-YYYY-MM-DD-HHmmss.md`                    | `fec-validation-fix` スキル                                                                      |
+| E2E 実行サマリー     | `e2e-summary-YYYY-MM-DD-HHmmss.md`                       | `frontend-e2e-runner` エージェント（任意）                                                       |
+| 移行計画             | `migration-plan-YYYY-MM-DD-HHmmss.md`                    | `fec-legacy-to-modern-migration` スキル                                                          |
 
 > **ヒント：** `.gitignore` に `reports/` を追加して自動生成レポートのコミットを避けるか、チームの履歴のためにコミットを残してください。
 
