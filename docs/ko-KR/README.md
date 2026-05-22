@@ -358,7 +358,7 @@ model: sonnet
 {
   "event": "PreToolUse",
   "matcher": "tool == \"Bash\"",
-  "command": "node \"${FRONTEND_CRAFT_ROOT}/dist/scripts/security-check.js\""
+  "command": "node \"${FRONTEND_CRAFT_ROOT}/dist/hooks/security-check.js\""
 }
 ```
 

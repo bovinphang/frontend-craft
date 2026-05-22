@@ -27,7 +27,7 @@ export async function installQoder(ctx: InstallContext): Promise<void> {
 function copyHookScripts(pluginRoot: string, hooksDir: string): void {
   ensureDir(hooksDir);
   for (const script of HOOK_SCRIPTS) {
-    const src = path.join(pluginRoot, "dist", "scripts", script);
+    const src = path.join(pluginRoot, "dist", "hooks", script);
     if (fs.existsSync(src)) {
       copyFile(src, path.join(hooksDir, script));
     }

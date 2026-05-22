@@ -118,13 +118,15 @@ When changing a skill, keep these source files aligned:
 
 ## Scripts
 
+Hook scripts live under `src/hooks/` and are bundled into `dist/hooks/` for published runtime use. Maintenance scripts live under `scripts/` and run from source with `tsx`; they are not published as `dist/scripts`.
+
 | Script                                      | Purpose                           |
 | ------------------------------------------- | --------------------------------- |
-| `scripts/run-tests.ts`                     | Test runner helper                |
-| `scripts/format-changed-file.ts`           | Format changed files              |
-| `scripts/security-check.ts`                | Security scanning                 |
-| `scripts/notify.ts`                        | Notification script               |
-| `scripts/session-start.ts`                 | Session initialization            |
+| `src/hooks/run-tests.ts`                     | Test runner helper                |
+| `src/hooks/format-changed-file.ts`           | Format changed files              |
+| `src/hooks/security-check.ts`                | Security scanning                 |
+| `src/hooks/notify.ts`                        | Notification script               |
+| `src/hooks/session-start.ts`                 | Session initialization            |
 | `scripts/sync-codex-agents-toml.ts`        | Sync Codex agents configuration   |
 | `scripts/pack-skills.ts`                   | Standalone skill package builder  |
 | `scripts/check-skills-publish.ts`          | Standalone skill package verifier |

@@ -11,7 +11,7 @@ import { RUNTIME_CAPABILITIES } from "../../src/install/runtime-capabilities.js"
 import { ensureDir } from "../../src/install/shared/fs.js";
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "../..");
-const cli = path.join(root, "bin", "frontend-craft.js");
+const cli = path.join(root, "dist", "bin", "frontend-craft.js");
 
 test("ensureDir is a no-op for an existing filesystem root", () => {
   assert.doesNotThrow(() => ensureDir(path.parse(process.cwd()).root));
@@ -208,7 +208,8 @@ test("all runtime local installs match declared capabilities", () => {
           "qoder installs markdown agents",
         );
         assert.ok(fs.existsSync(path.join(baseDir, "rules", "react.md")), "qoder installs shared rules");
-        assert.ok(fs.existsSync(path.join(baseDir, "hooks", "security-check.js")), "qoder installs hook scripts");
+        assert.ok(fs.existsSync(path.join(baseDir, "hooks", "security-check.js")), "qoder installs security hook script");
+        assert.ok(fs.existsSync(path.join(baseDir, "hooks", "notify.js")), "qoder installs notification hook script");
         const settings = JSON.parse(fs.readFileSync(path.join(baseDir, "settings.json"), "utf8")) as {
           hooks?: unknown;
         };

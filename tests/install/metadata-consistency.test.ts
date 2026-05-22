@@ -154,6 +154,7 @@ test("tracked source and docs do not contain mojibake markers", () => {
       !rel.startsWith(`.claude${path.sep}`) &&
       !rel.startsWith(`.codex${path.sep}`) &&
       !rel.startsWith(`npm-packages${path.sep}`) &&
+      !rel.startsWith(`skill-packages${path.sep}`) &&
       /\.(ts|md|json|toml)$/.test(file)
     );
   });

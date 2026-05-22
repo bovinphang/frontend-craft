@@ -16,9 +16,10 @@ const root = resolvePluginRoot(import.meta.url);
 const skillsDir = path.join(root, "skills");
 const packageRoot = path.join(root, "skill-packages");
 const distPackageRoot = path.join(root, "dist", "skill-packages");
+const tsxCli = path.join(root, "node_modules", "tsx", "dist", "cli.mjs");
 
 test("pack:skills creates one standalone publish package per skill", () => {
-  execFileSync(process.execPath, [path.join(root, "dist", "scripts", "pack-skills.js")], {
+  execFileSync(process.execPath, [tsxCli, path.join(root, "scripts", "pack-skills.ts")], {
     cwd: root,
     encoding: "utf8",
   });
@@ -70,7 +71,7 @@ test("pack:skills creates one standalone publish package per skill", () => {
 });
 
 test("check:skills-publish validates generated standalone packages", () => {
-  execFileSync(process.execPath, [path.join(root, "dist", "scripts", "check-skills-publish.js")], {
+  execFileSync(process.execPath, [tsxCli, path.join(root, "scripts", "check-skills-publish.ts")], {
     cwd: root,
     encoding: "utf8",
   });

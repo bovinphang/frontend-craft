@@ -118,13 +118,15 @@ npm run pack:all               # 完整测试 + OpenClaw 包 + 独立 skill 包
 
 ## Scripts 目录说明
 
+Hook 脚本位于 `src/hooks/`，发布时会打包到 `dist/hooks/` 供 runtime 使用。维护脚本位于 `scripts/`，通过 `tsx` 直接运行源码，不再发布为 `dist/scripts`。
+
 | 脚本                                        | 用途                      |
 | ------------------------------------------- | ------------------------- |
-| `scripts/run-tests.ts`                     | 测试运行辅助              |
-| `scripts/format-changed-file.ts`           | 格式化变更文件            |
-| `scripts/security-check.ts`                | 安全检查                  |
-| `scripts/notify.ts`                        | 通知脚本                  |
-| `scripts/session-start.ts`                 | 会话初始化                |
+| `src/hooks/run-tests.ts`                     | 测试运行辅助              |
+| `src/hooks/format-changed-file.ts`           | 格式化变更文件            |
+| `src/hooks/security-check.ts`                | 安全检查                  |
+| `src/hooks/notify.ts`                        | 通知脚本                  |
+| `src/hooks/session-start.ts`                 | 会话初始化                |
 | `scripts/sync-codex-agents-toml.ts`        | 同步 Codex agents 配置    |
 | `scripts/pack-skills.ts`                   | 独立 skill 包构建         |
 | `scripts/check-skills-publish.ts`          | 独立 skill 包校验         |

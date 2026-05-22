@@ -72,12 +72,17 @@ frontend-craft/
 |-- hooks/            # Event-driven automation
 |   |-- hooks.json     # PreToolUse, PostToolUse, Stop, Notification, etc.
 |
-|-- scripts/          # Cross-platform Node.js scripts
+|-- src/              # TypeScript source for published runtime code
+|   |-- hooks/         # Runtime hook scripts bundled to dist/hooks
 |   |-- security-check.ts      # Block dangerous commands
 |   |-- format-changed-file.ts # Auto Prettier formatting
 |   |-- run-tests.ts           # Run checks on session end
 |   |-- session-start.ts       # Detect framework on session start
 |   |-- notify.ts              # Cross-platform desktop notifications
+|   |-- install/       # Installer core (CLI, interactive wizard, runtime converters)
+|   |-- openclaw/      # OpenClaw runtime TypeScript source
+|
+|-- scripts/          # Source-run repository maintenance scripts, not published to npm
 |
 |-- templates/        # Runtime-specific project templates
 |   |-- claude/        # CLAUDE.md and settings.json
@@ -98,8 +103,9 @@ frontend-craft/
 | `commands/`     | Custom slash commands (`fec-init`, `fec-review`, `fec-scaffold`, workflow commands) |
 | `docs/`         | Runtime installation docs and localized READMEs                                   |
 | `hooks/`        | Hook configuration (`hooks.json`)                                                 |
-| `scripts/`      | Helper scripts (formatting, packaging, notifications, security, testing)          |
+| `scripts/`      | Source-run maintenance scripts (build, packaging, publishing checks, metadata sync), excluded from npm runtime output |
 | `skills/`       | Skill definitions (`SKILL.md`, `metadata.json`)                                   |
+| `src/hooks/`    | Runtime hook source bundled into `dist/hooks/` for Claude/Qoder execution          |
 | `src/install/`  | Installer core (CLI, interactive wizard, runtime converters)                      |
 | `src/openclaw/` | OpenClaw runtime TypeScript source                                                |
 | `templates/`    | Runtime-specific project templates (Claude/Codex/OpenClaw configs + shared rules) |
