@@ -27,7 +27,7 @@ export function buildHooksJson(pluginRoot: string): string {
  * @param {{ pluginRoot: string; baseDir: string; cwd: string; dryRun: boolean }} ctx
  */
 export async function installClaude(ctx: InstallContext): Promise<void> {
-  const { pluginRoot, baseDir, dryRun, cwd } = ctx;
+  const { pluginRoot, baseDir, dryRun, cwd, isGlobal } = ctx;
   if (dryRun) {
     console.log(`[dry-run] would install Claude Code files into ${baseDir}`);
     return;
@@ -45,12 +45,12 @@ export async function installClaude(ctx: InstallContext): Promise<void> {
     }
   }
   writeUtf8(path.join(baseDir, "hooks.json"), buildHooksJson(pluginRoot));
-  if (fs.existsSync(path.join(pluginRoot, ".mcp.json"))) {
+  if (!isGlobal && fs.existsSync(path.join(pluginRoot, ".mcp.json"))) {
     const destMcp = path.join(cwd, ".mcp.json");
     if (!fs.existsSync(destMcp)) copyFile(path.join(pluginRoot, ".mcp.json"), destMcp);
   }
   const pluginJson = path.join(pluginRoot, ".claude-plugin", "plugin.json");
-  if (fs.existsSync(pluginJson)) {
+  if (!isGlobal && fs.existsSync(pluginJson)) {
     ensureDir(path.join(cwd, ".claude-plugin"));
     copyFile(pluginJson, path.join(cwd, ".claude-plugin", "plugin.json"));
     const mp = path.join(pluginRoot, ".claude-plugin", "marketplace.json");

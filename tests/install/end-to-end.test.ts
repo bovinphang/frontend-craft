@@ -112,9 +112,31 @@ test("install claude into temp dir creates hooks and skills", () => {
     assert.ok(fs.existsSync(path.join(dir, ".claude", "commands", "fec-tdd.md")));
     assert.ok(fs.existsSync(path.join(dir, ".claude", "rules", "agent-workflow.md")));
     assert.ok(fs.existsSync(path.join(dir, ".claude", "rules", "working-modes.md")));
+    assert.ok(fs.existsSync(path.join(dir, ".mcp.json")));
+    assert.ok(fs.existsSync(path.join(dir, ".claude-plugin", "plugin.json")));
     assert.ok(!fs.existsSync(path.join(dir, ".claude", "commands", "init.md")));
   } finally {
     fs.rmSync(dir, { recursive: true, force: true });
+  }
+});
+
+test("global claude install does not write project sidecar files into cwd", () => {
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), "fc-global-cwd-"));
+  const claudeHome = fs.mkdtempSync(path.join(os.tmpdir(), "fc-global-claude-"));
+  try {
+    execFileSync(process.execPath, [cli, "install", "claude", "--global"], {
+      cwd: dir,
+      encoding: "utf8",
+      env: { ...process.env, CLAUDE_CONFIG_DIR: claudeHome },
+    });
+
+    assert.ok(fs.existsSync(path.join(claudeHome, "hooks.json")));
+    assert.ok(fs.existsSync(path.join(claudeHome, "skills", "fec-react-project-standard", "SKILL.md")));
+    assert.ok(!fs.existsSync(path.join(dir, ".mcp.json")));
+    assert.ok(!fs.existsSync(path.join(dir, ".claude-plugin")));
+  } finally {
+    fs.rmSync(dir, { recursive: true, force: true });
+    fs.rmSync(claudeHome, { recursive: true, force: true });
   }
 });
 
