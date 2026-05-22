@@ -110,79 +110,16 @@ npx skills update
 
 이 저장소는 **범용 프론트엔드 플러그인**이며 여러 AI 코딩 도구의 네이티브 레이아웃을 포함합니다. Claude Code 플러그인 메타데이터는 `.claude-plugin/`에 있습니다.
 
-```text
-frontend-craft/
-|-- .claude-plugin/   # Claude Code 플러그인 및 마켓플레이스 매니페스트
-|   |-- plugin.json         # 플러그인 메타데이터
-|   |-- marketplace.json    # 마켓플레이스 디렉터리 메타데이터
-|
-|-- agents/           # 위임용 전문 서브 에이전트
-|   |-- frontend-architect.md    # 페이지 분할, 컴포넌트 아키텍처, 상태 흐름
-|   |-- frontend-code-reviewer.md # 프론트엔드 특화 코드 리뷰(품질, 보안, a11y)
-|   |-- frontend-security-reviewer.md # 프론트엔드 공격면: XSS, 시크릿, CSP, 의존성
-|   |-- frontend-test-planner.md  # 테스트 전략, 리스크 매트릭스, 커버리지 계획
-|   |-- frontend-e2e-runner.md     # E2E 작성·실행, flaky, 아티팩트와 CI
-|   |-- typescript-reviewer.md    # TS/JS 타입·비동기·보안, 보고서 전용
-|   |-- performance-optimizer.md # 성능 병목 분석 및 최적화
-|   |-- ui-checker.md            # UI 시각적 이슈, 디자인 충실도 평가
-|   |-- figma-implementer.md     # 디자인 기반 정확한 UI 구현
-|   |-- design-token-mapper.md   # 디자인 변수를 Design Token에 매핑
-|
-|-- skills/           # 워크플로우 정의 및 도메인 지식
-|   |-- fec-frontend-code-review/    # 아키텍처, 타입, 렌더링, 스타일, a11y
-|   |-- fec-security-review/     # XSS, CSRF, 민감 데이터, 입력 검증
-|   |-- fec-accessibility-check/     # WCAG 2.1 AA 접근성
-|   |-- fec-react-project-standard/ # React + TypeScript 프로젝트 규약
-|   |-- fec-vue3-project-standard/  # Vue 3 + TypeScript 프로젝트 규약
-|   |-- fec-implement-from-design/   # 디자인에서 UI 구현
-|   |-- fec-validation-fix/           # lint, type-check, test, build 및 수정
-|   |-- fec-legacy-web-standard/     # JS + jQuery + HTML 레거시 프로젝트 규약
-|   |-- fec-legacy-to-modern-migration/  # jQuery/MPA → React/Vue 마이그레이션 전략 및 워크플로우
-|   |-- fec-testing-strategy/          # 테스트 계층 전략 및 커버리지 매트릭스
-|   |-- fec-e2e-testing/                # Playwright/Cypress E2E 테스트 규약
-|   |-- fec-nextjs-project-standard/    # Next.js 14+ App Router, SSR/SSG 규약
-|   |-- fec-nuxt-project-standard/      # Nuxt 3 SSR/SSG, Composition API 규약
-|   |-- fec-monorepo-project-standard/  # pnpm workspace, Turborepo, Nx 규약
-|   |-- fec-data-fetching/              # TanStack Query / 서버 상태 패칭, 캐시, 무효화, 낙관적 업데이트
-|   |-- fec-form-handling/              # React Hook Form + Zod 폼, 동적 필드, 업로드, 멀티스텝
-|   |-- fec-route-protection/           # React Router / Next.js / Vue Router / Nuxt 인증 및 권한 라우팅
-|   |-- fec-component-testing/          # React Testing Library / Vue Test Utils 컴포넌트 테스트 및 리그레이션
-|   |-- fec-browser-storage/            # localStorage/sessionStorage/IndexedDB/Cookies 선택 및 보안 영속화
-|   |-- fec-storybook-component-doc/    # Storybook 컴포넌트 문서, addons, MDX, 인터랙션 및 비주얼 테스트
-|   |-- fec-list-virtualization/        # 대용량 리스트 가상화 (react-window / TanStack Virtual)
-|   |-- fec-ui-design-direction/        # 제품별 UI 방향, 첫 화면 계층, 도메인 톤
-|   |-- fec-interface-polish/           # 간격, 타이포그래피, radius, 모션, 상태 등 UI 세부 polish
-|   |-- fec-vite-project-standard/      # Vite 설정, 환경 변수 안전, HMR, 프록시, 빌드 및 라이브러리 모드
-|   |-- fec-pwa-implementation/         # Manifest, 서비스 워커, 오프라인 캐시, 설치 프롬프트, 업데이트 처리
-|   |-- fec-web-workers/                # Web Worker 통합, 전달 가능 객체, Comlink, Worker 풀
-|   |-- fec-canvas-threejs/             # Canvas 2D, Three.js, React Three Fiber, WebGL 성능 및 접근성
-|   |-- fec-svg-animation/              # SVG 애니메이션 (CSS / Framer Motion / GSAP) 및 reduced-motion 대체
-|
-|-- commands/         # 슬래시 명령어
-|   |-- fec-init.md     # /fec-init - 프로젝트 템플릿 초기화
-|   |-- fec-review.md   # /fec-review - 코드 규약화 리뷰
-|   |-- fec-test-plan.md # /fec-test-plan - 테스트 계층 전략 및 커버리지 매트릭스
-|   |-- fec-scaffold.md # /fec-scaffold - page/feature/component 생성
-|
-|-- hooks/            # 이벤트 기반 자동화
-|   |-- hooks.json     # PreToolUse, PostToolUse, Stop, Notification 등
-|
-|-- scripts/          # 크로스 플랫폼 Node.js 스크립트
-|   |-- security-check.ts      # 위험한 명령어 차단
-|   |-- format-changed-file.ts # 자동 Prettier 포맷팅
-|   |-- run-tests.ts           # 세션 종료 시 검사 실행
-|   |-- session-start.ts      # 세션 시작 시 프레임워크 감지
-|   |-- notify.ts              # 크로스 플랫폼 데스크톱 알림
-|
-|-- templates/        # runtime별 프로젝트 템플릿
-|   |-- claude/        # CLAUDE.md 및 settings.json
-|   |-- codex/         # AGENTS.md 및 config.toml
-|   |-- openclaw/      # AGENTS.md 및 OPENCLAW-CONFIG.md
-|   |-- shared/rules/  # vue, react, design-system, testing 등
-|
-|-- .mcp.json         # MCP 서버 설정 (Figma, Sketch, MasterGo, Pixso, 墨刀)
-└-- README.md
-```
+본 저장소는 **agents**, **skills**, **commands**, **hooks**, **scripts**, **templates**를 하나의 설치 단위로 패키징합니다. 전체 디렉터리 구조 및 파일 책임은 [프로젝트 구조 상세](../project-structure.md)를 참조하세요.
+
+**핵심 내용:**
+
+- **10개 전문 agent** — 코드 리뷰, 보안, 테스트, 성능, 아키텍처, UI 충실도, 디자인 구현
+- **28개 자동 활성화 skill** — React/Vue/Next/Nuxt 규약, 접근성, 보안, 폼, 데이터 패칭, PWA, E2E 등
+- **4개 슬래시 명령어** — `/fec-init`, `/fec-review`, `/fec-test-plan`, `/fec-scaffold`
+- **5개 이벤트 기반 hook** — 세션 감지, 보안 검사, 자동 포맷, 검증, 알림
+- **MCP 통합** — Figma, Sketch, MasterGo, Pixso, 墨刀, 摹客
+- **프로젝트 템플릿** — CLAUDE.md, 규칙(Vue/React/디자인 시스템/테스트 등), settings.json
 
 ---
 
@@ -224,7 +161,7 @@ frontend-craft/
 | `fec-component-testing`          | React Testing Library / Vue Test Utils 컴포넌트 테스트 및 리그레이션             | —                           |
 | `fec-storybook-component-doc`    | Storybook 컴포넌트 문서, Addon, MDX, 인터랙션·비주얼 테스트 통합                 | —                           |
 | `fec-list-virtualization`        | react-window / TanStack Virtual 대용량 리스트 가상화 및 측정 전략                | —                           |
-| `fec-ui-design-direction`        | 제품별 UI 방향, 첫 화면 계층, 도메인 톤, 시각 전략                              | —                           |
+| `fec-ui-design-direction`        | 제품별 UI 방향, 첫 화면 계층, 도메인 톤, 시각 전략                               | —                           |
 | `fec-interface-polish`           | 간격, 타이포그래피, radius, 그림자, hit area, 상태, transition polish            | —                           |
 | `fec-vite-project-standard`      | Vite 설정, 환경 변수 안전, HMR, 개발 프록시, 빌드 최적화, 라이브러리 모드        | —                           |
 | `fec-pwa-implementation`         | Manifest, 서비스 워커, 오프라인 캐시, 설치 프롬프트, 업데이트 관리               | —                           |

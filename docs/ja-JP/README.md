@@ -110,79 +110,16 @@ npx skills update
 
 本リポジトリは **汎用フロントエンドプラグイン**で、複数の AI コーディングツール向けのネイティブレイアウトを含みます。Claude Code プラグインのメタデータは `.claude-plugin/` にあります。
 
-```text
-frontend-craft/
-|-- .claude-plugin/   # Claude Code プラグインとマーケットプレイスマニフェスト
-|   |-- plugin.json         # プラグインメタデータ
-|   |-- marketplace.json    # マーケットプレイスディレクトリのメタデータ
-|
-|-- agents/           # 委任用の専門サブエージェント
-|   |-- frontend-architect.md    # ページ分割、コンポーネントアーキテクチャ、状態フロー
-|   |-- frontend-code-reviewer.md # フロントエンド特化コードレビュー（品質、セキュリティ、a11y）
-|   |-- frontend-security-reviewer.md # フロントエンド攻撃面：XSS、シークレット、CSP、依存関係
-|   |-- frontend-test-planner.md  # テスト戦略、リスクマトリクス、カバレッジ計画
-|   |-- frontend-e2e-runner.md     # E2E 作成・実行、flaky、成果物と CI
-|   |-- typescript-reviewer.md    # TS/JS 型・非同期・セキュリティ、レポートのみ
-|   |-- performance-optimizer.md # パフォーマンスボトルネック分析と最適化
-|   |-- ui-checker.md            # UI ビジュアル問題、デザイン忠実度評価
-|   |-- figma-implementer.md     # デザインからの正確な UI 実装
-|   |-- design-token-mapper.md   # デザイン変数を Design Token にマッピング
-|
-|-- skills/           # ワークフロー定義とドメイン知識
-|   |-- fec-frontend-code-review/    # アーキテクチャ、型、レンダリング、スタイル、a11y
-|   |-- fec-security-review/     # XSS、CSRF、機密データ、入力検証
-|   |-- fec-accessibility-check/     # WCAG 2.1 AA アクセシビリティ
-|   |-- fec-react-project-standard/ # React + TypeScript プロジェクト規約
-|   |-- fec-vue3-project-standard/  # Vue 3 + TypeScript プロジェクト規約
-|   |-- fec-implement-from-design/   # デザインから UI を実装
-|   |-- fec-validation-fix/           # lint、type-check、test、build と修正
-|   |-- fec-legacy-web-standard/     # JS + jQuery + HTML レガシープロジェクト規約
-|   |-- fec-legacy-to-modern-migration/  # jQuery/MPA から React/Vue への移行戦略とワークフロー
-|   |-- fec-testing-strategy/          # テスト階層戦略とカバレッジマトリクス
-|   |-- fec-e2e-testing/                # Playwright/Cypress E2E テスト規約
-|   |-- fec-nextjs-project-standard/    # Next.js 14+ App Router、SSR/SSG 規約
-|   |-- fec-nuxt-project-standard/      # Nuxt 3 SSR/SSG、Composition API 規約
-|   |-- fec-monorepo-project-standard/  # pnpm workspace、Turborepo、Nx 規約
-|   |-- fec-data-fetching/              # TanStack Query / サーバー状態取得、キャッシュ、無効化、楽観的更新
-|   |-- fec-form-handling/              # React Hook Form + Zod フォーム、動的フィールド、アップロード、マルチステップ
-|   |-- fec-route-protection/           # React Router / Next.js / Vue Router / Nuxt 認証・権限ルーティング
-|   |-- fec-component-testing/          # React Testing Library / Vue Test Utils コンポーネントテストとリグレッション
-|   |-- fec-browser-storage/            # localStorage/sessionStorage/IndexedDB/Cookies 選定と安全な永続化
-|   |-- fec-storybook-component-doc/    # Storybook コンポーネントドキュメント、addons、MDX、インタラクション・ビジュアルテスト
-|   |-- fec-list-virtualization/        # 大規模リストのウィンドイング（react-window / TanStack Virtual）
-|   |-- fec-ui-design-direction/        # プロダクト固有の UI 方向性、ファーストビュー階層、ドメイントーン
-|   |-- fec-interface-polish/           # 余白、タイポグラフィ、角丸、モーション、状態など UI 細部の磨き込み
-|   |-- fec-vite-project-standard/      # Vite 設定、環境変数安全性、HMR、プロキシ、ビルドとライブラリモード
-|   |-- fec-pwa-implementation/         # Manifest、サービスワーカー、オフラインキャッシュ、インストールプロンプト、更新処理
-|   |-- fec-web-workers/                # Web Worker 統合、転送可能オブジェクト、Comlink、Worker プール
-|   |-- fec-canvas-threejs/             # Canvas 2D、Three.js、React Three Fiber、WebGL パフォーマンスとアクセシビリティ
-|   |-- fec-svg-animation/              # SVG アニメーション（CSS / Framer Motion / GSAP）と reduced-motion 代替
-|
-|-- commands/         # スラッシュコマンド
-|   |-- fec-init.md     # /fec-init - プロジェクトテンプレート初期化
-|   |-- fec-review.md   # /fec-review - コードレビュー
-|   |-- fec-test-plan.md # /fec-test-plan - テスト階層戦略とカバレッジマトリクス
-|   |-- fec-scaffold.md # /fec-scaffold - page/feature/component 作成
-|
-|-- hooks/            # イベント駆動の自動化
-|   |-- hooks.json     # PreToolUse、PostToolUse、Stop、Notification など
-|
-|-- scripts/          # クロスプラットフォーム Node.js スクリプト
-|   |-- security-check.ts      # 危険なコマンドをブロック
-|   |-- format-changed-file.ts # 自動 Prettier フォーマット
-|   |-- run-tests.ts           # セッション終了時にチェック実行
-|   |-- session-start.ts       # セッション開始時にフレームワーク検出
-|   |-- notify.ts              # クロスプラットフォームデスクトップ通知
-|
-|-- templates/        # runtime 別のプロジェクトテンプレート
-|   |-- claude/        # CLAUDE.md と settings.json
-|   |-- codex/         # AGENTS.md と config.toml
-|   |-- openclaw/      # AGENTS.md と OPENCLAW-CONFIG.md
-|   |-- shared/rules/  # vue、react、design-system、testing など
-|
-|-- .mcp.json         # MCP サーバー設定（Figma、Sketch、MasterGo、Pixso、墨刀）
-└-- README.md
-```
+本リポジトリは **agents**、**skills**、**commands**、**hooks**、**scripts**、**templates** を 1 つのインストール単位にまとめています。詳細なディレクトリ構造とファイルの役割は [プロジェクト構造の詳細](../project-structure.md) を参照してください。
+
+**主な内容：**
+
+- **10 个专业 agent** — コードレビュー、セキュリティ、テスト、パフォーマンス、アーキテクチャ、UI 忠実度、デザイン実装
+- **28 個の自動スキル** — React/Vue/Next/Nuxt 規約、アクセシビリティ、セキュリティ、フォーム、データ取得、PWA、E2E など
+- **4 個のスラッシュコマンド** — `/fec-init`、`/fec-review`、`/fec-test-plan`、`/fec-scaffold`
+- **5 個のイベント駆動フック** — セッション検出、セキュリティチェック、自動フォーマット、バリデーション、通知
+- **MCP 統合** — Figma、Sketch、MasterGo、Pixso、墨刀、摹客
+- **プロジェクトテンプレート** — CLAUDE.md、ルール（Vue/React/デザインシステム/テストなど）、settings.json
 
 ---
 
@@ -224,9 +161,9 @@ frontend-craft/
 | `fec-component-testing`          | React Testing Library / Vue Test Utils コンポーネントテストとリグレッション                    | —                           |
 | `fec-storybook-component-doc`    | Storybook コンポーネントドキュメント、Addon、MDX、インタラクションテスト・ビジュアルテスト統合 | —                           |
 | `fec-list-virtualization`        | react-window / TanStack Virtual 大規模リスト仮想化と測定戦略                                   | —                           |
-| `fec-ui-design-direction`        | プロダクト固有の UI 方向性、ファーストビュー階層、ドメイントーン、視覚戦略                    | —                           |
-| `fec-interface-polish`           | 余白、タイポグラフィ、角丸、影、ヒット領域、状態、トランジションの磨き込み                    | —                           |
-| `fec-vite-project-standard`      | Vite 設定、環境変数安全性、HMR、開発プロキシ、ビルド最適化、ライブラリモード                  | —                           |
+| `fec-ui-design-direction`        | プロダクト固有の UI 方向性、ファーストビュー階層、ドメイントーン、視覚戦略                     | —                           |
+| `fec-interface-polish`           | 余白、タイポグラフィ、角丸、影、ヒット領域、状態、トランジションの磨き込み                     | —                           |
+| `fec-vite-project-standard`      | Vite 設定、環境変数安全性、HMR、開発プロキシ、ビルド最適化、ライブラリモード                   | —                           |
 | `fec-pwa-implementation`         | Manifest、サービスワーカー、オフラインキャッシュ、インストールプロンプト、更新管理             | —                           |
 | `fec-web-workers`                | Web Worker、Transferable、Comlink、Worker プール                                               | —                           |
 | `fec-canvas-threejs`             | Canvas 2D、Three.js、React Three Fiber、WebGL パフォーマンスとアクセシビリティ                 | —                           |

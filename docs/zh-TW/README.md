@@ -110,79 +110,16 @@ npx skills update
 
 本倉庫為 **通用前端插件**，包含多個 AI 程式設計工具的原生布局；Claude Code 插件元資料位於 `.claude-plugin/`。
 
-```text
-frontend-craft/
-|-- .claude-plugin/   # Claude Code 插件與市場清單
-|   |-- plugin.json         # 插件元資料
-|   |-- marketplace.json    # Marketplace 目錄元資料
-|
-|-- agents/           # 委派用的專業子代理
-|   |-- frontend-architect.md    # 頁面拆分、元件架構、狀態流設計
-|   |-- frontend-code-reviewer.md # 專注前端的程式碼審查（品質、安全、無障礙）
-|   |-- frontend-security-reviewer.md # 前端攻擊面：XSS、金鑰、CSP、依賴
-|   |-- frontend-test-planner.md  # 測試策略、風險矩陣、覆蓋規劃
-|   |-- frontend-e2e-runner.md     # E2E 撰寫執行、flaky、產物與 CI
-|   |-- typescript-reviewer.md    # TS/JS 型別、非同步、安全，僅輸出報告
-|   |-- performance-optimizer.md # 效能瓶頸分析與優化方案
-|   |-- ui-checker.md            # UI 視覺問題、設計還原度評估
-|   |-- figma-implementer.md     # 依設計稿精確實作 UI
-|   |-- design-token-mapper.md   # 設計變數對應至 Design Token
-|
-|-- skills/           # 工作流程定義與領域知識
-|   |-- fec-frontend-code-review/    # 架構、型別、渲染、樣式、無障礙審查
-|   |-- fec-security-review/     # XSS、CSRF、敏感資料、輸入驗證
-|   |-- fec-accessibility-check/     # WCAG 2.1 AA 無障礙檢查
-|   |-- fec-react-project-standard/ # React + TypeScript 專案規範
-|   |-- fec-vue3-project-standard/  # Vue 3 + TypeScript 專案規範
-|   |-- fec-implement-from-design/   # 依設計稿實作 UI
-|   |-- fec-validation-fix/           # lint、type-check、test、build 並修復
-|   |-- fec-legacy-web-standard/    # JS + jQuery + HTML 傳統專案規範
-|   |-- fec-legacy-to-modern-migration/  # jQuery/MPA 遷移至 React/Vue 策略與流程
-|   |-- fec-testing-strategy/          # 測試分層策略與覆蓋矩陣
-|   |-- fec-e2e-testing/                # Playwright/Cypress E2E 測試規範
-|   |-- fec-nextjs-project-standard/    # Next.js 14+ App Router、SSR/SSG 規範
-|   |-- fec-nuxt-project-standard/      # Nuxt 3 SSR/SSG、組合式 API 規範
-|   |-- fec-monorepo-project-standard/  # pnpm workspace、Turborepo、Nx 規範
-|   |-- fec-data-fetching/              # TanStack Query / 服務端狀態獲取、緩存、失效、樂觀更新
-|   |-- fec-form-handling/              # React Hook Form + Zod 表單、動態欄位、上傳、多步驟流程
-|   |-- fec-route-protection/           # React Router / Next.js / Vue Router / Nuxt 登入態與權限路由
-|   |-- fec-component-testing/          # React Testing Library / Vue Test Utils 元件測試與回歸場景
-|   |-- fec-browser-storage/            # localStorage/sessionStorage/IndexedDB/Cookies 選型與安全持久化
-|   |-- fec-storybook-component-doc/    # Storybook 元件文件、addons、MDX、互動與視覺測試
-|   |-- fec-list-virtualization/        # 大數據列表虛擬化（react-window / TanStack Virtual）
-|   |-- fec-ui-design-direction/        # 產品化 UI 方向、首屏層級、業務語氣
-|   |-- fec-interface-polish/           # 間距、排版、圓角、動效、狀態等 UI 細節打磨
-|   |-- fec-vite-project-standard/      # Vite 設定、環境變數安全、HMR、代理、建置與函式庫模式
-|   |-- fec-pwa-implementation/         # Manifest、Service Worker、離線緩存、安裝提示、更新處理
-|   |-- fec-web-workers/                # Web Worker 整合、可傳輸物件、Comlink、Worker 池
-|   |-- fec-canvas-threejs/             # Canvas 2D、Three.js、React Three Fiber、WebGL 效能與無障礙
-|   |-- fec-svg-animation/              # SVG 動畫（CSS / Framer Motion / GSAP）與 reduced-motion 降級
-|
-|-- commands/         # 斜線指令
-|   |-- fec-init.md     # /fec-init - 初始化專案範本
-|   |-- fec-review.md   # /fec-review - 程式碼規範化審查
-|   |-- fec-test-plan.md # /fec-test-plan - 測試分層策略與覆蓋矩陣
-|   |-- fec-scaffold.md # /fec-scaffold - 建立 page/feature/component
-|
-|-- hooks/            # 事件驅動自動化
-|   |-- hooks.json     # PreToolUse、PostToolUse、Stop、Notification 等
-|
-|-- scripts/          # 跨平台 Node.js 腳本
-|   |-- security-check.ts      # 攔截危險指令
-|   |-- format-changed-file.ts # 自動 Prettier 格式化
-|   |-- run-tests.ts           # 會話結束時執行校驗
-|   |-- session-start.ts       # 會話開始時偵測框架
-|   |-- notify.ts              # 跨平台桌面通知
-|
-|-- templates/        # 各 runtime 的專案設定範本
-|   |-- claude/        # CLAUDE.md 與 settings.json
-|   |-- codex/         # AGENTS.md 與 config.toml
-|   |-- openclaw/      # AGENTS.md 與 OPENCLAW-CONFIG.md
-|   |-- shared/rules/  # vue、react、design-system、testing 等
-|
-|-- .mcp.json         # MCP 伺服器設定（Figma、Sketch、MasterGo、Pixso、墨刀）
-└-- README.md
-```
+本倉庫將 **agents**、**skills**、**commands**、**hooks**、**scripts** 和 **templates** 打包為一個可安裝單元。完整目錄結構及檔案職責見 [詳細專案結構](../project-structure.md)。
+
+**核心內容：**
+
+- **10 個專業 agent** — 程式碼審查、安全、測試、效能、架構、UI 還原度、設計實現
+- **28 個自動激活 skill** — React/Vue/Next/Nuxt 規範、無障礙、安全、表單、資料獲取、PWA、E2E 等
+- **4 個斜線指令** — `/fec-init`、`/fec-review`、`/fec-test-plan`、`/fec-scaffold`
+- **5 個事件驅動 hook** — 會話檢測、安全檢查、自動格式化、校驗、通知
+- **MCP 整合** — Figma、Sketch、MasterGo、Pixso、墨刀、摹客
+- **專案範本** — CLAUDE.md、規則（Vue/React/設計系統/測試等）、settings.json
 
 ---
 
@@ -224,7 +161,7 @@ frontend-craft/
 | `fec-component-testing`          | React Testing Library / Vue Test Utils 元件測試與回歸用例          | —                           |
 | `fec-storybook-component-doc`    | Storybook 元件文件、Addon、MDX、互動測試與視覺測試整合             | —                           |
 | `fec-list-virtualization`        | react-window / TanStack Virtual 大數據列表虛擬滾動與測量策略       | —                           |
-| `fec-ui-design-direction`        | 產品化 UI 方向、首屏層級、業務語氣與視覺策略                      | —                           |
+| `fec-ui-design-direction`        | 產品化 UI 方向、首屏層級、業務語氣與視覺策略                       | —                           |
 | `fec-interface-polish`           | 間距、排版、圓角、陰影、命中區域、狀態與動效細節打磨               | —                           |
 | `fec-vite-project-standard`      | Vite 設定、環境變數安全、HMR、開發代理、建置最佳化與函式庫模式     | —                           |
 | `fec-pwa-implementation`         | Manifest、Service Worker、離線緩存、安裝提示與更新管理             | —                           |

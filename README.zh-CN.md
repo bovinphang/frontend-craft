@@ -107,83 +107,20 @@ npx skills update
 
 ---
 
-## 📦 里面有什么
+## 里面有什么
 
 这个仓库是一个 **通用前端插件**，包含多个 AI 编程工具的原生布局；Claude Code 插件元数据位于 `.claude-plugin/`。
 
-```text
-frontend-craft/
-|-- .claude-plugin/   # Claude Code 插件与市场清单
-|   |-- plugin.json         # 插件元数据
-|   └-- marketplace.json    # Marketplace 目录元数据
-|
-|-- agents/           # 用于委托的专业子代理
-|   |-- frontend-architect.md    # 页面拆分、组件架构、状态流设计
-|   |-- frontend-code-reviewer.md # 专注前端的代码评审（质量、安全、无障碍）
-|   |-- frontend-security-reviewer.md # 前端攻击面：XSS、密钥、CSP、依赖
-|   |-- frontend-test-planner.md  # 测试策略、风险矩阵、覆盖规划
-|   |-- frontend-e2e-runner.md     # E2E 编写执行、flaky、产物与 CI
-|   |-- typescript-reviewer.md    # TS/JS 类型、异步、安全，只出报告
-|   |-- performance-optimizer.md # 性能瓶颈分析与优化方案
-|   |-- ui-checker.md            # UI 视觉问题、设计还原度评估
-|   |-- figma-implementer.md     # 按设计稿精确实现 UI
-|   └-- design-token-mapper.md   # 设计变量映射到 Design Token
-|
-|-- skills/           # 工作流定义和领域知识
-|   |-- fec-frontend-code-review/    # 架构、类型、渲染、样式、可访问性审查
-|   |-- fec-security-review/     # XSS、CSRF、敏感数据、输入校验
-|   |-- fec-accessibility-check/     # WCAG 2.1 AA 无障碍检查
-|   |-- fec-react-project-standard/ # React + TypeScript 项目规范
-|   |-- fec-vue3-project-standard/  # Vue 3 + TypeScript 项目规范
-|   |-- fec-implement-from-design/   # 基于设计稿实现 UI
-|   |-- fec-validation-fix/           # lint、type-check、test、build 并修复
-|   |-- fec-legacy-web-standard/    # JS + jQuery + HTML 传统项目规范
-|   |-- fec-legacy-to-modern-migration/  # jQuery/MPA 迁移至 React/Vue 策略与流程
-|   |-- fec-testing-strategy/          # 测试层级选择与覆盖矩阵
-|   |-- fec-e2e-testing/                # Playwright/Cypress E2E 测试规范
-|   |-- fec-nextjs-project-standard/    # Next.js 14+ App Router、SSR/SSG 规范
-|   |-- fec-nuxt-project-standard/      # Nuxt 3 SSR/SSG、组合式 API 规范
-|   |-- fec-monorepo-project-standard/  # pnpm workspace、Turborepo、Nx 规范
-|   |-- fec-data-fetching/              # TanStack Query 与服务端状态工作流
-|   |-- fec-form-handling/              # React Hook Form + Zod 表单工作流
-|   |-- fec-route-protection/           # 登录态与权限路由保护
-|   |-- fec-component-testing/          # RTL / Vue Test Utils 组件测试
-|   |-- fec-pwa-implementation/         # PWA manifest、Service Worker、离线能力
-|   |-- fec-web-workers/                # Worker 集成与后台计算
-|   |-- fec-canvas-threejs/             # Canvas、Three.js、React Three Fiber
-|   |-- fec-svg-animation/              # SVG 动画与 reduced-motion 降级
-|   |-- fec-browser-storage/            # localStorage/sessionStorage/IndexedDB/Cookies 选型与安全持久化
-|   |-- fec-list-virtualization/        # 大数据列表虚拟化（react-window / TanStack Virtual）
-|   |-- fec-storybook-component-doc/    # Storybook 组件文档、addons、MDX、交互与视觉测试
-|   |-- fec-ui-design-direction/        # 产品化 UI 方向、首屏层级、业务语气
-|   |-- fec-interface-polish/           # 间距、排版、圆角、动效、状态等 UI 细节打磨
-|   |-- fec-vite-project-standard/      # Vite 配置、环境变量安全、HMR、代理、构建与库模式
-|
-|-- commands/         # 用于快速执行的斜杠命令
-|   |-- fec-init.md     # /fec-init - 初始化项目模板
-|   |-- fec-review.md   # /fec-review - 代码规范化评审
-|   |-- fec-test-plan.md # /fec-test-plan - 测试策略与覆盖矩阵
-|   └-- fec-scaffold.md # /fec-scaffold - 创建 page/feature/component
-|
-|-- hooks/            # 基于触发器的自动化
-|   └-- hooks.json     # PreToolUse、PostToolUse、Stop、Notification 等
-|
-|-- scripts/          # 跨平台 Node.js 脚本
-|   |-- security-check.ts      # 拦截危险命令
-|   |-- format-changed-file.ts # 自动 Prettier 格式化
-|   |-- run-tests.ts           # 会话结束执行校验
-|   |-- session-start.ts       # 会话开始检测框架
-|   └-- notify.ts              # 跨平台桌面通知
-|
-|-- templates/        # 各 runtime 的项目级配置模板
-|   |-- claude/        # CLAUDE.md 与 settings.json
-|   |-- codex/         # AGENTS.md 与 config.toml
-|   |-- openclaw/      # AGENTS.md 与 OPENCLAW-CONFIG.md
-|   └-- shared/rules/  # vue、react、design-system、testing 等
-|
-|-- .mcp.json         # MCP 服务器配置（Figma、Sketch、MasterGo、Pixso、墨刀）
-└-- README.md
-```
+本仓库将 **agents**、**skills**、**commands**、**hooks**、**scripts** 和 **templates** 打包为一个可安装单元。完整目录结构及文件职责见 [详细项目结构](docs/project-structure.md)。
+
+**核心内容：**
+
+- **10 个专业 agent** — 代码评审、安全、测试、性能、架构、UI 还原度、设计实现
+- **28 个自动激活 skill** — React/Vue/Next/Nuxt 规范、无障碍、安全、表单、数据获取、PWA、E2E 等
+- **4 个斜杠命令** — `/fec-init`、`/fec-review`、`/fec-test-plan`、`/fec-scaffold`
+- **5 个事件驱动 hook** — 会话检测、安全检查、自动格式化、校验、通知
+- **MCP 集成** — Figma、Sketch、MasterGo、Pixso、墨刀、摹客
+- **项目模板** — CLAUDE.md、规则（Vue/React/设计系统/测试等）、settings.json
 
 ---
 
@@ -225,7 +162,7 @@ frontend-craft/
 | `fec-component-testing`          | React Testing Library / Vue Test Utils 组件测试与回归用例          | —                           |
 | `fec-storybook-component-doc`    | Storybook 组件文档、Addon、MDX、交互测试与视觉测试集成             | —                           |
 | `fec-list-virtualization`        | react-window / TanStack Virtual 大列表虚拟滚动与测量策略           | —                           |
-| `fec-ui-design-direction`        | 产品化 UI 方向、首屏层级、业务语气与视觉策略                      | —                           |
+| `fec-ui-design-direction`        | 产品化 UI 方向、首屏层级、业务语气与视觉策略                       | —                           |
 | `fec-interface-polish`           | 间距、排版、圆角、阴影、命中区域、状态与动效细节打磨               | —                           |
 | `fec-vite-project-standard`      | Vite 配置、环境变量安全、HMR、开发代理、构建优化与库模式           | —                           |
 | `fec-pwa-implementation`         | manifest、Service Worker、离线缓存、安装提示与更新管理             | —                           |
