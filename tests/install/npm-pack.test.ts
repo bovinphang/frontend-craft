@@ -38,3 +38,13 @@ test("OpenClaw dist check does not clean the bundle it verifies", () => {
     "node dist/scripts/openclaw/verify-openclaw-dist.js",
   );
 });
+
+test("build minifies compiled JavaScript while preserving CLI shebang", () => {
+  const cliRuntime = fs.readFileSync(path.join(root, "dist", "src", "install", "cli.js"), "utf8");
+  const cliSource = fs.readFileSync(path.join(root, "src", "install", "cli.ts"), "utf8");
+  const binRuntime = fs.readFileSync(path.join(root, "dist", "bin", "frontend-craft.js"), "utf8");
+
+  assert.ok(cliRuntime.length < cliSource.length * 0.8, "dist/src/install/cli.js should be minified");
+  assert.ok(!cliRuntime.includes("function printHelp"), "dist/src/install/cli.js should minify local names");
+  assert.ok(binRuntime.startsWith("#!/usr/bin/env node\n"), "bin shebang should stay intact");
+});
