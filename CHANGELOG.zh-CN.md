@@ -8,6 +8,17 @@
 
 自 **2.0.0** 起，面向发布的说明以英文 `CHANGELOG.md` 为权威来源；历史条目可能保留最初撰写语言。
 
+## [Unreleased]
+
+### 新增
+
+- 新增工作流能力：`fec-tdd-workflow`、`fec-refactor-clean`、`fec-doc-sync`、`/fec-plan`、`/fec-tdd`、`/fec-build-fix`、`/fec-refactor-clean`、`/fec-doc-sync`，以及 `frontend-build-fixer`、`frontend-refactor-cleaner`、`frontend-doc-updater`。
+- 新增 agent workflow 与 working modes 共享规则，并扩展 testing、performance、refactoring、git、comment 规则，补充 TDD、增量验证、清理和文档同步指导。
+
+### 变更
+
+- 增强 `fec-validation-fix` 的增量 build-fix 行为，并在 Node 安全 hook 中加入跨平台长命令日志提示。
+
 ## [2.2.1] - 2026-05-21
 
 ### 新增

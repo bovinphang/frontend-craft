@@ -101,3 +101,5 @@
 - code-comments.md - 代码注释（何时写、写什么）
 - ci-cd.md - CI/CD 规范
 - refactoring.md - 重构约束
+- agent-workflow.md - 子代理协作边界
+- working-modes.md - 调研、计划、开发、评审、收尾模式

@@ -314,6 +314,41 @@
     ]
   },
   {
+    "id": "fec-refactor-clean",
+    "name": "重构清理",
+    "category": "quality",
+    "tags": [
+      "refactor",
+      "dead-code",
+      "cleanup",
+      "unused-exports",
+      "dependencies"
+    ],
+    "summary": "Frontend Craft skill for 重构清理.",
+    "version": "2.2.1",
+    "license": "MIT",
+    "homepage": "https://github.com/bovinphang/frontend-craft",
+    "repository": "https://github.com/bovinphang/frontend-craft",
+    "keywords": [
+      "quality",
+      "refactor",
+      "dead-code",
+      "cleanup",
+      "unused-exports",
+      "dependencies"
+    ],
+    "platforms": [
+      "skills-cli",
+      "skillreg",
+      "claude-code",
+      "codex",
+      "cursor",
+      "opencode",
+      "openclaw",
+      "generic-skill-runtime"
+    ]
+  },
+  {
     "id": "fec-implement-from-design",
     "name": "设计稿实现",
     "category": "migration-design",
@@ -810,6 +845,41 @@
     ]
   },
   {
+    "id": "fec-doc-sync",
+    "name": "文档同步",
+    "category": "capability",
+    "tags": [
+      "docs",
+      "readme",
+      "metadata",
+      "sync",
+      "runtime-docs"
+    ],
+    "summary": "Frontend Craft skill for 文档同步.",
+    "version": "2.2.1",
+    "license": "MIT",
+    "homepage": "https://github.com/bovinphang/frontend-craft",
+    "repository": "https://github.com/bovinphang/frontend-craft",
+    "keywords": [
+      "capability",
+      "docs",
+      "readme",
+      "metadata",
+      "sync",
+      "runtime-docs"
+    ],
+    "platforms": [
+      "skills-cli",
+      "skillreg",
+      "claude-code",
+      "codex",
+      "cursor",
+      "opencode",
+      "openclaw",
+      "generic-skill-runtime"
+    ]
+  },
+  {
     "id": "fec-validation-fix",
     "name": "验证与修复",
     "category": "quality",
@@ -834,6 +904,41 @@
       "test",
       "build",
       "fix"
+    ],
+    "platforms": [
+      "skills-cli",
+      "skillreg",
+      "claude-code",
+      "codex",
+      "cursor",
+      "opencode",
+      "openclaw",
+      "generic-skill-runtime"
+    ]
+  },
+  {
+    "id": "fec-tdd-workflow",
+    "name": "TDD 工作流",
+    "category": "quality",
+    "tags": [
+      "tdd",
+      "testing",
+      "red-green-refactor",
+      "regression",
+      "frontend-tests"
+    ],
+    "summary": "Frontend Craft skill for TDD 工作流.",
+    "version": "2.2.1",
+    "license": "MIT",
+    "homepage": "https://github.com/bovinphang/frontend-craft",
+    "repository": "https://github.com/bovinphang/frontend-craft",
+    "keywords": [
+      "quality",
+      "tdd",
+      "testing",
+      "red-green-refactor",
+      "regression",
+      "frontend-tests"
     ],
     "platforms": [
       "skills-cli",

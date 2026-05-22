@@ -30,3 +30,11 @@ test("npm pack publishes compiled runtime files without TypeScript sources", () 
     });
   assert.deepEqual(staleCompiledFiles, []);
 });
+
+test("OpenClaw dist check does not clean the bundle it verifies", () => {
+  const pkg = JSON.parse(fs.readFileSync(path.join(root, "package.json"), "utf8"));
+  assert.equal(
+    pkg.scripts["check:openclaw-dist"],
+    "node dist/scripts/openclaw/verify-openclaw-dist.js",
+  );
+});

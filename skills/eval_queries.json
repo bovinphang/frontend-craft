@@ -89,28 +89,6 @@
       "迁移 jQuery 项目"
     ]
   },
-  "fec-testing-strategy": {
-    "should_trigger": [
-      "为这个前端功能制定测试策略",
-      "这次 PR 应该补哪些层级的测试",
-      "按风险给登录重构做测试覆盖矩阵",
-      "单元测试、组件测试、E2E 怎么分工",
-      "规划静态检查、组件测试和 E2E 的质量门禁",
-      "评估这个里程碑的测试债治理优先级",
-      "测试分层怎么设计",
-      "create a frontend testing strategy for this feature"
-    ],
-    "should_not_trigger": [
-      "给 Button 写 RTL 单测",
-      "写 Playwright 登录 E2E",
-      "运行 npm test 并修复失败",
-      "配置 Storybook stories",
-      "只检查 XSS 和 CSP",
-      "只做 WCAG 键盘焦点审查",
-      "实现 React 项目目录结构",
-      "优化虚拟列表滚动性能"
-    ]
-  },
   "fec-data-fetching": {
     "should_trigger": [
       "TanStack Query queryKey 怎么设计",
@@ -131,6 +109,28 @@
       "Web Worker 后台解析 CSV",
       "虚拟列表滚动渲染",
       "审查 token 存储安全"
+    ]
+  },
+  "fec-doc-sync": {
+    "should_trigger": [
+      "同步 README 中的 skill 和 agent 数量",
+      "新增命令后更新多语言文档",
+      "根据 package.json 生成命令清单",
+      "docs sync for runtime documentation",
+      "更新 marketplace 描述里的能力数量",
+      "检查 README 和 skills metadata 是否一致",
+      "把报告输出表同步到文档",
+      "更新项目结构文档中的 commands 列表"
+    ],
+    "should_not_trigger": [
+      "给组件写 Storybook stories",
+      "修复 TypeScript 构建失败",
+      "写登录 E2E 测试",
+      "审查 XSS 风险",
+      "规划 React 组件边界",
+      "清理未使用导出",
+      "实现 PWA manifest",
+      "优化虚拟列表滚动"
     ]
   },
   "fec-e2e-testing": {
@@ -419,6 +419,28 @@
       "XSS 安全审查"
     ]
   },
+  "fec-refactor-clean": {
+    "should_trigger": [
+      "清理未使用的 React 组件",
+      "用 knip 检查死代码并安全删除",
+      "删除没有引用的工具函数",
+      "检查未使用的 npm 依赖",
+      "refactor clean unused exports",
+      "清理过期路由前先做风险分类",
+      "找出无用 CSS 文件但不要误删动态 class",
+      "生成 dead code cleanup 报告"
+    ],
+    "should_not_trigger": [
+      "实现新功能页面",
+      "写 TDD 失败测试",
+      "同步 README 命令表",
+      "修复 lint 失败",
+      "做安全审查",
+      "设计 Next.js 路由结构",
+      "写 Playwright 测试",
+      "迁移 jQuery 到 React"
+    ]
+  },
   "fec-route-protection": {
     "should_trigger": [
       "实现未登录跳转登录页",
@@ -507,27 +529,49 @@
       "虚拟列表性能"
     ]
   },
-  "fec-validation-fix": {
+  "fec-tdd-workflow": {
     "should_trigger": [
-      "运行项目测试并修复失败",
-      "npm run build 报错帮我修",
-      "typecheck 失败怎么处理",
-      "lint failure after changes",
-      "跑验证命令并分析失败日志",
-      "修复单元测试失败",
-      "CI build failed locally",
-      "test and fix this frontend repo"
+      "用 TDD 实现这个 hook",
+      "先写失败测试再修这个 bug",
+      "为新组件走红绿重构流程",
+      "补一个回归测试再改逻辑",
+      "test driven development for this frontend feature",
+      "这个工具函数先写单测再实现",
+      "修复表单校验 bug 前先复现测试",
+      "用测试驱动方式重构状态逻辑"
     ],
-      "should_not_trigger": [
-        "给 Button 写组件单元测试",
-        "为登录流程编写 Playwright E2E",
-        "写新的 Playwright 测试计划",
-        "做代码 review 报告",
-        "设计 React 架构",
-        "PWA manifest",
-        "Web Worker 实现",
-        "迁移 jQuery"
-      ]
+    "should_not_trigger": [
+      "只运行现有测试并修复失败",
+      "制定测试分层策略",
+      "写完整 Playwright E2E 流程",
+      "同步文档能力表",
+      "清理未使用依赖",
+      "做 XSS 安全审查",
+      "设计 Vue 项目结构",
+      "配置 PWA 离线缓存"
+    ]
+  },
+  "fec-testing-strategy": {
+    "should_trigger": [
+      "为这个前端功能制定测试策略",
+      "这次 PR 应该补哪些层级的测试",
+      "按风险给登录重构做测试覆盖矩阵",
+      "单元测试、组件测试、E2E 怎么分工",
+      "规划静态检查、组件测试和 E2E 的质量门禁",
+      "评估这个里程碑的测试债治理优先级",
+      "测试分层怎么设计",
+      "create a frontend testing strategy for this feature"
+    ],
+    "should_not_trigger": [
+      "给 Button 写 RTL 单测",
+      "写 Playwright 登录 E2E",
+      "运行 npm test 并修复失败",
+      "配置 Storybook stories",
+      "只检查 XSS 和 CSP",
+      "只做 WCAG 键盘焦点审查",
+      "实现 React 项目目录结构",
+      "优化虚拟列表滚动性能"
+    ]
   },
   "fec-ui-design-direction": {
     "should_trigger": [
@@ -549,6 +593,28 @@
       "检查键盘焦点和 aria",
       "写 Storybook stories",
       "实现 Web Worker"
+    ]
+  },
+  "fec-validation-fix": {
+    "should_trigger": [
+      "运行项目测试并修复失败",
+      "npm run build 报错帮我修",
+      "typecheck 失败怎么处理",
+      "lint failure after changes",
+      "跑验证命令并分析失败日志",
+      "修复单元测试失败",
+      "CI build failed locally",
+      "test and fix this frontend repo"
+    ],
+    "should_not_trigger": [
+      "给 Button 写组件单元测试",
+      "为登录流程编写 Playwright E2E",
+      "写新的 Playwright 测试计划",
+      "做代码 review 报告",
+      "设计 React 架构",
+      "PWA manifest",
+      "Web Worker 实现",
+      "迁移 jQuery"
     ]
   },
   "fec-vite-project-standard": {

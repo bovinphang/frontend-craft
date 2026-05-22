@@ -115,9 +115,9 @@ npx skills update
 
 **核心内容：**
 
-- **10 个专业 agent** — 代码评审、安全、测试、性能、架构、UI 还原度、设计实现
-- **28 个自动激活 skill** — React/Vue/Next/Nuxt 规范、无障碍、安全、表单、数据获取、PWA、E2E 等
-- **4 个斜杠命令** — `/fec-init`、`/fec-review`、`/fec-test-plan`、`/fec-scaffold`
+- **13 个专业 agent** — 代码评审、安全、测试、性能、架构、UI 还原度、设计实现
+- **31 个自动激活 skill** — React/Vue/Next/Nuxt 规范、无障碍、安全、表单、数据获取、PWA、E2E 等
+- **9 个斜杠命令** — `/fec-init`、`/fec-review`、`/fec-test-plan`、`/fec-scaffold`、`/fec-plan`、`/fec-tdd`、`/fec-build-fix`、`/fec-refactor-clean`、`/fec-doc-sync`
 - **5 个事件驱动 hook** — 会话检测、安全检查、自动格式化、校验、通知
 - **MCP 集成** — Figma、Sketch、MasterGo、Pixso、墨刀、摹客
 - **项目模板** — CLAUDE.md、规则（Vue/React/设计系统/测试等）、settings.json
@@ -136,6 +136,11 @@ npx skills update
 | `/fec-review`    | 对指定文件或最近变更的代码执行规范化评审，输出分级报告           | `code-review-*.md` |
 | `/fec-test-plan` | 规划前端测试分层、风险覆盖和执行顺序                             | `test-plan-*.md`   |
 | `/fec-scaffold`  | 按项目规范创建 page / feature / component 标准目录结构和样板文件 | —                  |
+| `/fec-plan`      | 实现前规划前端功能、架构调整和重构                                | `architecture-proposal-*.md` |
+| `/fec-tdd`       | 执行前端 TDD：失败测试、最小实现、重构                              | —                  |
+| `/fec-build-fix` | 增量修复 lint、type-check、test、build 或 CI 失败                    | `validation-fix-*.md` |
+| `/fec-refactor-clean` | 安全分类并清理死代码、未使用导出、样式和依赖                  | `refactor-clean-*.md` |
+| `/fec-doc-sync`  | 同步 README、runtime 文档、能力表和公开 metadata                    | —                  |
 
 ### Skills（自动激活）
 
@@ -148,6 +153,9 @@ npx skills update
 | `fec-vue3-project-standard`      | Vue 3 + TypeScript 项目工程规范（结构、组件、路由、Pinia、API 层） | —                           |
 | `fec-implement-from-design`      | 基于 Figma/Sketch/MasterGo/Pixso/墨刀/摹客设计稿实现 UI            | `design-plan-*.md`          |
 | `fec-validation-fix`             | 执行 lint、type-check、test、build 并修复失败                      | `validation-fix-*.md`       |
+| `fec-tdd-workflow`               | 测试先行的前端实现、Bug 修复与红绿重构流程                         | —                           |
+| `fec-refactor-clean`             | 安全清理死代码、未使用导出、样式、路由和依赖                        | `refactor-clean-*.md`       |
+| `fec-doc-sync`                   | 将公开文档与脚本、skills、agents、commands 和模板同步              | —                           |
 | `fec-legacy-web-standard`        | JS + jQuery + HTML 传统项目的开发与维护规范                        | —                           |
 | `fec-legacy-to-modern-migration` | jQuery/MPA 迁移至 React/Vue 3 + TS 的策略、概念映射与分阶段流程    | `migration-plan-*.md`       |
 | `fec-testing-strategy`           | 在静态检查、单元、组件、集成、E2E、视觉和专项质量之间选择测试层级  | `test-plan-*.md`            |
@@ -178,6 +186,9 @@ npx skills update
 | `frontend-code-reviewer`     | 前端代码评审：React/Vue/Next/Nuxt、TS、样式、客户端安全、按置信度降噪                        | `code-review-*.md`           |
 | `frontend-security-reviewer` | 前端安全：XSS、客户端密钥、危险 DOM/API、第三方脚本、CSP、依赖审计                           | `security-review-*.md`       |
 | `frontend-test-planner`      | 前端测试策略：按风险映射静态、单元、组件、E2E、视觉、无障碍、安全与性能覆盖                  | `test-plan-*.md`             |
+| `frontend-build-fixer`       | 增量修复 lint、type-check、test、build 与 CI 失败                                      | `validation-fix-*.md`        |
+| `frontend-refactor-cleaner`  | 分类并安全清理未使用前端代码、导出、样式、路由和依赖                                 | `refactor-clean-*.md`        |
+| `frontend-doc-updater`       | 同步 README、runtime 文档、项目结构、能力表和公开 metadata                            | —                            |
 | `frontend-e2e-runner`        | E2E 编写与执行（Playwright/Cypress）、flaky 隔离、Trace/截图/视频、CI 对齐；可选摘要报告     | `e2e-summary-*.md`（可选）   |
 | `typescript-reviewer`        | TS/JS 专项：先跑 typecheck/eslint、PR 就绪检查、类型与异步与安全、惯用法；只报告不直接改代码 | `typescript-review-*.md`     |
 | `performance-optimizer`      | 分析性能瓶颈（打包体积、渲染性能、网络请求），输出量化优化方案                               | `performance-review-*.md`    |
@@ -227,6 +238,8 @@ npx skills update
 | `rules/code-comments.md`      | 前端代码注释：何时写、写什么（意图与背景，避免零注释与废话注释）  |
 | `rules/ci-cd.md`              | CI/CD 流水线阶段、GitHub Actions / GitLab CI 示例、密钥管理       |
 | `rules/refactoring.md`        | 重构约束：图片、样式、禁止内联 SVG/样式、优先 flex 布局、功能等价 |
+| `rules/agent-workflow.md`     | 子代理协作边界与委托规则                                      |
+| `rules/working-modes.md`      | 调研、计划、开发、评审、收尾模式指导                          |
 
 ---
 
@@ -292,6 +305,7 @@ $env:MODAO_TOKEN = "your-modao-token"
 | 设计计划       | `design-plan-YYYY-MM-DD-HHmmss.md`           | `fec-implement-from-design` skill                                                    |
 | 测试计划       | `test-plan-YYYY-MM-DD-HHmmss.md`             | `/fec-test-plan`、`fec-testing-strategy` skill、`frontend-test-planner` agent        |
 | 验证修复       | `validation-fix-YYYY-MM-DD-HHmmss.md`        | `fec-validation-fix` skill                                                           |
+| 重构清理       | `refactor-clean-YYYY-MM-DD-HHmmss.md`        | `/fec-refactor-clean`、`fec-refactor-clean` skill、`frontend-refactor-cleaner` agent |
 | E2E 运行摘要   | `e2e-summary-YYYY-MM-DD-HHmmss.md`           | `frontend-e2e-runner` agent（可选）                                                  |
 | 迁移计划       | `migration-plan-YYYY-MM-DD-HHmmss.md`        | `fec-legacy-to-modern-migration` skill                                               |
 

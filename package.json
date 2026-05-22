@@ -54,7 +54,7 @@
         "build:openclaw": "npm run build && node dist/scripts/openclaw/build.js",
         "audit:skills": "npm run build && node dist/scripts/audit-skills.js",
         "typecheck:openclaw": "tsc --noEmit -p tsconfig.openclaw.json",
-        "check:openclaw-dist": "npm run build && node dist/scripts/openclaw/verify-openclaw-dist.js",
+        "check:openclaw-dist": "node dist/scripts/openclaw/verify-openclaw-dist.js",
         "pack:openclaw": "npm run build:openclaw && npm run check:openclaw-dist && node dist/scripts/openclaw/pack-openclaw.js",
         "pack:skills": "npm run build && node dist/scripts/pack-skills.js",
         "check:skills-publish": "npm run build && node dist/scripts/check-skills-publish.js",

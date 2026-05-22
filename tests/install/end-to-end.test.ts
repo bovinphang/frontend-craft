@@ -109,6 +109,9 @@ test("install claude into temp dir creates hooks and skills", () => {
     assert.match(securitySkill, /^name:\s*fec-security-review$/m, "skill frontmatter uses fec- prefix");
     assert.doesNotMatch(securitySkill, /^version:/m, "skill frontmatter must not include version");
     assert.ok(fs.existsSync(path.join(dir, ".claude", "commands", "fec-init.md")));
+    assert.ok(fs.existsSync(path.join(dir, ".claude", "commands", "fec-tdd.md")));
+    assert.ok(fs.existsSync(path.join(dir, ".claude", "rules", "agent-workflow.md")));
+    assert.ok(fs.existsSync(path.join(dir, ".claude", "rules", "working-modes.md")));
     assert.ok(!fs.existsSync(path.join(dir, ".claude", "commands", "init.md")));
   } finally {
     fs.rmSync(dir, { recursive: true, force: true });

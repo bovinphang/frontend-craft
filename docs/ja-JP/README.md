@@ -114,9 +114,9 @@ npx skills update
 
 **主な内容：**
 
-- **10 个专业 agent** — コードレビュー、セキュリティ、テスト、パフォーマンス、アーキテクチャ、UI 忠実度、デザイン実装
-- **28 個の自動スキル** — React/Vue/Next/Nuxt 規約、アクセシビリティ、セキュリティ、フォーム、データ取得、PWA、E2E など
-- **4 個のスラッシュコマンド** — `/fec-init`、`/fec-review`、`/fec-test-plan`、`/fec-scaffold`
+- **13 個の専門 agent** — コードレビュー、セキュリティ、テスト、パフォーマンス、アーキテクチャ、UI 忠実度、デザイン実装
+- **31 個の自動スキル** — React/Vue/Next/Nuxt 規約、アクセシビリティ、セキュリティ、フォーム、データ取得、PWA、E2E など
+- **9 個のスラッシュコマンド** — `/fec-init`、`/fec-review`、`/fec-test-plan`、`/fec-scaffold`、`/fec-plan`、`/fec-tdd`、`/fec-build-fix`、`/fec-refactor-clean`、`/fec-doc-sync`
 - **5 個のイベント駆動フック** — セッション検出、セキュリティチェック、自動フォーマット、バリデーション、通知
 - **MCP 統合** — Figma、Sketch、MasterGo、Pixso、墨刀、摹客
 - **プロジェクトテンプレート** — CLAUDE.md、ルール（Vue/React/デザインシステム/テストなど）、settings.json
@@ -147,6 +147,9 @@ npx skills update
 | `fec-vue3-project-standard`      | Vue 3 + TypeScript プロジェクト規約（構造、コンポーネント、ルーティング、Pinia、API 層）       | —                           |
 | `fec-implement-from-design`      | Figma/Sketch/MasterGo/Pixso/墨刀/摹客 のデザインから UI を実装                                 | `design-plan-*.md`          |
 | `fec-validation-fix`             | lint、type-check、test、build を実行し失敗を修正                                               | `validation-fix-*.md`       |
+| `fec-tdd-workflow`               | テストファーストのフロントエンド実装、Bug 修正、red-green-refactor                            | —                           |
+| `fec-refactor-clean`             | デッドコード、未使用 export、スタイル、ルート、依存関係の安全な清理                            | `refactor-clean-*.md`       |
+| `fec-doc-sync`                   | 公開 docs と scripts、skills、agents、commands、templates を同期                               | —                           |
 | `fec-legacy-web-standard`        | JS + jQuery + HTML レガシープロジェクトの開発・保守規約                                        | —                           |
 | `fec-legacy-to-modern-migration` | jQuery/MPA から React/Vue 3 + TS への移行戦略、概念マッピング、段階的ワークフロー              | `migration-plan-*.md`       |
 | `fec-testing-strategy`           | テスト階層選択、リスクマトリクス、カバレッジ計画                                               | `test-plan-*.md`            |
@@ -177,6 +180,9 @@ npx skills update
 | `frontend-code-reviewer`     | フロントエンドコードレビュー：React/Vue/Next/Nuxt、TS、スタイル、クライアント側セキュリティ                 | `code-review-*.md`           |
 | `frontend-security-reviewer` | フロントエンドセキュリティ：XSS、クライアントシークレット、危険な DOM/API、CSP、依存監査                    | `security-review-*.md`       |
 | `frontend-test-planner`      | フロントエンドテスト戦略: リスクを静的、単体、コンポーネント、E2E、視覚、a11y、セキュリティ、性能に対応付け | `test-plan-*.md`             |
+| `frontend-build-fixer`       | lint、type-check、test、build、CI 失敗を段階的に修正                                      | `validation-fix-*.md`        |
+| `frontend-refactor-cleaner`  | 未使用のフロントエンドコード、export、スタイル、ルート、依存関係を分類して安全に清理          | `refactor-clean-*.md`        |
+| `frontend-doc-updater`       | README、runtime docs、プロジェクト構造、能力表、公開 metadata を同期                         | —                            |
 | `frontend-e2e-runner`        | E2E 作成・実行（Playwright/Cypress）、flaky 隔離、Trace/スクリーンショット、CI；任意で要約レポート          | `e2e-summary-*.md`（任意）   |
 | `typescript-reviewer`        | TS/JS レビュー：typecheck/eslint、PR マージ可否、型・非同期・セキュリティ；コード改変なし                   | `typescript-review-*.md`     |
 | `performance-optimizer`      | パフォーマンスボトルネック分析（バンドルサイズ、レンダリング、ネットワーク）、定量化された最適化案          | `performance-review-*.md`    |
@@ -225,6 +231,8 @@ npx skills update
 | `rules/naming-conventions.md` | ファイル、コンポーネント、変数、ルート、API、CSS の統一命名規約                                  |
 | `rules/ci-cd.md`              | CI/CD パイプライン段階、GitHub Actions / GitLab CI 例、シークレット管理                          |
 | `rules/refactoring.md`        | リファクタリング制約：画像、スタイル、インライン SVG/スタイル禁止、flex レイアウト優先、機能同等 |
+| `rules/agent-workflow.md`     | サブエージェント協作境界と委任ガイド                                      |
+| `rules/working-modes.md`      | 調査、計画、開発、レビュー、完了モードのガイド                          |
 
 ---
 
@@ -291,6 +299,7 @@ $env:MODAO_TOKEN = "your-modao-token"
 | デザイン計画         | `design-plan-YYYY-MM-DD-HHmmss.md`                       | `fec-implement-from-design` スキル                                                               |
 | テスト計画           | `test-plan-YYYY-MM-DD-HHmmss.md`                         | `fec-testing-strategy` スキル / `frontend-test-planner` エージェント                             |
 | 検証修正             | `validation-fix-YYYY-MM-DD-HHmmss.md`                    | `fec-validation-fix` スキル                                                                      |
+| リファクタ清理       | `refactor-clean-YYYY-MM-DD-HHmmss.md`                    | `/fec-refactor-clean`、`fec-refactor-clean` スキル、`frontend-refactor-cleaner` エージェント       |
 | E2E 実行サマリー     | `e2e-summary-YYYY-MM-DD-HHmmss.md`                       | `frontend-e2e-runner` エージェント（任意）                                                       |
 | 移行計画             | `migration-plan-YYYY-MM-DD-HHmmss.md`                    | `fec-legacy-to-modern-migration` スキル                                                          |
 

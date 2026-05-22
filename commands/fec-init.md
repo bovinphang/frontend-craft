@@ -54,6 +54,8 @@ description: 按当前 AI runtime 初始化 frontend-craft 项目模板、rules 
    - `templates/shared/rules/code-comments.md` → `.claude/rules/code-comments.md`
    - `templates/shared/rules/ci-cd.md` → `.claude/rules/ci-cd.md`
    - `templates/shared/rules/refactoring.md` → `.claude/rules/refactoring.md`
+   - `templates/shared/rules/agent-workflow.md` → `.claude/rules/agent-workflow.md`
+   - `templates/shared/rules/working-modes.md` → `.claude/rules/working-modes.md`
 
 4. 复制完成后，不要只输出提醒。先检查项目根目录中的 `package.json`、常见框架配置文件和 `.github/workflows/`，推断适用规则，然后向用户提供初始化后配置选项：
    - 推荐：自动检测并裁剪规则（默认推荐项）。根据检测结果展示建议保留和建议移除的规则，用户确认后再修改 `.claude/CLAUDE.md` 底部的规则导入部分。

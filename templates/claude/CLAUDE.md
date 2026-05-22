@@ -102,3 +102,5 @@
 @./rules/code-comments.md
 @./rules/ci-cd.md
 @./rules/refactoring.md
+@./rules/agent-workflow.md
+@./rules/working-modes.md

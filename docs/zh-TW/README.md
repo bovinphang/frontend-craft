@@ -114,9 +114,9 @@ npx skills update
 
 **核心內容：**
 
-- **10 個專業 agent** — 程式碼審查、安全、測試、效能、架構、UI 還原度、設計實現
-- **28 個自動激活 skill** — React/Vue/Next/Nuxt 規範、無障礙、安全、表單、資料獲取、PWA、E2E 等
-- **4 個斜線指令** — `/fec-init`、`/fec-review`、`/fec-test-plan`、`/fec-scaffold`
+- **13 個專業 agent** — 程式碼審查、安全、測試、效能、架構、UI 還原度、設計實現
+- **31 個自動激活 skill** — React/Vue/Next/Nuxt 規範、無障礙、安全、表單、資料獲取、PWA、E2E 等
+- **9 個斜線指令** — `/fec-init`、`/fec-review`、`/fec-test-plan`、`/fec-scaffold`、`/fec-plan`、`/fec-tdd`、`/fec-build-fix`、`/fec-refactor-clean`、`/fec-doc-sync`
 - **5 個事件驅動 hook** — 會話檢測、安全檢查、自動格式化、校驗、通知
 - **MCP 整合** — Figma、Sketch、MasterGo、Pixso、墨刀、摹客
 - **專案範本** — CLAUDE.md、規則（Vue/React/設計系統/測試等）、settings.json
@@ -147,6 +147,9 @@ npx skills update
 | `fec-vue3-project-standard`      | Vue 3 + TypeScript 專案工程規範（結構、元件、路由、Pinia、API 層） | —                           |
 | `fec-implement-from-design`      | 基於 Figma/Sketch/MasterGo/Pixso/墨刀/摹客設計稿實作 UI            | `design-plan-*.md`          |
 | `fec-validation-fix`             | 執行 lint、type-check、test、build 並修復失敗                      | `validation-fix-*.md`       |
+| `fec-tdd-workflow`               | 測試先行的前端實作、Bug 修復與紅綠重構流程                         | —                           |
+| `fec-refactor-clean`             | 安全清理死程式碼、未使用匯出、樣式、路由和依賴                      | `refactor-clean-*.md`       |
+| `fec-doc-sync`                   | 將公開文件與 scripts、skills、agents、commands 和 templates 同步   | —                           |
 | `fec-legacy-web-standard`        | JS + jQuery + HTML 傳統專案的開發與維護規範                        | —                           |
 | `fec-legacy-to-modern-migration` | jQuery/MPA 遷移至 React/Vue 3 + TS 的策略、概念對應與分階段流程    | `migration-plan-*.md`       |
 | `fec-testing-strategy`           | 測試分層選擇、風險矩陣與覆蓋規劃                                   | `test-plan-*.md`            |
@@ -177,6 +180,9 @@ npx skills update
 | `frontend-code-reviewer`     | 前端程式碼審查：React/Vue/Next/Nuxt、TS、樣式、用戶端安全                      | `code-review-*.md`           |
 | `frontend-security-reviewer` | 前端安全：XSS、用戶端金鑰、危險 DOM/API、CSP、依賴稽核                         | `security-review-*.md`       |
 | `frontend-test-planner`      | 前端測試策略：按風險映射靜態、單元、元件、E2E、視覺、無障礙、安全與效能覆蓋    | `test-plan-*.md`             |
+| `frontend-build-fixer`       | 增量修復 lint、type-check、test、build 與 CI 失敗                         | `validation-fix-*.md`        |
+| `frontend-refactor-cleaner`  | 分類並安全清理未使用前端程式碼、匯出、樣式、路由和依賴                 | `refactor-clean-*.md`        |
+| `frontend-doc-updater`       | 同步 README、runtime 文件、專案結構、能力表和公開 metadata             | —                            |
 | `frontend-e2e-runner`        | E2E 撰寫與執行（Playwright/Cypress）、flaky 隔離、Trace/截圖、CI；可選摘要報告 | `e2e-summary-*.md`（可選）   |
 | `typescript-reviewer`        | TS/JS 審查：typecheck/eslint、PR 合併就緒、型別與非同步與安全；不直接改程式    | `typescript-review-*.md`     |
 | `performance-optimizer`      | 分析效能瓶頸（打包體積、渲染效能、網路請求），輸出量化優化方案                 | `performance-review-*.md`    |
@@ -225,6 +231,8 @@ npx skills update
 | `rules/naming-conventions.md` | 檔案、元件、變數、路由、API、CSS 統一命名規範                     |
 | `rules/ci-cd.md`              | CI/CD 流水線階段、GitHub Actions / GitLab CI 範例、金鑰管理       |
 | `rules/refactoring.md`        | 重構約束：圖片、樣式、禁止內聯 SVG/樣式、優先 flex 佈局、功能等價 |
+| `rules/agent-workflow.md`     | 子代理協作邊界與委託規則                                      |
+| `rules/working-modes.md`      | 調研、計畫、開發、評審、收尾模式指引                          |
 
 ---
 
@@ -291,6 +299,7 @@ $env:MODAO_TOKEN = "your-modao-token"
 | 設計計畫         | `design-plan-YYYY-MM-DD-HHmmss.md`           | `fec-implement-from-design` skill                                                    |
 | 測試計畫         | `test-plan-YYYY-MM-DD-HHmmss.md`             | `fec-testing-strategy` skill / `frontend-test-planner` agent                         |
 | 驗證修復         | `validation-fix-YYYY-MM-DD-HHmmss.md`        | `fec-validation-fix` skill                                                           |
+| 重構清理         | `refactor-clean-YYYY-MM-DD-HHmmss.md`        | `/fec-refactor-clean`、`fec-refactor-clean` skill、`frontend-refactor-cleaner` agent |
 | E2E 執行摘要     | `e2e-summary-YYYY-MM-DD-HHmmss.md`           | `frontend-e2e-runner` agent（可選）                                                  |
 | 遷移計畫         | `migration-plan-YYYY-MM-DD-HHmmss.md`        | `fec-legacy-to-modern-migration` skill                                               |
 

@@ -115,9 +115,9 @@ The repo packages **agents**, **skills**, **commands**, **hooks**, **scripts**, 
 
 **Highlights:**
 
-- **10 specialized agents** — code review, security, testing, performance, architecture, UI fidelity, design implementation
-- **28 auto-activated skills** — React/Vue/Next/Nuxt standards, accessibility, security, forms, data fetching, PWA, E2E, and more
-- **4 slash commands** — `/fec-init`, `/fec-review`, `/fec-test-plan`, `/fec-scaffold`
+- **13 specialized agents** — code review, security, testing, performance, architecture, UI fidelity, design implementation
+- **31 auto-activated skills** — React/Vue/Next/Nuxt standards, accessibility, security, forms, data fetching, PWA, E2E, and more
+- **9 slash commands** — `/fec-init`, `/fec-review`, `/fec-test-plan`, `/fec-scaffold`, `/fec-plan`, `/fec-tdd`, `/fec-build-fix`, `/fec-refactor-clean`, `/fec-doc-sync`
 - **5 event-driven hooks** — session detection, security checks, auto-formatting, validation, notifications
 - **MCP integration** — Figma, Sketch, MasterGo, Pixso, 墨刀, 摹客
 - **Project templates** — CLAUDE.md, rules (Vue/React/design-system/testing/etc.), settings.json
@@ -136,6 +136,11 @@ Slash commands in the tables below are shown **for Claude Code** as a familiar e
 | `/fec-review`    | Code review for specified or recently changed files, output graded report | `code-review-*.md` |
 | `/fec-test-plan` | Plan frontend testing layers, risk coverage, and execution order          | `test-plan-*.md`   |
 | `/fec-scaffold`  | Create page / feature / component structure and boilerplate by convention | —                  |
+| `/fec-plan`      | Plan frontend features, architecture changes, and refactors before implementation | `architecture-proposal-*.md` |
+| `/fec-tdd`       | Run a frontend TDD loop: failing test, minimal implementation, refactor | —                  |
+| `/fec-build-fix` | Incrementally fix lint, type-check, test, build, or CI failures | `validation-fix-*.md` |
+| `/fec-refactor-clean` | Safely classify and clean dead code, unused exports, styles, and dependencies | `refactor-clean-*.md` |
+| `/fec-doc-sync`  | Sync READMEs, runtime docs, capability tables, and public metadata | —                  |
 
 ### Skills (auto-activated)
 
@@ -148,6 +153,9 @@ Slash commands in the tables below are shown **for Claude Code** as a familiar e
 | `fec-vue3-project-standard`      | Vue 3 + TypeScript project standards (structure, components, routing, Pinia, API layer) | —                           |
 | `fec-implement-from-design`      | Implement UI from Figma/Sketch/MasterGo/Pixso/墨刀/摹客 design files                    | `design-plan-*.md`          |
 | `fec-validation-fix`             | Run lint, type-check, test, build and fix failures                                      | `validation-fix-*.md`       |
+| `fec-tdd-workflow`               | Test-first frontend implementation and bug fixing with red-green-refactor               | —                           |
+| `fec-refactor-clean`             | Safe dead-code, unused export, style, route, and dependency cleanup                     | `refactor-clean-*.md`       |
+| `fec-doc-sync`                   | Synchronize public docs with package scripts, skills, agents, commands, and templates   | —                           |
 | `fec-legacy-web-standard`        | Development and maintenance standards for JS + jQuery + HTML legacy projects            | —                           |
 | `fec-legacy-to-modern-migration` | Strategy, concept mapping, and phased workflow for jQuery/MPA → React/Vue 3 + TS        | `migration-plan-*.md`       |
 | `fec-testing-strategy`           | Testing layer selection across static checks, unit, component, integration, E2E, visual | `test-plan-*.md`            |
@@ -178,6 +186,9 @@ Slash commands in the tables below are shown **for Claude Code** as a familiar e
 | `frontend-code-reviewer`     | Frontend code review: React/Vue/Next/Nuxt, TS, styles, client-side security, confidence-based findings                            | `code-review-*.md`            |
 | `frontend-security-reviewer` | Frontend security: XSS, client secrets, dangerous DOM/APIs, third-party scripts, CSP, dependency audit                            | `security-review-*.md`        |
 | `frontend-test-planner`      | Frontend testing strategy: risk-to-layer matrix across static, unit, component, E2E, visual, a11y, security, performance          | `test-plan-*.md`              |
+| `frontend-build-fixer`       | Incrementally fixes lint, type-check, test, build, and CI failures                                                            | `validation-fix-*.md`         |
+| `frontend-refactor-cleaner`  | Classifies and safely cleans unused frontend code, exports, styles, routes, and dependencies                                 | `refactor-clean-*.md`         |
+| `frontend-doc-updater`       | Synchronizes README, runtime docs, project structure, capability tables, and public metadata                                  | —                             |
 | `frontend-e2e-runner`        | E2E authoring & runs (Playwright/Cypress), flaky quarantine, traces/screenshots/videos, CI alignment; optional `e2e-summary-*.md` | `e2e-summary-*.md` (optional) |
 | `typescript-reviewer`        | TS/JS review: run typecheck/eslint, PR merge readiness, type safety, async, security, idiomatic patterns; report-only             | `typescript-review-*.md`      |
 | `performance-optimizer`      | Analyze performance bottlenecks (bundle size, render performance, network), output quantified optimization plan                   | `performance-review-*.md`     |
@@ -227,6 +238,8 @@ Slash commands in the tables below are shown **for Claude Code** as a familiar e
 | `rules/code-comments.md`      | When and how to write frontend code comments (why, not what)                               |
 | `rules/ci-cd.md`              | CI/CD pipeline stages, GitHub Actions / GitLab CI examples, secrets handling               |
 | `rules/refactoring.md`        | Refactoring constraints: images, styles, no inline SVG/styles, flex layout, feature parity |
+| `rules/agent-workflow.md`     | Agent collaboration boundaries and delegation guidance                                      |
+| `rules/working-modes.md`      | Research, planning, development, review, and finishing mode guidance                        |
 
 ---
 
@@ -292,6 +305,7 @@ All review, analysis, and evaluation outputs are saved as Markdown files to the 
 | Design plan            | `design-plan-YYYY-MM-DD-HHmmss.md`           | `fec-implement-from-design` skill                                                       |
 | Test plan              | `test-plan-YYYY-MM-DD-HHmmss.md`             | `/fec-test-plan`, `fec-testing-strategy` skill, `frontend-test-planner` agent           |
 | Validation fix         | `validation-fix-YYYY-MM-DD-HHmmss.md`        | `fec-validation-fix` skill                                                              |
+| Refactor clean         | `refactor-clean-YYYY-MM-DD-HHmmss.md`        | `/fec-refactor-clean`, `fec-refactor-clean` skill, `frontend-refactor-cleaner` agent    |
 | E2E run summary        | `e2e-summary-YYYY-MM-DD-HHmmss.md`           | `frontend-e2e-runner` agent (optional)                                                  |
 | Migration plan         | `migration-plan-YYYY-MM-DD-HHmmss.md`        | `fec-legacy-to-modern-migration` skill                                                  |
 

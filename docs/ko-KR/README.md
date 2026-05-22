@@ -114,9 +114,9 @@ npx skills update
 
 **핵심 내용:**
 
-- **10개 전문 agent** — 코드 리뷰, 보안, 테스트, 성능, 아키텍처, UI 충실도, 디자인 구현
-- **28개 자동 활성화 skill** — React/Vue/Next/Nuxt 규약, 접근성, 보안, 폼, 데이터 패칭, PWA, E2E 등
-- **4개 슬래시 명령어** — `/fec-init`, `/fec-review`, `/fec-test-plan`, `/fec-scaffold`
+- **13개 전문 agent** — 코드 리뷰, 보안, 테스트, 성능, 아키텍처, UI 충실도, 디자인 구현
+- **31개 자동 활성화 skill** — React/Vue/Next/Nuxt 규약, 접근성, 보안, 폼, 데이터 패칭, PWA, E2E 등
+- **9개 슬래시 명령어** — `/fec-init`, `/fec-review`, `/fec-test-plan`, `/fec-scaffold`, `/fec-plan`, `/fec-tdd`, `/fec-build-fix`, `/fec-refactor-clean`, `/fec-doc-sync`
 - **5개 이벤트 기반 hook** — 세션 감지, 보안 검사, 자동 포맷, 검증, 알림
 - **MCP 통합** — Figma, Sketch, MasterGo, Pixso, 墨刀, 摹客
 - **프로젝트 템플릿** — CLAUDE.md, 규칙(Vue/React/디자인 시스템/테스트 등), settings.json
@@ -147,6 +147,9 @@ npx skills update
 | `fec-vue3-project-standard`      | Vue 3 + TypeScript 프로젝트 규약 (구조, 컴포넌트, 라우팅, Pinia, API 계층)       | —                           |
 | `fec-implement-from-design`      | Figma/Sketch/MasterGo/Pixso/墨刀/摹客 디자인에서 UI 구현                         | `design-plan-*.md`          |
 | `fec-validation-fix`             | lint, type-check, test, build 실행 및 실패 수정                                  | `validation-fix-*.md`       |
+| `fec-tdd-workflow`               | 테스트 우선 프론트엔드 구현, 버그 수정, red-green-refactor                       | —                           |
+| `fec-refactor-clean`             | 죽은 코드, 미사용 export, 스타일, 라우트, 의존성의 안전한 정리                   | `refactor-clean-*.md`       |
+| `fec-doc-sync`                   | 공개 docs와 scripts, skills, agents, commands, templates 동기화                  | —                           |
 | `fec-legacy-web-standard`        | JS + jQuery + HTML 레거시 프로젝트 개발·유지보수 규약                            | —                           |
 | `fec-legacy-to-modern-migration` | jQuery/MPA → React/Vue 3 + TS 마이그레이션 전략, 개념 매핑, 단계별 워크플로우    | `migration-plan-*.md`       |
 | `fec-testing-strategy`           | 테스트 계층 선택, 위험 매트릭스, 커버리지 계획                                   | `test-plan-*.md`            |
@@ -177,6 +180,9 @@ npx skills update
 | `frontend-code-reviewer`     | 프론트엔드 코드 리뷰: React/Vue/Next/Nuxt, TS, 스타일, 클라이언트 보안                             | `code-review-*.md`           |
 | `frontend-security-reviewer` | 프론트엔드 보안: XSS, 클라이언트 시크릿, 위험한 DOM/API, CSP, 의존성 감사                          | `security-review-*.md`       |
 | `frontend-test-planner`      | 프론트엔드 테스트 전략: 위험을 정적, 단위, 컴포넌트, E2E, 시각, 접근성, 보안, 성능 커버리지에 매핑 | `test-plan-*.md`             |
+| `frontend-build-fixer`       | lint, type-check, test, build, CI 실패를 점진적으로 수정                         | `validation-fix-*.md`        |
+| `frontend-refactor-cleaner`  | 미사용 프론트엔드 코드, export, 스타일, 라우트, 의존성을 분류하고 안전하게 정리  | `refactor-clean-*.md`        |
+| `frontend-doc-updater`       | README, runtime docs, 프로젝트 구조, 기능 표, 공개 metadata 동기화               | —                            |
 | `frontend-e2e-runner`        | E2E 작성·실행 (Playwright/Cypress), flaky 격리, Trace/스크린샷, CI; 선택 요약 리포트               | `e2e-summary-*.md` (선택)    |
 | `typescript-reviewer`        | TS/JS 리뷰: typecheck/eslint, PR 병합 준비, 타입·비동기·보안; 코드 직접 수정 없음                  | `typescript-review-*.md`     |
 | `performance-optimizer`      | 성능 병목 분석 (번들 크기, 렌더링 성능, 네트워크 요청), 정량화된 최적화 방안 출력                  | `performance-review-*.md`    |
@@ -225,6 +231,8 @@ npx skills update
 | `rules/naming-conventions.md` | 파일, 컴포넌트, 변수, 라우트, API, CSS 통일 명명 규약                                |
 | `rules/ci-cd.md`              | CI/CD 파이프라인 단계, GitHub Actions / GitLab CI 예시, 시크릿 관리                  |
 | `rules/refactoring.md`        | 리팩터링 제약: 이미지, 스타일, 인라인 SVG/스타일 금지, flex 레이아웃 우선, 기능 동등 |
+| `rules/agent-workflow.md`     | 하위 에이전트 협업 경계와 위임 규칙                                      |
+| `rules/working-modes.md`      | 조사, 계획, 개발, 리뷰, 마무리 모드 가이드                               |
 
 ---
 
@@ -291,6 +299,7 @@ $env:MODAO_TOKEN = "your-modao-token"
 | 디자인 계획       | `design-plan-YYYY-MM-DD-HHmmss.md`                    | `fec-implement-from-design` 스킬                                                         |
 | 테스트 계획       | `test-plan-YYYY-MM-DD-HHmmss.md`                      | `fec-testing-strategy` 스킬 / `frontend-test-planner` 에이전트                           |
 | 검증 수정         | `validation-fix-YYYY-MM-DD-HHmmss.md`                 | `fec-validation-fix` 스킬                                                                |
+| 리팩터 정리       | `refactor-clean-YYYY-MM-DD-HHmmss.md`                 | `/fec-refactor-clean`, `fec-refactor-clean` 스킬, `frontend-refactor-cleaner` 에이전트 |
 | E2E 실행 요약     | `e2e-summary-YYYY-MM-DD-HHmmss.md`                    | `frontend-e2e-runner` 에이전트 (선택)                                                    |
 | 마이그레이션 계획 | `migration-plan-YYYY-MM-DD-HHmmss.md`                 | `fec-legacy-to-modern-migration` 스킬                                                    |
 

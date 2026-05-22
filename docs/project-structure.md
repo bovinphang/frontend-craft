@@ -15,6 +15,9 @@ frontend-craft/
 |   |-- frontend-code-reviewer.md # Frontend-focused code review (quality, security, a11y)
 |   |-- frontend-security-reviewer.md # Frontend attack surface: XSS, secrets, CSP, deps
 |   |-- frontend-test-planner.md # Testing strategy, risk matrix, coverage planning
+|   |-- frontend-build-fixer.md # Incremental lint/typecheck/test/build/CI failure repair
+|   |-- frontend-refactor-cleaner.md # Dead-code and unused dependency cleanup
+|   |-- frontend-doc-updater.md # README/runtime docs/capability table synchronization
 |   |-- frontend-e2e-runner.md     # E2E authoring, execution, flaky handling, artifacts, CI
 |   |-- typescript-reviewer.md    # TS/JS type safety, async, security, report-only review
 |   |-- performance-optimizer.md # Performance bottleneck analysis and optimization
@@ -30,6 +33,9 @@ frontend-craft/
 |   |-- fec-vue3-project-standard/   # Vue 3 + TypeScript project standards
 |   |-- fec-implement-from-design/   # Implement UI from design files
 |   |-- fec-validation-fix/            # lint, type-check, test, build and fix
+|   |-- fec-tdd-workflow/              # Test-first frontend implementation workflow
+|   |-- fec-refactor-clean/            # Safe dead-code and unused dependency cleanup
+|   |-- fec-doc-sync/                  # Public docs and metadata synchronization
 |   |-- fec-legacy-web-standard/     # JS + jQuery + HTML legacy project standards
 |   |-- fec-legacy-to-modern-migration/ # jQuery/MPA migration to React/Vue strategy and workflow
 |   |-- fec-testing-strategy/          # Testing layer selection and coverage matrix
@@ -57,6 +63,11 @@ frontend-craft/
 |   |-- fec-review.md   # /fec-review - Code review
 |   |-- fec-test-plan.md # /fec-test-plan - Testing strategy and coverage matrix
 |   |-- fec-scaffold.md # /fec-scaffold - Create page/feature/component
+|   |-- fec-plan.md     # /fec-plan - Implementation planning before frontend changes
+|   |-- fec-tdd.md      # /fec-tdd - Test-driven frontend implementation
+|   |-- fec-build-fix.md # /fec-build-fix - Incremental validation failure repair
+|   |-- fec-refactor-clean.md # /fec-refactor-clean - Safe dead-code cleanup
+|   |-- fec-doc-sync.md # /fec-doc-sync - Public docs and metadata sync
 |
 |-- hooks/            # Event-driven automation
 |   |-- hooks.json     # PreToolUse, PostToolUse, Stop, Notification, etc.
@@ -72,7 +83,7 @@ frontend-craft/
 |   |-- claude/        # CLAUDE.md and settings.json
 |   |-- codex/         # AGENTS.md and config.toml
 |   |-- openclaw/      # AGENTS.md and OPENCLAW-CONFIG.md
-|   |-- shared/rules/  # vue, react, design-system, testing, etc.
+|   |-- shared/rules/  # vue, react, design-system, testing, agent workflow, working modes, etc.
 |
 |-- .mcp.json         # MCP server config (Figma, Sketch, MasterGo, Pixso, 墨刀)
 └-- README.md
@@ -84,7 +95,7 @@ frontend-craft/
 | --------------- | --------------------------------------------------------------------------------- |
 | `agents/`       | Specialized sub-agent definitions (Markdown + YAML frontmatter)                   |
 | `bin/`          | CLI entry point (`frontend-craft.ts`)                                             |
-| `commands/`     | Custom slash commands (`fec-init`, `fec-review`, `fec-scaffold`)                  |
+| `commands/`     | Custom slash commands (`fec-init`, `fec-review`, `fec-scaffold`, workflow commands) |
 | `docs/`         | Runtime installation docs and localized READMEs                                   |
 | `hooks/`        | Hook configuration (`hooks.json`)                                                 |
 | `scripts/`      | Helper scripts (formatting, packaging, notifications, security, testing)          |

@@ -9,6 +9,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 Project-facing release notes are maintained in English from 2.0.0 onward. Historical entries may preserve their original language.
 
+## [Unreleased]
+
+### Added
+
+- Added new workflow capabilities: `fec-tdd-workflow`, `fec-refactor-clean`, `fec-doc-sync`, `/fec-plan`, `/fec-tdd`, `/fec-build-fix`, `/fec-refactor-clean`, `/fec-doc-sync`, plus `frontend-build-fixer`, `frontend-refactor-cleaner`, and `frontend-doc-updater`.
+- Added shared rules for agent workflow and working modes, and expanded testing, performance, refactoring, git, and comment rules with TDD, incremental validation, cleanup, and documentation-sync guidance.
+
+### Changed
+
+- Enhanced `fec-validation-fix` with incremental build-fix behavior and added cross-platform long-running command guidance in the Node security hook.
+
 ## [2.2.1] - 2026-05-21
 
 ### Added
