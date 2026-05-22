@@ -5,6 +5,7 @@ import { promptLocation, promptRuntime } from "./interactive.js";
 import { getInstallBaseDir } from "./runtime-homes.js";
 import { RUNTIME_CAPABILITIES, renderRuntimeCapabilityMatrix } from "./runtime-capabilities.js";
 import { resolvePluginRoot } from "./shared/resolve-plugin-root.js";
+import { beginManifestSession, discardManifestSession, endManifestSession, getManifestPath } from "./shared/fs.js";
 import type { InstallContext } from "./types.js";
 
 function readPkgVersion(pluginRoot: string): string {
@@ -45,6 +46,8 @@ Usage:
   frontend-craft install <runtime> [options]
   frontend-craft install --all [options]
   frontend-craft install
+  frontend-craft update <runtime> [options]
+  frontend-craft upgrade <runtime> [options]
   frontend-craft list
   frontend-craft matrix
   frontend-craft doctor <runtime>
@@ -122,7 +125,8 @@ export async function main(argv: string[]): Promise<void> {
     if (r) console.warn(`Requested runtime: ${r}`);
     return;
   }
-  if (cmd !== "install") {
+  const mode = cmd === "update" || cmd === "upgrade" ? "update" : "install";
+  if (cmd !== "install" && cmd !== "update" && cmd !== "upgrade") {
     console.error(`Unknown command: ${cmd}`);
     printHelp();
     process.exitCode = 1;
@@ -178,10 +182,25 @@ export async function main(argv: string[]): Promise<void> {
       isGlobal,
       baseDir,
       dryRun,
+      mode,
       capabilities: RUNTIME_CAPABILITIES[rt],
     };
-    console.log(`Installing frontend-craft for "${rt}" -> ${baseDir}${isGlobal ? " (global)" : ""}`);
-    await INSTALLERS[rt](ctx);
+    if (mode === "install") {
+      console.log(`Installing frontend-craft for "${rt}" -> ${baseDir}${isGlobal ? " (global)" : ""}`);
+      if (!dryRun && fs.existsSync(getManifestPath(baseDir))) {
+        console.log(`Existing frontend-craft manifest found; use "frontend-craft update ${rt}" to refresh managed files.`);
+      }
+    } else {
+      console.log(`Updating frontend-craft for "${rt}" -> ${baseDir}${isGlobal ? " (global)" : ""}`);
+    }
+    if (!dryRun) beginManifestSession({ baseDir, mode, packageVersion: readPkgVersion(pluginRoot), runtime: rt, isGlobal });
+    try {
+      await INSTALLERS[rt](ctx);
+      if (!dryRun) endManifestSession();
+    } catch (err) {
+      if (!dryRun) discardManifestSession();
+      throw err;
+    }
   }
 }
 

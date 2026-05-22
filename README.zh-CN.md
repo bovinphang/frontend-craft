@@ -49,6 +49,7 @@ npx frontend-craft@latest list
 npx frontend-craft@latest install --local claude
 npx frontend-craft@latest install --global codex
 npx frontend-craft@latest install cursor --local
+npx frontend-craft@latest update claude --local
 npx frontend-craft@latest install --all --dry-run --global
 ```
 
@@ -315,7 +316,7 @@ $env:MODAO_TOKEN = "your-modao-token"
 
 ## 保持更新
 
-- **CLI 安装：** 使用相同的 `--local` / `--global` 与 runtime，重新执行 `npx frontend-craft@latest install`，版本说明见 [CHANGELOG.zh-CN.md](CHANGELOG.zh-CN.md) / [CHANGELOG.md](CHANGELOG.md)。
+- **CLI 安装：** 使用相同的作用域执行 `npx frontend-craft@latest update <runtime> --local` 或 `--global`；`upgrade` 是别名。CLI 会在 runtime 目录写入 `frontend-craft.manifest.json`，并跳过上次托管安装后被用户改动过的文件。
 - **Claude Code Marketplace 或 submodule 安装：** 见 [docs/runtimes/claude.zh-CN.md](docs/runtimes/claude.zh-CN.md) 中的 **更新** · [English](docs/runtimes/claude.md)。
 
 ---

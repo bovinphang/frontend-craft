@@ -49,6 +49,7 @@ npx frontend-craft@latest list
 npx frontend-craft@latest install --local claude
 npx frontend-craft@latest install --global codex
 npx frontend-craft@latest install cursor --local
+npx frontend-craft@latest update claude --local
 npx frontend-craft@latest install --all --dry-run --global
 ```
 
@@ -315,7 +316,7 @@ All review, analysis, and evaluation outputs are saved as Markdown files to the 
 
 ## Staying up to date
 
-- **CLI installs:** Re-run `npx frontend-craft@latest install` with the same `--local` / `--global` flags and runtime(s), and read [CHANGELOG.md](CHANGELOG.md) for release notes.
+- **CLI installs:** Run `npx frontend-craft@latest update <runtime> --local` or `--global` for the same scope. `upgrade` is an alias. The CLI writes `frontend-craft.manifest.json` in the runtime directory and skips files that were modified after the previous managed install.
 - **Claude Code Marketplace or submodule installs:** See **Updating** in [docs/runtimes/claude.md](docs/runtimes/claude.md) · [简体中文](docs/runtimes/claude.zh-CN.md).
 
 ---
