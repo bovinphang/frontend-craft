@@ -8,7 +8,7 @@
     "rootDir": ".",
     "declaration": false,
     "strict": true,
-    "noImplicitAny": false,
+    "noImplicitAny": true,
     "noImplicitOverride": true,
     "skipLibCheck": true,
     "resolveJsonModule": true,

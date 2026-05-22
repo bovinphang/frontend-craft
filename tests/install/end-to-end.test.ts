@@ -209,7 +209,9 @@ test("all runtime local installs match declared capabilities", () => {
         );
         assert.ok(fs.existsSync(path.join(baseDir, "rules", "react.md")), "qoder installs shared rules");
         assert.ok(fs.existsSync(path.join(baseDir, "hooks", "security-check.js")), "qoder installs hook scripts");
-        const settings = JSON.parse(fs.readFileSync(path.join(baseDir, "settings.json"), "utf8"));
+        const settings = JSON.parse(fs.readFileSync(path.join(baseDir, "settings.json"), "utf8")) as {
+          hooks?: unknown;
+        };
         assert.ok(settings.hooks, "qoder settings include hooks");
         assert.ok(JSON.stringify(settings.hooks).includes(".qoder/hooks/security-check.js"));
       }
@@ -228,6 +230,6 @@ test("all runtime local installs match declared capabilities", () => {
   }
 });
 
-function escapeRegExp(value) {
+function escapeRegExp(value: string): string {
   return value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 }

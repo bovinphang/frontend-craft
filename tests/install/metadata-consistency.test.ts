@@ -6,9 +6,24 @@ import { resolvePluginRoot } from "../../src/install/shared/resolve-plugin-root.
 
 const root = resolvePluginRoot(import.meta.url);
 
+type SkillMetadata = {
+  id: string;
+  category: string;
+  version: string;
+  license: string;
+  homepage: string;
+  repository: string;
+  summary: string;
+  tags: string[];
+  keywords: string[];
+  platforms: string[];
+};
+
+type EvalQueries = Record<string, { should_trigger: unknown[]; should_not_trigger: unknown[] }>;
+
 test("skills metadata matches skill directories and frontmatter names", () => {
   const skillsDir = path.join(root, "skills");
-  const metadata = JSON.parse(fs.readFileSync(path.join(skillsDir, "metadata.json"), "utf8"));
+  const metadata = JSON.parse(fs.readFileSync(path.join(skillsDir, "metadata.json"), "utf8")) as SkillMetadata[];
   const skillDirs = fs
     .readdirSync(skillsDir, { withFileTypes: true })
     .filter((entry) => entry.isDirectory())
@@ -43,7 +58,7 @@ test("skills metadata matches skill directories and frontmatter names", () => {
 });
 
 test("skills metadata uses the four public taxonomy categories", () => {
-  const metadata = JSON.parse(fs.readFileSync(path.join(root, "skills", "metadata.json"), "utf8"));
+  const metadata = JSON.parse(fs.readFileSync(path.join(root, "skills", "metadata.json"), "utf8")) as SkillMetadata[];
   const allowedCategories = new Set(["project-standard", "capability", "quality", "migration-design"]);
 
   for (const skill of metadata) {
@@ -52,8 +67,13 @@ test("skills metadata uses the four public taxonomy categories", () => {
 });
 
 test("skills metadata includes standalone publish fields", () => {
-  const pkg = JSON.parse(fs.readFileSync(path.join(root, "package.json"), "utf8"));
-  const metadata = JSON.parse(fs.readFileSync(path.join(root, "skills", "metadata.json"), "utf8"));
+  const pkg = JSON.parse(fs.readFileSync(path.join(root, "package.json"), "utf8")) as {
+    version: string;
+    license: string;
+    homepage: string;
+    repository: { url: string };
+  };
+  const metadata = JSON.parse(fs.readFileSync(path.join(root, "skills", "metadata.json"), "utf8")) as SkillMetadata[];
   const expectedPlatforms = ["skills-cli", "skillreg", "claude-code", "codex", "cursor", "opencode", "openclaw", "generic-skill-runtime"];
 
   for (const skill of metadata) {
@@ -76,8 +96,8 @@ test("skills metadata includes standalone publish fields", () => {
 
 test("skill trigger eval queries cover every skill with positive and negative examples", () => {
   const skillsDir = path.join(root, "skills");
-  const metadata = JSON.parse(fs.readFileSync(path.join(skillsDir, "metadata.json"), "utf8"));
-  const evalQueries = JSON.parse(fs.readFileSync(path.join(skillsDir, "eval_queries.json"), "utf8"));
+  const metadata = JSON.parse(fs.readFileSync(path.join(skillsDir, "metadata.json"), "utf8")) as SkillMetadata[];
+  const evalQueries = JSON.parse(fs.readFileSync(path.join(skillsDir, "eval_queries.json"), "utf8")) as EvalQueries;
 
   assert.deepEqual(Object.keys(evalQueries).sort(), metadata.map((skill) => skill.id).sort());
 
@@ -96,24 +116,28 @@ test("marketplace skill count matches skills directory count", () => {
     .filter((entry) => entry.isDirectory()).length;
   const marketplace = JSON.parse(
     fs.readFileSync(path.join(root, ".claude-plugin", "marketplace.json"), "utf8"),
-  );
+  ) as { plugins: Array<{ description: string }> };
   const description = marketplace.plugins[0].description;
   assert.match(description, new RegExp(`${skillCount} skills`));
 });
 
 test("public metadata versions follow package.json", () => {
-  const pkg = JSON.parse(fs.readFileSync(path.join(root, "package.json"), "utf8"));
-  const plugin = JSON.parse(fs.readFileSync(path.join(root, ".claude-plugin", "plugin.json"), "utf8"));
+  const pkg = JSON.parse(fs.readFileSync(path.join(root, "package.json"), "utf8")) as { version: string };
+  const plugin = JSON.parse(fs.readFileSync(path.join(root, ".claude-plugin", "plugin.json"), "utf8")) as {
+    version: string;
+  };
   const marketplace = JSON.parse(
     fs.readFileSync(path.join(root, ".claude-plugin", "marketplace.json"), "utf8"),
-  );
-  const openclaw = JSON.parse(fs.readFileSync(path.join(root, "openclaw.plugin.json"), "utf8"));
+  ) as { plugins: Array<{ version: string }> };
+  const openclaw = JSON.parse(fs.readFileSync(path.join(root, "openclaw.plugin.json"), "utf8")) as {
+    version: string;
+  };
 
   assert.equal(plugin.version, pkg.version);
   assert.equal(marketplace.plugins[0].version, pkg.version);
   assert.equal(openclaw.version, pkg.version);
 
-  const skills = JSON.parse(fs.readFileSync(path.join(root, "skills", "metadata.json"), "utf8"));
+  const skills = JSON.parse(fs.readFileSync(path.join(root, "skills", "metadata.json"), "utf8")) as SkillMetadata[];
   for (const skill of skills) {
     assert.equal(skill.version, pkg.version);
   }
@@ -191,11 +215,11 @@ test("fec-init mentions every shared rule copied by the command", () => {
   }
 });
 
-function escapeRegExp(value) {
+function escapeRegExp(value: string): string {
   return value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 }
 
-function assertNoDuplicateHeadingPair(body, dir, left, right) {
+function assertNoDuplicateHeadingPair(body: string, dir: string, left: string, right: string): void {
   const hasLeft = new RegExp(`^##\\s+${escapeRegExp(left)}$`, "m").test(body);
   const hasRight = new RegExp(`^##\\s+${escapeRegExp(right)}$`, "m").test(body);
   assert.ok(!(hasLeft && hasRight), `duplicate skill sections should be merged in ${dir}: ${left} + ${right}`);

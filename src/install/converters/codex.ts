@@ -1,13 +1,14 @@
 import path from "node:path";
 import fs from "node:fs";
 import os from "node:os";
+import type { InstallContext } from "../types.js";
 import { copyDir, copyFile, ensureDir, readUtf8, writeUtf8 } from "../shared/fs.js";
 import { agentMdToToml } from "../codex-agents.js";
 
 /**
  * @param {import('../types.js').InstallContext} ctx
  */
-export async function installCodex(ctx) {
+export async function installCodex(ctx: InstallContext): Promise<void> {
   const { pluginRoot, baseDir, cwd, dryRun, isGlobal } = ctx;
   const agentsSrc = path.join(pluginRoot, "agents");
   const codexAgents = path.join(baseDir, "agents");

@@ -1,12 +1,13 @@
 import path from "node:path";
 import fs from "node:fs";
+import type { InstallContext } from "../types.js";
 import { copyDir, copyFile, ensureDir, readUtf8, writeUtf8 } from "../shared/fs.js";
 
 /**
  * @param {string} pluginRoot
  * @param {string} body
  */
-export function injectPluginRoot(pluginRoot, body) {
+export function injectPluginRoot(pluginRoot: string, body: string): string {
   const abs = path.resolve(pluginRoot);
   return body
     .replaceAll("${CLAUDE_PLUGIN_ROOT}", abs)
@@ -16,7 +17,7 @@ export function injectPluginRoot(pluginRoot, body) {
 /**
  * @param {string} pluginRoot
  */
-export function buildHooksJson(pluginRoot) {
+export function buildHooksJson(pluginRoot: string): string {
   const src = path.join(pluginRoot, "hooks", "hooks.json");
   const raw = readUtf8(src);
   return injectPluginRoot(pluginRoot, raw);
@@ -25,7 +26,7 @@ export function buildHooksJson(pluginRoot) {
 /**
  * @param {{ pluginRoot: string; baseDir: string; cwd: string; dryRun: boolean }} ctx
  */
-export async function installClaude(ctx) {
+export async function installClaude(ctx: InstallContext): Promise<void> {
   const { pluginRoot, baseDir, dryRun, cwd } = ctx;
   if (dryRun) {
     console.log(`[dry-run] would install Claude Code files into ${baseDir}`);

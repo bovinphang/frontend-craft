@@ -214,7 +214,7 @@ export function createLocationPromptState(runtimes: string[], options: { pageSiz
   });
 }
 
-export function renderSelectablePrompt(state: SelectState<any>): string {
+export function renderSelectablePrompt(state: SelectState<unknown>): string {
   const visible = state.visibleOptions();
   const selectedSet = new Set(state.selected);
   const optionByValue = new Map(state.options.map((option) => [option.value, option]));

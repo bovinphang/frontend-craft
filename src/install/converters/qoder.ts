@@ -1,5 +1,6 @@
 import path from "node:path";
 import fs from "node:fs";
+import type { InstallContext } from "../types.js";
 import { copyDir, copyFile, ensureDir, readUtf8, writeUtf8 } from "../shared/fs.js";
 
 const HOOK_SCRIPTS = ["security-check.js", "format-changed-file.js", "run-tests.js", "notify.js"];
@@ -7,7 +8,7 @@ const HOOK_SCRIPTS = ["security-check.js", "format-changed-file.js", "run-tests.
 /**
  * @param {import('../types.js').InstallContext} ctx
  */
-export async function installQoder(ctx) {
+export async function installQoder(ctx: InstallContext): Promise<void> {
   const { pluginRoot, baseDir, dryRun } = ctx;
   if (dryRun) {
     console.log(`[dry-run] qoder -> ${baseDir}`);

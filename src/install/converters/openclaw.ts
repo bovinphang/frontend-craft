@@ -1,11 +1,12 @@
 import path from "node:path";
 import fs from "node:fs";
+import type { InstallContext } from "../types.js";
 import { copyDir, copyFile, ensureDir } from "../shared/fs.js";
 
 /**
  * @param {import('../types.js').InstallContext} ctx
  */
-export async function installOpenclaw(ctx) {
+export async function installOpenclaw(ctx: InstallContext): Promise<void> {
   const { pluginRoot, baseDir, cwd, dryRun } = ctx;
   if (dryRun) return console.log(`[dry-run] openclaw -> ${baseDir}`);
   ensureDir(baseDir);

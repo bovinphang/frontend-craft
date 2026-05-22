@@ -3,7 +3,7 @@
  * @param {string} raw
  * @param {string} filename
  */
-export function agentMdToToml(raw, filename) {
+export function agentMdToToml(raw: string, filename: string): string {
   const m = raw.match(/^---\r?\n([\s\S]*?)\r?\n---\r?\n([\s\S]*)$/);
   if (!m) throw new Error(`no frontmatter: ${filename}`);
   const fm = m[1];
@@ -16,7 +16,7 @@ export function agentMdToToml(raw, filename) {
   const name = nameM[1].trim();
   const dm = fm.match(/^description:\s*(.+)$/m);
   const desc = dm ? dm[1].trim() : "";
-  const esc = (s) => s.replace(/\\/g, "\\\\").replace(/"/g, '\\"');
+  const esc = (s: string): string => s.replace(/\\/g, "\\\\").replace(/"/g, '\\"');
   return (
     `name = "${name}"\n` +
     `description = "${esc(desc)}"\n\n` +

@@ -4,7 +4,7 @@ import path from "node:path";
 /**
  * @param {string} p
  */
-function expandTilde(p) {
+function expandTilde(p: string): string {
   if (!p) return p;
   if (p.startsWith("~/") || p === "~") return path.join(os.homedir(), p.slice(1));
   return p;
@@ -14,7 +14,7 @@ function expandTilde(p) {
  * Global config base directory (aligned with get-shit-done runtime-homes + openclaw).
  * @param {string} runtime
  */
-export function getGlobalConfigDir(runtime) {
+export function getGlobalConfigDir(runtime: string): string {
   const home = os.homedir();
   const env = process.env;
 
@@ -65,7 +65,7 @@ export function getGlobalConfigDir(runtime) {
 }
 
 /** @type {Record<string, string>} project-relative directory; empty = project root files only */
-export const LOCAL_DIR = {
+export const LOCAL_DIR: Record<string, string> = {
   claude: ".claude",
   codex: ".codex",
   cursor: ".cursor",
@@ -86,7 +86,15 @@ export const LOCAL_DIR = {
 /**
  * @param {{ runtime: string; isGlobal: boolean; cwd: string }} p
  */
-export function getInstallBaseDir({ runtime, isGlobal, cwd }) {
+export function getInstallBaseDir({
+  runtime,
+  isGlobal,
+  cwd,
+}: {
+  runtime: string;
+  isGlobal: boolean;
+  cwd: string;
+}): string {
   if (isGlobal) return getGlobalConfigDir(runtime);
   if (runtime === "cline") return cwd;
   const sub = LOCAL_DIR[runtime] ?? ".claude";

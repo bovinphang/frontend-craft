@@ -1,11 +1,12 @@
 import path from "node:path";
 import fs from "node:fs";
+import type { InstallContext } from "../types.js";
 import { ensureDir, readUtf8, writeUtf8 } from "../shared/fs.js";
 
 /**
  * @param {import('../types.js').InstallContext} ctx
  */
-export async function installCopilot(ctx) {
+export async function installCopilot(ctx: InstallContext): Promise<void> {
   const { pluginRoot, baseDir, dryRun } = ctx;
   if (dryRun) {
     console.log(`[dry-run] copilot -> ${baseDir}`);
