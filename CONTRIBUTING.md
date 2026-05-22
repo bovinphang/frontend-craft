@@ -27,9 +27,10 @@ npm run typecheck:openclaw
 ├── commands/        # Custom commands (fec-init, fec-review, fec-scaffold)
 ├── docs/            # Runtime installation docs and localized READMEs
 ├── hooks/           # Hook configuration (hooks.json)
-├── scripts/         # Helper scripts (formatting, packaging, notifications, security, testing)
+├── scripts/         # Source-run maintenance scripts (build, packaging, publishing checks)
 ├── skills/          # Skill definitions (SKILL.md, metadata.json)
 ├── src/             # Source code
+│   ├── hooks/       # Runtime hook source bundled to dist/hooks/
 │   ├── install/     # Installer core (CLI, interactive wizard, runtime converters)
 │   └── openclaw/    # OpenClaw runtime TypeScript source
 ├── templates/       # Templates (Claude/Codex/OpenClaw configs + shared rules)
@@ -45,16 +46,21 @@ npm run typecheck:openclaw
 # 1. Install dependencies
 npm install
 
-# 2. Install to a specific runtime (e.g., claude)
+# 2. Build dist/bin and dist/hooks
+npm run build
+
+# 3. Install to a specific runtime (e.g., claude)
 node dist/bin/frontend-craft.js install claude --local --dry-run  # preview first
 node dist/bin/frontend-craft.js install claude --local            # actual install
 
-# 3. Install to all runtimes
+# 4. Install to all runtimes
 node dist/bin/frontend-craft.js install --all --dry-run
 
-# 4. List all supported runtimes
+# 5. List all supported runtimes
 node dist/bin/frontend-craft.js list
 ```
+
+`npm run build` runs `clean`, `typecheck`, and `scripts/build-dist.ts`. Run it before using `dist/bin/frontend-craft.js` or the bundled hook scripts locally.
 
 ## Testing
 
@@ -65,23 +71,25 @@ Tests use Node.js built-in `node:test` with `assert/strict`.
 npm test
 
 # Run a single test file
-node --test dist/tests/install/cli.test.js
+node --import tsx --test tests/install/cli.test.ts
 
 # Run installer tests
-node --test dist/tests/install/*.js
+node --import tsx --test tests/install/*.test.ts
 
 # Run converter tests
-node --test dist/tests/converters/*.js
+node --import tsx --test tests/converters/*.test.ts
 
 # Run all-runtimes dry-run test
-node --test dist/tests/install/all-runtimes-dry.test.js
+node --import tsx --test tests/install/all-runtimes-dry.test.ts
 ```
 
 For testing the interactive installation wizard, set `FRONTEND_CRAFT_FORCE_INTERACTIVE=1`:
 
 ```bash
-FRONTEND_CRAFT_FORCE_INTERACTIVE=1 node --test dist/tests/install/cli.test.js
+FRONTEND_CRAFT_FORCE_INTERACTIVE=1 node --import tsx --test tests/install/cli.test.ts
 ```
+
+`npm test` runs `npm run build` first, then executes the curated converter and installer test suite from `tests/`.
 
 ## OpenClaw Build
 
@@ -116,24 +124,63 @@ When changing a skill, keep these source files aligned:
 - `skills/eval_queries.json` — positive and negative trigger examples used by routing quality checks.
 - `README.md` and localized README summaries when the public skill list or user-facing behavior changes.
 
-## Scripts
+## NPM Scripts
+
+Use `package.json` scripts as the public development entrypoints.
+
+| Script                         | Purpose                                                                          |
+| ------------------------------ | -------------------------------------------------------------------------------- |
+| `npm run clean`                | Remove `dist/`.                                                                  |
+| `npm run typecheck`            | Run TypeScript checking for the main project with `tsconfig.json`.               |
+| `npm run build`                | Run `clean`, `typecheck`, and bundle CLI/hooks via `scripts/build-dist.ts`.      |
+| `npm test`                     | Build, then run the curated `node:test` suite with `tsx`.                        |
+| `npm run build:openclaw`       | Build the main project, then bundle OpenClaw runtime output.                     |
+| `npm run audit:skills`         | Build, then report skill instruction size and description overlap signals.       |
+| `npm run typecheck:openclaw`   | Run TypeScript checking for OpenClaw with `tsconfig.openclaw.json`.              |
+| `npm run check:openclaw-dist`  | Verify the generated OpenClaw dist output.                                       |
+| `npm run pack:openclaw`        | Build, verify, and package the OpenClaw plugin.                                  |
+| `npm run pack:skills`          | Build standalone packages under `skill-packages/`.                               |
+| `npm run check:skills-publish` | Build, then verify standalone skill package metadata and copied files.           |
+| `npm run pack:all`             | Run tests, package OpenClaw, package skills, and verify skill publishing output. |
+| `npm run sync:version`         | Sync package version metadata across release manifests.                          |
+| `npm run version`              | Run `sync:version`, then stage versioned manifests for npm version workflows.    |
+| `npm run prepack`              | Build before `npm pack`.                                                         |
+| `npm run prepublishOnly`       | Sync versions and run tests before npm publish.                                  |
+
+For common change types:
+
+- Skill changes: run `npm test`, `npm run audit:skills`, `npm run pack:skills`, and `npm run check:skills-publish`.
+- OpenClaw changes: run `npm run typecheck:openclaw` and `npm run pack:openclaw`.
+- Release packaging: run `npm run pack:all`; `prepublishOnly` also runs version sync and tests before publish.
+
+## Source Maintenance Files
+
+Maintenance scripts live under `scripts/` and run from source with `tsx`; they are not published as `dist/scripts`.
+
+| File                                       | Purpose                              |
+| ------------------------------------------ | ------------------------------------ |
+| `scripts/audit-skills.ts`                  | Skill size and trigger-overlap audit |
+| `scripts/build-dist.ts`                    | CLI and runtime hook bundler         |
+| `scripts/sync-codex-agents-toml.ts`        | Sync Codex agents configuration      |
+| `scripts/sync-version.ts`                  | Sync release version metadata        |
+| `scripts/pack-skills.ts`                   | Standalone skill package builder     |
+| `scripts/check-skills-publish.ts`          | Standalone skill package verifier    |
+| `scripts/skill-packaging.ts`               | Shared skill packaging helpers       |
+| `scripts/openclaw/build.ts`                | OpenClaw esbuild bundler             |
+| `scripts/openclaw/pack-openclaw.ts`        | OpenClaw packaging                   |
+| `scripts/openclaw/verify-openclaw-dist.ts` | Verify OpenClaw dist completeness    |
+
+## Runtime Hook Scripts
 
 Hook scripts live under `src/hooks/` and are bundled into `dist/hooks/` for published runtime use. Maintenance scripts live under `scripts/` and run from source with `tsx`; they are not published as `dist/scripts`.
 
-| Script                                      | Purpose                           |
-| ------------------------------------------- | --------------------------------- |
-| `src/hooks/run-tests.ts`                     | Test runner helper                |
-| `src/hooks/format-changed-file.ts`           | Format changed files              |
-| `src/hooks/security-check.ts`                | Security scanning                 |
-| `src/hooks/notify.ts`                        | Notification script               |
-| `src/hooks/session-start.ts`                 | Session initialization            |
-| `scripts/sync-codex-agents-toml.ts`        | Sync Codex agents configuration   |
-| `scripts/pack-skills.ts`                   | Standalone skill package builder  |
-| `scripts/check-skills-publish.ts`          | Standalone skill package verifier |
-| `scripts/skill-packaging.ts`               | Shared skill packaging helpers    |
-| `scripts/openclaw/build.ts`                | OpenClaw esbuild bundler          |
-| `scripts/openclaw/pack-openclaw.ts`        | OpenClaw packaging                |
-| `scripts/openclaw/verify-openclaw-dist.ts` | Verify OpenClaw dist completeness |
+| Source file                        | Bundled output                      | Purpose                |
+| ---------------------------------- | ----------------------------------- | ---------------------- |
+| `src/hooks/run-tests.ts`           | `dist/hooks/run-tests.js`           | Test runner helper     |
+| `src/hooks/format-changed-file.ts` | `dist/hooks/format-changed-file.js` | Format changed files   |
+| `src/hooks/security-check.ts`      | `dist/hooks/security-check.js`      | Security scanning      |
+| `src/hooks/notify.ts`              | `dist/hooks/notify.js`              | Notification script    |
+| `src/hooks/session-start.ts`       | `dist/hooks/session-start.js`       | Session initialization |
 
 ## Architecture Overview
 
@@ -275,9 +322,11 @@ skills:
 ## Adding a Hook
 
 1. Update `hooks/hooks.json`.
-2. Put hook scripts under `scripts/` and prefer cross-platform Node.js.
-3. In `hooks/hooks.json`, use **`${CLAUDE_PLUGIN_ROOT}`** for paths to bundled `scripts/` entrypoints (Claude Code substitutes this at runtime; see the official [Plugins reference](https://code.claude.com/docs/en/plugins-reference)). The Claude installer in this repo also expands **`${CLAUDE_PLUGIN_ROOT}`** and legacy **`${FRONTEND_CRAFT_ROOT}`** to absolute paths when it writes `hooks.json` under `.claude/`.
-4. Update the Hooks table in `README.md`.
+2. Put runtime hook scripts under `src/hooks/` and prefer cross-platform Node.js.
+3. Add each new hook entrypoint to `scripts/build-dist.ts` so `npm run build` bundles it into `dist/hooks/`.
+4. In `hooks/hooks.json`, use **`${CLAUDE_PLUGIN_ROOT}/dist/hooks/<script>.js`** for bundled hook entrypoints (Claude Code substitutes the root at runtime; see the official [Plugins reference](https://code.claude.com/docs/en/plugins-reference)). The Claude installer in this repo also expands **`${CLAUDE_PLUGIN_ROOT}`** and legacy **`${FRONTEND_CRAFT_ROOT}`** to absolute paths when it writes `hooks.json` under `.claude/`.
+5. Keep repository maintenance scripts under `scripts/`; do not reference them directly from runtime hook configuration.
+6. Update the Hooks table in `README.md`.
 
 ## Pull Request Checklist
 
@@ -285,11 +334,12 @@ Before opening a pull request:
 
 - [ ] The change is scoped and described clearly.
 - [ ] `npm test` passes.
-- [ ] Skill changes pass `npm run pack:skills` and `npm run check:skills-publish`.
-- [ ] `npm run typecheck:openclaw` passes when OpenClaw code or templates are affected.
+- [ ] Skill changes pass `npm run audit:skills`, `npm run pack:skills`, and `npm run check:skills-publish`.
+- [ ] `npm run typecheck:openclaw` and `npm run pack:openclaw` pass when OpenClaw code or templates are affected.
 - [ ] `README.md` and `CHANGELOG.md` are updated when user-facing behavior changes (and `CHANGELOG.zh-CN.md` when you ship Chinese-facing release notes).
 - [ ] Localized README files are synced, or a follow-up translation issue is linked.
 - [ ] New runtime, agent, skill, command, hook, or template changes include relevant tests or dry-run coverage.
+- [ ] Release packaging changes pass `npm run pack:all` or are covered by the `prepublishOnly` publish gate.
 - [ ] Security-sensitive changes have been reviewed against `SECURITY.md`.
 
 ## Code Style
