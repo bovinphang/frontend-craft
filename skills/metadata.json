@@ -10,7 +10,7 @@
       "audit"
     ],
     "summary": "Frontend Craft skill for 无障碍检查.",
-    "version": "2.2.1",
+    "version": "2.3.0",
     "license": "MIT",
     "homepage": "https://github.com/bovinphang/frontend-craft",
     "repository": "https://github.com/bovinphang/frontend-craft",
@@ -44,7 +44,7 @@
       "client-persistence"
     ],
     "summary": "Frontend Craft skill for 浏览器存储.",
-    "version": "2.2.1",
+    "version": "2.3.0",
     "license": "MIT",
     "homepage": "https://github.com/bovinphang/frontend-craft",
     "repository": "https://github.com/bovinphang/frontend-craft",
@@ -79,7 +79,7 @@
       "regression"
     ],
     "summary": "Frontend Craft skill for 组件测试.",
-    "version": "2.2.1",
+    "version": "2.3.0",
     "license": "MIT",
     "homepage": "https://github.com/bovinphang/frontend-craft",
     "repository": "https://github.com/bovinphang/frontend-craft",
@@ -114,7 +114,7 @@
       "quality-gate"
     ],
     "summary": "Frontend Craft skill for 测试策略.",
-    "version": "2.2.1",
+    "version": "2.3.0",
     "license": "MIT",
     "homepage": "https://github.com/bovinphang/frontend-craft",
     "repository": "https://github.com/bovinphang/frontend-craft",
@@ -150,7 +150,7 @@
       "r3f"
     ],
     "summary": "Frontend Craft skill for Canvas 与 Three.js.",
-    "version": "2.2.1",
+    "version": "2.3.0",
     "license": "MIT",
     "homepage": "https://github.com/bovinphang/frontend-craft",
     "repository": "https://github.com/bovinphang/frontend-craft",
@@ -186,7 +186,7 @@
       "server-state"
     ],
     "summary": "Frontend Craft skill for TanStack Query 数据获取.",
-    "version": "2.2.1",
+    "version": "2.3.0",
     "license": "MIT",
     "homepage": "https://github.com/bovinphang/frontend-craft",
     "repository": "https://github.com/bovinphang/frontend-craft",
@@ -222,7 +222,7 @@
       "pom"
     ],
     "summary": "Frontend Craft skill for E2E 测试规范.",
-    "version": "2.2.1",
+    "version": "2.3.0",
     "license": "MIT",
     "homepage": "https://github.com/bovinphang/frontend-craft",
     "repository": "https://github.com/bovinphang/frontend-craft",
@@ -258,7 +258,7 @@
       "file-upload"
     ],
     "summary": "Frontend Craft skill for 表单处理.",
-    "version": "2.2.1",
+    "version": "2.3.0",
     "license": "MIT",
     "homepage": "https://github.com/bovinphang/frontend-craft",
     "repository": "https://github.com/bovinphang/frontend-craft",
@@ -292,7 +292,7 @@
       "best-practices"
     ],
     "summary": "Frontend Craft skill for 前端代码审查.",
-    "version": "2.2.1",
+    "version": "2.3.0",
     "license": "MIT",
     "homepage": "https://github.com/bovinphang/frontend-craft",
     "repository": "https://github.com/bovinphang/frontend-craft",
@@ -325,7 +325,7 @@
       "dependencies"
     ],
     "summary": "Frontend Craft skill for 重构清理.",
-    "version": "2.2.1",
+    "version": "2.3.0",
     "license": "MIT",
     "homepage": "https://github.com/bovinphang/frontend-craft",
     "repository": "https://github.com/bovinphang/frontend-craft",
@@ -361,7 +361,7 @@
       "mcp"
     ],
     "summary": "Frontend Craft skill for 设计稿实现.",
-    "version": "2.2.1",
+    "version": "2.3.0",
     "license": "MIT",
     "homepage": "https://github.com/bovinphang/frontend-craft",
     "repository": "https://github.com/bovinphang/frontend-craft",
@@ -397,7 +397,7 @@
       "visual-qa"
     ],
     "summary": "Frontend Craft skill for 界面质感打磨.",
-    "version": "2.2.1",
+    "version": "2.3.0",
     "license": "MIT",
     "homepage": "https://github.com/bovinphang/frontend-craft",
     "repository": "https://github.com/bovinphang/frontend-craft",
@@ -433,7 +433,7 @@
       "modernization"
     ],
     "summary": "Frontend Craft skill for 遗留系统迁移.",
-    "version": "2.2.1",
+    "version": "2.3.0",
     "license": "MIT",
     "homepage": "https://github.com/bovinphang/frontend-craft",
     "repository": "https://github.com/bovinphang/frontend-craft",
@@ -468,7 +468,7 @@
       "vanilla-js"
     ],
     "summary": "Frontend Craft skill for 传统前端规范.",
-    "version": "2.2.1",
+    "version": "2.3.0",
     "license": "MIT",
     "homepage": "https://github.com/bovinphang/frontend-craft",
     "repository": "https://github.com/bovinphang/frontend-craft",
@@ -502,7 +502,7 @@
       "performance"
     ],
     "summary": "Frontend Craft skill for 列表虚拟化优化.",
-    "version": "2.2.1",
+    "version": "2.3.0",
     "license": "MIT",
     "homepage": "https://github.com/bovinphang/frontend-craft",
     "repository": "https://github.com/bovinphang/frontend-craft",
@@ -537,7 +537,7 @@
       "workspace"
     ],
     "summary": "Frontend Craft skill for Monorepo 项目规范.",
-    "version": "2.2.1",
+    "version": "2.3.0",
     "license": "MIT",
     "homepage": "https://github.com/bovinphang/frontend-craft",
     "repository": "https://github.com/bovinphang/frontend-craft",
@@ -572,7 +572,7 @@
       "react"
     ],
     "summary": "Frontend Craft skill for Next.js 项目规范.",
-    "version": "2.2.1",
+    "version": "2.3.0",
     "license": "MIT",
     "homepage": "https://github.com/bovinphang/frontend-craft",
     "repository": "https://github.com/bovinphang/frontend-craft",
@@ -607,7 +607,7 @@
       "data-fetching"
     ],
     "summary": "Frontend Craft skill for Nuxt 项目规范.",
-    "version": "2.2.1",
+    "version": "2.3.0",
     "license": "MIT",
     "homepage": "https://github.com/bovinphang/frontend-craft",
     "repository": "https://github.com/bovinphang/frontend-craft",
@@ -642,7 +642,7 @@
       "installable"
     ],
     "summary": "Frontend Craft skill for PWA 实现.",
-    "version": "2.2.1",
+    "version": "2.3.0",
     "license": "MIT",
     "homepage": "https://github.com/bovinphang/frontend-craft",
     "repository": "https://github.com/bovinphang/frontend-craft",
@@ -677,7 +677,7 @@
       "architecture"
     ],
     "summary": "Frontend Craft skill for React 项目规范.",
-    "version": "2.2.1",
+    "version": "2.3.0",
     "license": "MIT",
     "homepage": "https://github.com/bovinphang/frontend-craft",
     "repository": "https://github.com/bovinphang/frontend-craft",
@@ -713,7 +713,7 @@
       "vue-router"
     ],
     "summary": "Frontend Craft skill for 路由保护.",
-    "version": "2.2.1",
+    "version": "2.3.0",
     "license": "MIT",
     "homepage": "https://github.com/bovinphang/frontend-craft",
     "repository": "https://github.com/bovinphang/frontend-craft",
@@ -750,7 +750,7 @@
       "dompurify"
     ],
     "summary": "Frontend Craft skill for 前端安全审查.",
-    "version": "2.2.1",
+    "version": "2.3.0",
     "license": "MIT",
     "homepage": "https://github.com/bovinphang/frontend-craft",
     "repository": "https://github.com/bovinphang/frontend-craft",
@@ -786,7 +786,7 @@
       "micro-interaction"
     ],
     "summary": "Frontend Craft skill for SVG 动画.",
-    "version": "2.2.1",
+    "version": "2.3.0",
     "license": "MIT",
     "homepage": "https://github.com/bovinphang/frontend-craft",
     "repository": "https://github.com/bovinphang/frontend-craft",
@@ -821,7 +821,7 @@
       "mdx"
     ],
     "summary": "Frontend Craft skill for Storybook 组件文档化.",
-    "version": "2.2.1",
+    "version": "2.3.0",
     "license": "MIT",
     "homepage": "https://github.com/bovinphang/frontend-craft",
     "repository": "https://github.com/bovinphang/frontend-craft",
@@ -856,7 +856,7 @@
       "runtime-docs"
     ],
     "summary": "Frontend Craft skill for 文档同步.",
-    "version": "2.2.1",
+    "version": "2.3.0",
     "license": "MIT",
     "homepage": "https://github.com/bovinphang/frontend-craft",
     "repository": "https://github.com/bovinphang/frontend-craft",
@@ -892,7 +892,7 @@
       "fix"
     ],
     "summary": "Frontend Craft skill for 验证与修复.",
-    "version": "2.2.1",
+    "version": "2.3.0",
     "license": "MIT",
     "homepage": "https://github.com/bovinphang/frontend-craft",
     "repository": "https://github.com/bovinphang/frontend-craft",
@@ -928,7 +928,7 @@
       "frontend-tests"
     ],
     "summary": "Frontend Craft skill for TDD 工作流.",
-    "version": "2.2.1",
+    "version": "2.3.0",
     "license": "MIT",
     "homepage": "https://github.com/bovinphang/frontend-craft",
     "repository": "https://github.com/bovinphang/frontend-craft",
@@ -962,7 +962,7 @@
       "product-design"
     ],
     "summary": "Frontend Craft skill for UI 设计方向.",
-    "version": "2.2.1",
+    "version": "2.3.0",
     "license": "MIT",
     "homepage": "https://github.com/bovinphang/frontend-craft",
     "repository": "https://github.com/bovinphang/frontend-craft",
@@ -997,7 +997,7 @@
       "dev-server"
     ],
     "summary": "Frontend Craft skill for Vite 项目规范.",
-    "version": "2.2.1",
+    "version": "2.3.0",
     "license": "MIT",
     "homepage": "https://github.com/bovinphang/frontend-craft",
     "repository": "https://github.com/bovinphang/frontend-craft",
@@ -1033,7 +1033,7 @@
       "components"
     ],
     "summary": "Frontend Craft skill for Vue 3 项目规范.",
-    "version": "2.2.1",
+    "version": "2.3.0",
     "license": "MIT",
     "homepage": "https://github.com/bovinphang/frontend-craft",
     "repository": "https://github.com/bovinphang/frontend-craft",
@@ -1068,7 +1068,7 @@
       "performance"
     ],
     "summary": "Frontend Craft skill for Web Workers.",
-    "version": "2.2.1",
+    "version": "2.3.0",
     "license": "MIT",
     "homepage": "https://github.com/bovinphang/frontend-craft",
     "repository": "https://github.com/bovinphang/frontend-craft",
