@@ -1,11 +1,12 @@
 import path from "node:path";
 import fs from "node:fs";
+import type { InstallContext } from "../types.js";
 import { copyDir, ensureDir } from "../shared/fs.js";
 
 /**
  * @param {import('../types.js').InstallContext} ctx
  */
-export async function installAntigravity(ctx) {
+export async function installAntigravity(ctx: InstallContext): Promise<void> {
   const { pluginRoot, baseDir, dryRun } = ctx;
   if (dryRun) return console.log(`[dry-run] antigravity -> ${baseDir}`);
   ensureDir(baseDir);
@@ -15,7 +16,7 @@ export async function installAntigravity(ctx) {
 /**
  * @param {import('../types.js').InstallContext} ctx
  */
-export async function installAugment(ctx) {
+export async function installAugment(ctx: InstallContext): Promise<void> {
   const { pluginRoot, baseDir, dryRun } = ctx;
   if (dryRun) return console.log(`[dry-run] augment -> ${baseDir}`);
   ensureDir(baseDir);
@@ -25,7 +26,7 @@ export async function installAugment(ctx) {
 /**
  * @param {import('../types.js').InstallContext} ctx
  */
-export async function installCodebuddy(ctx) {
+export async function installCodebuddy(ctx: InstallContext): Promise<void> {
   const { pluginRoot, baseDir, dryRun } = ctx;
   if (dryRun) return console.log(`[dry-run] codebuddy -> ${baseDir}`);
   ensureDir(baseDir);

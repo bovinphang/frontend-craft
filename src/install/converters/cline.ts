@@ -1,11 +1,12 @@
 import path from "node:path";
 import fs from "node:fs";
+import type { InstallContext } from "../types.js";
 import { readUtf8, writeUtf8 } from "../shared/fs.js";
 
 /**
  * @param {import('../types.js').InstallContext} ctx
  */
-export async function installCline(ctx) {
+export async function installCline(ctx: InstallContext): Promise<void> {
   const { pluginRoot, baseDir, dryRun } = ctx;
   if (dryRun) return console.log(`[dry-run] cline -> ${path.join(baseDir, ".clinerules")}`);
   const rulesSrc = path.join(pluginRoot, "templates", "shared", "rules");

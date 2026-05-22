@@ -1,6 +1,8 @@
 import { existsSync, readFileSync } from "node:fs";
 import { execSync } from "node:child_process";
 
+type PackageScripts = Record<string, string>;
+
 try {
   // consume stdin to prevent pipe errors
   process.stdin.resume();
@@ -10,10 +12,10 @@ try {
   const blocking = process.env.FRONTEND_CRAFT_VALIDATION_MODE === "blocking";
   let failed = false;
 
-  let scripts = {};
+  let scripts: PackageScripts = {};
   try {
-    const pkg = JSON.parse(readFileSync("package.json", "utf-8"));
-    scripts = pkg.scripts || {};
+    const pkg = JSON.parse(readFileSync("package.json", "utf-8")) as { scripts?: PackageScripts };
+    scripts = pkg.scripts ?? {};
   } catch {
     process.exit(0);
   }
@@ -22,7 +24,7 @@ try {
   if (existsSync("pnpm-lock.yaml")) runner = "pnpm";
   else if (existsSync("yarn.lock")) runner = "yarn";
 
-  function runIfExists(name) {
+  function runIfExists(name: string): void {
     if (!scripts[name]) return;
     try {
       execSync(`${runner} run ${name}`, {

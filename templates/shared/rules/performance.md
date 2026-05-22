@@ -9,6 +9,8 @@
 - 避免不必要的重渲染
 - 关注 Core Web Vitals
 - 前端构建必须同时验证开发体验和生产产物，不能只看 dev server 正常
+- 在上下文或任务边界不清时，不启动大规模性能重构；先定位瓶颈再改代码
+- 对长时间运行的命令保留可回看日志，必要时使用终端会话、CI artifact 或测试报告
 
 ## 代码分割与懒加载
 
@@ -92,3 +94,4 @@ const Dashboard = () => import('./pages/Dashboard.vue');
 - 频繁操作（如输入、滚动）不做防抖/节流
 - 认为 `vite build` 通过就代表 TypeScript 没有错误
 - 设置 `envPrefix: ""` 或把服务端密钥注入客户端 bundle
+- 未先复现卡顿、包体积或 Web Vitals 指标，就做大范围“性能优化”

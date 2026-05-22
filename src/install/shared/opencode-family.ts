@@ -1,11 +1,12 @@
 import path from "node:path";
 import fs from "node:fs";
+import type { InstallContext } from "../types.js";
 import { copyDir, ensureDir, readUtf8, writeUtf8 } from "../shared/fs.js";
 
 /**
  * @param {import('../types.js').InstallContext} ctx
  */
-export async function installOpencodeFamily(ctx) {
+export async function installOpencodeFamily(ctx: InstallContext): Promise<void> {
   const { pluginRoot, baseDir, dryRun } = ctx;
   const cmdDest = path.join(baseDir, "command");
   if (dryRun) {

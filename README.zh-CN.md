@@ -1,428 +1,403 @@
+<div align="center">
+
 # frontend-craft
+
+### 一套工具，适配所有 AI 编程助手，落地生产级前端规范。
 
 [![Stars](https://img.shields.io/github/stars/bovinphang/frontend-craft?style=flat)](https://github.com/bovinphang/frontend-craft/stargazers)
 [![CI](https://github.com/bovinphang/frontend-craft/actions/workflows/ci.yml/badge.svg)](https://github.com/bovinphang/frontend-craft/actions/workflows/ci.yml)
+[![npm version](https://img.shields.io/npm/v/frontend-craft)](https://www.npmjs.com/package/frontend-craft)
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+![Node](https://img.shields.io/badge/Node.js-22+-339933?logo=node.js&logoColor=white)
 ![TypeScript](https://img.shields.io/badge/-TypeScript-3178C6?logo=typescript&logoColor=white)
 ![React](https://img.shields.io/badge/-React-61DAFB?logo=react&logoColor=black)
 ![Vue](https://img.shields.io/badge/-Vue-4FC08D?logo=vue.js&logoColor=white)
 ![Figma](https://img.shields.io/badge/-Figma-F24E1E?logo=figma&logoColor=white)
-![Node](https://img.shields.io/badge/-Node.js-339933?logo=node.js&logoColor=white)
-
----
-
-<div align="center">
 
 **🌐 Language / 语言 / 語言 / 言語 / 언어**
 
-[**English**](README.md) | [简体中文](README.zh-CN.md) | [繁體中文](docs/zh-TW/README.md) | [日本語](docs/ja-JP/README.md) | [한국어](docs/ko-KR/README.md)
+[English](README.md) · [**简体中文**](README.zh-CN.md) · [繁體中文](docs/zh-TW/README.md) · [日本語](docs/ja-JP/README.md) · [한국어](docs/ko-KR/README.md)
 
 </div>
 
 ---
 
-**面向 Claude Code、Codex、Cursor、OpenCode、Gemini CLI、Qoder、Kilo、Windsurf、Copilot、Antigravity、Augment、Trae、CodeBuddy、Cline、OpenClaw 等工具的通用前端插件。**
+`frontend-craft` 是一个**通用前端插件**，为以下 **15 款 AI 编程助手**注入统一的前端工程规范：
 
-`frontend-craft` 将前端评审 agents、工作流 skills、斜杠命令、hooks、MCP 模板和项目规范集中在一个仓库中维护。推荐通过 CLI 将同一套前端工程规范安装到 15 种 AI 编程运行时。若你**仅通过 Claude Code Marketplace**（原生插件流程）安装，说明见 [docs/runtimes/claude.zh-CN.md](docs/runtimes/claude.zh-CN.md) · [English](docs/runtimes/claude.md)。
+`claude` `codex` `cursor` `windsurf` `opencode`
+`kilo` `gemini` `copilot` `antigravity` `augment`
+`trae` `codebuddy` `cline` `openclaw` `qoder`
 
----
+各运行时的路径与注意事项详见 [`docs/runtimes/`](docs/runtimes/)。
 
-## 社区与治理
-
-- [贡献指南](CONTRIBUTING.zh-CN.md) — 开发环境、PR 自检清单与多语言同步规则（[英文 CONTRIBUTING.md](CONTRIBUTING.md)）。
-- [安全策略](SECURITY.zh-CN.md) — 私密漏洞报告方式与支持范围（[英文 SECURITY.md](SECURITY.md)）。
-- [行为准则](CODE_OF_CONDUCT.zh-CN.md) — 社区参与规范（[英文 CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md)）。
-- [变更日志](CHANGELOG.zh-CN.md) — 版本说明中文镜像（[英文 CHANGELOG.md](CHANGELOG.md)）。
-
----
-
-## 通用安装（推荐）
-
-需要 **Node.js 22+**。CLI 会按各工具约定把文件写入对应目录（路径规则见 [`src/install/runtime-homes.ts`](src/install/runtime-homes.ts)）。
-
-**在终端里交互安装（推荐）：** 直接运行 `npx frontend-craft@latest` 或 `npx frontend-craft@latest install` 不写 runtime，可按向导多选 runtime，并选择全局或当前项目。若已写 `install <runtime>` 但未带 `--global` / `--local`，在 **TTY** 下仍会询问安装位置。
-
-**脚本 / CI：** 请始终加上 **`--global` / `-g`** 或 **`--local` / `-l`**。若 stdin 不是 TTY 且两者都未指定，CLI 会默认安装 **`claude`** 到 **全局** 并输出提示。
+它将 **13 个专业 agent**、**31 个自动激活 skill**、**9 个斜杠命令**、**5 个事件驱动 hook**、面向 6 款设计工具的 **MCP 模板**以及一整套**规则库**打包为一个可安装单元。运行一条命令，团队里的每一次 AI 会话都将以相同的方式编写 React、Vue、Next.js 或 Nuxt——类型安全、可访问、安全、一致。
 
 ```bash
-npx frontend-craft@latest list
-npx frontend-craft@latest install --local claude
-npx frontend-craft@latest install --global codex
-npx frontend-craft@latest install cursor --local
-npx frontend-craft@latest install --all --dry-run --global
+npx frontend-craft@latest
 ```
 
-支持的 runtime：`claude`、`codex`、`cursor`、`windsurf`、`opencode`、`kilo`、`gemini`、`copilot`、`antigravity`、`augment`、`trae`、`codebuddy`、`cline`、`openclaw`、`qoder`。
+就这样。向导会引导你完成剩余步骤。
 
-各工具说明见 [`docs/runtimes/`](docs/runtimes/)。OpenClaw 独立 npm 包可在本仓库中通过 `npm run pack:openclaw` 构建并校验，产物为 **`npm-packages/openclaw/`** 目录下的 **`frontend-craft-<version>.tgz`**（例如 `frontend-craft-2.1.2.tgz`）。
+---
+
+## 为什么选择 frontend-craft？
+
+| 痛点                                          | frontend-craft 的解法                                                 |
+| --------------------------------------------- | --------------------------------------------------------------------- |
+| AI 助手写出的前端代码风格不一、缺类型、不安全 | **31 个 skill** 将团队规范编码为可自动激活的工作流                    |
+| 每款 AI 工具都有自己的插件格式                | **一条 CLI 命令** 把相同的规则、agent 和 hook 安装到 15 个运行时      |
+| 设计稿到代码的交接总有信息损失                | **MCP 模板** 直接读取 Figma、Sketch、MasterGo、Pixso、墨刀、摹客      |
+| 代码评审随意、浅层                            | **13 个 agent** 输出分级报告：代码、安全、无障碍、性能、TS、UI 还原度 |
+| 没人记得跑 lint 和测试                        | **事件驱动 hook** 在保存和会话结束时自动校验                          |
+| 新项目每次都从零开始                          | **`/fec-init`** 几秒内脚手架化 CLAUDE.md、规则和 settings             |
+
+---
+
+## 安装
+
+需要 **Node.js 22+**。完整支持 **Windows、macOS 和 Linux**（所有钩子和脚本均使用 Node.js 实现）。
+
+### 方式一：交互向导（推荐）
+
+```bash
+npx frontend-craft@latest
+```
+
+向导会引导你选择一个或多个运行时，并决定安装到全局还是当前项目。这是最友好的上手方式。
+
+### 方式二：脚本化安装
+
+```bash
+# 安装到当前项目
+npx frontend-craft@latest install --local claude
+
+# 全局安装到某个运行时
+npx frontend-craft@latest install --global codex
+
+# 预览所有运行时的安装内容（不实际写入）
+npx frontend-craft@latest install --all --dry-run --global
+
+# 列出支持的运行时
+npx frontend-craft@latest list
+```
+
+> **CI / 脚本场景：** 始终带上 `--global` / `-g` 或 `--local` / `-l`。非 TTY 且未指定时，CLI 默认安装到 `claude --global`。
+
+### 方式三：Claude Code Marketplace
+
+如果只通过 **Claude Code Marketplace**（原生插件流程）安装，完整步骤见 [docs/runtimes/claude.zh-CN.md](docs/runtimes/claude.zh-CN.md) · [English](docs/runtimes/claude.md)。
+
+---
 
 ---
 
 ## 快速开始
 
-1. 运行 `npx frontend-craft@latest`（向导）或 `npx frontend-craft@latest install --local <runtime>` / `install --global <runtime>`（脚本化安装）。
-2. 在 [`docs/runtimes/`](docs/runtimes/) 中打开与你工具对应的说明（路径与注意事项）。
-3. **仅 Claude Code Marketplace：** 市场安装、`/fec-init`、更新等完整步骤见 [docs/runtimes/claude.zh-CN.md](docs/runtimes/claude.zh-CN.md) · [English](docs/runtimes/claude.md)。
-
----
-
-## 🌐 跨平台支持
-
-此插件完全支持 **Windows、macOS 和 Linux**。所有钩子和脚本均使用 Node.js 实现，确保跨平台兼容。
-
----
-
-## 旧版 Skills CLI
-
-当前推荐的多 runtime 安装方式是 `npx frontend-craft@latest`（交互向导）或 `npx frontend-craft@latest install [--local|--global] <runtime>`（脚本化安装）。如果团队已经在使用独立的 [Skills CLI](https://skills.sh/docs/cli)，它仍然可以只安装 [`skills/`](skills/) 下的工作流技能包。
-
-### Skills CLI 与 frontend-craft CLI 的区别
-
-- **`npx frontend-craft`** — 安装本仓库支持的 skills、runtime 专用 agents、commands、hooks、rules 和模板。优先使用上文 **通用安装** 的交互流程；非 TTY 时请为 `install` 加上 `--local` 或 `--global`。
-- **`npx skills`** — 只安装 skill 包，适合已有 Skills CLI 工作流。
-
-### 环境要求
-
-`frontend-craft` 需要 Node.js 22+；使用 `npx skills` 时以 Skills CLI 自身要求为准。
-
-### 安装技能
-
-```bash
-npx skills add bovinphang/frontend-craft
-```
-
-按提示选择项目级或全局安装（`-g`）、符号链接或复制（`--copy`），以及要启用的代理。若只想查看仓库内技能列表而不安装，可执行 `npx skills add bovinphang/frontend-craft -l`。若需指定技能名或代理，可使用 `--skill` / `--agent`（详见 `npx skills --help`）。
-
-### 更新技能
-
-在已安装技能的项目目录下执行（若为全局安装，请使用对应作用域）：
-
-```bash
-npx skills update
-```
-
-该命令会将已安装的技能更新到最新版本。也可先运行 `npx skills check` 查看可用更新。
-
-**遥测：** CLI 默认可能采集匿名遥测。若需关闭，请设置环境变量 `DISABLE_TELEMETRY=1`。说明见 [skills.sh CLI 文档](https://skills.sh/docs/cli)。
-
----
-
-## 📦 里面有什么
-
-这个仓库是一个 **通用前端插件**，包含多个 AI 编程工具的原生布局；Claude Code 插件元数据位于 `.claude-plugin/`。
+安装完成后，你在每一次 AI 会话中都拥有一套完整的前端工程工具箱：
 
 ```text
-frontend-craft/
-|-- .claude-plugin/   # Claude Code 插件与市场清单
-|   |-- plugin.json         # 插件元数据
-|   └-- marketplace.json    # Marketplace 目录元数据
-|
-|-- agents/           # 用于委托的专业子代理
-|   |-- frontend-architect.md    # 页面拆分、组件架构、状态流设计
-|   |-- frontend-code-reviewer.md # 专注前端的代码评审（质量、安全、无障碍）
-|   |-- frontend-security-reviewer.md # 前端攻击面：XSS、密钥、CSP、依赖
-|   |-- frontend-test-planner.md  # 测试策略、风险矩阵、覆盖规划
-|   |-- frontend-e2e-runner.md     # E2E 编写执行、flaky、产物与 CI
-|   |-- typescript-reviewer.md    # TS/JS 类型、异步、安全，只出报告
-|   |-- performance-optimizer.md # 性能瓶颈分析与优化方案
-|   |-- ui-checker.md            # UI 视觉问题、设计还原度评估
-|   |-- figma-implementer.md     # 按设计稿精确实现 UI
-|   └-- design-token-mapper.md   # 设计变量映射到 Design Token
-|
-|-- skills/           # 工作流定义和领域知识
-|   |-- fec-frontend-code-review/    # 架构、类型、渲染、样式、可访问性审查
-|   |-- fec-security-review/     # XSS、CSRF、敏感数据、输入校验
-|   |-- fec-accessibility-check/     # WCAG 2.1 AA 无障碍检查
-|   |-- fec-react-project-standard/ # React + TypeScript 项目规范
-|   |-- fec-vue3-project-standard/  # Vue 3 + TypeScript 项目规范
-|   |-- fec-implement-from-design/   # 基于设计稿实现 UI
-|   |-- fec-validation-fix/           # lint、type-check、test、build 并修复
-|   |-- fec-legacy-web-standard/    # JS + jQuery + HTML 传统项目规范
-|   |-- fec-legacy-to-modern-migration/  # jQuery/MPA 迁移至 React/Vue 策略与流程
-|   |-- fec-testing-strategy/          # 测试层级选择与覆盖矩阵
-|   |-- fec-e2e-testing/                # Playwright/Cypress E2E 测试规范
-|   |-- fec-nextjs-project-standard/    # Next.js 14+ App Router、SSR/SSG 规范
-|   |-- fec-nuxt-project-standard/      # Nuxt 3 SSR/SSG、组合式 API 规范
-|   |-- fec-monorepo-project-standard/  # pnpm workspace、Turborepo、Nx 规范
-|   |-- fec-data-fetching/              # TanStack Query 与服务端状态工作流
-|   |-- fec-form-handling/              # React Hook Form + Zod 表单工作流
-|   |-- fec-route-protection/           # 登录态与权限路由保护
-|   |-- fec-component-testing/          # RTL / Vue Test Utils 组件测试
-|   |-- fec-pwa-implementation/         # PWA manifest、Service Worker、离线能力
-|   |-- fec-web-workers/                # Worker 集成与后台计算
-|   |-- fec-canvas-threejs/             # Canvas、Three.js、React Three Fiber
-|   |-- fec-svg-animation/              # SVG 动画与 reduced-motion 降级
-|   |-- fec-browser-storage/            # localStorage/sessionStorage/IndexedDB/Cookies 选型与安全持久化
-|   |-- fec-list-virtualization/        # 大数据列表虚拟化（react-window / TanStack Virtual）
-|   |-- fec-storybook-component-doc/    # Storybook 组件文档、addons、MDX、交互与视觉测试
-|   |-- fec-ui-design-direction/        # 产品化 UI 方向、首屏层级、业务语气
-|   |-- fec-interface-polish/           # 间距、排版、圆角、动效、状态等 UI 细节打磨
-|   |-- fec-vite-project-standard/      # Vite 配置、环境变量安全、HMR、代理、构建与库模式
-|
-|-- commands/         # 用于快速执行的斜杠命令
-|   |-- fec-init.md     # /fec-init - 初始化项目模板
-|   |-- fec-review.md   # /fec-review - 代码规范化评审
-|   |-- fec-test-plan.md # /fec-test-plan - 测试策略与覆盖矩阵
-|   └-- fec-scaffold.md # /fec-scaffold - 创建 page/feature/component
-|
-|-- hooks/            # 基于触发器的自动化
-|   └-- hooks.json     # PreToolUse、PostToolUse、Stop、Notification 等
-|
-|-- scripts/          # 跨平台 Node.js 脚本
-|   |-- security-check.ts      # 拦截危险命令
-|   |-- format-changed-file.ts # 自动 Prettier 格式化
-|   |-- run-tests.ts           # 会话结束执行校验
-|   |-- session-start.ts       # 会话开始检测框架
-|   └-- notify.ts              # 跨平台桌面通知
-|
-|-- templates/        # 各 runtime 的项目级配置模板
-|   |-- claude/        # CLAUDE.md 与 settings.json
-|   |-- codex/         # AGENTS.md 与 config.toml
-|   |-- openclaw/      # AGENTS.md 与 OPENCLAW-CONFIG.md
-|   └-- shared/rules/  # vue、react、design-system、testing 等
-|
-|-- .mcp.json         # MCP 服务器配置（Figma、Sketch、MasterGo、Pixso、墨刀）
-└-- README.md
+你："Review my recent changes"
+→ frontend-code-reviewer agent 被调度，输出 reports/code-review-*.md
+
+你："/fec-review"
+→ 按架构、类型、渲染、样式、可访问性等维度执行结构化评审
+
+你："根据这个 Figma 链接实现结算页"
+→ figma-implementer agent 通过 MCP 读取设计稿，输出组件和报告
+
+你："/fec-scaffold dashboard feature"
+→ 按项目约定创建 page / feature / component 标准目录结构
+
+你："/fec-build-fix"
+→ 增量修复 lint、type-check、test 和 build 失败
 ```
+
+下文斜杠命令以 **Claude Code** 为例；其他运行时通过各自的命令系统提供同等能力（详见 [`docs/runtimes/`](docs/runtimes/)）。
 
 ---
 
-## 功能概览
+## 里面有什么
 
-下表中的**斜杠命令**以 Claude Code 为例便于对照；其他 runtime 会以各自安装的 commands 与模板提供同等能力（见 [`docs/runtimes/`](docs/runtimes/)）。
+### 命令（Commands）
 
-### Commands（斜杠命令）
+斜杠命令是结构化工作流的主入口，多数会输出带时间戳的 Markdown 报告到 `reports/`。
 
-| 命令             | 用途                                                             | 输出报告           |
-| ---------------- | ---------------------------------------------------------------- | ------------------ |
-| `/fec-init`      | 将项目模板初始化到当前项目的 `.claude/` 目录                     | —                  |
-| `/fec-review`    | 对指定文件或最近变更的代码执行规范化评审，输出分级报告           | `code-review-*.md` |
-| `/fec-test-plan` | 规划前端测试分层、风险覆盖和执行顺序                             | `test-plan-*.md`   |
-| `/fec-scaffold`  | 按项目规范创建 page / feature / component 标准目录结构和样板文件 | —                  |
+| 命令                  | 用途                                              | 报告                         |
+| --------------------- | ------------------------------------------------- | ---------------------------- |
+| `/fec-init`           | 初始化项目模板（CLAUDE.md、规则、settings）       | —                            |
+| `/fec-review`         | 对指定文件或最近变更的代码执行结构化评审          | `code-review-*.md`           |
+| `/fec-test-plan`      | 规划测试分层、风险覆盖与执行顺序                  | `test-plan-*.md`             |
+| `/fec-scaffold`       | 按规范创建 page / feature / component 样板        | —                            |
+| `/fec-plan`           | 实现前规划功能架构、重构或迁移                    | `architecture-proposal-*.md` |
+| `/fec-tdd`            | 红 → 绿 → 重构的前端 TDD 循环                     | —                            |
+| `/fec-build-fix`      | 增量修复 lint、type-check、test、build 或 CI 失败 | `validation-fix-*.md`        |
+| `/fec-refactor-clean` | 分类并安全清理死代码、未使用导出、样式和依赖      | `refactor-clean-*.md`        |
+| `/fec-doc-sync`       | 同步 README、runtime 文档、能力表和公开 metadata  | —                            |
 
-### Skills（自动激活）
+### 技能（Skills，自动激活）
 
-| Skill                            | 用途                                                               | 输出报告                    |
-| -------------------------------- | ------------------------------------------------------------------ | --------------------------- |
-| `fec-frontend-code-review`       | 从架构、类型、渲染、样式、可访问性等维度审查代码                   | `code-review-*.md`          |
-| `fec-security-review`            | XSS、CSRF、敏感数据泄露、输入校验等安全审查                        | `security-review-*.md`      |
-| `fec-accessibility-check`        | WCAG 2.1 AA 无障碍检查                                             | `accessibility-review-*.md` |
-| `fec-react-project-standard`     | React + TypeScript 项目工程规范（结构、组件、路由、状态、API 层）  | —                           |
-| `fec-vue3-project-standard`      | Vue 3 + TypeScript 项目工程规范（结构、组件、路由、Pinia、API 层） | —                           |
-| `fec-implement-from-design`      | 基于 Figma/Sketch/MasterGo/Pixso/墨刀/摹客设计稿实现 UI            | `design-plan-*.md`          |
-| `fec-validation-fix`             | 执行 lint、type-check、test、build 并修复失败                      | `validation-fix-*.md`       |
-| `fec-legacy-web-standard`        | JS + jQuery + HTML 传统项目的开发与维护规范                        | —                           |
-| `fec-legacy-to-modern-migration` | jQuery/MPA 迁移至 React/Vue 3 + TS 的策略、概念映射与分阶段流程    | `migration-plan-*.md`       |
-| `fec-testing-strategy`           | 在静态检查、单元、组件、集成、E2E、视觉和专项质量之间选择测试层级  | `test-plan-*.md`            |
-| `fec-e2e-testing`                | Playwright/Cypress E2E 测试规范：目录结构、Page Object、CI 集成    | —                           |
-| `fec-nextjs-project-standard`    | Next.js 14+ App Router、SSR/SSG、流式渲染、元数据规范              | —                           |
-| `fec-nuxt-project-standard`      | Nuxt 3 SSR/SSG、组合式 API、数据获取、路由、中间件规范             | —                           |
-| `fec-monorepo-project-standard`  | pnpm workspace、Turborepo、Nx：目录结构、依赖管理、任务编排        | —                           |
-| `fec-data-fetching`              | TanStack Query / 服务端状态获取、缓存、失效、乐观更新              | —                           |
-| `fec-form-handling`              | React Hook Form + Zod 表单、动态字段、上传、多步流程               | —                           |
-| `fec-browser-storage`            | localStorage/sessionStorage/IndexedDB/Cookies 选型与安全持久化     | —                           |
-| `fec-route-protection`           | React Router、Next.js、Vue Router、Nuxt 的登录态与权限路由保护     | —                           |
-| `fec-component-testing`          | React Testing Library / Vue Test Utils 组件测试与回归用例          | —                           |
-| `fec-storybook-component-doc`    | Storybook 组件文档、Addon、MDX、交互测试与视觉测试集成             | —                           |
-| `fec-list-virtualization`        | react-window / TanStack Virtual 大列表虚拟滚动与测量策略           | —                           |
-| `fec-ui-design-direction`        | 产品化 UI 方向、首屏层级、业务语气与视觉策略                      | —                           |
-| `fec-interface-polish`           | 间距、排版、圆角、阴影、命中区域、状态与动效细节打磨               | —                           |
-| `fec-vite-project-standard`      | Vite 配置、环境变量安全、HMR、开发代理、构建优化与库模式           | —                           |
-| `fec-pwa-implementation`         | manifest、Service Worker、离线缓存、安装提示与更新管理             | —                           |
-| `fec-web-workers`                | Web Worker、Transferable、Comlink、Worker 池                       | —                           |
-| `fec-canvas-threejs`             | Canvas 2D、Three.js、React Three Fiber、WebGL 性能与可访问性       | —                           |
-| `fec-svg-animation`              | CSS、Framer Motion、GSAP SVG 动画与 reduced-motion 降级            | —                           |
+技能是根据文件模式、框架或任务上下文**自动激活**的工作流定义，编码了评审维度、输出约定和报告格式。
 
-### Agents（子代理）
+**项目规范** — 检测到对应框架时自动生效：
 
-| Agent                        | 用途                                                                                         | 输出报告                     |
-| ---------------------------- | -------------------------------------------------------------------------------------------- | ---------------------------- |
-| `frontend-architect`         | 页面拆分、组件架构、状态流设计、目录规划、大型重构                                           | `architecture-proposal-*.md` |
-| `frontend-code-reviewer`     | 前端代码评审：React/Vue/Next/Nuxt、TS、样式、客户端安全、按置信度降噪                        | `code-review-*.md`           |
-| `frontend-security-reviewer` | 前端安全：XSS、客户端密钥、危险 DOM/API、第三方脚本、CSP、依赖审计                           | `security-review-*.md`       |
-| `frontend-test-planner`      | 前端测试策略：按风险映射静态、单元、组件、E2E、视觉、无障碍、安全与性能覆盖                  | `test-plan-*.md`             |
-| `frontend-e2e-runner`        | E2E 编写与执行（Playwright/Cypress）、flaky 隔离、Trace/截图/视频、CI 对齐；可选摘要报告     | `e2e-summary-*.md`（可选）   |
-| `typescript-reviewer`        | TS/JS 专项：先跑 typecheck/eslint、PR 就绪检查、类型与异步与安全、惯用法；只报告不直接改代码 | `typescript-review-*.md`     |
-| `performance-optimizer`      | 分析性能瓶颈（打包体积、渲染性能、网络请求），输出量化优化方案                               | `performance-review-*.md`    |
-| `ui-checker`                 | UI 视觉问题排查、设计还原度评估                                                              | `ui-fidelity-review-*.md`    |
-| `figma-implementer`          | 按 Figma/Sketch/MasterGo/Pixso/墨刀/摹客设计稿精确实现 UI                                    | `design-implementation-*.md` |
-| `design-token-mapper`        | 将设计变量映射到项目 Design Token                                                            | `token-mapping-*.md`         |
+| 技能                            | 范围                                                  |
+| ------------------------------- | ----------------------------------------------------- |
+| `fec-react-project-standard`    | React + TypeScript（结构、组件、路由、状态、API 层）  |
+| `fec-vue3-project-standard`     | Vue 3 + TypeScript（结构、组件、路由、Pinia、API 层） |
+| `fec-nextjs-project-standard`   | Next.js 14+ App Router、SSR/SSG、流式渲染、元数据     |
+| `fec-nuxt-project-standard`     | Nuxt 3 SSR/SSG、组合式 API、数据获取、中间件          |
+| `fec-vite-project-standard`     | Vite 配置、环境变量安全、HMR、开发代理、构建优化      |
+| `fec-monorepo-project-standard` | pnpm workspace、Turborepo、Nx 结构与任务编排          |
 
-### Hooks（自动执行）
+**质量与评审** — 代码评审、PR 或重构时激活：
+
+| 技能                       | 范围                                           |
+| -------------------------- | ---------------------------------------------- |
+| `fec-frontend-code-review` | 架构、类型、渲染、样式、可访问性评审           |
+| `fec-security-review`      | XSS、CSRF、敏感数据泄露、输入校验              |
+| `fec-accessibility-check`  | WCAG 2.1 AA 无障碍检查                         |
+| `fec-typescript-review`    | 类型安全、异步正确性、惯用模式                 |
+| `fec-testing-strategy`     | 静态检查、单元、组件、集成、E2E、视觉测试分层  |
+| `fec-validation-fix`       | 一次性运行并修复 lint、type-check、test、build |
+| `fec-refactor-clean`       | 安全清理死代码、未使用导出、样式、路由和依赖   |
+
+**功能实现** — 构建特定 UI 场景时激活：
+
+| 技能                          | 范围                                                       |
+| ----------------------------- | ---------------------------------------------------------- |
+| `fec-implement-from-design`   | 基于 Figma/Sketch/MasterGo/Pixso/墨刀/摹客设计稿实现 UI    |
+| `fec-data-fetching`           | TanStack Query / 服务端状态获取、缓存、乐观更新            |
+| `fec-form-handling`           | React Hook Form + Zod、动态字段、上传、多步流程            |
+| `fec-browser-storage`         | localStorage / sessionStorage / IndexedDB / Cookies 选型   |
+| `fec-route-protection`        | React Router、Next.js、Vue Router、Nuxt 的登录态与权限路由 |
+| `fec-component-testing`       | React Testing Library / Vue Test Utils 组件测试与回归用例  |
+| `fec-storybook-component-doc` | Storybook 组件文档、Addon、MDX、交互与视觉测试             |
+| `fec-list-virtualization`     | react-window / TanStack Virtual 大列表虚拟滚动             |
+| `fec-e2e-testing`             | Playwright / Cypress E2E 与 Page Object 和 CI 集成         |
+| `fec-pwa-implementation`      | manifest、Service Worker、离线缓存、安装提示               |
+| `fec-web-workers`             | Web Worker、Transferable、Comlink、Worker 池               |
+| `fec-canvas-threejs`          | Canvas 2D、Three.js、React Three Fiber、WebGL              |
+| `fec-svg-animation`           | CSS / Framer Motion / GSAP SVG 动画与 reduced-motion       |
+
+**UI 与打磨** — 优化视觉输出时激活：
+
+| 技能                      | 范围                                         |
+| ------------------------- | -------------------------------------------- |
+| `fec-ui-design-direction` | 产品 UI 方向、首屏层级、业务语气             |
+| `fec-interface-polish`    | 间距、排版、圆角、阴影、命中区域、状态、动效 |
+
+**迁移与文档** — 现代化或文档维护时激活：
+
+| 技能                             | 范围                                           |
+| -------------------------------- | ---------------------------------------------- |
+| `fec-legacy-web-standard`        | JS + jQuery + HTML 遗留项目的开发与维护规范    |
+| `fec-legacy-to-modern-migration` | jQuery/MPA → React/Vue 3 + TS 策略与分阶段流程 |
+| `fec-tdd-workflow`               | 测试先行的前端实现，红绿重构循环               |
+| `fec-doc-sync`                   | 让公开文档与脚本、技能、代理、命令保持同步     |
+
+### 代理（Agents）
+
+代理是由主助手调度的专业子代理，专注处理单一任务并返回结构化报告。
+
+| 代理                         | 聚焦领域                                                  | 报告                         |
+| ---------------------------- | --------------------------------------------------------- | ---------------------------- |
+| `frontend-code-reviewer`     | React/Vue/Next/Nuxt、TS、样式、客户端安全（按置信度降噪） | `code-review-*.md`           |
+| `typescript-reviewer`        | 类型安全、异步正确性、惯用模式（只报告不修改）            | `typescript-review-*.md`     |
+| `frontend-security-reviewer` | XSS、客户端密钥、危险 DOM/API、CSP、依赖审计              | `security-review-*.md`       |
+| `performance-optimizer`      | 打包体积、渲染性能、网络瓶颈                              | `performance-review-*.md`    |
+| `frontend-architect`         | 页面拆分、组件架构、状态流、目录规划                      | `architecture-proposal-*.md` |
+| `frontend-test-planner`      | 风险-层级映射：静态、单元、组件、E2E、视觉、无障碍、安全  | `test-plan-*.md`             |
+| `frontend-build-fixer`       | 增量修复 lint / type-check / test / build / CI            | `validation-fix-*.md`        |
+| `frontend-refactor-cleaner`  | 分类并安全清理未使用代码、导出、样式、路由和依赖          | `refactor-clean-*.md`        |
+| `frontend-e2e-runner`        | E2E 编写与运行（Playwright/Cypress）、flaky 隔离、Trace   | `e2e-summary-*.md`           |
+| `frontend-doc-updater`       | 同步 README、runtime 文档、结构、能力表和 metadata        | —                            |
+| `ui-checker`                 | 视觉问题排查与设计还原度评估                              | `ui-fidelity-review-*.md`    |
+| `figma-implementer`          | 按 Figma/Sketch/MasterGo/Pixso/墨刀/摹客设计稿精确实现 UI | `design-implementation-*.md` |
+| `design-token-mapper`        | 将设计变量映射到项目 Design Token                         | `token-mapping-*.md`         |
+
+### 钩子（Hooks，事件驱动）
+
+钩子在 AI 助手事件触发时**自动执行**，无需手动调用。
 
 | 事件                      | 行为                                         |
 | ------------------------- | -------------------------------------------- |
 | `SessionStart`            | 自动检测项目框架和包管理器                   |
-| `PreToolUse(Bash)`        | 拦截危险命令（rm -rf、force push 等）        |
+| `PreToolUse(Bash)`        | 拦截危险命令（`rm -rf`、force push 等）      |
 | `PostToolUse(Write/Edit)` | 对修改的文件自动执行 Prettier                |
 | `Stop`                    | 会话结束时执行 lint、type-check、test、build |
 | `Notification`            | 跨平台桌面通知（macOS / Linux / Windows）    |
 
 ### MCP 集成
 
-| 服务          | 用途                                               |
-| ------------- | -------------------------------------------------- |
-| Figma         | 读取设计上下文、变量定义                           |
-| Figma Desktop | Figma 桌面端集成                                   |
-| Sketch        | 读取设计选区截图                                   |
-| MasterGo      | 读取 DSL 结构数据、组件层级和样式                  |
-| Pixso         | 本地 MCP 获取帧数据、代码片段和图片资源            |
-| 墨刀          | 获取原型数据、生成设计描述、导入 HTML              |
-| 摹客          | 无 MCP 集成，通过用户提供的截图/标注/导出 CSS 支持 |
+将 AI 助手直接接入设计工具，实现无损的设计转代码工作流。
 
-### 项目模板（通过 `/fec-init` 初始化）
+| 服务              | 能力                                 |
+| ----------------- | ------------------------------------ |
+| **Figma**         | 读取设计上下文与变量定义             |
+| **Figma Desktop** | Figma 桌面端集成                     |
+| **Sketch**        | 读取设计选区截图                     |
+| **MasterGo**      | 读取 DSL 结构、组件层级和样式        |
+| **Pixso**         | 本地 MCP：帧数据、代码片段、图片资源 |
+| **墨刀**          | 原型数据、设计描述、HTML 导入        |
+| **摹客**          | 截图/标注/导出 CSS 工作流（无 MCP）  |
 
-| 文件                          | 用途                                                              |
-| ----------------------------- | ----------------------------------------------------------------- |
-| `CLAUDE.md`                   | 项目说明、常用命令、工作原则、安全要求                            |
-| `settings.json`               | 权限白名单/黑名单、环境变量                                       |
-| `rules/vue.md`                | Vue 3 组件规范和反模式                                            |
-| `rules/react.md`              | React 组件规范和反模式                                            |
-| `rules/design-system.md`      | 设计系统、Token、可访问性规则                                     |
-| `rules/testing.md`            | 测试与校验规则                                                    |
-| `rules/git-conventions.md`    | Conventional Commits 提交规范                                     |
-| `rules/i18n.md`               | 国际化文案规范                                                    |
-| `rules/performance.md`        | 前端性能优化规则                                                  |
-| `rules/api-layer.md`          | API 层类型化、错误处理规范                                        |
-| `rules/state-management.md`   | 状态分类、管理策略、反模式                                        |
-| `rules/error-handling.md`     | 错误分层、Error Boundary、降级 UI、上报规范                       |
-| `rules/naming-conventions.md` | 文件、组件、变量、路由、API、CSS 统一命名规范                     |
-| `rules/code-comments.md`      | 前端代码注释：何时写、写什么（意图与背景，避免零注释与废话注释）  |
-| `rules/ci-cd.md`              | CI/CD 流水线阶段、GitHub Actions / GitLab CI 示例、密钥管理       |
-| `rules/refactoring.md`        | 重构约束：图片、样式、禁止内联 SVG/样式、优先 flex 布局、功能等价 |
+### 项目模板（`/fec-init`）
+
+运行 `/fec-init` 即可将一套开箱即用的规则库和项目配置脚手架化到 `.claude/`：
+
+<details>
+<summary>查看全部 18 个模板文件</summary>
+
+| 文件                          | 用途                                                   |
+| ----------------------------- | ------------------------------------------------------ |
+| `CLAUDE.md`                   | 项目说明、常用命令、工作原则、安全要求                 |
+| `settings.json`               | 权限白名单/黑名单、环境变量                            |
+| `rules/vue.md`                | Vue 3 组件规范与反模式                                 |
+| `rules/react.md`              | React 组件规范与反模式                                 |
+| `rules/design-system.md`      | 设计系统、Token、可访问性规则                          |
+| `rules/testing.md`            | 测试与校验规则                                         |
+| `rules/git-conventions.md`    | Conventional Commits 提交规范                          |
+| `rules/i18n.md`               | 国际化文案规范                                         |
+| `rules/performance.md`        | 前端性能优化规则                                       |
+| `rules/api-layer.md`          | API 层类型化与错误处理规范                             |
+| `rules/state-management.md`   | 状态分类、管理策略与反模式                             |
+| `rules/error-handling.md`     | 错误分层、Error Boundary、降级 UI、上报规范            |
+| `rules/naming-conventions.md` | 文件、组件、变量、路由、API、CSS 统一命名              |
+| `rules/code-comments.md`      | 何时以及如何写前端注释                                 |
+| `rules/ci-cd.md`              | CI/CD 流水线阶段、GitHub Actions / GitLab CI、密钥管理 |
+| `rules/refactoring.md`        | 重构约束与功能等价要求                                 |
+| `rules/agent-workflow.md`     | 子代理协作边界与委托规则                               |
+| `rules/working-modes.md`      | 调研、计划、开发、评审、收尾模式指导                   |
+
+</details>
 
 ---
 
-## ⚙️ 配置
+## 配置
 
-### 前置依赖
+### 前置条件
 
-- Node.js 22+
-- npm、pnpm 或 yarn
-- Git Bash（Windows 用户需要，用于执行 hook 脚本）
+- **Node.js 22+**
+- **npm、pnpm 或 yarn**
+- **Git Bash**（仅 Windows — 执行 hook 脚本所需）
 
-### MCP 服务器
+### MCP 设计工具令牌
 
-使用设计稿相关功能前，根据团队使用的设计工具设置对应环境变量：
+根据团队使用的设计工具设置对应环境变量：
 
-| 环境变量         | 对应工具              | 获取方式                                  |
+| 环境变量         | 工具                  | 获取方式                                  |
 | ---------------- | --------------------- | ----------------------------------------- |
-| `FIGMA_API_KEY`  | Figma / Figma Desktop | Figma 账户设置 > Personal Access Tokens   |
+| `FIGMA_API_KEY`  | Figma / Figma Desktop | Figma 账户设置 → Personal Access Tokens   |
 | `SKETCH_API_KEY` | Sketch                | Sketch 开发者设置                         |
-| `MG_MCP_TOKEN`   | MasterGo              | MasterGo 账户设置 > 安全设置 > 生成 Token |
-| `MODAO_TOKEN`    | 墨刀                  | 墨刀 AI 功能页面获取访问令牌              |
+| `MG_MCP_TOKEN`   | MasterGo              | MasterGo 账户设置 → 安全设置 → 生成 Token |
+| `MODAO_TOKEN`    | 墨刀                  | 墨刀 AI 功能页面 → 访问令牌               |
 
-> Pixso 使用本地 MCP 服务，需在 Pixso 客户端中启用 MCP 功能，无需额外环境变量。
-> 摹客暂无 MCP 集成，通过用户提供截图/标注方式工作。
+> **Pixso** 使用本地 MCP 服务 — 在 Pixso 客户端启用即可，无需额外环境变量。
+> **摹客** 暂无 MCP 集成 — 通过截图和导出 CSS 方式工作。
 
-**macOS / Linux:**
+添加到 shell 配置文件以持久化：
 
 ```bash
+# macOS / Linux — 追加到 ~/.bashrc 或 ~/.zshrc
 export FIGMA_API_KEY="your-figma-api-key"
 export SKETCH_API_KEY="your-sketch-api-key"
 export MG_MCP_TOKEN="your-mastergo-token"
 export MODAO_TOKEN="your-modao-token"
 ```
 
-**Windows (PowerShell):**
-
 ```powershell
+# Windows — 设为系统环境变量，或在 PowerShell 中临时设置：
 $env:FIGMA_API_KEY = "your-figma-api-key"
 $env:SKETCH_API_KEY = "your-sketch-api-key"
 $env:MG_MCP_TOKEN = "your-mastergo-token"
 $env:MODAO_TOKEN = "your-modao-token"
 ```
 
-建议将环境变量添加到 shell 配置文件（`~/.bashrc`、`~/.zshrc`）或 Windows 系统环境变量中。
-
 ---
 
-## 📄 报告输出
+## 报告输出
 
-所有审查、分析和评估功能均自动将报告保存为 Markdown 文件至项目根目录下的 `reports/` 目录。
+每一次评审、分析和评估都会输出带时间戳的 Markdown 报告到 `reports/`，可作为审计记录和 PR 交付物。
 
-| 报告类型       | 文件名模式                                   | 来源                                                                                 |
-| -------------- | -------------------------------------------- | ------------------------------------------------------------------------------------ |
-| 代码审查       | `code-review-YYYY-MM-DD-HHmmss.md`           | `/fec-review` 命令、`fec-frontend-code-review` skill、`frontend-code-reviewer` agent |
-| TS/JS 专项评审 | `typescript-review-YYYY-MM-DD-HHmmss.md`     | `typescript-reviewer` agent                                                          |
-| 安全审查       | `security-review-YYYY-MM-DD-HHmmss.md`       | `fec-security-review` skill、`frontend-security-reviewer` agent                      |
-| 无障碍检查     | `accessibility-review-YYYY-MM-DD-HHmmss.md`  | `fec-accessibility-check` skill                                                      |
-| 性能分析       | `performance-review-YYYY-MM-DD-HHmmss.md`    | `performance-optimizer` agent                                                        |
-| 架构方案       | `architecture-proposal-YYYY-MM-DD-HHmmss.md` | `frontend-architect` agent                                                           |
-| 设计还原度     | `ui-fidelity-review-YYYY-MM-DD-HHmmss.md`    | `ui-checker` agent                                                                   |
-| 设计实现       | `design-implementation-YYYY-MM-DD-HHmmss.md` | `figma-implementer` agent                                                            |
-| Token 映射     | `token-mapping-YYYY-MM-DD-HHmmss.md`         | `design-token-mapper` agent                                                          |
-| 设计计划       | `design-plan-YYYY-MM-DD-HHmmss.md`           | `fec-implement-from-design` skill                                                    |
-| 测试计划       | `test-plan-YYYY-MM-DD-HHmmss.md`             | `/fec-test-plan`、`fec-testing-strategy` skill、`frontend-test-planner` agent        |
-| 验证修复       | `validation-fix-YYYY-MM-DD-HHmmss.md`        | `fec-validation-fix` skill                                                           |
-| E2E 运行摘要   | `e2e-summary-YYYY-MM-DD-HHmmss.md`           | `frontend-e2e-runner` agent（可选）                                                  |
-| 迁移计划       | `migration-plan-YYYY-MM-DD-HHmmss.md`        | `fec-legacy-to-modern-migration` skill                                               |
+<details>
+<summary>查看全部 15 种报告类型</summary>
 
-> **建议**：在 `.gitignore` 中添加 `reports/` 以避免将自动生成的报告提交到代码仓库，或保留提交以便团队成员查看历史审查记录。
+| 报告类型       | 文件名模式                                   | 来源                                                                     |
+| -------------- | -------------------------------------------- | ------------------------------------------------------------------------ |
+| 代码审查       | `code-review-YYYY-MM-DD-HHmmss.md`           | `/fec-review`、`fec-frontend-code-review`、`frontend-code-reviewer`      |
+| TS/JS 专项评审 | `typescript-review-YYYY-MM-DD-HHmmss.md`     | `typescript-reviewer`                                                    |
+| 安全审查       | `security-review-YYYY-MM-DD-HHmmss.md`       | `fec-security-review`、`frontend-security-reviewer`                      |
+| 无障碍检查     | `accessibility-review-YYYY-MM-DD-HHmmss.md`  | `fec-accessibility-check`                                                |
+| 性能分析       | `performance-review-YYYY-MM-DD-HHmmss.md`    | `performance-optimizer`                                                  |
+| 架构方案       | `architecture-proposal-YYYY-MM-DD-HHmmss.md` | `frontend-architect`                                                     |
+| 设计还原度     | `ui-fidelity-review-YYYY-MM-DD-HHmmss.md`    | `ui-checker`                                                             |
+| 设计实现       | `design-implementation-YYYY-MM-DD-HHmmss.md` | `figma-implementer`                                                      |
+| Token 映射     | `token-mapping-YYYY-MM-DD-HHmmss.md`         | `design-token-mapper`                                                    |
+| 设计计划       | `design-plan-YYYY-MM-DD-HHmmss.md`           | `fec-implement-from-design`                                              |
+| 测试计划       | `test-plan-YYYY-MM-DD-HHmmss.md`             | `/fec-test-plan`、`fec-testing-strategy`、`frontend-test-planner`        |
+| 验证修复       | `validation-fix-YYYY-MM-DD-HHmmss.md`        | `fec-validation-fix`                                                     |
+| 重构清理       | `refactor-clean-YYYY-MM-DD-HHmmss.md`        | `/fec-refactor-clean`、`fec-refactor-clean`、`frontend-refactor-cleaner` |
+| E2E 运行摘要   | `e2e-summary-YYYY-MM-DD-HHmmss.md`           | `frontend-e2e-runner`（可选）                                            |
+| 迁移计划       | `migration-plan-YYYY-MM-DD-HHmmss.md`        | `fec-legacy-to-modern-migration`                                         |
+
+</details>
+
+> **建议：** 在 `.gitignore` 中添加 `reports/` 以避免将自动生成的报告提交到代码仓库，或保留提交以便团队查看历史审查记录。
 
 ---
 
 ## 保持更新
 
-- **CLI 安装：** 使用相同的 `--local` / `--global` 与 runtime，重新执行 `npx frontend-craft@latest install`，版本说明见 [CHANGELOG.zh-CN.md](CHANGELOG.zh-CN.md) / [CHANGELOG.md](CHANGELOG.md)。
-- **Claude Code Marketplace 或 submodule 安装：** 见 [docs/runtimes/claude.zh-CN.md](docs/runtimes/claude.zh-CN.md) 中的 **更新** · [English](docs/runtimes/claude.md)。
-
----
-
-## 🎯 关键概念
-
-### 代理
-
-子代理以有限范围处理委托的任务。示例：
-
-```markdown
----
-name: performance-optimizer
-description: 分析前端性能瓶颈并给出优化方案
-tools: Read, Edit, Write, Glob, Grep, Bash
-model: sonnet
----
-
-你是一名专注于前端性能分析与优化的高级工程师...
+```bash
+# 更新 CLI 安装（作用域与初次安装一致）
+npx frontend-craft@latest update <runtime> --local
+npx frontend-craft@latest update <runtime> --global
+# `upgrade` 是 `update` 的别名
 ```
 
-### 技能
+CLI 会在 runtime 目录写入 `frontend-craft.manifest.json`，并**跳过你本地修改过的文件**——自定义内容在更新后依然保留。
 
-技能是由命令或代理调用的工作流定义，包含评审维度、输出格式和报告文件约定：
-
-```markdown
-# 前端代码评审
-
-## 评审维度
-
-1. 架构 - 组件边界、职责分离
-2. 类型安全 - any 使用、props 类型
-   ...
-
-## 报告文件输出
-
-- 目录：reports/
-- 文件名：code-review-YYYY-MM-DD-HHmmss.md
-```
-
-### 钩子
-
-钩子在工具事件时触发。示例 — 拦截危险命令：
-
-```json
-{
-  "event": "PreToolUse",
-  "matcher": "tool == \"Bash\"",
-  "command": "node \"${FRONTEND_CRAFT_ROOT}/dist/scripts/security-check.js\""
-}
-```
+**Claude Code Marketplace** 或 **submodule** 安装的更新方式见 [docs/runtimes/claude.zh-CN.md](docs/runtimes/claude.zh-CN.md) · [English](docs/runtimes/claude.md)。
 
 ---
 
-## 📄 许可证
+## 旧版 Skills CLI
 
-MIT - 自由使用，根据需要修改，如果可以请回馈。
+如果团队已在使用独立的 [Skills CLI](https://skills.sh/docs/cli)，它仍然可以只安装 [`skills/`](skills/) 下的工作流技能包：
+
+```bash
+npx skills add bovinphang/frontend-craft   # 按提示操作，加 -g 可全局安装
+npx skills update                          # 更新到最新版本
+npx skills check                           # 预览可用更新
+```
+
+| CLI                  | 安装内容                                      |
+| -------------------- | --------------------------------------------- |
+| `npx frontend-craft` | 技能 + 运行时专属代理、命令、钩子、规则、模板 |
+| `npx skills`         | 仅技能（适用于已有 Skills CLI 工作流）        |
+
+关闭遥测：`DISABLE_TELEMETRY=1`。详见 [skills.sh CLI 文档](https://skills.sh/docs/cli)。
 
 ---
 
-**如果这个仓库有帮助，请给它一个 Star。构建一些很棒的前端。**
+## 社区
+
+- [贡献指南](CONTRIBUTING.zh-CN.md) — 开发环境、PR 自检清单与多语言同步规则（[English](CONTRIBUTING.md)）
+- [安全策略](SECURITY.zh-CN.md) — 私密漏洞报告方式与支持范围（[English](SECURITY.md)）
+- [行为准则](CODE_OF_CONDUCT.zh-CN.md) — 社区参与规范（[English](CODE_OF_CONDUCT.md)）
+- [变更日志](CHANGELOG.zh-CN.md) — 版本说明（[English](CHANGELOG.md)）
+- [项目结构](docs/project-structure.md) — 完整目录布局与文件职责
+
+---
+
+## 许可证
+
+[MIT](LICENSE) — 自由使用，按需修改，如果可以请回馈社区。
+
+---
+
+<div align="center">
+
+**如果 frontend-craft 帮助了你的团队，[请给它一个 Star](https://github.com/bovinphang/frontend-craft)。**
+
+</div>

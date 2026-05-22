@@ -8,9 +8,14 @@ import { fileURLToPath } from "node:url";
 import { ALL_RUNTIMES } from "../../src/install/registry.js";
 import { getInstallBaseDir } from "../../src/install/runtime-homes.js";
 import { RUNTIME_CAPABILITIES } from "../../src/install/runtime-capabilities.js";
+import { ensureDir } from "../../src/install/shared/fs.js";
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "../..");
-const cli = path.join(root, "bin", "frontend-craft.js");
+const cli = path.join(root, "dist", "bin", "frontend-craft.js");
+
+test("ensureDir is a no-op for an existing filesystem root", () => {
+  assert.doesNotThrow(() => ensureDir(path.parse(process.cwd()).root));
+});
 
 test("dry-run install claude does not throw", () => {
   execFileSync(process.execPath, [cli, "install", "claude", "--dry-run"], {
@@ -104,6 +109,9 @@ test("install claude into temp dir creates hooks and skills", () => {
     assert.match(securitySkill, /^name:\s*fec-security-review$/m, "skill frontmatter uses fec- prefix");
     assert.doesNotMatch(securitySkill, /^version:/m, "skill frontmatter must not include version");
     assert.ok(fs.existsSync(path.join(dir, ".claude", "commands", "fec-init.md")));
+    assert.ok(fs.existsSync(path.join(dir, ".claude", "commands", "fec-tdd.md")));
+    assert.ok(fs.existsSync(path.join(dir, ".claude", "rules", "agent-workflow.md")));
+    assert.ok(fs.existsSync(path.join(dir, ".claude", "rules", "working-modes.md")));
     assert.ok(!fs.existsSync(path.join(dir, ".claude", "commands", "init.md")));
   } finally {
     fs.rmSync(dir, { recursive: true, force: true });
@@ -200,8 +208,11 @@ test("all runtime local installs match declared capabilities", () => {
           "qoder installs markdown agents",
         );
         assert.ok(fs.existsSync(path.join(baseDir, "rules", "react.md")), "qoder installs shared rules");
-        assert.ok(fs.existsSync(path.join(baseDir, "hooks", "security-check.js")), "qoder installs hook scripts");
-        const settings = JSON.parse(fs.readFileSync(path.join(baseDir, "settings.json"), "utf8"));
+        assert.ok(fs.existsSync(path.join(baseDir, "hooks", "security-check.js")), "qoder installs security hook script");
+        assert.ok(fs.existsSync(path.join(baseDir, "hooks", "notify.js")), "qoder installs notification hook script");
+        const settings = JSON.parse(fs.readFileSync(path.join(baseDir, "settings.json"), "utf8")) as {
+          hooks?: unknown;
+        };
         assert.ok(settings.hooks, "qoder settings include hooks");
         assert.ok(JSON.stringify(settings.hooks).includes(".qoder/hooks/security-check.js"));
       }
@@ -220,6 +231,6 @@ test("all runtime local installs match declared capabilities", () => {
   }
 });
 
-function escapeRegExp(value) {
+function escapeRegExp(value: string): string {
   return value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 }

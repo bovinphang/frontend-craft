@@ -7,6 +7,7 @@ export interface InstallContext {
   isGlobal: boolean;
   baseDir: string;
   dryRun: boolean;
+  mode: "install" | "update";
   force?: boolean;
   capabilities?: RuntimeCapabilities;
   projectFiles?: string[];

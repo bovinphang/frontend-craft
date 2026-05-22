@@ -1,17 +1,24 @@
 {
-    "attribution": {
-        "commit": "Co-Authored-By: pengbaowen <pengbaowen@msn.com>"
-    },
-    "permissions": {
-        "allow": [
-            "Bash(wc -l __TRACKED_VAR__/SKILL.md)",
-            "Bash(head -5 __TRACKED_VAR__/SKILL.md)",
-            "Bash(git add *)",
-            "Bash(git commit -m ' *)",
-            "Bash(git commit *)",
-            "Bash(git push *)",
-            "Bash(npm run *)",
-            "Bash(npm test *)"
-        ]
-    }
+  "attribution": {
+    "commit": "Co-Authored-By: pengbaowen <pengbaowen@msn.com>"
+  },
+  "permissions": {
+    "allow": [
+      "Bash(wc -l __TRACKED_VAR__/SKILL.md)",
+      "Bash(head -5 __TRACKED_VAR__/SKILL.md)",
+      "Bash(git add *)",
+      "Bash(git commit -m ' *)",
+      "Bash(git commit *)",
+      "Bash(git push *)",
+      "Bash(npm run *)",
+      "Bash(npm test *)",
+      "Bash(python -c \"import json,sys; data=json.load\\(sys.stdin\\); print\\(f'metadata.json entries: {len\\(data\\)}'\\); ids=[d['id'] for d in data]; print\\('\\\\n'.join\\(ids\\)\\)\")",
+      "Bash(npx skills *)",
+      "Bash(gh api *)",
+      "Bash(python -c \"import json,sys; data=json.load\\(sys.stdin\\); print\\(f'Remote metadata entries: {len\\(data\\)}'\\); print\\('\\\\n'.join\\([d['id'] for d in data]\\)\\)\")",
+      "WebFetch(domain:raw.githubusercontent.com)",
+      "Bash(python -c \"import json,sys; data=json.load\\(sys.stdin\\); print\\(f'skill-packages index entries: {len\\(data\\)}'\\); print\\('\\\\n'.join\\(data\\)\\)\")",
+      "Bash(npm view *)"
+    ]
+  }
 }

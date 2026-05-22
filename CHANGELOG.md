@@ -9,6 +9,28 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 Project-facing release notes are maintained in English from 2.0.0 onward. Historical entries may preserve their original language.
 
+## [2.3.0] - 2026-05-22
+
+### Added
+
+- Added new workflow capabilities: `fec-tdd-workflow`, `fec-refactor-clean`, `fec-doc-sync`, `/fec-plan`, `/fec-tdd`, `/fec-build-fix`, `/fec-refactor-clean`, `/fec-doc-sync`, plus `frontend-build-fixer`, `frontend-refactor-cleaner`, and `frontend-doc-updater`.
+- Added shared rules for agent workflow and working modes, and expanded testing, performance, refactoring, git, and comment rules with TDD, incremental validation, cleanup, and documentation-sync guidance.
+- **Update/upgrade commands:** added `frontend-craft update` and `frontend-craft upgrade` with manifest-based file protection, allowing safe in-place updates without overwriting user-modified files.
+- **esbuild minification:** added an esbuild minification step to the build pipeline, producing smaller compiled output for `dist/`.
+- **Version sync script:** added `scripts/sync-version.ts` to propagate the package version across plugin metadata files, keeping `package.json`, `openclaw.json`, and skill manifests in lockstep.
+
+### Changed
+
+- Enhanced `fec-validation-fix` with incremental build-fix behavior and added cross-platform long-running command guidance in the Node security hook.
+- **Build pipeline restructure:** moved hook scripts from `hooks/` to `src/hooks/`, switched the build pipeline to tsx-based compilation, bundled the CLI entry point into `dist/bin/`, and stopped publishing `dist/src/` in the npm package.
+- **Install module type annotations:** added comprehensive TypeScript type annotations to the install module for improved type safety and editor support.
+- **README layout:** replaced the detailed directory tree with a concise summary and a link to the full project structure documentation.
+- **CONTRIBUTING guides:** updated `CONTRIBUTING.md` and `CONTRIBUTING.zh-CN.md` to reflect the tsx-based build pipeline and the hook script relocation to `src/hooks/`.
+
+### Fixed
+
+- **Install mkdir:** skipped `mkdir` when the target directory already exists, preventing unnecessary errors during repeated installs.
+
 ## [2.2.1] - 2026-05-21
 
 ### Added

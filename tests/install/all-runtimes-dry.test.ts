@@ -5,7 +5,7 @@ import { fileURLToPath } from "node:url";
 import { ALL_RUNTIMES } from "../../src/install/registry.js";
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "../..");
-const cli = path.join(root, "bin", "frontend-craft.js");
+const cli = path.join(root, "dist", "bin", "frontend-craft.js");
 
 for (const rt of ALL_RUNTIMES) {
   test(`dry-run install ${rt}`, () => {

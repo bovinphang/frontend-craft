@@ -1,0 +1,55 @@
+import { mkdir } from "node:fs/promises";
+import path from "node:path";
+import { build, type BuildOptions } from "esbuild";
+import { resolvePluginRoot } from "../src/install/shared/resolve-plugin-root.js";
+
+const root = resolvePluginRoot(import.meta.url);
+
+const hookEntries = [
+  ["src/hooks/format-changed-file.ts", "dist/hooks/format-changed-file.js"],
+  ["src/hooks/notify.ts", "dist/hooks/notify.js"],
+  ["src/hooks/run-tests.ts", "dist/hooks/run-tests.js"],
+  ["src/hooks/security-check.ts", "dist/hooks/security-check.js"],
+  ["src/hooks/session-start.ts", "dist/hooks/session-start.js"],
+] as const;
+
+await mkdir(path.join(root, "dist", "bin"), { recursive: true });
+await mkdir(path.join(root, "dist", "hooks"), { recursive: true });
+
+await bundle({
+  entryPoint: "bin/frontend-craft.ts",
+  outfile: "dist/bin/frontend-craft.js",
+});
+
+for (const [entryPoint, outfile] of hookEntries) {
+  await bundle({ entryPoint, outfile });
+}
+
+console.log(`[build-dist] bundled ${hookEntries.length + 1} JavaScript entry points`);
+
+async function bundle({
+  entryPoint,
+  outfile,
+}: {
+  entryPoint: string;
+  outfile: string;
+}): Promise<void> {
+  const options: BuildOptions = {
+    absWorkingDir: root,
+    bundle: true,
+    charset: "utf8",
+    entryPoints: [entryPoint],
+    format: "esm",
+    legalComments: "none",
+    logLevel: "silent",
+    minify: true,
+    outfile,
+    packages: "external",
+    platform: "node",
+    sourcemap: false,
+    sourcesContent: false,
+    target: ["node22"],
+  };
+
+  await build(options);
+}

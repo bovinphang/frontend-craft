@@ -8,6 +8,28 @@
 
 自 **2.0.0** 起，面向发布的说明以英文 `CHANGELOG.md` 为权威来源；历史条目可能保留最初撰写语言。
 
+## [2.3.0] - 2026-05-22
+
+### 新增
+
+- 新增工作流能力：`fec-tdd-workflow`、`fec-refactor-clean`、`fec-doc-sync`、`/fec-plan`、`/fec-tdd`、`/fec-build-fix`、`/fec-refactor-clean`、`/fec-doc-sync`，以及 `frontend-build-fixer`、`frontend-refactor-cleaner`、`frontend-doc-updater`。
+- 新增 agent workflow 与 working modes 共享规则，并扩展 testing、performance、refactoring、git、comment 规则，补充 TDD、增量验证、清理和文档同步指导。
+- **更新/升级命令**：新增 `frontend-craft update` 和 `frontend-craft upgrade`，基于 manifest 文件保护机制，支持安全就地更新而不会覆盖用户已修改的文件。
+- **esbuild 压缩**：在构建流水线中新增 esbuild 压缩步骤，使 `dist/` 编译产物更小。
+- **版本同步脚本**：新增 `scripts/sync-version.ts`，在 `package.json`、`openclaw.json` 及 skill manifest 之间自动传播版本号，保持各元数据文件一致。
+
+### 变更
+
+- 增强 `fec-validation-fix` 的增量 build-fix 行为，并在 Node 安全 hook 中加入跨平台长命令日志提示。
+- **构建流水线重构**：将 hook 脚本从 `hooks/` 迁移至 `src/hooks/`，构建流水线切换为 tsx 编译，CLI 入口打包至 `dist/bin/`，npm 发布包不再包含 `dist/src/`。
+- **安装模块类型注解**：为安装模块补充完整的 TypeScript 类型标注，提升类型安全与编辑器体验。
+- **README 布局**：将详细目录树替换为简要摘要与完整项目结构文档的链接。
+- **CONTRIBUTING 文档**：更新 `CONTRIBUTING.md` 与 `CONTRIBUTING.zh-CN.md`，反映 tsx 构建流水线及 hook 脚本迁移至 `src/hooks/` 的变更。
+
+### 修复
+
+- **安装 mkdir**：目标目录已存在时跳过 `mkdir`，避免重复安装时产生不必要的错误。
+
 ## [2.2.1] - 2026-05-21
 
 ### 新增

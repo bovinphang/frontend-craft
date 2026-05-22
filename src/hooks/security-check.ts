@@ -50,4 +50,16 @@ for (const pattern of dangerous) {
   }
 }
 
+const longRunning = [
+  /\b(npm|pnpm|yarn|bun)\s+(run\s+)?dev\b/i,
+  /\b(npm|pnpm|yarn|bun)\s+(run\s+)?(test|build)\b/i,
+  /\b(vitest|playwright|cypress)\b/i,
+];
+
+if (longRunning.some((pattern) => pattern.test(command))) {
+  process.stderr.write(
+    "frontend-craft note: long-running frontend commands are easier to debug when their logs stay visible in a persistent terminal or CI artifact.\n",
+  );
+}
+
 process.exit(0);
