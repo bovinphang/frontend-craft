@@ -4,12 +4,13 @@ import { transform } from "esbuild";
 
 const root = process.cwd();
 const distDir = path.join(root, "dist");
+const scriptsDir = path.join(distDir, "scripts");
 
 if (!fs.existsSync(distDir)) {
   throw new Error("dist directory does not exist; run tsc before minifying");
 }
 
-const files = listJavaScriptFiles(distDir);
+const files = fs.existsSync(scriptsDir) ? listJavaScriptFiles(scriptsDir) : [];
 
 for (const file of files) {
   const source = fs.readFileSync(file, "utf8");

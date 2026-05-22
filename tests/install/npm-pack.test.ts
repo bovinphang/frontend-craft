@@ -16,7 +16,7 @@ test("npm pack publishes compiled runtime files without TypeScript sources", () 
   const files = pack[0]?.files.map((file) => file.path).sort() ?? [];
 
   assert.ok(files.includes("dist/bin/frontend-craft.js"));
-  assert.ok(files.includes("dist/src/install/cli.js"));
+  assert.ok(!files.some((file) => file.startsWith("dist/src/")), "npm package should not publish dist/src");
   assert.ok(files.includes("skills/metadata.json"));
 
   const leakedSources = files.filter((file) => /^(bin|src|scripts)\/.*\.ts$/.test(file));
@@ -40,11 +40,10 @@ test("OpenClaw dist check does not clean the bundle it verifies", () => {
 });
 
 test("build minifies compiled JavaScript while preserving CLI shebang", () => {
-  const cliRuntime = fs.readFileSync(path.join(root, "dist", "src", "install", "cli.js"), "utf8");
-  const cliSource = fs.readFileSync(path.join(root, "src", "install", "cli.ts"), "utf8");
-  const binRuntime = fs.readFileSync(path.join(root, "dist", "bin", "frontend-craft.js"), "utf8");
+  const cliRuntime = fs.readFileSync(path.join(root, "dist", "bin", "frontend-craft.js"), "utf8");
 
-  assert.ok(cliRuntime.length < cliSource.length * 0.8, "dist/src/install/cli.js should be minified");
-  assert.ok(!cliRuntime.includes("function printHelp"), "dist/src/install/cli.js should minify local names");
-  assert.ok(binRuntime.startsWith("#!/usr/bin/env node\n"), "bin shebang should stay intact");
+  assert.ok(!cliRuntime.includes("function printHelp"), "dist/bin/frontend-craft.js should minify local names");
+  assert.ok(!cliRuntime.includes("../src/install/cli.js"), "CLI should be bundled instead of importing dist/src");
+  assert.ok(cliRuntime.startsWith("#!/usr/bin/env node\n"), "bin shebang should stay intact");
+  assert.equal(cliRuntime.match(/^#!\/usr\/bin\/env node$/gm)?.length, 1, "bin should include one shebang");
 });

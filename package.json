@@ -24,7 +24,6 @@
     },
     "files": [
         "dist/bin",
-        "dist/src",
         "dist/scripts",
         "agents",
         "skills",
@@ -49,7 +48,7 @@
     ],
     "scripts": {
         "clean": "node -e \"require('node:fs').rmSync('dist',{recursive:true,force:true})\"",
-        "build": "npm run clean && tsc -p tsconfig.json && node dist/scripts/minify-dist.js",
+        "build": "npm run clean && tsc -p tsconfig.json && node dist/scripts/build-cli.js && node dist/scripts/minify-dist.js",
         "test": "npm run build && node --test dist/tests/converters/codex-agents.test.js dist/tests/install/cli.test.js dist/tests/install/end-to-end.test.js dist/tests/install/all-runtimes-dry.test.js dist/tests/install/metadata-consistency.test.js dist/tests/install/npm-pack.test.js dist/tests/install/skill-package.test.js dist/tests/install/sync-version.test.js",
         "build:openclaw": "npm run build && node dist/scripts/openclaw/build.js",
         "audit:skills": "npm run build && node dist/scripts/audit-skills.js",
