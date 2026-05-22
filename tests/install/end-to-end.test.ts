@@ -8,9 +8,14 @@ import { fileURLToPath } from "node:url";
 import { ALL_RUNTIMES } from "../../src/install/registry.js";
 import { getInstallBaseDir } from "../../src/install/runtime-homes.js";
 import { RUNTIME_CAPABILITIES } from "../../src/install/runtime-capabilities.js";
+import { ensureDir } from "../../src/install/shared/fs.js";
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "../..");
 const cli = path.join(root, "bin", "frontend-craft.js");
+
+test("ensureDir is a no-op for an existing filesystem root", () => {
+  assert.doesNotThrow(() => ensureDir(path.parse(process.cwd()).root));
+});
 
 test("dry-run install claude does not throw", () => {
   execFileSync(process.execPath, [cli, "install", "claude", "--dry-run"], {

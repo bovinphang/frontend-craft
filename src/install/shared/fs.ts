@@ -5,6 +5,7 @@ import path from "node:path";
  * @param {string} dir
  */
 export function ensureDir(dir: string): void {
+  if (fs.existsSync(dir)) return;
   fs.mkdirSync(dir, { recursive: true });
 }
 
