@@ -8,6 +8,20 @@
 
 自 **2.0.0** 起，面向发布的说明以英文 `CHANGELOG.md` 为权威来源；历史条目可能保留最初撰写语言。
 
+## [2.3.1] - 2026-05-25
+
+### 新增
+
+- **Claude 缓存清理 hook**：新增 `fec-cleanup-claude-cache` hook，用于在会话启动时自动管理 Claude 缓存。
+- **缓存诊断**：为 `frontend-craft doctor claude` 新增 `--fix-cache` 和 `--dry-run` 参数，用于检查和清理过期缓存条目。
+- **新模块**：`src/install/claude-cache.ts`，提供缓存报告生成、清理逻辑和结果渲染。
+- **Hook 注册**：在 `hooks/hooks.json` 和 `scripts/build-dist.ts` 中注册 `fec-cleanup-claude-cache`。
+
+### 变更
+
+- **版本升级**：将版本号更新为 2.3.1，涵盖 `package.json`、`.claude-plugin/plugin.json`、`.claude-plugin/marketplace.json`、`openclaw.plugin.json`、`package-lock.json` 以及 `skills/metadata.json` 中的所有 skill manifest。
+- **Doctor 命令**：扩展 `doctor` 报告，当 runtime 为 `claude` 时自动显示 Claude 缓存状态。
+
 ## [2.3.0] - 2026-05-22
 
 ### 新增
