@@ -24,6 +24,7 @@ test("npm pack publishes compiled runtime files without TypeScript sources", () 
   assert.deepEqual(leakedSources, []);
 
   const hookRuntimes = [
+    "fec-cleanup-claude-cache.js",
     "fec-format-changed-file.js",
     "fec-notify.js",
     "fec-run-tests.js",

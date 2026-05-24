@@ -6,6 +6,12 @@ import { getInstallBaseDir } from "./runtime-homes.js";
 import { RUNTIME_CAPABILITIES, renderRuntimeCapabilityMatrix } from "./runtime-capabilities.js";
 import { resolvePluginRoot } from "./shared/resolve-plugin-root.js";
 import { beginManifestSession, discardManifestSession, endManifestSession, getManifestPath } from "./shared/fs.js";
+import {
+  cleanupClaudeFrontendCraftCache,
+  getClaudeFrontendCraftCacheReport,
+  renderClaudeCacheCleanupResult,
+  renderClaudeCacheReport,
+} from "./claude-cache.js";
 import type { InstallContext } from "./types.js";
 
 function readPkgVersion(pluginRoot: string): string {
@@ -51,6 +57,7 @@ Usage:
   frontend-craft list
   frontend-craft matrix
   frontend-craft doctor <runtime>
+  frontend-craft doctor claude --fix-cache [--dry-run]
   frontend-craft sync-metadata --check
   frontend-craft version
   frontend-craft uninstall <runtime>   (prints manual cleanup hints)
@@ -91,6 +98,8 @@ export async function main(argv: string[]): Promise<void> {
   if (cmd === "doctor") {
     const runtime = cmdArgs[0] ?? "claude";
     const isGlobal = cmdArgs.includes("--global") || cmdArgs.includes("-g");
+    const fixCache = cmdArgs.includes("--fix-cache");
+    const dryRun = cmdArgs.includes("--dry-run");
     const cwd = process.cwd();
     const baseDir = getInstallBaseDir({ runtime, isGlobal, cwd });
     const cap = RUNTIME_CAPABILITIES[runtime];
@@ -99,7 +108,7 @@ export async function main(argv: string[]): Promise<void> {
       process.exitCode = 1;
       return;
     }
-    console.log(renderDoctorReport({ runtime, baseDir, cwd, cap }));
+    console.log(renderDoctorReport({ runtime, baseDir, cwd, cap, pluginRoot, fixCache, dryRun }));
     return;
   }
   if (cmd === "sync-metadata") {
@@ -209,11 +218,17 @@ function renderDoctorReport({
   baseDir,
   cwd,
   cap,
+  pluginRoot,
+  fixCache,
+  dryRun,
 }: {
   runtime: string;
   baseDir: string;
   cwd: string;
   cap: NonNullable<(typeof RUNTIME_CAPABILITIES)[string]>;
+  pluginRoot: string;
+  fixCache: boolean;
+  dryRun: boolean;
 }): string {
   const lines = [`frontend-craft doctor: ${runtime}`, `baseDir: ${baseDir}`, `tier: ${cap.tier}`];
   lines.push(`skills: ${status(checkSkills(runtime, baseDir, cwd), cap.skills)}`);
@@ -222,6 +237,14 @@ function renderDoctorReport({
   lines.push(`hooks: ${status(checkHooks(runtime, baseDir), cap.hooks)}`);
   lines.push(`rules: ${status(checkRules(runtime, baseDir), cap.rules)}`);
   lines.push(`templates: ${status(checkTemplates(runtime, baseDir, cwd), cap.templates)}`);
+  if (runtime === "claude") {
+    const currentVersion = readPkgVersion(pluginRoot);
+    if (fixCache) {
+      lines.push(renderClaudeCacheCleanupResult(cleanupClaudeFrontendCraftCache({ currentVersion, dryRun }), dryRun));
+    } else {
+      lines.push(renderClaudeCacheReport(getClaudeFrontendCraftCacheReport({ currentVersion })));
+    }
+  }
   return lines.join("\n");
 }
 

@@ -32,6 +32,11 @@
                 "hooks": [
                     {
                         "type": "command",
+                        "command": "node \"${CLAUDE_PLUGIN_ROOT}/dist/hooks/fec-cleanup-claude-cache.js\"",
+                        "timeout": 120
+                    },
+                    {
+                        "type": "command",
                         "command": "node \"${CLAUDE_PLUGIN_ROOT}/dist/hooks/fec-session-start.js\"",
                         "timeout": 10
                     }

@@ -6,6 +6,7 @@ import { resolvePluginRoot } from "../src/install/shared/resolve-plugin-root.js"
 const root = resolvePluginRoot(import.meta.url);
 
 const hookEntries = [
+  ["src/hooks/cleanup-claude-cache.ts", "dist/hooks/fec-cleanup-claude-cache.js"],
   ["src/hooks/format-changed-file.ts", "dist/hooks/fec-format-changed-file.js"],
   ["src/hooks/notify.ts", "dist/hooks/fec-notify.js"],
   ["src/hooks/run-tests.ts", "dist/hooks/fec-run-tests.js"],
