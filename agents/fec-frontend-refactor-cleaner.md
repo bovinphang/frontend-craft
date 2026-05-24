@@ -1,5 +1,5 @@
 ---
-name: frontend-refactor-cleaner
+name: fec-frontend-refactor-cleaner
 description: 前端死代码与技术债清理子代理：识别未使用组件、导出、样式、路由、依赖和测试夹具，按风险分类，仅在验证保护下清理安全项。
 tools: Read, Edit, Write, MultiEdit, Glob, Grep, LS, Bash
 model: sonnet

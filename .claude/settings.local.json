@@ -18,7 +18,8 @@
       "Bash(python -c \"import json,sys; data=json.load\\(sys.stdin\\); print\\(f'Remote metadata entries: {len\\(data\\)}'\\); print\\('\\\\n'.join\\([d['id'] for d in data]\\)\\)\")",
       "WebFetch(domain:raw.githubusercontent.com)",
       "Bash(python -c \"import json,sys; data=json.load\\(sys.stdin\\); print\\(f'skill-packages index entries: {len\\(data\\)}'\\); print\\('\\\\n'.join\\(data\\)\\)\")",
-      "Bash(npm view *)"
+      "Bash(npm view *)",
+      "Bash(npx frontend-craft *)"
     ]
   }
 }

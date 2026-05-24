@@ -85,7 +85,9 @@ npx frontend-craft@latest list
 
 ### 方式三：Claude Code Marketplace
 
-如果只通过 **Claude Code Marketplace**（原生插件流程）安装，完整步骤见 [docs/runtimes/claude.zh-CN.md](docs/runtimes/claude.zh-CN.md) · [English](docs/runtimes/claude.md)。
+对 Claude Code 用户，**Claude Code Marketplace** 是推荐的单一来源安装方式。只有在需要跨运行时安装、脚本化/离线复制文件，或非 Marketplace 环境时，才建议对 Claude 使用 CLI。除非显式传入 `--force`，不要在同一个 Claude 作用域同时启用 Marketplace 和 CLI 两份完整插件。
+
+完整步骤见 [docs/runtimes/claude.zh-CN.md](docs/runtimes/claude.zh-CN.md) · [English](docs/runtimes/claude.md)。
 
 ---
 
@@ -97,13 +99,13 @@ npx frontend-craft@latest list
 
 ```text
 你："Review my recent changes"
-→ frontend-code-reviewer agent 被调度，输出 reports/code-review-*.md
+→ fec-frontend-code-reviewer agent 被调度，输出 reports/code-review-*.md
 
 你："/fec-review"
 → 按架构、类型、渲染、样式、可访问性等维度执行结构化评审
 
 你："根据这个 Figma 链接实现结算页"
-→ figma-implementer agent 通过 MCP 读取设计稿，输出组件和报告
+→ fec-figma-implementer agent 通过 MCP 读取设计稿，输出组件和报告
 
 你："/fec-scaffold dashboard feature"
 → 按项目约定创建 page / feature / component 标准目录结构
@@ -201,19 +203,19 @@ npx frontend-craft@latest list
 
 | 代理                         | 聚焦领域                                                  | 报告                         |
 | ---------------------------- | --------------------------------------------------------- | ---------------------------- |
-| `frontend-code-reviewer`     | React/Vue/Next/Nuxt、TS、样式、客户端安全（按置信度降噪） | `code-review-*.md`           |
-| `typescript-reviewer`        | 类型安全、异步正确性、惯用模式（只报告不修改）            | `typescript-review-*.md`     |
-| `frontend-security-reviewer` | XSS、客户端密钥、危险 DOM/API、CSP、依赖审计              | `security-review-*.md`       |
-| `performance-optimizer`      | 打包体积、渲染性能、网络瓶颈                              | `performance-review-*.md`    |
-| `frontend-architect`         | 页面拆分、组件架构、状态流、目录规划                      | `architecture-proposal-*.md` |
-| `frontend-test-planner`      | 风险-层级映射：静态、单元、组件、E2E、视觉、无障碍、安全  | `test-plan-*.md`             |
-| `frontend-build-fixer`       | 增量修复 lint / type-check / test / build / CI            | `validation-fix-*.md`        |
-| `frontend-refactor-cleaner`  | 分类并安全清理未使用代码、导出、样式、路由和依赖          | `refactor-clean-*.md`        |
-| `frontend-e2e-runner`        | E2E 编写与运行（Playwright/Cypress）、flaky 隔离、Trace   | `e2e-summary-*.md`           |
-| `frontend-doc-updater`       | 同步 README、runtime 文档、结构、能力表和 metadata        | —                            |
-| `ui-checker`                 | 视觉问题排查与设计还原度评估                              | `ui-fidelity-review-*.md`    |
-| `figma-implementer`          | 按 Figma/Sketch/MasterGo/Pixso/墨刀/摹客设计稿精确实现 UI | `design-implementation-*.md` |
-| `design-token-mapper`        | 将设计变量映射到项目 Design Token                         | `token-mapping-*.md`         |
+| `fec-frontend-code-reviewer`     | React/Vue/Next/Nuxt、TS、样式、客户端安全（按置信度降噪） | `code-review-*.md`           |
+| `fec-typescript-reviewer`        | 类型安全、异步正确性、惯用模式（只报告不修改）            | `typescript-review-*.md`     |
+| `fec-frontend-security-reviewer` | XSS、客户端密钥、危险 DOM/API、CSP、依赖审计              | `security-review-*.md`       |
+| `fec-performance-optimizer`      | 打包体积、渲染性能、网络瓶颈                              | `performance-review-*.md`    |
+| `fec-frontend-architect`         | 页面拆分、组件架构、状态流、目录规划                      | `architecture-proposal-*.md` |
+| `fec-frontend-test-planner`      | 风险-层级映射：静态、单元、组件、E2E、视觉、无障碍、安全  | `test-plan-*.md`             |
+| `fec-frontend-build-fixer`       | 增量修复 lint / type-check / test / build / CI            | `validation-fix-*.md`        |
+| `fec-frontend-refactor-cleaner`  | 分类并安全清理未使用代码、导出、样式、路由和依赖          | `refactor-clean-*.md`        |
+| `fec-frontend-e2e-runner`        | E2E 编写与运行（Playwright/Cypress）、flaky 隔离、Trace   | `e2e-summary-*.md`           |
+| `fec-frontend-doc-updater`       | 同步 README、runtime 文档、结构、能力表和 metadata        | —                            |
+| `fec-ui-checker`                 | 视觉问题排查与设计还原度评估                              | `ui-fidelity-review-*.md`    |
+| `fec-figma-implementer`          | 按 Figma/Sketch/MasterGo/Pixso/墨刀/摹客设计稿精确实现 UI | `design-implementation-*.md` |
+| `fec-design-token-mapper`        | 将设计变量映射到项目 Design Token                         | `token-mapping-*.md`         |
 
 ### 钩子（Hooks，事件驱动）
 
@@ -324,20 +326,20 @@ $env:MODAO_TOKEN = "your-modao-token"
 
 | 报告类型       | 文件名模式                                   | 来源                                                                     |
 | -------------- | -------------------------------------------- | ------------------------------------------------------------------------ |
-| 代码审查       | `code-review-YYYY-MM-DD-HHmmss.md`           | `/fec-review`、`fec-frontend-code-review`、`frontend-code-reviewer`      |
-| TS/JS 专项评审 | `typescript-review-YYYY-MM-DD-HHmmss.md`     | `typescript-reviewer`                                                    |
-| 安全审查       | `security-review-YYYY-MM-DD-HHmmss.md`       | `fec-security-review`、`frontend-security-reviewer`                      |
+| 代码审查       | `code-review-YYYY-MM-DD-HHmmss.md`           | `/fec-review`、`fec-frontend-code-review`、`fec-frontend-code-reviewer`      |
+| TS/JS 专项评审 | `typescript-review-YYYY-MM-DD-HHmmss.md`     | `fec-typescript-reviewer`                                                    |
+| 安全审查       | `security-review-YYYY-MM-DD-HHmmss.md`       | `fec-security-review`、`fec-frontend-security-reviewer`                      |
 | 无障碍检查     | `accessibility-review-YYYY-MM-DD-HHmmss.md`  | `fec-accessibility-check`                                                |
-| 性能分析       | `performance-review-YYYY-MM-DD-HHmmss.md`    | `performance-optimizer`                                                  |
-| 架构方案       | `architecture-proposal-YYYY-MM-DD-HHmmss.md` | `frontend-architect`                                                     |
-| 设计还原度     | `ui-fidelity-review-YYYY-MM-DD-HHmmss.md`    | `ui-checker`                                                             |
-| 设计实现       | `design-implementation-YYYY-MM-DD-HHmmss.md` | `figma-implementer`                                                      |
-| Token 映射     | `token-mapping-YYYY-MM-DD-HHmmss.md`         | `design-token-mapper`                                                    |
+| 性能分析       | `performance-review-YYYY-MM-DD-HHmmss.md`    | `fec-performance-optimizer`                                                  |
+| 架构方案       | `architecture-proposal-YYYY-MM-DD-HHmmss.md` | `fec-frontend-architect`                                                     |
+| 设计还原度     | `ui-fidelity-review-YYYY-MM-DD-HHmmss.md`    | `fec-ui-checker`                                                             |
+| 设计实现       | `design-implementation-YYYY-MM-DD-HHmmss.md` | `fec-figma-implementer`                                                      |
+| Token 映射     | `token-mapping-YYYY-MM-DD-HHmmss.md`         | `fec-design-token-mapper`                                                    |
 | 设计计划       | `design-plan-YYYY-MM-DD-HHmmss.md`           | `fec-implement-from-design`                                              |
-| 测试计划       | `test-plan-YYYY-MM-DD-HHmmss.md`             | `/fec-test-plan`、`fec-testing-strategy`、`frontend-test-planner`        |
+| 测试计划       | `test-plan-YYYY-MM-DD-HHmmss.md`             | `/fec-test-plan`、`fec-testing-strategy`、`fec-frontend-test-planner`        |
 | 验证修复       | `validation-fix-YYYY-MM-DD-HHmmss.md`        | `fec-validation-fix`                                                     |
-| 重构清理       | `refactor-clean-YYYY-MM-DD-HHmmss.md`        | `/fec-refactor-clean`、`fec-refactor-clean`、`frontend-refactor-cleaner` |
-| E2E 运行摘要   | `e2e-summary-YYYY-MM-DD-HHmmss.md`           | `frontend-e2e-runner`（可选）                                            |
+| 重构清理       | `refactor-clean-YYYY-MM-DD-HHmmss.md`        | `/fec-refactor-clean`、`fec-refactor-clean`、`fec-frontend-refactor-cleaner` |
+| E2E 运行摘要   | `e2e-summary-YYYY-MM-DD-HHmmss.md`           | `fec-frontend-e2e-runner`（可选）                                            |
 | 迁移计划       | `migration-plan-YYYY-MM-DD-HHmmss.md`        | `fec-legacy-to-modern-migration`                                         |
 
 </details>
@@ -357,7 +359,7 @@ npx frontend-craft@latest update <runtime> --global
 
 CLI 会在 runtime 目录写入 `frontend-craft.manifest.json`，并**跳过你本地修改过的文件**——自定义内容在更新后依然保留。
 
-**Claude Code Marketplace** 或 **submodule** 安装的更新方式见 [docs/runtimes/claude.zh-CN.md](docs/runtimes/claude.zh-CN.md) · [English](docs/runtimes/claude.md)。
+**Claude Code Marketplace** 或 **submodule** 安装的更新方式见 [docs/runtimes/claude.zh-CN.md](docs/runtimes/claude.zh-CN.md) · [English](docs/runtimes/claude.md)。`/fec-init` 只初始化项目配置，不是第二次安装插件本体。
 
 ---
 

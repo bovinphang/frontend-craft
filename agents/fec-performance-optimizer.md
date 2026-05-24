@@ -1,5 +1,5 @@
 ---
-name: performance-optimizer
+name: fec-performance-optimizer
 description: 前端性能分析与优化专精：Core Web Vitals、打包体积、运行时与渲染、网络与缓存、内存泄漏排查；可配合 Lighthouse、Bundle 分析与 Profiler。当用户提到页面慢、卡顿、首屏、包体积、渲染差、Web Vitals 不达标时使用。
 tools: Read, Edit, Write, MultiEdit, Glob, Grep, LS, Bash
 model: sonnet
@@ -223,7 +223,7 @@ onLCP(console.log);
 # 性能分析报告
 
 > 生成时间: YYYY-MM-DD HH:mm
-> 工具: frontend-craft / performance-optimizer
+> 工具: frontend-craft / fec-performance-optimizer
 
 ## 摘要
 - 整体结论（如：首屏包体偏大 / LCP 风险高）

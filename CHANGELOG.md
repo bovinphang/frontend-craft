@@ -9,6 +9,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 Project-facing release notes are maintained in English from 2.0.0 onward. Historical entries may preserve their original language.
 
+## [2.3.1] - 2026-05-25
+
+### Added
+
+- **Claude cache cleanup hook:** added `fec-cleanup-claude-cache` hook for automatic Claude cache management during session start.
+- **Cache diagnostics:** added `--fix-cache` and `--dry-run` flags to `frontend-craft doctor claude` for inspecting and cleaning stale cache entries.
+- **New module:** `src/install/claude-cache.ts` with cache report generation, cleanup logic, and result rendering.
+- **Hook registration:** registered `fec-cleanup-claude-cache` in `hooks/hooks.json` and `scripts/build-dist.ts`.
+
+### Changed
+
+- **Doctor command:** extended `doctor` report to include Claude cache status when runtime is `claude`.
+- **Install documentation:** clarified Claude Code Marketplace as the preferred single-source install for Claude Code users; added warnings against running both Marketplace and CLI copies in the same scope, documented `--force` requirement for dual-install conflicts, and clarified that `/fec-init` only initializes project config, not a second plugin install.
+- **Test coverage:** added `tests/install/claude-cache.test.ts`; expanded end-to-end, metadata consistency, and update test coverage.
+
 ## [2.3.0] - 2026-05-22
 
 ### Added

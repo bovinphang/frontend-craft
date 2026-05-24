@@ -11,19 +11,19 @@ frontend-craft/
 |   |-- marketplace.json    # Marketplace directory metadata
 |
 |-- agents/           # Specialized sub-agents for delegation
-|   |-- frontend-architect.md    # Page splitting, component architecture, state flow
-|   |-- frontend-code-reviewer.md # Frontend-focused code review (quality, security, a11y)
-|   |-- frontend-security-reviewer.md # Frontend attack surface: XSS, secrets, CSP, deps
-|   |-- frontend-test-planner.md # Testing strategy, risk matrix, coverage planning
-|   |-- frontend-build-fixer.md # Incremental lint/typecheck/test/build/CI failure repair
-|   |-- frontend-refactor-cleaner.md # Dead-code and unused dependency cleanup
-|   |-- frontend-doc-updater.md # README/runtime docs/capability table synchronization
-|   |-- frontend-e2e-runner.md     # E2E authoring, execution, flaky handling, artifacts, CI
-|   |-- typescript-reviewer.md    # TS/JS type safety, async, security, report-only review
-|   |-- performance-optimizer.md # Performance bottleneck analysis and optimization
-|   |-- ui-checker.md            # UI visual issues, design fidelity evaluation
-|   |-- figma-implementer.md     # Precise UI implementation from design
-|   |-- design-token-mapper.md   # Map design variables to Design Tokens
+|   |-- fec-frontend-architect.md    # Page splitting, component architecture, state flow
+|   |-- fec-frontend-code-reviewer.md # Frontend-focused code review (quality, security, a11y)
+|   |-- fec-frontend-security-reviewer.md # Frontend attack surface: XSS, secrets, CSP, deps
+|   |-- fec-frontend-test-planner.md # Testing strategy, risk matrix, coverage planning
+|   |-- fec-frontend-build-fixer.md # Incremental lint/typecheck/test/build/CI failure repair
+|   |-- fec-frontend-refactor-cleaner.md # Dead-code and unused dependency cleanup
+|   |-- fec-frontend-doc-updater.md # README/runtime docs/capability table synchronization
+|   |-- fec-frontend-e2e-runner.md     # E2E authoring, execution, flaky handling, artifacts, CI
+|   |-- fec-typescript-reviewer.md    # TS/JS type safety, async, security, report-only review
+|   |-- fec-performance-optimizer.md # Performance bottleneck analysis and optimization
+|   |-- fec-ui-checker.md            # UI visual issues, design fidelity evaluation
+|   |-- fec-figma-implementer.md     # Precise UI implementation from design
+|   |-- fec-design-token-mapper.md   # Map design variables to Design Tokens
 |
 |-- skills/           # Workflow definitions and domain knowledge
 |   |-- fec-frontend-code-review/    # Architecture, types, rendering, styles, a11y

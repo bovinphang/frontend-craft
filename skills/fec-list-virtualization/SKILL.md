@@ -41,4 +41,4 @@ Load [references/virtualization-patterns.md](references/virtualization-patterns.
 
 ## Related Agent
 
-- [performance-optimizer](../../agents/performance-optimizer.md) — 性能分析与优化，可通过 Profiler 验证虚拟化效果
+- [fec-performance-optimizer](../../agents/fec-performance-optimizer.md) — 性能分析与优化，可通过 Profiler 验证虚拟化效果

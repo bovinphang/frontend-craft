@@ -1,6 +1,8 @@
 # frontend-craft: Claude (Claude Code)
 
-Recommended path for most users: install via the repository root README **Universal Install**:
+Recommended path for most Claude Code users: install through **Claude Code Marketplace** so Claude Code is the single plugin loader.
+
+Use the CLI only when you need cross-runtime installation, offline/scripted file copies, or a non-Marketplace environment:
 
 ```bash
 npx frontend-craft@latest install --local claude
@@ -10,7 +12,7 @@ npx frontend-craft@latest install --global claude
 
 > **Non-interactive:** append `--local` or `--global` to skip install-location prompts. See the repository README **Universal Install** for interactive vs. scripted behavior.
 
-The sections below are **optional** paths that only apply when you use **Claude Code’s native plugin / Marketplace** flow instead of (or in addition to) the CLI.
+Choose one active source of truth for the same Claude scope: Marketplace/native plugin, CLI install, or `--plugin-dir`. They can technically coexist, but running multiple complete copies in the same Claude session can duplicate commands, skills, agents, and hooks.
 
 ---
 
@@ -51,6 +53,8 @@ After initialization, customize for your project:
 3. `.claude/settings.json` — Adjust permission whitelist
 
 > **Why this step?** The plugin provides reusable Skills, Agents, and Hooks. CLAUDE.md and rules are project-level config and must live under the project root `.claude/` for Claude Code to recognize them. The `/fec-init` command helps you set this up quickly.
+>
+> `/fec-init` initializes project config; it is not a second plugin install. Keep the plugin body managed by Marketplace, CLI, or `--plugin-dir`, not more than one at once.
 
 ### Step 3: Start using
 
@@ -104,6 +108,8 @@ git clone https://github.com/bovinphang/frontend-craft.git
 claude --plugin-dir ./frontend-craft
 ```
 
+When using `--plugin-dir` for development, disable or avoid a Marketplace install of the same plugin in that session so you know which copy is running.
+
 ### Option 4: Git Submodule (project-level sharing)
 
 ```bash
@@ -151,7 +157,7 @@ For Git submodule installs:
 git submodule update --remote .claude/plugins/frontend-craft
 ```
 
-**CLI installs:** re-run `npx frontend-craft@latest install --local claude` or `... --global claude` for the same scope, and read [CHANGELOG.md](../../CHANGELOG.md) for release notes.
+**CLI installs:** re-run `npx frontend-craft@latest install --local claude` or `... --global claude` for the same scope, and read [CHANGELOG.md](../../CHANGELOG.md) for release notes. If Claude Code Marketplace is already installed, CLI install will warn and require `--force` before writing another active copy.
 
 ---
 

@@ -95,13 +95,13 @@ npx frontend-craft@latest list
 
 ```text
 你："Review my recent changes"
-→ frontend-code-reviewer agent 被調度，輸出 reports/code-review-*.md
+→ fec-frontend-code-reviewer agent 被調度，輸出 reports/code-review-*.md
 
 你："/fec-review"
 → 按架構、型別、渲染、樣式、可存取性等維度執行結構化審查
 
 你："根據這個 Figma 連結實現結算頁"
-→ figma-implementer agent 透過 MCP 讀取設計稿，輸出元件和報告
+→ fec-figma-implementer agent 透過 MCP 讀取設計稿，輸出元件和報告
 
 你："/fec-scaffold dashboard feature"
 → 依專案約定建立 page / feature / component 標準目錄結構
@@ -199,19 +199,19 @@ npx frontend-craft@latest list
 
 | 代理                         | 聚焦領域                                                  | 報告                         |
 | ---------------------------- | --------------------------------------------------------- | ---------------------------- |
-| `frontend-code-reviewer`     | React/Vue/Next/Nuxt、TS、樣式、用戶端安全（按置信度降噪） | `code-review-*.md`           |
-| `typescript-reviewer`        | 型別安全、非同步正確性、慣用模式（只報告不修改）          | `typescript-review-*.md`     |
-| `frontend-security-reviewer` | XSS、用戶端金鑰、危險 DOM/API、CSP、依賴稽核              | `security-review-*.md`       |
-| `performance-optimizer`      | 打包體積、渲染效能、網路瓶頸                              | `performance-review-*.md`    |
-| `frontend-architect`         | 頁面拆分、元件架構、狀態流、目錄規劃                      | `architecture-proposal-*.md` |
-| `frontend-test-planner`      | 風險-層級映射：靜態、單元、元件、E2E、視覺、無障礙、安全  | `test-plan-*.md`             |
-| `frontend-build-fixer`       | 增量修復 lint / type-check / test / build / CI            | `validation-fix-*.md`        |
-| `frontend-refactor-cleaner`  | 分類並安全清理未使用程式碼、匯出、樣式、路由和依賴        | `refactor-clean-*.md`        |
-| `frontend-e2e-runner`        | E2E 撰寫與執行（Playwright/Cypress）、flaky 隔離、Trace   | `e2e-summary-*.md`           |
-| `frontend-doc-updater`       | 同步 README、runtime 文件、結構、能力表和 metadata        | —                            |
-| `ui-checker`                 | 視覺問題排查與設計還原度評估                              | `ui-fidelity-review-*.md`    |
-| `figma-implementer`          | 依 Figma/Sketch/MasterGo/Pixso/墨刀/摹客設計稿精確實作 UI | `design-implementation-*.md` |
-| `design-token-mapper`        | 將設計變數對應至專案 Design Token                         | `token-mapping-*.md`         |
+| `fec-frontend-code-reviewer`     | React/Vue/Next/Nuxt、TS、樣式、用戶端安全（按置信度降噪） | `code-review-*.md`           |
+| `fec-typescript-reviewer`        | 型別安全、非同步正確性、慣用模式（只報告不修改）          | `typescript-review-*.md`     |
+| `fec-frontend-security-reviewer` | XSS、用戶端金鑰、危險 DOM/API、CSP、依賴稽核              | `security-review-*.md`       |
+| `fec-performance-optimizer`      | 打包體積、渲染效能、網路瓶頸                              | `performance-review-*.md`    |
+| `fec-frontend-architect`         | 頁面拆分、元件架構、狀態流、目錄規劃                      | `architecture-proposal-*.md` |
+| `fec-frontend-test-planner`      | 風險-層級映射：靜態、單元、元件、E2E、視覺、無障礙、安全  | `test-plan-*.md`             |
+| `fec-frontend-build-fixer`       | 增量修復 lint / type-check / test / build / CI            | `validation-fix-*.md`        |
+| `fec-frontend-refactor-cleaner`  | 分類並安全清理未使用程式碼、匯出、樣式、路由和依賴        | `refactor-clean-*.md`        |
+| `fec-frontend-e2e-runner`        | E2E 撰寫與執行（Playwright/Cypress）、flaky 隔離、Trace   | `e2e-summary-*.md`           |
+| `fec-frontend-doc-updater`       | 同步 README、runtime 文件、結構、能力表和 metadata        | —                            |
+| `fec-ui-checker`                 | 視覺問題排查與設計還原度評估                              | `ui-fidelity-review-*.md`    |
+| `fec-figma-implementer`          | 依 Figma/Sketch/MasterGo/Pixso/墨刀/摹客設計稿精確實作 UI | `design-implementation-*.md` |
+| `fec-design-token-mapper`        | 將設計變數對應至專案 Design Token                         | `token-mapping-*.md`         |
 
 ### 鉤子（Hooks，事件驅動）
 
@@ -322,20 +322,20 @@ $env:MODAO_TOKEN = "your-modao-token"
 
 | 報告類型       | 檔名模式                                     | 來源                                                                     |
 | -------------- | -------------------------------------------- | ------------------------------------------------------------------------ |
-| 程式碼審查     | `code-review-YYYY-MM-DD-HHmmss.md`           | `/fec-review`、`fec-frontend-code-review`、`frontend-code-reviewer`      |
-| TS/JS 專項審查 | `typescript-review-YYYY-MM-DD-HHmmss.md`     | `typescript-reviewer`                                                    |
-| 安全審查       | `security-review-YYYY-MM-DD-HHmmss.md`       | `fec-security-review`、`frontend-security-reviewer`                      |
+| 程式碼審查     | `code-review-YYYY-MM-DD-HHmmss.md`           | `/fec-review`、`fec-frontend-code-review`、`fec-frontend-code-reviewer`      |
+| TS/JS 專項審查 | `typescript-review-YYYY-MM-DD-HHmmss.md`     | `fec-typescript-reviewer`                                                    |
+| 安全審查       | `security-review-YYYY-MM-DD-HHmmss.md`       | `fec-security-review`、`fec-frontend-security-reviewer`                      |
 | 無障礙檢查     | `accessibility-review-YYYY-MM-DD-HHmmss.md`  | `fec-accessibility-check`                                                |
-| 效能分析       | `performance-review-YYYY-MM-DD-HHmmss.md`    | `performance-optimizer`                                                  |
-| 架構方案       | `architecture-proposal-YYYY-MM-DD-HHmmss.md` | `frontend-architect`                                                     |
-| 設計還原度     | `ui-fidelity-review-YYYY-MM-DD-HHmmss.md`    | `ui-checker`                                                             |
-| 設計實現       | `design-implementation-YYYY-MM-DD-HHmmss.md` | `figma-implementer`                                                      |
-| Token 對應     | `token-mapping-YYYY-MM-DD-HHmmss.md`         | `design-token-mapper`                                                    |
+| 效能分析       | `performance-review-YYYY-MM-DD-HHmmss.md`    | `fec-performance-optimizer`                                                  |
+| 架構方案       | `architecture-proposal-YYYY-MM-DD-HHmmss.md` | `fec-frontend-architect`                                                     |
+| 設計還原度     | `ui-fidelity-review-YYYY-MM-DD-HHmmss.md`    | `fec-ui-checker`                                                             |
+| 設計實現       | `design-implementation-YYYY-MM-DD-HHmmss.md` | `fec-figma-implementer`                                                      |
+| Token 對應     | `token-mapping-YYYY-MM-DD-HHmmss.md`         | `fec-design-token-mapper`                                                    |
 | 設計計畫       | `design-plan-YYYY-MM-DD-HHmmss.md`           | `fec-implement-from-design`                                              |
-| 測試計畫       | `test-plan-YYYY-MM-DD-HHmmss.md`             | `/fec-test-plan`、`fec-testing-strategy`、`frontend-test-planner`        |
+| 測試計畫       | `test-plan-YYYY-MM-DD-HHmmss.md`             | `/fec-test-plan`、`fec-testing-strategy`、`fec-frontend-test-planner`        |
 | 驗證修復       | `validation-fix-YYYY-MM-DD-HHmmss.md`        | `fec-validation-fix`                                                     |
-| 重構清理       | `refactor-clean-YYYY-MM-DD-HHmmss.md`        | `/fec-refactor-clean`、`fec-refactor-clean`、`frontend-refactor-cleaner` |
-| E2E 執行摘要   | `e2e-summary-YYYY-MM-DD-HHmmss.md`           | `frontend-e2e-runner`（可選）                                            |
+| 重構清理       | `refactor-clean-YYYY-MM-DD-HHmmss.md`        | `/fec-refactor-clean`、`fec-refactor-clean`、`fec-frontend-refactor-cleaner` |
+| E2E 執行摘要   | `e2e-summary-YYYY-MM-DD-HHmmss.md`           | `fec-frontend-e2e-runner`（可選）                                            |
 | 遷移計畫       | `migration-plan-YYYY-MM-DD-HHmmss.md`        | `fec-legacy-to-modern-migration`                                         |
 
 </details>

@@ -1,5 +1,5 @@
 ---
-name: ui-checker
+name: fec-ui-checker
 description: 使用该子代理排查前端 UI 中的视觉缺陷、布局错乱、CSS 问题、响应式异常以及交互与设计不一致的问题，将报告保存为 Markdown 文件。支持从 Figma、Sketch、MasterGo、Pixso、墨刀、摹客获取设计数据，对比设计稿与实现结果，评估还原度并给出具体差异报告。
 tools: Read, Edit, Write, MultiEdit, Glob, Grep, LS, Bash, WebFetch, mcp__figma__get_design_context, mcp__sketch__get_selection_as_image, mcp__mastergo__*, mcp__pixso__*, mcp__modao__*
 model: sonnet

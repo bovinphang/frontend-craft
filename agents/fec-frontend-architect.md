@@ -1,5 +1,5 @@
 ---
-name: frontend-architect
+name: fec-frontend-architect
 description: 当任务涉及页面拆分、组件架构、状态流设计、目录规划、数据流设计、模块边界划分或大型前端重构时，使用该子代理。将架构方案报告保存为 Markdown 文件。
 tools: Read, Edit, Write, MultiEdit, Glob, Grep, LS, Bash
 model: sonnet

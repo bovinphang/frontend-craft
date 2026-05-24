@@ -1,5 +1,5 @@
 ---
-name: figma-implementer
+name: fec-figma-implementer
 description: 专注于按设计稿精确实现 UI 组件的代理，并将实现报告保存为 Markdown 文件。支持 Figma、Sketch、MasterGo、Pixso、墨刀、摹客六种设计工具。提供设计稿链接、选区截图或标注数据，自动获取设计数据并生成高保真前端代码。当需要基于设计上下文实现 UI，尤其是通过 MCP 完成设计稿转代码任务时，使用该子代理。
 tools: Read, Edit, Write, MultiEdit, Glob, Grep, LS, WebFetch, mcp__figma__get_design_context, mcp__figma__get_variable_defs, mcp__sketch__get_selection_as_image, mcp__sketch__run_code, mcp__mastergo__*, mcp__pixso__*, mcp__modao__*
 model: sonnet

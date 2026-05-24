@@ -85,7 +85,9 @@ npx frontend-craft@latest list
 
 ### Option 3 — Claude Code Marketplace
 
-If you install only through the **Claude Code Marketplace** (native plugin flow), full steps are in [docs/runtimes/claude.md](docs/runtimes/claude.md) · [简体中文](docs/runtimes/claude.zh-CN.md).
+For Claude Code users, **Claude Code Marketplace** is the preferred single-source install. Use the CLI for Claude when you need cross-runtime installs, scripted/offline file copies, or non-Marketplace environments. Do not keep Marketplace and CLI copies active in the same Claude scope unless you explicitly choose that with `--force`.
+
+Full Claude-specific steps are in [docs/runtimes/claude.md](docs/runtimes/claude.md) · [简体中文](docs/runtimes/claude.zh-CN.md).
 
 ---
 
@@ -95,13 +97,13 @@ Once installed, you have a full frontend engineering toolkit available in every 
 
 ```text
 You: "Review my recent changes"
-→ The frontend-code-reviewer agent is dispatched, produces reports/code-review-*.md
+→ The fec-frontend-code-reviewer agent is dispatched, produces reports/code-review-*.md
 
 You: "/fec-review"
 → Runs a structured review across architecture, types, rendering, styles, a11y
 
 You: "Implement the checkout page from this Figma link"
-→ The figma-implementer agent reads the design via MCP, emits components and a report
+→ The fec-figma-implementer agent reads the design via MCP, emits components and a report
 
 You: "/fec-scaffold dashboard feature"
 → Creates a page / feature / component directory tree following project conventions
@@ -199,19 +201,19 @@ Agents are specialized sub-agents dispatched by the main assistant to handle a f
 
 | Agent                        | Focus                                                                      | Report                       |
 | ---------------------------- | -------------------------------------------------------------------------- | ---------------------------- |
-| `frontend-code-reviewer`     | React/Vue/Next/Nuxt, TS, styles, client-side security (confidence-based)   | `code-review-*.md`           |
-| `typescript-reviewer`        | Type safety, async correctness, idiomatic patterns (report-only)           | `typescript-review-*.md`     |
-| `frontend-security-reviewer` | XSS, client secrets, dangerous DOM/APIs, CSP, dependency audit             | `security-review-*.md`       |
-| `performance-optimizer`      | Bundle size, render performance, network bottlenecks                       | `performance-review-*.md`    |
-| `frontend-architect`         | Page splitting, component architecture, state flow, directory planning     | `architecture-proposal-*.md` |
-| `frontend-test-planner`      | Risk-to-layer matrix: static, unit, component, E2E, visual, a11y, security | `test-plan-*.md`             |
-| `frontend-build-fixer`       | Incremental lint / type-check / test / build / CI repair                   | `validation-fix-*.md`        |
-| `frontend-refactor-cleaner`  | Classify and safely remove unused code, exports, styles, routes, deps      | `refactor-clean-*.md`        |
-| `frontend-e2e-runner`        | E2E authoring and runs (Playwright/Cypress), flaky quarantine, traces      | `e2e-summary-*.md`           |
-| `frontend-doc-updater`       | Sync README, runtime docs, structure, capability tables, metadata          | —                            |
-| `ui-checker`                 | Visual issue debugging and design fidelity evaluation                      | `ui-fidelity-review-*.md`    |
-| `figma-implementer`          | Precise UI implementation from Figma/Sketch/MasterGo/Pixso/墨刀/摹客       | `design-implementation-*.md` |
-| `design-token-mapper`        | Map design variables to project Design Tokens                              | `token-mapping-*.md`         |
+| `fec-frontend-code-reviewer`     | React/Vue/Next/Nuxt, TS, styles, client-side security (confidence-based)   | `code-review-*.md`           |
+| `fec-typescript-reviewer`        | Type safety, async correctness, idiomatic patterns (report-only)           | `typescript-review-*.md`     |
+| `fec-frontend-security-reviewer` | XSS, client secrets, dangerous DOM/APIs, CSP, dependency audit             | `security-review-*.md`       |
+| `fec-performance-optimizer`      | Bundle size, render performance, network bottlenecks                       | `performance-review-*.md`    |
+| `fec-frontend-architect`         | Page splitting, component architecture, state flow, directory planning     | `architecture-proposal-*.md` |
+| `fec-frontend-test-planner`      | Risk-to-layer matrix: static, unit, component, E2E, visual, a11y, security | `test-plan-*.md`             |
+| `fec-frontend-build-fixer`       | Incremental lint / type-check / test / build / CI repair                   | `validation-fix-*.md`        |
+| `fec-frontend-refactor-cleaner`  | Classify and safely remove unused code, exports, styles, routes, deps      | `refactor-clean-*.md`        |
+| `fec-frontend-e2e-runner`        | E2E authoring and runs (Playwright/Cypress), flaky quarantine, traces      | `e2e-summary-*.md`           |
+| `fec-frontend-doc-updater`       | Sync README, runtime docs, structure, capability tables, metadata          | —                            |
+| `fec-ui-checker`                 | Visual issue debugging and design fidelity evaluation                      | `ui-fidelity-review-*.md`    |
+| `fec-figma-implementer`          | Precise UI implementation from Figma/Sketch/MasterGo/Pixso/墨刀/摹客       | `design-implementation-*.md` |
+| `fec-design-token-mapper`        | Map design variables to project Design Tokens                              | `token-mapping-*.md`         |
 
 ### Hooks (event-driven)
 
@@ -322,20 +324,20 @@ Every review, analysis, and evaluation writes a timestamped Markdown report to `
 
 | Report type            | Filename pattern                             | Produced by                                                              |
 | ---------------------- | -------------------------------------------- | ------------------------------------------------------------------------ |
-| Code review            | `code-review-YYYY-MM-DD-HHmmss.md`           | `/fec-review`, `fec-frontend-code-review`, `frontend-code-reviewer`      |
-| TypeScript / JS review | `typescript-review-YYYY-MM-DD-HHmmss.md`     | `typescript-reviewer`                                                    |
-| Security review        | `security-review-YYYY-MM-DD-HHmmss.md`       | `fec-security-review`, `frontend-security-reviewer`                      |
+| Code review            | `code-review-YYYY-MM-DD-HHmmss.md`           | `/fec-review`, `fec-frontend-code-review`, `fec-frontend-code-reviewer`      |
+| TypeScript / JS review | `typescript-review-YYYY-MM-DD-HHmmss.md`     | `fec-typescript-reviewer`                                                    |
+| Security review        | `security-review-YYYY-MM-DD-HHmmss.md`       | `fec-security-review`, `fec-frontend-security-reviewer`                      |
 | Accessibility          | `accessibility-review-YYYY-MM-DD-HHmmss.md`  | `fec-accessibility-check`                                                |
-| Performance            | `performance-review-YYYY-MM-DD-HHmmss.md`    | `performance-optimizer`                                                  |
-| Architecture           | `architecture-proposal-YYYY-MM-DD-HHmmss.md` | `frontend-architect`                                                     |
-| Design fidelity        | `ui-fidelity-review-YYYY-MM-DD-HHmmss.md`    | `ui-checker`                                                             |
-| Design implementation  | `design-implementation-YYYY-MM-DD-HHmmss.md` | `figma-implementer`                                                      |
-| Token mapping          | `token-mapping-YYYY-MM-DD-HHmmss.md`         | `design-token-mapper`                                                    |
+| Performance            | `performance-review-YYYY-MM-DD-HHmmss.md`    | `fec-performance-optimizer`                                                  |
+| Architecture           | `architecture-proposal-YYYY-MM-DD-HHmmss.md` | `fec-frontend-architect`                                                     |
+| Design fidelity        | `ui-fidelity-review-YYYY-MM-DD-HHmmss.md`    | `fec-ui-checker`                                                             |
+| Design implementation  | `design-implementation-YYYY-MM-DD-HHmmss.md` | `fec-figma-implementer`                                                      |
+| Token mapping          | `token-mapping-YYYY-MM-DD-HHmmss.md`         | `fec-design-token-mapper`                                                    |
 | Design plan            | `design-plan-YYYY-MM-DD-HHmmss.md`           | `fec-implement-from-design`                                              |
-| Test plan              | `test-plan-YYYY-MM-DD-HHmmss.md`             | `/fec-test-plan`, `fec-testing-strategy`, `frontend-test-planner`        |
+| Test plan              | `test-plan-YYYY-MM-DD-HHmmss.md`             | `/fec-test-plan`, `fec-testing-strategy`, `fec-frontend-test-planner`        |
 | Validation fix         | `validation-fix-YYYY-MM-DD-HHmmss.md`        | `fec-validation-fix`                                                     |
-| Refactor clean         | `refactor-clean-YYYY-MM-DD-HHmmss.md`        | `/fec-refactor-clean`, `fec-refactor-clean`, `frontend-refactor-cleaner` |
-| E2E run summary        | `e2e-summary-YYYY-MM-DD-HHmmss.md`           | `frontend-e2e-runner` (optional)                                         |
+| Refactor clean         | `refactor-clean-YYYY-MM-DD-HHmmss.md`        | `/fec-refactor-clean`, `fec-refactor-clean`, `fec-frontend-refactor-cleaner` |
+| E2E run summary        | `e2e-summary-YYYY-MM-DD-HHmmss.md`           | `fec-frontend-e2e-runner` (optional)                                         |
 | Migration plan         | `migration-plan-YYYY-MM-DD-HHmmss.md`        | `fec-legacy-to-modern-migration`                                         |
 
 </details>
@@ -355,7 +357,7 @@ npx frontend-craft@latest update <runtime> --global
 
 The CLI writes `frontend-craft.manifest.json` into the runtime directory and **skips files you’ve modified locally**, so customizations survive updates.
 
-For **Claude Code Marketplace** or **submodule** installs, see [docs/runtimes/claude.md](docs/runtimes/claude.md) · [简体中文](docs/runtimes/claude.zh-CN.md).
+For **Claude Code Marketplace** or **submodule** installs, see [docs/runtimes/claude.md](docs/runtimes/claude.md) · [简体中文](docs/runtimes/claude.zh-CN.md). `/fec-init` only initializes project config; it is not a second plugin install.
 
 ---
 

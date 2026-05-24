@@ -3,7 +3,7 @@ import fs from "node:fs";
 import type { InstallContext } from "../types.js";
 import { copyDir, copyFile, ensureDir, readUtf8, writeUtf8 } from "../shared/fs.js";
 
-const HOOK_SCRIPTS = ["security-check.js", "format-changed-file.js", "run-tests.js", "notify.js"];
+const HOOK_SCRIPTS = ["fec-security-check.js", "fec-format-changed-file.js", "fec-run-tests.js", "fec-notify.js"];
 
 /**
  * @param {import('../types.js').InstallContext} ctx
@@ -43,19 +43,19 @@ function mergeQoderSettings(baseDir: string): Record<string, unknown> {
       ...asRecord(existing.hooks),
       PreToolUse: [
         ...asArray(asRecord(existing.hooks).PreToolUse),
-        qoderHook("Bash|Shell", ".qoder/hooks/security-check.js", "Checking command safety..."),
+        qoderHook("Bash|Shell", ".qoder/hooks/fec-security-check.js", "Checking command safety..."),
       ],
       PostToolUse: [
         ...asArray(asRecord(existing.hooks).PostToolUse),
-        qoderHook("Write|Edit|MultiEdit", ".qoder/hooks/format-changed-file.js", "Running formatter..."),
+        qoderHook("Write|Edit|MultiEdit", ".qoder/hooks/fec-format-changed-file.js", "Running formatter..."),
       ],
       Stop: [
         ...asArray(asRecord(existing.hooks).Stop),
-        qoderHook(".*", ".qoder/hooks/run-tests.js", "Running final validation..."),
+        qoderHook(".*", ".qoder/hooks/fec-run-tests.js", "Running final validation..."),
       ],
       Notification: [
         ...asArray(asRecord(existing.hooks).Notification),
-        qoderHook(".*", ".qoder/hooks/notify.js"),
+        qoderHook(".*", ".qoder/hooks/fec-notify.js"),
       ],
     },
   };

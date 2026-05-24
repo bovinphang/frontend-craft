@@ -115,5 +115,5 @@ function setup() {
 
 ## Related Agent
 
-- [frontend-code-reviewer](../../agents/frontend-code-reviewer.md) - 评审组件测试是否覆盖关键风险和避免脆弱断言。
-- [frontend-e2e-runner](../../agents/frontend-e2e-runner.md) - 将跨页面关键路径提升为 E2E 用例。
+- [fec-frontend-code-reviewer](../../agents/fec-frontend-code-reviewer.md) - 评审组件测试是否覆盖关键风险和避免脆弱断言。
+- [fec-frontend-e2e-runner](../../agents/fec-frontend-e2e-runner.md) - 将跨页面关键路径提升为 E2E 用例。

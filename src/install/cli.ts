@@ -6,6 +6,14 @@ import { getInstallBaseDir } from "./runtime-homes.js";
 import { RUNTIME_CAPABILITIES, renderRuntimeCapabilityMatrix } from "./runtime-capabilities.js";
 import { resolvePluginRoot } from "./shared/resolve-plugin-root.js";
 import { beginManifestSession, discardManifestSession, endManifestSession, getManifestPath } from "./shared/fs.js";
+import {
+  cleanupClaudeFrontendCraftCache,
+  getClaudeFrontendCraftCacheReport,
+  getClaudeInstallSourceReport,
+  renderClaudeCacheCleanupResult,
+  renderClaudeCacheReport,
+  renderClaudeInstallSourceReport,
+} from "./claude-cache.js";
 import type { InstallContext } from "./types.js";
 
 function readPkgVersion(pluginRoot: string): string {
@@ -23,6 +31,7 @@ function parseInstallArgs(argv: string[]) {
   let hasGlobal = false;
   let hasLocal = false;
   let dryRun = false;
+  let force = false;
   let all = false;
   const rest: string[] = [];
   for (const a of argv) {
@@ -33,10 +42,11 @@ function parseInstallArgs(argv: string[]) {
       hasLocal = true;
       installLocation = "local";
     } else if (a === "--dry-run") dryRun = true;
+    else if (a === "--force") force = true;
     else if (a === "--all") all = true;
     else if (!a.startsWith("-")) rest.push(a);
   }
-  return { runtime: rest[0], installLocation, dryRun, all, hasGlobal, hasLocal };
+  return { runtime: rest[0], installLocation, dryRun, force, all, hasGlobal, hasLocal };
 }
 
 function printHelp(): void {
@@ -51,6 +61,7 @@ Usage:
   frontend-craft list
   frontend-craft matrix
   frontend-craft doctor <runtime>
+  frontend-craft doctor claude --fix-cache [--dry-run]
   frontend-craft sync-metadata --check
   frontend-craft version
   frontend-craft uninstall <runtime>   (prints manual cleanup hints)
@@ -59,6 +70,7 @@ Options:
   --global, -g     Install to tool global config directory
   --local, -l      Install to this project only
   --dry-run        Show actions without writing files
+  --force          Continue Claude CLI install even if a native plugin install is detected
   --all            Install for every supported runtime
 
 Runtimes:
@@ -91,6 +103,8 @@ export async function main(argv: string[]): Promise<void> {
   if (cmd === "doctor") {
     const runtime = cmdArgs[0] ?? "claude";
     const isGlobal = cmdArgs.includes("--global") || cmdArgs.includes("-g");
+    const fixCache = cmdArgs.includes("--fix-cache");
+    const dryRun = cmdArgs.includes("--dry-run");
     const cwd = process.cwd();
     const baseDir = getInstallBaseDir({ runtime, isGlobal, cwd });
     const cap = RUNTIME_CAPABILITIES[runtime];
@@ -99,7 +113,7 @@ export async function main(argv: string[]): Promise<void> {
       process.exitCode = 1;
       return;
     }
-    console.log(renderDoctorReport({ runtime, baseDir, cwd, cap }));
+    console.log(renderDoctorReport({ runtime, baseDir, cwd, cap, pluginRoot, fixCache, dryRun }));
     return;
   }
   if (cmd === "sync-metadata") {
@@ -120,7 +134,7 @@ export async function main(argv: string[]): Promise<void> {
   if (cmd === "uninstall") {
     const r = argv[1];
     console.warn(
-      "Uninstall is not automated. Remove generated directories for your runtime (e.g. .claude/skills, .codex/agents) or re-run install with a clean backup.",
+      "Uninstall is not automated. Remove generated directories for your runtime (e.g. .claude/skills, .codex/agents) or re-run install with a clean backup. For installs created before the fec-prefix convention, also remove legacy unprefixed agent and copied hook files if you did not customize them.",
     );
     if (r) console.warn(`Requested runtime: ${r}`);
     return;
@@ -137,7 +151,7 @@ export async function main(argv: string[]): Promise<void> {
     return;
   }
 
-  const { runtime, installLocation, dryRun, all, hasGlobal, hasLocal } = parseInstallArgs(cmdArgs);
+  const { runtime, installLocation, dryRun, force, all, hasGlobal, hasLocal } = parseInstallArgs(cmdArgs);
   if (hasGlobal && hasLocal) {
     console.error("--global and --local cannot be used together.");
     process.exitCode = 1;
@@ -175,6 +189,22 @@ export async function main(argv: string[]): Promise<void> {
       continue;
     }
     const baseDir = getInstallBaseDir({ runtime: rt, isGlobal, cwd });
+    if (rt === "claude" && mode === "install") {
+      const sourceReport = getClaudeInstallSourceReport({ cwd });
+      const hasNativeInstall = sourceReport.native.length > 0;
+      if (hasNativeInstall) {
+        console.log("Claude Code native plugin install detected for frontend-craft.");
+        console.log(renderClaudeInstallSourceReport(sourceReport));
+        if (!force && !dryRun) {
+          console.log("Use --force to install anyway, or keep Claude Code Marketplace as the single active source.");
+          process.exitCode = 1;
+          continue;
+        }
+        console.log(force ? "Continuing because --force was provided." : "Dry run only; no Claude CLI files will be installed.");
+      } else if (sourceReport.hasMultipleActiveSources) {
+        console.log(renderClaudeInstallSourceReport(sourceReport));
+      }
+    }
     const ctx: InstallContext = {
       pluginRoot,
       cwd,
@@ -209,11 +239,17 @@ function renderDoctorReport({
   baseDir,
   cwd,
   cap,
+  pluginRoot,
+  fixCache,
+  dryRun,
 }: {
   runtime: string;
   baseDir: string;
   cwd: string;
   cap: NonNullable<(typeof RUNTIME_CAPABILITIES)[string]>;
+  pluginRoot: string;
+  fixCache: boolean;
+  dryRun: boolean;
 }): string {
   const lines = [`frontend-craft doctor: ${runtime}`, `baseDir: ${baseDir}`, `tier: ${cap.tier}`];
   lines.push(`skills: ${status(checkSkills(runtime, baseDir, cwd), cap.skills)}`);
@@ -222,6 +258,15 @@ function renderDoctorReport({
   lines.push(`hooks: ${status(checkHooks(runtime, baseDir), cap.hooks)}`);
   lines.push(`rules: ${status(checkRules(runtime, baseDir), cap.rules)}`);
   lines.push(`templates: ${status(checkTemplates(runtime, baseDir, cwd), cap.templates)}`);
+  if (runtime === "claude") {
+    const currentVersion = readPkgVersion(pluginRoot);
+    lines.push(renderClaudeInstallSourceReport(getClaudeInstallSourceReport({ cwd })));
+    if (fixCache) {
+      lines.push(renderClaudeCacheCleanupResult(cleanupClaudeFrontendCraftCache({ currentVersion, dryRun }), dryRun));
+    } else {
+      lines.push(renderClaudeCacheReport(getClaudeFrontendCraftCacheReport({ currentVersion })));
+    }
+  }
   return lines.join("\n");
 }
 
@@ -252,7 +297,7 @@ function checkCommands(runtime: string, baseDir: string): boolean {
 
 function checkHooks(runtime: string, baseDir: string): boolean {
   if (runtime === "qoder") {
-    return fs.existsSync(path.join(baseDir, "settings.json")) && fs.existsSync(path.join(baseDir, "hooks", "security-check.js"));
+    return fs.existsSync(path.join(baseDir, "settings.json")) && fs.existsSync(path.join(baseDir, "hooks", "fec-security-check.js"));
   }
   return fs.existsSync(path.join(baseDir, "hooks.json"));
 }

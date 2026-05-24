@@ -1,5 +1,5 @@
 ---
-name: frontend-test-planner
+name: fec-frontend-test-planner
 description: 前端测试策略规划子代理：按风险和测试层级制定覆盖矩阵，区分静态检查、单元、组件、轻量集成、E2E、Storybook/视觉回归与专项质量验证。适合在新功能、PR、里程碑或测试债治理前使用，不负责大规模编写具体测试。
 tools: Read, Write, Glob, Grep, LS, Bash
 model: sonnet
