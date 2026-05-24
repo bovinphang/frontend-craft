@@ -85,7 +85,9 @@ npx frontend-craft@latest list
 
 ### 方式三：Claude Code Marketplace
 
-如果只通过 **Claude Code Marketplace**（原生插件流程）安装，完整步骤见 [docs/runtimes/claude.zh-CN.md](docs/runtimes/claude.zh-CN.md) · [English](docs/runtimes/claude.md)。
+对 Claude Code 用户，**Claude Code Marketplace** 是推荐的单一来源安装方式。只有在需要跨运行时安装、脚本化/离线复制文件，或非 Marketplace 环境时，才建议对 Claude 使用 CLI。除非显式传入 `--force`，不要在同一个 Claude 作用域同时启用 Marketplace 和 CLI 两份完整插件。
+
+完整步骤见 [docs/runtimes/claude.zh-CN.md](docs/runtimes/claude.zh-CN.md) · [English](docs/runtimes/claude.md)。
 
 ---
 
@@ -357,7 +359,7 @@ npx frontend-craft@latest update <runtime> --global
 
 CLI 会在 runtime 目录写入 `frontend-craft.manifest.json`，并**跳过你本地修改过的文件**——自定义内容在更新后依然保留。
 
-**Claude Code Marketplace** 或 **submodule** 安装的更新方式见 [docs/runtimes/claude.zh-CN.md](docs/runtimes/claude.zh-CN.md) · [English](docs/runtimes/claude.md)。
+**Claude Code Marketplace** 或 **submodule** 安装的更新方式见 [docs/runtimes/claude.zh-CN.md](docs/runtimes/claude.zh-CN.md) · [English](docs/runtimes/claude.md)。`/fec-init` 只初始化项目配置，不是第二次安装插件本体。
 
 ---
 

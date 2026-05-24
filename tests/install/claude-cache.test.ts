@@ -113,6 +113,71 @@ test("doctor claude --fix-cache previews and removes stale native plugin cache v
   }
 });
 
+test("doctor claude reports native and CLI sources without deleting CLI manifests", () => {
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), "fc-cli-source-cwd-"));
+  const claudeHome = makeClaudeHome("2.3.1");
+  try {
+    makeCacheVersion(claudeHome, "2.1.2", { missingDist: true, packageVersion: "2.1.2" });
+    makeCacheVersion(claudeHome, "2.3.1", { packageVersion: "2.3.1" });
+    fs.mkdirSync(path.join(dir, ".claude"), { recursive: true });
+    const manifestPath = path.join(dir, ".claude", "frontend-craft.manifest.json");
+    fs.writeFileSync(
+      manifestPath,
+      `${JSON.stringify({ packageVersion: "2.3.1", runtime: "claude", scope: "local", files: [] }, null, 2)}\n`,
+      "utf8",
+    );
+
+    const fixed = execFileSync(process.execPath, [cli, "doctor", "claude", "--fix-cache"], {
+      cwd: dir,
+      encoding: "utf8",
+      env: { ...process.env, CLAUDE_CONFIG_DIR: claudeHome },
+    });
+
+    assert.match(fixed, /install sources:/);
+    assert.match(fixed, /native plugin: 2\.3\.1/);
+    assert.match(fixed, /local CLI: 2\.3\.1/);
+    assert.match(fixed, /multiple active sources detected/);
+    assert.ok(!fs.existsSync(cacheVersionPath(claudeHome, "2.1.2")));
+    assert.ok(fs.existsSync(manifestPath));
+  } finally {
+    fs.rmSync(dir, { recursive: true, force: true });
+    fs.rmSync(claudeHome, { recursive: true, force: true });
+  }
+});
+
+test("doctor claude reports local and global CLI sources when both manifests exist", () => {
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), "fc-cli-dual-cwd-"));
+  const claudeHome = fs.mkdtempSync(path.join(os.tmpdir(), "fc-cli-dual-home-"));
+  try {
+    fs.mkdirSync(path.join(dir, ".claude"), { recursive: true });
+    fs.mkdirSync(claudeHome, { recursive: true });
+    fs.writeFileSync(
+      path.join(dir, ".claude", "frontend-craft.manifest.json"),
+      `${JSON.stringify({ packageVersion: "2.3.1", runtime: "claude", scope: "local", files: [] }, null, 2)}\n`,
+      "utf8",
+    );
+    fs.writeFileSync(
+      path.join(claudeHome, "frontend-craft.manifest.json"),
+      `${JSON.stringify({ packageVersion: "2.2.0", runtime: "claude", scope: "global", files: [] }, null, 2)}\n`,
+      "utf8",
+    );
+
+    const report = execFileSync(process.execPath, [cli, "doctor", "claude"], {
+      cwd: dir,
+      encoding: "utf8",
+      env: { ...process.env, CLAUDE_CONFIG_DIR: claudeHome },
+    });
+
+    assert.match(report, /install sources:/);
+    assert.match(report, /local CLI: 2\.3\.1/);
+    assert.match(report, /global CLI: 2\.2\.0/);
+    assert.match(report, /multiple active sources detected/);
+  } finally {
+    fs.rmSync(dir, { recursive: true, force: true });
+    fs.rmSync(claudeHome, { recursive: true, force: true });
+  }
+});
+
 function makeClaudeHome(currentVersion: string): string {
   const claudeHome = fs.mkdtempSync(path.join(os.tmpdir(), "fc-claude-cache-"));
   const installPath = cacheVersionPath(claudeHome, currentVersion);

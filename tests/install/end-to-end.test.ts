@@ -89,11 +89,12 @@ test("non-interactive install defaults to claude global dry-run", () => {
 
 test("install claude into temp dir creates hooks and skills", () => {
   const dir = fs.mkdtempSync(path.join(os.tmpdir(), "fc-test-"));
+  const claudeHome = fs.mkdtempSync(path.join(os.tmpdir(), "fc-test-claude-home-"));
   try {
     execFileSync(process.execPath, [cli, "install", "claude", "--local"], {
       cwd: dir,
       encoding: "utf8",
-      env: { ...process.env },
+      env: { ...process.env, CLAUDE_CONFIG_DIR: claudeHome },
     });
     assert.ok(fs.existsSync(path.join(dir, ".claude", "hooks.json")));
     assert.ok(fs.existsSync(path.join(dir, ".claude", "skills", "fec-react-project-standard", "SKILL.md")));
@@ -117,6 +118,7 @@ test("install claude into temp dir creates hooks and skills", () => {
     assert.ok(!fs.existsSync(path.join(dir, ".claude", "commands", "init.md")));
   } finally {
     fs.rmSync(dir, { recursive: true, force: true });
+    fs.rmSync(claudeHome, { recursive: true, force: true });
   }
 });
 
@@ -134,6 +136,57 @@ test("global claude install does not write project sidecar files into cwd", () =
     assert.ok(fs.existsSync(path.join(claudeHome, "skills", "fec-react-project-standard", "SKILL.md")));
     assert.ok(!fs.existsSync(path.join(dir, ".mcp.json")));
     assert.ok(!fs.existsSync(path.join(dir, ".claude-plugin")));
+  } finally {
+    fs.rmSync(dir, { recursive: true, force: true });
+    fs.rmSync(claudeHome, { recursive: true, force: true });
+  }
+});
+
+test("claude install warns and exits when native plugin is already installed", () => {
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), "fc-native-conflict-cwd-"));
+  const claudeHome = fs.mkdtempSync(path.join(os.tmpdir(), "fc-native-conflict-home-"));
+  try {
+    writeNativeInstallMetadata(claudeHome, "2.3.1");
+
+    assert.throws(
+      () =>
+        execFileSync(process.execPath, [cli, "install", "claude", "--local"], {
+          cwd: dir,
+          encoding: "utf8",
+          env: { ...process.env, CLAUDE_CONFIG_DIR: claudeHome },
+          stdio: "pipe",
+        }),
+      (err: unknown) => {
+        const error = err as { stdout?: Buffer | string; status?: number };
+        assert.equal(error.status, 1);
+        const out = String(error.stdout ?? "");
+        assert.match(out, /Claude Code native plugin install detected/);
+        assert.match(out, /Use --force to install anyway/);
+        return true;
+      },
+    );
+    assert.ok(!fs.existsSync(path.join(dir, ".claude", "frontend-craft.manifest.json")));
+  } finally {
+    fs.rmSync(dir, { recursive: true, force: true });
+    fs.rmSync(claudeHome, { recursive: true, force: true });
+  }
+});
+
+test("claude install --force continues when native plugin is already installed", () => {
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), "fc-native-force-cwd-"));
+  const claudeHome = fs.mkdtempSync(path.join(os.tmpdir(), "fc-native-force-home-"));
+  try {
+    writeNativeInstallMetadata(claudeHome, "2.3.1");
+
+    const out = execFileSync(process.execPath, [cli, "install", "claude", "--local", "--force"], {
+      cwd: dir,
+      encoding: "utf8",
+      env: { ...process.env, CLAUDE_CONFIG_DIR: claudeHome },
+    });
+
+    assert.match(out, /Claude Code native plugin install detected/);
+    assert.match(out, /Continuing because --force was provided/);
+    assert.ok(fs.existsSync(path.join(dir, ".claude", "frontend-craft.manifest.json")));
   } finally {
     fs.rmSync(dir, { recursive: true, force: true });
     fs.rmSync(claudeHome, { recursive: true, force: true });
@@ -185,11 +238,12 @@ test("runtime command installers keep fec command names", () => {
 test("all runtime local installs match declared capabilities", () => {
   for (const runtime of ALL_RUNTIMES) {
     const dir = fs.mkdtempSync(path.join(os.tmpdir(), `fc-${runtime}-cap-`));
+    const claudeHome = fs.mkdtempSync(path.join(os.tmpdir(), `fc-${runtime}-cap-claude-home-`));
     try {
       execFileSync(process.execPath, [cli, "install", runtime, "--local"], {
         cwd: dir,
         encoding: "utf8",
-        env: { ...process.env },
+        env: { ...process.env, CLAUDE_CONFIG_DIR: claudeHome },
       });
 
       const cap = RUNTIME_CAPABILITIES[runtime];
@@ -253,10 +307,37 @@ test("all runtime local installs match declared capabilities", () => {
       }
     } finally {
       fs.rmSync(dir, { recursive: true, force: true });
+      fs.rmSync(claudeHome, { recursive: true, force: true });
     }
   }
 });
 
 function escapeRegExp(value: string): string {
   return value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+}
+
+function writeNativeInstallMetadata(claudeHome: string, version: string): void {
+  const installPath = path.join(claudeHome, "plugins", "cache", "frontend-craft", "frontend-craft", version);
+  fs.mkdirSync(path.join(claudeHome, "plugins"), { recursive: true });
+  fs.mkdirSync(installPath, { recursive: true });
+  fs.writeFileSync(
+    path.join(claudeHome, "plugins", "installed_plugins.json"),
+    `${JSON.stringify(
+      {
+        version: 2,
+        plugins: {
+          "frontend-craft@frontend-craft": [
+            {
+              scope: "user",
+              installPath,
+              version,
+            },
+          ],
+        },
+      },
+      null,
+      2,
+    )}\n`,
+    "utf8",
+  );
 }

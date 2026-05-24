@@ -9,8 +9,10 @@ import { beginManifestSession, discardManifestSession, endManifestSession, getMa
 import {
   cleanupClaudeFrontendCraftCache,
   getClaudeFrontendCraftCacheReport,
+  getClaudeInstallSourceReport,
   renderClaudeCacheCleanupResult,
   renderClaudeCacheReport,
+  renderClaudeInstallSourceReport,
 } from "./claude-cache.js";
 import type { InstallContext } from "./types.js";
 
@@ -29,6 +31,7 @@ function parseInstallArgs(argv: string[]) {
   let hasGlobal = false;
   let hasLocal = false;
   let dryRun = false;
+  let force = false;
   let all = false;
   const rest: string[] = [];
   for (const a of argv) {
@@ -39,10 +42,11 @@ function parseInstallArgs(argv: string[]) {
       hasLocal = true;
       installLocation = "local";
     } else if (a === "--dry-run") dryRun = true;
+    else if (a === "--force") force = true;
     else if (a === "--all") all = true;
     else if (!a.startsWith("-")) rest.push(a);
   }
-  return { runtime: rest[0], installLocation, dryRun, all, hasGlobal, hasLocal };
+  return { runtime: rest[0], installLocation, dryRun, force, all, hasGlobal, hasLocal };
 }
 
 function printHelp(): void {
@@ -66,6 +70,7 @@ Options:
   --global, -g     Install to tool global config directory
   --local, -l      Install to this project only
   --dry-run        Show actions without writing files
+  --force          Continue Claude CLI install even if a native plugin install is detected
   --all            Install for every supported runtime
 
 Runtimes:
@@ -146,7 +151,7 @@ export async function main(argv: string[]): Promise<void> {
     return;
   }
 
-  const { runtime, installLocation, dryRun, all, hasGlobal, hasLocal } = parseInstallArgs(cmdArgs);
+  const { runtime, installLocation, dryRun, force, all, hasGlobal, hasLocal } = parseInstallArgs(cmdArgs);
   if (hasGlobal && hasLocal) {
     console.error("--global and --local cannot be used together.");
     process.exitCode = 1;
@@ -184,6 +189,22 @@ export async function main(argv: string[]): Promise<void> {
       continue;
     }
     const baseDir = getInstallBaseDir({ runtime: rt, isGlobal, cwd });
+    if (rt === "claude" && mode === "install") {
+      const sourceReport = getClaudeInstallSourceReport({ cwd });
+      const hasNativeInstall = sourceReport.native.length > 0;
+      if (hasNativeInstall) {
+        console.log("Claude Code native plugin install detected for frontend-craft.");
+        console.log(renderClaudeInstallSourceReport(sourceReport));
+        if (!force && !dryRun) {
+          console.log("Use --force to install anyway, or keep Claude Code Marketplace as the single active source.");
+          process.exitCode = 1;
+          continue;
+        }
+        console.log(force ? "Continuing because --force was provided." : "Dry run only; no Claude CLI files will be installed.");
+      } else if (sourceReport.hasMultipleActiveSources) {
+        console.log(renderClaudeInstallSourceReport(sourceReport));
+      }
+    }
     const ctx: InstallContext = {
       pluginRoot,
       cwd,
@@ -239,6 +260,7 @@ function renderDoctorReport({
   lines.push(`templates: ${status(checkTemplates(runtime, baseDir, cwd), cap.templates)}`);
   if (runtime === "claude") {
     const currentVersion = readPkgVersion(pluginRoot);
+    lines.push(renderClaudeInstallSourceReport(getClaudeInstallSourceReport({ cwd })));
     if (fixCache) {
       lines.push(renderClaudeCacheCleanupResult(cleanupClaudeFrontendCraftCache({ currentVersion, dryRun }), dryRun));
     } else {

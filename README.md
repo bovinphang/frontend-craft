@@ -85,7 +85,9 @@ npx frontend-craft@latest list
 
 ### Option 3 — Claude Code Marketplace
 
-If you install only through the **Claude Code Marketplace** (native plugin flow), full steps are in [docs/runtimes/claude.md](docs/runtimes/claude.md) · [简体中文](docs/runtimes/claude.zh-CN.md).
+For Claude Code users, **Claude Code Marketplace** is the preferred single-source install. Use the CLI for Claude when you need cross-runtime installs, scripted/offline file copies, or non-Marketplace environments. Do not keep Marketplace and CLI copies active in the same Claude scope unless you explicitly choose that with `--force`.
+
+Full Claude-specific steps are in [docs/runtimes/claude.md](docs/runtimes/claude.md) · [简体中文](docs/runtimes/claude.zh-CN.md).
 
 ---
 
@@ -355,7 +357,7 @@ npx frontend-craft@latest update <runtime> --global
 
 The CLI writes `frontend-craft.manifest.json` into the runtime directory and **skips files you’ve modified locally**, so customizations survive updates.
 
-For **Claude Code Marketplace** or **submodule** installs, see [docs/runtimes/claude.md](docs/runtimes/claude.md) · [简体中文](docs/runtimes/claude.zh-CN.md).
+For **Claude Code Marketplace** or **submodule** installs, see [docs/runtimes/claude.md](docs/runtimes/claude.md) · [简体中文](docs/runtimes/claude.zh-CN.md). `/fec-init` only initializes project config; it is not a second plugin install.
 
 ---
 

@@ -204,6 +204,28 @@ test("README skill tree uses fec-prefixed public skill directories", () => {
   }
 });
 
+test("Claude docs describe one active plugin source instead of recommending dual installs", () => {
+  const docs = [
+    "README.md",
+    "README.zh-CN.md",
+    path.join("docs", "runtimes", "claude.md"),
+    path.join("docs", "runtimes", "claude.zh-CN.md"),
+  ];
+
+  for (const doc of docs) {
+    const body = fs.readFileSync(path.join(root, doc), "utf8");
+    assert.doesNotMatch(body, /instead of \(or in addition to\) the CLI/, `${doc} recommends dual installs`);
+    assert.doesNotMatch(body, /可与 CLI 并存/, `${doc} recommends dual installs`);
+  }
+
+  const englishClaude = fs.readFileSync(path.join(root, "docs", "runtimes", "claude.md"), "utf8");
+  const chineseClaude = fs.readFileSync(path.join(root, "docs", "runtimes", "claude.zh-CN.md"), "utf8");
+  assert.match(englishClaude, /single plugin loader/);
+  assert.match(englishClaude, /not a second plugin install/);
+  assert.match(chineseClaude, /唯一加载来源/);
+  assert.match(chineseClaude, /不是第二次安装插件本体/);
+});
+
 test("fec-init mentions every shared rule copied by the command", () => {
   const rules = fs
     .readdirSync(path.join(root, "templates", "shared", "rules"))

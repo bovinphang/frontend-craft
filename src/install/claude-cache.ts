@@ -26,6 +26,25 @@ export interface ClaudeCacheCleanupResult extends ClaudeCacheReport {
   deleted: ClaudeCacheEntry[];
 }
 
+export interface ClaudeNativeInstall {
+  key: string;
+  scope?: string;
+  installPath?: string;
+  version?: string;
+}
+
+export interface ClaudeCliInstall {
+  scope: "local" | "global";
+  manifestPath: string;
+  packageVersion?: string;
+}
+
+export interface ClaudeInstallSourceReport {
+  native: ClaudeNativeInstall[];
+  cli: ClaudeCliInstall[];
+  hasMultipleActiveSources: boolean;
+}
+
 export function getClaudeFrontendCraftCacheReport({
   claudeConfigDir = getClaudeConfigDir(),
   currentVersion,
@@ -74,6 +93,45 @@ export function cleanupClaudeFrontendCraftCache({
   }
 
   return { ...report, deleted };
+}
+
+export function getClaudeInstallSourceReport({
+  claudeConfigDir = getClaudeConfigDir(),
+  cwd = process.cwd(),
+}: {
+  claudeConfigDir?: string;
+  cwd?: string;
+} = {}): ClaudeInstallSourceReport {
+  const native = readNativeInstalls(claudeConfigDir);
+  const cli = [
+    readCliManifest(path.join(cwd, ".claude", "frontend-craft.manifest.json"), "local"),
+    readCliManifest(path.join(claudeConfigDir, "frontend-craft.manifest.json"), "global"),
+  ].filter((entry): entry is ClaudeCliInstall => entry !== undefined);
+
+  return {
+    native,
+    cli,
+    hasMultipleActiveSources: native.length + cli.length > 1,
+  };
+}
+
+export function renderClaudeInstallSourceReport(report: ClaudeInstallSourceReport): string {
+  const lines = ["install sources:"];
+  if (report.native.length === 0 && report.cli.length === 0) {
+    lines.push("  none detected");
+    return lines.join("\n");
+  }
+  for (const install of report.native) {
+    const details = [install.version, install.scope].filter(Boolean).join(", ");
+    lines.push(`  native plugin: ${details || "installed"}${install.installPath ? ` (${install.installPath})` : ""}`);
+  }
+  for (const install of report.cli) {
+    lines.push(`  ${install.scope} CLI: ${install.packageVersion ?? "unknown"} (${install.manifestPath})`);
+  }
+  if (report.hasMultipleActiveSources) {
+    lines.push("  warning: multiple active sources detected; keep one Claude loader as the source of truth");
+  }
+  return lines.join("\n");
 }
 
 export function renderClaudeCacheReport(report: ClaudeCacheReport, action: "report" | "dry-run" | "fix" = "report"): string {
@@ -164,6 +222,49 @@ function readCurrentInstallPaths(claudeConfigDir: string): { paths: string[]; wa
     return { paths };
   } catch {
     return { paths: [], warning: `invalid ${installedPath}; refusing to delete cache entries` };
+  }
+}
+
+function readNativeInstalls(claudeConfigDir: string): ClaudeNativeInstall[] {
+  const installedPath = path.join(claudeConfigDir, "plugins", "installed_plugins.json");
+  if (!fs.existsSync(installedPath)) return [];
+  try {
+    const parsed = JSON.parse(fs.readFileSync(installedPath, "utf8")) as {
+      plugins?: Record<string, Array<{ installPath?: unknown; scope?: unknown; version?: unknown }>>;
+    };
+    return Object.entries(parsed.plugins ?? {}).flatMap(([key, entries]) => {
+      if (!isFrontendCraftPluginKey(key)) return [];
+      return entries.map((entry) => ({
+        key,
+        installPath: typeof entry.installPath === "string" ? path.resolve(entry.installPath) : undefined,
+        scope: typeof entry.scope === "string" ? entry.scope : undefined,
+        version: typeof entry.version === "string" ? entry.version : undefined,
+      }));
+    });
+  } catch {
+    return [];
+  }
+}
+
+function isFrontendCraftPluginKey(key: string): boolean {
+  return key === "frontend-craft@frontend-craft" || key.startsWith("frontend-craft@");
+}
+
+function readCliManifest(manifestPath: string, scope: "local" | "global"): ClaudeCliInstall | undefined {
+  if (!fs.existsSync(manifestPath)) return undefined;
+  try {
+    const parsed = JSON.parse(fs.readFileSync(manifestPath, "utf8")) as {
+      packageVersion?: unknown;
+      runtime?: unknown;
+    };
+    if (parsed.runtime !== "claude") return undefined;
+    return {
+      scope,
+      manifestPath,
+      packageVersion: typeof parsed.packageVersion === "string" ? parsed.packageVersion : undefined,
+    };
+  } catch {
+    return { scope, manifestPath };
   }
 }
 

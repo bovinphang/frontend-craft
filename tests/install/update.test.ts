@@ -11,11 +11,12 @@ const cli = path.join(root, "dist", "bin", "frontend-craft.js");
 
 test("install writes a frontend-craft manifest for the runtime scope", () => {
   const dir = fs.mkdtempSync(path.join(os.tmpdir(), "fc-manifest-"));
+  const claudeHome = fs.mkdtempSync(path.join(os.tmpdir(), "fc-manifest-claude-home-"));
   try {
     execFileSync(process.execPath, [cli, "install", "claude", "--local"], {
       cwd: dir,
       encoding: "utf8",
-      env: { ...process.env },
+      env: { ...process.env, CLAUDE_CONFIG_DIR: claudeHome },
     });
 
     const manifestPath = path.join(dir, ".claude", "frontend-craft.manifest.json");
@@ -34,17 +35,19 @@ test("install writes a frontend-craft manifest for the runtime scope", () => {
     assert.ok(manifest.files?.some((file) => file.path === "hooks.json"));
   } finally {
     fs.rmSync(dir, { recursive: true, force: true });
+    fs.rmSync(claudeHome, { recursive: true, force: true });
   }
 });
 
 test("update and upgrade aliases refresh an existing local install", () => {
   for (const command of ["update", "upgrade"]) {
     const dir = fs.mkdtempSync(path.join(os.tmpdir(), `fc-${command}-`));
+    const claudeHome = fs.mkdtempSync(path.join(os.tmpdir(), `fc-${command}-claude-home-`));
     try {
       execFileSync(process.execPath, [cli, "install", "claude", "--local"], {
         cwd: dir,
         encoding: "utf8",
-        env: { ...process.env },
+        env: { ...process.env, CLAUDE_CONFIG_DIR: claudeHome },
       });
 
       const skillPath = path.join(dir, ".claude", "skills", "fec-react-project-standard", "SKILL.md");
@@ -53,7 +56,7 @@ test("update and upgrade aliases refresh an existing local install", () => {
       const out = execFileSync(process.execPath, [cli, command, "claude", "--local"], {
         cwd: dir,
         encoding: "utf8",
-        env: { ...process.env },
+        env: { ...process.env, CLAUDE_CONFIG_DIR: claudeHome },
       });
 
       assert.match(out, new RegExp(`Updating frontend-craft for "claude"`));
@@ -61,17 +64,19 @@ test("update and upgrade aliases refresh an existing local install", () => {
       assert.ok(fs.existsSync(path.join(dir, ".claude", "frontend-craft.manifest.json")));
     } finally {
       fs.rmSync(dir, { recursive: true, force: true });
+      fs.rmSync(claudeHome, { recursive: true, force: true });
     }
   }
 });
 
 test("update skips files modified since the previous manifest", () => {
   const dir = fs.mkdtempSync(path.join(os.tmpdir(), "fc-update-conflict-"));
+  const claudeHome = fs.mkdtempSync(path.join(os.tmpdir(), "fc-update-conflict-claude-home-"));
   try {
     execFileSync(process.execPath, [cli, "install", "claude", "--local"], {
       cwd: dir,
       encoding: "utf8",
-      env: { ...process.env },
+      env: { ...process.env, CLAUDE_CONFIG_DIR: claudeHome },
     });
 
     const commandPath = path.join(dir, ".claude", "commands", "fec-init.md");
@@ -80,13 +85,14 @@ test("update skips files modified since the previous manifest", () => {
     const out = execFileSync(process.execPath, [cli, "update", "claude", "--local"], {
       cwd: dir,
       encoding: "utf8",
-      env: { ...process.env },
+      env: { ...process.env, CLAUDE_CONFIG_DIR: claudeHome },
     });
 
     assert.match(out, /Skipped modified file: commands[/\\]fec-init\.md/);
     assert.match(fs.readFileSync(commandPath, "utf8"), /USER CUSTOMIZATION/);
   } finally {
     fs.rmSync(dir, { recursive: true, force: true });
+    fs.rmSync(claudeHome, { recursive: true, force: true });
   }
 });
 
