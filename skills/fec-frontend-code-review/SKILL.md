@@ -96,7 +96,7 @@ Load [references/report-template.md](references/report-template.md) when writing
 
 ## 与子代理的配合
 
-需要基于 **git diff**、按 **CRITICAL / HIGH / MEDIUM / LOW** 分级、合并同类问题并输出 **Review Summary 表** 时，可委托插件内置的 **`frontend-code-reviewer`** 子代理；报告文件命名与本 Skill 相同（`code-review-YYYY-MM-DD-HHmmss.md`）。
+需要基于 **git diff**、按 **CRITICAL / HIGH / MEDIUM / LOW** 分级、合并同类问题并输出 **Review Summary 表** 时，可委托插件内置的 **`fec-frontend-code-reviewer`** 子代理；报告文件命名与本 Skill 相同（`code-review-YYYY-MM-DD-HHmmss.md`）。
 
 ## Related Skills / Boundary
 

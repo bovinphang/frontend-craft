@@ -46,4 +46,4 @@ description: Use when planning or reviewing a frontend testing strategy, selecti
 
 ## Related Agent
 
-- [frontend-test-planner](../../agents/frontend-test-planner.md) - 为功能、PR 或里程碑制定测试分层与覆盖矩阵。
+- [fec-frontend-test-planner](../../agents/fec-frontend-test-planner.md) - 为功能、PR 或里程碑制定测试分层与覆盖矩阵。

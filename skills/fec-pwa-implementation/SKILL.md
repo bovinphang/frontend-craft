@@ -42,5 +42,5 @@ description: Use when adding or reviewing Progressive Web App capabilities such 
 
 ## Related Agent
 
-- [frontend-architect](../../agents/frontend-architect.md) — PWA 架构设计与 Service Worker 策略选型
-- [performance-optimizer](../../agents/performance-optimizer.md) — PWA 缓存策略性能验证
+- [fec-frontend-architect](../../agents/fec-frontend-architect.md) — PWA 架构设计与 Service Worker 策略选型
+- [fec-performance-optimizer](../../agents/fec-performance-optimizer.md) — PWA 缓存策略性能验证

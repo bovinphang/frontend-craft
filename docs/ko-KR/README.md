@@ -95,13 +95,13 @@ npx frontend-craft@latest list
 
 ```text
 사용자: "Review my recent changes"
-→ frontend-code-reviewer 에이전트가 실행되어 reports/code-review-*.md 출력
+→ fec-frontend-code-reviewer 에이전트가 실행되어 reports/code-review-*.md 출력
 
 사용자: "/fec-review"
 → 아키텍처, 타입, 렌더링, 스타일, 접근성 관점에서 구조화된 리뷰 실행
 
 사용자: "이 Figma 링크로 결제 페이지를 구현해줘"
-→ figma-implementer 에이전트가 MCP를 통해 디자인을 읽고 컴포넌트와 보고서 출력
+→ fec-figma-implementer 에이전트가 MCP를 통해 디자인을 읽고 컴포넌트와 보고서 출력
 
 사용자: "/fec-scaffold dashboard feature"
 → 프로젝트 규칙에 따라 page / feature / component 디렉토리 트리 생성
@@ -199,19 +199,19 @@ npx frontend-craft@latest list
 
 | 에이전트                     | 초점                                                              | 보고서                       |
 | ---------------------------- | ----------------------------------------------------------------- | ---------------------------- |
-| `frontend-code-reviewer`     | React/Vue/Next/Nuxt, TS, 스타일, 클라이언트 측 보안 (신뢰도 기반) | `code-review-*.md`           |
-| `typescript-reviewer`        | 타입 안전성, 비동기 정확성, 관용적 패턴 (보고서만)                | `typescript-review-*.md`     |
-| `frontend-security-reviewer` | XSS, 클라이언트 시크릿, 위험한 DOM/API, CSP, 의존성 감사          | `security-review-*.md`       |
-| `performance-optimizer`      | 번들 크기, 렌더링 성능, 네트워크 병목                             | `performance-review-*.md`    |
-| `frontend-architect`         | 페이지 분할, 컴포넌트 아키텍처, 상태 흐름, 디렉토리 계획          | `architecture-proposal-*.md` |
-| `frontend-test-planner`      | 위험→계층 매트릭스: 정적, 단위, 컴포넌트, E2E, 시각, 접근성, 보안 | `test-plan-*.md`             |
-| `frontend-build-fixer`       | lint / type-check / test / build / CI의 점진적 수정               | `validation-fix-*.md`        |
-| `frontend-refactor-cleaner`  | 미사용 코드, export, 스타일, 라우트, 의존성 분류 및 안전한 제거   | `refactor-clean-*.md`        |
-| `frontend-e2e-runner`        | E2E 작성 및 실행 (Playwright/Cypress), flaky 격리, 트레이스       | `e2e-summary-*.md`           |
-| `frontend-doc-updater`       | README, 런타임 문서, 구조, 기능 표, 메타데이터 동기화             | —                            |
-| `ui-checker`                 | 시각적 문제 디버깅 및 디자인 충실도 평가                          | `ui-fidelity-review-*.md`    |
-| `figma-implementer`          | Figma/Sketch/MasterGo/Pixso/墨刀/摹客에서 정확한 UI 구현          | `design-implementation-*.md` |
-| `design-token-mapper`        | 디자인 변수를 프로젝트 Design Token에 매핑                        | `token-mapping-*.md`         |
+| `fec-frontend-code-reviewer`     | React/Vue/Next/Nuxt, TS, 스타일, 클라이언트 측 보안 (신뢰도 기반) | `code-review-*.md`           |
+| `fec-typescript-reviewer`        | 타입 안전성, 비동기 정확성, 관용적 패턴 (보고서만)                | `typescript-review-*.md`     |
+| `fec-frontend-security-reviewer` | XSS, 클라이언트 시크릿, 위험한 DOM/API, CSP, 의존성 감사          | `security-review-*.md`       |
+| `fec-performance-optimizer`      | 번들 크기, 렌더링 성능, 네트워크 병목                             | `performance-review-*.md`    |
+| `fec-frontend-architect`         | 페이지 분할, 컴포넌트 아키텍처, 상태 흐름, 디렉토리 계획          | `architecture-proposal-*.md` |
+| `fec-frontend-test-planner`      | 위험→계층 매트릭스: 정적, 단위, 컴포넌트, E2E, 시각, 접근성, 보안 | `test-plan-*.md`             |
+| `fec-frontend-build-fixer`       | lint / type-check / test / build / CI의 점진적 수정               | `validation-fix-*.md`        |
+| `fec-frontend-refactor-cleaner`  | 미사용 코드, export, 스타일, 라우트, 의존성 분류 및 안전한 제거   | `refactor-clean-*.md`        |
+| `fec-frontend-e2e-runner`        | E2E 작성 및 실행 (Playwright/Cypress), flaky 격리, 트레이스       | `e2e-summary-*.md`           |
+| `fec-frontend-doc-updater`       | README, 런타임 문서, 구조, 기능 표, 메타데이터 동기화             | —                            |
+| `fec-ui-checker`                 | 시각적 문제 디버깅 및 디자인 충실도 평가                          | `ui-fidelity-review-*.md`    |
+| `fec-figma-implementer`          | Figma/Sketch/MasterGo/Pixso/墨刀/摹客에서 정확한 UI 구현          | `design-implementation-*.md` |
+| `fec-design-token-mapper`        | 디자인 변수를 프로젝트 Design Token에 매핑                        | `token-mapping-*.md`         |
 
 ### 훅 (이벤트 기반)
 
@@ -322,20 +322,20 @@ $env:MODAO_TOKEN = "your-modao-token"
 
 | 보고서 유형          | 파일명 패턴                                  | 생성 출처                                                                |
 | -------------------- | -------------------------------------------- | ------------------------------------------------------------------------ |
-| 코드 리뷰            | `code-review-YYYY-MM-DD-HHmmss.md`           | `/fec-review`, `fec-frontend-code-review`, `frontend-code-reviewer`      |
-| TypeScript / JS 리뷰 | `typescript-review-YYYY-MM-DD-HHmmss.md`     | `typescript-reviewer`                                                    |
-| 보안 리뷰            | `security-review-YYYY-MM-DD-HHmmss.md`       | `fec-security-review`, `frontend-security-reviewer`                      |
+| 코드 리뷰            | `code-review-YYYY-MM-DD-HHmmss.md`           | `/fec-review`, `fec-frontend-code-review`, `fec-frontend-code-reviewer`      |
+| TypeScript / JS 리뷰 | `typescript-review-YYYY-MM-DD-HHmmss.md`     | `fec-typescript-reviewer`                                                    |
+| 보안 리뷰            | `security-review-YYYY-MM-DD-HHmmss.md`       | `fec-security-review`, `fec-frontend-security-reviewer`                      |
 | 접근성               | `accessibility-review-YYYY-MM-DD-HHmmss.md`  | `fec-accessibility-check`                                                |
-| 성능                 | `performance-review-YYYY-MM-DD-HHmmss.md`    | `performance-optimizer`                                                  |
-| 아키텍처             | `architecture-proposal-YYYY-MM-DD-HHmmss.md` | `frontend-architect`                                                     |
-| 디자인 충실도        | `ui-fidelity-review-YYYY-MM-DD-HHmmss.md`    | `ui-checker`                                                             |
-| 디자인 구현          | `design-implementation-YYYY-MM-DD-HHmmss.md` | `figma-implementer`                                                      |
-| 토큰 매핑            | `token-mapping-YYYY-MM-DD-HHmmss.md`         | `design-token-mapper`                                                    |
+| 성능                 | `performance-review-YYYY-MM-DD-HHmmss.md`    | `fec-performance-optimizer`                                                  |
+| 아키텍처             | `architecture-proposal-YYYY-MM-DD-HHmmss.md` | `fec-frontend-architect`                                                     |
+| 디자인 충실도        | `ui-fidelity-review-YYYY-MM-DD-HHmmss.md`    | `fec-ui-checker`                                                             |
+| 디자인 구현          | `design-implementation-YYYY-MM-DD-HHmmss.md` | `fec-figma-implementer`                                                      |
+| 토큰 매핑            | `token-mapping-YYYY-MM-DD-HHmmss.md`         | `fec-design-token-mapper`                                                    |
 | 디자인 계획          | `design-plan-YYYY-MM-DD-HHmmss.md`           | `fec-implement-from-design`                                              |
-| 테스트 계획          | `test-plan-YYYY-MM-DD-HHmmss.md`             | `/fec-test-plan`, `fec-testing-strategy`, `frontend-test-planner`        |
+| 테스트 계획          | `test-plan-YYYY-MM-DD-HHmmss.md`             | `/fec-test-plan`, `fec-testing-strategy`, `fec-frontend-test-planner`        |
 | 검증 수정            | `validation-fix-YYYY-MM-DD-HHmmss.md`        | `fec-validation-fix`                                                     |
-| 리팩토링 정리        | `refactor-clean-YYYY-MM-DD-HHmmss.md`        | `/fec-refactor-clean`, `fec-refactor-clean`, `frontend-refactor-cleaner` |
-| E2E 실행 요약        | `e2e-summary-YYYY-MM-DD-HHmmss.md`           | `frontend-e2e-runner` (선택)                                             |
+| 리팩토링 정리        | `refactor-clean-YYYY-MM-DD-HHmmss.md`        | `/fec-refactor-clean`, `fec-refactor-clean`, `fec-frontend-refactor-cleaner` |
+| E2E 실행 요약        | `e2e-summary-YYYY-MM-DD-HHmmss.md`           | `fec-frontend-e2e-runner` (선택)                                             |
 | 마이그레이션 계획    | `migration-plan-YYYY-MM-DD-HHmmss.md`        | `fec-legacy-to-modern-migration`                                         |
 
 </details>

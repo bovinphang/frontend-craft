@@ -24,22 +24,28 @@ test("npm pack publishes compiled runtime files without TypeScript sources", () 
   assert.deepEqual(leakedSources, []);
 
   const hookRuntimes = [
-    "format-changed-file.js",
-    "notify.js",
-    "run-tests.js",
-    "security-check.js",
-    "session-start.js",
+    "fec-format-changed-file.js",
+    "fec-notify.js",
+    "fec-run-tests.js",
+    "fec-security-check.js",
+    "fec-session-start.js",
   ];
   for (const hookRuntime of hookRuntimes) {
     assert.ok(files.includes(`dist/hooks/${hookRuntime}`), `npm package should publish dist/hooks/${hookRuntime}`);
     assert.ok(!files.includes(`dist/scripts/${hookRuntime}`), `runtime hook should not be published in dist/scripts`);
+  }
+  for (const unprefixedHookRuntime of hookRuntimes.map((hookRuntime) => hookRuntime.replace(/^fec-/, ""))) {
+    assert.ok(
+      !files.includes(`dist/hooks/${unprefixedHookRuntime}`),
+      `npm package should not publish unprefixed dist/hooks/${unprefixedHookRuntime}`,
+    );
   }
 
   const staleCompiledFiles = files
     .filter((file) => /^dist\/(bin|src|scripts|hooks)\/.*\.js$/.test(file))
     .filter((file) => {
       const sourcePath = file.startsWith("dist/hooks/")
-        ? file.replace(/^dist\/hooks\//, "src/hooks/").replace(/\.js$/, ".ts")
+        ? file.replace(/^dist\/hooks\/fec-/, "src/hooks/").replace(/\.js$/, ".ts")
         : file.replace(/^dist\//, "").replace(/\.js$/, ".ts");
       return !fs.existsSync(path.join(root, sourcePath));
     });
@@ -50,7 +56,7 @@ test("build output only contains bundled publish runtime directories", () => {
   assert.ok(!fs.existsSync(path.join(root, "dist", "src")), "build should not emit dist/src");
   assert.ok(!fs.existsSync(path.join(root, "dist", "tests")), "build should not emit dist/tests");
   assert.ok(fs.existsSync(path.join(root, "dist", "bin", "frontend-craft.js")), "build should emit bundled CLI");
-  assert.ok(fs.existsSync(path.join(root, "dist", "hooks", "security-check.js")), "build should emit bundled hooks");
+  assert.ok(fs.existsSync(path.join(root, "dist", "hooks", "fec-security-check.js")), "build should emit bundled hooks");
   assert.ok(!fs.existsSync(path.join(root, "dist", "scripts")), "build should not emit maintenance scripts");
 });
 

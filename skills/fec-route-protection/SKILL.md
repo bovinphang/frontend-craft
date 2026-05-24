@@ -133,5 +133,5 @@ router.beforeEach(async (to) => {
 
 ## Related Agent
 
-- [frontend-security-reviewer](../../agents/frontend-security-reviewer.md) - 检查越权、open redirect、客户端权限伪造和认证态存储风险。
-- [frontend-architect](../../agents/frontend-architect.md) - 规划路由层级、权限模型和模块边界。
+- [fec-frontend-security-reviewer](../../agents/fec-frontend-security-reviewer.md) - 检查越权、open redirect、客户端权限伪造和认证态存储风险。
+- [fec-frontend-architect](../../agents/fec-frontend-architect.md) - 规划路由层级、权限模型和模块边界。

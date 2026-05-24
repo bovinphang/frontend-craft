@@ -95,13 +95,13 @@ npx frontend-craft@latest list
 
 ```text
 あなた："Review my recent changes"
-→ frontend-code-reviewer エージェントが起動し、reports/code-review-*.md を出力
+→ fec-frontend-code-reviewer エージェントが起動し、reports/code-review-*.md を出力
 
 あなた："/fec-review"
 → アーキテクチャ、型、レンダリング、スタイル、a11y の観点で構造化レビューを実行
 
 あなた："この Figma リンクからチェックアウトページを実装して"
-→ figma-implementer エージェントが MCP 経由でデザインを読み取り、コンポーネントとレポートを出力
+→ fec-figma-implementer エージェントが MCP 経由でデザインを読み取り、コンポーネントとレポートを出力
 
 あなた："/fec-scaffold dashboard feature"
 → プロジェクト規約に従い page / feature / component のディレクトリツリーを作成
@@ -199,19 +199,19 @@ npx frontend-craft@latest list
 
 | エージェント                 | 焦点                                                                                 | レポート                     |
 | ---------------------------- | ------------------------------------------------------------------------------------ | ---------------------------- |
-| `frontend-code-reviewer`     | React/Vue/Next/Nuxt、TS、スタイル、クライアント側セキュリティ（信頼度ベース）        | `code-review-*.md`           |
-| `typescript-reviewer`        | 型安全性、非同期の正しさ、慣用的パターン（レポートのみ）                             | `typescript-review-*.md`     |
-| `frontend-security-reviewer` | XSS、クライアントシークレット、危険な DOM/API、CSP、依存関係監査                     | `security-review-*.md`       |
-| `performance-optimizer`      | バンドルサイズ、レンダリングパフォーマンス、ネットワークボトルネック                 | `performance-review-*.md`    |
-| `frontend-architect`         | ページ分割、コンポーネントアーキテクチャ、状態フロー、ディレクトリ計画               | `architecture-proposal-*.md` |
-| `frontend-test-planner`      | リスク→階層マトリクス：静的、ユニット、コンポーネント、E2E、視覚、a11y、セキュリティ | `test-plan-*.md`             |
-| `frontend-build-fixer`       | lint / type-check / test / build / CI の段階的修復                                   | `validation-fix-*.md`        |
-| `frontend-refactor-cleaner`  | 未使用コード、export、スタイル、ルート、依存関係の分類と安全な削除                   | `refactor-clean-*.md`        |
-| `frontend-e2e-runner`        | E2E 作成と実行（Playwright/Cypress）、flaky 隔離、トレース                           | `e2e-summary-*.md`           |
-| `frontend-doc-updater`       | README、ランタイムドキュメント、構造、機能表、メタデータの同期                       | —                            |
-| `ui-checker`                 | 視覚的問題のデバッグとデザイン忠実度評価                                             | `ui-fidelity-review-*.md`    |
-| `figma-implementer`          | Figma/Sketch/MasterGo/Pixso/墨刀/摹客 からの正確な UI 実装                           | `design-implementation-*.md` |
-| `design-token-mapper`        | デザイン変数をプロジェクトの Design Token にマッピング                               | `token-mapping-*.md`         |
+| `fec-frontend-code-reviewer`     | React/Vue/Next/Nuxt、TS、スタイル、クライアント側セキュリティ（信頼度ベース）        | `code-review-*.md`           |
+| `fec-typescript-reviewer`        | 型安全性、非同期の正しさ、慣用的パターン（レポートのみ）                             | `typescript-review-*.md`     |
+| `fec-frontend-security-reviewer` | XSS、クライアントシークレット、危険な DOM/API、CSP、依存関係監査                     | `security-review-*.md`       |
+| `fec-performance-optimizer`      | バンドルサイズ、レンダリングパフォーマンス、ネットワークボトルネック                 | `performance-review-*.md`    |
+| `fec-frontend-architect`         | ページ分割、コンポーネントアーキテクチャ、状態フロー、ディレクトリ計画               | `architecture-proposal-*.md` |
+| `fec-frontend-test-planner`      | リスク→階層マトリクス：静的、ユニット、コンポーネント、E2E、視覚、a11y、セキュリティ | `test-plan-*.md`             |
+| `fec-frontend-build-fixer`       | lint / type-check / test / build / CI の段階的修復                                   | `validation-fix-*.md`        |
+| `fec-frontend-refactor-cleaner`  | 未使用コード、export、スタイル、ルート、依存関係の分類と安全な削除                   | `refactor-clean-*.md`        |
+| `fec-frontend-e2e-runner`        | E2E 作成と実行（Playwright/Cypress）、flaky 隔離、トレース                           | `e2e-summary-*.md`           |
+| `fec-frontend-doc-updater`       | README、ランタイムドキュメント、構造、機能表、メタデータの同期                       | —                            |
+| `fec-ui-checker`                 | 視覚的問題のデバッグとデザイン忠実度評価                                             | `ui-fidelity-review-*.md`    |
+| `fec-figma-implementer`          | Figma/Sketch/MasterGo/Pixso/墨刀/摹客 からの正確な UI 実装                           | `design-implementation-*.md` |
+| `fec-design-token-mapper`        | デザイン変数をプロジェクトの Design Token にマッピング                               | `token-mapping-*.md`         |
 
 ### フック（イベント駆動）
 
@@ -322,20 +322,20 @@ $env:MODAO_TOKEN = "your-modao-token"
 
 | レポートタイプ           | ファイル名パターン                           | 生成元                                                                   |
 | ------------------------ | -------------------------------------------- | ------------------------------------------------------------------------ |
-| コードレビュー           | `code-review-YYYY-MM-DD-HHmmss.md`           | `/fec-review`、`fec-frontend-code-review`、`frontend-code-reviewer`      |
-| TypeScript / JS レビュー | `typescript-review-YYYY-MM-DD-HHmmss.md`     | `typescript-reviewer`                                                    |
-| セキュリティレビュー     | `security-review-YYYY-MM-DD-HHmmss.md`       | `fec-security-review`、`frontend-security-reviewer`                      |
+| コードレビュー           | `code-review-YYYY-MM-DD-HHmmss.md`           | `/fec-review`、`fec-frontend-code-review`、`fec-frontend-code-reviewer`      |
+| TypeScript / JS レビュー | `typescript-review-YYYY-MM-DD-HHmmss.md`     | `fec-typescript-reviewer`                                                    |
+| セキュリティレビュー     | `security-review-YYYY-MM-DD-HHmmss.md`       | `fec-security-review`、`fec-frontend-security-reviewer`                      |
 | アクセシビリティ         | `accessibility-review-YYYY-MM-DD-HHmmss.md`  | `fec-accessibility-check`                                                |
-| パフォーマンス           | `performance-review-YYYY-MM-DD-HHmmss.md`    | `performance-optimizer`                                                  |
-| アーキテクチャ           | `architecture-proposal-YYYY-MM-DD-HHmmss.md` | `frontend-architect`                                                     |
-| デザイン忠実度           | `ui-fidelity-review-YYYY-MM-DD-HHmmss.md`    | `ui-checker`                                                             |
-| デザイン実装             | `design-implementation-YYYY-MM-DD-HHmmss.md` | `figma-implementer`                                                      |
-| トークンマッピング       | `token-mapping-YYYY-MM-DD-HHmmss.md`         | `design-token-mapper`                                                    |
+| パフォーマンス           | `performance-review-YYYY-MM-DD-HHmmss.md`    | `fec-performance-optimizer`                                                  |
+| アーキテクチャ           | `architecture-proposal-YYYY-MM-DD-HHmmss.md` | `fec-frontend-architect`                                                     |
+| デザイン忠実度           | `ui-fidelity-review-YYYY-MM-DD-HHmmss.md`    | `fec-ui-checker`                                                             |
+| デザイン実装             | `design-implementation-YYYY-MM-DD-HHmmss.md` | `fec-figma-implementer`                                                      |
+| トークンマッピング       | `token-mapping-YYYY-MM-DD-HHmmss.md`         | `fec-design-token-mapper`                                                    |
 | デザイン計画             | `design-plan-YYYY-MM-DD-HHmmss.md`           | `fec-implement-from-design`                                              |
-| テスト計画               | `test-plan-YYYY-MM-DD-HHmmss.md`             | `/fec-test-plan`、`fec-testing-strategy`、`frontend-test-planner`        |
+| テスト計画               | `test-plan-YYYY-MM-DD-HHmmss.md`             | `/fec-test-plan`、`fec-testing-strategy`、`fec-frontend-test-planner`        |
 | 検証修復                 | `validation-fix-YYYY-MM-DD-HHmmss.md`        | `fec-validation-fix`                                                     |
-| リファクタリングクリーン | `refactor-clean-YYYY-MM-DD-HHmmss.md`        | `/fec-refactor-clean`、`fec-refactor-clean`、`frontend-refactor-cleaner` |
-| E2E 実行サマリー         | `e2e-summary-YYYY-MM-DD-HHmmss.md`           | `frontend-e2e-runner`（任意）                                            |
+| リファクタリングクリーン | `refactor-clean-YYYY-MM-DD-HHmmss.md`        | `/fec-refactor-clean`、`fec-refactor-clean`、`fec-frontend-refactor-cleaner` |
+| E2E 実行サマリー         | `e2e-summary-YYYY-MM-DD-HHmmss.md`           | `fec-frontend-e2e-runner`（任意）                                            |
 | 移行計画                 | `migration-plan-YYYY-MM-DD-HHmmss.md`        | `fec-legacy-to-modern-migration`                                         |
 
 </details>

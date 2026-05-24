@@ -67,5 +67,5 @@ Load [references/rendering-patterns.md](references/rendering-patterns.md) for Ca
 
 ## Related Agent
 
-- [performance-optimizer](../../agents/performance-optimizer.md) — 3D 场景性能分析与优化
-- [figma-implementer](../../agents/figma-implementer.md) — 设计稿中的 Canvas 元素实现
+- [fec-performance-optimizer](../../agents/fec-performance-optimizer.md) — 3D 场景性能分析与优化
+- [fec-figma-implementer](../../agents/fec-figma-implementer.md) — 设计稿中的 Canvas 元素实现

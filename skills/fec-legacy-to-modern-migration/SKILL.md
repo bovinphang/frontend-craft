@@ -184,4 +184,4 @@ Load [references/migration-report-template.md](references/migration-report-templ
 - `fec-legacy-web-standard` — 理解源项目（jQuery、MPA）的代码模式
 - `fec-react-project-standard` — 迁移至 React 时的目标结构规范
 - `fec-vue3-project-standard` — 迁移至 Vue 3 时的目标结构规范
-- `frontend-architect` — 大型迁移的架构设计与风险评估
+- `fec-frontend-architect` — 大型迁移的架构设计与风险评估

@@ -1,5 +1,5 @@
 ---
-name: frontend-security-reviewer
+name: fec-frontend-security-reviewer
 description: 专注于前端与浏览器侧的安全评审：XSS、客户端密钥泄露、危险 DOM/API 用法、第三方脚本、CSP、依赖与供应链、认证态存储等。在用户输入、认证、支付、上传、动态 HTML、外链 fetch 等变更后主动委托；输出分级结论并写入 reports。当用户要求前端安全审查、渗透前自检、或评审 OWASP 相关客户端风险时优先使用。
 tools: Read, Edit, Write, MultiEdit, Glob, Grep, LS, Bash
 model: sonnet
@@ -110,4 +110,4 @@ npx eslint . --max-warnings 0
 
 报告结构、emoji 分级标题与 **`security-review-*.md`** 文件名必须与 **`fec-security-review`** Skill 一致；本代理提供**系统化流程与前端专项检查**，避免与通用后端渗透范围混淆。
 
-**记住**：前端是攻击面的一环；与 `frontend-code-reviewer` 分工为——本代理**以安全与威胁建模为主**，对方覆盖广义代码质量。
+**记住**：前端是攻击面的一环；与 `fec-frontend-code-reviewer` 分工为——本代理**以安全与威胁建模为主**，对方覆盖广义代码质量。

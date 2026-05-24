@@ -1,5 +1,5 @@
 ---
-name: frontend-doc-updater
+name: fec-frontend-doc-updater
 description: 前端仓库文档同步子代理：从 package.json、skills metadata、agents、commands、shared rules、runtime templates 等事实来源同步 README、runtime docs、项目结构、能力表和报告说明。
 tools: Read, Edit, Write, MultiEdit, Glob, Grep, LS, Bash
 model: sonnet

@@ -138,5 +138,5 @@ export function LogoReveal() {
 
 ## Related Agent
 
-- [ui-checker](../../agents/ui-checker.md) - 检查动画是否造成视觉错位、遮挡或设计还原问题。
-- [performance-optimizer](../../agents/performance-optimizer.md) - 分析动画带来的渲染、合成层和主线程开销。
+- [fec-ui-checker](../../agents/fec-ui-checker.md) - 检查动画是否造成视觉错位、遮挡或设计还原问题。
+- [fec-performance-optimizer](../../agents/fec-performance-optimizer.md) - 分析动画带来的渲染、合成层和主线程开销。

@@ -42,4 +42,4 @@ description: Use when moving expensive browser work off the main thread with Web
 
 ## Related Agent
 
-- [performance-optimizer](../../agents/performance-optimizer.md) — 通过 Profiler 验证 Worker 效果，识别主线程阻塞
+- [fec-performance-optimizer](../../agents/fec-performance-optimizer.md) — 通过 Profiler 验证 Worker 效果，识别主线程阻塞

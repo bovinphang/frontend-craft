@@ -41,4 +41,4 @@ description: Use when running existing project validation commands and fixing fa
 
 ## Related Agent
 
-- [frontend-build-fixer](../../agents/frontend-build-fixer.md) - 复杂构建、类型检查、测试或 CI 失败的增量修复。
+- [fec-frontend-build-fixer](../../agents/fec-frontend-build-fixer.md) - 复杂构建、类型检查、测试或 CI 失败的增量修复。

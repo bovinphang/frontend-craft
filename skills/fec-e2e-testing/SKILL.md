@@ -43,4 +43,4 @@ description: Use when creating, maintaining, debugging, or reviewing real-browse
 
 ## 与子代理的配合
 
-需要实际执行 Playwright/Cypress、反复验证 flaky、整理 CI artifact 时，可委托 `frontend-e2e-runner` 子代理。
+需要实际执行 Playwright/Cypress、反复验证 flaky、整理 CI artifact 时，可委托 `fec-frontend-e2e-runner` 子代理。

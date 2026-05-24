@@ -43,5 +43,5 @@ description: Use when setting up or reviewing Storybook component documentation,
 
 ## Related Agent
 
-- [frontend-architect](../../agents/frontend-architect.md) — 组件拆分与 Design System 架构设计
-- [figma-implementer](../../agents/figma-implementer.md) — 从设计稿实现组件后，在 Storybook 中验证还原度
+- [fec-frontend-architect](../../agents/fec-frontend-architect.md) — 组件拆分与 Design System 架构设计
+- [fec-figma-implementer](../../agents/fec-figma-implementer.md) — 从设计稿实现组件后，在 Storybook 中验证还原度

@@ -1,4 +1,4 @@
-import { mkdir } from "node:fs/promises";
+import { mkdir, rm } from "node:fs/promises";
 import path from "node:path";
 import { build, type BuildOptions } from "esbuild";
 import { resolvePluginRoot } from "../src/install/shared/resolve-plugin-root.js";
@@ -6,14 +6,15 @@ import { resolvePluginRoot } from "../src/install/shared/resolve-plugin-root.js"
 const root = resolvePluginRoot(import.meta.url);
 
 const hookEntries = [
-  ["src/hooks/format-changed-file.ts", "dist/hooks/format-changed-file.js"],
-  ["src/hooks/notify.ts", "dist/hooks/notify.js"],
-  ["src/hooks/run-tests.ts", "dist/hooks/run-tests.js"],
-  ["src/hooks/security-check.ts", "dist/hooks/security-check.js"],
-  ["src/hooks/session-start.ts", "dist/hooks/session-start.js"],
+  ["src/hooks/format-changed-file.ts", "dist/hooks/fec-format-changed-file.js"],
+  ["src/hooks/notify.ts", "dist/hooks/fec-notify.js"],
+  ["src/hooks/run-tests.ts", "dist/hooks/fec-run-tests.js"],
+  ["src/hooks/security-check.ts", "dist/hooks/fec-security-check.js"],
+  ["src/hooks/session-start.ts", "dist/hooks/fec-session-start.js"],
 ] as const;
 
 await mkdir(path.join(root, "dist", "bin"), { recursive: true });
+await rm(path.join(root, "dist", "hooks"), { recursive: true, force: true });
 await mkdir(path.join(root, "dist", "hooks"), { recursive: true });
 
 await bundle({

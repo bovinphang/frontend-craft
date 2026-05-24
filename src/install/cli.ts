@@ -120,7 +120,7 @@ export async function main(argv: string[]): Promise<void> {
   if (cmd === "uninstall") {
     const r = argv[1];
     console.warn(
-      "Uninstall is not automated. Remove generated directories for your runtime (e.g. .claude/skills, .codex/agents) or re-run install with a clean backup.",
+      "Uninstall is not automated. Remove generated directories for your runtime (e.g. .claude/skills, .codex/agents) or re-run install with a clean backup. For installs created before the fec-prefix convention, also remove legacy unprefixed agent and copied hook files if you did not customize them.",
     );
     if (r) console.warn(`Requested runtime: ${r}`);
     return;
@@ -252,7 +252,7 @@ function checkCommands(runtime: string, baseDir: string): boolean {
 
 function checkHooks(runtime: string, baseDir: string): boolean {
   if (runtime === "qoder") {
-    return fs.existsSync(path.join(baseDir, "settings.json")) && fs.existsSync(path.join(baseDir, "hooks", "security-check.js"));
+    return fs.existsSync(path.join(baseDir, "settings.json")) && fs.existsSync(path.join(baseDir, "hooks", "fec-security-check.js"));
   }
   return fs.existsSync(path.join(baseDir, "hooks.json"));
 }

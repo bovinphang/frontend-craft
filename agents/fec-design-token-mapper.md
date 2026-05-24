@@ -1,5 +1,5 @@
 ---
-name: design-token-mapper
+name: fec-design-token-mapper
 description: 使用该子代理将 Figma、Sketch、MasterGo、Pixso、墨刀或摹客中的样式与变量映射到项目已有的设计 Token、主题变量和样式约定，并将映射报告保存为 Markdown 文件。
 tools: Read, Edit, Write, MultiEdit, Glob, Grep, LS, mcp__figma__get_design_context, mcp__figma__get_variable_defs, mcp__sketch__get_selection_as_image, mcp__mastergo__*, mcp__pixso__*, mcp__modao__*
 model: sonnet

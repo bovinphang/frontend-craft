@@ -211,6 +211,10 @@ test("all runtime local installs match declared capabilities", () => {
       if (cap.agents) {
         const agentDir = runtime === "codex" ? path.join(baseDir, "agents") : path.join(baseDir, "agents");
         assert.ok(fs.existsSync(agentDir), `${runtime} installs agents`);
+        const expectedAgent = runtime === "codex" ? "fec-frontend-code-reviewer.toml" : "fec-frontend-code-reviewer.md";
+        const oldAgent = runtime === "codex" ? "frontend-code-reviewer.toml" : "frontend-code-reviewer.md";
+        assert.ok(fs.existsSync(path.join(agentDir, expectedAgent)), `${runtime} installs fec-prefixed agents`);
+        assert.ok(!fs.existsSync(path.join(agentDir, oldAgent)), `${runtime} does not install unprefixed agents`);
       }
       if (cap.commands) {
         const commandDir =
@@ -226,17 +230,17 @@ test("all runtime local installs match declared capabilities", () => {
       }
       if (runtime === "qoder") {
         assert.ok(
-          fs.existsSync(path.join(baseDir, "agents", "frontend-code-reviewer.md")),
-          "qoder installs markdown agents",
+          fs.existsSync(path.join(baseDir, "agents", "fec-frontend-code-reviewer.md")),
+          "qoder installs fec-prefixed markdown agents",
         );
         assert.ok(fs.existsSync(path.join(baseDir, "rules", "react.md")), "qoder installs shared rules");
-        assert.ok(fs.existsSync(path.join(baseDir, "hooks", "security-check.js")), "qoder installs security hook script");
-        assert.ok(fs.existsSync(path.join(baseDir, "hooks", "notify.js")), "qoder installs notification hook script");
+        assert.ok(fs.existsSync(path.join(baseDir, "hooks", "fec-security-check.js")), "qoder installs security hook script");
+        assert.ok(fs.existsSync(path.join(baseDir, "hooks", "fec-notify.js")), "qoder installs notification hook script");
         const settings = JSON.parse(fs.readFileSync(path.join(baseDir, "settings.json"), "utf8")) as {
           hooks?: unknown;
         };
         assert.ok(settings.hooks, "qoder settings include hooks");
-        assert.ok(JSON.stringify(settings.hooks).includes(".qoder/hooks/security-check.js"));
+        assert.ok(JSON.stringify(settings.hooks).includes(".qoder/hooks/fec-security-check.js"));
       }
       if (cap.rules) {
         const rulesDir =

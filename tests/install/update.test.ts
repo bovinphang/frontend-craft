@@ -30,6 +30,7 @@ test("install writes a frontend-craft manifest for the runtime scope", () => {
     assert.equal(manifest.runtime, "claude");
     assert.equal(manifest.scope, "local");
     assert.ok(manifest.files?.some((file) => file.path === "skills/fec-react-project-standard/SKILL.md"));
+    assert.ok(manifest.files?.some((file) => file.path === "agents/fec-frontend-code-reviewer.md"));
     assert.ok(manifest.files?.some((file) => file.path === "hooks.json"));
   } finally {
     fs.rmSync(dir, { recursive: true, force: true });

@@ -6,7 +6,7 @@
                 "hooks": [
                     {
                         "type": "command",
-                        "command": "node \"${CLAUDE_PLUGIN_ROOT}/dist/hooks/security-check.js\"",
+                        "command": "node \"${CLAUDE_PLUGIN_ROOT}/dist/hooks/fec-security-check.js\"",
                         "timeout": 20,
                         "statusMessage": "Checking command safety..."
                     }
@@ -19,7 +19,7 @@
                 "hooks": [
                     {
                         "type": "command",
-                        "command": "node \"${CLAUDE_PLUGIN_ROOT}/dist/hooks/format-changed-file.js\"",
+                        "command": "node \"${CLAUDE_PLUGIN_ROOT}/dist/hooks/fec-format-changed-file.js\"",
                         "timeout": 180,
                         "statusMessage": "Running formatter..."
                     }
@@ -32,7 +32,7 @@
                 "hooks": [
                     {
                         "type": "command",
-                        "command": "node \"${CLAUDE_PLUGIN_ROOT}/dist/hooks/session-start.js\"",
+                        "command": "node \"${CLAUDE_PLUGIN_ROOT}/dist/hooks/fec-session-start.js\"",
                         "timeout": 10
                     }
                 ]
@@ -44,7 +44,7 @@
                 "hooks": [
                     {
                         "type": "command",
-                        "command": "node \"${CLAUDE_PLUGIN_ROOT}/dist/hooks/run-tests.js\"",
+                        "command": "node \"${CLAUDE_PLUGIN_ROOT}/dist/hooks/fec-run-tests.js\"",
                         "timeout": 300,
                         "statusMessage": "Running final validation..."
                     }
@@ -57,7 +57,7 @@
                 "hooks": [
                     {
                         "type": "command",
-                        "command": "node \"${CLAUDE_PLUGIN_ROOT}/dist/hooks/notify.js\""
+                        "command": "node \"${CLAUDE_PLUGIN_ROOT}/dist/hooks/fec-notify.js\""
                     }
                 ]
             }

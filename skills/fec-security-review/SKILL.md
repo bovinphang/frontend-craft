@@ -42,4 +42,4 @@ description: Use when reviewing frontend security risks such as XSS, CSRF, sensi
 
 ## 与子代理的配合
 
-需要结合 `npm audit`、OWASP 清单、Grep 高危 DOM/API 模式时，可委托 `frontend-security-reviewer` 子代理。
+需要结合 `npm audit`、OWASP 清单、Grep 高危 DOM/API 模式时，可委托 `fec-frontend-security-reviewer` 子代理。
