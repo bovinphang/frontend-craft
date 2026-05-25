@@ -5,6 +5,8 @@ import fs from "node:fs";
 import path from "node:path";
 import { resolvePluginRoot } from "../src/install/shared/resolve-plugin-root.js";
 import {
+  assertStandaloneSkillBody,
+  assertSkillRelation,
   extractReferencedFiles,
   listSkillIds,
   parseSkillFrontmatter,
@@ -12,6 +14,7 @@ import {
   toPosixPath,
   type RootPackage,
   type SkillMetadata,
+  type SkillRelations,
 } from "./skill-packaging.js";
 
 type SkillPackageIndexEntry = {
@@ -32,21 +35,31 @@ const packageRoot = path.join(root, "skill-packages");
 const pkg = readJsonFile<RootPackage>(path.join(root, "package.json"));
 const metadata = readJsonFile<SkillMetadata[]>(path.join(skillsDir, "metadata.json"));
 const metadataById = new Map(metadata.map((skill) => [skill.id, skill]));
+const skillIds = listSkillIds(skillsDir);
+const skillIdSet = new Set(skillIds);
+const relations = readJsonFile<SkillRelations>(path.join(skillsDir, "relations.json"));
 
 fs.rmSync(packageRoot, { recursive: true, force: true });
 fs.mkdirSync(packageRoot, { recursive: true });
 
 const index: SkillPackageIndexEntry[] = [];
 
-for (const skillId of listSkillIds(skillsDir)) {
+for (const [skillId, relation] of Object.entries(relations)) {
+  if (!skillIdSet.has(skillId)) throw new Error(`Unknown skill relation entry: ${skillId}`);
+  assertSkillRelation(relation, skillId, skillIdSet);
+}
+
+for (const skillId of skillIds) {
   const skillMeta = metadataById.get(skillId);
   if (!skillMeta) throw new Error(`Missing metadata for skill: ${skillId}`);
 
   const sourceDir = path.join(skillsDir, skillId);
   const destDir = path.join(packageRoot, skillId);
   const skillBody = fs.readFileSync(path.join(sourceDir, "SKILL.md"), "utf8");
+  assertStandaloneSkillBody(skillBody, skillId);
   const frontmatter = parseSkillFrontmatter(skillBody, skillId);
   const references = extractReferencedFiles(skillBody);
+  const relation = relations[skillId];
 
   fs.mkdirSync(destDir, { recursive: true });
   fs.copyFileSync(path.join(sourceDir, "SKILL.md"), path.join(destDir, "SKILL.md"));
@@ -69,6 +82,7 @@ for (const skillId of listSkillIds(skillsDir)) {
     description: frontmatter.description,
     source: `skills/${skillId}`,
     references,
+    ...(relation ? { relations: relation } : {}),
   };
 
   const standalonePackage = {
@@ -90,7 +104,7 @@ for (const skillId of listSkillIds(skillsDir)) {
 
   fs.writeFileSync(path.join(destDir, "metadata.json"), `${JSON.stringify(publishMetadata, null, 2)}\n`, "utf8");
   fs.writeFileSync(path.join(destDir, "package.json"), `${JSON.stringify(standalonePackage, null, 2)}\n`, "utf8");
-  fs.writeFileSync(path.join(destDir, "README.md"), renderReadme(skillMeta, frontmatter, references), "utf8");
+  fs.writeFileSync(path.join(destDir, "README.md"), renderReadme(skillMeta, frontmatter, references, relation), "utf8");
 
   index.push({
     id: skillId,
@@ -109,13 +123,24 @@ fs.writeFileSync(path.join(packageRoot, "index.json"), `${JSON.stringify(index, 
 
 console.log(`[pack-skills] Packed ${index.length} skills to ${packageRoot}`);
 
-function renderReadme(metadata: SkillMetadata, frontmatter: { name: string; description: string }, references: string[]): string {
+function renderReadme(
+  metadata: SkillMetadata,
+  frontmatter: { name: string; description: string },
+  references: string[],
+  relation: SkillRelations[string] | undefined,
+): string {
   const referenceSection =
     references.length > 0
       ? `\n## References\n\n${references.map((reference) => `- [${reference}](${reference})`).join("\n")}\n`
       : "";
+  const relatedSection =
+    relation?.relatedSkills && relation.relatedSkills.length > 0
+      ? `\n## Optional Related Packages\n\n${relation.relatedSkills
+          .map((skillId) => `- \`@frontend-craft/${skillId}\``)
+          .join("\n")}\n`
+      : "";
 
-  return `# ${metadata.name}\n\n${metadata.summary}\n\n## Skill\n\n- ID: \`${metadata.id}\`\n- Category: \`${metadata.category}\`\n- Version: \`${pkg.version}\`\n- Source: \`skills/${metadata.id}/SKILL.md\`\n\n## Description\n\n${frontmatter.description}\n\n## Usage\n\nInstall or import this package with any skill runtime that understands the standard \`SKILL.md\` layout. The canonical source remains the Frontend Craft repository.\n${referenceSection}\n## License\n\nMIT\n`;
+  return `# ${metadata.name}\n\n${metadata.summary}\n\n## Skill\n\n- ID: \`${metadata.id}\`\n- Category: \`${metadata.category}\`\n- Version: \`${pkg.version}\`\n- Source: \`skills/${metadata.id}/SKILL.md\`\n\n## Description\n\n${frontmatter.description}\n\n## Usage\n\nInstall or import this package with any skill runtime that understands the standard \`SKILL.md\` layout. The canonical source remains the Frontend Craft repository.\n${referenceSection}${relatedSection}\n## License\n\nMIT\n`;
 }
 
 function unique(values: string[]): string[] {

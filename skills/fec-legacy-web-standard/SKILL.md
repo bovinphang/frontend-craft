@@ -11,7 +11,7 @@ description: Use when maintaining or safely modifying existing non-framework fro
 
 ## Procedure
 
-1. 先确认本次改动是维护旧栈还是迁移；迁移到 React/Vue/TypeScript 时切换到 `fec-legacy-to-modern-migration`。
+1. 先确认本次改动是维护旧栈还是迁移；迁移到 React/Vue/TypeScript 时切换到现代化迁移 workflow。
 2. 沿用现有架构和代码风格，优先修复问题，不在一次改动中引入多项现代化。
 3. JavaScript 用 IIFE/命名空间减少全局污染，事件绑定优先委托到合理容器。
 4. DOM 更新缓存选择器、批量操作、转义用户输入；Ajax 必须处理 loading、error、空状态和防重复提交。
@@ -29,12 +29,6 @@ Load [references/legacy-patterns.md](references/legacy-patterns.md) for jQuery n
 - 禁止用 `innerHTML` / `.html()` 直接插入用户输入。
 - 避免全局变量污染。
 - 每次聚焦一个维护点，避免顺手重构整个模块。
-
-## Related Skills / Boundary
-
-- `fec-legacy-to-modern-migration` — 迁移策略、存量盘点、分阶段迁移到 React/Vue/TypeScript。
-- `fec-security-review` — 遗留项目中的 XSS、CSRF、开放重定向和第三方脚本专项审查。
-- `fec-validation-fix` — 在遗留项目中运行已有 lint/test/build 或手动验证脚本。
 
 ## Expected Output
 
