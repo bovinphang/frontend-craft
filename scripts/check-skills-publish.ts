@@ -5,6 +5,8 @@ import fs from "node:fs";
 import path from "node:path";
 import { resolvePluginRoot } from "../src/install/shared/resolve-plugin-root.js";
 import {
+  assertStandaloneSkillBody,
+  assertSkillRelation,
   extractReferencedFiles,
   listSkillIds,
   parseSkillFrontmatter,
@@ -12,6 +14,8 @@ import {
   toPosixPath,
   type RootPackage,
   type SkillMetadata,
+  type SkillRelation,
+  type SkillRelations,
 } from "./skill-packaging.js";
 
 const root = resolvePluginRoot(import.meta.url);
@@ -20,15 +24,26 @@ const packageRoot = path.join(root, "skill-packages");
 const pkg = readJsonFile<RootPackage>(path.join(root, "package.json"));
 const metadata = readJsonFile<SkillMetadata[]>(path.join(skillsDir, "metadata.json"));
 const metadataById = new Map(metadata.map((skill) => [skill.id, skill]));
+const relations = readJsonFile<SkillRelations>(path.join(skillsDir, "relations.json"));
 
 if (!fs.existsSync(packageRoot)) fail(`Missing skill package directory: ${packageRoot}`);
 
 const skillIds = listSkillIds(skillsDir);
+const skillIdSet = new Set(skillIds);
 const index = readJsonFile<Array<{ id: string; version: string; packagePath: string; sourcePath: string }>>(
   path.join(packageRoot, "index.json"),
 );
 
 assertEqual(JSON.stringify(index.map((entry) => entry.id).sort()), JSON.stringify(skillIds), "index skill ids mismatch");
+
+for (const [skillId, relation] of Object.entries(relations)) {
+  if (!skillIdSet.has(skillId)) fail(`Unknown skill relation entry: ${skillId}`);
+  try {
+    assertSkillRelation(relation, skillId, skillIdSet);
+  } catch (error) {
+    fail(error instanceof Error ? error.message : String(error));
+  }
+}
 
 for (const skillId of skillIds) {
   const skillMeta = metadataById.get(skillId);
@@ -37,15 +52,23 @@ for (const skillId of skillIds) {
   const sourceDir = path.join(skillsDir, skillId);
   const destDir = path.join(packageRoot, skillId);
   const skillBody = fs.readFileSync(path.join(sourceDir, "SKILL.md"), "utf8");
+  const packageSkillBody = fs.readFileSync(path.join(destDir, "SKILL.md"), "utf8");
+  try {
+    assertStandaloneSkillBody(skillBody, skillId);
+    assertStandaloneSkillBody(packageSkillBody, skillId);
+  } catch (error) {
+    fail(error instanceof Error ? error.message : String(error));
+  }
   const frontmatter = parseSkillFrontmatter(skillBody, skillId);
   const references = extractReferencedFiles(skillBody);
+  const relation = relations[skillId];
 
   for (const requiredFile of ["SKILL.md", "README.md", "metadata.json", "package.json", "LICENSE"]) {
     assertExists(path.join(destDir, requiredFile));
   }
 
   const packageJson = readJsonFile<{ name: string; version: string; keywords: string[] }>(path.join(destDir, "package.json"));
-  const publishMetadata = readJsonFile<SkillMetadata & { description: string; references: string[] }>(
+  const publishMetadata = readJsonFile<SkillMetadata & { description: string; references: string[]; relations?: SkillRelation }>(
     path.join(destDir, "metadata.json"),
   );
   const entry = index.find((candidate) => candidate.id === skillId);
@@ -56,6 +79,7 @@ for (const skillId of skillIds) {
   assertEqual(publishMetadata.version, pkg.version, `metadata version mismatch: ${skillId}`);
   assertEqual(publishMetadata.description, frontmatter.description, `description mismatch: ${skillId}`);
   assertEqual(JSON.stringify(publishMetadata.references), JSON.stringify(references), `references mismatch: ${skillId}`);
+  assertEqual(JSON.stringify(publishMetadata.relations ?? null), JSON.stringify(relation ?? null), `relations mismatch: ${skillId}`);
   assertEqual(entry.version, pkg.version, `index version mismatch: ${skillId}`);
   assertEqual(entry.packagePath, toPosixPath(path.relative(root, destDir)), `index package path mismatch: ${skillId}`);
   assertEqual(entry.sourcePath, `skills/${skillId}`, `index source path mismatch: ${skillId}`);

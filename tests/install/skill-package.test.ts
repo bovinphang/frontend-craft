@@ -5,11 +5,14 @@ import fs from "node:fs";
 import path from "node:path";
 import { resolvePluginRoot } from "../../src/install/shared/resolve-plugin-root.js";
 import {
+  assertStandaloneSkillBody,
   extractReferencedFiles,
   listSkillIds,
   parseSkillFrontmatter,
   readJsonFile,
   toPosixPath,
+  type SkillRelation,
+  type SkillRelations,
 } from "../../scripts/skill-packaging.js";
 
 const root = resolvePluginRoot(import.meta.url);
@@ -27,6 +30,7 @@ test("pack:skills creates one standalone publish package per skill", () => {
 
   const pkg = readJsonFile<{ version: string }>(path.join(root, "package.json"));
   const skillIds = listSkillIds(skillsDir);
+  const relations = readJsonFile<SkillRelations>(path.join(skillsDir, "relations.json"));
   const index = readJsonFile<Array<{ id: string; version: string; packagePath: string; sourcePath: string }>>(
     path.join(packageRoot, "index.json"),
   );
@@ -38,8 +42,12 @@ test("pack:skills creates one standalone publish package per skill", () => {
     const sourceDir = path.join(skillsDir, skillId);
     const destDir = path.join(packageRoot, skillId);
     const skillBody = fs.readFileSync(path.join(sourceDir, "SKILL.md"), "utf8");
+    const packageSkillBody = fs.readFileSync(path.join(destDir, "SKILL.md"), "utf8");
     const frontmatter = parseSkillFrontmatter(skillBody, skillId);
     const references = extractReferencedFiles(skillBody);
+    const relation = relations[skillId];
+
+    assertStandaloneSkillBody(packageSkillBody, skillId);
 
     for (const requiredFile of ["SKILL.md", "README.md", "metadata.json", "package.json", "LICENSE"]) {
       assert.ok(fs.existsSync(path.join(destDir, requiredFile)), `missing ${requiredFile}: ${skillId}`);
@@ -48,7 +56,7 @@ test("pack:skills creates one standalone publish package per skill", () => {
     const standalonePkg = readJsonFile<{ version: string; description: string; keywords: string[] }>(
       path.join(destDir, "package.json"),
     );
-    const publishMetadata = readJsonFile<{ version: string; description: string; references: string[] }>(
+    const publishMetadata = readJsonFile<{ version: string; description: string; references: string[]; relations?: SkillRelation }>(
       path.join(destDir, "metadata.json"),
     );
     const entry = index.find((candidate) => candidate.id === skillId);
@@ -61,6 +69,8 @@ test("pack:skills creates one standalone publish package per skill", () => {
     assert.equal(publishMetadata.version, pkg.version);
     assert.equal(publishMetadata.description, frontmatter.description);
     assert.deepEqual(publishMetadata.references, references);
+    assert.deepEqual(publishMetadata.relations ?? null, relation ?? null);
+    assert.ok(!("relatedAgents" in (publishMetadata.relations ?? {})), `package metadata includes relatedAgents: ${skillId}`);
     assert.equal(entry?.version, pkg.version);
     assert.equal(entry?.packagePath, toPosixPath(path.relative(root, destDir)));
     assert.equal(entry?.sourcePath, `skills/${skillId}`);
