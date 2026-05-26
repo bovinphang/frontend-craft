@@ -61,8 +61,3 @@ Load [references/query-patterns.md](references/query-patterns.md) for QueryClien
 
 数据获取层具备 loading/error/empty/data 状态，重复请求自动去重，mutation 后缓存正确失效或回滚，API 层与 UI 层边界清晰。
 
-## Related Skills / Boundary
-
-- `fec-form-handling` — 表单状态、校验和提交 UI；提交后的 mutation 可联用本 skill。
-- `fec-pwa-implementation` — Service Worker 和离线缓存，不负责 React Query server state。
-- `fec-list-virtualization` — 无限列表的 DOM 渲染性能；分页数据源可联用本 skill。

@@ -1,6 +1,6 @@
 ---
 name: fec-nextjs-project-standard
-description: Use when creating or reviewing Next.js 14+ App Router projects, file routes, layouts, server/client component boundaries, SSR/SSG/ISR, streaming, metadata, middleware, server actions, or Next-specific data fetching. Use fec-react-project-standard for generic client React component architecture; Chinese triggers include Next.js, App Router.
+description: Use when creating or reviewing Next.js 14+ App Router projects, file routes, layouts, server/client component boundaries, SSR/SSG/ISR, streaming, metadata, middleware, server actions, or Next-specific data fetching. For generic client React component architecture, apply the project's React conventions separately; Chinese triggers include Next.js, App Router.
 ---
 
 # Next.js 项目规范
@@ -17,7 +17,7 @@ description: Use when creating or reviewing Next.js 14+ App Router projects, fil
 2. 默认服务端组件优先；只有需要浏览器 API、交互状态或事件处理时才使用 `'use client'`。
 3. 明确 SSR / SSG / ISR / CSR 渲染模式和 Next fetch/cache 策略。
 4. 为路由补齐 `loading.tsx`、`error.tsx`、`not-found.tsx`、metadata 和敏感逻辑的服务端边界。
-5. 客户端组件架构问题分流到 `fec-react-project-standard`。
+5. 客户端组件架构问题分流到 React 项目 workflow。
 
 ## 项目结构
 

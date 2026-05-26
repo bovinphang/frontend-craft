@@ -63,9 +63,6 @@ description: Use when ...
 
 明确产出物是什么，如何验证。
 
-## Related Skills / Boundary
-
-- `fec-related-skill` — 说明什么时候应切换到该 skill。
 ```
 
 ---
@@ -82,8 +79,15 @@ description: Use when ...
 
 - 触发条件主要写在 frontmatter `description`，正文不要再重复长篇 `When to Use`。
 - `description` 必须包含 should-trigger 场景和近邻 should-not-trigger 边界。
-- 对容易重叠的 skill，在正文添加 `Related Skills / Boundary`，说明什么时候应切换到专项 skill。
 - 示例: `Use when building substantial forms with React Hook Form and Zod. Do not use for trivial 1-3 field forms without validation.`
+
+### Capability Relations
+
+- `SKILL.md` 必须自包含，不能依赖另一个 skill 或 agent 才能理解或执行。
+- 不要在 skill 正文添加 `Related Agent`。
+- 不要从 skill 正文链接到 `../agents`、`../../agents`、`../skills` 或 `../../skills`。
+- 相关 skill、边界 workflow 和能力标签统一维护在 `skills/relations.json`。
+- Agent 可以在自己的 frontmatter `skills:` 字段中引用 skills；skill 不反向引用 agent。
 
 ### Procedure
 
@@ -140,18 +144,6 @@ description: Use when ...
 - `should_trigger`：8-10 条真实用户问法。
 - `should_not_trigger`：8-10 条近邻误触发问法。
 - 高重叠 skill 优先覆盖 React/Vue/Next/Nuxt、review/security/a11y、component/E2E/Storybook、legacy/migration。
-
----
-
-## Agent 关联
-
-如果 Skill 有对应的 Agent，在文件末尾添加：
-
-```markdown
-## Related Agent
-
-- [agent-name](../agents/agent-name.md) — 关联说明
-```
 
 ---
 

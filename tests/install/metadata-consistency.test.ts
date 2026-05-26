@@ -21,6 +21,14 @@ type SkillMetadata = {
 
 type EvalQueries = Record<string, { should_trigger: unknown[]; should_not_trigger: unknown[] }>;
 
+type SkillRelation = {
+  relatedSkills?: string[];
+  boundaryWorkflows?: string[];
+  capabilityTags?: string[];
+};
+
+type SkillRelations = Record<string, SkillRelation>;
+
 test("skills metadata matches skill directories and frontmatter names", () => {
   const skillsDir = path.join(root, "skills");
   const metadata = JSON.parse(fs.readFileSync(path.join(skillsDir, "metadata.json"), "utf8")) as SkillMetadata[];
@@ -63,6 +71,75 @@ test("skills metadata uses the four public taxonomy categories", () => {
 
   for (const skill of metadata) {
     assert.ok(allowedCategories.has(skill.category), `unexpected skill category for ${skill.id}: ${skill.category}`);
+  }
+});
+
+test("skill relations are structured and point only to existing skills", () => {
+  const skillsDir = path.join(root, "skills");
+  const metadata = JSON.parse(fs.readFileSync(path.join(skillsDir, "metadata.json"), "utf8")) as SkillMetadata[];
+  const relations = JSON.parse(fs.readFileSync(path.join(skillsDir, "relations.json"), "utf8")) as SkillRelations;
+  const skillIds = new Set(metadata.map((skill) => skill.id));
+  const allowedKeys = new Set(["relatedSkills", "boundaryWorkflows", "capabilityTags"]);
+
+  for (const [skillId, relation] of Object.entries(relations)) {
+    assert.ok(skillIds.has(skillId), `unknown relation skill id: ${skillId}`);
+    assert.ok(!("relatedAgents" in relation), `relations must not include relatedAgents: ${skillId}`);
+
+    for (const key of Object.keys(relation)) {
+      assert.ok(allowedKeys.has(key), `unsupported relation field ${skillId}.${key}`);
+    }
+
+    if (relation.relatedSkills !== undefined) {
+      assertStringArray(relation.relatedSkills, `${skillId}.relatedSkills`);
+      for (const relatedSkill of relation.relatedSkills) {
+        assert.ok(skillIds.has(relatedSkill), `unknown related skill ${relatedSkill} in ${skillId}`);
+      }
+    }
+
+    if (relation.boundaryWorkflows !== undefined) {
+      assertStringArray(relation.boundaryWorkflows, `${skillId}.boundaryWorkflows`);
+    }
+
+    assertStringArray(relation.capabilityTags, `${skillId}.capabilityTags`);
+  }
+});
+
+test("agent frontmatter skills point only to existing skills", () => {
+  const skillsDir = path.join(root, "skills");
+  const metadata = JSON.parse(fs.readFileSync(path.join(skillsDir, "metadata.json"), "utf8")) as SkillMetadata[];
+  const skillIds = new Set(metadata.map((skill) => skill.id));
+  const agentFiles = fs
+    .readdirSync(path.join(root, "agents"))
+    .filter((name) => name.endsWith(".md"))
+    .sort();
+
+  for (const agentFile of agentFiles) {
+    const body = fs.readFileSync(path.join(root, "agents", agentFile), "utf8");
+    for (const skillId of extractAgentSkills(body)) {
+      assert.ok(skillIds.has(skillId), `${agentFile} references unknown skill: ${skillId}`);
+    }
+  }
+});
+
+test("skill bodies do not contain agent backlinks or package-external skill links", () => {
+  const skillsDir = path.join(root, "skills");
+  const skillDirs = fs
+    .readdirSync(skillsDir, { withFileTypes: true })
+    .filter((entry) => entry.isDirectory())
+    .map((entry) => entry.name)
+    .sort();
+
+  for (const dir of skillDirs) {
+    const body = fs.readFileSync(path.join(skillsDir, dir, "SKILL.md"), "utf8");
+    assert.doesNotMatch(body, /^## Related Skills \/ Boundary$/m, `${dir} contains Related Skills / Boundary`);
+    assert.doesNotMatch(body, /^## 相关技能$/m, `${dir} contains related skills section`);
+    assert.doesNotMatch(body, /^## 与子代理的配合$/m, `${dir} contains subagent coordination section`);
+    assert.doesNotMatch(body, /^## Related Agent$/m, `${dir} contains Related Agent`);
+    assert.doesNotMatch(body, /\]\(\.\.\/\.\.\/agents\//, `${dir} links to ../../agents`);
+    assert.doesNotMatch(body, /\]\(\.\.\/agents\//, `${dir} links to ../agents`);
+    assert.doesNotMatch(body, /\]\(\.\.\/\.\.\/skills\//, `${dir} links to ../../skills`);
+    assert.doesNotMatch(body, /\]\(\.\.\/skills\//, `${dir} links to ../skills`);
+    assert.doesNotMatch(body, /`fec-[a-z0-9-]+`/, `${dir} contains inline skill or agent id navigation`);
   }
 });
 
@@ -246,6 +323,25 @@ function assertNoDuplicateHeadingPair(body: string, dir: string, left: string, r
   const hasLeft = new RegExp(`^##\\s+${escapeRegExp(left)}$`, "m").test(body);
   const hasRight = new RegExp(`^##\\s+${escapeRegExp(right)}$`, "m").test(body);
   assert.ok(!(hasLeft && hasRight), `duplicate skill sections should be merged in ${dir}: ${left} + ${right}`);
+}
+
+function assertStringArray(value: unknown, label: string): asserts value is string[] {
+  assert.ok(Array.isArray(value), `${label} must be an array`);
+  assert.ok(value.length > 0, `${label} must not be empty`);
+  for (const entry of value) {
+    assert.equal(typeof entry, "string", `${label} entries must be strings`);
+    assert.ok(entry.length > 0, `${label} entries must not be empty`);
+  }
+}
+
+function extractAgentSkills(body: string): string[] {
+  const frontmatter = body.match(/^---\r?\n([\s\S]*?)\r?\n---/);
+  if (!frontmatter) return [];
+
+  const skillsBlock = frontmatter[1].match(/^skills:\r?\n((?:\s+-\s+.+\r?\n?)+)/m)?.[1];
+  if (!skillsBlock) return [];
+
+  return [...skillsBlock.matchAll(/^\s+-\s+(.+)$/gm)].map((match) => match[1].trim()).filter(Boolean);
 }
 
 function collectFiles(dir: string): string[] {
