@@ -157,6 +157,13 @@ git submodule update --remote .claude/plugins/frontend-craft
 
 **CLI 安装：** 对同一作用域重新执行 `npx frontend-craft@latest install --local claude` 或 `... --global claude`，版本说明见 [CHANGELOG.zh-CN.md](../../CHANGELOG.zh-CN.md) 或 [CHANGELOG.md](../../CHANGELOG.md)。如果已经检测到 Claude Code Marketplace 安装，CLI 会提示冲突，并要求显式传入 `--force` 才继续写入另一份激活副本。
 
+强制继续 CLI 安装时，请使用完整命令；`--force` 必须跟在 `install claude` 后面：
+
+```bash
+npx frontend-craft@latest install claude --global --force
+npx frontend-craft@latest install claude --local --force
+```
+
 ---
 
 **English:** [claude.md](claude.md)

@@ -87,6 +87,13 @@ npx frontend-craft@latest list
 
 对 Claude Code 用户，**Claude Code Marketplace** 是推荐的单一来源安装方式。只有在需要跨运行时安装、脚本化/离线复制文件，或非 Marketplace 环境时，才建议对 Claude 使用 CLI。除非显式传入 `--force`，不要在同一个 Claude 作用域同时启用 Marketplace 和 CLI 两份完整插件。
 
+如果你确实要额外启用一份 CLI 管理的 Claude 安装，请把 `--force` 放在 `install claude` 后面；它不是顶层命令，不能写成 `npx frontend-craft@latest --force`：
+
+```bash
+npx frontend-craft@latest install claude --global --force
+npx frontend-craft@latest install claude --local --force
+```
+
 完整步骤见 [docs/runtimes/claude.zh-CN.md](docs/runtimes/claude.zh-CN.md) · [English](docs/runtimes/claude.md)。
 
 ---

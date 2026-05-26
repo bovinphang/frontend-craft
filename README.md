@@ -87,6 +87,13 @@ npx frontend-craft@latest list
 
 For Claude Code users, **Claude Code Marketplace** is the preferred single-source install. Use the CLI for Claude when you need cross-runtime installs, scripted/offline file copies, or non-Marketplace environments. Do not keep Marketplace and CLI copies active in the same Claude scope unless you explicitly choose that with `--force`.
 
+If you do choose a second CLI-managed Claude copy, pass `--force` after `install claude`; it is not a top-level command:
+
+```bash
+npx frontend-craft@latest install claude --global --force
+npx frontend-craft@latest install claude --local --force
+```
+
 Full Claude-specific steps are in [docs/runtimes/claude.md](docs/runtimes/claude.md) · [简体中文](docs/runtimes/claude.zh-CN.md).
 
 ---

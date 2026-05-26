@@ -159,6 +159,13 @@ git submodule update --remote .claude/plugins/frontend-craft
 
 **CLI installs:** re-run `npx frontend-craft@latest install --local claude` or `... --global claude` for the same scope, and read [CHANGELOG.md](../../CHANGELOG.md) for release notes. If Claude Code Marketplace is already installed, CLI install will warn and require `--force` before writing another active copy.
 
+Use the full command form when forcing a CLI install; `--force` must follow `install claude`:
+
+```bash
+npx frontend-craft@latest install claude --global --force
+npx frontend-craft@latest install claude --local --force
+```
+
 ---
 
 **Other languages:** [简体中文](claude.zh-CN.md)
