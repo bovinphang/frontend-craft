@@ -250,22 +250,22 @@ npx frontend-craft@latest list
 | ----------------------------- | ------------------------------------------------------ |
 | `CLAUDE.md`                   | 專案說明、常用指令、工作原則、安全要求                 |
 | `settings.json`               | 權限白名單／黑名單、環境變數                           |
-| `rules/vue.md`                | Vue 3 元件規範與反模式                                 |
-| `rules/react.md`              | React 元件規範與反模式                                 |
-| `rules/design-system.md`      | 設計系統、Token、可存取性規則                          |
-| `rules/testing.md`            | 測試與校驗規則                                         |
-| `rules/git-conventions.md`    | Conventional Commits 提交規範                          |
-| `rules/i18n.md`               | 國際化文案規範                                         |
-| `rules/performance.md`        | 前端效能最佳化規則                                     |
-| `rules/api-layer.md`          | API 層型別化與錯誤處理規範                             |
-| `rules/state-management.md`   | 狀態分類、管理策略與反模式                             |
-| `rules/error-handling.md`     | 錯誤分層、Error Boundary、降級 UI、上報規範            |
-| `rules/naming-conventions.md` | 檔案、元件、變數、路由、API、CSS 統一命名              |
-| `rules/code-comments.md`      | 何時以及如何寫前端註釋                                 |
-| `rules/ci-cd.md`              | CI/CD 流水線階段、GitHub Actions / GitLab CI、金鑰管理 |
-| `rules/refactoring.md`        | 重構約束與功能等價要求                                 |
-| `rules/agent-workflow.md`     | 子代理協作邊界與委託規則                               |
-| `rules/working-modes.md`      | 調研、計畫、開發、評審、收尾模式指引                   |
+| `rules/fec-vue.md`                | Vue 3 元件規範與反模式                                 |
+| `rules/fec-react.md`              | React 元件規範與反模式                                 |
+| `rules/fec-design-system.md`      | 設計系統、Token、可存取性規則                          |
+| `rules/fec-testing.md`            | 測試與校驗規則                                         |
+| `rules/fec-git-conventions.md`    | Conventional Commits 提交規範                          |
+| `rules/fec-i18n.md`               | 國際化文案規範                                         |
+| `rules/fec-performance.md`        | 前端效能最佳化規則                                     |
+| `rules/fec-api-layer.md`          | API 層型別化與錯誤處理規範                             |
+| `rules/fec-state-management.md`   | 狀態分類、管理策略與反模式                             |
+| `rules/fec-error-handling.md`     | 錯誤分層、Error Boundary、降級 UI、上報規範            |
+| `rules/fec-naming-conventions.md` | 檔案、元件、變數、路由、API、CSS 統一命名              |
+| `rules/fec-code-comments.md`      | 何時以及如何寫前端註釋                                 |
+| `rules/fec-ci-cd.md`              | CI/CD 流水線階段、GitHub Actions / GitLab CI、金鑰管理 |
+| `rules/fec-refactoring.md`        | 重構約束與功能等價要求                                 |
+| `rules/fec-agent-workflow.md`     | 子代理協作邊界與委託規則                               |
+| `rules/fec-working-modes.md`      | 調研、計畫、開發、評審、收尾模式指引                   |
 
 </details>
 

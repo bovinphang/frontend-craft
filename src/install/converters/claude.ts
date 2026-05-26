@@ -36,7 +36,9 @@ export async function installClaude(ctx: InstallContext): Promise<void> {
   copyDir(path.join(pluginRoot, "skills"), path.join(baseDir, "skills"));
   copyDir(path.join(pluginRoot, "agents"), path.join(baseDir, "agents"));
   copyDir(path.join(pluginRoot, "commands"), path.join(baseDir, "commands"));
-  copyDir(path.join(pluginRoot, "templates", "shared", "rules"), path.join(baseDir, "rules"));
+  if (!isGlobal) {
+    copyDir(path.join(pluginRoot, "templates", "shared", "rules"), path.join(baseDir, "rules"));
+  }
   const claudeTemplateDir = path.join(pluginRoot, "templates", "claude");
   if (fs.existsSync(claudeTemplateDir)) {
     for (const f of fs.readdirSync(claudeTemplateDir)) {

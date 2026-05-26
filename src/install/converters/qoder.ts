@@ -9,7 +9,7 @@ const HOOK_SCRIPTS = ["fec-security-check.js", "fec-format-changed-file.js", "fe
  * @param {import('../types.js').InstallContext} ctx
  */
 export async function installQoder(ctx: InstallContext): Promise<void> {
-  const { pluginRoot, baseDir, dryRun } = ctx;
+  const { pluginRoot, baseDir, dryRun, isGlobal } = ctx;
   if (dryRun) {
     console.log(`[dry-run] qoder -> ${baseDir}`);
     return;
@@ -19,7 +19,9 @@ export async function installQoder(ctx: InstallContext): Promise<void> {
   copyDir(path.join(pluginRoot, "skills"), path.join(baseDir, "skills"));
   copyDir(path.join(pluginRoot, "commands"), path.join(baseDir, "commands"));
   copyDir(path.join(pluginRoot, "agents"), path.join(baseDir, "agents"));
-  copyDir(path.join(pluginRoot, "templates", "shared", "rules"), path.join(baseDir, "rules"));
+  if (!isGlobal) {
+    copyDir(path.join(pluginRoot, "templates", "shared", "rules"), path.join(baseDir, "rules"));
+  }
   copyHookScripts(pluginRoot, path.join(baseDir, "hooks"));
   writeUtf8(path.join(baseDir, "settings.json"), JSON.stringify(mergeQoderSettings(baseDir), null, 2) + "\n");
 }

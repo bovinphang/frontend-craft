@@ -7,7 +7,7 @@ import { copyDir, ensureDir, readUtf8, writeUtf8 } from "../shared/fs.js";
  * @param {import('../types.js').InstallContext} ctx
  */
 export async function installCursor(ctx: InstallContext): Promise<void> {
-  const { pluginRoot, baseDir, dryRun } = ctx;
+  const { pluginRoot, baseDir, dryRun, isGlobal } = ctx;
   if (dryRun) {
     console.log(`[dry-run] cursor -> ${baseDir}`);
     return;
@@ -18,8 +18,8 @@ export async function installCursor(ctx: InstallContext): Promise<void> {
 
   const rulesSrc = path.join(pluginRoot, "templates", "shared", "rules");
   const rulesDest = path.join(baseDir, "rules");
-  ensureDir(rulesDest);
-  if (fs.existsSync(rulesSrc)) {
+  if (!isGlobal && fs.existsSync(rulesSrc)) {
+    ensureDir(rulesDest);
     for (const name of fs.readdirSync(rulesSrc)) {
       if (!name.endsWith(".md")) continue;
       const body = readUtf8(path.join(rulesSrc, name));

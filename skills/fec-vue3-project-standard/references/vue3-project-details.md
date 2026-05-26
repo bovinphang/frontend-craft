@@ -121,7 +121,7 @@ src/
 - 可复用逻辑优先提取到 composables
 - 保持 template 可读，避免过深条件嵌套
 - 优先使用计算属性，而不是重复维护状态
-- 避免构建大型单体组件；**单文件规模**见 `templates/rules/vue.md`「**组件文件规模**」（约 300 行内为佳，逾 500 行或复杂度过高拆子组件与 Composables）
+- 避免构建大型单体组件；**单文件规模**见 `templates/shared/rules/fec-vue.md`「**组件文件规模**」（约 300 行内为佳，逾 500 行或复杂度过高拆子组件与 Composables）
 - 优先使用强类型的 props、emits 和暴露方法
 - 遵循仓库的文件与目录命名规范
 - 优先复用现有 UI 组件和 Token
@@ -144,7 +144,7 @@ src/
 
 ## TypeScript 规范
 
-通用 TypeScript / JavaScript 约定见插件模板 **`templates/rules/typescript.md`**（初始化到项目后为 `.claude/rules/typescript.md`）。
+通用 TypeScript / JavaScript 约定见插件模板 **`templates/shared/rules/fec-typescript.md`**（初始化到项目后为 `.claude/rules/fec-typescript.md`）。
 
 ### Vue 3 项目补充约定
 

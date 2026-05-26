@@ -111,8 +111,8 @@ test("install claude into temp dir creates hooks and skills", () => {
     assert.doesNotMatch(securitySkill, /^version:/m, "skill frontmatter must not include version");
     assert.ok(fs.existsSync(path.join(dir, ".claude", "commands", "fec-init.md")));
     assert.ok(fs.existsSync(path.join(dir, ".claude", "commands", "fec-tdd.md")));
-    assert.ok(fs.existsSync(path.join(dir, ".claude", "rules", "agent-workflow.md")));
-    assert.ok(fs.existsSync(path.join(dir, ".claude", "rules", "working-modes.md")));
+    assert.ok(fs.existsSync(path.join(dir, ".claude", "rules", "fec-agent-workflow.md")));
+    assert.ok(fs.existsSync(path.join(dir, ".claude", "rules", "fec-working-modes.md")));
     assert.ok(fs.existsSync(path.join(dir, ".mcp.json")));
     assert.ok(fs.existsSync(path.join(dir, ".claude-plugin", "plugin.json")));
     assert.ok(!fs.existsSync(path.join(dir, ".claude", "commands", "init.md")));
@@ -134,8 +134,52 @@ test("global claude install does not write project sidecar files into cwd", () =
 
     assert.ok(fs.existsSync(path.join(claudeHome, "hooks.json")));
     assert.ok(fs.existsSync(path.join(claudeHome, "skills", "fec-react-project-standard", "SKILL.md")));
+    assert.ok(!fs.existsSync(path.join(claudeHome, "rules")));
     assert.ok(!fs.existsSync(path.join(dir, ".mcp.json")));
     assert.ok(!fs.existsSync(path.join(dir, ".claude-plugin")));
+  } finally {
+    fs.rmSync(dir, { recursive: true, force: true });
+    fs.rmSync(claudeHome, { recursive: true, force: true });
+  }
+});
+
+test("global installs do not write shared rules into runtime config dirs", () => {
+  const cases = [
+    ["claude", "CLAUDE_CONFIG_DIR"],
+    ["codex", "CODEX_HOME"],
+    ["qoder", "QODER_CONFIG_DIR"],
+    ["cursor", "CURSOR_CONFIG_DIR"],
+  ] as const;
+
+  for (const [runtime, envName] of cases) {
+    const dir = fs.mkdtempSync(path.join(os.tmpdir(), `fc-global-${runtime}-cwd-`));
+    const runtimeHome = fs.mkdtempSync(path.join(os.tmpdir(), `fc-global-${runtime}-home-`));
+    try {
+      execFileSync(process.execPath, [cli, "install", runtime, "--global"], {
+        cwd: dir,
+        encoding: "utf8",
+        env: { ...process.env, [envName]: runtimeHome },
+      });
+
+      assert.ok(!fs.existsSync(path.join(runtimeHome, "rules")), `${runtime} global install does not create rules dir`);
+    } finally {
+      fs.rmSync(dir, { recursive: true, force: true });
+      fs.rmSync(runtimeHome, { recursive: true, force: true });
+    }
+  }
+});
+
+test("doctor global reports rules as not expected", () => {
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), "fc-doctor-global-cwd-"));
+  const claudeHome = fs.mkdtempSync(path.join(os.tmpdir(), "fc-doctor-global-claude-"));
+  try {
+    const out = execFileSync(process.execPath, [cli, "doctor", "claude", "--global"], {
+      cwd: dir,
+      encoding: "utf8",
+      env: { ...process.env, CLAUDE_CONFIG_DIR: claudeHome },
+    });
+
+    assert.match(out, /rules: not expected/);
   } finally {
     fs.rmSync(dir, { recursive: true, force: true });
     fs.rmSync(claudeHome, { recursive: true, force: true });
@@ -287,7 +331,8 @@ test("all runtime local installs match declared capabilities", () => {
           fs.existsSync(path.join(baseDir, "agents", "fec-frontend-code-reviewer.md")),
           "qoder installs fec-prefixed markdown agents",
         );
-        assert.ok(fs.existsSync(path.join(baseDir, "rules", "react.md")), "qoder installs shared rules");
+        assert.ok(fs.existsSync(path.join(baseDir, "rules", "fec-react.md")), "qoder installs fec-prefixed shared rules");
+        assert.ok(!fs.existsSync(path.join(baseDir, "rules", "react.md")), "qoder does not install unprefixed rules");
         assert.ok(fs.existsSync(path.join(baseDir, "hooks", "fec-security-check.js")), "qoder installs security hook script");
         assert.ok(fs.existsSync(path.join(baseDir, "hooks", "fec-notify.js")), "qoder installs notification hook script");
         const settings = JSON.parse(fs.readFileSync(path.join(baseDir, "settings.json"), "utf8")) as {
@@ -304,6 +349,13 @@ test("all runtime local installs match declared capabilities", () => {
               ? baseDir
               : path.join(baseDir, "rules");
         assert.ok(fs.existsSync(rulesDir), `${runtime} installs rules or instructions`);
+        if (runtime === "cursor") {
+          assert.ok(fs.existsSync(path.join(rulesDir, "fec-react.mdc")), `${runtime} installs fec-prefixed rules`);
+          assert.ok(!fs.existsSync(path.join(rulesDir, "react.mdc")), `${runtime} does not install unprefixed rules`);
+        } else if (!["copilot", "cline", "trae"].includes(runtime)) {
+          assert.ok(fs.existsSync(path.join(rulesDir, "fec-react.md")), `${runtime} installs fec-prefixed rules`);
+          assert.ok(!fs.existsSync(path.join(rulesDir, "react.md")), `${runtime} does not install unprefixed rules`);
+        }
       }
     } finally {
       fs.rmSync(dir, { recursive: true, force: true });

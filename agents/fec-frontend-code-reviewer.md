@@ -50,14 +50,14 @@ skills:
 ### 代码质量（HIGH）
 
 - **过大函数**（如单函数 >50 行）— 建议拆分。
-- **过大组件文件** — 单文件明显超过约 **500 行**，或在约 **300～500 行**已叠加复杂状态、过多副作用、深层 JSX/模板、密集分支等，应按 `templates/rules/react.md` 或 `vue.md` 中的**「组件文件规模」**拆分为子组件、Hooks/Composables、工具函数、常量与类型；若仓库另有行数约定，从其约定。
+- **过大组件文件** — 单文件明显超过约 **500 行**，或在约 **300～500 行**已叠加复杂状态、过多副作用、深层 JSX/模板、密集分支等，应按 `templates/shared/rules/fec-react.md` 或 `fec-vue.md` 中的**「组件文件规模」**拆分为子组件、Hooks/Composables、工具函数、常量与类型；若仓库另有行数约定，从其约定。
 - **过深嵌套**（如 >4 层）— 早返回、抽函数。
 - **错误处理缺失** — 未处理的 Promise、`catch` 为空、用户不可见的失败。
-- **可变滥用** — 应使用不可变更新处直接改对象（与 `templates/rules/typescript.md` 一致）。
+- **可变滥用** — 应使用不可变更新处直接改对象（与 `templates/shared/rules/fec-typescript.md` 一致）。
 - **调试输出** — 合并前应移除的 `console.log`（生产路径）。
 - **新逻辑无测试** — 关键路径缺少单测/E2E（按项目要求）。
 - **死代码** — 注释掉的大段代码、无用 import、不可达分支。
-- **TS 参数类型臃肿** — 复杂联合、内联对象、冗长回调未抽具名类型（见 `templates/rules/typescript.md`「函数参数：复杂类型宜具名」）。
+- **TS 参数类型臃肿** — 复杂联合、内联对象、冗长回调未抽具名类型（见 `templates/shared/rules/fec-typescript.md`「函数参数：复杂类型宜具名」）。
 
 ### React / Next.js（HIGH，在相关文件中检查）
 
@@ -88,7 +88,7 @@ skills:
 - **TODO/FIXME** — 无工单或说明。
 - **对外导出 API** — 缺 JSDoc 或类型（按项目要求）。
 - **命名** — 非平凡上下文中单字母、`data` 等模糊名。
-- **魔法数字 / 魔法字符串（业务语义）** — 状态、类型、标识等用裸 `1`/`"2"` 等；应使用 `enum` / `as const` 常量对象 / 字面量联合（见 `templates/rules/typescript.md`「禁止 Magic Number / Magic String」）；纯样式刻度优先设计 Token。
+- **魔法数字 / 魔法字符串（业务语义）** — 状态、类型、标识等用裸 `1`/`"2"` 等；应使用 `enum` / `as const` 常量对象 / 字面量联合（见 `templates/shared/rules/fec-typescript.md`「禁止 Magic Number / Magic String」）；纯样式刻度优先设计 Token。
 - **格式不一致** — 与仓库格式化规则冲突。
 
 ## 输出格式
@@ -125,7 +125,7 @@ Fix: …
 
 若存在 `CLAUDE.md`、`.claude/rules/` 或仓库规范，优先对齐：
 
-- 组件文件规模与拆分（见 `react.md`/`vue.md`「组件文件规模」）、函数体量、Emoji、不可变策略、Error Boundary、状态管理选型等。
+- 组件文件规模与拆分（见 `fec-react.md`/`fec-vue.md`「组件文件规模」）、函数体量、Emoji、不可变策略、Error Boundary、状态管理选型等。
 - 不确定时，**与代码库多数现有写法一致**，并在结论中说明「建议与某文件对齐」。
 
 ## AI 生成代码的补充视角

@@ -155,7 +155,7 @@ src/
 ## 组件设计规范
 
 - 使用**函数组件**、Hooks 与 TypeScript；**不要**新增类组件（Error Boundary 用 `react-error-boundary` 等库，见下文）
-- **单文件规模**与拆分原则见 `templates/rules/react.md`「**组件文件规模**」（约 300 行内为佳，逾 500 行或复杂度过高拆子组件、Hooks、utils、类型）
+- **单文件规模**与拆分原则见 `templates/shared/rules/fec-react.md`「**组件文件规模**」（约 300 行内为佳，逾 500 行或复杂度过高拆子组件、Hooks、utils、类型）
 - 保持组件职责单一、可组合
 - 将可复用逻辑提取到 hooks
 - 在合适场景优先使用受控组件 API
@@ -195,7 +195,7 @@ src/
 
 ### 表单
 
-- 受控字段 + 校验错误对象是一类可行实现；中大型表单优先 **React Hook Form**（或 Formik）+ **Zod**（类型与校验与 `templates/rules/typescript.md` 一致）。
+- 受控字段 + 校验错误对象是一类可行实现；中大型表单优先 **React Hook Form**（或 Formik）+ **Zod**（类型与校验与 `templates/shared/rules/fec-typescript.md` 一致）。
 - 避免单组件内巨型 `useState` 表单对象与重复校验逻辑，可拆字段子组件或抽 `useFormSchema`。
 
 ### Error Boundary
@@ -517,7 +517,7 @@ function Dashboard() {
 
 ## TypeScript 规范
 
-通用 TypeScript / JavaScript 约定（类型与接口、`any`/`unknown`、React Props、不可变更新、错误处理、Zod、模式与安全等）见插件模板 **`templates/rules/typescript.md`**（初始化到项目后为 `.claude/rules/typescript.md`）。
+通用 TypeScript / JavaScript 约定（类型与接口、`any`/`unknown`、React Props、不可变更新、错误处理、Zod、模式与安全等）见插件模板 **`templates/shared/rules/fec-typescript.md`**（初始化到项目后为 `.claude/rules/fec-typescript.md`）。
 
 - **函数签名**：参数上的复杂联合、内联对象、冗长回调应优先抽成具名类型（见同文件「函数参数：复杂类型宜具名」）。
 

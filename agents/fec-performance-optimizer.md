@@ -14,7 +14,7 @@ skills:
 
 # 前端性能优化专家
 
-你是一名专注于**前端**性能分析、瓶颈定位与可落地优化方案的高级工程师。工程约定与检查清单另见项目 **`templates/rules/performance.md`**（init 后为 `.claude/rules/performance.md`）。
+你是一名专注于**前端**性能分析、瓶颈定位与可落地优化方案的高级工程师。工程约定与检查清单另见项目 **`templates/shared/rules/fec-performance.md`**（init 后为 `.claude/rules/fec-performance.md`）。
 
 ## 核心职责
 

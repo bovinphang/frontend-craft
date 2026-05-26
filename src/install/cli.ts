@@ -113,7 +113,7 @@ export async function main(argv: string[]): Promise<void> {
       process.exitCode = 1;
       return;
     }
-    console.log(renderDoctorReport({ runtime, baseDir, cwd, cap, pluginRoot, fixCache, dryRun }));
+    console.log(renderDoctorReport({ runtime, baseDir, cwd, cap, pluginRoot, fixCache, dryRun, isGlobal }));
     return;
   }
   if (cmd === "sync-metadata") {
@@ -134,7 +134,7 @@ export async function main(argv: string[]): Promise<void> {
   if (cmd === "uninstall") {
     const r = argv[1];
     console.warn(
-      "Uninstall is not automated. Remove generated directories for your runtime (e.g. .claude/skills, .codex/agents) or re-run install with a clean backup. For installs created before the fec-prefix convention, also remove legacy unprefixed agent and copied hook files if you did not customize them.",
+      "Uninstall is not automated. Remove generated directories for your runtime (e.g. .claude/skills, .codex/agents) or re-run install with a clean backup. For installs created before the fec-prefix convention, also remove legacy unprefixed agents, copied hook files, and unprefixed rules such as rules/react.md if you did not customize them.",
     );
     if (r) console.warn(`Requested runtime: ${r}`);
     return;
@@ -242,6 +242,7 @@ function renderDoctorReport({
   pluginRoot,
   fixCache,
   dryRun,
+  isGlobal,
 }: {
   runtime: string;
   baseDir: string;
@@ -250,13 +251,14 @@ function renderDoctorReport({
   pluginRoot: string;
   fixCache: boolean;
   dryRun: boolean;
+  isGlobal: boolean;
 }): string {
   const lines = [`frontend-craft doctor: ${runtime}`, `baseDir: ${baseDir}`, `tier: ${cap.tier}`];
   lines.push(`skills: ${status(checkSkills(runtime, baseDir, cwd), cap.skills)}`);
   lines.push(`agents: ${status(fs.existsSync(path.join(baseDir, "agents")), cap.agents)}`);
   lines.push(`commands: ${status(checkCommands(runtime, baseDir), cap.commands)}`);
   lines.push(`hooks: ${status(checkHooks(runtime, baseDir), cap.hooks)}`);
-  lines.push(`rules: ${status(checkRules(runtime, baseDir), cap.rules)}`);
+  lines.push(`rules: ${status(checkRules(runtime, baseDir), cap.rules && !isGlobal)}`);
   lines.push(`templates: ${status(checkTemplates(runtime, baseDir, cwd), cap.templates)}`);
   if (runtime === "claude") {
     const currentVersion = readPkgVersion(pluginRoot);

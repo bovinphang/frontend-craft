@@ -7,7 +7,7 @@ import { ensureDir, readUtf8, writeUtf8 } from "../shared/fs.js";
  * @param {import('../types.js').InstallContext} ctx
  */
 export async function installCopilot(ctx: InstallContext): Promise<void> {
-  const { pluginRoot, baseDir, dryRun } = ctx;
+  const { pluginRoot, baseDir, dryRun, isGlobal } = ctx;
   if (dryRun) {
     console.log(`[dry-run] copilot -> ${baseDir}`);
     return;
@@ -15,19 +15,21 @@ export async function installCopilot(ctx: InstallContext): Promise<void> {
   ensureDir(baseDir);
   const instr = path.join(baseDir, "instructions");
   const prompts = path.join(baseDir, "prompts");
-  ensureDir(instr);
   ensureDir(prompts);
 
-  const rulesSrc = path.join(pluginRoot, "templates", "shared", "rules");
-  /** @type {string[]} */
-  const parts = ["# Frontend Craft - Copilot instructions\n"];
-  if (fs.existsSync(rulesSrc)) {
-    for (const name of fs.readdirSync(rulesSrc)) {
-      if (!name.endsWith(".md")) continue;
-      parts.push(`\n## ${name}\n\n`, readUtf8(path.join(rulesSrc, name)));
+  if (!isGlobal) {
+    ensureDir(instr);
+    const rulesSrc = path.join(pluginRoot, "templates", "shared", "rules");
+    /** @type {string[]} */
+    const parts = ["# Frontend Craft - Copilot instructions\n"];
+    if (fs.existsSync(rulesSrc)) {
+      for (const name of fs.readdirSync(rulesSrc)) {
+        if (!name.endsWith(".md")) continue;
+        parts.push(`\n## ${name}\n\n`, readUtf8(path.join(rulesSrc, name)));
+      }
     }
+    writeUtf8(path.join(instr, "frontend-craft.instructions.md"), parts.join(""));
   }
-  writeUtf8(path.join(instr, "frontend-craft.instructions.md"), parts.join(""));
 
   const cmdDir = path.join(pluginRoot, "commands");
   for (const f of fs.readdirSync(cmdDir)) {

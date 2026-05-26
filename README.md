@@ -259,22 +259,22 @@ Run `/fec-init` to scaffold a ready-to-use rules library and project config into
 | ----------------------------- | ----------------------------------------------------------------- |
 | `CLAUDE.md`                   | Project description, commands, working principles, security       |
 | `settings.json`               | Permission whitelist/blacklist, environment variables             |
-| `rules/vue.md`                | Vue 3 component standards and anti-patterns                       |
-| `rules/react.md`              | React component standards and anti-patterns                       |
-| `rules/design-system.md`      | Design system, tokens, accessibility                              |
-| `rules/testing.md`            | Testing and validation rules                                      |
-| `rules/git-conventions.md`    | Conventional Commits                                              |
-| `rules/i18n.md`               | Internationalization copy standards                               |
-| `rules/performance.md`        | Frontend performance rules                                        |
-| `rules/api-layer.md`          | API layer typing and error handling                               |
-| `rules/state-management.md`   | State classification, strategy, anti-patterns                     |
-| `rules/error-handling.md`     | Error layering, Error Boundary, fallback UI, reporting            |
-| `rules/naming-conventions.md` | Unified naming for files, components, variables, routes, API, CSS |
-| `rules/code-comments.md`      | When and how to write frontend comments                           |
-| `rules/ci-cd.md`              | CI/CD pipeline stages, GitHub Actions / GitLab CI, secrets        |
-| `rules/refactoring.md`        | Refactoring constraints and feature-parity requirements           |
-| `rules/agent-workflow.md`     | Agent collaboration boundaries and delegation                     |
-| `rules/working-modes.md`      | Research, planning, development, review, finishing modes          |
+| `rules/fec-vue.md`                | Vue 3 component standards and anti-patterns                       |
+| `rules/fec-react.md`              | React component standards and anti-patterns                       |
+| `rules/fec-design-system.md`      | Design system, tokens, accessibility                              |
+| `rules/fec-testing.md`            | Testing and validation rules                                      |
+| `rules/fec-git-conventions.md`    | Conventional Commits                                              |
+| `rules/fec-i18n.md`               | Internationalization copy standards                               |
+| `rules/fec-performance.md`        | Frontend performance rules                                        |
+| `rules/fec-api-layer.md`          | API layer typing and error handling                               |
+| `rules/fec-state-management.md`   | State classification, strategy, anti-patterns                     |
+| `rules/fec-error-handling.md`     | Error layering, Error Boundary, fallback UI, reporting            |
+| `rules/fec-naming-conventions.md` | Unified naming for files, components, variables, routes, API, CSS |
+| `rules/fec-code-comments.md`      | When and how to write frontend comments                           |
+| `rules/fec-ci-cd.md`              | CI/CD pipeline stages, GitHub Actions / GitLab CI, secrets        |
+| `rules/fec-refactoring.md`        | Refactoring constraints and feature-parity requirements           |
+| `rules/fec-agent-workflow.md`     | Agent collaboration boundaries and delegation                     |
+| `rules/fec-working-modes.md`      | Research, planning, development, review, finishing modes          |
 
 </details>
 

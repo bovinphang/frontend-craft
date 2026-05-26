@@ -23,7 +23,6 @@ export async function installCodex(ctx: InstallContext): Promise<void> {
   }
 
   ensureDir(codexAgents);
-  ensureDir(codexRules);
   ensureDir(agentsDestGlobal);
 
   for (const f of fs.readdirSync(agentsSrc)) {
@@ -36,7 +35,7 @@ export async function installCodex(ctx: InstallContext): Promise<void> {
   copyDir(path.join(pluginRoot, "skills"), agentsDestGlobal);
 
   const rulesShared = path.join(pluginRoot, "templates", "shared", "rules");
-  if (fs.existsSync(rulesShared)) copyDir(rulesShared, codexRules);
+  if (!isGlobal && fs.existsSync(rulesShared)) copyDir(rulesShared, codexRules);
 
   const tmplAgents = path.join(pluginRoot, "templates", "codex", "AGENTS.md");
   const tmplCfg = path.join(pluginRoot, "templates", "codex", "config.toml");

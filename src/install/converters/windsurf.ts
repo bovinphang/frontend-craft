@@ -7,7 +7,7 @@ import { copyDir, ensureDir, readUtf8, writeUtf8 } from "../shared/fs.js";
  * @param {import('../types.js').InstallContext} ctx
  */
 export async function installWindsurf(ctx: InstallContext): Promise<void> {
-  const { pluginRoot, baseDir, dryRun } = ctx;
+  const { pluginRoot, baseDir, dryRun, isGlobal } = ctx;
   if (dryRun) {
     console.log(`[dry-run] windsurf -> ${baseDir}`);
     return;
@@ -16,7 +16,6 @@ export async function installWindsurf(ctx: InstallContext): Promise<void> {
   const wf = path.join(baseDir, "workflows");
   const rulesDest = path.join(baseDir, "rules");
   ensureDir(wf);
-  ensureDir(rulesDest);
 
   const cmdDir = path.join(pluginRoot, "commands");
   for (const f of fs.readdirSync(cmdDir)) {
@@ -26,7 +25,8 @@ export async function installWindsurf(ctx: InstallContext): Promise<void> {
   }
 
   const rulesSrc = path.join(pluginRoot, "templates", "shared", "rules");
-  if (fs.existsSync(rulesSrc)) {
+  if (!isGlobal && fs.existsSync(rulesSrc)) {
+    ensureDir(rulesDest);
     for (const name of fs.readdirSync(rulesSrc)) {
       if (!name.endsWith(".md")) continue;
       const body = readUtf8(path.join(rulesSrc, name));

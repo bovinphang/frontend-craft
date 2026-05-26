@@ -49,7 +49,7 @@ Get started in a few minutes:
 After initialization, customize for your project:
 
 1. `.claude/CLAUDE.md` — Update project info, package manager, common commands (source templates: `templates/claude/`; `/fec-init` copies into `.claude/`)
-2. `.claude/rules/` — Remove inapplicable rules (e.g. delete `vue.md` for React-only projects, delete `i18n.md` if i18n is not needed)
+2. `.claude/rules/` — Remove inapplicable rules (e.g. delete `fec-vue.md` for React-only projects, delete `fec-i18n.md` if i18n is not needed)
 3. `.claude/settings.json` — Adjust permission whitelist
 
 > **Why this step?** The plugin provides reusable Skills, Agents, and Hooks. CLAUDE.md and rules are project-level config and must live under the project root `.claude/` for Claude Code to recognize them. The `/fec-init` command helps you set this up quickly.

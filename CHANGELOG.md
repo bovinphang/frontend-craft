@@ -146,8 +146,8 @@ Project-facing release notes are maintained in English from 2.0.0 onward. Histor
 - `fec-nextjs-project-standard` skill — Next.js 项目规范（App Router、SSR/SSG）
 - `fec-nuxt-project-standard` skill — Nuxt 3 项目规范（SSR/SSG）
 - `fec-monorepo-project-standard` skill — Monorepo 项目规范
-- `rules/ci-cd.md` 模板 — CI/CD 流水线规范
-- `rules/refactoring.md` 模板 — 重构项目约束（图片、样式、功能等价）
+- `rules/fec-ci-cd.md` 模板 — CI/CD 流水线规范
+- `rules/fec-refactoring.md` 模板 — 重构项目约束（图片、样式、功能等价）
 - CONTRIBUTING.md — 贡献指南
 - CHANGELOG.md — 版本变更记录
 

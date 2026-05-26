@@ -47,7 +47,7 @@ npx frontend-craft@latest install --global claude
 初始化后请根据项目实际情况修改：
 
 1. `.claude/CLAUDE.md` — 修改项目基础信息、包管理器、常用命令（仓库内模板位于 `templates/claude/`，`/fec-init` 会复制到 `.claude/`）
-2. `.claude/rules/` — 删除不适用的规则文件（如纯 React 项目删除 `vue.md`，不需要 i18n 的项目删除 `i18n.md`）
+2. `.claude/rules/` — 删除不适用的规则文件（如纯 React 项目删除 `fec-vue.md`，不需要 i18n 的项目删除 `fec-i18n.md`）
 3. `.claude/settings.json` — 调整权限白名单
 
 > **为什么需要这一步？** 插件提供可复用的 Skills、Agents 和 Hooks；CLAUDE.md 与 rules 属于项目级配置，须位于项目根目录的 `.claude/` 下才能被 Claude Code 识别。`/fec-init` 用于快速完成该步骤。

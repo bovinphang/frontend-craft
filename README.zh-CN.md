@@ -261,22 +261,22 @@ npx frontend-craft@latest install claude --local --force
 | ----------------------------- | ------------------------------------------------------ |
 | `CLAUDE.md`                   | 项目说明、常用命令、工作原则、安全要求                 |
 | `settings.json`               | 权限白名单/黑名单、环境变量                            |
-| `rules/vue.md`                | Vue 3 组件规范与反模式                                 |
-| `rules/react.md`              | React 组件规范与反模式                                 |
-| `rules/design-system.md`      | 设计系统、Token、可访问性规则                          |
-| `rules/testing.md`            | 测试与校验规则                                         |
-| `rules/git-conventions.md`    | Conventional Commits 提交规范                          |
-| `rules/i18n.md`               | 国际化文案规范                                         |
-| `rules/performance.md`        | 前端性能优化规则                                       |
-| `rules/api-layer.md`          | API 层类型化与错误处理规范                             |
-| `rules/state-management.md`   | 状态分类、管理策略与反模式                             |
-| `rules/error-handling.md`     | 错误分层、Error Boundary、降级 UI、上报规范            |
-| `rules/naming-conventions.md` | 文件、组件、变量、路由、API、CSS 统一命名              |
-| `rules/code-comments.md`      | 何时以及如何写前端注释                                 |
-| `rules/ci-cd.md`              | CI/CD 流水线阶段、GitHub Actions / GitLab CI、密钥管理 |
-| `rules/refactoring.md`        | 重构约束与功能等价要求                                 |
-| `rules/agent-workflow.md`     | 子代理协作边界与委托规则                               |
-| `rules/working-modes.md`      | 调研、计划、开发、评审、收尾模式指导                   |
+| `rules/fec-vue.md`                | Vue 3 组件规范与反模式                                 |
+| `rules/fec-react.md`              | React 组件规范与反模式                                 |
+| `rules/fec-design-system.md`      | 设计系统、Token、可访问性规则                          |
+| `rules/fec-testing.md`            | 测试与校验规则                                         |
+| `rules/fec-git-conventions.md`    | Conventional Commits 提交规范                          |
+| `rules/fec-i18n.md`               | 国际化文案规范                                         |
+| `rules/fec-performance.md`        | 前端性能优化规则                                       |
+| `rules/fec-api-layer.md`          | API 层类型化与错误处理规范                             |
+| `rules/fec-state-management.md`   | 状态分类、管理策略与反模式                             |
+| `rules/fec-error-handling.md`     | 错误分层、Error Boundary、降级 UI、上报规范            |
+| `rules/fec-naming-conventions.md` | 文件、组件、变量、路由、API、CSS 统一命名              |
+| `rules/fec-code-comments.md`      | 何时以及如何写前端注释                                 |
+| `rules/fec-ci-cd.md`              | CI/CD 流水线阶段、GitHub Actions / GitLab CI、密钥管理 |
+| `rules/fec-refactoring.md`        | 重构约束与功能等价要求                                 |
+| `rules/fec-agent-workflow.md`     | 子代理协作边界与委托规则                               |
+| `rules/fec-working-modes.md`      | 调研、计划、开发、评审、收尾模式指导                   |
 
 </details>
 

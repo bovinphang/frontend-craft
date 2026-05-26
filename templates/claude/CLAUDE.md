@@ -64,7 +64,7 @@
 - 提交前必须通过 lint 和类型检查
 - 未经我确认不要直接 commit
 - 分支命名: feature/xxx, fix/xxx, refactor/xxx
-- Commit 格式: 遵循 Conventional Commits（详见 rules/git-conventions.md）
+- Commit 格式: 遵循 Conventional Commits（详见 rules/fec-git-conventions.md）
 
 ## 设计稿实现工作流
 
@@ -87,20 +87,20 @@
 
 <!-- 按项目技术栈选择性导入，删除不需要的行 -->
 
-@./rules/vue.md
-@./rules/react.md
-@./rules/design-system.md
-@./rules/testing.md
-@./rules/git-conventions.md
-@./rules/i18n.md
-@./rules/performance.md
-@./rules/api-layer.md
-@./rules/state-management.md
-@./rules/error-handling.md
-@./rules/naming-conventions.md
-@./rules/typescript.md
-@./rules/code-comments.md
-@./rules/ci-cd.md
-@./rules/refactoring.md
-@./rules/agent-workflow.md
-@./rules/working-modes.md
+@./rules/fec-vue.md
+@./rules/fec-react.md
+@./rules/fec-design-system.md
+@./rules/fec-testing.md
+@./rules/fec-git-conventions.md
+@./rules/fec-i18n.md
+@./rules/fec-performance.md
+@./rules/fec-api-layer.md
+@./rules/fec-state-management.md
+@./rules/fec-error-handling.md
+@./rules/fec-naming-conventions.md
+@./rules/fec-typescript.md
+@./rules/fec-code-comments.md
+@./rules/fec-ci-cd.md
+@./rules/fec-refactoring.md
+@./rules/fec-agent-workflow.md
+@./rules/fec-working-modes.md

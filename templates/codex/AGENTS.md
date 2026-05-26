@@ -64,7 +64,7 @@
 - 提交前必须通过 lint 和类型检查
 - 未经我确认不要直接 commit
 - 分支命名: feature/xxx, fix/xxx, refactor/xxx
-- Commit 格式: 遵循 Conventional Commits（详见 .codex/rules/git-conventions.md）
+- Commit 格式: 遵循 Conventional Commits（详见 .codex/rules/fec-git-conventions.md）
 
 ## 设计稿实现工作流
 
@@ -87,19 +87,19 @@
 
 项目详细规则位于 `.codex/rules/` 目录，按技术栈选择性参考：
 
-- vue.md / react.md - 框架组件规范
-- typescript.md - TypeScript/JavaScript 规范（与 `typescript-reviewer` 子代理联动）
-- design-system.md - 设计系统与 Token
-- testing.md - 测试规范
-- git-conventions.md - Git 提交规范
-- i18n.md - 国际化规范（如需要）
-- performance.md - 性能优化
-- api-layer.md - API 层规范
-- state-management.md - 状态管理
-- error-handling.md - 错误处理
-- naming-conventions.md - 命名规范
-- code-comments.md - 代码注释（何时写、写什么）
-- ci-cd.md - CI/CD 规范
-- refactoring.md - 重构约束
-- agent-workflow.md - 子代理协作边界
-- working-modes.md - 调研、计划、开发、评审、收尾模式
+- fec-vue.md / fec-react.md - 框架组件规范
+- fec-typescript.md - TypeScript/JavaScript 规范（与 `typescript-reviewer` 子代理联动）
+- fec-design-system.md - 设计系统与 Token
+- fec-testing.md - 测试规范
+- fec-git-conventions.md - Git 提交规范
+- fec-i18n.md - 国际化规范（如需要）
+- fec-performance.md - 性能优化
+- fec-api-layer.md - API 层规范
+- fec-state-management.md - 状态管理
+- fec-error-handling.md - 错误处理
+- fec-naming-conventions.md - 命名规范
+- fec-code-comments.md - 代码注释（何时写、写什么）
+- fec-ci-cd.md - CI/CD 规范
+- fec-refactoring.md - 重构约束
+- fec-agent-workflow.md - 子代理协作边界
+- fec-working-modes.md - 调研、计划、开发、评审、收尾模式

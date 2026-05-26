@@ -1,6 +1,6 @@
 # TypeScript / JavaScript 规则
 
-编写、修改或评审 `.ts`、`.tsx`、`.js`、`.jsx` 时应用本文件。注释风格另见 `code-comments.md`；E2E 与校验流程另见 `testing.md`。
+编写、修改或评审 `.ts`、`.tsx`、`.js`、`.jsx` 时应用本文件。注释风格另见 `fec-code-comments.md`；E2E 与校验流程另见 `fec-testing.md`。
 
 ## 类型与接口
 
@@ -145,7 +145,7 @@ export function formatUser(user) {
   - **`enum`**（与后端或协议对齐、或团队明确约定时使用；注意字符串 enum、const enum 与打包/tree-shaking 策略）；
   - **`as const` 常量对象**（常与 `typeof` / `keyof` 推导联合类型，适合前端主路径）；
   - **字面量联合类型**（`type Status = "a" | "b"`）并与上面对象或 map 配套，保证调用处可收窄、可重构。
-- **不属本条**的典型例外（仍应保持可读）：纯算法下标、 obvious 的 `0`/`1` 长度判断、与业务无关的 UI 刻度若已有设计 Token 则改走 `design-system.md`。
+- **不属本条**的典型例外（仍应保持可读）：纯算法下标、 obvious 的 `0`/`1` 长度判断、与业务无关的 UI 刻度若已有设计 Token 则改走 `fec-design-system.md`。
 
 ```typescript
 // 不佳：业务语义依赖裸数字 / 裸字符串
@@ -348,7 +348,7 @@ if (!apiKey) {
 
 ## 与测试规则的关系
 
-关键用户路径的端到端覆盖方式（Playwright、Cypress、Page Object 等）以 `testing.md` 为准；本文件不重复展开 E2E 细则。
+关键用户路径的端到端覆盖方式（Playwright、Cypress、Page Object 等）以 `fec-testing.md` 为准；本文件不重复展开 E2E 细则。
 
 ## 与 `typescript-reviewer` 子代理
 
