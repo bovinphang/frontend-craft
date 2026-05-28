@@ -66,6 +66,16 @@
 | --- | --- | --- | --- | --- |
 | 设计稿实现 | 「请按 Figma 节点 `123:456` 实现 UI。复用现有 design token 和组件，匹配间距与响应式状态，并说明假设。」 | `fec-implement-from-design`、`fec-figma-implementer` | UI 代码和设计实现说明/报告。 | 配好 MCP 凭据效果最好。 |
 | 截图到 UI 打磨 | 「请打磨这个 dashboard，让它像生产级 SaaS 工具：信息密度、层级、空/加载/错误状态、响应式布局和交互状态。」 | `fec-ui-design` | UI 改进和视觉 QA 说明。 | 可提供截图或本地 URL。 |
+| 产品化设计方向 | 「请为 healthcare analytics dashboard 制定贴合产品的设计方向：核心用户任务、视觉锚点、信息密度、图表语言、色彩角色、字体气质和必须避免的反模式。」 | `fec-ui-design`、`fec-performance-optimizer` | 设计方向、dashboard 结构、图表 UX 建议和 QA 重点。 | 补充受众、数据类型，以及是否实时刷新。 |
+| 设计系统生成 | 「请为高端预约类应用生成设计系统方向：语义色角色、字号层级、间距/圆角规则、组件语气、动效原则，以及哪些做法要刻意避开。」 | `fec-ui-design`、`fec-design-token-mapper` | 贴合产品的设计系统方案和 token 建议。 | 补充产品类别、品牌语气和目标技术栈。 |
+| Master/Page overrides | 「打磨 checkout 前，请先读取 `design-system/Acme/MASTER.md`，再检查是否有 `design-system/Acme/pages/checkout.md`；页面规则只覆盖与 Master 不同的部分。」 | `fec-ui-design` | 遵循长期设计系统规则的页面级打磨。 | 适用于把设计决策沉淀在仓库文档里的项目。 |
+| 落地页方向 | 「请为 B2B developer tool 设计落地页方向：首屏层级、可信证据、产品展示、CTA 位置、响应式区块，以及不要落入通用渐变 hero 的视觉锚点。」 | `fec-ui-design` | 落地页结构、视觉层级、转化路径和反模板建议。 | 补充具体 offer、受众和转化目标。 |
+| 数据看板 UX | 「请优化这个 operations dashboard，让用户在高压场景下也能快速扫描：表格/图表平衡、实时状态、告警优先级、下钻路径、空/错误状态和响应式密度。」 | `fec-ui-design`、`fec-accessibility-check` | Dashboard UX 建议或 UI 修改，并覆盖关键状态。 | 提供截图、样例数据或本地路由。 |
+| 移动电商 UI | 「请设计移动端电商商品浏览流程：安全触控区域、底部导航、筛选/排序体验、商品媒体、加载/空状态，以及进入 checkout 的路径。」 | `fec-ui-design`、`fec-accessibility-check` | 移动 UI 方向、交互状态和响应式约束。 | 说明这是移动 Web 还是类原生 Web UI。 |
+| 金融界面打磨 | 「请打磨这个 banking 界面，让它显得可信、克制、清晰：余额可见性、交易层级、风险状态、对比度、focus 行为和节制动效。」 | `fec-ui-design`、`fec-security-review` | 适合金融场景的 UI 打磨和风险状态建议。 | 如有合规或脱敏要求请说明。 |
+| 作品集视觉识别 | 「请为设计师/开发者 portfolio 制定有辨识度的视觉方向：项目叙事、导航节奏、case study 布局、媒体呈现、字体性格和 reduced-motion 降级。」 | `fec-ui-design`、`fec-svg-animation` | Portfolio UI 方向和交互建议。 | 提供个人品牌语气和代表项目。 |
+| 反模板 UI 评审 | 「请评审这个页面是否有泛化 AI 应用痕迹：过度使用紫色渐变、堆叠卡片、空泛 hero 文案、产品证据不足、单一色相和缺少交互状态。」 | `fec-ui-design` | 反模式问题和具体替代方向。 | 配合截图或本地 URL 效果更好。 |
+| 交付前 UI QA | 「请做一轮交付前 UI QA，覆盖 375px、768px、1440px：文本溢出、focus ring、hover/active/disabled、reduced motion、加载/空/错误状态和视觉一致性。」 | `fec-ui-design`、`fec-accessibility-check` | UI QA 清单、问题和修复建议。 | 适合实现收尾阶段。 |
 | Design Token 映射 | 「请把 Figma 变量中的颜色、字体、间距、圆角和阴影映射到本仓库 design token 结构，不破坏现有组件。」 | `fec-design-token-mapper` | Token 映射方案或代码修改。 | 补充 token 命名规则。 |
 | Storybook 文档 | 「请为 `packages/ui/Button` 和 `Dialog` 搭建 Storybook 文档：MDX、状态、无障碍 addon、交互测试和视觉基线。」 | `fec-storybook-component-doc` | Storybook stories/docs 和测试建议。 | 说明当前 Storybook 状态。 |
 
@@ -102,4 +112,3 @@
 | 斜杠命令清理 | 「`/fec-refactor-clean` 请安全移除这个包里的未使用导出和依赖。」 | `/fec-refactor-clean` | 清理报告和安全修改。 | 修改后运行测试。 |
 | 斜杠命令文档同步 | 「`/fec-doc-sync` 请同步 README、runtime docs 和 metadata，使其匹配当前包内容。」 | `/fec-doc-sync` | 文档更新和验证说明。 | 发布前使用。 |
 | 显式代理 | 「请委托 `fec-frontend-code-reviewer` 对 `src/features/payments/` 做 PR 风格评审，然后先总结阻塞项。」 | agent dispatch | 专项代理报告和摘要。 | 适合专家评审。 |
-
