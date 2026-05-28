@@ -163,8 +163,7 @@ frontend-craft/
 | `fec-web-workers`                | Web Worker integration, transferable objects, Comlink, worker pools                  |
 | `fec-canvas-threejs`             | Canvas 2D, Three.js, React Three Fiber, WebGL performance and accessibility          |
 | `fec-svg-animation`              | SVG animation with CSS, Framer Motion, GSAP, reduced-motion fallbacks                |
-| `fec-ui-design-direction`        | Product-specific UI direction, first-screen hierarchy, domain tone, visual strategy  |
-| `fec-interface-polish`           | Polish spacing, typography, radius, shadows, hit areas, states, transitions          |
+| `fec-ui-design`                  | UI direction, visual identity, polish, states, visual QA                             |
 | `fec-vite-project-standard`      | Vite config, env safety, HMR, dev proxy, build optimization, library mode            |
 
 ### Using skills (scenarios & examples)
@@ -205,8 +204,7 @@ Skills live under `skills/<id>/SKILL.md`. OpenClaw exposes them as plugin skill 
 | Heavy computation off main thread          | `fec-web-workers`                | “Move the image-processing logic to a Web Worker with Comlink to keep the UI responsive.”                                                       |
 | Build an interactive 3D scene              | `fec-canvas-threejs`             | “Add a Three.js product viewer to `src/components/ProductViewer.tsx` with performance and fallback considerations.”                             |
 | Add SVG motion to a landing page           | `fec-svg-animation`              | “Animate the hero SVG with Framer Motion, and ensure reduced-motion users get a static fallback.”                                               |
-| Set UI visual direction                    | `fec-ui-design-direction`        | “Guide the visual direction for our dashboard: first-screen hierarchy, domain tone, and spacing strategy.”                                      |
-| Polish UI details                          | `fec-interface-polish`           | “Review `src/components/Dashboard.tsx` for spacing, typography, radius, shadows, hit areas, and motion polish.”                                 |
+| Design and polish UI                       | `fec-ui-design`                  | “Review `src/components/Dashboard.tsx` for UI direction, visual identity, spacing, states, and motion polish.”                                  |
 | Optimize Vite build config                 | `fec-vite-project-standard`      | “Audit our `vite.config.ts` for HMR, dev proxy, env variable safety, and library mode best practices.”                                          |
 
 **Slash commands (markdown under `commands/`)**

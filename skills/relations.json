@@ -1,21 +1,38 @@
 {
   "fec-browser-storage": {
-    "relatedSkills": ["fec-security-review", "fec-pwa-implementation", "fec-data-fetching"],
+    "relatedSkills": [
+      "fec-security-review",
+      "fec-pwa-implementation",
+      "fec-data-fetching"
+    ],
     "boundaryWorkflows": [
       "Use a security review workflow for token, private data, and XSS read risks.",
       "Use a PWA workflow for Service Worker offline caches and installability.",
       "Use a data-fetching workflow for server state and API cache behavior."
     ],
-    "capabilityTags": ["storage", "security", "offline-cache"]
+    "capabilityTags": [
+      "storage",
+      "security",
+      "offline-cache"
+    ]
   },
   "fec-canvas-threejs": {
-    "relatedSkills": ["fec-web-workers", "fec-svg-animation", "fec-accessibility-check"],
+    "relatedSkills": [
+      "fec-web-workers",
+      "fec-svg-animation",
+      "fec-accessibility-check"
+    ],
     "boundaryWorkflows": [
       "Use a worker workflow when expensive graphics computation blocks the main thread.",
       "Use an SVG animation workflow for small vector icons, path strokes, and UI micro-interactions.",
       "Use an accessibility workflow for non-text alternatives and keyboard fallbacks."
     ],
-    "capabilityTags": ["canvas", "threejs", "performance", "accessibility"]
+    "capabilityTags": [
+      "canvas",
+      "threejs",
+      "performance",
+      "accessibility"
+    ]
   },
   "fec-component-testing": {
     "relatedSkills": [
@@ -30,106 +47,183 @@
       "Use an E2E workflow for real-browser cross-page journeys, login state, and CI artifacts.",
       "Use a validation workflow when the task is to run or repair existing lint, typecheck, test, or build failures."
     ],
-    "capabilityTags": ["testing", "component-test", "ui-quality"]
+    "capabilityTags": [
+      "testing",
+      "component-test",
+      "ui-quality"
+    ]
   },
   "fec-data-fetching": {
-    "relatedSkills": ["fec-form-handling", "fec-pwa-implementation", "fec-list-virtualization"],
+    "relatedSkills": [
+      "fec-form-handling",
+      "fec-pwa-implementation",
+      "fec-list-virtualization"
+    ],
     "boundaryWorkflows": [
       "Use a form workflow for form state, validation, and submit UI.",
       "Use a PWA workflow for Service Worker and offline cache policy.",
       "Use a virtualization workflow for DOM rendering performance in infinite lists."
     ],
-    "capabilityTags": ["data-fetching", "server-state", "cache"]
+    "capabilityTags": [
+      "data-fetching",
+      "server-state",
+      "cache"
+    ]
   },
   "fec-e2e-testing": {
-    "relatedSkills": ["fec-testing-strategy", "fec-component-testing", "fec-storybook-component-doc", "fec-validation-fix"],
+    "relatedSkills": [
+      "fec-testing-strategy",
+      "fec-component-testing",
+      "fec-storybook-component-doc",
+      "fec-validation-fix"
+    ],
     "boundaryWorkflows": [
       "Use a testing strategy workflow before deciding the coverage layer.",
       "Use a component testing workflow for unit, component, and light integration tests close to UI code.",
       "Use a validation workflow when existing project checks are failing."
     ],
-    "capabilityTags": ["testing", "e2e", "browser-automation"]
+    "capabilityTags": [
+      "testing",
+      "e2e",
+      "browser-automation"
+    ]
   },
   "fec-form-handling": {
-    "relatedSkills": ["fec-component-testing", "fec-data-fetching", "fec-accessibility-check"],
+    "relatedSkills": [
+      "fec-component-testing",
+      "fec-data-fetching",
+      "fec-accessibility-check"
+    ],
     "boundaryWorkflows": [
       "Use a component testing workflow for form interactions, validation errors, and submit callbacks.",
       "Use a data-fetching workflow for mutation, cache invalidation, and optimistic updates after submit.",
       "Use an accessibility workflow for labels, error messages, and focus order in complex forms."
     ],
-    "capabilityTags": ["forms", "validation", "accessibility"]
+    "capabilityTags": [
+      "forms",
+      "validation",
+      "accessibility"
+    ]
   },
   "fec-frontend-code-review": {
-    "relatedSkills": ["fec-security-review", "fec-accessibility-check", "fec-e2e-testing", "fec-validation-fix"],
+    "relatedSkills": [
+      "fec-security-review",
+      "fec-accessibility-check",
+      "fec-e2e-testing",
+      "fec-validation-fix"
+    ],
     "boundaryWorkflows": [
       "Use a security review workflow for XSS, CSRF, token, upload, third-party script, and CSP risks.",
       "Use an accessibility workflow for WCAG, keyboard, focus, semantic, and ARIA risks.",
       "Use an E2E workflow for critical paths, flaky tests, traces, and CI artifacts."
     ],
-    "capabilityTags": ["code-review", "quality", "frontend"]
-  },
-  "fec-interface-polish": {
-    "relatedSkills": ["fec-ui-design-direction", "fec-accessibility-check", "fec-frontend-code-review"],
-    "boundaryWorkflows": [
-      "Use a design direction workflow before polishing details when product tone or hierarchy is unclear.",
-      "Use an accessibility workflow for focus management, keyboard interaction, and ARIA review.",
-      "Use a code review workflow when issues cross architecture, types, rendering performance, and styles."
-    ],
-    "capabilityTags": ["ui-polish", "visual-qa", "visual-identity", "anti-generic", "accessibility"]
+    "capabilityTags": [
+      "code-review",
+      "quality",
+      "frontend"
+    ]
   },
   "fec-legacy-web-standard": {
-    "relatedSkills": ["fec-legacy-to-modern-migration", "fec-security-review", "fec-validation-fix"],
+    "relatedSkills": [
+      "fec-legacy-to-modern-migration",
+      "fec-security-review",
+      "fec-validation-fix"
+    ],
     "boundaryWorkflows": [
       "Use a migration workflow for inventory, strategy, and staged migration to React, Vue, or TypeScript.",
       "Use a security review workflow for XSS, CSRF, open redirect, and third-party script risks in legacy projects.",
       "Use a validation workflow for existing lint, test, build, or manual verification scripts."
     ],
-    "capabilityTags": ["legacy", "migration", "quality"]
+    "capabilityTags": [
+      "legacy",
+      "migration",
+      "quality"
+    ]
   },
   "fec-legacy-to-modern-migration": {
-    "relatedSkills": ["fec-legacy-web-standard", "fec-react-project-standard", "fec-vue3-project-standard"],
+    "relatedSkills": [
+      "fec-legacy-web-standard",
+      "fec-react-project-standard",
+      "fec-vue3-project-standard"
+    ],
     "boundaryWorkflows": [
       "Use a legacy workflow to understand the source jQuery or MPA code model before migration.",
       "Use the target framework project workflow for React or Vue directory and component structure.",
       "Use architecture planning for large migrations with high boundary and rollout risk."
     ],
-    "capabilityTags": ["legacy", "migration", "modernization"]
+    "capabilityTags": [
+      "legacy",
+      "migration",
+      "modernization"
+    ]
   },
   "fec-list-virtualization": {
-    "relatedSkills": ["fec-data-fetching", "fec-web-workers", "fec-accessibility-check"],
+    "relatedSkills": [
+      "fec-data-fetching",
+      "fec-web-workers",
+      "fec-accessibility-check"
+    ],
     "boundaryWorkflows": [
       "Use a data-fetching workflow for pagination and cache behavior in infinite lists.",
       "Use a worker workflow when expensive item computation blocks scrolling.",
       "Use an accessibility workflow for keyboard and screen reader behavior in virtualized lists."
     ],
-    "capabilityTags": ["performance", "virtualization", "large-lists"]
+    "capabilityTags": [
+      "performance",
+      "virtualization",
+      "large-lists"
+    ]
   },
   "fec-nextjs-project-standard": {
-    "relatedSkills": ["fec-react-project-standard", "fec-route-protection", "fec-data-fetching"],
+    "relatedSkills": [
+      "fec-react-project-standard",
+      "fec-route-protection",
+      "fec-data-fetching"
+    ],
     "boundaryWorkflows": [
       "Use a React project workflow for generic client component architecture and hooks organization.",
       "Use a route protection workflow for auth, RBAC, redirects, and middleware security boundaries.",
       "Use a data-fetching workflow for client-side server state; keep Next server fetch and cache policy in the Next workflow."
     ],
-    "capabilityTags": ["nextjs", "react", "routing"]
+    "capabilityTags": [
+      "nextjs",
+      "react",
+      "routing"
+    ]
   },
   "fec-nuxt-project-standard": {
-    "relatedSkills": ["fec-vue3-project-standard", "fec-route-protection", "fec-data-fetching"],
+    "relatedSkills": [
+      "fec-vue3-project-standard",
+      "fec-route-protection",
+      "fec-data-fetching"
+    ],
     "boundaryWorkflows": [
       "Use a Vue project workflow for generic Vue component, composable, and Pinia boundaries.",
       "Use a route protection workflow for login state, protected routes, redirects, and middleware risks.",
       "Use a data-fetching workflow for client server state or cache patterns; keep Nuxt useFetch and useAsyncData policy in the Nuxt workflow."
     ],
-    "capabilityTags": ["nuxt", "vue", "routing"]
+    "capabilityTags": [
+      "nuxt",
+      "vue",
+      "routing"
+    ]
   },
   "fec-pwa-implementation": {
-    "relatedSkills": ["fec-data-fetching", "fec-browser-storage", "fec-validation-fix"],
+    "relatedSkills": [
+      "fec-data-fetching",
+      "fec-browser-storage",
+      "fec-validation-fix"
+    ],
     "boundaryWorkflows": [
       "Use a data-fetching workflow for API server state, cache invalidation, and optimistic updates.",
       "Use a browser storage workflow for IndexedDB, localStorage, and client persistence choices.",
       "Use a validation workflow for build, Lighthouse, and end-to-end verification after PWA changes."
     ],
-    "capabilityTags": ["pwa", "service-worker", "offline-cache"]
+    "capabilityTags": [
+      "pwa",
+      "service-worker",
+      "offline-cache"
+    ]
   },
   "fec-react-project-standard": {
     "relatedSkills": [
@@ -147,34 +241,64 @@
       "Use specialty workflows for complex forms, server state, tests, accessibility, security, large lists, animation, or graphics.",
       "Keep generic React component architecture and hooks organization in the React project workflow."
     ],
-    "capabilityTags": ["react", "project-standard", "frontend-architecture"]
+    "capabilityTags": [
+      "react",
+      "project-standard",
+      "frontend-architecture"
+    ]
   },
   "fec-security-review": {
-    "relatedSkills": ["fec-frontend-code-review", "fec-accessibility-check", "fec-browser-storage"],
+    "relatedSkills": [
+      "fec-frontend-code-review",
+      "fec-accessibility-check",
+      "fec-browser-storage"
+    ],
     "boundaryWorkflows": [
       "Use a general code review workflow for architecture, maintainability, and broad quality review.",
       "Use an accessibility workflow for accessibility-only concerns.",
       "Use a browser storage workflow for storage strategy; keep sensitive data leakage risks in the security workflow."
     ],
-    "capabilityTags": ["security", "review", "frontend"]
+    "capabilityTags": [
+      "security",
+      "review",
+      "frontend"
+    ]
   },
   "fec-storybook-component-doc": {
-    "relatedSkills": ["fec-testing-strategy", "fec-component-testing", "fec-e2e-testing", "fec-accessibility-check"],
+    "relatedSkills": [
+      "fec-testing-strategy",
+      "fec-component-testing",
+      "fec-e2e-testing",
+      "fec-accessibility-check"
+    ],
     "boundaryWorkflows": [
       "Use a testing strategy workflow to decide whether a risk belongs in Storybook, component tests, E2E, or specialty review.",
       "Use a component testing workflow for unit, component, and light integration tests close to UI code.",
       "Use an E2E workflow for real-browser cross-page journeys and page-level visual regression."
     ],
-    "capabilityTags": ["storybook", "design-system", "visual-regression"]
+    "capabilityTags": [
+      "storybook",
+      "design-system",
+      "visual-regression"
+    ]
   },
   "fec-tdd-workflow": {
-    "relatedSkills": ["fec-component-testing", "fec-e2e-testing", "fec-testing-strategy", "fec-validation-fix"],
+    "relatedSkills": [
+      "fec-component-testing",
+      "fec-e2e-testing",
+      "fec-testing-strategy",
+      "fec-validation-fix"
+    ],
     "boundaryWorkflows": [
       "Use a component testing workflow for component, hook, composable, and light integration tests.",
       "Use an E2E workflow for real-browser critical paths.",
       "Use a validation workflow after existing checks fail."
     ],
-    "capabilityTags": ["tdd", "testing", "workflow"]
+    "capabilityTags": [
+      "tdd",
+      "testing",
+      "workflow"
+    ]
   },
   "fec-testing-strategy": {
     "relatedSkills": [
@@ -190,16 +314,32 @@
       "Use specialty testing workflows after the layer and risk placement are decided.",
       "Use accessibility, security, or code review workflows for deep specialty quality reviews."
     ],
-    "capabilityTags": ["testing", "strategy", "quality-gate"]
+    "capabilityTags": [
+      "testing",
+      "strategy",
+      "quality-gate"
+    ]
   },
-  "fec-ui-design-direction": {
-    "relatedSkills": ["fec-interface-polish", "fec-implement-from-design", "fec-accessibility-check"],
-    "boundaryWorkflows": [
-      "Use a polish workflow after product tone, hierarchy, and layout direction are settled.",
-      "Use an implementation-from-design workflow when an external design file is the source of truth.",
-      "Use an accessibility workflow for keyboard, focus, ARIA, and semantic structure checks."
+  "fec-ui-design": {
+    "relatedSkills": [
+      "fec-implement-from-design",
+      "fec-accessibility-check",
+      "fec-frontend-code-review"
     ],
-    "capabilityTags": ["ui-design", "design-direction", "product-design", "visual-identity", "anti-generic", "accessibility"]
+    "boundaryWorkflows": [
+      "Use an implementation-from-design workflow when an external design file is the source of truth.",
+      "Use an accessibility workflow for keyboard, focus, ARIA, semantic structure, and contrast checks.",
+      "Use a code review workflow when UI issues cross architecture, types, rendering performance, and maintainability."
+    ],
+    "capabilityTags": [
+      "ui-design",
+      "design-direction",
+      "visual-identity",
+      "ui-polish",
+      "anti-generic",
+      "visual-qa",
+      "accessibility"
+    ]
   },
   "fec-vite-project-standard": {
     "relatedSkills": [
@@ -213,7 +353,11 @@
       "Use a monorepo workflow for workspace boundaries and task orchestration.",
       "Use a security review workflow for client secrets, CSP, supply chain, and XSS risks."
     ],
-    "capabilityTags": ["vite", "build", "project-standard"]
+    "capabilityTags": [
+      "vite",
+      "build",
+      "project-standard"
+    ]
   },
   "fec-vue3-project-standard": {
     "relatedSkills": [
@@ -231,15 +375,27 @@
       "Use specialty workflows for complex forms, server state, tests, accessibility, security, large lists, animation, or graphics.",
       "Keep generic Vue component architecture, composables, and Pinia boundaries in the Vue project workflow."
     ],
-    "capabilityTags": ["vue", "project-standard", "frontend-architecture"]
+    "capabilityTags": [
+      "vue",
+      "project-standard",
+      "frontend-architecture"
+    ]
   },
   "fec-web-workers": {
-    "relatedSkills": ["fec-canvas-threejs", "fec-list-virtualization", "fec-validation-fix"],
+    "relatedSkills": [
+      "fec-canvas-threejs",
+      "fec-list-virtualization",
+      "fec-validation-fix"
+    ],
     "boundaryWorkflows": [
       "Use a graphics workflow for rendering and animation loops; use workers only when complex computation blocks rendering.",
       "Use a virtualization workflow for large-list DOM rendering; do not use workers as a replacement for virtual scrolling.",
       "Use a validation workflow after worker changes for build, typecheck, and key interaction verification."
     ],
-    "capabilityTags": ["web-workers", "performance", "main-thread"]
+    "capabilityTags": [
+      "web-workers",
+      "performance",
+      "main-thread"
+    ]
   }
 }

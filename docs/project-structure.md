@@ -54,8 +54,7 @@ frontend-craft/
 |   |-- fec-browser-storage/            # localStorage/sessionStorage/IndexedDB/Cookies selection and safe client persistence
 |   |-- fec-list-virtualization/        # Large-list windowing with react-window / TanStack Virtual and measurement strategies
 |   |-- fec-storybook-component-doc/    # Storybook component docs, addons, MDX, interaction and visual test integration
-|   |-- fec-ui-design-direction/        # Product-specific UI direction, first-screen hierarchy, domain tone
-|   |-- fec-interface-polish/           # UI polish details: spacing, typography, radius, motion, states
+|   |-- fec-ui-design/                  # UI direction, visual identity, polish, states, visual QA
 |   |-- fec-vite-project-standard/      # Vite config, env safety, HMR, proxy, build and library mode
 |
 |-- commands/         # Slash commands for quick execution

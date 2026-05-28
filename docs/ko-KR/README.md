@@ -181,8 +181,7 @@ npx frontend-craft@latest list
 
 | 스킬                      | 범위                                                         |
 | ------------------------- | ------------------------------------------------------------ |
-| `fec-ui-design-direction` | 제품 UI 방향, 첫 화면 계층, 도메인 톤                        |
-| `fec-interface-polish`    | 간격, 타이포그래피, radius, 그림자, hit area, 상태, 트랜지션 |
+| `fec-ui-design`           | UI 방향, 시각적 정체성, polish, 상태, visual QA              |
 
 **마이그레이션 및 문서** — 현대화 또는 문서 작업 시 활성화:
 

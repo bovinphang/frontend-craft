@@ -14,8 +14,7 @@ mcpServers:
   - modao
 skills:
   - fec-frontend-code-review
-  - fec-ui-design-direction
-  - fec-interface-polish
+  - fec-ui-design
   - fec-accessibility-check
   - fec-validation-fix
 ---

@@ -192,8 +192,7 @@ npx frontend-craft@latest install claude --local --force
 
 | 技能                      | 范围                                         |
 | ------------------------- | -------------------------------------------- |
-| `fec-ui-design-direction` | 产品 UI 方向、首屏层级、业务语气             |
-| `fec-interface-polish`    | 间距、排版、圆角、阴影、命中区域、状态、动效 |
+| `fec-ui-design`           | UI 方向、视觉识别、界面打磨、状态、视觉 QA |
 
 **迁移与文档** — 现代化或文档维护时激活：
 

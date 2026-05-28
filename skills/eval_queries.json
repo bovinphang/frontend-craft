@@ -221,29 +221,6 @@
       "写 Web Worker"
     ]
   },
-  "fec-interface-polish": {
-    "should_trigger": [
-      "这个界面看起来有点粗糙，帮我打磨间距和状态",
-      "检查按钮 hover active focus disabled 是否完整",
-      "卡片圆角和内层元素看起来不协调",
-      "计数器数字变化导致布局抖动怎么处理",
-      "这个 toolbar 的图标按钮命中区域太小",
-      "修一下 CSS transition all 和动效过重的问题",
-      "做一次 UI polish pass",
-      "这个页面局部有模板感，帮我打磨得更精致",
-      "visual QA spacing typography color rhythm motion"
-    ],
-    "should_not_trigger": [
-      "确定整个产品的设计风格方向",
-      "按 Figma 设计稿还原页面",
-      "给 React 项目做目录规划",
-      "写 Playwright E2E",
-      "审查 XSS 和 CSP",
-      "配置 Vite proxy",
-      "设计浏览器存储策略",
-      "迁移 jQuery 页面"
-    ]
-  },
   "fec-legacy-to-modern-migration": {
     "should_trigger": [
       "把 jQuery MPA 迁移到 React TypeScript",
@@ -574,26 +551,27 @@
       "优化虚拟列表滚动性能"
     ]
   },
-  "fec-ui-design-direction": {
+  "fec-ui-design": {
     "should_trigger": [
       "这个后台页面应该走什么 UI 设计方向",
       "帮我把这个工具界面做得更产品化",
-      "设计一个适合 SaaS 运营台的首屏布局",
-      "这个 landing page 的视觉层级怎么定",
       "让这个页面不要那么模板化和泛泛",
-      "选择适合数据看板的视觉语气",
-      "给新功能定 UI 风格和信息优先级",
       "把这个页面做得更有辨识度和高级感",
-      "product-specific distinctive frontend design direction"
+      "这个界面看起来有点粗糙，帮我打磨间距和状态",
+      "检查按钮 hover active focus disabled 是否完整",
+      "这个页面局部有模板感，帮我打磨得更精致",
+      "做一次 UI polish pass",
+      "product-specific distinctive UI design and visual QA"
     ],
     "should_not_trigger": [
-      "只修按钮圆角和 hover 状态",
       "按 Figma 像素还原组件",
-      "写 React Hook Form 表单",
-      "配置 Vite 环境变量",
-      "做代码 review 报告",
       "检查键盘焦点和 aria",
-      "写 Storybook stories",
+      "审查 XSS 和 CSP",
+      "写 Playwright E2E",
+      "写 React Hook Form 表单",
+      "设计浏览器存储策略",
+      "配置 Vite 环境变量",
+      "给 React 项目做目录规划",
       "实现 Web Worker"
     ]
   },

@@ -30,7 +30,7 @@
 
 Per-runtime paths and caveats live in [`docs/runtimes/`](docs/runtimes/).
 
-It bundles **13 specialized agents**, **31 auto-activated skills**, **9 slash commands**, **5 event-driven hooks**, **MCP templates** for 6 design tools, and a complete **rules library** into a single installable package. Run one command, and every AI session on your team writes React, Vue, Next.js, or Nuxt the same way — typed, accessible, secure, and consistent.
+It bundles **13 specialized agents**, **30 auto-activated skills**, **9 slash commands**, **5 event-driven hooks**, **MCP templates** for 6 design tools, and a complete **rules library** into a single installable package. Run one command, and every AI session on your team writes React, Vue, Next.js, or Nuxt the same way — typed, accessible, secure, and consistent.
 
 ```bash
 npx frontend-craft@latest
@@ -44,7 +44,7 @@ That’s it. The wizard walks you through the rest.
 
 | Problem                                                              | What frontend-craft does                                                                       |
 | -------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------- |
-| AI assistants write inconsistent, untyped, or insecure frontend code | **31 skills** encode team standards — auto-activated when the assistant touches matching files |
+| AI assistants write inconsistent, untyped, or insecure frontend code | **30 skills** encode team standards — auto-activated when the assistant touches matching files |
 | Each AI tool has its own plugin format                               | **One CLI** installs the same rules, agents, and hooks into 15 runtimes                        |
 | Design-to-code handoff is lossy                                      | **MCP templates** read Figma, Sketch, MasterGo, Pixso, 墨刀, and 摹客 directly                 |
 | Reviews are ad-hoc and shallow                                       | **13 agents** produce graded reports: code, security, a11y, performance, TS, UI fidelity       |
@@ -190,8 +190,7 @@ Skills are workflow definitions that activate automatically based on file patter
 
 | Skill                     | Scope                                                                |
 | ------------------------- | -------------------------------------------------------------------- |
-| `fec-ui-design-direction` | Product UI direction, first-screen hierarchy, domain tone            |
-| `fec-interface-polish`    | Spacing, typography, radius, shadows, hit areas, states, transitions |
+| `fec-ui-design`           | UI direction, visual identity, polish, states, visual QA            |
 
 **Migration & docs** — activated during modernization or documentation work:
 

@@ -386,45 +386,6 @@
     ]
   },
   {
-    "id": "fec-interface-polish",
-    "name": "界面质感打磨",
-    "category": "migration-design",
-    "tags": [
-      "ui-polish",
-      "spacing",
-      "typography",
-      "color-rhythm",
-      "motion",
-      "anti-generic",
-      "visual-qa"
-    ],
-    "summary": "Frontend Craft skill for spacing, typography, color rhythm, motion, and anti-generic UI polish.",
-    "version": "2.3.1",
-    "license": "MIT",
-    "homepage": "https://github.com/bovinphang/frontend-craft",
-    "repository": "https://github.com/bovinphang/frontend-craft",
-    "keywords": [
-      "migration-design",
-      "ui-polish",
-      "spacing",
-      "typography",
-      "color-rhythm",
-      "motion",
-      "anti-generic",
-      "visual-qa"
-    ],
-    "platforms": [
-      "skills-cli",
-      "skillreg",
-      "claude-code",
-      "codex",
-      "cursor",
-      "opencode",
-      "openclaw",
-      "generic-skill-runtime"
-    ]
-  },
-  {
     "id": "fec-legacy-to-modern-migration",
     "name": "遗留系统迁移",
     "category": "migration-design",
@@ -956,19 +917,18 @@
     ]
   },
   {
-    "id": "fec-ui-design-direction",
-    "name": "UI 设计方向",
+    "id": "fec-ui-design",
+    "name": "UI 设计",
     "category": "migration-design",
     "tags": [
       "ui-design",
       "visual-direction",
       "visual-identity",
-      "distinctive-ui",
+      "ui-polish",
       "anti-generic",
-      "layout",
-      "product-design"
+      "visual-qa"
     ],
-    "summary": "Frontend Craft skill for product-specific UI direction, distinctive visual identity, and anti-generic interface design.",
+    "summary": "Frontend Craft skill for product UI direction, distinctive visual identity, polish, interaction states, and visual QA.",
     "version": "2.3.1",
     "license": "MIT",
     "homepage": "https://github.com/bovinphang/frontend-craft",
@@ -978,10 +938,9 @@
       "ui-design",
       "visual-direction",
       "visual-identity",
-      "distinctive-ui",
+      "ui-polish",
       "anti-generic",
-      "layout",
-      "product-design"
+      "visual-qa"
     ],
     "platforms": [
       "skills-cli",

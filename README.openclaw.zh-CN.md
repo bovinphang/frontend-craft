@@ -163,8 +163,7 @@ frontend-craft/
 | `fec-web-workers`                | Web Worker、Transferable、Comlink、Worker 池                   |
 | `fec-canvas-threejs`             | Canvas 2D、Three.js、React Three Fiber、WebGL 性能与可访问性   |
 | `fec-svg-animation`              | CSS、Framer Motion、GSAP SVG 动画与 reduced-motion 降级        |
-| `fec-ui-design-direction`        | 产品化 UI 方向、首屏层级、业务语气与视觉策略                   |
-| `fec-interface-polish`           | 间距、排版、圆角、阴影、命中区域、状态与动效细节打磨           |
+| `fec-ui-design`                  | UI 方向、视觉识别、界面打磨、状态与视觉 QA                    |
 | `fec-vite-project-standard`      | Vite 配置、环境变量安全、HMR、开发代理、构建优化与库模式       |
 
 ### 技能使用：场景与示例
@@ -205,8 +204,7 @@ frontend-craft/
 | 重计算移出主线程             | `fec-web-workers`                | 「把图片处理逻辑移到 Web Worker，用 Comlink 通信，保持 UI 响应。」                                                                     |
 | 构建交互式 3D 场景           | `fec-canvas-threejs`             | 「在 `src/components/ProductViewer.tsx` 添加 Three.js 产品展示，兼顾性能和降级方案。」                                                 |
 | 为落地页添加 SVG 动效        | `fec-svg-animation`              | 「用 Framer Motion 为 hero 区 SVG 添加动画，并为 reduced-motion 用户提供静态降级方案。」                                               |
-| 设定 UI 视觉方向             | `fec-ui-design-direction`        | 「为我们的管理后台设定视觉方向：首屏层级、业务语气和间距策略。」                                                                       |
-| 打磨 UI 细节                 | `fec-interface-polish`           | 「请评审 `src/components/Dashboard.tsx` 的间距、排版、圆角、阴影、命中区域和动效，给出可落地的优化建议。」                             |
+| 设计与打磨 UI               | `fec-ui-design`                  | 「请评审 `src/components/Dashboard.tsx` 的 UI 方向、视觉识别、间距、状态和动效打磨。」                                                   |
 | 优化 Vite 构建配置           | `fec-vite-project-standard`      | 「请审计 `vite.config.ts` 的 HMR、开发代理、环境变量安全和库模式最佳实践。」                                                           |
 
 **斜杠命令（`commands/` 下的 Markdown）**
