@@ -393,10 +393,12 @@
       "ui-polish",
       "spacing",
       "typography",
+      "color-rhythm",
       "motion",
+      "anti-generic",
       "visual-qa"
     ],
-    "summary": "Frontend Craft skill for 界面质感打磨.",
+    "summary": "Frontend Craft skill for spacing, typography, color rhythm, motion, and anti-generic UI polish.",
     "version": "2.3.1",
     "license": "MIT",
     "homepage": "https://github.com/bovinphang/frontend-craft",
@@ -406,7 +408,9 @@
       "ui-polish",
       "spacing",
       "typography",
+      "color-rhythm",
       "motion",
+      "anti-generic",
       "visual-qa"
     ],
     "platforms": [
@@ -958,10 +962,13 @@
     "tags": [
       "ui-design",
       "visual-direction",
+      "visual-identity",
+      "distinctive-ui",
+      "anti-generic",
       "layout",
       "product-design"
     ],
-    "summary": "Frontend Craft skill for UI 设计方向.",
+    "summary": "Frontend Craft skill for product-specific UI direction, distinctive visual identity, and anti-generic interface design.",
     "version": "2.3.1",
     "license": "MIT",
     "homepage": "https://github.com/bovinphang/frontend-craft",
@@ -970,6 +977,9 @@
       "migration-design",
       "ui-design",
       "visual-direction",
+      "visual-identity",
+      "distinctive-ui",
+      "anti-generic",
       "layout",
       "product-design"
     ],

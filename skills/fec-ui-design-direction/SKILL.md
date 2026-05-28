@@ -1,15 +1,15 @@
 ---
 name: fec-ui-design-direction
-description: Use when building or improving frontend UI that needs product-specific design direction, visual hierarchy, layout tone, first-screen composition, or domain-appropriate interaction design. When an external design file is authoritative, implement from that source instead of inventing direction; Chinese triggers include UI 设计方向, 视觉风格, 界面质感, 产品化界面.
+description: Use when building or improving frontend UI that needs product-specific design direction, distinctive visual identity, anti-generic interface choices, visual hierarchy, first-screen composition, or domain-appropriate interaction design. When an external design file is authoritative, implement from that source instead of inventing direction; Chinese triggers include UI 设计方向, 视觉风格, 不要模板化, 高级感, 产品化界面.
 ---
 
 # UI 设计方向
 
-适用于需要从“能用”推进到“符合产品语境、可扫描、可信赖”的前端 UI 任务。
+适用于需要从“能用”推进到“符合产品语境、可扫描、可信赖，并且有明确辨识度”的前端 UI 任务。
 
 ## Purpose
 
-为页面、组件、仪表盘和工具界面建立清晰的产品化设计方向。
+为页面、组件、仪表盘和工具界面建立清晰、贴合业务且不模板化的产品化设计方向。
 
 ## Procedure
 
@@ -17,22 +17,35 @@ description: Use when building or improving frontend UI that needs product-speci
    - 先说清它帮助用户完成什么任务，而不是先选颜色或布局。
    - 判断这是日常高频工具、营销展示、内容阅读、可视化探索、游戏，还是配置/管理后台。
 
-2. 选择设计语气
+2. 定义审美主张
+   - 写出目标用户、使用场景、可信赖感来源和一个可被记住的视觉锚点。
+   - 视觉锚点可以来自信息结构、真实媒体、数据形态、行业材质、字体性格、交互节奏或空间组织，而不是空泛装饰。
+   - 先确定“为什么这样设计”，再选择颜色、字体、动效和布局。
+
+3. 选择设计语气
    - SaaS、CRM、后台、运营工具默认安静、密集、可扫描。
    - 品牌页、作品集、发布页可更具表现力，但首屏仍要让主体明确出现。
    - 游戏、可视化和创作工具可以更有动效和沉浸感，但不能牺牲交互可控性。
+   - 表现力必须服务业务语境：可以大胆，但不能把所有产品都做成同一种炫技页面。
 
-3. 建立首屏优先级
+4. 建立首屏优先级
    - 工具型界面：首屏直接呈现核心工作区、列表、表格、画布或编辑器。
    - 落地页：H1 使用品牌、产品、地点、人名或明确品类，价值说明放在辅助文案。
    - 产品/对象页：首屏必须可见真实产品、对象、状态或可检查媒体。
+   - 首屏应留下一个明确记忆点，但不能遮挡核心任务、导航和状态反馈。
 
-4. 对齐现有系统
+5. 组织视觉语言
+   - 字体：优先沿用项目字体体系；若任务允许建立新方向，选择能表达产品性格的标题/正文字体组合，并保证可读性。
+   - 色彩：明确主色、功能色、中性色和强调色的角色，避免所有元素平均用力。
+   - 动效：只为关键转场、状态变化、反馈和引导建立节奏；普通工具控件保持直接、稳定。
+   - 空间：根据任务选择高密度、留白、非对称、分栏、画布式或编辑器式布局，不套用固定卡片模板。
+
+6. 对齐现有系统
    - 先复用项目已有组件、token、图标库、路由和布局约定。
    - 缺少 token 时集中补齐或明确记录，不要在多个组件里散落硬编码。
    - 复杂 UI 在实现前写出复用组件、新建组件、响应式策略和状态覆盖。
 
-5. 验证设计结果
+7. 验证设计结果
    - 检查 loading、empty、error、disabled、hover、focus、selected 状态。
    - 在 mobile(375px)、tablet(768px)、desktop(1440px) 检查文案是否溢出或遮挡。
    - 对依赖图片、图表、画布或 3D 的界面，确认资源真实渲染且承担主体信息。
@@ -41,6 +54,7 @@ description: Use when building or improving frontend UI that needs product-speci
 
 - 不把工具型应用做成营销落地页；首屏应是可用工作区。
 - 不用通用紫色渐变、装饰光斑、堆叠卡片或空泛 hero 作为默认方案。
+- 不使用无语境默认字体、均匀无重点配色、重复圆角卡片和模板化双栏 hero 来替代真实设计判断。
 - 不在卡片里再套大卡片；页面分区优先用全宽区域或无框布局。
 - 不用可见文案解释控件本该表达的功能，常见动作优先用图标和 tooltip。
 - 不引入只服务视觉噱头的新依赖，除非它显著提升核心体验。
@@ -48,4 +62,4 @@ description: Use when building or improving frontend UI that needs product-speci
 
 ## Expected Output
 
-输出应包含明确的设计方向、组件/布局边界、状态覆盖、响应式策略和验证结果。实现后的 UI 应符合业务语境，首屏主体明确，视觉层级支持快速扫描。
+输出应包含明确的设计方向、首屏记忆点、视觉语言策略、组件/布局边界、状态覆盖、响应式策略和验证结果。实现后的 UI 应符合业务语境，首屏主体明确，视觉层级支持快速扫描，并避免泛化模板感。

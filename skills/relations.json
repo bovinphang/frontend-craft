@@ -75,7 +75,7 @@
       "Use an accessibility workflow for focus management, keyboard interaction, and ARIA review.",
       "Use a code review workflow when issues cross architecture, types, rendering performance, and styles."
     ],
-    "capabilityTags": ["ui-polish", "visual-qa", "accessibility"]
+    "capabilityTags": ["ui-polish", "visual-qa", "visual-identity", "anti-generic", "accessibility"]
   },
   "fec-legacy-web-standard": {
     "relatedSkills": ["fec-legacy-to-modern-migration", "fec-security-review", "fec-validation-fix"],
@@ -199,7 +199,7 @@
       "Use an implementation-from-design workflow when an external design file is the source of truth.",
       "Use an accessibility workflow for keyboard, focus, ARIA, and semantic structure checks."
     ],
-    "capabilityTags": ["ui-design", "product-design", "accessibility"]
+    "capabilityTags": ["ui-design", "design-direction", "product-design", "visual-identity", "anti-generic", "accessibility"]
   },
   "fec-vite-project-standard": {
     "relatedSkills": [

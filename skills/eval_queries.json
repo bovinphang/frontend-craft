@@ -230,7 +230,8 @@
       "这个 toolbar 的图标按钮命中区域太小",
       "修一下 CSS transition all 和动效过重的问题",
       "做一次 UI polish pass",
-      "visual QA spacing typography radius shadows"
+      "这个页面局部有模板感，帮我打磨得更精致",
+      "visual QA spacing typography color rhythm motion"
     ],
     "should_not_trigger": [
       "确定整个产品的设计风格方向",
@@ -582,7 +583,8 @@
       "让这个页面不要那么模板化和泛泛",
       "选择适合数据看板的视觉语气",
       "给新功能定 UI 风格和信息优先级",
-      "product-specific frontend design direction"
+      "把这个页面做得更有辨识度和高级感",
+      "product-specific distinctive frontend design direction"
     ],
     "should_not_trigger": [
       "只修按钮圆角和 hover 状态",

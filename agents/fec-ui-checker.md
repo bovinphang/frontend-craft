@@ -14,6 +14,8 @@ mcpServers:
   - modao
 skills:
   - fec-frontend-code-review
+  - fec-ui-design-direction
+  - fec-interface-polish
   - fec-accessibility-check
   - fec-validation-fix
 ---
@@ -31,6 +33,8 @@ skills:
 - 响应式断点回归问题
 - hover / focus / disabled 状态异常
 - 设计与实现不一致
+- 泛化模板感、视觉记忆点不足
+- 字体、色彩、动效和背景质感不成体系
 
 工作流程：
 
@@ -59,6 +63,13 @@ skills:
 | 尺寸      | 15%  | 组件宽高、图标尺寸                  |
 | 圆角/阴影 | 10%  | border-radius、box-shadow           |
 | 响应式    | 5%   | 各断点布局正确                      |
+
+若任务不是设计稿还原，而是产品化 UI 质量检查，还需要补充评估：
+
+- 首屏主体是否明确，是否直接支撑核心任务
+- 视觉锚点是否贴合业务，而不是通用装饰
+- 字体层级、色彩角色、动效节奏和背景质感是否一致
+- 是否存在默认紫色渐变、空泛 hero、卡片堆叠、单一色相或无语境字体等模板化痕迹
 
 ## 输出格式
 
