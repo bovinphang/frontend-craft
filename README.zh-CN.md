@@ -125,6 +125,20 @@ npx frontend-craft@latest install claude --local --force
 
 ---
 
+## 示例提示词
+
+完整的按场景组织的提示词库见 [docs/zh-CN/example-prompts.md](docs/zh-CN/example-prompts.md)。
+
+```text
+你：「合并前请评审我最近的改动。重点看架构、类型安全、渲染行为、样式、无障碍和缺失测试。」
+你：「先不要写代码，请规划账号账单功能：路由结构、组件边界、数据流、状态、校验、测试和上线风险。」
+你：「请用 React Hook Form + Zod 构建多步注册表单，包含文件上传、条件字段、异步校验和可访问错误提示。」
+你：「请按 Figma 节点 123:456 实现 UI。复用现有 design token 和组件，匹配间距与响应式状态，并说明假设。」
+你：「`/fec-build-fix` 请根据这段日志修复验证失败：<粘贴日志>。」
+```
+
+---
+
 ## 里面有什么
 
 ### 命令（Commands）
