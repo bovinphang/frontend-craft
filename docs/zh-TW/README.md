@@ -30,7 +30,7 @@
 
 各執行時的路徑與注意事項詳見 [`docs/runtimes/`](../runtimes/)。
 
-它將 **13 個專業 agent**、**31 個自動啟用 skill**、**9 個斜線指令**、**5 個事件驅動 hook**、面向 6 款設計工具的 **MCP 範本**以及一整套**規則庫**打包為一個可安裝單元。執行一條指令，團隊裡的每一次 AI 會話都將以相同的方式編寫 React、Vue、Next.js 或 Nuxt——型別安全、可存取、安全、一致。
+它將 **13 個專業 agent**、**30 個自動啟用 skill**、**9 個斜線指令**、**5 個事件驅動 hook**、面向 6 款設計工具的 **MCP 範本**以及一整套**規則庫**打包為一個可安裝單元。執行一條指令，團隊裡的每一次 AI 會話都將以相同的方式編寫 React、Vue、Next.js 或 Nuxt——型別安全、可存取、安全、一致。
 
 ```bash
 npx frontend-craft@latest
@@ -44,7 +44,7 @@ npx frontend-craft@latest
 
 | 痛點                                            | frontend-craft 的解法                                                   |
 | ----------------------------------------------- | ----------------------------------------------------------------------- |
-| AI 助手寫出的前端程式碼風格不一、缺型別、不安全 | **31 個 skill** 將團隊規範編碼為可自動啟用的工作流                      |
+| AI 助手寫出的前端程式碼風格不一、缺型別、不安全 | **30 個 skill** 將團隊規範編碼為可自動啟用的工作流                      |
 | 每款 AI 工具都有自己的插件格式                  | **一條 CLI 指令** 把相同的規則、agent 和 hook 安裝到 15 個執行時        |
 | 設計稿到程式碼的交接總有資訊損失                | **MCP 範本** 直接讀取 Figma、Sketch、MasterGo、Pixso、墨刀、摹客        |
 | 程式碼審查隨意、淺層                            | **13 個 agent** 輸出分級報告：程式碼、安全、無障礙、效能、TS、UI 還原度 |
@@ -147,50 +147,59 @@ npx frontend-craft@latest list
 | `fec-vite-project-standard`     | Vite 設定、環境變數安全、HMR、開發代理、建置最佳化    |
 | `fec-monorepo-project-standard` | pnpm workspace、Turborepo、Nx 結構與任務編排          |
 
-**品質與審查** — 程式碼審查、PR 或重構時啟用：
+**實作能力** — 建構特定前端能力時啟用：
+
+| 技能                          | 範圍                                                       |
+| ----------------------------- | ---------------------------------------------------------- |
+| `fec-data-fetching`           | TanStack Query / 服務端狀態獲取、快取、樂觀更新            |
+| `fec-form-handling`           | React Hook Form + Zod、動態欄位、上傳、多步流程            |
+| `fec-browser-storage`         | localStorage / sessionStorage / IndexedDB / Cookies 選型   |
+| `fec-route-protection`        | React Router、Next.js、Vue Router、Nuxt 的登入態與權限路由 |
+| `fec-pwa-implementation`      | manifest、Service Worker、離線快取、安裝提示               |
+| `fec-web-workers`             | Web Worker、Transferable、Comlink、Worker 池               |
+| `fec-canvas-threejs`          | Canvas 2D、Three.js、React Three Fiber、WebGL              |
+| `fec-svg-animation`           | CSS / Framer Motion / GSAP SVG 動畫與 reduced-motion       |
+| `fec-list-virtualization`     | react-window / TanStack Virtual 大清單虛擬滾動             |
+
+**測試** — 規劃或撰寫前端測試覆蓋時啟用：
+
+| 技能                          | 範圍                                                     |
+| ----------------------------- | -------------------------------------------------------- |
+| `fec-testing-strategy`        | 靜態檢查、單元、元件、整合、E2E、視覺測試分層            |
+| `fec-component-testing`       | React Testing Library / Vue Test Utils 元件測試與回歸用例 |
+| `fec-e2e-testing`             | Playwright / Cypress E2E 與 Page Object 和 CI 整合       |
+| `fec-tdd-workflow`            | 測試先行的前端實作，紅綠重構循環                        |
+
+**審查與品質** — 程式碼審查、驗證或清理時啟用：
 
 | 技能                       | 範圍                                           |
 | -------------------------- | ---------------------------------------------- |
 | `fec-frontend-code-review` | 架構、型別、渲染、樣式、可存取性審查           |
 | `fec-security-review`      | XSS、CSRF、敏感資料外洩、輸入驗證              |
 | `fec-accessibility-check`  | WCAG 2.1 AA 無障礙檢查                         |
-| `fec-typescript-review`    | 型別安全、非同步正確性、慣用模式               |
-| `fec-testing-strategy`     | 靜態檢查、單元、元件、整合、E2E、視覺測試分層  |
 | `fec-validation-fix`       | 一次性執行並修復 lint、type-check、test、build |
 | `fec-refactor-clean`       | 安全清理死程式碼、未使用匯出、樣式、路由和依賴 |
 
-**功能實現** — 建構特定 UI 場景時啟用：
+**設計 UI** — 設計實作、設計系統或視覺打磨時啟用：
 
-| 技能                          | 範圍                                                       |
-| ----------------------------- | ---------------------------------------------------------- |
-| `fec-implement-from-design`   | 基於 Figma/Sketch/MasterGo/Pixso/墨刀/摹客設計稿實現 UI    |
-| `fec-data-fetching`           | TanStack Query / 服務端狀態獲取、快取、樂觀更新            |
-| `fec-form-handling`           | React Hook Form + Zod、動態欄位、上傳、多步流程            |
-| `fec-browser-storage`         | localStorage / sessionStorage / IndexedDB / Cookies 選型   |
-| `fec-route-protection`        | React Router、Next.js、Vue Router、Nuxt 的登入態與權限路由 |
-| `fec-component-testing`       | React Testing Library / Vue Test Utils 元件測試與回歸用例  |
-| `fec-storybook-component-doc` | Storybook 元件文件、Addon、MDX、互動與視覺測試             |
-| `fec-list-virtualization`     | react-window / TanStack Virtual 大清單虛擬滾動             |
-| `fec-e2e-testing`             | Playwright / Cypress E2E 與 Page Object 和 CI 整合         |
-| `fec-pwa-implementation`      | manifest、Service Worker、離線快取、安裝提示               |
-| `fec-web-workers`             | Web Worker、Transferable、Comlink、Worker 池               |
-| `fec-canvas-threejs`          | Canvas 2D、Three.js、React Three Fiber、WebGL              |
-| `fec-svg-animation`           | CSS / Framer Motion / GSAP SVG 動畫與 reduced-motion       |
+| 技能                          | 範圍                                                    |
+| ----------------------------- | ------------------------------------------------------- |
+| `fec-ui-design`              | UI 方向、視覺識別、界面打磨、狀態、視覺 QA             |
+| `fec-implement-from-design`   | 基於 Figma/Sketch/MasterGo/Pixso/墨刀/摹客設計稿實現 UI |
+| `fec-storybook-component-doc` | Storybook 元件文件、Addon、MDX、互動與視覺測試          |
 
-**UI 與打磨** — 最佳化視覺輸出時啟用：
-
-| 技能                      | 範圍                                         |
-| ------------------------- | -------------------------------------------- |
-| `fec-ui-design`           | UI 方向、視覺識別、界面打磨、狀態、視覺 QA |
-
-**遷移與文件** — 現代化或文件維護時啟用：
+**遺留遷移** — 現代化遷移時啟用：
 
 | 技能                             | 範圍                                           |
 | -------------------------------- | ---------------------------------------------- |
 | `fec-legacy-web-standard`        | JS + jQuery + HTML 傳統專案的開發與維護規範    |
 | `fec-legacy-to-modern-migration` | jQuery/MPA → React/Vue 3 + TS 策略與分階段流程 |
-| `fec-tdd-workflow`               | 測試先行的前端實現，紅綠重構循環               |
-| `fec-doc-sync`                   | 讓公開文件與腳本、技能、代理、指令保持同步     |
+
+**文件維護** — 文件維護時啟用：
+
+| 技能           | 範圍                                       |
+| -------------- | ------------------------------------------ |
+| `fec-doc-sync` | 讓公開文件與腳本、技能、代理、指令保持同步 |
 
 ### 代理（Agents）
 

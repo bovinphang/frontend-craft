@@ -65,9 +65,17 @@ test("skills metadata matches skill directories and frontmatter names", () => {
   }
 });
 
-test("skills metadata uses the four public taxonomy categories", () => {
+test("skills metadata uses the public taxonomy categories", () => {
   const metadata = JSON.parse(fs.readFileSync(path.join(root, "skills", "metadata.json"), "utf8")) as SkillMetadata[];
-  const allowedCategories = new Set(["project-standard", "capability", "quality", "migration-design"]);
+  const allowedCategories = new Set([
+    "project-standard",
+    "implementation-capability",
+    "testing",
+    "review-quality",
+    "design-ui",
+    "legacy-migration",
+    "maintenance-docs",
+  ]);
 
   for (const skill of metadata) {
     assert.ok(allowedCategories.has(skill.category), `unexpected skill category for ${skill.id}: ${skill.category}`);

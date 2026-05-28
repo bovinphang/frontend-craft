@@ -30,7 +30,7 @@
 
 各ランタイムのパスと注意事項は [`docs/runtimes/`](../runtimes/) にあります。
 
-**13 の専門エージェント**、**31 の自動起動スキル**、**9 のスラッシュコマンド**、**5 のイベント駆動フック**、6 つのデザインツール向け **MCP テンプレート**、そして完全な**ルールライブラリ**をひとつのパッケージにまとめています。コマンドひとつ実行するだけで、チームのすべての AI セッションが React、Vue、Next.js、Nuxt を同じように書きます——型安全で、アクセシブルで、セキュアで、一貫性を持って。
+**13 の専門エージェント**、**30 の自動起動スキル**、**9 のスラッシュコマンド**、**5 のイベント駆動フック**、6 つのデザインツール向け **MCP テンプレート**、そして完全な**ルールライブラリ**をひとつのパッケージにまとめています。コマンドひとつ実行するだけで、チームのすべての AI セッションが React、Vue、Next.js、Nuxt を同じように書きます——型安全で、アクセシブルで、セキュアで、一貫性を持って。
 
 ```bash
 npx frontend-craft@latest
@@ -44,7 +44,7 @@ npx frontend-craft@latest
 
 | 課題                                                                          | frontend-craft の解決策                                                                                      |
 | ----------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------ |
-| AI アシスタントが一貫性のない、型なしの、安全でないフロントエンドコードを書く | **31 のスキル**がチーム標準をエンコード——該当ファイルに触れると自動起動                                      |
+| AI アシスタントが一貫性のない、型なしの、安全でないフロントエンドコードを書く | **30 のスキル**がチーム標準をエンコード——該当ファイルに触れると自動起動                                      |
 | AI ツールごとにプラグイン形式が異なる                                         | **ひとつの CLI** で同じルール、エージェント、フックを 15 のランタイムにインストール                          |
 | デザインからコードへの受け渡しで情報が失われる                                | **MCP テンプレート**が Figma、Sketch、MasterGo、Pixso、墨刀、摹客を直接読み取り                              |
 | レビューが場当たり的で浅い                                                    | **13 のエージェント**がグレード付きレポートを出力：コード、セキュリティ、a11y、パフォーマンス、TS、UI 忠実度 |
@@ -147,50 +147,59 @@ npx frontend-craft@latest list
 | `fec-vite-project-standard`     | Vite 設定、環境変数安全性、HMR、開発プロキシ、ビルド最適化              |
 | `fec-monorepo-project-standard` | pnpm workspace、Turborepo、Nx の構造とタスクオーケストレーション        |
 
-**品質とレビュー** — コードレビュー、PR、リファクタリング時に起動：
+**実装機能** — 特定のフロントエンド機能を構築する際に起動：
+
+| スキル                        | 範囲                                                                         |
+| ----------------------------- | ---------------------------------------------------------------------------- |
+| `fec-data-fetching`           | TanStack Query / サーバー状態取得、キャッシュ、楽観的更新                    |
+| `fec-form-handling`           | React Hook Form + Zod、動的フィールド、アップロード、マルチステップ          |
+| `fec-browser-storage`         | localStorage / sessionStorage / IndexedDB / Cookies の選定                   |
+| `fec-route-protection`        | React Router、Next.js、Vue Router、Nuxt の認証・権限ルーティング             |
+| `fec-pwa-implementation`      | マニフェスト、サービスワーカー、オフラインキャッシュ、インストールプロンプト |
+| `fec-web-workers`             | Web Worker、Transferable、Comlink、ワーカープール                            |
+| `fec-canvas-threejs`          | Canvas 2D、Three.js、React Three Fiber、WebGL                                |
+| `fec-svg-animation`           | CSS / Framer Motion / GSAP SVG アニメーションと reduced-motion               |
+| `fec-list-virtualization`     | react-window / TanStack Virtual による大規模リスト仮想化                     |
+
+**テスト** — フロントエンドテストの計画や作成時に起動：
+
+| スキル                        | 範囲                                                            |
+| ----------------------------- | --------------------------------------------------------------- |
+| `fec-testing-strategy`        | 静的、ユニット、コンポーネント、統合、E2E、視覚テストの階層選択 |
+| `fec-component-testing`       | React Testing Library / Vue Test Utils とリグレッションシナリオ |
+| `fec-e2e-testing`             | Playwright / Cypress E2E と Page Object、CI 統合                |
+| `fec-tdd-workflow`            | テストファーストのフロントエンド実装、赤緑リファクタリング      |
+
+**レビューと品質** — レビュー、検証、クリーンアップ時に起動：
 
 | スキル                     | 範囲                                                                          |
 | -------------------------- | ----------------------------------------------------------------------------- |
 | `fec-frontend-code-review` | アーキテクチャ、型、レンダリング、スタイル、a11y レビュー                     |
 | `fec-security-review`      | XSS、CSRF、機密データ漏洩、入力検証                                           |
 | `fec-accessibility-check`  | WCAG 2.1 AA 準拠チェック                                                      |
-| `fec-typescript-review`    | 型安全性、非同期の正しさ、慣用的パターン                                      |
-| `fec-testing-strategy`     | 静的、ユニット、コンポーネント、統合、E2E、視覚テストの階層選択               |
 | `fec-validation-fix`       | lint、type-check、test、build を一度に実行して修復                            |
 | `fec-refactor-clean`       | デッドコード、未使用 export、スタイル、ルート、依存関係の安全なクリーンアップ |
 
-**機能実装** — 特定の UI 画面を構築する際に起動：
+**デザイン UI** — デザイン実装、デザインシステム、視覚仕上げで起動：
 
-| スキル                        | 範囲                                                                         |
-| ----------------------------- | ---------------------------------------------------------------------------- |
-| `fec-implement-from-design`   | Figma/Sketch/MasterGo/Pixso/墨刀/摹客 のデザインから UI を実装               |
-| `fec-data-fetching`           | TanStack Query / サーバー状態取得、キャッシュ、楽観的更新                    |
-| `fec-form-handling`           | React Hook Form + Zod、動的フィールド、アップロード、マルチステップ          |
-| `fec-browser-storage`         | localStorage / sessionStorage / IndexedDB / Cookies の選定                   |
-| `fec-route-protection`        | React Router、Next.js、Vue Router、Nuxt の認証・権限ルーティング             |
-| `fec-component-testing`       | React Testing Library / Vue Test Utils とリグレッションシナリオ              |
-| `fec-storybook-component-doc` | Storybook ドキュメント、アドオン、MDX、インタラクション・ビジュアルテスト    |
-| `fec-list-virtualization`     | react-window / TanStack Virtual による大規模リスト仮想化                     |
-| `fec-e2e-testing`             | Playwright / Cypress E2E と Page Object、CI 統合                             |
-| `fec-pwa-implementation`      | マニフェスト、サービスワーカー、オフラインキャッシュ、インストールプロンプト |
-| `fec-web-workers`             | Web Worker、Transferable、Comlink、ワーカープール                            |
-| `fec-canvas-threejs`          | Canvas 2D、Three.js、React Three Fiber、WebGL                                |
-| `fec-svg-animation`           | CSS / Framer Motion / GSAP SVG アニメーションと reduced-motion               |
+| スキル                        | 範囲                                                                      |
+| ----------------------------- | ------------------------------------------------------------------------- |
+| `fec-ui-design`              | UI 方向性、ビジュアル識別、ポリッシュ、状態、ビジュアル QA                |
+| `fec-implement-from-design`   | Figma/Sketch/MasterGo/Pixso/墨刀/摹客 のデザインから UI を実装            |
+| `fec-storybook-component-doc` | Storybook ドキュメント、アドオン、MDX、インタラクション・ビジュアルテスト |
 
-**UI と仕上げ** — 視覚出力を洗練させる際に起動：
+**レガシー移行** — モダナイゼーション時に起動：
 
-| スキル                    | 範囲                                                             |
-| ------------------------- | ---------------------------------------------------------------- |
-| `fec-ui-design`           | UI 方向性、ビジュアル識別、ポリッシュ、状態、ビジュアル QA     |
+| スキル                           | 範囲                                                           |
+| -------------------------------- | -------------------------------------------------------------- |
+| `fec-legacy-web-standard`        | JS + jQuery + HTML のレガシープロジェクト開発・保守基準        |
+| `fec-legacy-to-modern-migration` | jQuery/MPA → React/Vue 3 + TS への移行戦略と段階的ワークフロー |
 
-**移行とドキュメント** — モダナイゼーションやドキュメント作業時に起動：
+**ドキュメント保守** — ドキュメント作業時に起動：
 
-| スキル                           | 範囲                                                               |
-| -------------------------------- | ------------------------------------------------------------------ |
-| `fec-legacy-web-standard`        | JS + jQuery + HTML のレガシープロジェクト開発・保守基準            |
-| `fec-legacy-to-modern-migration` | jQuery/MPA → React/Vue 3 + TS への移行戦略と段階的ワークフロー     |
-| `fec-tdd-workflow`               | テストファーストのフロントエンド実装、赤緑リファクタリング         |
-| `fec-doc-sync`                   | 公開ドキュメントをスクリプト、スキル、エージェント、コマンドと同期 |
+| スキル          | 範囲                                                               |
+| -------------- | ------------------------------------------------------------------ |
+| `fec-doc-sync` | 公開ドキュメントをスクリプト、スキル、エージェント、コマンドと同期 |
 
 ### エージェント
 

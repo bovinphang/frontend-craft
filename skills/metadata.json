@@ -2,7 +2,7 @@
   {
     "id": "fec-accessibility-check",
     "name": "无障碍检查",
-    "category": "quality",
+    "category": "review-quality",
     "tags": [
       "a11y",
       "wcag",
@@ -15,7 +15,7 @@
     "homepage": "https://github.com/bovinphang/frontend-craft",
     "repository": "https://github.com/bovinphang/frontend-craft",
     "keywords": [
-      "quality",
+      "review-quality",
       "a11y",
       "wcag",
       "accessibility",
@@ -35,7 +35,7 @@
   {
     "id": "fec-browser-storage",
     "name": "浏览器存储",
-    "category": "capability",
+    "category": "implementation-capability",
     "tags": [
       "storage",
       "localStorage",
@@ -49,7 +49,7 @@
     "homepage": "https://github.com/bovinphang/frontend-craft",
     "repository": "https://github.com/bovinphang/frontend-craft",
     "keywords": [
-      "capability",
+      "implementation-capability",
       "storage",
       "localStorage",
       "indexedDB",
@@ -70,7 +70,7 @@
   {
     "id": "fec-component-testing",
     "name": "组件测试",
-    "category": "quality",
+    "category": "testing",
     "tags": [
       "rtl",
       "vue-test-utils",
@@ -84,7 +84,7 @@
     "homepage": "https://github.com/bovinphang/frontend-craft",
     "repository": "https://github.com/bovinphang/frontend-craft",
     "keywords": [
-      "quality",
+      "testing",
       "rtl",
       "vue-test-utils",
       "component-test",
@@ -105,7 +105,7 @@
   {
     "id": "fec-testing-strategy",
     "name": "测试策略",
-    "category": "quality",
+    "category": "testing",
     "tags": [
       "testing-strategy",
       "test-plan",
@@ -119,7 +119,7 @@
     "homepage": "https://github.com/bovinphang/frontend-craft",
     "repository": "https://github.com/bovinphang/frontend-craft",
     "keywords": [
-      "quality",
+      "testing",
       "testing-strategy",
       "test-plan",
       "coverage",
@@ -140,7 +140,7 @@
   {
     "id": "fec-canvas-threejs",
     "name": "Canvas 与 Three.js",
-    "category": "capability",
+    "category": "implementation-capability",
     "tags": [
       "canvas",
       "webgl",
@@ -155,7 +155,7 @@
     "homepage": "https://github.com/bovinphang/frontend-craft",
     "repository": "https://github.com/bovinphang/frontend-craft",
     "keywords": [
-      "capability",
+      "implementation-capability",
       "canvas",
       "webgl",
       "three.js",
@@ -177,7 +177,7 @@
   {
     "id": "fec-data-fetching",
     "name": "TanStack Query 数据获取",
-    "category": "capability",
+    "category": "implementation-capability",
     "tags": [
       "react-query",
       "tanstack",
@@ -191,7 +191,7 @@
     "homepage": "https://github.com/bovinphang/frontend-craft",
     "repository": "https://github.com/bovinphang/frontend-craft",
     "keywords": [
-      "capability",
+      "implementation-capability",
       "react-query",
       "tanstack",
       "caching",
@@ -212,7 +212,7 @@
   {
     "id": "fec-e2e-testing",
     "name": "E2E 测试规范",
-    "category": "quality",
+    "category": "testing",
     "tags": [
       "playwright",
       "cypress",
@@ -227,7 +227,7 @@
     "homepage": "https://github.com/bovinphang/frontend-craft",
     "repository": "https://github.com/bovinphang/frontend-craft",
     "keywords": [
-      "quality",
+      "testing",
       "playwright",
       "cypress",
       "e2e",
@@ -249,7 +249,7 @@
   {
     "id": "fec-form-handling",
     "name": "表单处理",
-    "category": "capability",
+    "category": "implementation-capability",
     "tags": [
       "react-hook-form",
       "zod",
@@ -263,7 +263,7 @@
     "homepage": "https://github.com/bovinphang/frontend-craft",
     "repository": "https://github.com/bovinphang/frontend-craft",
     "keywords": [
-      "capability",
+      "implementation-capability",
       "react-hook-form",
       "zod",
       "validation",
@@ -284,7 +284,7 @@
   {
     "id": "fec-frontend-code-review",
     "name": "前端代码审查",
-    "category": "quality",
+    "category": "review-quality",
     "tags": [
       "code-review",
       "architecture",
@@ -297,9 +297,10 @@
     "homepage": "https://github.com/bovinphang/frontend-craft",
     "repository": "https://github.com/bovinphang/frontend-craft",
     "keywords": [
-      "quality",
+      "review-quality",
       "code-review",
       "architecture",
+      "quality",
       "best-practices"
     ],
     "platforms": [
@@ -316,7 +317,7 @@
   {
     "id": "fec-refactor-clean",
     "name": "重构清理",
-    "category": "quality",
+    "category": "review-quality",
     "tags": [
       "refactor",
       "dead-code",
@@ -330,7 +331,7 @@
     "homepage": "https://github.com/bovinphang/frontend-craft",
     "repository": "https://github.com/bovinphang/frontend-craft",
     "keywords": [
-      "quality",
+      "review-quality",
       "refactor",
       "dead-code",
       "cleanup",
@@ -351,7 +352,7 @@
   {
     "id": "fec-implement-from-design",
     "name": "设计稿实现",
-    "category": "migration-design",
+    "category": "design-ui",
     "tags": [
       "figma",
       "sketch",
@@ -366,7 +367,7 @@
     "homepage": "https://github.com/bovinphang/frontend-craft",
     "repository": "https://github.com/bovinphang/frontend-craft",
     "keywords": [
-      "migration-design",
+      "design-ui",
       "figma",
       "sketch",
       "mastergo",
@@ -388,7 +389,7 @@
   {
     "id": "fec-legacy-to-modern-migration",
     "name": "遗留系统迁移",
-    "category": "migration-design",
+    "category": "legacy-migration",
     "tags": [
       "migration",
       "jquery",
@@ -403,7 +404,7 @@
     "homepage": "https://github.com/bovinphang/frontend-craft",
     "repository": "https://github.com/bovinphang/frontend-craft",
     "keywords": [
-      "migration-design",
+      "legacy-migration",
       "migration",
       "jquery",
       "mpa",
@@ -425,7 +426,7 @@
   {
     "id": "fec-legacy-web-standard",
     "name": "传统前端规范",
-    "category": "migration-design",
+    "category": "legacy-migration",
     "tags": [
       "jquery",
       "mpa",
@@ -438,7 +439,7 @@
     "homepage": "https://github.com/bovinphang/frontend-craft",
     "repository": "https://github.com/bovinphang/frontend-craft",
     "keywords": [
-      "migration-design",
+      "legacy-migration",
       "jquery",
       "mpa",
       "legacy",
@@ -458,7 +459,7 @@
   {
     "id": "fec-list-virtualization",
     "name": "列表虚拟化优化",
-    "category": "capability",
+    "category": "implementation-capability",
     "tags": [
       "virtualization",
       "windowing",
@@ -472,7 +473,7 @@
     "homepage": "https://github.com/bovinphang/frontend-craft",
     "repository": "https://github.com/bovinphang/frontend-craft",
     "keywords": [
-      "capability",
+      "implementation-capability",
       "virtualization",
       "windowing",
       "react-window",
@@ -598,7 +599,7 @@
   {
     "id": "fec-pwa-implementation",
     "name": "PWA 实现",
-    "category": "capability",
+    "category": "implementation-capability",
     "tags": [
       "pwa",
       "service-worker",
@@ -612,7 +613,7 @@
     "homepage": "https://github.com/bovinphang/frontend-craft",
     "repository": "https://github.com/bovinphang/frontend-craft",
     "keywords": [
-      "capability",
+      "implementation-capability",
       "pwa",
       "service-worker",
       "offline",
@@ -668,7 +669,7 @@
   {
     "id": "fec-route-protection",
     "name": "路由保护",
-    "category": "capability",
+    "category": "implementation-capability",
     "tags": [
       "auth",
       "rbac",
@@ -683,7 +684,7 @@
     "homepage": "https://github.com/bovinphang/frontend-craft",
     "repository": "https://github.com/bovinphang/frontend-craft",
     "keywords": [
-      "capability",
+      "implementation-capability",
       "auth",
       "rbac",
       "route-guard",
@@ -705,7 +706,7 @@
   {
     "id": "fec-security-review",
     "name": "前端安全审查",
-    "category": "quality",
+    "category": "review-quality",
     "tags": [
       "xss",
       "csrf",
@@ -720,7 +721,7 @@
     "homepage": "https://github.com/bovinphang/frontend-craft",
     "repository": "https://github.com/bovinphang/frontend-craft",
     "keywords": [
-      "quality",
+      "review-quality",
       "xss",
       "csrf",
       "csp",
@@ -742,7 +743,7 @@
   {
     "id": "fec-svg-animation",
     "name": "SVG 动画",
-    "category": "capability",
+    "category": "implementation-capability",
     "tags": [
       "svg",
       "animation",
@@ -756,7 +757,7 @@
     "homepage": "https://github.com/bovinphang/frontend-craft",
     "repository": "https://github.com/bovinphang/frontend-craft",
     "keywords": [
-      "capability",
+      "implementation-capability",
       "svg",
       "animation",
       "framer-motion",
@@ -777,7 +778,7 @@
   {
     "id": "fec-storybook-component-doc",
     "name": "Storybook 组件文档化",
-    "category": "migration-design",
+    "category": "design-ui",
     "tags": [
       "storybook",
       "design-system",
@@ -791,7 +792,7 @@
     "homepage": "https://github.com/bovinphang/frontend-craft",
     "repository": "https://github.com/bovinphang/frontend-craft",
     "keywords": [
-      "migration-design",
+      "design-ui",
       "storybook",
       "design-system",
       "component-doc",
@@ -812,7 +813,7 @@
   {
     "id": "fec-doc-sync",
     "name": "文档同步",
-    "category": "capability",
+    "category": "maintenance-docs",
     "tags": [
       "docs",
       "readme",
@@ -826,7 +827,7 @@
     "homepage": "https://github.com/bovinphang/frontend-craft",
     "repository": "https://github.com/bovinphang/frontend-craft",
     "keywords": [
-      "capability",
+      "maintenance-docs",
       "docs",
       "readme",
       "metadata",
@@ -847,7 +848,7 @@
   {
     "id": "fec-validation-fix",
     "name": "验证与修复",
-    "category": "quality",
+    "category": "review-quality",
     "tags": [
       "validation",
       "lint",
@@ -862,7 +863,7 @@
     "homepage": "https://github.com/bovinphang/frontend-craft",
     "repository": "https://github.com/bovinphang/frontend-craft",
     "keywords": [
-      "quality",
+      "review-quality",
       "validation",
       "lint",
       "typecheck",
@@ -884,7 +885,7 @@
   {
     "id": "fec-tdd-workflow",
     "name": "TDD 工作流",
-    "category": "quality",
+    "category": "testing",
     "tags": [
       "tdd",
       "testing",
@@ -898,9 +899,8 @@
     "homepage": "https://github.com/bovinphang/frontend-craft",
     "repository": "https://github.com/bovinphang/frontend-craft",
     "keywords": [
-      "quality",
-      "tdd",
       "testing",
+      "tdd",
       "red-green-refactor",
       "regression",
       "frontend-tests"
@@ -919,7 +919,7 @@
   {
     "id": "fec-ui-design",
     "name": "UI 设计",
-    "category": "migration-design",
+    "category": "design-ui",
     "tags": [
       "ui-design",
       "visual-direction",
@@ -937,7 +937,7 @@
     "homepage": "https://github.com/bovinphang/frontend-craft",
     "repository": "https://github.com/bovinphang/frontend-craft",
     "keywords": [
-      "migration-design",
+      "design-ui",
       "ui-design",
       "visual-direction",
       "visual-identity",
@@ -1037,7 +1037,7 @@
   {
     "id": "fec-web-workers",
     "name": "Web Workers",
-    "category": "capability",
+    "category": "implementation-capability",
     "tags": [
       "worker",
       "background-thread",
@@ -1051,7 +1051,7 @@
     "homepage": "https://github.com/bovinphang/frontend-craft",
     "repository": "https://github.com/bovinphang/frontend-craft",
     "keywords": [
-      "capability",
+      "implementation-capability",
       "worker",
       "background-thread",
       "comlink",

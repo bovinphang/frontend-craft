@@ -30,7 +30,7 @@
 
 각 런타임의 경로와 주의사항은 [`docs/runtimes/`](../runtimes/)에 있습니다.
 
-**13개의 전문 에이전트**, **31개의 자동 활성화 스킬**, **9개의 슬래시 명령어**, **5개의 이벤트 기반 훅**, 6개 디자인 도구를 위한 **MCP 템플릿**, 그리고 완전한 **규칙 라이브러리**를 하나의 설치 가능한 패키지로 묶었습니다. 명령어 하나만 실행하면, 팀의 모든 AI 세션이 React, Vue, Next.js, Nuxt를 같은 방식으로 작성합니다 — 타입 안전하고, 접근성 있고, 안전하며, 일관성 있게.
+**13개의 전문 에이전트**, **30개의 자동 활성화 스킬**, **9개의 슬래시 명령어**, **5개의 이벤트 기반 훅**, 6개 디자인 도구를 위한 **MCP 템플릿**, 그리고 완전한 **규칙 라이브러리**를 하나의 설치 가능한 패키지로 묶었습니다. 명령어 하나만 실행하면, 팀의 모든 AI 세션이 React, Vue, Next.js, Nuxt를 같은 방식으로 작성합니다 — 타입 안전하고, 접근성 있고, 안전하며, 일관성 있게.
 
 ```bash
 npx frontend-craft@latest
@@ -44,7 +44,7 @@ npx frontend-craft@latest
 
 | 문제점                                                                       | frontend-craft의 해결책                                                         |
 | ---------------------------------------------------------------------------- | ------------------------------------------------------------------------------- |
-| AI 어시스턴트가 일관성 없고, 타입 없고, 안전하지 않은 프론트엔드 코드를 작성 | **31개 스킬**이 팀 표준을 인코딩 — 해당 파일을 건드릴 때 자동 활성화            |
+| AI 어시스턴트가 일관성 없고, 타입 없고, 안전하지 않은 프론트엔드 코드를 작성 | **30개 스킬**이 팀 표준을 인코딩 — 해당 파일을 건드릴 때 자동 활성화            |
 | AI 도구마다 플러그인 형식이 다름                                             | **하나의 CLI**로 동일한 규칙, 에이전트, 훅을 15개 런타임에 설치                 |
 | 디자인에서 코드로의 전달 과정에서 정보 손실                                  | **MCP 템플릿**이 Figma, Sketch, MasterGo, Pixso, 墨刀, 摹客을 직접 읽기         |
 | 리뷰가 즉흥적이고 얕음                                                       | **13개 에이전트**가 등급별 보고서 출력: 코드, 보안, 접근성, 성능, TS, UI 충실도 |
@@ -147,50 +147,59 @@ npx frontend-craft@latest list
 | `fec-vite-project-standard`     | Vite 설정, 환경 변수 안전, HMR, 개발 프록시, 빌드 최적화     |
 | `fec-monorepo-project-standard` | pnpm workspace, Turborepo, Nx 구조 및 태스크 오케스트레이션  |
 
-**품질 및 리뷰** — 코드 리뷰, PR, 또는 리팩토링 시 활성화:
+**구현 기능** — 특정 프론트엔드 기능을 구축할 때 활성화:
+
+| 스킬                          | 범위                                                          |
+| ----------------------------- | ------------------------------------------------------------- |
+| `fec-data-fetching`           | TanStack Query / 서버 상태 페칭, 캐시, 낙관적 업데이트        |
+| `fec-form-handling`           | React Hook Form + Zod, 동적 필드, 업로드, 멀티스텝            |
+| `fec-browser-storage`         | localStorage / sessionStorage / IndexedDB / Cookies 선택      |
+| `fec-route-protection`        | React Router, Next.js, Vue Router, Nuxt의 인증 및 권한 라우팅 |
+| `fec-pwa-implementation`      | 매니페스트, 서비스 워커, 오프라인 캐시, 설치 프롬프트         |
+| `fec-web-workers`             | Web Worker, Transferable, Comlink, 워커 풀                    |
+| `fec-canvas-threejs`          | Canvas 2D, Three.js, React Three Fiber, WebGL                 |
+| `fec-svg-animation`           | CSS / Framer Motion / GSAP SVG 애니메이션과 reduced-motion    |
+| `fec-list-virtualization`     | react-window / TanStack Virtual를 이용한 대규모 리스트 가상화 |
+
+**테스트** — 프론트엔드 테스트 범위를 계획하거나 작성할 때 활성화:
+
+| 스킬                          | 범위                                                   |
+| ----------------------------- | ------------------------------------------------------ |
+| `fec-testing-strategy`        | 정적, 단위, 컴포넌트, 통합, E2E, 시각 테스트 계층 선택 |
+| `fec-component-testing`       | React Testing Library / Vue Test Utils와 회귀 시나리오 |
+| `fec-e2e-testing`             | Playwright / Cypress E2E와 Page Object, CI 통합        |
+| `fec-tdd-workflow`            | 테스트 우선 프론트엔드 구현, 빨강-초록 리팩토링        |
+
+**리뷰 및 품질** — 리뷰, 검증, 정리 워크플로에서 활성화:
 
 | 스킬                       | 범위                                                           |
 | -------------------------- | -------------------------------------------------------------- |
 | `fec-frontend-code-review` | 아키텍처, 타입, 렌더링, 스타일, 접근성 리뷰                    |
 | `fec-security-review`      | XSS, CSRF, 민감 데이터 유출, 입력 검증                         |
 | `fec-accessibility-check`  | WCAG 2.1 AA 준수 검사                                          |
-| `fec-typescript-review`    | 타입 안전성, 비동기 정확성, 관용적 패턴                        |
-| `fec-testing-strategy`     | 정적, 단위, 컴포넌트, 통합, E2E, 시각 테스트 계층 선택         |
 | `fec-validation-fix`       | lint, type-check, test, build를 한 번에 실행하고 수정          |
 | `fec-refactor-clean`       | 데드 코드, 미사용 export, 스타일, 라우트, 의존성의 안전한 정리 |
 
-**기능 구현** — 특정 UI 화면을 구축할 때 활성화:
+**디자인 UI** — 디자인 구현, 디자인 시스템, 시각적 마무리에서 활성화:
 
-| 스킬                          | 범위                                                          |
-| ----------------------------- | ------------------------------------------------------------- |
-| `fec-implement-from-design`   | Figma/Sketch/MasterGo/Pixso/墨刀/摹客 디자인에서 UI 구현      |
-| `fec-data-fetching`           | TanStack Query / 서버 상태 페칭, 캐시, 낙관적 업데이트        |
-| `fec-form-handling`           | React Hook Form + Zod, 동적 필드, 업로드, 멀티스텝            |
-| `fec-browser-storage`         | localStorage / sessionStorage / IndexedDB / Cookies 선택      |
-| `fec-route-protection`        | React Router, Next.js, Vue Router, Nuxt의 인증 및 권한 라우팅 |
-| `fec-component-testing`       | React Testing Library / Vue Test Utils와 회귀 시나리오        |
-| `fec-storybook-component-doc` | Storybook 문서, 애드온, MDX, 인터랙션 및 시각 테스트          |
-| `fec-list-virtualization`     | react-window / TanStack Virtual를 이용한 대규모 리스트 가상화 |
-| `fec-e2e-testing`             | Playwright / Cypress E2E와 Page Object, CI 통합               |
-| `fec-pwa-implementation`      | 매니페스트, 서비스 워커, 오프라인 캐시, 설치 프롬프트         |
-| `fec-web-workers`             | Web Worker, Transferable, Comlink, 워커 풀                    |
-| `fec-canvas-threejs`          | Canvas 2D, Three.js, React Three Fiber, WebGL                 |
-| `fec-svg-animation`           | CSS / Framer Motion / GSAP SVG 애니메이션과 reduced-motion    |
+| 스킬                          | 범위                                                     |
+| ----------------------------- | -------------------------------------------------------- |
+| `fec-ui-design`              | UI 방향, 시각적 정체성, polish, 상태, visual QA          |
+| `fec-implement-from-design`   | Figma/Sketch/MasterGo/Pixso/墨刀/摹客 디자인에서 UI 구현 |
+| `fec-storybook-component-doc` | Storybook 문서, 애드온, MDX, 인터랙션 및 시각 테스트     |
 
-**UI 및 마무리** — 시각적 출력을 다듬을 때 활성화:
-
-| 스킬                      | 범위                                                         |
-| ------------------------- | ------------------------------------------------------------ |
-| `fec-ui-design`           | UI 방향, 시각적 정체성, polish, 상태, visual QA              |
-
-**마이그레이션 및 문서** — 현대화 또는 문서 작업 시 활성화:
+**레거시 마이그레이션** — 현대화 작업에서 활성화:
 
 | 스킬                             | 범위                                                               |
 | -------------------------------- | ------------------------------------------------------------------ |
 | `fec-legacy-web-standard`        | JS + jQuery + HTML 레거시 프로젝트 개발 및 유지보수 기준           |
 | `fec-legacy-to-modern-migration` | jQuery/MPA → React/Vue 3 + TS 마이그레이션 전략 및 단계별 워크플로 |
-| `fec-tdd-workflow`               | 테스트 우선 프론트엔드 구현, 빨강-초록 리팩토링                    |
-| `fec-doc-sync`                   | 공개 문서를 스크립트, 스킬, 에이전트, 명령어와 동기화              |
+
+**문서 유지보수** — 문서 작업에서 활성화:
+
+| 스킬           | 범위                                                          |
+| -------------- | ------------------------------------------------------------- |
+| `fec-doc-sync` | 공개 문서를 스크립트, 스킬, 에이전트, 명령어와 동기화         |
 
 ### 에이전트
 

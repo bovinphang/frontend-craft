@@ -156,50 +156,59 @@ Skills are workflow definitions that activate automatically based on file patter
 | `fec-vite-project-standard`     | Vite config, env safety, HMR, dev proxy, build optimization           |
 | `fec-monorepo-project-standard` | pnpm workspace, Turborepo, Nx structure and task orchestration        |
 
-**Quality & review** — activated during code review, PR, or refactoring workflows:
-
-| Skill                      | Scope                                                                    |
-| -------------------------- | ------------------------------------------------------------------------ |
-| `fec-frontend-code-review` | Architecture, types, rendering, styles, a11y review                      |
-| `fec-security-review`      | XSS, CSRF, sensitive data leakage, input validation                      |
-| `fec-accessibility-check`  | WCAG 2.1 AA compliance                                                   |
-| `fec-typescript-review`    | Type safety, async correctness, idiomatic patterns                       |
-| `fec-testing-strategy`     | Layer selection across static, unit, component, integration, E2E, visual |
-| `fec-validation-fix`       | Run and repair lint, type-check, test, build in one pass                 |
-| `fec-refactor-clean`       | Safe dead-code, unused export, style, route, dependency cleanup          |
-
-**Feature implementation** — activated when building specific UI surfaces:
+**Implementation capabilities** — activated when building specific frontend behavior:
 
 | Skill                         | Scope                                                                  |
 | ----------------------------- | ---------------------------------------------------------------------- |
-| `fec-implement-from-design`   | Build UI from Figma/Sketch/MasterGo/Pixso/墨刀/摹客 design files       |
 | `fec-data-fetching`           | TanStack Query / server-state fetching, caching, optimistic updates    |
 | `fec-form-handling`           | React Hook Form + Zod, dynamic fields, uploads, multi-step flows       |
 | `fec-browser-storage`         | localStorage / sessionStorage / IndexedDB / Cookies selection          |
 | `fec-route-protection`        | Auth and permission routes for React Router, Next.js, Vue Router, Nuxt |
-| `fec-component-testing`       | React Testing Library / Vue Test Utils with regression scenarios       |
-| `fec-storybook-component-doc` | Storybook docs, addons, MDX, interaction and visual test integration   |
-| `fec-list-virtualization`     | react-window / TanStack Virtual with measurement strategies            |
-| `fec-e2e-testing`             | Playwright / Cypress E2E with Page Object and CI integration           |
 | `fec-pwa-implementation`      | Manifest, service worker, offline cache, install prompts               |
 | `fec-web-workers`             | Web Worker integration, transferables, Comlink, worker pools           |
 | `fec-canvas-threejs`          | Canvas 2D, Three.js, React Three Fiber, WebGL                          |
 | `fec-svg-animation`           | CSS / Framer Motion / GSAP SVG animation with reduced-motion           |
+| `fec-list-virtualization`     | react-window / TanStack Virtual with measurement strategies            |
 
-**UI & polish** — activated when refining visual output:
+**Testing** — activated when planning or authoring frontend test coverage:
 
-| Skill                     | Scope                                                                |
-| ------------------------- | -------------------------------------------------------------------- |
-| `fec-ui-design`           | UI direction, visual identity, polish, states, visual QA            |
+| Skill                         | Scope                                                                    |
+| ----------------------------- | ------------------------------------------------------------------------ |
+| `fec-testing-strategy`        | Layer selection across static, unit, component, integration, E2E, visual |
+| `fec-component-testing`       | React Testing Library / Vue Test Utils with regression scenarios         |
+| `fec-e2e-testing`             | Playwright / Cypress E2E with Page Object and CI integration             |
+| `fec-tdd-workflow`            | Test-first frontend implementation with red-green-refactor               |
 
-**Migration & docs** — activated during modernization or documentation work:
+**Review & quality** — activated during review, validation, or cleanup workflows:
 
-| Skill                            | Scope                                                           |
-| -------------------------------- | --------------------------------------------------------------- |
-| `fec-legacy-web-standard`        | Standards for JS + jQuery + HTML maintenance                    |
-| `fec-legacy-to-modern-migration` | jQuery/MPA → React/Vue 3 + TS strategy and phased workflow      |
-| `fec-tdd-workflow`               | Test-first frontend implementation with red-green-refactor      |
-| `fec-doc-sync`                   | Keep public docs in sync with scripts, skills, agents, commands |
+| Skill                      | Scope                                                           |
+| -------------------------- | --------------------------------------------------------------- |
+| `fec-frontend-code-review` | Architecture, types, rendering, styles, a11y review             |
+| `fec-security-review`      | XSS, CSRF, sensitive data leakage, input validation             |
+| `fec-accessibility-check`  | WCAG 2.1 AA compliance                                          |
+| `fec-validation-fix`       | Run and repair lint, type-check, test, build in one pass        |
+| `fec-refactor-clean`       | Safe dead-code, unused export, style, route, dependency cleanup |
+
+**Design UI** — activated for design-to-code, design systems, and visual polish:
+
+| Skill                         | Scope                                                              |
+| ----------------------------- | ------------------------------------------------------------------ |
+| `fec-ui-design`              | UI direction, visual identity, polish, states, visual QA           |
+| `fec-implement-from-design`   | Build UI from Figma/Sketch/MasterGo/Pixso/墨刀/摹客 design files   |
+| `fec-storybook-component-doc` | Storybook docs, addons, MDX, interaction and visual test integration |
+
+**Legacy migration** — activated during modernization work:
+
+| Skill                            | Scope                                                      |
+| -------------------------------- | ---------------------------------------------------------- |
+| `fec-legacy-web-standard`        | Standards for JS + jQuery + HTML maintenance               |
+| `fec-legacy-to-modern-migration` | jQuery/MPA → React/Vue 3 + TS strategy and phased workflow |
+
+**Maintenance docs** — activated during documentation upkeep:
+
+| Skill          | Scope                                                           |
+| -------------- | --------------------------------------------------------------- |
+| `fec-doc-sync` | Keep public docs in sync with scripts, skills, agents, commands |
 
 ### Agents
 
