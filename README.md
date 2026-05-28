@@ -123,6 +123,20 @@ All slash commands below are shown for **Claude Code**; other runtimes expose th
 
 ---
 
+## Example prompts
+
+For a complete scenario-based prompt library, see [docs/example-prompts.md](docs/example-prompts.md).
+
+```text
+You: "Review my recent changes before merge. Focus on architecture, type safety, rendering behavior, styles, accessibility, and missing tests."
+You: "Before coding, plan the account billing feature: route structure, component boundaries, data flow, states, validation, tests, and rollout risks."
+You: "Build a multi-step registration form with React Hook Form + Zod, file upload, conditional fields, async validation, and accessible errors."
+You: "Implement the UI from Figma node 123:456. Use existing design tokens and components, match spacing and responsive states, and document assumptions."
+You: "`/fec-build-fix` Fix the failing validation commands from this log: <paste log>."
+```
+
+---
+
 ## What’s inside
 
 ### Commands

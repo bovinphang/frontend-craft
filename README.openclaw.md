@@ -170,13 +170,15 @@ frontend-craft/
 
 Skills live under `skills/<id>/SKILL.md`. OpenClaw exposes them as plugin skill roots (`openclaw.plugin.json` lists `skills` and `commands`). The harness typically **auto-selects** a workflow when your plain-language request matches a skill’s frontmatter `description`; exact behavior depends on your OpenClaw / agent setup. You do **not** need to know internal skill ids—describe the outcome you want. (Power users may still mention an id if they know it.)
 
+This section is a quick OpenClaw-oriented sample, not the full prompt catalog. For complete scenario-based prompts across skills, agents, commands, design workflows, testing, maintenance, and runtime setup, see [docs/example-prompts.md](docs/example-prompts.md).
+
 **Tips**
 
 - Point to **paths or components** when asking for reviews or refactors.
 - For design-to-code, attach a **Figma link / node id**, **screenshot**, or say which MCP you configured.
 - When lint, typecheck, tests, or build fail, name the **exact commands** you run if they are non-standard.
 
-**Scenarios and example prompts**
+**OpenClaw quick scenarios and example prompts**
 
 | Scenario                                   | Skill (reference)                | Example prompt (no skill names)                                                                                                                 |
 | ------------------------------------------ | -------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -209,7 +211,7 @@ Skills live under `skills/<id>/SKILL.md`. OpenClaw exposes them as plugin skill 
 
 **Slash commands (markdown under `commands/`)**
 
-These are loaded as command specs; use them when you want a **fixed checklist** instead of free-form matching. In chat, describe what you want—the agent can follow the matching command doc without you naming it.
+These are loaded as command specs; use them when you want a **fixed checklist** instead of free-form matching. In chat, describe what you want—the agent can follow the matching command doc without you naming it. The table below lists common OpenClaw examples; the complete command prompt set is in [docs/example-prompts.md](docs/example-prompts.md#power-user-prompts).
 
 | Command doc        | When to use                                                                                                 | Example (plain language)                                                                                                     |
 | ------------------ | ----------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------- |
