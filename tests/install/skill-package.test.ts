@@ -53,7 +53,7 @@ test("pack:skills creates one standalone publish package per skill", () => {
       assert.ok(fs.existsSync(path.join(destDir, requiredFile)), `missing ${requiredFile}: ${skillId}`);
     }
 
-    const standalonePkg = readJsonFile<{ version: string; description: string; keywords: string[] }>(
+    const standalonePkg = readJsonFile<{ version: string; description: string; keywords: string[]; files: string[] }>(
       path.join(destDir, "package.json"),
     );
     const publishMetadata = readJsonFile<{ version: string; description: string; references: string[]; relations?: SkillRelation }>(
@@ -66,6 +66,9 @@ test("pack:skills creates one standalone publish package per skill", () => {
     assert.equal(standalonePkg.description, frontmatter.description);
     assert.ok(standalonePkg.keywords.includes("agent-skill"));
     assert.ok(standalonePkg.keywords.includes("frontend-craft"));
+    assert.ok(standalonePkg.files.includes("references"));
+    assert.ok(standalonePkg.files.includes("scripts"));
+    assert.ok(standalonePkg.files.includes("data"));
     assert.equal(publishMetadata.version, pkg.version);
     assert.equal(publishMetadata.description, frontmatter.description);
     assert.deepEqual(publishMetadata.references, references);
@@ -75,7 +78,7 @@ test("pack:skills creates one standalone publish package per skill", () => {
     assert.equal(entry?.packagePath, toPosixPath(path.relative(root, destDir)));
     assert.equal(entry?.sourcePath, `skills/${skillId}`);
 
-    const copiedReferences = listReferenceFiles(path.join(destDir, "references"));
+    const copiedReferences = listPackagedFiles(destDir, references);
     assert.deepEqual(copiedReferences, references);
   }
 });
@@ -87,17 +90,9 @@ test("check:skills-publish validates generated standalone packages", () => {
   });
 });
 
-function listReferenceFiles(referencesDir: string): string[] {
-  if (!fs.existsSync(referencesDir)) return [];
-  const files: string[] = [];
-  collect(referencesDir, files);
-  return files.map((file) => toPosixPath(path.relative(path.dirname(referencesDir), file))).sort();
-}
-
-function collect(dir: string, files: string[]): void {
-  for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
-    const file = path.join(dir, entry.name);
-    if (entry.isDirectory()) collect(file, files);
-    else files.push(file);
-  }
+function listPackagedFiles(destDir: string, expectedFiles: string[]): string[] {
+  return expectedFiles
+    .filter((reference) => fs.existsSync(path.join(destDir, reference)))
+    .map((reference) => toPosixPath(reference))
+    .sort();
 }

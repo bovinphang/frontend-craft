@@ -1,11 +1,13 @@
 ---
 name: fec-ui-design
-description: Use when building, reviewing, or improving frontend UI that needs product-specific design direction, distinctive visual identity, anti-generic interface choices, first-screen hierarchy, UI polish, interaction states, responsive behavior, or visual QA. When an external design file is authoritative, implement from that source instead of inventing direction; Chinese triggers include UI 设计, 视觉风格, 不要模板化, 高级感, 界面打磨, 交互状态.
+description: Use when building, reviewing, or improving frontend UI that needs product-specific design direction, design-system generation, Master/Page overrides, distinctive visual identity, anti-generic interface choices, first-screen hierarchy, UI polish, chart UX, interaction states, responsive behavior, or visual QA. When an external design file is authoritative, implement from that source instead of inventing direction; Chinese triggers include UI 设计, 设计系统, 视觉风格, 不要模板化, 高级感, 界面打磨, 交互状态.
 ---
 
 # UI 设计
 
-适用于需要把前端界面推进到“符合产品语境、可扫描、可信赖、有辨识度，并且细节稳定”的 UI 任务。
+适用于需要把前端界面推进到“符合产品语境、可扫描、可信赖、有辨识度，并且细节稳定”的 UI 任务。需要系统化设计建议时，加载 [design-intelligence.md](references/design-intelligence.md)；需要长期沉淀设计系统时，加载 [master-page-overrides.md](references/master-page-overrides.md)；上线前做 UI/UX QA 时，加载 [pre-delivery-checklist.md](references/pre-delivery-checklist.md)。
+
+可执行设计系统生成器位于 [design-system.mjs](scripts/design-system.mjs)，其原创知识包包括 [product-rules.json](data/product-rules.json)、[style-archetypes.json](data/style-archetypes.json)、[ux-quality-rules.json](data/ux-quality-rules.json) 和 [stack-ui-rules.json](data/stack-ui-rules.json)。
 
 ## Purpose
 
@@ -23,24 +25,30 @@ description: Use when building, reviewing, or improving frontend UI that needs p
    - 视觉锚点可以来自信息结构、真实媒体、数据形态、行业材质、字体性格、交互节奏或空间组织，而不是空泛装饰。
    - 表现力必须服务业务语境：工具型界面重效率和稳定，展示型页面重主体识别和记忆点。
 
-3. 建立首屏与视觉层级
+3. 生成或读取设计系统
+   - 若项目还没有设计系统，可运行 `node skills/fec-ui-design/scripts/design-system.mjs "<product audience tone>" --project "<name>"` 生成建议。
+   - 若需要跨会话复用，使用 `--persist` 生成 `design-system/<project>/MASTER.md`；页面差异用 `--page <page>` 写入 `pages/<page>.md`。
+   - 构建具体页面时先读页面 override，再读 Master；页面规则只覆盖差异，不复制全量设计系统。
+
+4. 建立首屏与视觉层级
    - 工具型界面：首屏直接呈现核心工作区、列表、表格、画布或编辑器。
    - 落地页：H1 使用品牌、产品、地点、人名或明确品类，价值说明放在辅助文案。
    - 产品/对象页：首屏必须可见真实产品、对象、状态或可检查媒体。
    - 首屏应留下一个明确记忆点，但不能遮挡核心任务、导航和状态反馈。
 
-4. 组织视觉语言
+5. 组织视觉语言
    - 字体：优先沿用项目字体体系；若任务允许建立新方向，选择能表达产品性格的标题/正文字体组合，并保证可读性。
    - 色彩：明确主色、功能色、中性色和强调色的角色，避免所有元素平均用力。
    - 空间：根据任务选择高密度、留白、非对称、分栏、画布式或编辑器式布局，不套用固定卡片模板。
    - 动效：只为页面入场、层级展开、状态确认、错误反馈和重点引导建立节奏，并尊重 `prefers-reduced-motion`。
+   - 图表：先判断数据任务是趋势、比较、构成、分布还是流程，再选择图表，不把所有数据都做成卡片或饼图。
 
-5. 对齐组件与 token
+6. 对齐组件与 token
    - 先复用项目已有组件、token、图标库、路由和布局约定。
    - 缺少 token 时集中补齐或明确记录，不要在多个组件里散落硬编码。
    - 复杂 UI 在实现前写出复用组件、新建组件、响应式策略和状态覆盖。
 
-6. 打磨几何、文本和状态
+7. 打磨几何、文本和状态
    - 嵌套圆角遵循“外层圆角约等于内层圆角 + 间距”的光学关系。
    - 非对称图标、播放三角、箭头、星标等需要按视觉中心微调。
    - 标题和短文本可使用 `text-wrap: balance` 或 `text-wrap: pretty`。
@@ -48,7 +56,7 @@ description: Use when building, reviewing, or improving frontend UI that needs p
    - 小控件点击区域至少 40x40px，空间允许时优先 44x44px。
    - focus ring 用于键盘定位，hover/active 用于鼠标反馈，disabled 不只靠透明度表达。
 
-7. 验证设计结果
+8. 验证设计结果
    - 检查 loading、empty、error、disabled、hover、focus、selected 状态。
    - 在 mobile(375px)、tablet(768px)、desktop(1440px) 检查文案是否溢出或遮挡。
    - 对依赖图片、图表、画布或 3D 的界面，确认资源真实渲染且承担主体信息。
@@ -63,6 +71,7 @@ description: Use when building, reviewing, or improving frontend UI that needs p
 - 不用可见文案解释控件本该表达的功能，常见动作优先用图标和 tooltip。
 - 不为了质感添加大面积装饰、模糊光斑、无语义渐变或无关重写。
 - 不为了统一风格让整个界面落入单一色相；颜色应有层次和语义区分。
+- 不把生成器输出当成不可修改的设计稿；它是决策起点，必须结合项目已有组件、token、用户任务和真实数据校正。
 
 ## Expected Output
 

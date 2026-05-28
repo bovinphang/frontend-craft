@@ -1,0 +1,74 @@
+[
+  {
+    "id": "minimal",
+    "keywords": ["minimal", "clean", "enterprise", "trust", "calm"],
+    "description": "Quiet surfaces, strong hierarchy, restrained accents, fast scanning.",
+    "tokens": { "radius": "4-8px", "shadow": "low", "density": "medium-high" },
+    "bestFor": ["enterprise", "finance", "healthcare", "documentation"],
+    "avoid": ["empty white space without information priority", "low-contrast gray text"]
+  },
+  {
+    "id": "editorial",
+    "keywords": ["editorial", "magazine", "portfolio", "brand", "luxury"],
+    "description": "Expressive typography, strong media, controlled asymmetry, narrative pacing.",
+    "tokens": { "radius": "0-8px", "shadow": "content-dependent", "density": "medium" },
+    "bestFor": ["creative", "ecommerce", "portfolio", "launch pages"],
+    "avoid": ["decorative text that harms reading", "media that hides the actual product"]
+  },
+  {
+    "id": "glass",
+    "keywords": ["glass", "modern", "ai", "overlay", "depth"],
+    "description": "Layered translucent surfaces used sparingly for hierarchy and focus.",
+    "tokens": { "radius": "12-20px", "shadow": "soft depth", "density": "medium" },
+    "bestFor": ["modern SaaS", "AI tools", "visualization"],
+    "avoid": ["blurred low-contrast text", "using blur as pure decoration"]
+  },
+  {
+    "id": "brutalist",
+    "keywords": ["brutalist", "raw", "bold", "youth", "experimental"],
+    "description": "Hard edges, bold contrast, visible structure, intentionally direct composition.",
+    "tokens": { "radius": "0-4px", "shadow": "hard or none", "density": "variable" },
+    "bestFor": ["creative campaigns", "youth brands", "experimental portfolios"],
+    "avoid": ["serious regulated workflows", "inaccessible contrast or chaotic navigation"]
+  },
+  {
+    "id": "bento",
+    "keywords": ["bento", "cards", "modular", "features", "education"],
+    "description": "Modular information blocks with varied scale and clear grouping.",
+    "tokens": { "radius": "8px or less unless system differs", "shadow": "subtle", "density": "medium" },
+    "bestFor": ["feature overviews", "learning paths", "product summaries"],
+    "avoid": ["card-inside-card layouts", "equal-weight modules that hide priority"]
+  },
+  {
+    "id": "data-dense",
+    "keywords": ["dashboard", "analytics", "table", "monitoring", "dense"],
+    "description": "Operational density, table/chart alignment, semantic color, stable controls.",
+    "tokens": { "radius": "4-8px", "shadow": "minimal", "density": "high" },
+    "bestFor": ["dashboards", "admin", "monitoring", "analytics"],
+    "avoid": ["marketing hero screens", "large decorative cards"]
+  },
+  {
+    "id": "immersive",
+    "keywords": ["immersive", "game", "3d", "canvas", "story", "visualization"],
+    "description": "Full-bleed visual space with controls that remain predictable and readable.",
+    "tokens": { "radius": "contextual", "shadow": "scene-driven", "density": "low-medium" },
+    "bestFor": ["games", "3D previews", "interactive visualization"],
+    "avoid": ["framing the primary scene in a decorative card", "controls hidden by atmosphere"]
+  },
+  {
+    "id": "mobile-native",
+    "keywords": ["mobile", "app", "native", "touch", "safe-area"],
+    "description": "Touch-first layout with platform-safe spacing, clear feedback, and resilient text scaling.",
+    "tokens": { "radius": "platform-consistent", "shadow": "native elevation", "density": "touch-comfortable" },
+    "bestFor": ["mobile apps", "responsive tools", "field workflows"],
+    "avoid": ["hover-only behavior", "content behind safe areas"]
+  },
+  {
+    "id": "soft",
+    "keywords": ["soft", "wellness", "beauty", "calm", "organic"],
+    "description": "Warm surfaces, gentle contrast, tactile spacing, and calm interaction rhythm.",
+    "tokens": { "radius": "8-16px", "shadow": "soft", "density": "low-medium" },
+    "bestFor": ["wellness", "beauty", "lifestyle", "care services"],
+    "avoid": ["pastel contrast failures", "vague atmospheric imagery over real services"]
+  }
+]

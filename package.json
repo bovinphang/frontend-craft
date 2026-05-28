@@ -50,7 +50,7 @@
         "clean": "node -e \"require('node:fs').rmSync('dist',{recursive:true,force:true})\"",
         "typecheck": "tsc --noEmit -p tsconfig.json",
         "build": "npm run clean && npm run typecheck && tsx scripts/build-dist.ts",
-        "test": "npm run build && node --import tsx --test tests/converters/codex-agents.test.ts tests/install/cli.test.ts tests/install/end-to-end.test.ts tests/install/update.test.ts tests/install/all-runtimes-dry.test.ts tests/install/metadata-consistency.test.ts tests/install/npm-pack.test.ts tests/install/skill-package.test.ts tests/install/sync-version.test.ts tests/install/claude-cache.test.ts",
+        "test": "npm run build && node --import tsx --test tests/converters/codex-agents.test.ts tests/install/cli.test.ts tests/install/end-to-end.test.ts tests/install/update.test.ts tests/install/all-runtimes-dry.test.ts tests/install/metadata-consistency.test.ts tests/install/npm-pack.test.ts tests/install/skill-package.test.ts tests/install/ui-design-intelligence.test.ts tests/install/sync-version.test.ts tests/install/claude-cache.test.ts",
         "build:openclaw": "npm run build && tsx scripts/openclaw/build.ts",
         "audit:skills": "npm run build && tsx scripts/audit-skills.ts",
         "typecheck:openclaw": "tsc --noEmit -p tsconfig.openclaw.json",

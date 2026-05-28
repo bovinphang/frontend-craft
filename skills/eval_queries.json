@@ -561,6 +561,10 @@
       "检查按钮 hover active focus disabled 是否完整",
       "这个页面局部有模板感，帮我打磨得更精致",
       "做一次 UI polish pass",
+      "为这个美业预约产品生成设计系统建议",
+      "根据行业和产品类型给 dashboard 做 UI 方向",
+      "写一个 design-system Master 和 dashboard page override",
+      "检查这个图表页面的 chart UX 和视觉 QA",
       "product-specific distinctive UI design and visual QA"
     ],
     "should_not_trigger": [

@@ -329,15 +329,20 @@
     "boundaryWorkflows": [
       "Use an implementation-from-design workflow when an external design file is the source of truth.",
       "Use an accessibility workflow for keyboard, focus, ARIA, semantic structure, and contrast checks.",
-      "Use a code review workflow when UI issues cross architecture, types, rendering performance, and maintainability."
+      "Use a code review workflow when UI issues cross architecture, types, rendering performance, and maintainability.",
+      "Use generated design-system recommendations as direction only; external design files, project tokens, and shipped component APIs remain authoritative."
     ],
     "capabilityTags": [
       "ui-design",
       "design-direction",
+      "design-system",
+      "master-page-overrides",
+      "industry-ui",
       "visual-identity",
       "ui-polish",
       "anti-generic",
       "visual-qa",
+      "chart-ux",
       "accessibility"
     ]
   },

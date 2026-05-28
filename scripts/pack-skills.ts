@@ -98,7 +98,7 @@ for (const skillId of skillIds) {
     },
     homepage: pkg.homepage,
     keywords: unique(["agent-skill", "frontend-craft", skillMeta.category, ...skillMeta.tags, ...skillMeta.keywords]),
-    files: ["SKILL.md", "references", "metadata.json", "README.md", "LICENSE"],
+    files: ["SKILL.md", "references", "scripts", "data", "metadata.json", "README.md", "LICENSE"],
     publishConfig: { access: "public" },
   };
 
@@ -131,7 +131,7 @@ function renderReadme(
 ): string {
   const referenceSection =
     references.length > 0
-      ? `\n## References\n\n${references.map((reference) => `- [${reference}](${reference})`).join("\n")}\n`
+      ? `\n## Packaged Files\n\n${references.map((reference) => `- [${reference}](${reference})`).join("\n")}\n`
       : "";
   const relatedSection =
     relation?.relatedSkills && relation.relatedSkills.length > 0

@@ -1,0 +1,56 @@
+[
+  {
+    "category": "accessibility",
+    "priority": "critical",
+    "checks": ["Text contrast meets WCAG AA", "Focus rings are visible", "Icon-only controls have names", "Keyboard order follows visual order"],
+    "avoid": ["Removing outlines globally", "Color-only error or success states"]
+  },
+  {
+    "category": "interaction",
+    "priority": "critical",
+    "checks": ["Primary controls respond within 100ms", "Touch targets are at least 44x44px", "Disabled states are semantic and visible"],
+    "avoid": ["Hover-only primary actions", "Tap targets packed without spacing"]
+  },
+  {
+    "category": "performance",
+    "priority": "high",
+    "checks": ["Images reserve dimensions", "Large lists are virtualized", "Animations use transform/opacity", "Heavy visual work is deferred or moved off main thread"],
+    "avoid": ["Animating layout properties", "Unbounded chart or table rendering"]
+  },
+  {
+    "category": "layout",
+    "priority": "high",
+    "checks": ["375/768/1024/1440px layouts are checked", "No horizontal overflow", "Fixed headers/footers reserve content space"],
+    "avoid": ["Desktop-first max-width fixes", "Nested scroll regions without reason"]
+  },
+  {
+    "category": "typography",
+    "priority": "medium",
+    "checks": ["Body text stays readable", "Line length is controlled", "Numbers use tabular figures where alignment matters"],
+    "avoid": ["Tiny low-contrast labels", "Negative tracking on body text"]
+  },
+  {
+    "category": "animation",
+    "priority": "medium",
+    "checks": ["Micro-interactions are 150-300ms", "Exit is faster than enter", "Reduced motion is respected"],
+    "avoid": ["Decorative motion without cause", "Blocking input during transitions"]
+  },
+  {
+    "category": "forms",
+    "priority": "medium",
+    "checks": ["Labels are persistent", "Errors appear near fields", "Submit has loading/success/error feedback", "First invalid field receives focus"],
+    "avoid": ["Placeholder-only labels", "Error summary without field recovery"]
+  },
+  {
+    "category": "navigation",
+    "priority": "high",
+    "checks": ["Current location is visible", "Back behavior preserves state", "Primary navigation remains reachable"],
+    "avoid": ["Mixing multiple primary nav systems", "Using modals for primary navigation"]
+  },
+  {
+    "category": "charts",
+    "priority": "medium",
+    "checks": ["Chart type matches data question", "Units and legends are visible", "Data has text/table fallback", "Color is supplemented by shape or labels"],
+    "avoid": ["Pie charts for many categories", "Color-only series distinction"]
+  }
+]

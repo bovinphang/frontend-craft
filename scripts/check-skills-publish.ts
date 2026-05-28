@@ -84,25 +84,17 @@ for (const skillId of skillIds) {
   assertEqual(entry.packagePath, toPosixPath(path.relative(root, destDir)), `index package path mismatch: ${skillId}`);
   assertEqual(entry.sourcePath, `skills/${skillId}`, `index source path mismatch: ${skillId}`);
 
-  const copiedReferenceFiles = listPackageReferenceFiles(path.join(destDir, "references"));
+  const copiedReferenceFiles = listPackagedFiles(destDir, references);
   assertEqual(JSON.stringify(copiedReferenceFiles), JSON.stringify(references), `copied references mismatch: ${skillId}`);
 }
 
 console.log(`[check-skills-publish] OK: ${skillIds.length} standalone skill packages`);
 
-function listPackageReferenceFiles(referencesDir: string): string[] {
-  if (!fs.existsSync(referencesDir)) return [];
-  const out: string[] = [];
-  collect(referencesDir, out);
-  return out.map((file) => toPosixPath(path.relative(path.dirname(referencesDir), file))).sort();
-}
-
-function collect(dir: string, out: string[]): void {
-  for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
-    const file = path.join(dir, entry.name);
-    if (entry.isDirectory()) collect(file, out);
-    else out.push(file);
-  }
+function listPackagedFiles(destDir: string, expectedFiles: string[]): string[] {
+  return expectedFiles
+    .filter((reference) => fs.existsSync(path.join(destDir, reference)))
+    .map((reference) => toPosixPath(reference))
+    .sort();
 }
 
 function assertExists(filePath: string): void {

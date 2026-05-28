@@ -926,7 +926,10 @@
       "visual-identity",
       "ui-polish",
       "anti-generic",
-      "visual-qa"
+      "visual-qa",
+      "design-system",
+      "industry-ui",
+      "chart-ux"
     ],
     "summary": "Frontend Craft skill for product UI direction, distinctive visual identity, polish, interaction states, and visual QA.",
     "version": "2.3.1",
@@ -940,7 +943,13 @@
       "visual-identity",
       "ui-polish",
       "anti-generic",
-      "visual-qa"
+      "visual-qa",
+      "design-system",
+      "industry-ui",
+      "chart-ux",
+      "design-system-generation",
+      "industry-specific-ui",
+      "master-page-overrides"
     ],
     "platforms": [
       "skills-cli",
