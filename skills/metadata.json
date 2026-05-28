@@ -786,7 +786,7 @@
       "visual-testing",
       "mdx"
     ],
-    "summary": "Frontend Craft skill for Storybook 组件文档化.",
+    "summary": "Storybook component documentation, design-system presentation, isolated state previews, and Storybook-scoped visual baselines.",
     "version": "2.3.1",
     "license": "MIT",
     "homepage": "https://github.com/bovinphang/frontend-craft",

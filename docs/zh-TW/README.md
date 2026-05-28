@@ -136,6 +136,8 @@ npx frontend-craft@latest list
 
 技能是根據檔案模式、框架或任務上下文**自動啟用**的工作流定義，編碼了審查維度、輸出約定和報告格式。
 
+分類邊界刻意保持收窄：實作能力面向具體前端行為；設計 UI 面向設計來源、設計系統呈現、視覺方向和 UI 打磨；測試面向測試策略與測試撰寫；審查與品質面向審查、驗證修復和清理。文件維護暫時單獨保留，作為後續發布流程和 metadata 同步能力的入口。
+
 **專案規範** — 偵測到對應框架時自動生效：
 
 | 技能                            | 範圍                                                  |
@@ -186,7 +188,7 @@ npx frontend-craft@latest list
 | ----------------------------- | ------------------------------------------------------- |
 | `fec-ui-design`              | UI 方向、視覺識別、界面打磨、狀態、視覺 QA             |
 | `fec-implement-from-design`   | 基於 Figma/Sketch/MasterGo/Pixso/墨刀/摹客設計稿實現 UI |
-| `fec-storybook-component-doc` | Storybook 元件文件、Addon、MDX、互動與視覺測試          |
+| `fec-storybook-component-doc` | Storybook 元件文件、設計系統呈現、隔離狀態預覽          |
 
 **遺留遷移** — 現代化遷移時啟用：
 

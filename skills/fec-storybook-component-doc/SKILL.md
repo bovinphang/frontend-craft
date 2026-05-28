@@ -1,13 +1,13 @@
 ---
 name: fec-storybook-component-doc
-description: Use when setting up or reviewing Storybook component documentation, stories, addons, decorators, MDX docs, isolated component development, component-state interaction tests, visual baselines, Chromatic, or design system documentation. For real-browser cross-page journeys or broader coverage planning, choose the matching testing workflow first; Chinese triggers include Storybook, 组件文档, Design System, 视觉回归.
+description: Use when setting up or reviewing Storybook component documentation, design-system presentation, isolated component state previews, stories, addons, decorators, MDX docs, component-state interaction checks, visual baselines, or Chromatic. For real-browser cross-page journeys or broader coverage planning, choose the matching testing workflow first; Chinese triggers include Storybook, 组件文档, Design System, 视觉回归.
 ---
 
 # Storybook 组件文档化
 
 ## Purpose
 
-为 UI 组件建立隔离开发、状态预览和可交互文档环境。
+为 UI 组件建立文档化、设计系统展示和隔离状态预览环境；交互与视觉测试只覆盖 Storybook 场景内的组件状态。
 
 ## Procedure
 
@@ -15,7 +15,7 @@ description: Use when setting up or reviewing Storybook component documentation,
 2. 每个组件的 Story 覆盖默认态、主要变体、disabled、loading、error 和关键边缘状态。
 3. 依赖 Router、Store、i18n、ThemeProvider 的组件用 decorators 包裹，不在 Story 中复制应用入口。
 4. 复杂组件用 MDX 补充使用说明、Props、状态示例和源码展示。
-5. 需要自动化时接入 interaction tests、addon-a11y、Chromatic 或 Storybook Test Runner；仅覆盖组件状态和文档场景，不承接跨页业务旅程。
+5. 需要自动化时接入 interaction tests、addon-a11y、Chromatic 或 Storybook Test Runner；这些能力服务于组件文档和设计系统展示，不承接跨页业务旅程。
 
 ## Detailed References
 
@@ -32,4 +32,4 @@ description: Use when setting up or reviewing Storybook component documentation,
 
 ## Expected Output
 
-可交互的组件文档站点，每个组件状态都有可视化预览，Props 表格可生成，关键交互有可选 play 测试或视觉回归基线。
+可交互的组件文档和设计系统展示站点，每个组件状态都有隔离预览，Props 表格可生成，关键 Storybook 场景有可选 play 测试或视觉回归基线。

@@ -147,6 +147,8 @@ npx frontend-craft@latest install claude --local --force
 
 技能是根据文件模式、框架或任务上下文**自动激活**的工作流定义，编码了评审维度、输出约定和报告格式。
 
+分类边界刻意保持收窄：实现能力面向具体前端行为；设计 UI 面向设计来源、设计系统呈现、视觉方向和 UI 打磨；测试面向测试策略与测试编写；评审与质量面向审查、验证修复和清理。文档维护暂时单独保留，作为后续发布流程和 metadata 同步能力的入口。
+
 **项目规范** — 检测到对应框架时自动生效：
 
 | 技能                            | 范围                                                  |
@@ -197,7 +199,7 @@ npx frontend-craft@latest install claude --local --force
 | ----------------------------- | ------------------------------------------------------- |
 | `fec-ui-design`              | UI 方向、视觉识别、界面打磨、状态、视觉 QA             |
 | `fec-implement-from-design`   | 基于 Figma/Sketch/MasterGo/Pixso/墨刀/摹客设计稿实现 UI |
-| `fec-storybook-component-doc` | Storybook 组件文档、Addon、MDX、交互与视觉测试          |
+| `fec-storybook-component-doc` | Storybook 组件文档、设计系统呈现、隔离状态预览          |
 
 **遗留迁移** — 现代化迁移时激活：
 

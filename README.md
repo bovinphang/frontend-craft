@@ -145,6 +145,8 @@ Slash commands are the primary entry points for structured workflows. Most produ
 
 Skills are workflow definitions that activate automatically based on file patterns, frameworks, or task context. They encode review dimensions, output conventions, and report formats.
 
+Category boundaries are intentionally narrow: implementation capabilities cover concrete frontend behavior; design UI covers design sources, design-system presentation, visual direction, and UI polish; testing covers test strategy and test authoring; review & quality covers audits, validation repair, and cleanup. Maintenance docs stays separate as the docs/metadata sync entry point for future release-workflow expansion.
+
 **Project standards** — conventions enforced whenever matching frameworks are detected:
 
 | Skill                           | Scope                                                                 |
@@ -195,7 +197,7 @@ Skills are workflow definitions that activate automatically based on file patter
 | ----------------------------- | ------------------------------------------------------------------ |
 | `fec-ui-design`              | UI direction, visual identity, polish, states, visual QA           |
 | `fec-implement-from-design`   | Build UI from Figma/Sketch/MasterGo/Pixso/墨刀/摹客 design files   |
-| `fec-storybook-component-doc` | Storybook docs, addons, MDX, interaction and visual test integration |
+| `fec-storybook-component-doc` | Storybook component docs, design-system presentation, isolated state previews |
 
 **Legacy migration** — activated during modernization work:
 
