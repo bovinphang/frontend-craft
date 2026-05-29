@@ -3,13 +3,24 @@
     "id": "fec-accessibility-check",
     "name": "无障碍检查",
     "category": "review-quality",
-    "tags": ["a11y", "wcag", "accessibility", "audit"],
+    "tags": [
+      "a11y",
+      "wcag",
+      "accessibility",
+      "audit"
+    ],
     "summary": "Frontend Craft skill for 无障碍检查.",
     "version": "2.4.0",
     "license": "MIT",
     "homepage": "https://github.com/bovinphang/frontend-craft",
     "repository": "https://github.com/bovinphang/frontend-craft",
-    "keywords": ["review-quality", "a11y", "wcag", "accessibility", "audit"],
+    "keywords": [
+      "review-quality",
+      "a11y",
+      "wcag",
+      "accessibility",
+      "audit"
+    ],
     "platforms": [
       "skills-cli",
       "skillreg",
@@ -25,7 +36,13 @@
     "id": "fec-api-integration",
     "name": "API 集成",
     "category": "implementation-capability",
-    "tags": ["api", "typed-client", "auth-refresh", "upload", "realtime"],
+    "tags": [
+      "api",
+      "typed-client",
+      "auth-refresh",
+      "upload",
+      "realtime"
+    ],
     "summary": "Frontend API integration boundaries, typed clients, error mapping, auth refresh, uploads, and realtime choices.",
     "version": "2.4.0",
     "license": "MIT",
@@ -89,7 +106,14 @@
     "id": "fec-canvas-threejs",
     "name": "Canvas 与 Three.js",
     "category": "implementation-capability",
-    "tags": ["canvas", "webgl", "three.js", "3d", "visualization", "r3f"],
+    "tags": [
+      "canvas",
+      "webgl",
+      "three.js",
+      "3d",
+      "visualization",
+      "r3f"
+    ],
     "summary": "Frontend Craft skill for Canvas 与 Three.js.",
     "version": "2.4.0",
     "license": "MIT",
@@ -119,7 +143,12 @@
     "id": "fec-code-review",
     "name": "前端代码审查",
     "category": "review-quality",
-    "tags": ["code-review", "architecture", "quality", "best-practices"],
+    "tags": [
+      "code-review",
+      "architecture",
+      "quality",
+      "best-practices"
+    ],
     "summary": "Frontend Craft skill for 前端代码审查.",
     "version": "2.4.0",
     "license": "MIT",
@@ -287,7 +316,13 @@
     "id": "fec-doc-sync",
     "name": "文档同步",
     "category": "maintenance-docs",
-    "tags": ["docs", "readme", "metadata", "sync", "runtime-docs"],
+    "tags": [
+      "docs",
+      "readme",
+      "metadata",
+      "sync",
+      "runtime-docs"
+    ],
     "summary": "Frontend Craft skill for 文档同步.",
     "version": "2.4.0",
     "license": "MIT",
@@ -316,7 +351,14 @@
     "id": "fec-e2e-testing",
     "name": "E2E 测试规范",
     "category": "testing",
-    "tags": ["playwright", "cypress", "e2e", "visual-regression", "ci", "pom"],
+    "tags": [
+      "playwright",
+      "cypress",
+      "e2e",
+      "visual-regression",
+      "ci",
+      "pom"
+    ],
     "summary": "Frontend Craft skill for E2E 测试规范.",
     "version": "2.4.0",
     "license": "MIT",
@@ -381,7 +423,14 @@
     "id": "fec-implement-from-design",
     "name": "设计稿实现",
     "category": "design-ui",
-    "tags": ["figma", "sketch", "mastergo", "pixso", "design-to-code", "mcp"],
+    "tags": [
+      "figma",
+      "sketch",
+      "mastergo",
+      "pixso",
+      "design-to-code",
+      "mcp"
+    ],
     "summary": "Frontend Craft skill for 设计稿实现.",
     "version": "2.4.0",
     "license": "MIT",
@@ -411,7 +460,14 @@
     "id": "fec-legacy-to-modern-migration",
     "name": "遗留系统迁移",
     "category": "legacy-migration",
-    "tags": ["migration", "jquery", "mpa", "react", "vue", "modernization"],
+    "tags": [
+      "migration",
+      "jquery",
+      "mpa",
+      "react",
+      "vue",
+      "modernization"
+    ],
     "summary": "Frontend Craft skill for 遗留系统迁移.",
     "version": "2.4.0",
     "license": "MIT",
@@ -441,13 +497,24 @@
     "id": "fec-legacy-web-standard",
     "name": "传统前端规范",
     "category": "legacy-migration",
-    "tags": ["jquery", "mpa", "legacy", "vanilla-js"],
+    "tags": [
+      "jquery",
+      "mpa",
+      "legacy",
+      "vanilla-js"
+    ],
     "summary": "Frontend Craft skill for 传统前端规范.",
     "version": "2.4.0",
     "license": "MIT",
     "homepage": "https://github.com/bovinphang/frontend-craft",
     "repository": "https://github.com/bovinphang/frontend-craft",
-    "keywords": ["legacy-migration", "jquery", "mpa", "legacy", "vanilla-js"],
+    "keywords": [
+      "legacy-migration",
+      "jquery",
+      "mpa",
+      "legacy",
+      "vanilla-js"
+    ],
     "platforms": [
       "skills-cli",
       "skillreg",
@@ -498,7 +565,13 @@
     "id": "fec-monorepo-project-standard",
     "name": "Monorepo 项目规范",
     "category": "project-standard",
-    "tags": ["monorepo", "pnpm", "turborepo", "nx", "workspace"],
+    "tags": [
+      "monorepo",
+      "pnpm",
+      "turborepo",
+      "nx",
+      "workspace"
+    ],
     "summary": "Frontend Craft skill for Monorepo 项目规范.",
     "version": "2.4.0",
     "license": "MIT",
@@ -527,7 +600,13 @@
     "id": "fec-motion-interaction",
     "name": "交互动效",
     "category": "design-ui",
-    "tags": ["motion", "framer-motion", "gsap", "lottie", "reduced-motion"],
+    "tags": [
+      "motion",
+      "framer-motion",
+      "gsap",
+      "lottie",
+      "reduced-motion"
+    ],
     "summary": "Frontend interaction motion strategy, tool selection, performance budgets, and accessible reduced-motion behavior.",
     "version": "2.4.0",
     "license": "MIT",
@@ -556,7 +635,13 @@
     "id": "fec-nextjs-project-standard",
     "name": "Next.js 项目规范",
     "category": "project-standard",
-    "tags": ["nextjs", "app-router", "ssr", "rsc", "react"],
+    "tags": [
+      "nextjs",
+      "app-router",
+      "ssr",
+      "rsc",
+      "react"
+    ],
     "summary": "Frontend Craft skill for Next.js 项目规范.",
     "version": "2.4.0",
     "license": "MIT",
@@ -585,7 +670,13 @@
     "id": "fec-nuxt-project-standard",
     "name": "Nuxt 项目规范",
     "category": "project-standard",
-    "tags": ["nuxt", "vue", "ssr", "ssg", "data-fetching"],
+    "tags": [
+      "nuxt",
+      "vue",
+      "ssr",
+      "ssg",
+      "data-fetching"
+    ],
     "summary": "Frontend Craft skill for Nuxt 项目规范.",
     "version": "2.4.0",
     "license": "MIT",
@@ -614,7 +705,13 @@
     "id": "fec-performance-optimization",
     "name": "前端性能优化",
     "category": "review-quality",
-    "tags": ["performance", "web-vitals", "bundle", "runtime", "lighthouse"],
+    "tags": [
+      "performance",
+      "web-vitals",
+      "bundle",
+      "runtime",
+      "lighthouse"
+    ],
     "summary": "Frontend performance workflow for Core Web Vitals, bundle size, rendering cost, memory leaks, network waterfalls, budgets, and evidence-based optimization.",
     "version": "2.4.0",
     "license": "MIT",
@@ -643,7 +740,13 @@
     "id": "fec-pwa-implementation",
     "name": "PWA 实现",
     "category": "implementation-capability",
-    "tags": ["pwa", "service-worker", "offline", "workbox", "installable"],
+    "tags": [
+      "pwa",
+      "service-worker",
+      "offline",
+      "workbox",
+      "installable"
+    ],
     "summary": "Frontend Craft skill for PWA 实现.",
     "version": "2.4.0",
     "license": "MIT",
@@ -672,7 +775,13 @@
     "id": "fec-react-project-standard",
     "name": "React 项目规范",
     "category": "project-standard",
-    "tags": ["react", "typescript", "hooks", "components", "architecture"],
+    "tags": [
+      "react",
+      "typescript",
+      "hooks",
+      "components",
+      "architecture"
+    ],
     "summary": "Frontend Craft skill for React 项目规范.",
     "version": "2.4.0",
     "license": "MIT",
@@ -808,7 +917,14 @@
     "id": "fec-security-review",
     "name": "前端安全审查",
     "category": "review-quality",
-    "tags": ["xss", "csrf", "csp", "security", "owasp", "dompurify"],
+    "tags": [
+      "xss",
+      "csrf",
+      "csp",
+      "security",
+      "owasp",
+      "dompurify"
+    ],
     "summary": "Frontend Craft skill for 前端安全审查.",
     "version": "2.4.0",
     "license": "MIT",
@@ -908,7 +1024,13 @@
     "id": "fec-tailwind-design-system",
     "name": "Tailwind 设计系统",
     "category": "design-ui",
-    "tags": ["tailwind", "design-system", "tokens", "variants", "dark-mode"],
+    "tags": [
+      "tailwind",
+      "design-system",
+      "tokens",
+      "variants",
+      "dark-mode"
+    ],
     "summary": "Tailwind CSS design-system workflow for token mapping, theme extension, component variants, class governance, responsive utilities, and dark mode.",
     "version": "2.4.0",
     "license": "MIT",
@@ -972,7 +1094,13 @@
     "id": "fec-svg-animation",
     "name": "SVG 动画",
     "category": "implementation-capability",
-    "tags": ["svg", "animation", "framer-motion", "gsap", "micro-interaction"],
+    "tags": [
+      "svg",
+      "animation",
+      "framer-motion",
+      "gsap",
+      "micro-interaction"
+    ],
     "summary": "Frontend Craft skill for SVG 动画.",
     "version": "2.4.0",
     "license": "MIT",
@@ -1116,7 +1244,13 @@
     "id": "fec-typescript-type-safety",
     "name": "TypeScript 类型安全",
     "category": "review-quality",
-    "tags": ["typescript", "type-safety", "generics", "type-guards", "dto"],
+    "tags": [
+      "typescript",
+      "type-safety",
+      "generics",
+      "type-guards",
+      "dto"
+    ],
     "summary": "TypeScript type modeling, contracts, discriminated unions, type guards, DTO mapping, advanced generics, and type-level regression checks.",
     "version": "2.4.0",
     "license": "MIT",
@@ -1145,7 +1279,14 @@
     "id": "fec-validation-fix",
     "name": "验证与修复",
     "category": "review-quality",
-    "tags": ["validation", "lint", "typecheck", "test", "build", "fix"],
+    "tags": [
+      "validation",
+      "lint",
+      "typecheck",
+      "test",
+      "build",
+      "fix"
+    ],
     "summary": "Frontend Craft skill for 验证与修复.",
     "version": "2.4.0",
     "license": "MIT",
@@ -1175,7 +1316,14 @@
     "id": "fec-vite-project-standard",
     "name": "Vite 项目规范",
     "category": "project-standard",
-    "tags": ["vite", "build", "hmr", "env", "bundle", "dev-server"],
+    "tags": [
+      "vite",
+      "build",
+      "hmr",
+      "env",
+      "bundle",
+      "dev-server"
+    ],
     "summary": "Frontend Craft skill for Vite 项目规范.",
     "version": "2.4.0",
     "license": "MIT",
@@ -1205,7 +1353,13 @@
     "id": "fec-vue3-project-standard",
     "name": "Vue 3 项目规范",
     "category": "project-standard",
-    "tags": ["vue3", "typescript", "composition-api", "pinia", "components"],
+    "tags": [
+      "vue3",
+      "typescript",
+      "composition-api",
+      "pinia",
+      "components"
+    ],
     "summary": "Frontend Craft skill for Vue 3 项目规范.",
     "version": "2.4.0",
     "license": "MIT",
