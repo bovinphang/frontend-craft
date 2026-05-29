@@ -26,6 +26,7 @@
 | 评审最近改动 | 「合并前请评审我最近的改动。重点看架构、类型安全、渲染行为、样式、无障碍和缺失测试；先列问题。」 | `fec-code-review`、`fec-code-reviewer`、`/fec-review` | 按严重级别排序的评审，带文件引用和测试缺口。 | 可补充分支名或 diff 范围。 |
 | PR 合并准备 | 「请把 `src/features/checkout/` 当作 PR 评审，指出阻塞项、风险假设，以及合并前必须补的测试。」 | `fec-code-reviewer` | 合并准备度判断和结构化报告。 | 若运行时可访问 PR，可贴 PR 链接。 |
 | TypeScript 专项评审 | 「请审计本次改动中的 `.ts` 和 `.tsx`：不安全类型、异步问题、过宽接口、陈旧派生状态、React/TypeScript 惯用法。」 | `fec-typescript-reviewer` | TypeScript 专项问题清单，通常只报告不修改。 | JS/TS 改动占主要部分时最适合。 |
+| 类型契约评审 | 「请评审 `src/features/billing/` 的 API DTO、组件 props、泛型工具和类型守卫，找出不安全断言、过宽类型和缺失的运行时收窄。」 | `fec-typescript-type-safety`、`fec-typescript-reviewer` | 类型边界问题、更安全的建模建议和类型测试建议。 | 适合 SDK、设计系统或 API 密集改动。 |
 | 安全审查 | 「请审计 `src/lib/auth.ts`、API client 和所有渲染用户 HTML 的代码，关注 XSS、token 泄露、不安全存储、CSRF 假设和危险 DOM API。」 | `fec-security-review`、`fec-security-reviewer` | 按严重程度排序的安全问题和修复建议。 | 补充鉴权模型和存储约束。 |
 | 无障碍检查 | 「请检查 `src/components/ConfirmDialog.tsx` 的焦点陷阱、键盘流程、标签、ARIA、读屏行为和 WCAG 2.1 AA 问题。」 | `fec-accessibility-check` | 无障碍问题和可落地修改建议。 | 视觉焦点问题最好附截图。 |
 | 性能审查 | 「请基于证据分析 dashboard 性能：Core Web Vitals、包体积、渲染热点、数据瀑布流、内存泄漏和合理性能预算。」 | `fec-performance-optimization`、`fec-performance-optimizer` | 性能报告，包含基线证据、优先级、验证命令和针对性修复。 | 有 Lighthouse、trace、profile 或慢路径更好。 |
@@ -53,6 +54,7 @@
 | 官方文档核对 | 「请确认当前 Vite 版本是否还需要这个依赖预构建 workaround。先看项目配置和官方文档，再建议是否删除。」 | `fec-source-driven-development`、`fec-vite-project-standard` | 版本感知的建议，包含来源说明、回退和验证计划。 | 适合删除兼容代码前使用。 |
 | Monorepo 边界 | 「请检查 `apps/web` 和 `packages/ui` 的包边界、workspace 依赖、构建脚本和 Turborepo/Nx 任务图。」 | `fec-monorepo-project-standard` | 边界与任务编排评审。 | 补充包管理器和 workspace 文件。 |
 | 服务端状态 | 「请评审 `src/queries/useReports.ts`：query key、缓存时间、失效策略、乐观更新、错误状态和 suspense/loading 行为。」 | `fec-data-fetching` | TanStack Query / 服务端状态建议或实现。 | 补充 API 变化频率和 UX 预期。 |
+| 状态归属 | 「请审计 dashboard 的状态归属：哪些属于 URL 参数、TanStack Query、本地组件 state、浏览器持久化或全局 store，并给出安全迁移方案。」 | `fec-state-management` | 状态清单、归属决策、store 边界和验证步骤。 | 适合 store 重构或清理重复状态前使用。 |
 | API 集成 | 「请为 checkout 设计类型化 API 集成层：client 边界、错误映射、鉴权刷新、上传策略，以及订单更新用 polling、SSE 还是 WebSocket。」 | `fec-api-integration` | API client 策略或实现，包含失败状态和联调检查。 | 补充后端归属、鉴权模型和接口契约。 |
 | 复杂表单 | 「请用 React Hook Form + Zod 构建多步注册表单，包含文件上传、条件字段、异步校验和可访问错误提示。」 | `fec-form-handling` | 类型化表单实现，必要时包含测试。 | 补充最终提交 payload。 |
 | 路由保护 | 「请为 `/admin` 添加基于角色的保护：匿名用户重定向，未授权角色拒绝访问，保留 return URL，并避免受保护内容闪现。」 | `fec-route-protection` | Auth guard / middleware 实现。 | 说明鉴权来源和角色模型。 |

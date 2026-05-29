@@ -1,6 +1,6 @@
 # API 集成实现模式
 
-## Typed Fetch Client
+## 类型化 Fetch 客户端
 
 ```ts
 export class ApiError extends Error {
@@ -8,11 +8,14 @@ export class ApiError extends Error {
     public readonly status: number,
     public readonly body: unknown,
   ) {
-    super(`API request failed with ${status}`);
+    super(`API 请求失败，状态码 ${status}`);
   }
 }
 
-export async function requestJson<T>(path: string, init: RequestInit = {}): Promise<T> {
+export async function requestJson<T>(
+  path: string,
+  init: RequestInit = {},
+): Promise<T> {
   const response = await fetch(`${import.meta.env.VITE_API_URL}${path}`, {
     ...init,
     headers: {
@@ -33,45 +36,45 @@ export async function requestJson<T>(path: string, init: RequestInit = {}): Prom
 }
 ```
 
-## User-Facing Error Mapping
+## 用户端错误映射
 
 ```ts
 export function getApiMessage(error: unknown): string {
-  if (!(error instanceof ApiError)) return "Something went wrong. Please try again.";
+  if (!(error instanceof ApiError)) return "操作失败，请稍后重试。";
 
-  if (error.status === 401) return "Please sign in again.";
-  if (error.status === 403) return "You do not have permission for this action.";
-  if (error.status === 404) return "The requested item no longer exists.";
-  if (error.status === 409) return "This change conflicts with newer data.";
-  if (error.status === 422) return "Please check the highlighted fields.";
-  if (error.status === 429) return "Too many requests. Please wait a moment.";
+  if (error.status === 401) return "请重新登录。";
+  if (error.status === 403) return "您没有权限执行此操作。";
+  if (error.status === 404) return "请求的资源已不存在。";
+  if (error.status === 409) return "此变更与最新数据冲突。";
+  if (error.status === 422) return "请检查标红字段。";
+  if (error.status === 429) return "请求过于频繁，请稍后再试。";
 
-  return "The service is unavailable. Please try again later.";
+  return "服务暂不可用，请稍后重试。";
 }
 ```
 
-## Upload Selection
+## 上传选型
 
-| Need | Prefer |
-| --- | --- |
-| Small avatar or CSV | Multipart request |
-| Large video or archive | Presigned direct upload |
-| Unstable network and large files | Resumable chunk upload |
-| Compliance scanning before storage | API-mediated upload with size limits |
+| 需求             | 推荐方案                      |
+| ---------------- | ----------------------------- |
+| 小头像或 CSV     | Multipart 请求                |
+| 大视频或归档文件 | 预签名直传                    |
+| 弱网环境大文件   | 分片断点续传                  |
+| 入库前合规扫描   | 经 API 中介上传（含大小限制） |
 
-## Realtime Selection
+## 实时通信选型
 
-| Need | Prefer |
-| --- | --- |
-| Job progress or notifications | SSE |
-| Chat, presence, collaboration | WebSocket |
-| Status every few seconds | Polling |
-| AI token stream from server | SSE or fetch stream |
+| 需求                 | 推荐方案                  |
+| -------------------- | ------------------------- |
+| 任务进度或通知       | SSE（Server-Sent Events） |
+| 聊天、在线状态、协作 | WebSocket                 |
+| 数秒一次的状态轮询   | 定时轮询（Polling）       |
+| 服务端 AI Token 流   | SSE 或 fetch 流式响应     |
 
-## Review Checklist
+## 审查清单
 
-- API URL and credentials are centralized.
-- Client has behavior for 204, non-JSON errors, cancellation, and offline state.
-- Auth refresh cannot create request storms.
-- Components consume hooks/domain functions instead of raw fetch.
-- Upload and realtime flows expose progress, cancellation, failure, and retry states.
+- API 地址和凭证集中管理。
+- 客户端需处理 204、非 JSON 错误、取消和离线状态。
+- Token 刷新机制不能引发请求风暴。
+- 组件应消费 hooks/领域函数，而非直接调用原始 fetch。
+- 上传和实时流需暴露进度、取消、失败和重试状态。

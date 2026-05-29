@@ -5,6 +5,7 @@
       "fec-security-review",
       "fec-route-protection",
       "fec-form-handling",
+      "fec-typescript-type-safety",
       "fec-source-driven-development"
     ],
     "boundaryWorkflows": [
@@ -24,6 +25,7 @@
     "relatedSkills": [
       "fec-security-review",
       "fec-pwa-implementation",
+      "fec-state-management",
       "fec-data-fetching"
     ],
     "boundaryWorkflows": [
@@ -63,6 +65,8 @@
       "fec-e2e-testing",
       "fec-validation-fix",
       "fec-performance-optimization",
+      "fec-typescript-type-safety",
+      "fec-state-management",
       "fec-source-driven-development"
     ],
     "boundaryWorkflows": [
@@ -97,6 +101,7 @@
   },
   "fec-data-fetching": {
     "relatedSkills": [
+      "fec-state-management",
       "fec-form-handling",
       "fec-pwa-implementation",
       "fec-list-virtualization"
@@ -134,6 +139,7 @@
     "relatedSkills": [
       "fec-component-testing",
       "fec-data-fetching",
+      "fec-state-management",
       "fec-accessibility-check"
     ],
     "boundaryWorkflows": [
@@ -292,6 +298,8 @@
   },
   "fec-react-project-standard": {
     "relatedSkills": [
+      "fec-typescript-type-safety",
+      "fec-state-management",
       "fec-form-handling",
       "fec-data-fetching",
       "fec-component-testing",
@@ -305,7 +313,7 @@
       "fec-motion-interaction"
     ],
     "boundaryWorkflows": [
-      "Use specialty workflows for complex forms, server state, tests, accessibility, security, large lists, animation, or graphics.",
+      "Use specialty workflows for complex forms, state ownership, TypeScript contracts, server state, tests, accessibility, security, large lists, animation, or graphics.",
       "Keep generic React component architecture and hooks organization in the React project workflow."
     ],
     "capabilityTags": [
@@ -348,6 +356,27 @@
       "source-driven",
       "official-docs",
       "version-sensitive"
+    ]
+  },
+  "fec-state-management": {
+    "relatedSkills": [
+      "fec-data-fetching",
+      "fec-form-handling",
+      "fec-browser-storage",
+      "fec-route-protection",
+      "fec-react-project-standard",
+      "fec-vue3-project-standard"
+    ],
+    "boundaryWorkflows": [
+      "Use a data-fetching workflow for query keys, cache lifetime, invalidation, optimistic updates, and server-state hooks.",
+      "Use a form workflow for field registration, validation, submit flows, and form-specific dirty/error state.",
+      "Use a browser storage workflow when state must persist across reloads, sessions, offline mode, or cookie boundaries."
+    ],
+    "capabilityTags": [
+      "state-management",
+      "store-selection",
+      "url-state",
+      "state-ownership"
     ]
   },
   "fec-storybook-component-doc": {
@@ -394,6 +423,26 @@
       "tdd",
       "testing",
       "workflow"
+    ]
+  },
+  "fec-typescript-type-safety": {
+    "relatedSkills": [
+      "fec-code-review",
+      "fec-api-integration",
+      "fec-react-project-standard",
+      "fec-vue3-project-standard",
+      "fec-form-handling"
+    ],
+    "boundaryWorkflows": [
+      "Use a general code review workflow when the task spans architecture, rendering, styles, tests, and maintainability beyond type contracts.",
+      "Use an API integration workflow for runtime API client boundaries, auth refresh, uploads, realtime behavior, and error mapping.",
+      "Use framework project workflows when type decisions are part of broader React, Vue, Next.js, or Nuxt module architecture."
+    ],
+    "capabilityTags": [
+      "typescript",
+      "type-safety",
+      "type-modeling",
+      "dto"
     ]
   },
   "fec-testing-strategy": {
@@ -463,6 +512,8 @@
   },
   "fec-vue3-project-standard": {
     "relatedSkills": [
+      "fec-typescript-type-safety",
+      "fec-state-management",
       "fec-form-handling",
       "fec-data-fetching",
       "fec-component-testing",
@@ -474,7 +525,7 @@
       "fec-canvas-threejs"
     ],
     "boundaryWorkflows": [
-      "Use specialty workflows for complex forms, server state, tests, accessibility, security, large lists, animation, or graphics.",
+      "Use specialty workflows for complex forms, state ownership, TypeScript contracts, server state, tests, accessibility, security, large lists, animation, or graphics.",
       "Keep generic Vue component architecture, composables, and Pinia boundaries in the Vue project workflow."
     ],
     "capabilityTags": [

@@ -1,28 +1,28 @@
 # Shader 与 WebGL 模式
 
-## Technique Routing
+## 技术选型参考
 
-| Goal | Start With | Watch |
-| --- | --- | --- |
-| Mathematical 3D forms | SDF + ray marching | Step count, normal quality, soft shadow cost |
-| Organic motion | Noise + domain warp | Overdraw, repeated noise calls |
-| Particles | Instancing or shader particles | Mobile particle cap, blending cost |
-| Bloom/glitch/color grade | Post-processing pass | Extra framebuffer memory |
-| Persistent simulation | Ping-pong framebuffer | Texture format support |
-| White screen debugging | Compile/link logs | Function order, uniforms optimized out |
+| 目标               | 推荐起点           | 注意事项                       |
+| ------------------ | ------------------ | ------------------------------ |
+| 数学几何 3D 形态   | SDF + 光线步进     | 步数上限、法线质量、软阴影开销 |
+| 有机运动效果       | 噪声 + 域扭曲      | 过度绘制、重复噪声调用         |
+| 粒子效果           | 实例化或着色器粒子 | 移动端粒子数量上限、混合开销   |
+| 泛光/故障/色彩调整 | 后处理通道         | 额外帧缓冲区显存               |
+| 持续模拟           | 乒乓帧缓冲区       | 纹理格式支持                   |
+| 白屏调试           | 编译/链接日志      | 函数顺序、被优化掉的 uniform   |
 
-## WebGL2 Adaptation Checklist
+## WebGL2 适配清单
 
-- Fragment shader starts with `#version 300 es`.
-- Add `precision highp float;` and `out vec4 fragColor;`.
-- Use `in`/`out` instead of legacy `varying`.
-- Use `texture()` instead of `texture2D()`.
-- Wrap ShaderToy-style `mainImage` with a standard `main`.
-- Use `gl_FragCoord.xy` for fragment coordinates.
-- Declare helper functions before they are called.
-- Precompute constants instead of putting function calls inside macros.
+- 片元着色器以 `#version 300 es` 开头。
+- 添加 `precision highp float;` 和 `out vec4 fragColor;`。
+- 用 `in`/`out` 替代旧版 `varying`。
+- 用 `texture()` 替代 `texture2D()`。
+- 将 ShaderToy 风格的 `mainImage` 包装为标准 `main`。
+- 使用 `gl_FragCoord.xy` 获取片元坐标。
+- 辅助函数必须在被调用前声明。
+- 预计算常量，不要在宏定义中放函数调用。
 
-## Runtime Skeleton
+## 运行时骨架
 
 ```ts
 const gl = canvas.getContext("webgl2");
@@ -42,26 +42,26 @@ function compile(type: number, source: string) {
 }
 ```
 
-## Performance Budget
+## 性能预算
 
-- Ray marching steps: start at 64, raise only when artifacts prove it is needed.
-- Volume samples: start at 16-24 per ray on desktop, lower on mobile.
-- FBM octaves: start at 4; avoid nested FBM inside ray loops.
-- DPR: cap at 2 on desktop and 1.5 on mobile-heavy scenes.
-- Texture size: use compressed or resized assets; do not assume 4K textures are safe.
+- 光线步进步数：从 64 起步，仅在出现伪影且证明必要时再提升。
+- 体积采样：桌面端每条射线 16-24 次，移动端酌情降低。
+- FBM 倍频：从 4 开始；避免在光线循环内嵌套 FBM。
+- DPR：桌面端上限 2，移动端重度场景上限 1.5。
+- 纹理尺寸：使用压缩或缩放资源；不要假设 4K 纹理是安全的。
 
-## Debug Views
+## 调试视图
 
-- Normals: output normalized normal mapped to 0-1.
-- Step count: output steps divided by max steps.
-- Distance/depth: output hit distance as grayscale.
-- UV: output `vec3(uv, 0.0)` after mapping.
-- Material id: map ids to a small fixed palette.
+- 法线：输出归一化后的法线，映射到 0-1 范围。
+- 步数：输出当前步数除以最大步数。
+- 距离/深度：以灰度输出命中距离。
+- UV：映射后输出 `vec3(uv, 0.0)`。
+- 材质 ID：将 ID 映射到少量固定调色板。
 
-## Visual Verification
+## 视觉验证
 
-- Canvas is nonblank at desktop and mobile sizes.
-- Resize updates drawing buffer, viewport, camera aspect, and uniforms.
-- Reduced-power mode still responds or has a static fallback.
-- Console has no shader compile/link errors.
-- Animation stops on unmount or when the scene is hidden.
+- 桌面端和移动端尺寸下 Canvas 不为空白。
+- 缩放时更新绘制缓冲区、视口、相机纵横比和 uniform。
+- 低功耗模式下仍能响应，或有静态降级方案。
+- 控制台无着色器编译/链接错误。
+- 卸载或场景隐藏时停止动画。

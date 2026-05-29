@@ -9,6 +9,7 @@ skills:
   - fec-code-review
   - fec-vue3-project-standard
   - fec-react-project-standard
+  - fec-state-management
   - fec-legacy-to-modern-migration
   - fec-e2e-testing
   - fec-nextjs-project-standard

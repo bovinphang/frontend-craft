@@ -17,10 +17,11 @@ description: Use when designing or reviewing Vue 3 + TypeScript project structur
 2. 划分页面、业务组件、通用组件、composables、stores、services 和 utils 的边界。
 3. 优先沿用 `<script setup lang="ts">`、组合式 API 和仓库现有自动导入/模块出口约定。
 4. 输出时补齐状态归属、API 层、错误处理、样式隔离和专项 skill 分流。
+5. 状态归属复杂时先做状态清单；DTO、公共 props 或泛型 composable 复杂时先收敛 TypeScript 类型契约。
 
 ## Detailed References
 
-Load [references/vue3-project-details.md](references/vue3-project-details.md) when the task needs concrete Vue 3 project structure, component patterns, Composables, slots, Provide/Inject, routing, Pinia, API layer, error handling, directives, styling, TypeScript, testing, performance, or review checklists.
+需要具体 Vue 3 项目结构、组件模式、Composables、slots、Provide/Inject、路由、Pinia、API 层、错误处理、指令、样式、TypeScript、测试、性能或审查清单时，加载 [references/vue3-project-details.md](references/vue3-project-details.md)。
 
 ## Constraints
 
@@ -39,6 +40,7 @@ Load [references/vue3-project-details.md](references/vue3-project-details.md) wh
 - 可复用逻辑已提取到 composable，返回 `readonly` 引用
 - Loading / Error / Empty / Data 状态均已处理
 - 路由组件使用动态 import 加载，状态管理符合就近原则
+- URL 状态、服务端状态、表单状态和 Pinia 全局状态边界明确
 - API 调用有类型约束和统一错误处理
 - 样式使用 scoped 隔离，关键行为有测试覆盖
 - 文件结构与项目约定一致（pages / features / components 分离）

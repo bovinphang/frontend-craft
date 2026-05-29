@@ -21,7 +21,7 @@ description: Use when reviewing or improving frontend accessibility, semantic st
 
 ## Detailed References
 
-Load [references/report-template.md](references/report-template.md) when writing an accessibility review report.
+撰写无障碍审查报告时，加载 [references/report-template.md](references/report-template.md)。
 
 ## Constraints
 

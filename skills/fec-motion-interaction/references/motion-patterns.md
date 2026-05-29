@@ -66,7 +66,11 @@ export function RevealTimeline() {
       gsap
         .timeline({ defaults: { ease: "power2.out" } })
         .from("[data-title]", { opacity: 0, y: 16, duration: 0.28 })
-        .from("[data-item]", { opacity: 0, y: 10, stagger: 0.04, duration: 0.2 }, "-=0.08");
+        .from(
+          "[data-item]",
+          { opacity: 0, y: 10, stagger: 0.04, duration: 0.2 },
+          "-=0.08",
+        );
     }, rootRef);
 
     return () => context.revert();
@@ -83,7 +87,7 @@ export function RevealTimeline() {
 }
 ```
 
-## Lazy Load Heavy Motion
+## 重型动效懒加载
 
 ```tsx
 import { lazy, Suspense } from "react";
@@ -99,7 +103,7 @@ export function ShowcaseSlot() {
 }
 ```
 
-## Review Checklist
+## 审查清单
 
 - 动画目标能用一句话说明，且服务信息层级或状态反馈。
 - 高吞吐界面不使用滚动劫持或长时间入场遮挡。

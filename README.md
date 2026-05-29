@@ -30,7 +30,7 @@
 
 Per-runtime paths and caveats live in [`docs/runtimes/`](docs/runtimes/).
 
-It bundles **13 specialized agents**, **34 auto-activated skills**, **9 slash commands**, **5 event-driven hooks**, **MCP templates** for 6 design tools, and a complete **rules library** into a single installable package. Run one command, and every AI session on your team writes React, Vue, Next.js, or Nuxt the same way — typed, accessible, secure, and consistent.
+It bundles **13 specialized agents**, **36 auto-activated skills**, **9 slash commands**, **5 event-driven hooks**, **MCP templates** for 6 design tools, and a complete **rules library** into a single installable package. Run one command, and every AI session on your team writes React, Vue, Next.js, or Nuxt the same way — typed, accessible, secure, and consistent.
 
 ```bash
 npx frontend-craft@latest
@@ -44,7 +44,7 @@ That’s it. The wizard walks you through the rest.
 
 | Problem                                                              | What frontend-craft does                                                                       |
 | -------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------- |
-| AI assistants write inconsistent, untyped, or insecure frontend code | **34 skills** encode team standards — auto-activated when the assistant touches matching files |
+| AI assistants write inconsistent, untyped, or insecure frontend code | **36 skills** encode team standards — auto-activated when the assistant touches matching files |
 | Each AI tool has its own plugin format                               | **One CLI** installs the same rules, agents, and hooks into 15 runtimes                        |
 | Design-to-code handoff is lossy                                      | **MCP templates** read Figma, Sketch, MasterGo, Pixso, 墨刀, and 摹客 directly                 |
 | Reviews are ad-hoc and shallow                                       | **13 agents** produce graded reports: code, security, a11y, performance, TS, UI fidelity       |
@@ -178,6 +178,7 @@ Category boundaries are intentionally narrow: implementation capabilities cover 
 | ----------------------------- | ---------------------------------------------------------------------- |
 | `fec-data-fetching`           | TanStack Query / server-state fetching, caching, optimistic updates    |
 | `fec-api-integration`         | Typed API clients, auth refresh, uploads, realtime integration         |
+| `fec-state-management`        | State ownership, store selection, URL state, server/form/local boundaries |
 | `fec-form-handling`           | React Hook Form + Zod, dynamic fields, uploads, multi-step flows       |
 | `fec-browser-storage`         | localStorage / sessionStorage / IndexedDB / Cookies selection          |
 | `fec-route-protection`        | Auth and permission routes for React Router, Next.js, Vue Router, Nuxt |
@@ -201,6 +202,7 @@ Category boundaries are intentionally narrow: implementation capabilities cover 
 | Skill                      | Scope                                                           |
 | -------------------------- | --------------------------------------------------------------- |
 | `fec-code-review` | Architecture, types, rendering, styles, a11y review             |
+| `fec-typescript-type-safety` | Type contracts, DTO mapping, type guards, generics, type-level checks |
 | `fec-security-review`      | XSS, CSRF, sensitive data leakage, input validation             |
 | `fec-accessibility-check`  | WCAG 2.1 AA compliance                                          |
 | `fec-validation-fix`       | Run and repair lint, type-check, test, build in one pass        |

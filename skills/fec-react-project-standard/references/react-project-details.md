@@ -1,4 +1,4 @@
-# React Project Standard Details
+# React 项目规范详解
 
 ## 项目结构（推荐参考）
 

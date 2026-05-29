@@ -153,6 +153,7 @@ frontend-craft/
 | `fec-nuxt-project-standard`      | Nuxt 3 SSR/SSG、组合式函数、路由、中间件                       |
 | `fec-monorepo-project-standard`  | pnpm workspace、Turborepo、Nx 结构与任务编排                   |
 | `fec-data-fetching`              | TanStack Query / 服务端状态获取、缓存、失效、乐观更新          |
+| `fec-state-management`           | 状态归属、store 选型、URL/服务端/表单/本地状态边界             |
 | `fec-form-handling`              | React Hook Form + Zod 表单、动态字段、上传、多步流程           |
 | `fec-browser-storage`            | localStorage/sessionStorage/IndexedDB/Cookies 选型与安全持久化 |
 | `fec-route-protection`           | React Router、Next.js、Vue Router、Nuxt 的权限路由保护         |
@@ -164,6 +165,7 @@ frontend-craft/
 | `fec-canvas-threejs`             | Canvas 2D、Three.js、React Three Fiber、WebGL 性能与可访问性   |
 | `fec-svg-animation`              | CSS、Framer Motion、GSAP SVG 动画与 reduced-motion 降级        |
 | `fec-ui-design`                  | UI 方向、视觉识别、界面打磨、状态与视觉 QA                    |
+| `fec-typescript-type-safety`     | 类型契约、DTO 映射、类型守卫、泛型和类型级检查                 |
 | `fec-vite-project-standard`      | Vite 配置、环境变量安全、HMR、开发代理、构建优化与库模式       |
 
 ### 技能使用：场景与示例
@@ -197,6 +199,7 @@ frontend-craft/
 | Nuxt 3 页面或布局            | `fec-nuxt-project-standard`      | 「请评审 `pages/admin/*.vue` 与 `composables/useApi.ts` 是否符合 Nuxt 3 的 SSR、数据与组合式用法惯例。」                               |
 | Monorepo 边界与任务编排      | `fec-monorepo-project-standard`  | 「`apps/web` 依赖 `packages/ui`，请检查包边界、workspace 配置和 Turborepo 任务图是否有问题。」                                         |
 | 服务端数据获取               | `fec-data-fetching`              | 「请评审 `src/queries/useReports.ts` 的 TanStack Query 模式：缓存 key、失效策略和乐观更新。」                                          |
+| 状态归属与 store 选型        | `fec-state-management`           | 「请审计 dashboard 的状态：哪些属于 URL 参数、TanStack Query、本地 state 或全局 store，并给出安全迁移方案。」                         |
 | 复杂表单与校验               | `fec-form-handling`              | 「用 React Hook Form + Zod 构建多步注册表单，包含文件上传和动态条件字段。」                                                            |
 | 为应用添加路由守卫           | `fec-route-protection`           | 「为 React Router 的 `/admin` 路由做权限保护：未登录用户重定向，基于角色控制访问。」                                                   |
 | 编写组件单元测试             | `fec-component-testing`          | 「为 `src/components/UserCard.tsx` 编写 RTL 测试：渲染、user-event 交互和快照回归用例。」                                              |

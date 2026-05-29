@@ -47,9 +47,9 @@ return () => {
 
 ## Detailed References
 
-Load [references/rendering-patterns.md](references/rendering-patterns.md) for Canvas 2D drawing, animation loops, Three.js scene setup, React Three Fiber, InstancedMesh, and performance cleanup.
+涉及 Canvas 2D 绘图、动画循环、Three.js 场景搭建、React Three Fiber、InstancedMesh 和性能清理时，加载 [references/rendering-patterns.md](references/rendering-patterns.md)。
 
-Load [references/shader-webgl-patterns.md](references/shader-webgl-patterns.md) for shader routing, WebGL2 adaptation, GLSL debugging, multipass budgets, and visual validation.
+涉及着色器路由、WebGL2 适配、GLSL 调试、多 pass 预算和视觉验证时，加载 [references/shader-webgl-patterns.md](references/shader-webgl-patterns.md)。
 
 ## Constraints
 

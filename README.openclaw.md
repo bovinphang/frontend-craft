@@ -153,6 +153,7 @@ frontend-craft/
 | `fec-nuxt-project-standard`      | Nuxt 3 SSR/SSG, composables, routing, middleware                                     |
 | `fec-monorepo-project-standard`  | pnpm workspace, Turborepo, Nx structure and task orchestration                       |
 | `fec-data-fetching`              | TanStack Query / server-state fetching, caching, invalidation, optimistic updates    |
+| `fec-state-management`           | State ownership, store selection, URL/server/form/local state boundaries             |
 | `fec-form-handling`              | React Hook Form + Zod forms, dynamic fields, uploads, multi-step flows               |
 | `fec-browser-storage`            | localStorage/sessionStorage/IndexedDB/Cookies selection and safe client persistence  |
 | `fec-route-protection`           | Authenticated and permissioned routes for React Router, Next.js, Vue Router, Nuxt    |
@@ -164,6 +165,7 @@ frontend-craft/
 | `fec-canvas-threejs`             | Canvas 2D, Three.js, React Three Fiber, WebGL performance and accessibility          |
 | `fec-svg-animation`              | SVG animation with CSS, Framer Motion, GSAP, reduced-motion fallbacks                |
 | `fec-ui-design`                  | UI direction, visual identity, polish, states, visual QA                             |
+| `fec-typescript-type-safety`     | Type contracts, DTO mapping, type guards, generics, and type-level checks            |
 | `fec-vite-project-standard`      | Vite config, env safety, HMR, dev proxy, build optimization, library mode            |
 
 ### Using skills (scenarios & examples)
@@ -197,6 +199,7 @@ This section is a quick OpenClaw-oriented sample, not the full prompt catalog. F
 | Nuxt 3 feature or layout                   | `fec-nuxt-project-standard`      | “Review `pages/admin/*.vue` and `composables/useApi.ts` for Nuxt 3 SSR/data/composables conventions.”                                           |
 | Monorepo boundaries and tasks              | `fec-monorepo-project-standard`  | “`apps/web` depends on `packages/ui`—check package boundaries, workspace config, and Turborepo task graph for issues.”                          |
 | Server-state data fetching                 | `fec-data-fetching`              | “Review `src/queries/useReports.ts` for TanStack Query patterns: caching keys, invalidation, and optimistic updates.”                           |
+| State ownership and store selection        | `fec-state-management`           | “Audit our dashboard state: decide what belongs in URL params, TanStack Query, local state, or the global store, then propose a safe migration.” |
 | Complex form with validation               | `fec-form-handling`              | “Build a multi-step registration form with Zod validation, file upload, and dynamic conditional fields using React Hook Form.”                  |
 | Add route guards to an app                 | `fec-route-protection`           | “Secure the `/admin` routes in our React Router app: redirect unauthenticated users and enforce role-based access.”                             |
 | Write component unit tests                 | `fec-component-testing`          | “Add RTL tests for `src/components/UserCard.tsx`: render, user-event interactions, and snapshot for regression.”                                |

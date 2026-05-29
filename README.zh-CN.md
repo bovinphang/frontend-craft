@@ -30,7 +30,7 @@
 
 各运行时的路径与注意事项详见 [`docs/runtimes/`](docs/runtimes/)。
 
-它将 **13 个专业 agent**、**34 个自动激活 skill**、**9 个斜杠命令**、**5 个事件驱动 hook**、面向 6 款设计工具的 **MCP 模板**以及一整套**规则库**打包为一个可安装单元。运行一条命令，团队里的每一次 AI 会话都将以相同的方式编写 React、Vue、Next.js 或 Nuxt——类型安全、可访问、安全、一致。
+它将 **13 个专业 agent**、**36 个自动激活 skill**、**9 个斜杠命令**、**5 个事件驱动 hook**、面向 6 款设计工具的 **MCP 模板**以及一整套**规则库**打包为一个可安装单元。运行一条命令，团队里的每一次 AI 会话都将以相同的方式编写 React、Vue、Next.js 或 Nuxt——类型安全、可访问、安全、一致。
 
 ```bash
 npx frontend-craft@latest
@@ -44,7 +44,7 @@ npx frontend-craft@latest
 
 | 痛点                                          | frontend-craft 的解法                                                 |
 | --------------------------------------------- | --------------------------------------------------------------------- |
-| AI 助手写出的前端代码风格不一、缺类型、不安全 | **34 个 skill** 将团队规范编码为可自动激活的工作流                    |
+| AI 助手写出的前端代码风格不一、缺类型、不安全 | **36 个 skill** 将团队规范编码为可自动激活的工作流                    |
 | 每款 AI 工具都有自己的插件格式                | **一条 CLI 命令** 把相同的规则、agent 和 hook 安装到 15 个运行时      |
 | 设计稿到代码的交接总有信息损失                | **MCP 模板** 直接读取 Figma、Sketch、MasterGo、Pixso、墨刀、摹客      |
 | 代码评审随意、浅层                            | **13 个 agent** 输出分级报告：代码、安全、无障碍、性能、TS、UI 还原度 |
@@ -180,6 +180,7 @@ npx frontend-craft@latest install claude --local --force
 | ----------------------------- | ---------------------------------------------------------- |
 | `fec-data-fetching`           | TanStack Query / 服务端状态获取、缓存、乐观更新            |
 | `fec-api-integration`         | 类型化 API client、鉴权刷新、上传、实时集成                |
+| `fec-state-management`        | 状态归属、store 选型、URL 状态、服务端/表单/本地状态边界   |
 | `fec-form-handling`           | React Hook Form + Zod、动态字段、上传、多步流程            |
 | `fec-browser-storage`         | localStorage / sessionStorage / IndexedDB / Cookies 选型   |
 | `fec-route-protection`        | React Router、Next.js、Vue Router、Nuxt 的登录态与权限路由 |
@@ -203,6 +204,7 @@ npx frontend-craft@latest install claude --local --force
 | 技能                       | 范围                                           |
 | -------------------------- | ---------------------------------------------- |
 | `fec-code-review` | 架构、类型、渲染、样式、可访问性评审           |
+| `fec-typescript-type-safety` | 类型契约、DTO 映射、类型守卫、泛型和类型级检查 |
 | `fec-security-review`      | XSS、CSRF、敏感数据泄露、输入校验              |
 | `fec-accessibility-check`  | WCAG 2.1 AA 无障碍检查                         |
 | `fec-validation-fix`       | 一次性运行并修复 lint、type-check、test、build |

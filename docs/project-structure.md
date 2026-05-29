@@ -35,6 +35,8 @@ frontend-craft/
 |   |-- fec-validation-fix/            # lint, type-check, test, build and fix
 |   |-- fec-performance-optimization/  # Core Web Vitals, bundle, rendering, network, memory
 |   |-- fec-source-driven-development/ # Official sources, project facts, version-sensitive decisions
+|   |-- fec-typescript-type-safety/   # Type contracts, DTO mapping, type guards, generics
+|   |-- fec-state-management/         # State ownership, store selection, URL/server/form/local boundaries
 |   |-- fec-tdd-workflow/              # Test-first frontend implementation workflow
 |   |-- fec-refactor-clean/            # Safe dead-code and unused dependency cleanup
 |   |-- fec-doc-sync/                  # Public docs and metadata synchronization
