@@ -28,7 +28,7 @@
 | TypeScript 专项评审 | 「请审计本次改动中的 `.ts` 和 `.tsx`：不安全类型、异步问题、过宽接口、陈旧派生状态、React/TypeScript 惯用法。」 | `fec-typescript-reviewer` | TypeScript 专项问题清单，通常只报告不修改。 | JS/TS 改动占主要部分时最适合。 |
 | 安全审查 | 「请审计 `src/lib/auth.ts`、API client 和所有渲染用户 HTML 的代码，关注 XSS、token 泄露、不安全存储、CSRF 假设和危险 DOM API。」 | `fec-security-review`、`fec-security-reviewer` | 按严重程度排序的安全问题和修复建议。 | 补充鉴权模型和存储约束。 |
 | 无障碍检查 | 「请检查 `src/components/ConfirmDialog.tsx` 的焦点陷阱、键盘流程、标签、ARIA、读屏行为和 WCAG 2.1 AA 问题。」 | `fec-accessibility-check` | 无障碍问题和可落地修改建议。 | 视觉焦点问题最好附截图。 |
-| 性能审查 | 「请分析 dashboard 性能：包体积、渲染热点、不必要重渲染、数据瀑布流和昂贵的客户端计算。」 | `fec-performance-optimizer` | 瓶颈列表和针对性优化方案。 | 有 profile 或慢路径更好。 |
+| 性能审查 | 「请基于证据分析 dashboard 性能：Core Web Vitals、包体积、渲染热点、数据瀑布流、内存泄漏和合理性能预算。」 | `fec-performance-optimization`、`fec-performance-optimizer` | 性能报告，包含基线证据、优先级、验证命令和针对性修复。 | 有 Lighthouse、trace、profile 或慢路径更好。 |
 | UI 还原度评审 | 「请对比设置页实现与截图/设计链接，列出布局、间距、字体、状态和响应式差异。」 | `fec-ui-checker` | UI 还原度报告和修复建议。 | 提供截图或设计来源。 |
 
 ## 规划与架构
@@ -38,6 +38,7 @@
 | 功能规划 | 「先不要写代码，请规划账号账单功能：路由结构、组件边界、数据流、状态、校验、测试和上线风险。」 | `/fec-plan`、`fec-architect` | 架构方案和实施计划。 | 补充验收标准和限制。 |
 | 拆分复杂页面 | 「请先在方案层面重构 `src/pages/Dashboard.tsx`：组件边界、hooks、状态归属和安全迁移步骤。」 | `fec-architect`、`fec-refactor-clean` | 重构计划和风险控制。 | 如果只要计划，请明确不要改代码。 |
 | 测试策略 | 「针对 checkout 重写，请把风险映射到静态检查、单元测试、组件测试、E2E、视觉检查、无障碍和安全覆盖。」 | `/fec-test-plan`、`fec-testing-strategy`、`fec-test-planner` | 测试矩阵和优先级。 | 大改动前很适合。 |
+| 来源驱动决策 | 「修改 Next.js 缓存方案前，请先核对当前项目代码和官方文档，总结版本假设、推荐模式、迁移影响和需要补的测试。」 | `fec-source-driven-development` | 基于来源的决策摘要，包含项目事实、官方依据、假设和验证步骤。 | 适合可能随版本变化的框架/库行为。 |
 | 遗留迁移 | 「我们有一个 jQuery 多页应用在 `public/js/legacy/`。请制定分阶段迁移到 React + TypeScript 的方案，同时不阻塞日常需求。」 | `fec-legacy-to-modern-migration` | 迁移计划、风险、里程碑和兼容策略。 | 补充发布节奏和遗留约束。 |
 
 ## 功能实现
@@ -49,6 +50,7 @@
 | Next.js App Router | 「请评审并改进 `app/(dashboard)/reports/page.tsx`：App Router 数据获取、metadata、loading/error 状态、server/client 边界和 actions。」 | `fec-nextjs-project-standard` | Next.js 专项问题或代码修改。 | 补充路由分组行为。 |
 | Nuxt 3 页面 | 「请在 Nuxt 3 中构建 admin reports 页面，处理 SSR 行为、`useFetch`/composables、中间件和类型化 server routes。」 | `fec-nuxt-project-standard` | 符合 Nuxt 约定的实现。 | 说明该路由是 SSR、SSG 还是 SPA。 |
 | Vite 配置 | 「请审计 `vite.config.ts`：HMR、环境变量暴露、开发代理、构建产物、依赖预构建和插件顺序。」 | `fec-vite-project-standard` | Vite 配置问题和安全修改。 | 补充构建或 dev server 症状。 |
+| 官方文档核对 | 「请确认当前 Vite 版本是否还需要这个依赖预构建 workaround。先看项目配置和官方文档，再建议是否删除。」 | `fec-source-driven-development`、`fec-vite-project-standard` | 版本感知的建议，包含来源说明、回退和验证计划。 | 适合删除兼容代码前使用。 |
 | Monorepo 边界 | 「请检查 `apps/web` 和 `packages/ui` 的包边界、workspace 依赖、构建脚本和 Turborepo/Nx 任务图。」 | `fec-monorepo-project-standard` | 边界与任务编排评审。 | 补充包管理器和 workspace 文件。 |
 | 服务端状态 | 「请评审 `src/queries/useReports.ts`：query key、缓存时间、失效策略、乐观更新、错误状态和 suspense/loading 行为。」 | `fec-data-fetching` | TanStack Query / 服务端状态建议或实现。 | 补充 API 变化频率和 UX 预期。 |
 | API 集成 | 「请为 checkout 设计类型化 API 集成层：client 边界、错误映射、鉴权刷新、上传策略，以及订单更新用 polling、SSE 还是 WebSocket。」 | `fec-api-integration` | API client 策略或实现，包含失败状态和联调检查。 | 补充后端归属、鉴权模型和接口契约。 |
@@ -97,6 +99,7 @@
 | 修复构建失败 | 「`pnpm lint`、`pnpm typecheck` 和 `pnpm test` 都失败了。请逐步修复，不要放宽规则或跳过测试。」 | `/fec-build-fix`、`fec-validation-fix`、`fec-build-fixer` | 最小修复和验证报告。 | 粘贴准确失败命令。 |
 | 清理死代码 | 「请查找并安全移除未使用导出、死路由、过期样式和未使用依赖。保持 public API，并写报告。」 | `/fec-refactor-clean`、`fec-refactor-clean`、`fec-refactor-cleaner` | 清理计划/变更和报告。 | 发布前很适合。 |
 | 文档同步 | 「请更新公开文档，让 README、runtime docs、能力表和 metadata 与当前 commands、skills、agents、hooks、package 文件一致。」 | `/fec-doc-sync`、`fec-doc-sync`、`fec-doc-updater` | 同步后的文档和验证说明。 | 不要把临时报告复制进公开文档。 |
+| 来源驱动升级 | 「请规划 React Router/TanStack Query/Vite 的安全升级。核对官方迁移说明、当前项目用法、破坏性变更，并给出验证步骤。」 | `fec-source-driven-development`、`fec-doc-sync` | 升级决策说明、影响文件、迁移风险和验证清单。 | 如果公开指南变化，再配合文档同步。 |
 | 遗留项目维护 | 「请改进 `public/js/legacy/cart.js`，保持当前 jQuery/MPA 技术栈，降低风险、改善结构，但暂时不要重写成 React。」 | `fec-legacy-web-standard` | 安全的遗留维护变更或建议。 | 补充浏览器兼容限制。 |
 
 ## 高级用户提示词
