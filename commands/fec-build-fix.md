@@ -3,7 +3,7 @@ name: fec-build-fix
 description: 增量修复 lint、type-check、test、build 或 CI 失败，一次处理一类根因并重新验证。
 ---
 
-按 `fec-validation-fix` 执行构建与验证失败修复。先定位根因，再小批修复并复跑受影响命令；复杂失败可委托 **`fec-build-fixer`**。
+按 `fec-validation-fix` 执行构建与验证失败修复。先定位根因，再小批修复并复跑受影响命令；依赖升级、peer dependency、ESM/CJS 或 lockfile 引发的失败同时参考 `fec-dependency-upgrade`，复杂失败可委托 **`fec-build-fixer`**。
 
 ## 执行步骤
 

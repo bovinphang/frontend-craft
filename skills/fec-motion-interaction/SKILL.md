@@ -17,6 +17,7 @@ description: Use when designing, implementing, or reviewing frontend interaction
    - 先写清动效服务的用户意图：定位、反馈、层级变化、状态确认、叙事引导或品牌记忆。
    - 工具型界面默认克制，优先保障扫描效率；营销页和作品页可增加节奏，但不能遮挡主要信息。
    - 若动效只装饰而不改善理解、反馈或品牌识别，应删掉或改成静态视觉处理。
+   - loading、skeleton、toast、错误提示和成功反馈属于状态沟通；动效只能增强反馈节奏，不能替代文本、语义或可见状态。
 
 2. 选择技术路线
    - CSS transition/keyframes：hover、focus、toast、简单入场和小型状态反馈。
@@ -42,6 +43,7 @@ description: Use when designing, implementing, or reviewing frontend interaction
    - 自动播放或循环动效若超过 5 秒，应提供暂停方式或只在局部非关键区域运行。
    - 不闪烁超过每秒 3 次；不要用动效作为唯一状态提示。
    - focus ring、错误提示、成功反馈必须在无动效时同样清楚。
+   - 手势动画必须有点击、键盘或明确控件替代；拖拽、滑动和长按不能成为唯一操作路径。
 
 6. 验证交付
    - 在 375px、768px、1440px 检查动效是否遮挡文案、按钮或表格内容。
@@ -57,6 +59,7 @@ description: Use when designing, implementing, or reviewing frontend interaction
 - 不动画 `width`、`height`、`top`、`left`、`margin`、`padding` 等会频繁触发布局的属性。
 - 不把大型 Lottie JSON、GSAP 插件或 3D 场景放入首屏同步包。
 - 不让动画改变阅读顺序、焦点顺序或键盘可达性。
+- 不用 skeleton 长时间占位掩盖真实加载失败；超过预期时应转入可理解的 loading、retry 或 error 状态。
 
 ## Expected Output
 

@@ -28,7 +28,7 @@ frontend-craft/
 |-- skills/           # 工作流定义和领域知识
 |   |-- fec-code-review/    # 架构、类型、渲染、样式、无障碍
 |   |-- fec-security-review/     # XSS、CSRF、敏感数据、输入校验
-|   |-- fec-accessibility-check/     # WCAG 2.1 AA 无障碍检查
+|   |-- fec-accessibility-check/     # WCAG 2.2、键盘、焦点和屏幕阅读器无障碍检查
 |   |-- fec-react-project-standard/  # React + TypeScript 项目规范
 |   |-- fec-vue3-project-standard/   # Vue 3 + TypeScript 项目规范
 |   |-- fec-implement-from-design/   # 从设计文件实现 UI
@@ -37,6 +37,9 @@ frontend-craft/
 |   |-- fec-source-driven-development/ # 官方来源、项目事实、版本敏感决策
 |   |-- fec-typescript-type-safety/   # 类型契约、DTO 映射、类型守卫和泛型
 |   |-- fec-state-management/         # 状态归属、store 选型、URL/服务端/表单/本地边界
+|   |-- fec-tailwind-design-system/   # Tailwind token、组件变体、暗色模式和 class 治理
+|   |-- fec-responsive-layout/        # 移动优先布局、容器查询和触摸友好的响应式 UI
+|   |-- fec-dependency-upgrade/       # 依赖升级、lockfile 风险和 CVE 修复
 |   |-- fec-tdd-workflow/              # 测试先行的前端实现工作流
 |   |-- fec-refactor-clean/            # 安全清理死代码和未使用依赖
 |   |-- fec-doc-sync/                  # 公开文档和 metadata 同步

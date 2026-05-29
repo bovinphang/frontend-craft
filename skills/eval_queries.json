@@ -2,7 +2,7 @@
   "fec-accessibility-check": {
     "should_trigger": [
       "检查这个弹窗的键盘焦点和 aria 是否正确",
-      "给这个表单做 WCAG 2.1 AA 无障碍审查",
+      "给这个表单做 WCAG 2.2 AA 无障碍审查",
       "这个菜单能不能只用键盘操作",
       "审查页面标题层级和 landmark",
       "按钮只有图标，帮我补可访问名称",
@@ -153,6 +153,28 @@
       "Web Worker 后台解析 CSV",
       "虚拟列表滚动渲染",
       "审查 token 存储安全"
+    ]
+  },
+  "fec-dependency-upgrade": {
+    "should_trigger": [
+      "把 Vite 从 5 升级到 6，需要评估破坏性变更",
+      "package-lock 改了很多，帮我 review 依赖升级风险",
+      "修复 npm audit 里的前端高危 CVE",
+      "React 大版本升级前需要迁移计划",
+      "peer dependency 冲突怎么处理",
+      "这个包从 CJS 切到 ESM 会影响构建吗",
+      "frontend dependency upgrade verification plan",
+      "升级 Storybook 后 CI build 失败需要分析"
+    ],
+    "should_not_trigger": [
+      "只运行 npm test 并修复失败",
+      "清理已证明未使用的组件",
+      "写 React 组件架构规范",
+      "设计 Tailwind token",
+      "审查 XSS 和 CSP",
+      "配置 Playwright 登录流程",
+      "做 UI 视觉打磨",
+      "实现 API client 错误映射"
     ]
   },
   "fec-doc-sync": {
@@ -507,6 +529,28 @@
       "jQuery 迁移"
     ]
   },
+  "fec-responsive-layout": {
+    "should_trigger": [
+      "这个页面 375px 下横向溢出，帮我做响应式布局",
+      "用 container query 改这个组件的布局",
+      "移动端表格应该怎么改成可读视图",
+      "dashboard 在平板和桌面断点之间跳变",
+      "检查触摸目标和安全区域适配",
+      "横竖屏切换后底部操作栏挡住内容",
+      "responsive layout review for this web app",
+      "设计移动优先的多列筛选页面"
+    ],
+    "should_not_trigger": [
+      "为产品页定义视觉风格",
+      "设计 Tailwind 组件变体",
+      "只检查 aria 和键盘焦点",
+      "优化 bundle size",
+      "写 Playwright E2E",
+      "实现 React 项目目录结构",
+      "审查 XSS 风险",
+      "升级依赖版本"
+    ]
+  },
   "fec-security-review": {
     "should_trigger": [
       "检查 dangerouslySetInnerHTML 是否安全",
@@ -593,6 +637,28 @@
       "PWA 配置",
       "Web Worker",
       "jQuery 迁移"
+    ]
+  },
+  "fec-tailwind-design-system": {
+    "should_trigger": [
+      "设计 Tailwind token 和 theme.extend",
+      "这个组件库的 class 太散，想整理成 variants",
+      "Tailwind 暗色模式怎么和 CSS 变量对齐",
+      "检查动态 class 是否会被 purge 掉",
+      "用 CVA 设计 Button 的 size 和 tone",
+      "Tailwind safelist 应该怎么治理",
+      "build a Tailwind design system for this app",
+      "把硬编码颜色迁移到 Tailwind 语义 token"
+    ],
+    "should_not_trigger": [
+      "纯 CSS Grid 响应式布局溢出",
+      "按 Figma 像素还原页面",
+      "写组件 RTL 单测",
+      "审查接口 401 错误映射",
+      "修复 TypeScript 类型错误",
+      "配置路由权限守卫",
+      "升级 npm 依赖",
+      "做通用前端 PR review"
     ]
   },
   "fec-svg-animation": {

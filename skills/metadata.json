@@ -243,6 +243,41 @@
     ]
   },
   {
+    "id": "fec-dependency-upgrade",
+    "name": "依赖升级",
+    "category": "review-quality",
+    "tags": [
+      "dependency-upgrade",
+      "lockfile",
+      "cve",
+      "migration",
+      "peer-dependency"
+    ],
+    "summary": "Frontend dependency upgrade planning, lockfile risk review, major-version migration, CVE remediation, peer dependency handling, and CI verification.",
+    "version": "2.3.1",
+    "license": "MIT",
+    "homepage": "https://github.com/bovinphang/frontend-craft",
+    "repository": "https://github.com/bovinphang/frontend-craft",
+    "keywords": [
+      "review-quality",
+      "dependency-upgrade",
+      "lockfile",
+      "cve",
+      "migration",
+      "peer-dependency"
+    ],
+    "platforms": [
+      "skills-cli",
+      "skillreg",
+      "claude-code",
+      "codex",
+      "cursor",
+      "opencode",
+      "openclaw",
+      "generic-skill-runtime"
+    ]
+  },
+  {
     "id": "fec-doc-sync",
     "name": "文档同步",
     "category": "maintenance-docs",
@@ -809,6 +844,41 @@
     ]
   },
   {
+    "id": "fec-responsive-layout",
+    "name": "响应式布局",
+    "category": "design-ui",
+    "tags": [
+      "responsive",
+      "layout",
+      "container-query",
+      "mobile-first",
+      "touch-target"
+    ],
+    "summary": "Responsive frontend layout strategy for mobile-first breakpoints, container queries, fluid grids, data-dense screens, touch targets, and cross-device verification.",
+    "version": "2.3.1",
+    "license": "MIT",
+    "homepage": "https://github.com/bovinphang/frontend-craft",
+    "repository": "https://github.com/bovinphang/frontend-craft",
+    "keywords": [
+      "design-ui",
+      "responsive",
+      "layout",
+      "container-query",
+      "mobile-first",
+      "touch-target"
+    ],
+    "platforms": [
+      "skills-cli",
+      "skillreg",
+      "claude-code",
+      "codex",
+      "cursor",
+      "opencode",
+      "openclaw",
+      "generic-skill-runtime"
+    ]
+  },
+  {
     "id": "fec-security-review",
     "name": "前端安全审查",
     "category": "review-quality",
@@ -903,6 +973,41 @@
       "component-doc",
       "visual-testing",
       "mdx"
+    ],
+    "platforms": [
+      "skills-cli",
+      "skillreg",
+      "claude-code",
+      "codex",
+      "cursor",
+      "opencode",
+      "openclaw",
+      "generic-skill-runtime"
+    ]
+  },
+  {
+    "id": "fec-tailwind-design-system",
+    "name": "Tailwind 设计系统",
+    "category": "design-ui",
+    "tags": [
+      "tailwind",
+      "design-system",
+      "tokens",
+      "variants",
+      "dark-mode"
+    ],
+    "summary": "Tailwind CSS design-system workflow for token mapping, theme extension, component variants, class governance, responsive utilities, and dark mode.",
+    "version": "2.3.1",
+    "license": "MIT",
+    "homepage": "https://github.com/bovinphang/frontend-craft",
+    "repository": "https://github.com/bovinphang/frontend-craft",
+    "keywords": [
+      "design-ui",
+      "tailwind",
+      "design-system",
+      "tokens",
+      "variants",
+      "dark-mode"
     ],
     "platforms": [
       "skills-cli",

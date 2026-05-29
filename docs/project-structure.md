@@ -28,7 +28,7 @@ frontend-craft/
 |-- skills/           # Workflow definitions and domain knowledge
 |   |-- fec-code-review/    # Architecture, types, rendering, styles, a11y
 |   |-- fec-security-review/     # XSS, CSRF, sensitive data, input validation
-|   |-- fec-accessibility-check/     # WCAG 2.1 AA accessibility
+|   |-- fec-accessibility-check/     # WCAG 2.2 accessibility, keyboard, focus, screen readers
 |   |-- fec-react-project-standard/  # React + TypeScript project standards
 |   |-- fec-vue3-project-standard/   # Vue 3 + TypeScript project standards
 |   |-- fec-implement-from-design/   # Implement UI from design files
@@ -37,6 +37,9 @@ frontend-craft/
 |   |-- fec-source-driven-development/ # Official sources, project facts, version-sensitive decisions
 |   |-- fec-typescript-type-safety/   # Type contracts, DTO mapping, type guards, generics
 |   |-- fec-state-management/         # State ownership, store selection, URL/server/form/local boundaries
+|   |-- fec-tailwind-design-system/   # Tailwind tokens, variants, dark mode, class governance
+|   |-- fec-responsive-layout/        # Mobile-first layouts, container queries, touch-safe responsive UI
+|   |-- fec-dependency-upgrade/       # Dependency upgrades, lockfile risk, CVE remediation
 |   |-- fec-tdd-workflow/              # Test-first frontend implementation workflow
 |   |-- fec-refactor-clean/            # Safe dead-code and unused dependency cleanup
 |   |-- fec-doc-sync/                  # Public docs and metadata synchronization

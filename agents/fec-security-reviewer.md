@@ -7,6 +7,7 @@ permissionMode: default
 maxTurns: 14
 skills:
   - fec-security-review
+  - fec-dependency-upgrade
   - fec-react-project-standard
   - fec-vue3-project-standard
   - fec-nextjs-project-standard
@@ -22,7 +23,7 @@ skills:
 2. **密钥与敏感数据** — 打进客户端 bundle 的 secret、误用的 `NEXT_PUBLIC_` / `VITE_` 暴露、日志与上报中的 PII/Token。
 3. **输入与输出** — `dangerouslySetInnerHTML`、`v-html`、模板字符串拼 HTML、`eval`、动态脚本 URL。
 4. **认证与会话（客户端可见部分）** — Token 存取位置（httpOnly vs localStorage）、URL 传敏感字段、客户端鉴权仅作 UX 的误判。
-5. **依赖与供应链** — `npm audit`、已知 CVE、非官方 CDN 脚本、缺 SRI 的第三方资源。
+5. **依赖与供应链** — `npm audit`、已知 CVE、lockfile 异常、非官方 CDN 脚本、缺 SRI 的第三方资源。
 6. **安全编码习惯** — CSP 建议、HTTPS 混合内容、`target="_blank"` 未加 `rel` 等。
 
 ## 分析命令（在仓库允许时执行）

@@ -27,7 +27,9 @@ description: Use when planning or reviewing a frontend testing strategy, selecti
    - 视觉、a11y、安全和性能属于专项质量层，不塞进普通组件测试。
 5. 检查是否已有命令、测试框架、目录约定和 CI 门禁；沿用项目现状，不为策略文档引入不必要工具。
 6. 规划失败证据：每个高风险项要说明失败时如何定位，例如断言、截图、trace、coverage、日志或报告。
-7. 输出可执行的最小测试计划：每层覆盖什么、不覆盖什么、优先级、建议命令和责任 skill。
+7. 设计测试数据与 mock 策略：共享 fixture 表达业务场景，测试数据 builder 只封装噪声字段，避免每个测试手写随机对象。
+8. 管理 flaky 风险：把时间、网络、动画、随机数、并发和外部服务标为不稳定来源，并指定隔离、重试和证据产物。
+9. 输出可执行的最小测试计划：每层覆盖什么、不覆盖什么、优先级、建议命令和责任 skill。
 
 ## Constraints
 
@@ -36,6 +38,7 @@ description: Use when planning or reviewing a frontend testing strategy, selecti
 - 不把 E2E 当作单元/组件测试的替代品；不把组件测试当作真实浏览器兼容保证。
 - 不为小改动强制引入新框架；优先复用仓库已有工具和脚本。
 - 不追求没有风险说明的覆盖率数字；覆盖率只能辅助判断，不能替代场景覆盖。
+- 不把随机 fixture、共享全局状态或依赖执行顺序的测试纳入主干门禁。
 
 ## Expected Output
 

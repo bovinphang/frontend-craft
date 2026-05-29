@@ -30,7 +30,7 @@
 
 각 런타임의 경로와 주의사항은 [`docs/runtimes/`](../runtimes/)에 있습니다.
 
-**13개의 전문 에이전트**, **36개의 자동 활성화 스킬**, **9개의 슬래시 명령어**, **5개의 이벤트 기반 훅**, 6개 디자인 도구를 위한 **MCP 템플릿**, 그리고 완전한 **규칙 라이브러리**를 하나의 설치 가능한 패키지로 묶었습니다. 명령어 하나만 실행하면, 팀의 모든 AI 세션이 React, Vue, Next.js, Nuxt를 같은 방식으로 작성합니다 — 타입 안전하고, 접근성 있고, 안전하며, 일관성 있게.
+**13개의 전문 에이전트**, **39개의 자동 활성화 스킬**, **9개의 슬래시 명령어**, **5개의 이벤트 기반 훅**, 6개 디자인 도구를 위한 **MCP 템플릿**, 그리고 완전한 **규칙 라이브러리**를 하나의 설치 가능한 패키지로 묶었습니다. 명령어 하나만 실행하면, 팀의 모든 AI 세션이 React, Vue, Next.js, Nuxt를 같은 방식으로 작성합니다 — 타입 안전하고, 접근성 있고, 안전하며, 일관성 있게.
 
 ```bash
 npx frontend-craft@latest
@@ -44,7 +44,7 @@ npx frontend-craft@latest
 
 | 문제점                                                                       | frontend-craft의 해결책                                                         |
 | ---------------------------------------------------------------------------- | ------------------------------------------------------------------------------- |
-| AI 어시스턴트가 일관성 없고, 타입 없고, 안전하지 않은 프론트엔드 코드를 작성 | **36개 스킬**이 팀 표준을 인코딩 — 해당 파일을 건드릴 때 자동 활성화            |
+| AI 어시스턴트가 일관성 없고, 타입 없고, 안전하지 않은 프론트엔드 코드를 작성 | **39개 스킬**이 팀 표준을 인코딩 — 해당 파일을 건드릴 때 자동 활성화            |
 | AI 도구마다 플러그인 형식이 다름                                             | **하나의 CLI**로 동일한 규칙, 에이전트, 훅을 15개 런타임에 설치                 |
 | 디자인에서 코드로의 전달 과정에서 정보 손실                                  | **MCP 템플릿**이 Figma, Sketch, MasterGo, Pixso, 墨刀, 摹客을 직접 읽기         |
 | 리뷰가 즉흥적이고 얕음                                                       | **13개 에이전트**가 등급별 보고서 출력: 코드, 보안, 접근성, 성능, TS, UI 충실도 |
@@ -179,7 +179,8 @@ npx frontend-craft@latest list
 | -------------------------- | -------------------------------------------------------------- |
 | `fec-code-review` | 아키텍처, 타입, 렌더링, 스타일, 접근성 리뷰                    |
 | `fec-security-review`      | XSS, CSRF, 민감 데이터 유출, 입력 검증                         |
-| `fec-accessibility-check`  | WCAG 2.1 AA 준수 검사                                          |
+| `fec-accessibility-check`  | WCAG 2.2, 키보드, 포커스, 터치, 스크린 리더 동작               |
+| `fec-dependency-upgrade`   | 의존성 업그레이드, lockfile 리뷰, CVE 수정, 마이그레이션 검증  |
 | `fec-validation-fix`       | lint, type-check, test, build를 한 번에 실행하고 수정          |
 | `fec-performance-optimization` | Core Web Vitals, 번들, 렌더링, 메모리, 네트워크, 성능 예산 리뷰 |
 | `fec-refactor-clean`       | 데드 코드, 미사용 export, 스타일, 라우트, 의존성의 안전한 정리 |
@@ -189,6 +190,8 @@ npx frontend-craft@latest list
 | 스킬                          | 범위                                                     |
 | ----------------------------- | -------------------------------------------------------- |
 | `fec-ui-design`              | UI 방향, 시각적 정체성, polish, 상태, visual QA          |
+| `fec-tailwind-design-system` | Tailwind token, 테마 확장, variants, class 관리, dark mode |
+| `fec-responsive-layout`      | 모바일 우선, container queries, 데이터 밀집 responsive UI |
 | `fec-motion-interaction`      | 인터랙션 motion, 페이지 전환, 스크롤 animation, reduced-motion |
 | `fec-implement-from-design`   | Figma/Sketch/MasterGo/Pixso/墨刀/摹客 디자인에서 UI 구현 |
 | `fec-storybook-component-doc` | Storybook 컴포넌트 문서, 디자인 시스템 표시, 격리 상태 미리보기     |
@@ -205,6 +208,7 @@ npx frontend-craft@latest list
 | 스킬           | 범위                                                          |
 | -------------- | ------------------------------------------------------------- |
 | `fec-doc-sync` | 공개 문서를 스크립트, 스킬, 에이전트, 명령어와 동기화         |
+| `fec-source-driven-development` | 프로젝트 사실과 공식 소스로 버전 의존 결정을 검증 |
 
 ### 에이전트
 

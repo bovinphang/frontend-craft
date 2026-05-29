@@ -155,6 +155,8 @@ frontend-craft/
 | `fec-data-fetching`              | TanStack Query / 服务端状态获取、缓存、失效、乐观更新          |
 | `fec-state-management`           | 状态归属、store 选型、URL/服务端/表单/本地状态边界             |
 | `fec-form-handling`              | React Hook Form + Zod 表单、动态字段、上传、多步流程           |
+| `fec-tailwind-design-system`     | Tailwind token、主题扩展、组件变体、class 治理和暗色模式       |
+| `fec-responsive-layout`          | 移动优先布局、容器查询、数据密集型响应式界面                   |
 | `fec-browser-storage`            | localStorage/sessionStorage/IndexedDB/Cookies 选型与安全持久化 |
 | `fec-route-protection`           | React Router、Next.js、Vue Router、Nuxt 的权限路由保护         |
 | `fec-component-testing`          | RTL / Vue Test Utils 组件测试与回归用例                        |
@@ -166,6 +168,7 @@ frontend-craft/
 | `fec-svg-animation`              | CSS、Framer Motion、GSAP SVG 动画与 reduced-motion 降级        |
 | `fec-ui-design`                  | UI 方向、视觉识别、界面打磨、状态与视觉 QA                    |
 | `fec-typescript-type-safety`     | 类型契约、DTO 映射、类型守卫、泛型和类型级检查                 |
+| `fec-dependency-upgrade`         | 依赖升级、lockfile 评审、CVE 修复和迁移验证                    |
 | `fec-vite-project-standard`      | Vite 配置、环境变量安全、HMR、开发代理、构建优化与库模式       |
 
 ### 技能使用：场景与示例

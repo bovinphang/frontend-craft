@@ -35,6 +35,8 @@ description: Use when designing, implementing, or reviewing frontend-to-backend 
    - 422：映射字段级错误。
    - 429/5xx/网络错误：允许退避重试或展示稍后再试。
    - 未识别错误要落到统一 fallback，不把原始后端异常暴露给用户。
+   - 所有错误都应归一到用户可恢复动作：重试、重新登录、修改输入、返回上级、联系支持或稍后再试。
+   - 错误对象要保留面向日志的 trace id / request id，但 UI 不暴露内部堆栈、SQL、服务名或敏感字段。
 
 4. 管理接口演进
    - 兼容新增字段；删除或改名字段必须走迁移期、适配层或双写/双读策略。
@@ -59,6 +61,7 @@ description: Use when designing, implementing, or reviewing frontend-to-backend 
    - 用 mock 或测试服务覆盖 401、403、422、500、断网和取消请求。
    - 确认客户端 bundle 不包含私密环境变量、服务端密钥或内部地址。
    - 对关键 API client 行为补最小测试，证明超时、取消、错误映射和刷新队列可预期。
+   - 验证错误边界与请求层协作：渲染异常进 Error Boundary，请求失败进可恢复 UI，不互相吞掉。
 
 ## Constraints
 

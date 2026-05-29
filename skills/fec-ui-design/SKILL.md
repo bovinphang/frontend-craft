@@ -46,10 +46,13 @@ description: Use when building, reviewing, or improving frontend UI that needs p
    - 媒体：优先使用真实产品、真实状态、真实图表、可检查截图或本地生成资产；不要用模糊氛围图、占位 URL 或无关插画替代主体信息。
    - 图表：先判断数据任务是趋势、比较、构成、分布还是流程，再选择图表，不把所有数据都做成卡片或饼图。
 
-6. 对齐组件与 token
+6. 对齐设计系统、组件与 token
    - 先复用项目已有组件、token、图标库、路由和布局约定。
    - 缺少 token 时集中补齐或明确记录，不要在多个组件里散落硬编码。
    - 复杂 UI 在实现前写出复用组件、新建组件、响应式策略和状态覆盖。
+   - 设计系统先定义语义 token、组件 API、状态矩阵和使用边界，再落到 Tailwind、CSS Modules、组件库或 CSS 变量实现。
+   - Tailwind 专项 token、variant、dark mode 和 class 治理分流到 Tailwind 设计系统工作流；跨设备布局、容器查询和触摸目标分流到响应式布局工作流。
+   - 组件 API 应区分基础组件、业务组件和页面私有组件；避免让单个 `variant` 同时承担语义、尺寸、密度和权限含义。
 
 7. 打磨几何、文本和状态
    - 嵌套圆角遵循“外层圆角约等于内层圆角 + 间距”的光学关系。
@@ -80,6 +83,7 @@ description: Use when building, reviewing, or improving frontend UI that needs p
 - 不把生成器输出当成不可修改的设计稿；它是决策起点，必须结合项目已有组件、token、用户任务和真实数据校正。
 - 不用不可检查的远程占位图、通用 stock 氛围图或 lorem 文案作为交付主体；缺素材时明确生成、制作或降级为真实结构化内容。
 - 不让视觉 polish 破坏键盘路径、触摸目标、文本可读性或低端设备性能。
+- 不把 Tailwind、组件库或 Storybook 文档等实现载体当成设计方向本身；它们应承接已经明确的产品语境和 token 边界。
 
 ## Expected Output
 

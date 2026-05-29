@@ -5,7 +5,7 @@
 
 > 生成时间: YYYY-MM-DD HH:mm
 > 评审工具: frontend-craft
-> 标准: WCAG 2.1 AA
+> 标准: WCAG 2.2 AA
 
 ## 必须修复 (N项)
 - **[文件:行号]** 问题描述 -> 建议修改

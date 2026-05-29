@@ -30,7 +30,7 @@
 
 各运行时的路径与注意事项详见 [`docs/runtimes/`](docs/runtimes/)。
 
-它将 **13 个专业 agent**、**36 个自动激活 skill**、**9 个斜杠命令**、**5 个事件驱动 hook**、面向 6 款设计工具的 **MCP 模板**以及一整套**规则库**打包为一个可安装单元。运行一条命令，团队里的每一次 AI 会话都将以相同的方式编写 React、Vue、Next.js 或 Nuxt——类型安全、可访问、安全、一致。
+它将 **13 个专业 agent**、**39 个自动激活 skill**、**9 个斜杠命令**、**5 个事件驱动 hook**、面向 6 款设计工具的 **MCP 模板**以及一整套**规则库**打包为一个可安装单元。运行一条命令，团队里的每一次 AI 会话都将以相同的方式编写 React、Vue、Next.js 或 Nuxt——类型安全、可访问、安全、一致。
 
 ```bash
 npx frontend-craft@latest
@@ -44,7 +44,7 @@ npx frontend-craft@latest
 
 | 痛点                                          | frontend-craft 的解法                                                 |
 | --------------------------------------------- | --------------------------------------------------------------------- |
-| AI 助手写出的前端代码风格不一、缺类型、不安全 | **36 个 skill** 将团队规范编码为可自动激活的工作流                    |
+| AI 助手写出的前端代码风格不一、缺类型、不安全 | **39 个 skill** 将团队规范编码为可自动激活的工作流                    |
 | 每款 AI 工具都有自己的插件格式                | **一条 CLI 命令** 把相同的规则、agent 和 hook 安装到 15 个运行时      |
 | 设计稿到代码的交接总有信息损失                | **MCP 模板** 直接读取 Figma、Sketch、MasterGo、Pixso、墨刀、摹客      |
 | 代码评审随意、浅层                            | **13 个 agent** 输出分级报告：代码、安全、无障碍、性能、TS、UI 还原度 |
@@ -206,7 +206,8 @@ npx frontend-craft@latest install claude --local --force
 | `fec-code-review` | 架构、类型、渲染、样式、可访问性评审           |
 | `fec-typescript-type-safety` | 类型契约、DTO 映射、类型守卫、泛型和类型级检查 |
 | `fec-security-review`      | XSS、CSRF、敏感数据泄露、输入校验              |
-| `fec-accessibility-check`  | WCAG 2.1 AA 无障碍检查                         |
+| `fec-accessibility-check`  | WCAG 2.2、键盘、焦点、触控和屏幕阅读器行为     |
+| `fec-dependency-upgrade`   | 依赖升级、lockfile 评审、CVE 修复和迁移验证    |
 | `fec-validation-fix`       | 一次性运行并修复 lint、type-check、test、build |
 | `fec-performance-optimization` | Core Web Vitals、包体、渲染、内存、网络与性能预算审查 |
 | `fec-refactor-clean`       | 安全清理死代码、未使用导出、样式、路由和依赖   |
@@ -216,6 +217,8 @@ npx frontend-craft@latest install claude --local --force
 | 技能                          | 范围                                                    |
 | ----------------------------- | ------------------------------------------------------- |
 | `fec-ui-design`              | UI 方向、视觉识别、界面打磨、状态、视觉 QA             |
+| `fec-tailwind-design-system` | Tailwind token、主题扩展、组件变体、class 治理和暗色模式 |
+| `fec-responsive-layout`      | 移动优先布局、容器查询、数据密集型响应式界面            |
 | `fec-motion-interaction`      | 交互动效、页面转场、滚动动画、reduced-motion           |
 | `fec-implement-from-design`   | 基于 Figma/Sketch/MasterGo/Pixso/墨刀/摹客设计稿实现 UI |
 | `fec-storybook-component-doc` | Storybook 组件文档、设计系统呈现、隔离状态预览          |

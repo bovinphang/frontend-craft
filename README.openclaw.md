@@ -155,6 +155,8 @@ frontend-craft/
 | `fec-data-fetching`              | TanStack Query / server-state fetching, caching, invalidation, optimistic updates    |
 | `fec-state-management`           | State ownership, store selection, URL/server/form/local state boundaries             |
 | `fec-form-handling`              | React Hook Form + Zod forms, dynamic fields, uploads, multi-step flows               |
+| `fec-tailwind-design-system`     | Tailwind tokens, theme extension, variants, class governance, dark mode              |
+| `fec-responsive-layout`          | Mobile-first layouts, container queries, data-dense responsive UI                    |
 | `fec-browser-storage`            | localStorage/sessionStorage/IndexedDB/Cookies selection and safe client persistence  |
 | `fec-route-protection`           | Authenticated and permissioned routes for React Router, Next.js, Vue Router, Nuxt    |
 | `fec-component-testing`          | React Testing Library / Vue Test Utils component tests and regression scenarios      |
@@ -166,6 +168,7 @@ frontend-craft/
 | `fec-svg-animation`              | SVG animation with CSS, Framer Motion, GSAP, reduced-motion fallbacks                |
 | `fec-ui-design`                  | UI direction, visual identity, polish, states, visual QA                             |
 | `fec-typescript-type-safety`     | Type contracts, DTO mapping, type guards, generics, and type-level checks            |
+| `fec-dependency-upgrade`         | Dependency upgrades, lockfile review, CVE remediation, migration verification        |
 | `fec-vite-project-standard`      | Vite config, env safety, HMR, dev proxy, build optimization, library mode            |
 
 ### Using skills (scenarios & examples)

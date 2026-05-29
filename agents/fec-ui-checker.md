@@ -15,6 +15,8 @@ mcpServers:
 skills:
   - fec-code-review
   - fec-ui-design
+  - fec-tailwind-design-system
+  - fec-responsive-layout
   - fec-accessibility-check
   - fec-validation-fix
 ---
@@ -30,10 +32,12 @@ skills:
 - 间距或对齐错误
 - 样式优先级冲突
 - 响应式断点回归问题
+- 容器查询、触摸目标、安全区域和断点中间值问题
 - hover / focus / disabled 状态异常
 - 设计与实现不一致
 - 泛化模板感、视觉记忆点不足
 - 字体、色彩、动效和背景质感不成体系
+- Tailwind token、variant、暗色模式或动态 class 治理失控
 
 工作流程：
 

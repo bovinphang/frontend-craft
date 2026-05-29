@@ -12,8 +12,9 @@
 4. **单元测试** — Jest / Vitest
 5. **构建** — `npm run build` 或 `pnpm build`
 6. **包体/性能预算**（可选）— size-limit、Lighthouse CI、bundle analyzer
-7. **E2E 测试**（可选）— Playwright / Cypress
-8. **部署** — 构建产物上传或触发部署服务
+7. **依赖与供应链检查**（可选）— audit、license、lockfile diff、依赖升级验证
+8. **E2E 测试**（可选）— Playwright / Cypress
+9. **部署** — 构建产物上传或触发部署服务
 
 任一阶段失败则中止后续步骤。
 
@@ -116,6 +117,8 @@ build:
 - 上传测试报告、覆盖率、E2E trace、截图、构建产物和性能预算结果。
 - CI 失败时保留足够日志定位根因，不只返回“命令失败”。
 - 发布前确认版本、变更说明、迁移事项和回滚路径。
+- 依赖升级 PR 保留 lockfile diff、关键包版本、release notes 摘要和验证矩阵。
+- Monorepo affected 快速验证可以用于 PR 反馈，但 release 或主干合并前应保留全量验证入口。
 
 ## 强约束
 

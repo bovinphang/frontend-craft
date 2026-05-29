@@ -47,6 +47,8 @@ description: Use when designing or reviewing React + TypeScript project structur
    - 依赖是否已存在于 `package.json`，缺失时先给安装命令再使用
    - 重型 UI 能力（动效、图表、3D、编辑器、地图）是否隔离为 leaf component 并按需加载
    - 图片、视频、字体等资源是否本地化、可缓存，并避免占位 URL 进入交付
+   - 页面级 Error Boundary、模块级 fallback、API 错误映射和用户可恢复动作是否一致
+   - Tailwind token/variant 或响应式布局需求是否应分流到对应专项 skill
 
 ## Detailed References
 
@@ -63,6 +65,7 @@ description: Use when designing or reviewing React + TypeScript project structur
 - 避免 prop drilling 过深却不考虑组合或局部封装
 - 不在通用页面组件里同步引入 GSAP、Three.js、Lottie、富文本编辑器或地图 SDK；需要时用动态导入、路由级分包或叶子组件隔离。
 - 不在 React 组件中散落裸 `fetch`、API URL、token refresh 或上传流程；跨边界请求应收敛到 API 集成层。
+- 不用 Error Boundary 处理普通 API 失败；请求错误应优先落到 loading/error/empty/data 状态和可恢复操作。
 
 ## Expected Output
 

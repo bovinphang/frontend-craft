@@ -28,7 +28,7 @@
 | TypeScript 专项评审 | 「请审计本次改动中的 `.ts` 和 `.tsx`：不安全类型、异步问题、过宽接口、陈旧派生状态、React/TypeScript 惯用法。」 | `fec-typescript-reviewer` | TypeScript 专项问题清单，通常只报告不修改。 | JS/TS 改动占主要部分时最适合。 |
 | 类型契约评审 | 「请评审 `src/features/billing/` 的 API DTO、组件 props、泛型工具和类型守卫，找出不安全断言、过宽类型和缺失的运行时收窄。」 | `fec-typescript-type-safety`、`fec-typescript-reviewer` | 类型边界问题、更安全的建模建议和类型测试建议。 | 适合 SDK、设计系统或 API 密集改动。 |
 | 安全审查 | 「请审计 `src/lib/auth.ts`、API client 和所有渲染用户 HTML 的代码，关注 XSS、token 泄露、不安全存储、CSRF 假设和危险 DOM API。」 | `fec-security-review`、`fec-security-reviewer` | 按严重程度排序的安全问题和修复建议。 | 补充鉴权模型和存储约束。 |
-| 无障碍检查 | 「请检查 `src/components/ConfirmDialog.tsx` 的焦点陷阱、键盘流程、标签、ARIA、读屏行为和 WCAG 2.1 AA 问题。」 | `fec-accessibility-check` | 无障碍问题和可落地修改建议。 | 视觉焦点问题最好附截图。 |
+| 无障碍检查 | 「请检查 `src/components/ConfirmDialog.tsx` 的焦点陷阱、键盘流程、标签、ARIA、读屏行为、触摸目标和 WCAG 2.2 AA 问题。」 | `fec-accessibility-check` | 无障碍问题和可落地修改建议。 | 视觉焦点问题最好附截图。 |
 | 性能审查 | 「请基于证据分析 dashboard 性能：Core Web Vitals、包体积、渲染热点、数据瀑布流、内存泄漏和合理性能预算。」 | `fec-performance-optimization`、`fec-performance-optimizer` | 性能报告，包含基线证据、优先级、验证命令和针对性修复。 | 有 Lighthouse、trace、profile 或慢路径更好。 |
 | UI 还原度评审 | 「请对比设置页实现与截图/设计链接，列出布局、间距、字体、状态和响应式差异。」 | `fec-ui-checker` | UI 还原度报告和修复建议。 | 提供截图或设计来源。 |
 
@@ -53,6 +53,7 @@
 | Vite 配置 | 「请审计 `vite.config.ts`：HMR、环境变量暴露、开发代理、构建产物、依赖预构建和插件顺序。」 | `fec-vite-project-standard` | Vite 配置问题和安全修改。 | 补充构建或 dev server 症状。 |
 | 官方文档核对 | 「请确认当前 Vite 版本是否还需要这个依赖预构建 workaround。先看项目配置和官方文档，再建议是否删除。」 | `fec-source-driven-development`、`fec-vite-project-standard` | 版本感知的建议，包含来源说明、回退和验证计划。 | 适合删除兼容代码前使用。 |
 | Monorepo 边界 | 「请检查 `apps/web` 和 `packages/ui` 的包边界、workspace 依赖、构建脚本和 Turborepo/Nx 任务图。」 | `fec-monorepo-project-standard` | 边界与任务编排评审。 | 补充包管理器和 workspace 文件。 |
+| 依赖升级 | 「为这个仓库规划 Vite 和 Storybook 升级：查 release notes，识别 breaking changes，评审 lockfile 与 peer dependency 风险，并提出验证矩阵。」 | `fec-dependency-upgrade`、`fec-source-driven-development` | 升级批次、来源依据、影响范围、验证命令和回滚说明。 | 大版本升级不要和无关重构混在一起。 |
 | 服务端状态 | 「请评审 `src/queries/useReports.ts`：query key、缓存时间、失效策略、乐观更新、错误状态和 suspense/loading 行为。」 | `fec-data-fetching` | TanStack Query / 服务端状态建议或实现。 | 补充 API 变化频率和 UX 预期。 |
 | 状态归属 | 「请审计 dashboard 的状态归属：哪些属于 URL 参数、TanStack Query、本地组件 state、浏览器持久化或全局 store，并给出安全迁移方案。」 | `fec-state-management` | 状态清单、归属决策、store 边界和验证步骤。 | 适合 store 重构或清理重复状态前使用。 |
 | API 集成 | 「请为 checkout 设计类型化 API 集成层：client 边界、错误映射、鉴权刷新、上传策略，以及订单更新用 polling、SSE 还是 WebSocket。」 | `fec-api-integration` | API client 策略或实现，包含失败状态和联调检查。 | 补充后端归属、鉴权模型和接口契约。 |
@@ -71,6 +72,8 @@
 | --- | --- | --- | --- | --- |
 | 设计稿实现 | 「请按 Figma 节点 `123:456` 实现 UI。复用现有 design token 和组件，匹配间距与响应式状态，并说明假设。」 | `fec-implement-from-design`、`fec-figma-implementer` | UI 代码和设计实现说明/报告。 | 配好 MCP 凭据效果最好。 |
 | 截图到 UI 打磨 | 「请打磨这个 dashboard，让它像生产级 SaaS 工具：信息密度、层级、空/加载/错误状态、响应式布局和交互状态。」 | `fec-ui-design` | UI 改进和视觉 QA 说明。 | 可提供截图或本地 URL。 |
+| 响应式布局 | 「修复这个后台表格在 375px、768px、1440px 下的问题：决定移动端列优先级、容器查询、触摸目标、安全区域和溢出规则。」 | `fec-responsive-layout`、`fec-ui-checker` | 响应式策略、布局修改、视口检查和剩余风险。 | 最好提供截图或本地路由。 |
+| Tailwind 设计系统 | 「把这些 Tailwind 组件重构成语义 token 和 variants：theme 扩展、暗色模式、class 组合、动态 class 安全和 Storybook 状态覆盖。」 | `fec-tailwind-design-system`、`fec-ui-design` | token/variant 方案或实现、class 治理和暗色模式检查。 | 适合共享 UI 包变复杂前使用。 |
 | 产品化设计方向 | 「请为 healthcare analytics dashboard 制定贴合产品的设计方向：核心用户任务、视觉锚点、信息密度、图表语言、色彩角色、字体气质和必须避免的反模式。」 | `fec-ui-design`、`fec-performance-optimizer` | 设计方向、dashboard 结构、图表 UX 建议和 QA 重点。 | 补充受众、数据类型，以及是否实时刷新。 |
 | 设计系统生成 | 「请为高端预约类应用生成设计系统方向：语义色角色、字号层级、间距/圆角规则、组件语气、动效原则，以及哪些做法要刻意避开。」 | `fec-ui-design`、`fec-design-token-mapper` | 贴合产品的设计系统方案和 token 建议。 | 补充产品类别、品牌语气和目标技术栈。 |
 | Master/Page overrides | 「打磨 checkout 前，请先读取 `design-system/Acme/MASTER.md`，再检查是否有 `design-system/Acme/pages/checkout.md`；页面规则只覆盖与 Master 不同的部分。」 | `fec-ui-design` | 遵循长期设计系统规则的页面级打磨。 | 适用于把设计决策沉淀在仓库文档里的项目。 |
@@ -101,7 +104,7 @@
 | 修复构建失败 | 「`pnpm lint`、`pnpm typecheck` 和 `pnpm test` 都失败了。请逐步修复，不要放宽规则或跳过测试。」 | `/fec-build-fix`、`fec-validation-fix`、`fec-build-fixer` | 最小修复和验证报告。 | 粘贴准确失败命令。 |
 | 清理死代码 | 「请查找并安全移除未使用导出、死路由、过期样式和未使用依赖。保持 public API，并写报告。」 | `/fec-refactor-clean`、`fec-refactor-clean`、`fec-refactor-cleaner` | 清理计划/变更和报告。 | 发布前很适合。 |
 | 文档同步 | 「请更新公开文档，让 README、runtime docs、能力表和 metadata 与当前 commands、skills、agents、hooks、package 文件一致。」 | `/fec-doc-sync`、`fec-doc-sync`、`fec-doc-updater` | 同步后的文档和验证说明。 | 不要把临时报告复制进公开文档。 |
-| 来源驱动升级 | 「请规划 React Router/TanStack Query/Vite 的安全升级。核对官方迁移说明、当前项目用法、破坏性变更，并给出验证步骤。」 | `fec-source-driven-development`、`fec-doc-sync` | 升级决策说明、影响文件、迁移风险和验证清单。 | 如果公开指南变化，再配合文档同步。 |
+| 来源驱动升级 | 「请规划 React Router/TanStack Query/Vite 的安全升级。核对官方迁移说明、当前项目用法、破坏性变更，并给出验证步骤。」 | `fec-dependency-upgrade`、`fec-source-driven-development`、`fec-doc-sync` | 升级决策说明、影响文件、迁移风险和验证清单。 | 如果公开指南变化，再配合文档同步。 |
 | 遗留项目维护 | 「请改进 `public/js/legacy/cart.js`，保持当前 jQuery/MPA 技术栈，降低风险、改善结构，但暂时不要重写成 React。」 | `fec-legacy-web-standard` | 安全的遗留维护变更或建议。 | 补充浏览器兼容限制。 |
 
 ## 高级用户提示词

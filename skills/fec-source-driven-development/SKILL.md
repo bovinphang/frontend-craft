@@ -25,6 +25,7 @@ description: Use when frontend decisions depend on framework, library, browser, 
    - 写清当前版本推荐做法、弃用做法、限制条件和迁移注意事项。
    - 对多个可行方案说明选择理由、兼容性、维护成本和回退方式。
    - 若文档和项目现状冲突，优先解释冲突并给出渐进调整，不直接推翻已运行系统。
+   - 对依赖升级、框架迁移和公共 API 变化，记录 release notes、migration guide、版本范围、破坏性变更和回滚方案。
 
 4. 落到实现
    - 将外部行为隔离在适配层、配置层或小型工具函数中，避免在组件里散落版本假设。
@@ -34,6 +35,8 @@ description: Use when frontend decisions depend on framework, library, browser, 
 5. 验证假设
    - 用类型检查、最小复现、单元测试、组件测试、E2E、构建或浏览器验证证明关键假设。
    - 如果无法验证，报告不确定性、风险范围和需要用户或团队确认的信息。
+6. 留下轻量决策记录
+   - 当结论会影响公共接口、依赖版本、目录规范或团队工作流时，补充 ADR/变更记录或交给文档同步流程。
 
 ## Source Priority
 
@@ -51,6 +54,7 @@ description: Use when frontend decisions depend on framework, library, browser, 
 - 不引用无法复核的来源作为关键依据。
 - 不为追新而改动稳定项目约定；必须说明收益和迁移成本。
 - 不在交付中复制长篇外部文档；只保留必要结论和链接或文件路径。
+- 不把“查过文档”停留在口头；版本敏感决策需要能追溯到具体版本、路径或官方页面。
 
 ## Expected Output
 
