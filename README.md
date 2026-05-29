@@ -30,7 +30,7 @@
 
 Per-runtime paths and caveats live in [`docs/runtimes/`](docs/runtimes/).
 
-It bundles **13 specialized agents**, **39 auto-activated skills**, **9 slash commands**, **5 event-driven hooks**, **MCP templates** for 6 design tools, and a complete **rules library** into a single installable package. Run one command, and every AI session on your team writes React, Vue, Next.js, or Nuxt the same way — typed, accessible, secure, and consistent.
+It bundles **13 specialized agents**, **39 auto-activated skills**, **8 slash commands**, **5 event-driven hooks**, **MCP templates** for 6 design tools, and a complete **rules library** into a single installable package. Run one command, and every AI session on your team writes React, Vue, Next.js, or Nuxt the same way — typed, accessible, secure, and consistent.
 
 ```bash
 npx frontend-craft@latest
@@ -143,17 +143,16 @@ You: "`/fec-build-fix` Fix the failing validation commands from this log: <paste
 
 Slash commands are the primary entry points for structured workflows. Most produce a timestamped Markdown report under `reports/`.
 
-| Command               | Purpose                                                                | Report                       |
-| --------------------- | ---------------------------------------------------------------------- | ---------------------------- |
-| `/fec-init`           | Initialize project templates (CLAUDE.md, rules, settings)              | —                            |
-| `/fec-review`         | Structured review of specified or recently changed files               | `code-review-*.md`           |
-| `/fec-test-plan`      | Map frontend risks to test layers, priorities, commands, and evidence  | `test-plan-*.md`             |
-| `/fec-scaffold`       | Create page / feature / component boilerplate by convention            | —                            |
-| `/fec-plan`           | Plan implementation architecture, module boundaries, and rollout steps | `architecture-proposal-*.md` |
-| `/fec-tdd`            | Red → green → refactor loop for frontend TDD                           | —                            |
-| `/fec-build-fix`      | Incrementally repair lint, type-check, test, build, or CI failures     | `validation-fix-*.md`        |
-| `/fec-refactor-clean` | Classify and safely remove dead code, unused exports, styles, and deps | `refactor-clean-*.md`        |
-| `/fec-doc-sync`       | Sync READMEs, runtime docs, capability tables, and metadata            | —                            |
+| Command               | Purpose                                                                | Report                                           |
+| --------------------- | ---------------------------------------------------------------------- | ------------------------------------------------ |
+| `/fec-init`           | Initialize project templates (CLAUDE.md, rules, settings)              | —                                                |
+| `/fec-review`         | Structured review of specified or recently changed files               | `code-review-*.md`                               |
+| `/fec-scaffold`       | Create page / feature / component boilerplate by convention            | —                                                |
+| `/fec-plan`           | Unified planning: implementation architecture or test strategy         | `architecture-proposal-*.md` or `test-plan-*.md` |
+| `/fec-tdd`            | Red → green → refactor loop for frontend TDD                           | —                                                |
+| `/fec-build-fix`      | Incrementally repair lint, type-check, test, build, or CI failures     | `validation-fix-*.md`                            |
+| `/fec-refactor-clean` | Classify and safely remove dead code, unused exports, styles, and deps | `refactor-clean-*.md`                            |
+| `/fec-doc-sync`       | Sync READMEs, runtime docs, capability tables, and metadata            | —                                                |
 
 ### Skills (auto-activated)
 
@@ -375,7 +374,7 @@ Every review, analysis, and evaluation writes a timestamped Markdown report to `
 | Design implementation  | `design-implementation-YYYY-MM-DD-HHmmss.md` | `fec-figma-implementer`                                             |
 | Token mapping          | `token-mapping-YYYY-MM-DD-HHmmss.md`         | `fec-design-token-mapper`                                           |
 | Design plan            | `design-plan-YYYY-MM-DD-HHmmss.md`           | `fec-implement-from-design`                                         |
-| Test plan              | `test-plan-YYYY-MM-DD-HHmmss.md`             | `/fec-test-plan`, `fec-testing-strategy`, `fec-test-planner`        |
+| Test plan              | `test-plan-YYYY-MM-DD-HHmmss.md`             | `/fec-plan`, `fec-testing-strategy`, `fec-test-planner`             |
 | Validation fix         | `validation-fix-YYYY-MM-DD-HHmmss.md`        | `fec-validation-fix`                                                |
 | Refactor clean         | `refactor-clean-YYYY-MM-DD-HHmmss.md`        | `/fec-refactor-clean`, `fec-refactor-clean`, `fec-refactor-cleaner` |
 | E2E run summary        | `e2e-summary-YYYY-MM-DD-HHmmss.md`           | `fec-e2e-runner` (optional)                                         |

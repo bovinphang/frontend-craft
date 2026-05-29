@@ -30,7 +30,7 @@
 
 각 런타임의 경로와 주의사항은 [`docs/runtimes/`](../runtimes/)에 있습니다.
 
-**13개의 전문 에이전트**, **39개의 자동 활성화 스킬**, **9개의 슬래시 명령어**, **5개의 이벤트 기반 훅**, 6개 디자인 도구를 위한 **MCP 템플릿**, 그리고 완전한 **규칙 라이브러리**를 하나의 설치 가능한 패키지로 묶었습니다. 명령어 하나만 실행하면, 팀의 모든 AI 세션이 React, Vue, Next.js, Nuxt를 같은 방식으로 작성합니다 — 타입 안전하고, 접근성 있고, 안전하며, 일관성 있게.
+**13개의 전문 에이전트**, **39개의 자동 활성화 스킬**, **8개의 슬래시 명령어**, **5개의 이벤트 기반 훅**, 6개 디자인 도구를 위한 **MCP 템플릿**, 그리고 완전한 **규칙 라이브러리**를 하나의 설치 가능한 패키지로 묶었습니다. 명령어 하나만 실행하면, 팀의 모든 AI 세션이 React, Vue, Next.js, Nuxt를 같은 방식으로 작성합니다 — 타입 안전하고, 접근성 있고, 안전하며, 일관성 있게.
 
 ```bash
 npx frontend-craft@latest
@@ -120,17 +120,16 @@ npx frontend-craft@latest list
 
 슬래시 명령어는 구조화된 워크플로의 주요 진입점입니다. 대부분 `reports/`에 타임스탬프가 찍힌 Markdown 보고서를 출력합니다.
 
-| 명령어                | 용도                                                              | 보고서                       |
-| --------------------- | ----------------------------------------------------------------- | ---------------------------- |
-| `/fec-init`           | 프로젝트 템플릿 초기화 (CLAUDE.md, 규칙, 설정)                    | —                            |
-| `/fec-review`         | 지정되거나 최근 변경된 파일의 구조화된 리뷰                       | `code-review-*.md`           |
-| `/fec-test-plan`      | 프런트엔드 위험을 테스트 계층, 우선순위, 명령, 증거 산출물에 매핑 | `test-plan-*.md`             |
-| `/fec-scaffold`       | 규칙에 따라 page / feature / component 보일러플레이트 생성        | —                            |
-| `/fec-plan`           | 구현 아키텍처, 모듈 경계, 데이터 흐름, 단계별 적용 계획           | `architecture-proposal-*.md` |
-| `/fec-tdd`            | 빨강 → 초록 → 리팩토링 프론트엔드 TDD 루프                        | —                            |
-| `/fec-build-fix`      | lint, type-check, test, build, CI 실패를 점진적으로 수정          | `validation-fix-*.md`        |
-| `/fec-refactor-clean` | 데드 코드, 미사용 export, 스타일, 의존성을 분류하고 안전하게 제거 | `refactor-clean-*.md`        |
-| `/fec-doc-sync`       | README, 런타임 문서, 기능 표, 메타데이터 동기화                   | —                            |
+| 명령어                | 용도                                                              | 보고서                                             |
+| --------------------- | ----------------------------------------------------------------- | -------------------------------------------------- |
+| `/fec-init`           | 프로젝트 템플릿 초기화 (CLAUDE.md, 규칙, 설정)                    | —                                                  |
+| `/fec-review`         | 지정되거나 최근 변경된 파일의 구조화된 리뷰                       | `code-review-*.md`                                 |
+| `/fec-scaffold`       | 규칙에 따라 page / feature / component 보일러플레이트 생성        | —                                                  |
+| `/fec-plan`           | 통합 계획: 구현 아키텍처 또는 테스트 전략                         | `architecture-proposal-*.md` 또는 `test-plan-*.md` |
+| `/fec-tdd`            | 빨강 → 초록 → 리팩토링 프론트엔드 TDD 루프                        | —                                                  |
+| `/fec-build-fix`      | lint, type-check, test, build, CI 실패를 점진적으로 수정          | `validation-fix-*.md`                              |
+| `/fec-refactor-clean` | 데드 코드, 미사용 export, 스타일, 의존성을 분류하고 안전하게 제거 | `refactor-clean-*.md`                              |
+| `/fec-doc-sync`       | README, 런타임 문서, 기능 표, 메타데이터 동기화                   | —                                                  |
 
 ### 스킬 (자동 활성화)
 
@@ -350,7 +349,7 @@ $env:MODAO_TOKEN = "your-modao-token"
 | 디자인 구현          | `design-implementation-YYYY-MM-DD-HHmmss.md` | `fec-figma-implementer`                                             |
 | 토큰 매핑            | `token-mapping-YYYY-MM-DD-HHmmss.md`         | `fec-design-token-mapper`                                           |
 | 디자인 계획          | `design-plan-YYYY-MM-DD-HHmmss.md`           | `fec-implement-from-design`                                         |
-| 테스트 계획          | `test-plan-YYYY-MM-DD-HHmmss.md`             | `/fec-test-plan`, `fec-testing-strategy`, `fec-test-planner`        |
+| 테스트 계획          | `test-plan-YYYY-MM-DD-HHmmss.md`             | `/fec-plan`, `fec-testing-strategy`, `fec-test-planner`             |
 | 검증 수정            | `validation-fix-YYYY-MM-DD-HHmmss.md`        | `fec-validation-fix`                                                |
 | 리팩토링 정리        | `refactor-clean-YYYY-MM-DD-HHmmss.md`        | `/fec-refactor-clean`, `fec-refactor-clean`, `fec-refactor-cleaner` |
 | E2E 실행 요약        | `e2e-summary-YYYY-MM-DD-HHmmss.md`           | `fec-e2e-runner` (선택)                                             |

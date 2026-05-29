@@ -69,7 +69,6 @@ frontend-craft/
 |-- commands/         # Slash commands for quick execution
 |   |-- fec-init.md     # /fec-init - Initialize project templates
 |   |-- fec-review.md   # /fec-review - Code review
-|   |-- fec-test-plan.md # /fec-test-plan - Testing strategy and coverage matrix
 |   |-- fec-scaffold.md # /fec-scaffold - Create page/feature/component
 |   |-- fec-plan.md     # /fec-plan - Implementation planning before frontend changes
 |   |-- fec-tdd.md      # /fec-tdd - Test-driven frontend implementation
@@ -104,17 +103,17 @@ frontend-craft/
 
 ## Directory Responsibilities
 
-| Directory       | Purpose                                                                           |
-| --------------- | --------------------------------------------------------------------------------- |
-| `agents/`       | Specialized sub-agent definitions (Markdown + YAML frontmatter)                   |
-| `bin/`          | CLI entry point (`frontend-craft.ts`)                                             |
-| `commands/`     | Custom slash commands (`fec-init`, `fec-review`, `fec-scaffold`, workflow commands) |
-| `docs/`         | Runtime installation docs and localized READMEs                                   |
-| `hooks/`        | Hook configuration (`hooks.json`)                                                 |
+| Directory       | Purpose                                                                                                               |
+| --------------- | --------------------------------------------------------------------------------------------------------------------- |
+| `agents/`       | Specialized sub-agent definitions (Markdown + YAML frontmatter)                                                       |
+| `bin/`          | CLI entry point (`frontend-craft.ts`)                                                                                 |
+| `commands/`     | Custom slash commands (`fec-init`, `fec-review`, `fec-scaffold`, workflow commands)                                   |
+| `docs/`         | Runtime installation docs and localized READMEs                                                                       |
+| `hooks/`        | Hook configuration (`hooks.json`)                                                                                     |
 | `scripts/`      | Source-run maintenance scripts (build, packaging, publishing checks, metadata sync), excluded from npm runtime output |
-| `skills/`       | Skill definitions (`SKILL.md`, `metadata.json`)                                   |
-| `src/hooks/`    | Runtime hook source bundled into `dist/hooks/` for Claude/Qoder execution          |
-| `src/install/`  | Installer core (CLI, interactive wizard, runtime converters)                      |
-| `src/openclaw/` | OpenClaw runtime TypeScript source                                                |
-| `templates/`    | Runtime-specific project templates (Claude/Codex/OpenClaw configs + shared rules) |
-| `tests/`        | Test suite (converter tests, installer tests)                                     |
+| `skills/`       | Skill definitions (`SKILL.md`, `metadata.json`)                                                                       |
+| `src/hooks/`    | Runtime hook source bundled into `dist/hooks/` for Claude/Qoder execution                                             |
+| `src/install/`  | Installer core (CLI, interactive wizard, runtime converters)                                                          |
+| `src/openclaw/` | OpenClaw runtime TypeScript source                                                                                    |
+| `templates/`    | Runtime-specific project templates (Claude/Codex/OpenClaw configs + shared rules)                                     |
+| `tests/`        | Test suite (converter tests, installer tests)                                                                         |

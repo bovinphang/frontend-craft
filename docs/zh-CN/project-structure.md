@@ -69,7 +69,6 @@ frontend-craft/
 |-- commands/         # 快速执行的斜杠命令
 |   |-- fec-init.md     # /fec-init - 初始化项目模板
 |   |-- fec-review.md   # /fec-review - 代码评审
-|   |-- fec-test-plan.md # /fec-test-plan - 测试策略和覆盖矩阵
 |   |-- fec-scaffold.md # /fec-scaffold - 创建 page/feature/component
 |   |-- fec-plan.md     # /fec-plan - 前端变更前的实施规划
 |   |-- fec-tdd.md      # /fec-tdd - 测试驱动的前端实现
@@ -104,17 +103,17 @@ frontend-craft/
 
 ## 目录职责
 
-| 目录 | 职责 |
-| --- | --- |
-| `agents/` | 专业子代理定义（Markdown + YAML frontmatter） |
-| `bin/` | CLI 入口（`frontend-craft.ts`） |
-| `commands/` | 自定义斜杠命令（`fec-init`、`fec-review`、`fec-scaffold` 和工作流命令） |
-| `docs/` | 运行时安装文档和本地化 README |
-| `hooks/` | Hook 配置（`hooks.json`） |
-| `scripts/` | 仓库维护脚本源码（构建、打包、发布检查、metadata 同步），不包含在 npm 运行时输出中 |
-| `skills/` | Skill 定义（`SKILL.md`、`metadata.json`） |
-| `src/hooks/` | 打包到 `dist/hooks/` 的运行时 hook 源码，供 Claude/Qoder 执行 |
-| `src/install/` | 安装器核心（CLI、交互向导、运行时转换器） |
-| `src/openclaw/` | OpenClaw 运行时 TypeScript 源码 |
-| `templates/` | 运行时专用项目模板（Claude/Codex/OpenClaw 配置 + shared rules） |
-| `tests/` | 测试套件（转换器测试、安装器测试） |
+| 目录            | 职责                                                                               |
+| --------------- | ---------------------------------------------------------------------------------- |
+| `agents/`       | 专业子代理定义（Markdown + YAML frontmatter）                                      |
+| `bin/`          | CLI 入口（`frontend-craft.ts`）                                                    |
+| `commands/`     | 自定义斜杠命令（`fec-init`、`fec-review`、`fec-scaffold` 和工作流命令）            |
+| `docs/`         | 运行时安装文档和本地化 README                                                      |
+| `hooks/`        | Hook 配置（`hooks.json`）                                                          |
+| `scripts/`      | 仓库维护脚本源码（构建、打包、发布检查、metadata 同步），不包含在 npm 运行时输出中 |
+| `skills/`       | Skill 定义（`SKILL.md`、`metadata.json`）                                          |
+| `src/hooks/`    | 打包到 `dist/hooks/` 的运行时 hook 源码，供 Claude/Qoder 执行                      |
+| `src/install/`  | 安装器核心（CLI、交互向导、运行时转换器）                                          |
+| `src/openclaw/` | OpenClaw 运行时 TypeScript 源码                                                    |
+| `templates/`    | 运行时专用项目模板（Claude/Codex/OpenClaw 配置 + shared rules）                    |
+| `tests/`        | 测试套件（转换器测试、安装器测试）                                                 |

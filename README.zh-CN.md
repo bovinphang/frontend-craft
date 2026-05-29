@@ -30,7 +30,7 @@
 
 各运行时的路径与注意事项详见 [`docs/runtimes/`](docs/runtimes/)。
 
-它将 **13 个专业 agent**、**39 个自动激活 skill**、**9 个斜杠命令**、**5 个事件驱动 hook**、面向 6 款设计工具的 **MCP 模板**以及一整套**规则库**打包为一个可安装单元。运行一条命令，团队里的每一次 AI 会话都将以相同的方式编写 React、Vue、Next.js 或 Nuxt——类型安全、可访问、安全、一致。
+它将 **13 个专业 agent**、**39 个自动激活 skill**、**8 个斜杠命令**、**5 个事件驱动 hook**、面向 6 款设计工具的 **MCP 模板**以及一整套**规则库**打包为一个可安装单元。运行一条命令，团队里的每一次 AI 会话都将以相同的方式编写 React、Vue、Next.js 或 Nuxt——类型安全、可访问、安全、一致。
 
 ```bash
 npx frontend-craft@latest
@@ -145,17 +145,16 @@ npx frontend-craft@latest install claude --local --force
 
 斜杠命令是结构化工作流的主入口，多数会输出带时间戳的 Markdown 报告到 `reports/`。
 
-| 命令                  | 用途                                              | 报告                         |
-| --------------------- | ------------------------------------------------- | ---------------------------- |
-| `/fec-init`           | 初始化项目模板（CLAUDE.md、规则、settings）       | —                            |
-| `/fec-review`         | 对指定文件或最近变更的代码执行结构化评审          | `code-review-*.md`           |
-| `/fec-test-plan`      | 将前端风险映射到测试层级、优先级、命令和证据产物  | `test-plan-*.md`             |
-| `/fec-scaffold`       | 按规范创建 page / feature / component 样板        | —                            |
-| `/fec-plan`           | 规划实现架构、模块边界、数据流与落地步骤          | `architecture-proposal-*.md` |
-| `/fec-tdd`            | 红 → 绿 → 重构的前端 TDD 循环                     | —                            |
-| `/fec-build-fix`      | 增量修复 lint、type-check、test、build 或 CI 失败 | `validation-fix-*.md`        |
-| `/fec-refactor-clean` | 分类并安全清理死代码、未使用导出、样式和依赖      | `refactor-clean-*.md`        |
-| `/fec-doc-sync`       | 同步 README、runtime 文档、能力表和公开 metadata  | —                            |
+| 命令                  | 用途                                              | 报告                                             |
+| --------------------- | ------------------------------------------------- | ------------------------------------------------ |
+| `/fec-init`           | 初始化项目模板（CLAUDE.md、规则、settings）       | —                                                |
+| `/fec-review`         | 对指定文件或最近变更的代码执行结构化评审          | `code-review-*.md`                               |
+| `/fec-scaffold`       | 按规范创建 page / feature / component 样板        | —                                                |
+| `/fec-plan`           | 统一规划入口：实现架构或测试策略                  | `architecture-proposal-*.md` 或 `test-plan-*.md` |
+| `/fec-tdd`            | 红 → 绿 → 重构的前端 TDD 循环                     | —                                                |
+| `/fec-build-fix`      | 增量修复 lint、type-check、test、build 或 CI 失败 | `validation-fix-*.md`                            |
+| `/fec-refactor-clean` | 分类并安全清理死代码、未使用导出、样式和依赖      | `refactor-clean-*.md`                            |
+| `/fec-doc-sync`       | 同步 README、runtime 文档、能力表和公开 metadata  | —                                                |
 
 ### 技能（Skills，自动激活）
 
@@ -377,7 +376,7 @@ $env:MODAO_TOKEN = "your-modao-token"
 | 设计实现       | `design-implementation-YYYY-MM-DD-HHmmss.md` | `fec-figma-implementer`                                             |
 | Token 映射     | `token-mapping-YYYY-MM-DD-HHmmss.md`         | `fec-design-token-mapper`                                           |
 | 设计计划       | `design-plan-YYYY-MM-DD-HHmmss.md`           | `fec-implement-from-design`                                         |
-| 测试计划       | `test-plan-YYYY-MM-DD-HHmmss.md`             | `/fec-test-plan`、`fec-testing-strategy`、`fec-test-planner`        |
+| 测试计划       | `test-plan-YYYY-MM-DD-HHmmss.md`             | `/fec-plan`、`fec-testing-strategy`、`fec-test-planner`             |
 | 验证修复       | `validation-fix-YYYY-MM-DD-HHmmss.md`        | `fec-validation-fix`                                                |
 | 重构清理       | `refactor-clean-YYYY-MM-DD-HHmmss.md`        | `/fec-refactor-clean`、`fec-refactor-clean`、`fec-refactor-cleaner` |
 | E2E 运行摘要   | `e2e-summary-YYYY-MM-DD-HHmmss.md`           | `fec-e2e-runner`（可选）                                            |

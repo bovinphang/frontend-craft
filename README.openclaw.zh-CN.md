@@ -138,7 +138,7 @@ frontend-craft/
 
 | 技能                             | 用途                                                           |
 | -------------------------------- | -------------------------------------------------------------- |
-| `fec-code-review`       | 架构、类型安全、渲染、样式、可访问性、测试、安全评审           |
+| `fec-code-review`                | 架构、类型安全、渲染、样式、可访问性、测试、安全评审           |
 | `fec-security-review`            | XSS、CSRF、敏感数据泄露、不安全输入处理                        |
 | `fec-accessibility-check`        | 面向 WCAG 的语义结构、键盘支持、焦点、标签检查                 |
 | `fec-react-project-standard`     | React + TypeScript 项目规范                                    |
@@ -166,7 +166,7 @@ frontend-craft/
 | `fec-web-workers`                | Web Worker、Transferable、Comlink、Worker 池                   |
 | `fec-canvas-threejs`             | Canvas 2D、Three.js、React Three Fiber、WebGL 性能与可访问性   |
 | `fec-svg-animation`              | CSS、Framer Motion、GSAP SVG 动画与 reduced-motion 降级        |
-| `fec-ui-design`                  | UI 方向、视觉识别、界面打磨、状态与视觉 QA                    |
+| `fec-ui-design`                  | UI 方向、视觉识别、界面打磨、状态与视觉 QA                     |
 | `fec-typescript-type-safety`     | 类型契约、DTO 映射、类型守卫、泛型和类型级检查                 |
 | `fec-dependency-upgrade`         | 依赖升级、lockfile 评审、CVE 修复和迁移验证                    |
 | `fec-vite-project-standard`      | Vite 配置、环境变量安全、HMR、开发代理、构建优化与库模式       |
@@ -187,7 +187,7 @@ frontend-craft/
 
 | 场景                         | 技能（供查阅）                   | 示例话术（不出现技能名）                                                                                                               |
 | ---------------------------- | -------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------- |
-| 合并前做 PR / 分支评审       | `fec-code-review`       | 「合并前请评审 `src/features/checkout/`：架构、类型、无障碍和测试；把 Markdown 报告写到 `reports/`。」                                 |
+| 合并前做 PR / 分支评审       | `fec-code-review`                | 「合并前请评审 `src/features/checkout/`：架构、类型、无障碍和测试；把 Markdown 报告写到 `reports/`。」                                 |
 | 聚焦 XSS、密钥、危险 DOM     | `fec-security-review`            | 「请审计 `src/lib/auth.ts` 以及所有渲染或存储用户 HTML 的代码，按严重程度列出 XSS 与密钥泄露风险及修复建议。」                         |
 | 新弹窗 / 表单 — 键盘与 ARIA  | `fec-accessibility-check`        | 「检查 `src/components/ConfirmDialog.tsx` 的键盘陷阱、焦点顺序、标签与 ARIA，并给出可落地的修改建议。」                                |
 | 对齐 React 工程约定          | `fec-react-project-standard`     | 「我们使用 React 18 和 TanStack Query，请对照成熟 React + TS 实践评审 `src/pages/Dashboard/`，并贴合现有抽象。」                       |
@@ -202,7 +202,7 @@ frontend-craft/
 | Nuxt 3 页面或布局            | `fec-nuxt-project-standard`      | 「请评审 `pages/admin/*.vue` 与 `composables/useApi.ts` 是否符合 Nuxt 3 的 SSR、数据与组合式用法惯例。」                               |
 | Monorepo 边界与任务编排      | `fec-monorepo-project-standard`  | 「`apps/web` 依赖 `packages/ui`，请检查包边界、workspace 配置和 Turborepo 任务图是否有问题。」                                         |
 | 服务端数据获取               | `fec-data-fetching`              | 「请评审 `src/queries/useReports.ts` 的 TanStack Query 模式：缓存 key、失效策略和乐观更新。」                                          |
-| 状态归属与 store 选型        | `fec-state-management`           | 「请审计 dashboard 的状态：哪些属于 URL 参数、TanStack Query、本地 state 或全局 store，并给出安全迁移方案。」                         |
+| 状态归属与 store 选型        | `fec-state-management`           | 「请审计 dashboard 的状态：哪些属于 URL 参数、TanStack Query、本地 state 或全局 store，并给出安全迁移方案。」                          |
 | 复杂表单与校验               | `fec-form-handling`              | 「用 React Hook Form + Zod 构建多步注册表单，包含文件上传和动态条件字段。」                                                            |
 | 为应用添加路由守卫           | `fec-route-protection`           | 「为 React Router 的 `/admin` 路由做权限保护：未登录用户重定向，基于角色控制访问。」                                                   |
 | 编写组件单元测试             | `fec-component-testing`          | 「为 `src/components/UserCard.tsx` 编写 RTL 测试：渲染、user-event 交互和快照回归用例。」                                              |
@@ -212,19 +212,18 @@ frontend-craft/
 | 重计算移出主线程             | `fec-web-workers`                | 「把图片处理逻辑移到 Web Worker，用 Comlink 通信，保持 UI 响应。」                                                                     |
 | 构建交互式 3D 场景           | `fec-canvas-threejs`             | 「在 `src/components/ProductViewer.tsx` 添加 Three.js 产品展示，兼顾性能和降级方案。」                                                 |
 | 为落地页添加 SVG 动效        | `fec-svg-animation`              | 「用 Framer Motion 为 hero 区 SVG 添加动画，并为 reduced-motion 用户提供静态降级方案。」                                               |
-| 设计与打磨 UI               | `fec-ui-design`                  | 「请评审 `src/components/Dashboard.tsx` 的 UI 方向、视觉识别、间距、状态和动效打磨。」                                                   |
+| 设计与打磨 UI                | `fec-ui-design`                  | 「请评审 `src/components/Dashboard.tsx` 的 UI 方向、视觉识别、间距、状态和动效打磨。」                                                 |
 | 优化 Vite 构建配置           | `fec-vite-project-standard`      | 「请审计 `vite.config.ts` 的 HMR、开发代理、环境变量安全和库模式最佳实践。」                                                           |
 
 **斜杠命令（`commands/` 下的 Markdown）**
 
 作为**固定步骤**的命令说明加载。对话里用自然语言描述要做的事即可，代理可按对应命令文档执行，**无需**说出命令文件名。下表只列出常见 OpenClaw 示例；完整命令提示词见 [docs/zh-CN/example-prompts.md](docs/zh-CN/example-prompts.md#高级用户提示词)。
 
-| 命令文档           | 适用时机                                                                                 | 示例（自然语言）                                                                                                  |
-| ------------------ | ---------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------- |
-| `fec-init.md`      | 在**业务仓库**里初始化 **Claude 风格** 的 `.claude/` 模板（文档内路径针对 `.claude/`）。 | 「请在本仓库初始化 `.claude/`，按插件提供的模板与规则复制；若已有文件请先问我是否覆盖。」                         |
-| `fec-review.md`    | 引导式评审并保存 `reports/code-review-*.md`。                                            | 「请评审我上一次提交里改动的文件，并写一份结构化 Markdown 报告到 `reports/`。」                                   |
-| `fec-test-plan.md` | 前端测试策略与覆盖矩阵。                                                                 | 「这次 checkout 重构，请把风险映射到静态检查、单元、E2E、视觉、无障碍和安全覆盖。」                               |
-| `fec-scaffold.md`  | 页面 / 功能 / 组件目录脚手架。                                                           | 「请为 React 项目脚手架一个新页面 UserDetail：放在 `src/pages/...`，并带上空的 `components/` 与 `hooks/` 目录。」 |
+| 命令文档          | 适用时机                                                                                 | 示例（自然语言）                                                                                                  |
+| ----------------- | ---------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------- |
+| `fec-init.md`     | 在**业务仓库**里初始化 **Claude 风格** 的 `.claude/` 模板（文档内路径针对 `.claude/`）。 | 「请在本仓库初始化 `.claude/`，按插件提供的模板与规则复制；若已有文件请先问我是否覆盖。」                         |
+| `fec-review.md`   | 引导式评审并保存 `reports/code-review-*.md`。                                            | 「请评审我上一次提交里改动的文件，并写一份结构化 Markdown 报告到 `reports/`。」                                   |
+| `fec-scaffold.md` | 页面 / 功能 / 组件目录脚手架。                                                           | 「请为 React 项目脚手架一个新页面 UserDetail：放在 `src/pages/...`，并带上空的 `components/` 与 `hooks/` 目录。」 |
 
 ### Hooks
 

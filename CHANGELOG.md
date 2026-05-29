@@ -9,6 +9,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 Project-facing release notes are maintained in English from 2.0.0 onward. Historical entries may preserve their original language.
 
+## [Unreleased]
+
+### Removed
+
+- `/fec-test-plan` slash command — test-planning intent is now handled by `/fec-plan`.
+
+### Changed
+
+- `/fec-plan` is now the unified planning entry: it handles both implementation/architecture planning and test-strategy planning based on user intent.
+
 ## [2.3.1] - 2026-05-25
 
 ### Added

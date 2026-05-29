@@ -120,17 +120,16 @@ npx frontend-craft@latest list
 
 斜線指令是結構化工作流的主入口，多數會輸出帶時間戳記的 Markdown 報告到 `reports/`。
 
-| 指令                  | 用途                                              | 報告                         |
-| --------------------- | ------------------------------------------------- | ---------------------------- |
-| `/fec-init`           | 初始化專案範本（CLAUDE.md、規則、settings）       | —                            |
-| `/fec-review`         | 對指定或最近變更的檔案執行結構化審查              | `code-review-*.md`           |
-| `/fec-test-plan`      | 將前端風險映射到測試層級、優先級、命令和證據產物  | `test-plan-*.md`             |
-| `/fec-scaffold`       | 依規範建立 page / feature / component 樣板        | —                            |
-| `/fec-plan`           | 規劃實現架構、模組邊界、資料流與落地步驟          | `architecture-proposal-*.md` |
-| `/fec-tdd`            | 紅 → 綠 → 重構的前端 TDD 循環                     | —                            |
-| `/fec-build-fix`      | 增量修復 lint、type-check、test、build 或 CI 失敗 | `validation-fix-*.md`        |
-| `/fec-refactor-clean` | 分類並安全清理死程式碼、未使用匯出、樣式和依賴    | `refactor-clean-*.md`        |
-| `/fec-doc-sync`       | 同步 README、runtime 文件、能力表和公開 metadata  | —                            |
+| 指令                  | 用途                                              | 報告                                             |
+| --------------------- | ------------------------------------------------- | ------------------------------------------------ |
+| `/fec-init`           | 初始化專案範本（CLAUDE.md、規則、settings）       | —                                                |
+| `/fec-review`         | 對指定或最近變更的檔案執行結構化審查              | `code-review-*.md`                               |
+| `/fec-scaffold`       | 依規範建立 page / feature / component 樣板        | —                                                |
+| `/fec-plan`           | 統一規劃入口：實現架構或測試策略                  | `architecture-proposal-*.md` 或 `test-plan-*.md` |
+| `/fec-tdd`            | 紅 → 綠 → 重構的前端 TDD 循環                     | —                                                |
+| `/fec-build-fix`      | 增量修復 lint、type-check、test、build 或 CI 失敗 | `validation-fix-*.md`                            |
+| `/fec-refactor-clean` | 分類並安全清理死程式碼、未使用匯出、樣式和依賴    | `refactor-clean-*.md`                            |
+| `/fec-doc-sync`       | 同步 README、runtime 文件、能力表和公開 metadata  | —                                                |
 
 ### 技能（Skills，自動啟用）
 
@@ -350,7 +349,7 @@ $env:MODAO_TOKEN = "your-modao-token"
 | 設計實現       | `design-implementation-YYYY-MM-DD-HHmmss.md` | `fec-figma-implementer`                                             |
 | Token 對應     | `token-mapping-YYYY-MM-DD-HHmmss.md`         | `fec-design-token-mapper`                                           |
 | 設計計畫       | `design-plan-YYYY-MM-DD-HHmmss.md`           | `fec-implement-from-design`                                         |
-| 測試計畫       | `test-plan-YYYY-MM-DD-HHmmss.md`             | `/fec-test-plan`、`fec-testing-strategy`、`fec-test-planner`        |
+| 測試計畫       | `test-plan-YYYY-MM-DD-HHmmss.md`             | `/fec-plan`、`fec-testing-strategy`、`fec-test-planner`             |
 | 驗證修復       | `validation-fix-YYYY-MM-DD-HHmmss.md`        | `fec-validation-fix`                                                |
 | 重構清理       | `refactor-clean-YYYY-MM-DD-HHmmss.md`        | `/fec-refactor-clean`、`fec-refactor-clean`、`fec-refactor-cleaner` |
 | E2E 執行摘要   | `e2e-summary-YYYY-MM-DD-HHmmss.md`           | `fec-e2e-runner`（可選）                                            |

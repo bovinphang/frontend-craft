@@ -120,17 +120,16 @@ npx frontend-craft@latest list
 
 スラッシュコマンドは構造化ワークフローの主要なエントリーポイントです。ほとんどが `reports/` にタイムスタンプ付き Markdown レポートを出力します。
 
-| コマンド              | 用途                                                                | レポート                     |
-| --------------------- | ------------------------------------------------------------------- | ---------------------------- |
-| `/fec-init`           | プロジェクトテンプレート（CLAUDE.md、ルール、設定）を初期化         | —                            |
-| `/fec-review`         | 指定または最近変更したファイルの構造化レビュー                      | `code-review-*.md`           |
-| `/fec-test-plan`      | フロントエンドリスクをテスト層、優先度、コマンド、証跡に対応付ける  | `test-plan-*.md`             |
-| `/fec-scaffold`       | 規約に従い page / feature / component のボイラープレートを作成      | —                            |
-| `/fec-plan`           | 実装アーキテクチャ、モジュール境界、データフロー、展開手順を計画    | `architecture-proposal-*.md` |
-| `/fec-tdd`            | 赤 → 緑 → リファクタリングのフロントエンド TDD ループ               | —                            |
-| `/fec-build-fix`      | lint、type-check、test、build、CI の失敗を段階的に修復              | `validation-fix-*.md`        |
-| `/fec-refactor-clean` | デッドコード、未使用 export、スタイル、依存関係を分類して安全に削除 | `refactor-clean-*.md`        |
-| `/fec-doc-sync`       | README、ランタイムドキュメント、機能表、メタデータを同期            | —                            |
+| コマンド              | 用途                                                                | レポート                                             |
+| --------------------- | ------------------------------------------------------------------- | ---------------------------------------------------- |
+| `/fec-init`           | プロジェクトテンプレート（CLAUDE.md、ルール、設定）を初期化         | —                                                    |
+| `/fec-review`         | 指定または最近変更したファイルの構造化レビュー                      | `code-review-*.md`                                   |
+| `/fec-scaffold`       | 規約に従い page / feature / component のボイラープレートを作成      | —                                                    |
+| `/fec-plan`           | 統合計画：実装アーキテクチャまたはテスト戦略                        | `architecture-proposal-*.md` または `test-plan-*.md` |
+| `/fec-tdd`            | 赤 → 緑 → リファクタリングのフロントエンド TDD ループ               | —                                                    |
+| `/fec-build-fix`      | lint、type-check、test、build、CI の失敗を段階的に修復              | `validation-fix-*.md`                                |
+| `/fec-refactor-clean` | デッドコード、未使用 export、スタイル、依存関係を分類して安全に削除 | `refactor-clean-*.md`                                |
+| `/fec-doc-sync`       | README、ランタイムドキュメント、機能表、メタデータを同期            | —                                                    |
 
 ### スキル（自動起動）
 
@@ -350,7 +349,7 @@ $env:MODAO_TOKEN = "your-modao-token"
 | デザイン実装             | `design-implementation-YYYY-MM-DD-HHmmss.md` | `fec-figma-implementer`                                             |
 | トークンマッピング       | `token-mapping-YYYY-MM-DD-HHmmss.md`         | `fec-design-token-mapper`                                           |
 | デザイン計画             | `design-plan-YYYY-MM-DD-HHmmss.md`           | `fec-implement-from-design`                                         |
-| テスト計画               | `test-plan-YYYY-MM-DD-HHmmss.md`             | `/fec-test-plan`、`fec-testing-strategy`、`fec-test-planner`        |
+| テスト計画               | `test-plan-YYYY-MM-DD-HHmmss.md`             | `/fec-plan`、`fec-testing-strategy`、`fec-test-planner`             |
 | 検証修復                 | `validation-fix-YYYY-MM-DD-HHmmss.md`        | `fec-validation-fix`                                                |
 | リファクタリングクリーン | `refactor-clean-YYYY-MM-DD-HHmmss.md`        | `/fec-refactor-clean`、`fec-refactor-clean`、`fec-refactor-cleaner` |
 | E2E 実行サマリー         | `e2e-summary-YYYY-MM-DD-HHmmss.md`           | `fec-e2e-runner`（任意）                                            |
