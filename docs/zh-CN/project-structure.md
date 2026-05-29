@@ -33,6 +33,8 @@ frontend-craft/
 |   |-- fec-vue3-project-standard/   # Vue 3 + TypeScript 项目规范
 |   |-- fec-implement-from-design/   # 从设计文件实现 UI
 |   |-- fec-validation-fix/            # lint、type-check、test、build 与修复
+|   |-- fec-performance-optimization/  # Core Web Vitals、包体、渲染、网络、内存
+|   |-- fec-source-driven-development/ # 官方来源、项目事实、版本敏感决策
 |   |-- fec-tdd-workflow/              # 测试先行的前端实现工作流
 |   |-- fec-refactor-clean/            # 安全清理死代码和未使用依赖
 |   |-- fec-doc-sync/                  # 公开文档和 metadata 同步
@@ -89,7 +91,7 @@ frontend-craft/
 |   |-- claude/        # CLAUDE.md 和 settings.json
 |   |-- codex/         # AGENTS.md 和 config.toml
 |   |-- openclaw/      # AGENTS.md 和 OPENCLAW-CONFIG.md
-|   |-- shared/rules/  # vue、react、design-system、testing、agent workflow、working modes 等
+|   |-- shared/rules/  # vue、react、design-system、testing、source-driven development、agent workflow、working modes 等
 |
 |-- .mcp.json         # MCP server 配置（Figma、Sketch、MasterGo、Pixso、墨刀）
 └-- README.md

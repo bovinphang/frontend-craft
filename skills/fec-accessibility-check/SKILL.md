@@ -15,7 +15,9 @@ description: Use when reviewing or improving frontend accessibility, semantic st
 2. 检查键盘路径：Tab 顺序、Enter/Space/Esc 行为、焦点可见、关闭后焦点恢复。
 3. 检查复杂组件：对话框、菜单、标签页、树、抽屉、表格和自定义控件的 ARIA 状态。
 4. 检查动态状态：loading、empty、error、toast 和异步更新需要被屏幕阅读器感知。
-5. 输出分级报告；报告格式见 [references/report-template.md](references/report-template.md)。
+5. 检查视觉可读性：文本/背景对比、focus ring、缩放到 200%、减少动效偏好和触摸目标尺寸。
+6. 用真实键盘路径复核关键流程，必要时补充屏幕阅读器或浏览器无障碍树观察。
+7. 输出分级报告；报告格式见 [references/report-template.md](references/report-template.md)。
 
 ## Detailed References
 
@@ -28,6 +30,7 @@ Load [references/report-template.md](references/report-template.md) when writing
 - 交互元素必须可键盘访问。
 - 表单错误必须与字段关联。
 - 颜色对比度风险需要指出具体文本/背景组合。
+- 不用 ARIA 弥补可以用原生 HTML 解决的问题。
 
 ## Expected Output
 

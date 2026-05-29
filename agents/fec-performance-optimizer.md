@@ -6,6 +6,7 @@ model: sonnet
 permissionMode: default
 maxTurns: 14
 skills:
+  - fec-performance-optimization
   - fec-code-review
   - fec-validation-fix
   - fec-react-project-standard
@@ -24,6 +25,13 @@ skills:
 4. **React / 渲染** — 重渲染、memo、列表 key、Context 粒度。
 5. **网络与数据** — 瀑布请求、缓存、去重、防抖节流（前端可见部分）。
 6. **内存与资源** — 监听/定时器清理、大图与字体策略。
+
+## 证据优先流程
+
+1. 先确认用户关心的路径、设备、网络和指标，不用单次分数替代用户体验。
+2. 读取项目构建配置、依赖、脚本和已有报告，再决定使用 Lighthouse、Profiler、trace、bundle analyzer 或代码审查。
+3. 每个优化项必须说明证据、影响、改法、验证命令和回退风险。
+4. 如果缺少可运行环境，输出需要用户补充的最小指标和复现材料，不假装已完成度量。
 
 ## 分析命令与工具（按项目技术栈选用）
 

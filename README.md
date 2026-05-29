@@ -30,7 +30,7 @@
 
 Per-runtime paths and caveats live in [`docs/runtimes/`](docs/runtimes/).
 
-It bundles **13 specialized agents**, **32 auto-activated skills**, **9 slash commands**, **5 event-driven hooks**, **MCP templates** for 6 design tools, and a complete **rules library** into a single installable package. Run one command, and every AI session on your team writes React, Vue, Next.js, or Nuxt the same way — typed, accessible, secure, and consistent.
+It bundles **13 specialized agents**, **34 auto-activated skills**, **9 slash commands**, **5 event-driven hooks**, **MCP templates** for 6 design tools, and a complete **rules library** into a single installable package. Run one command, and every AI session on your team writes React, Vue, Next.js, or Nuxt the same way — typed, accessible, secure, and consistent.
 
 ```bash
 npx frontend-craft@latest
@@ -44,7 +44,7 @@ That’s it. The wizard walks you through the rest.
 
 | Problem                                                              | What frontend-craft does                                                                       |
 | -------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------- |
-| AI assistants write inconsistent, untyped, or insecure frontend code | **32 skills** encode team standards — auto-activated when the assistant touches matching files |
+| AI assistants write inconsistent, untyped, or insecure frontend code | **34 skills** encode team standards — auto-activated when the assistant touches matching files |
 | Each AI tool has its own plugin format                               | **One CLI** installs the same rules, agents, and hooks into 15 runtimes                        |
 | Design-to-code handoff is lossy                                      | **MCP templates** read Figma, Sketch, MasterGo, Pixso, 墨刀, and 摹客 directly                 |
 | Reviews are ad-hoc and shallow                                       | **13 agents** produce graded reports: code, security, a11y, performance, TS, UI fidelity       |
@@ -204,6 +204,7 @@ Category boundaries are intentionally narrow: implementation capabilities cover 
 | `fec-security-review`      | XSS, CSRF, sensitive data leakage, input validation             |
 | `fec-accessibility-check`  | WCAG 2.1 AA compliance                                          |
 | `fec-validation-fix`       | Run and repair lint, type-check, test, build in one pass        |
+| `fec-performance-optimization` | Core Web Vitals, bundle, rendering, memory, network, and budget reviews |
 | `fec-refactor-clean`       | Safe dead-code, unused export, style, route, dependency cleanup |
 
 **Design UI** — activated for design-to-code, design systems, and visual polish:
@@ -227,6 +228,7 @@ Category boundaries are intentionally narrow: implementation capabilities cover 
 | Skill          | Scope                                                           |
 | -------------- | --------------------------------------------------------------- |
 | `fec-doc-sync` | Keep public docs in sync with scripts, skills, agents, commands |
+| `fec-source-driven-development` | Verify version-sensitive frontend decisions against project facts and official sources |
 
 ### Agents
 
@@ -279,7 +281,7 @@ Plug your AI assistant directly into design tools for lossless design-to-code wo
 Run `/fec-init` to scaffold a ready-to-use rules library and project config into `.claude/`:
 
 <details>
-<summary>Click to see all 18 template files</summary>
+<summary>Click to see all 19 template files</summary>
 
 | File                          | Purpose                                                           |
 | ----------------------------- | ----------------------------------------------------------------- |
@@ -292,6 +294,7 @@ Run `/fec-init` to scaffold a ready-to-use rules library and project config into
 | `rules/fec-git-conventions.md`    | Conventional Commits                                              |
 | `rules/fec-i18n.md`               | Internationalization copy standards                               |
 | `rules/fec-performance.md`        | Frontend performance rules                                        |
+| `rules/fec-source-driven-development.md` | Source-driven decisions, official docs, version-sensitive assumptions |
 | `rules/fec-api-layer.md`          | API layer typing and error handling                               |
 | `rules/fec-state-management.md`   | State classification, strategy, anti-patterns                     |
 | `rules/fec-error-handling.md`     | Error layering, Error Boundary, fallback UI, reporting            |

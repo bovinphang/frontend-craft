@@ -30,7 +30,7 @@
 
 各執行時的路徑與注意事項詳見 [`docs/runtimes/`](../runtimes/)。
 
-它將 **13 個專業 agent**、**32 個自動啟用 skill**、**9 個斜線指令**、**5 個事件驅動 hook**、面向 6 款設計工具的 **MCP 範本**以及一整套**規則庫**打包為一個可安裝單元。執行一條指令，團隊裡的每一次 AI 會話都將以相同的方式編寫 React、Vue、Next.js 或 Nuxt——型別安全、可存取、安全、一致。
+它將 **13 個專業 agent**、**34 個自動啟用 skill**、**9 個斜線指令**、**5 個事件驅動 hook**、面向 6 款設計工具的 **MCP 範本**以及一整套**規則庫**打包為一個可安裝單元。執行一條指令，團隊裡的每一次 AI 會話都將以相同的方式編寫 React、Vue、Next.js 或 Nuxt——型別安全、可存取、安全、一致。
 
 ```bash
 npx frontend-craft@latest
@@ -44,7 +44,7 @@ npx frontend-craft@latest
 
 | 痛點                                            | frontend-craft 的解法                                                   |
 | ----------------------------------------------- | ----------------------------------------------------------------------- |
-| AI 助手寫出的前端程式碼風格不一、缺型別、不安全 | **32 個 skill** 將團隊規範編碼為可自動啟用的工作流                      |
+| AI 助手寫出的前端程式碼風格不一、缺型別、不安全 | **34 個 skill** 將團隊規範編碼為可自動啟用的工作流                      |
 | 每款 AI 工具都有自己的插件格式                  | **一條 CLI 指令** 把相同的規則、agent 和 hook 安裝到 15 個執行時        |
 | 設計稿到程式碼的交接總有資訊損失                | **MCP 範本** 直接讀取 Figma、Sketch、MasterGo、Pixso、墨刀、摹客        |
 | 程式碼審查隨意、淺層                            | **13 個 agent** 輸出分級報告：程式碼、安全、無障礙、效能、TS、UI 還原度 |
@@ -181,6 +181,7 @@ npx frontend-craft@latest list
 | `fec-security-review`      | XSS、CSRF、敏感資料外洩、輸入驗證              |
 | `fec-accessibility-check`  | WCAG 2.1 AA 無障礙檢查                         |
 | `fec-validation-fix`       | 一次性執行並修復 lint、type-check、test、build |
+| `fec-performance-optimization` | Core Web Vitals、包體、渲染、記憶體、網路與效能預算審查 |
 | `fec-refactor-clean`       | 安全清理死程式碼、未使用匯出、樣式、路由和依賴 |
 
 **設計 UI** — 設計實作、設計系統或視覺打磨時啟用：
@@ -204,6 +205,7 @@ npx frontend-craft@latest list
 | 技能           | 範圍                                       |
 | -------------- | ------------------------------------------ |
 | `fec-doc-sync` | 讓公開文件與腳本、技能、代理、指令保持同步 |
+| `fec-source-driven-development` | 以專案事實和官方來源驗證版本敏感的前端決策 |
 
 ### 代理（Agents）
 
@@ -256,7 +258,7 @@ npx frontend-craft@latest list
 執行 `/fec-init` 即可將一套開箱即用的規則庫和專案設定腳手架化到 `.claude/`：
 
 <details>
-<summary>查看全部 18 個範本檔案</summary>
+<summary>查看全部 19 個範本檔案</summary>
 
 | 檔案                          | 用途                                                   |
 | ----------------------------- | ------------------------------------------------------ |
@@ -269,6 +271,7 @@ npx frontend-craft@latest list
 | `rules/fec-git-conventions.md`    | Conventional Commits 提交規範                          |
 | `rules/fec-i18n.md`               | 國際化文案規範                                         |
 | `rules/fec-performance.md`        | 前端效能最佳化規則                                     |
+| `rules/fec-source-driven-development.md` | Source-driven decisions, official docs, version-sensitive assumptions |
 | `rules/fec-api-layer.md`          | API 層型別化與錯誤處理規範                             |
 | `rules/fec-state-management.md`   | 狀態分類、管理策略與反模式                             |
 | `rules/fec-error-handling.md`     | 錯誤分層、Error Boundary、降級 UI、上報規範            |

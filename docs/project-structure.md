@@ -33,6 +33,8 @@ frontend-craft/
 |   |-- fec-vue3-project-standard/   # Vue 3 + TypeScript project standards
 |   |-- fec-implement-from-design/   # Implement UI from design files
 |   |-- fec-validation-fix/            # lint, type-check, test, build and fix
+|   |-- fec-performance-optimization/  # Core Web Vitals, bundle, rendering, network, memory
+|   |-- fec-source-driven-development/ # Official sources, project facts, version-sensitive decisions
 |   |-- fec-tdd-workflow/              # Test-first frontend implementation workflow
 |   |-- fec-refactor-clean/            # Safe dead-code and unused dependency cleanup
 |   |-- fec-doc-sync/                  # Public docs and metadata synchronization
@@ -89,7 +91,7 @@ frontend-craft/
 |   |-- claude/        # CLAUDE.md and settings.json
 |   |-- codex/         # AGENTS.md and config.toml
 |   |-- openclaw/      # AGENTS.md and OPENCLAW-CONFIG.md
-|   |-- shared/rules/  # vue, react, design-system, testing, agent workflow, working modes, etc.
+|   |-- shared/rules/  # vue, react, design-system, testing, source-driven development, agent workflow, working modes, etc.
 |
 |-- .mcp.json         # MCP server config (Figma, Sketch, MasterGo, Pixso, 墨刀)
 └-- README.md

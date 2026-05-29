@@ -11,8 +11,9 @@
 3. **类型检查** — `tsc --noEmit`
 4. **单元测试** — Jest / Vitest
 5. **构建** — `npm run build` 或 `pnpm build`
-6. **E2E 测试**（可选）— Playwright / Cypress
-7. **部署** — 构建产物上传或触发部署服务
+6. **包体/性能预算**（可选）— size-limit、Lighthouse CI、bundle analyzer
+7. **E2E 测试**（可选）— Playwright / Cypress
+8. **部署** — 构建产物上传或触发部署服务
 
 任一阶段失败则中止后续步骤。
 
@@ -108,9 +109,17 @@ build:
 - 敏感信息使用 CI 平台的 Secrets，不写入仓库
 - 构建时注入 `VITE_*` / `NEXT_PUBLIC_*` 等前端环境变量
 - E2E 的 baseURL、测试账号等从 Secrets 读取
+- 只允许公开前缀的环境变量进入客户端 bundle；服务端密钥不得使用 `VITE_*` / `NEXT_PUBLIC_*`
+
+## 产物与证据
+
+- 上传测试报告、覆盖率、E2E trace、截图、构建产物和性能预算结果。
+- CI 失败时保留足够日志定位根因，不只返回“命令失败”。
+- 发布前确认版本、变更说明、迁移事项和回滚路径。
 
 ## 强约束
 
 - 使用锁文件（`package-lock.json`、`pnpm-lock.yaml`），禁止 `npm install` 无锁安装
 - 构建产物不提交到仓库，由 CI 生成并上传
 - 部署前必须通过 lint、typecheck、test、build
+- 不跳过失败门禁直接部署，除非有明确风险接受和回滚方案

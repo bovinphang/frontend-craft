@@ -87,6 +87,28 @@
       "检查按钮 aria-label"
     ]
   },
+  "fec-code-review": {
+    "should_trigger": [
+      "帮我 review 这个前端 PR",
+      "做一次合并前代码评审",
+      "检查 React 组件架构和可维护性",
+      "看看这批改动有没有类型和状态风险",
+      "输出 frontend code review 报告",
+      "审查样式一致性和测试缺口",
+      "评估这个 UI 实现能不能合并",
+      "general frontend PR review"
+    ],
+    "should_not_trigger": [
+      "只检查 XSS 和 CSP",
+      "只做 WCAG 无障碍审查",
+      "只运行 test 并修复失败",
+      "写 Playwright E2E",
+      "设计 Next.js 路由结构",
+      "迁移 jQuery 到 React",
+      "优化 WebGL 帧率",
+      "编写 Storybook 文档"
+    ]
+  },
   "fec-component-testing": {
     "should_trigger": [
       "给这个 React 组件补 RTL 单测",
@@ -199,28 +221,6 @@
       "Vue 组件架构设计"
     ]
   },
-  "fec-code-review": {
-    "should_trigger": [
-      "帮我 review 这个前端 PR",
-      "做一次合并前代码评审",
-      "检查 React 组件架构和可维护性",
-      "看看这批改动有没有类型和状态风险",
-      "输出 frontend code review 报告",
-      "审查样式一致性和测试缺口",
-      "评估这个 UI 实现能不能合并",
-      "general frontend PR review"
-    ],
-    "should_not_trigger": [
-      "只检查 XSS 和 CSP",
-      "只做 WCAG 无障碍审查",
-      "只运行 test 并修复失败",
-      "写 Playwright E2E",
-      "设计 Next.js 路由结构",
-      "迁移 jQuery 到 React",
-      "优化 WebGL 帧率",
-      "编写 Storybook 文档"
-    ]
-  },
   "fec-implement-from-design": {
     "should_trigger": [
       "按 Figma 设计稿实现这个页面",
@@ -241,28 +241,6 @@
       "检查 XSS 风险",
       "设计 monorepo package 边界",
       "写 Web Worker"
-    ]
-  },
-  "fec-motion-interaction": {
-    "should_trigger": [
-      "给这个产品页设计页面转场动效",
-      "Framer Motion 和 GSAP 这里该选哪个",
-      "滚动叙事动画怎么做且不掉帧",
-      "这个 dashboard 的交互动效太重了帮我降级",
-      "Lottie 图标动画怎么按需加载",
-      "设计 reduced-motion 下的动画兜底",
-      "页面入场 stagger 和布局过渡怎么规划",
-      "frontend interaction motion strategy"
-    ],
-    "should_not_trigger": [
-      "SVG 路径描边动画怎么写",
-      "Three.js 粒子系统怎么优化",
-      "普通 CSS hover 颜色变化",
-      "React 项目目录结构设计",
-      "检查按钮 aria-label",
-      "写 Playwright 动画截图测试",
-      "配置 PWA manifest",
-      "API 错误状态怎么映射"
     ]
   },
   "fec-legacy-to-modern-migration": {
@@ -353,6 +331,28 @@
       "维护 jQuery 页面"
     ]
   },
+  "fec-motion-interaction": {
+    "should_trigger": [
+      "给这个产品页设计页面转场动效",
+      "Framer Motion 和 GSAP 这里该选哪个",
+      "滚动叙事动画怎么做且不掉帧",
+      "这个 dashboard 的交互动效太重了帮我降级",
+      "Lottie 图标动画怎么按需加载",
+      "设计 reduced-motion 下的动画兜底",
+      "页面入场 stagger 和布局过渡怎么规划",
+      "frontend interaction motion strategy"
+    ],
+    "should_not_trigger": [
+      "SVG 路径描边动画怎么写",
+      "Three.js 粒子系统怎么优化",
+      "普通 CSS hover 颜色变化",
+      "React 项目目录结构设计",
+      "检查按钮 aria-label",
+      "写 Playwright 动画截图测试",
+      "配置 PWA manifest",
+      "API 错误状态怎么映射"
+    ]
+  },
   "fec-nextjs-project-standard": {
     "should_trigger": [
       "Next.js App Router 项目结构",
@@ -395,6 +395,28 @@
       "jQuery 维护",
       "Canvas 渲染",
       "Web Worker 性能"
+    ]
+  },
+  "fec-performance-optimization": {
+    "should_trigger": [
+      "页面首屏 LCP 很慢怎么定位",
+      "优化这个 React 页面重复渲染和长任务",
+      "bundle size 突然变大帮我分析",
+      "Core Web Vitals 不达标需要性能预算",
+      "Lighthouse performance 分数下降",
+      "滚动卡顿和主线程阻塞排查",
+      "检查内存泄漏和未清理事件监听",
+      "frontend performance optimization with web vitals"
+    ],
+    "should_not_trigger": [
+      "给 Button 写组件单元测试",
+      "规划 React 项目目录结构",
+      "检查 XSS 和 CSP 风险",
+      "同步 README skill 数量",
+      "按 Figma 实现页面",
+      "配置路由权限守卫",
+      "修复 TypeScript 类型错误",
+      "迁移 jQuery 到 Vue"
     ]
   },
   "fec-pwa-implementation": {
@@ -505,6 +527,28 @@
       "PWA install prompt",
       "Storybook 组件文档",
       "虚拟列表性能"
+    ]
+  },
+  "fec-source-driven-development": {
+    "should_trigger": [
+      "这个 Next.js 新版本 API 先查官方文档再决定",
+      "帮我确认 Vite 配置项当前版本是否还推荐",
+      "这个浏览器 API 兼容性要以规范和 MDN 为准",
+      "source-driven decision for a frontend library migration",
+      "React Router 版本差异需要查文档",
+      "这个包的 ESM/CJS 行为不要凭记忆判断",
+      "按项目源码和官方 docs 设计公共接口",
+      "验证 Nuxt useFetch 最新推荐用法"
+    ],
+    "should_not_trigger": [
+      "给表单写 Zod 校验",
+      "优化大列表虚拟滚动",
+      "运行 npm test 并修复失败",
+      "检查按钮 aria-label",
+      "写 Playwright 登录流程",
+      "清理未使用依赖",
+      "设计 UI 视觉方向",
+      "审查 token 存储安全"
     ]
   },
   "fec-storybook-component-doc": {

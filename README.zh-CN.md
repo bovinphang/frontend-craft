@@ -30,7 +30,7 @@
 
 各运行时的路径与注意事项详见 [`docs/runtimes/`](docs/runtimes/)。
 
-它将 **13 个专业 agent**、**32 个自动激活 skill**、**9 个斜杠命令**、**5 个事件驱动 hook**、面向 6 款设计工具的 **MCP 模板**以及一整套**规则库**打包为一个可安装单元。运行一条命令，团队里的每一次 AI 会话都将以相同的方式编写 React、Vue、Next.js 或 Nuxt——类型安全、可访问、安全、一致。
+它将 **13 个专业 agent**、**34 个自动激活 skill**、**9 个斜杠命令**、**5 个事件驱动 hook**、面向 6 款设计工具的 **MCP 模板**以及一整套**规则库**打包为一个可安装单元。运行一条命令，团队里的每一次 AI 会话都将以相同的方式编写 React、Vue、Next.js 或 Nuxt——类型安全、可访问、安全、一致。
 
 ```bash
 npx frontend-craft@latest
@@ -44,7 +44,7 @@ npx frontend-craft@latest
 
 | 痛点                                          | frontend-craft 的解法                                                 |
 | --------------------------------------------- | --------------------------------------------------------------------- |
-| AI 助手写出的前端代码风格不一、缺类型、不安全 | **32 个 skill** 将团队规范编码为可自动激活的工作流                    |
+| AI 助手写出的前端代码风格不一、缺类型、不安全 | **34 个 skill** 将团队规范编码为可自动激活的工作流                    |
 | 每款 AI 工具都有自己的插件格式                | **一条 CLI 命令** 把相同的规则、agent 和 hook 安装到 15 个运行时      |
 | 设计稿到代码的交接总有信息损失                | **MCP 模板** 直接读取 Figma、Sketch、MasterGo、Pixso、墨刀、摹客      |
 | 代码评审随意、浅层                            | **13 个 agent** 输出分级报告：代码、安全、无障碍、性能、TS、UI 还原度 |
@@ -206,6 +206,7 @@ npx frontend-craft@latest install claude --local --force
 | `fec-security-review`      | XSS、CSRF、敏感数据泄露、输入校验              |
 | `fec-accessibility-check`  | WCAG 2.1 AA 无障碍检查                         |
 | `fec-validation-fix`       | 一次性运行并修复 lint、type-check、test、build |
+| `fec-performance-optimization` | Core Web Vitals、包体、渲染、内存、网络与性能预算审查 |
 | `fec-refactor-clean`       | 安全清理死代码、未使用导出、样式、路由和依赖   |
 
 **设计 UI** — 设计实现、设计系统或视觉打磨时激活：
@@ -229,6 +230,7 @@ npx frontend-craft@latest install claude --local --force
 | 技能           | 范围                                       |
 | -------------- | ------------------------------------------ |
 | `fec-doc-sync` | 让公开文档与脚本、技能、代理、命令保持同步 |
+| `fec-source-driven-development` | 以项目事实和官方来源验证版本敏感的前端决策 |
 
 ### 代理（Agents）
 
@@ -281,7 +283,7 @@ npx frontend-craft@latest install claude --local --force
 运行 `/fec-init` 即可将一套开箱即用的规则库和项目配置脚手架化到 `.claude/`：
 
 <details>
-<summary>查看全部 18 个模板文件</summary>
+<summary>查看全部 19 个模板文件</summary>
 
 | 文件                          | 用途                                                   |
 | ----------------------------- | ------------------------------------------------------ |
@@ -294,6 +296,7 @@ npx frontend-craft@latest install claude --local --force
 | `rules/fec-git-conventions.md`    | Conventional Commits 提交规范                          |
 | `rules/fec-i18n.md`               | 国际化文案规范                                         |
 | `rules/fec-performance.md`        | 前端性能优化规则                                       |
+| `rules/fec-source-driven-development.md` | Source-driven decisions, official docs, version-sensitive assumptions |
 | `rules/fec-api-layer.md`          | API 层类型化与错误处理规范                             |
 | `rules/fec-state-management.md`   | 状态分类、管理策略与反模式                             |
 | `rules/fec-error-handling.md`     | 错误分层、Error Boundary、降级 UI、上报规范            |

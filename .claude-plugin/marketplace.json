@@ -13,7 +13,7 @@
         {
             "name": "frontend-craft",
             "source": "./",
-            "description": "Enterprise frontend team Claude Code plugin — 13 agents, 32 skills, 9 commands, shared rule templates, and production-ready hooks for code review, TypeScript review, security review, testing strategy, E2E, component testing, route protection, API integration, interaction motion, performance optimization, scaffolding, design-to-code (Figma/Sketch/MasterGo/Pixso/墨刀/摹客), UI design and polish, Vite standards, legacy-to-modern migration, React/Vue/Next.js/Nuxt/monorepo standards, PWA, Web Workers, Canvas/Three.js, SVG animation, CI/CD, architecture planning, and UI debugging with multi-design-tool MCP integration. All reports auto-saved as Markdown files to reports/ directory.",
+            "description": "Enterprise frontend team Claude Code plugin — 13 agents, 34 skills, 9 commands, shared rule templates, and production-ready hooks for code review, TypeScript review, security review, testing strategy, E2E, component testing, route protection, API integration, interaction motion, performance optimization, scaffolding, design-to-code (Figma/Sketch/MasterGo/Pixso/墨刀/摹客), UI design and polish, Vite standards, legacy-to-modern migration, React/Vue/Next.js/Nuxt/monorepo standards, PWA, Web Workers, Canvas/Three.js, SVG animation, CI/CD, architecture planning, and UI debugging with multi-design-tool MCP integration. All reports auto-saved as Markdown files to reports/ directory.",
             "version": "2.3.1",
             "author": {
                 "name": "Bovin Phang",

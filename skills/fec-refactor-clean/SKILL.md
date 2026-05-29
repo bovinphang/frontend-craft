@@ -22,6 +22,7 @@ description: Use when safely removing dead frontend code, unused exports, stale 
 4. 只自动处理 SAFE 项；CAUTION 和 DANGER 需输出建议和证据，不直接删除。
 5. 每批清理后运行受影响验证命令。
 6. 若验证失败，停止扩大清理范围，先定位该批次。
+7. 清理结束后做行为等价复核：公开 API、路由、命令、模板、metadata、文档示例和报告输出仍可被引用。
 
 ## Frontend-Specific Checks
 
@@ -35,6 +36,7 @@ description: Use when safely removing dead frontend code, unused exports, stale 
 - 不删除无法证明无引用的公开 API、路由、模板或配置。
 - 不用“一次大删除”替代可验证的小批次清理。
 - 不把格式化、重命名或架构重写混入死代码清理。
+- 不用“看起来没人用”作为证据；必须有搜索、工具输出、类型错误消失或测试保护。
 
 ## Expected Output
 

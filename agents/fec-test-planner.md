@@ -20,7 +20,8 @@ skills:
 ## 工作流
 
 1. 阅读用户指定的功能、PR、文件或最近 diff，识别业务风险、技术风险和发布门禁。
-2. 按层级分类覆盖：
+2. 先读取项目现有测试命令、目录约定、CI 门禁和已有测试风格，避免提出无法维护的新体系。
+3. 按层级分类覆盖：
    - 静态检查：TypeScript、ESLint、格式、依赖安全、构建。
    - 单元测试：utils、hooks/composables、状态逻辑、schema。
    - 组件测试：props/emits、用户交互、loading/error/empty、mock 边界。
@@ -28,8 +29,8 @@ skills:
    - E2E：真实浏览器跨页面旅程、登录态、权限、支付、关键 CRUD。
    - Storybook/视觉：组件状态文档、interaction、Chromatic 或视觉回归。
    - 专项质量：a11y、安全、性能、兼容性。
-3. 输出覆盖矩阵，标明优先级、工具/命令、推荐 skill 或 agent。
-4. 若用户需要落地实现，建议分流到 `fec-component-testing`、`fec-e2e-testing`、`fec-storybook-component-doc` 或 `fec-validation-fix`。
+4. 输出覆盖矩阵，标明优先级、工具/命令、推荐 skill 或 agent、失败时可观察证据。
+5. 若用户需要落地实现，建议分流到 `fec-component-testing`、`fec-e2e-testing`、`fec-storybook-component-doc` 或 `fec-validation-fix`。
 
 ## 输出格式
 

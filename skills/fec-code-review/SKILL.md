@@ -9,6 +9,14 @@ description: Use when the user asks for general frontend code review, PR review,
 
 从架构、类型安全、可访问性、样式一致性、性能和可测试性等 8 个维度审查前端代码质量，输出分级评审报告。
 
+## Review Process
+
+1. 先读项目事实：package scripts、框架、目录约定、最近 diff、现有测试和相关规则。
+2. 按风险找问题，而不是按个人偏好挑风格；每个发现都要能指向具体文件、行号和用户影响。
+3. 用五轴收敛结论：正确性、可维护性、类型/接口、用户体验、验证覆盖。
+4. 对安全、无障碍、E2E、性能等深水区只做初筛；需要专项调查时明确分流。
+5. 报告先列阻塞问题，再列建议项；没有证据的问题不要写成确定结论。
+
 ## 评审维度
 
 1. 架构
@@ -65,20 +73,26 @@ description: Use when the user asks for general frontend code review, PR review,
 - 无敏感信息硬编码
 - 无未校验的用户输入直接渲染
 
-9. 必检项（阻塞合并）
+9. 性能与体验证据
+
+- 是否引入首屏重依赖、重复请求、大列表渲染或长任务
+- loading、empty、error、disabled、focus 等状态是否完整
+- 响应式布局是否有可验证断点和文本溢出保护
+
+10. 必检项（阻塞合并）
 
 - [ ] TypeScript 类型完整，无 `any`
 - [ ] 无 XSS 风险
 - [ ] 无敏感信息硬编码
 - [ ] 核心逻辑有单元测试
 
-10. 质量项（建议修改）
+11. 质量项（建议修改）
 
 - [ ] 组件文件规模符合约定（约 300 行内为佳；逾 500 行或高复杂度已拆子组件 / Hooks / Composables / utils）
 - [ ] 无重复代码（DRY 原则）
 - [ ] 无未使用的 import
 
-11. 规范项（风格建议）
+12. 规范项（风格建议）
 
 - [ ] 命名语义清晰
 - [ ] 注释覆盖复杂逻辑
@@ -93,3 +107,4 @@ Load [references/report-template.md](references/report-template.md) when writing
 - 每个问题关联具体文件和行号，附修复建议
 - 阻塞项（CRITICAL）修复前不建议合并
 - 评审报告保存为 `reports/code-review-YYYY-MM-DD-HHmmss.md`
+- 对不确定项标注需要的验证命令或补充上下文，不把猜测写成事实

@@ -44,6 +44,7 @@ description: 按当前 AI runtime 初始化 frontend-craft 项目模板、rules 
    - `templates/shared/rules/fec-git-conventions.md` → `.claude/rules/fec-git-conventions.md`
    - `templates/shared/rules/fec-i18n.md` → `.claude/rules/fec-i18n.md`
    - `templates/shared/rules/fec-performance.md` → `.claude/rules/fec-performance.md`
+   - `templates/shared/rules/fec-source-driven-development.md` → `.claude/rules/fec-source-driven-development.md`
    - `templates/shared/rules/fec-responsive-design.md` → `.claude/rules/fec-responsive-design.md`
    - `templates/shared/rules/fec-rendering-patterns.md` → `.claude/rules/fec-rendering-patterns.md`
    - `templates/shared/rules/fec-api-layer.md` → `.claude/rules/fec-api-layer.md`

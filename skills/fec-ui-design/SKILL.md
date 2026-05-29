@@ -65,6 +65,8 @@ description: Use when building, reviewing, or improving frontend UI that needs p
    - 对依赖图片、图表、画布或 3D 的界面，确认资源真实渲染且承担主体信息。
    - 复核是否存在默认紫色渐变、空泛 hero、卡片堆叠、单一色相或无语境字体等模板化痕迹。
    - 检查首屏是否同时具备任务入口、主体识别、可信证据和下一屏内容线索；若只剩装饰，应回到信息架构重做。
+   - 对生产级控件补齐 hover、active、focus-visible、disabled、loading、selected、invalid 和 skeleton 状态。
+   - 对仪表盘、表格、编辑器和配置台检查扫描路径、密度、固定尺寸和重复使用时的疲劳感。
 
 ## Constraints
 
@@ -77,6 +79,7 @@ description: Use when building, reviewing, or improving frontend UI that needs p
 - 不为了统一风格让整个界面落入单一色相；颜色应有层次和语义区分。
 - 不把生成器输出当成不可修改的设计稿；它是决策起点，必须结合项目已有组件、token、用户任务和真实数据校正。
 - 不用不可检查的远程占位图、通用 stock 氛围图或 lorem 文案作为交付主体；缺素材时明确生成、制作或降级为真实结构化内容。
+- 不让视觉 polish 破坏键盘路径、触摸目标、文本可读性或低端设备性能。
 
 ## Expected Output
 
