@@ -117,8 +117,8 @@ npx frontend-craft@latest install claude --local --force
 你："/fec-scaffold dashboard feature"
 → 按项目约定创建 page / feature / component 标准目录结构
 
-你："/fec-build-fix"
-→ 增量修复 lint、type-check、test 和 build 失败
+你："/fec-refactor-clean"
+→ 分类并安全清理死代码、未使用导出、样式和依赖
 ```
 
 下文斜杠命令以 **Claude Code** 为例；其他运行时通过各自的命令系统提供同等能力（详见 [`docs/runtimes/`](docs/runtimes/)）。
@@ -134,7 +134,7 @@ npx frontend-craft@latest install claude --local --force
 你：「先不要写代码，请规划账号账单功能：路由结构、组件边界、数据流、状态归属、校验流程和上线风险。」
 你：「请用 React Hook Form + Zod 构建多步注册表单，包含文件上传、条件字段、异步校验和可访问错误提示。」
 你：「请按 Figma 节点 123:456 实现 UI。复用现有 design token 和组件，匹配间距与响应式状态，并说明假设。」
-你：「`/fec-build-fix` 请根据这段日志修复验证失败：<粘贴日志>。」
+你：「`/fec-refactor-clean` 请清理这个模块里的死代码。」
 ```
 
 ---
@@ -145,16 +145,16 @@ npx frontend-craft@latest install claude --local --force
 
 斜杠命令是结构化工作流的主入口，多数会输出带时间戳的 Markdown 报告到 `reports/`。
 
-| 命令                  | 用途                                              | 报告                                             |
-| --------------------- | ------------------------------------------------- | ------------------------------------------------ |
-| `/fec-init`           | 初始化项目模板（CLAUDE.md、规则、settings）       | —                                                |
-| `/fec-review`         | 对指定文件或最近变更的代码执行结构化评审          | `code-review-*.md`                               |
-| `/fec-scaffold`       | 按规范创建 page / feature / component 样板        | —                                                |
-| `/fec-plan`           | 统一规划入口：实现架构或测试策略                  | `architecture-proposal-*.md` 或 `test-plan-*.md` |
-| `/fec-tdd`            | 红 → 绿 → 重构的前端 TDD 循环                     | —                                                |
-| `/fec-build-fix`      | 增量修复 lint、type-check、test、build 或 CI 失败 | `validation-fix-*.md`                            |
-| `/fec-refactor-clean` | 分类并安全清理死代码、未使用导出、样式和依赖      | `refactor-clean-*.md`                            |
-| `/fec-doc-sync`       | 同步 README、runtime 文档、能力表和公开 metadata  | —                                                |
+| 命令                  | 用途                                                        | 报告                                             |
+| --------------------- | ----------------------------------------------------------- | ------------------------------------------------ |
+| `/fec-init`           | 初始化项目模板（CLAUDE.md、规则、settings）                 | —                                                |
+| `/fec-review`         | 对指定文件或最近变更的代码执行结构化评审                    | `code-review-*.md`                               |
+| `/fec-scaffold`       | 按规范创建 page / feature / component 样板                  | —                                                |
+| `/fec-plan`           | 统一规划入口：实现架构或测试策略                            | `architecture-proposal-*.md` 或 `test-plan-*.md` |
+| `/fec-tdd`            | 红 → 绿 → 重构的前端 TDD 循环                               | —                                                |
+| `/fec-debug`          | 前端问题诊断与修复：构建失败、运行时错误、UI 异常、接口问题 | `debug-*.md`                                     |
+| `/fec-refactor-clean` | 分类并安全清理死代码、未使用导出、样式和依赖                | `refactor-clean-*.md`                            |
+| `/fec-doc-sync`       | 同步 README、runtime 文档、能力表和公开 metadata            | —                                                |
 
 ### 技能（Skills，自动激活）
 

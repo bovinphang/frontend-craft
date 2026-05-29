@@ -30,7 +30,7 @@
 
 各執行時的路徑與注意事項詳見 [`docs/runtimes/`](../runtimes/)。
 
-它將 **13 個專業 agent**、**39 個自動啟用 skill**、**9 個斜線指令**、**5 個事件驅動 hook**、面向 6 款設計工具的 **MCP 範本**以及一整套**規則庫**打包為一個可安裝單元。執行一條指令，團隊裡的每一次 AI 會話都將以相同的方式編寫 React、Vue、Next.js 或 Nuxt——型別安全、可存取、安全、一致。
+它將 **13 個專業 agent**、**39 個自動啟用 skill**、**8 個斜線指令**、**5 個事件驅動 hook**、面向 6 款設計工具的 **MCP 範本**以及一整套**規則庫**打包為一個可安裝單元。執行一條指令，團隊裡的每一次 AI 會話都將以相同的方式編寫 React、Vue、Next.js 或 Nuxt——型別安全、可存取、安全、一致。
 
 ```bash
 npx frontend-craft@latest
@@ -106,8 +106,8 @@ npx frontend-craft@latest list
 你："/fec-scaffold dashboard feature"
 → 依專案約定建立 page / feature / component 標準目錄結構
 
-你："/fec-build-fix"
-→ 增量修復 lint、type-check、test 和 build 失敗
+你："/fec-refactor-clean"
+→ 分類並安全清理死程式碼、未使用匯出、樣式和依賴
 ```
 
 下文斜線指令以 **Claude Code** 為例；其他執行時透過各自的指令系統提供同等能力（詳見 [`docs/runtimes/`](../runtimes/)）。
@@ -120,16 +120,16 @@ npx frontend-craft@latest list
 
 斜線指令是結構化工作流的主入口，多數會輸出帶時間戳記的 Markdown 報告到 `reports/`。
 
-| 指令                  | 用途                                              | 報告                                             |
-| --------------------- | ------------------------------------------------- | ------------------------------------------------ |
-| `/fec-init`           | 初始化專案範本（CLAUDE.md、規則、settings）       | —                                                |
-| `/fec-review`         | 對指定或最近變更的檔案執行結構化審查              | `code-review-*.md`                               |
-| `/fec-scaffold`       | 依規範建立 page / feature / component 樣板        | —                                                |
-| `/fec-plan`           | 統一規劃入口：實現架構或測試策略                  | `architecture-proposal-*.md` 或 `test-plan-*.md` |
-| `/fec-tdd`            | 紅 → 綠 → 重構的前端 TDD 循環                     | —                                                |
-| `/fec-build-fix`      | 增量修復 lint、type-check、test、build 或 CI 失敗 | `validation-fix-*.md`                            |
-| `/fec-refactor-clean` | 分類並安全清理死程式碼、未使用匯出、樣式和依賴    | `refactor-clean-*.md`                            |
-| `/fec-doc-sync`       | 同步 README、runtime 文件、能力表和公開 metadata  | —                                                |
+| 指令                  | 用途                                                        | 報告                                             |
+| --------------------- | ----------------------------------------------------------- | ------------------------------------------------ |
+| `/fec-init`           | 初始化專案範本（CLAUDE.md、規則、settings）                 | —                                                |
+| `/fec-review`         | 對指定或最近變更的檔案執行結構化審查                        | `code-review-*.md`                               |
+| `/fec-scaffold`       | 依規範建立 page / feature / component 樣板                  | —                                                |
+| `/fec-plan`           | 統一規劃入口：實現架構或測試策略                            | `architecture-proposal-*.md` 或 `test-plan-*.md` |
+| `/fec-tdd`            | 紅 → 綠 → 重構的前端 TDD 循環                               | —                                                |
+| `/fec-debug`          | 前端問題診斷與修復：建置失敗、執行時錯誤、UI 異常、介面問題 | `debug-*.md`                                     |
+| `/fec-refactor-clean` | 分類並安全清理死程式碼、未使用匯出、樣式和依賴              | `refactor-clean-*.md`                            |
+| `/fec-doc-sync`       | 同步 README、runtime 文件、能力表和公開 metadata            | —                                                |
 
 ### 技能（Skills，自動啟用）
 

@@ -115,8 +115,8 @@ You: "Implement the checkout page from this Figma link"
 You: "/fec-scaffold dashboard feature"
 → Creates a page / feature / component directory tree following project conventions
 
-You: "/fec-build-fix"
-→ Incrementally repairs lint, type-check, test, and build failures
+You: "/fec-refactor-clean"
+→ Classifies and safely removes dead code, unused exports, styles, and deps
 ```
 
 All slash commands below are shown for **Claude Code**; other runtimes expose the same capabilities through their own command systems (see [`docs/runtimes/`](docs/runtimes/)).
@@ -132,7 +132,7 @@ You: "Review my recent changes before merge. Focus on architecture, type safety,
 You: "Before coding, plan the account billing feature: route structure, component boundaries, data flow, state ownership, validation flow, and rollout risks."
 You: "Build a multi-step registration form with React Hook Form + Zod, file upload, conditional fields, async validation, and accessible errors."
 You: "Implement the UI from Figma node 123:456. Use existing design tokens and components, match spacing and responsive states, and document assumptions."
-You: "`/fec-build-fix` Fix the failing validation commands from this log: <paste log>."
+You: "`/fec-refactor-clean` Clean up dead code in this module."
 ```
 
 ---
@@ -150,7 +150,7 @@ Slash commands are the primary entry points for structured workflows. Most produ
 | `/fec-scaffold`       | Create page / feature / component boilerplate by convention            | —                                                |
 | `/fec-plan`           | Unified planning: implementation architecture or test strategy         | `architecture-proposal-*.md` or `test-plan-*.md` |
 | `/fec-tdd`            | Red → green → refactor loop for frontend TDD                           | —                                                |
-| `/fec-build-fix`      | Incrementally repair lint, type-check, test, build, or CI failures     | `validation-fix-*.md`                            |
+| `/fec-debug`          | Diagnose and fix frontend issues: build, runtime, UI, and API failures | `debug-*.md`                                     |
 | `/fec-refactor-clean` | Classify and safely remove dead code, unused exports, styles, and deps | `refactor-clean-*.md`                            |
 | `/fec-doc-sync`       | Sync READMEs, runtime docs, capability tables, and metadata            | —                                                |
 

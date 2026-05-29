@@ -19,7 +19,15 @@
       "WebFetch(domain:raw.githubusercontent.com)",
       "Bash(python -c \"import json,sys; data=json.load\\(sys.stdin\\); print\\(f'skill-packages index entries: {len\\(data\\)}'\\); print\\('\\\\n'.join\\(data\\)\\)\")",
       "Bash(npm view *)",
-      "Bash(npx frontend-craft *)"
+      "Bash(npx frontend-craft *)",
+      "Bash(npx prettier *)",
+      "Bash(node --import tsx --test tests/install/metadata-consistency.test.ts)",
+      "Bash(node --import tsx --test tests/install/end-to-end.test.ts)",
+      "Bash(node --import tsx --test tests/install/cli.test.ts)",
+      "Bash(git check-ignore *)",
+      "Bash(git rm *)",
+      "Bash(git *)",
+      "Bash(echo \"exit: $?\")"
     ]
   }
 }

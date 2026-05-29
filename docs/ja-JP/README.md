@@ -30,7 +30,7 @@
 
 各ランタイムのパスと注意事項は [`docs/runtimes/`](../runtimes/) にあります。
 
-**13 の専門エージェント**、**39 の自動起動スキル**、**9 のスラッシュコマンド**、**5 のイベント駆動フック**、6 つのデザインツール向け **MCP テンプレート**、そして完全な**ルールライブラリ**をひとつのパッケージにまとめています。コマンドひとつ実行するだけで、チームのすべての AI セッションが React、Vue、Next.js、Nuxt を同じように書きます——型安全で、アクセシブルで、セキュアで、一貫性を持って。
+**13 の専門エージェント**、**39 の自動起動スキル**、**8 のスラッシュコマンド**、**5 のイベント駆動フック**、6 つのデザインツール向け **MCP テンプレート**、そして完全な**ルールライブラリ**をひとつのパッケージにまとめています。コマンドひとつ実行するだけで、チームのすべての AI セッションが React、Vue、Next.js、Nuxt を同じように書きます——型安全で、アクセシブルで、セキュアで、一貫性を持って。
 
 ```bash
 npx frontend-craft@latest
@@ -106,8 +106,8 @@ npx frontend-craft@latest list
 あなた："/fec-scaffold dashboard feature"
 → プロジェクト規約に従い page / feature / component のディレクトリツリーを作成
 
-あなた："/fec-build-fix"
-→ lint、type-check、test、build の失敗を段階的に修復
+あなた："/fec-refactor-clean"
+→ デッドコード、未使用 export、スタイル、依存関係を分類して安全に削除
 ```
 
 以下のスラッシュコマンドは **Claude Code** を例に示しています。他のランタイムも各自のコマンドシステムで同等の機能を提供します（[`docs/runtimes/`](../runtimes/) を参照）。
@@ -127,7 +127,7 @@ npx frontend-craft@latest list
 | `/fec-scaffold`       | 規約に従い page / feature / component のボイラープレートを作成      | —                                                    |
 | `/fec-plan`           | 統合計画：実装アーキテクチャまたはテスト戦略                        | `architecture-proposal-*.md` または `test-plan-*.md` |
 | `/fec-tdd`            | 赤 → 緑 → リファクタリングのフロントエンド TDD ループ               | —                                                    |
-| `/fec-build-fix`      | lint、type-check、test、build、CI の失敗を段階的に修復              | `validation-fix-*.md`                                |
+| `/fec-debug`          | フロントエンド問題の診断と修復：ビルド、ランタイム、UI、API 障害    | `debug-*.md`                                         |
 | `/fec-refactor-clean` | デッドコード、未使用 export、スタイル、依存関係を分類して安全に削除 | `refactor-clean-*.md`                                |
 | `/fec-doc-sync`       | README、ランタイムドキュメント、機能表、メタデータを同期            | —                                                    |
 

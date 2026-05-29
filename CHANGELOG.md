@@ -9,15 +9,35 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 Project-facing release notes are maintained in English from 2.0.0 onward. Historical entries may preserve their original language.
 
-## [Unreleased]
+## [2.4.0] - 2026-05-29
 
-### Removed
+### Added
 
-- `/fec-test-plan` slash command — test-planning intent is now handled by `/fec-plan`.
+- **Debug workflow:** added `fec-debug` slash command with type-based routing, `fec-debugger` agent for complex diagnostic scenarios, and `fec-debug-framework` skill with a 5-step diagnostic methodology.
+- **6 new skills:** `fec-performance-optimization` (Core Web Vitals, memory leaks, performance budgets), `fec-source-driven-development` (evidence-based decisions with official-docs verification), `fec-state-management` (state architecture patterns), `fec-typescript-type-safety` (type safety enforcement), `fec-dependency-upgrade` (upgrade planning), `fec-responsive-layout` (responsive layout strategy), and `fec-tailwind-design-system` (Tailwind-based design system implementation).
+- **2 new integration skills:** `fec-api-integration` and `fec-motion-interaction`.
+- **Example prompts library:** added `docs/example-prompts.md` and `docs/zh-CN/example-prompts.md` with scenario-based prompt catalogs covering skills, agents, commands, design workflows, testing, maintenance, and runtime setup; linked from all README variants.
+- **UI design system generator:** added `design-system.mjs` generator with product rules, style archetypes, UX quality and Stack UI rules data packages; supports `--persist` and `--page` flags to write `MASTER.md` and page overrides.
 
 ### Changed
 
-- `/fec-plan` is now the unified planning entry: it handles both implementation/architecture planning and test-strategy planning based on user intent.
+- **Agent renaming:** renamed 8 agents from `fec-frontend-*` to shorter `fec-*` prefix; replaced `fec-frontend-code-review` skill with `fec-code-review`.
+- **Skill consolidation:** merged `fec-interface-polish` and `fec-ui-design-direction` into a unified `fec-ui-design` skill covering both product-level visual direction and detail-level polish.
+- **UI design enhancement:** enhanced `fec-ui-design` with design-system generation, Master/Page overrides, chart UX, color rhythm, visual texture, anti-generic polish, and visual identity checks.
+- **Skill taxonomy:** refined from 4 to 7 categories — `implementation-capability`, `testing`, `review-quality`, `design-ui`, `legacy-migration`, `maintenance-docs`; updated README tables across all 5 locales.
+- **Unified planning entry:** merged `/fec-test-plan` into `/fec-plan`, which now auto-routes to implementation or test strategy based on user intent; updated all README variants, openclaw docs, example prompts, project structure, and marketplace metadata (9 → 8 commands).
+- **Rules naming:** renamed all template shared rules with `fec-` prefix for consistent naming convention; updated README, CHANGELOG, agents, commands, skills, installers, and tests.
+- **Skill descriptions:** refined skill descriptions, prompt examples, and README formatting; clarified `fec-storybook-component-doc` scope to component documentation, design-system presentation, and isolated state previews.
+
+### Fixed
+
+- **Skill relations:** decoupled skill relations from agent navigation to prevent incorrect cross-references.
+
+### Removed
+
+- `/fec-build-fix` slash command and `fec-build-fixer` agent — superseded by the new debug workflow.
+- `/fec-test-plan` slash command — test-planning intent is now handled by `/fec-plan`.
+- `fec-interface-polish` and `fec-ui-design-direction` skills — merged into `fec-ui-design`.
 
 ## [2.3.1] - 2026-05-25
 

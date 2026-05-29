@@ -8,15 +8,35 @@
 
 自 **2.0.0** 起，面向发布的说明以英文 `CHANGELOG.md` 为权威来源；历史条目可能保留最初撰写语言。
 
-## [Unreleased]
+## [2.4.0] - 2026-05-29
 
-### 移除
+### 新增
 
-- `/fec-test-plan` 斜杠命令——测试规划意图现由 `/fec-plan` 统一处理。
+- **调试工作流**：新增 `/fec-debug` 斜杠命令（按类型自动路由）、`fec-debugger` agent（复杂诊断场景）和 `fec-debug-framework` skill（5 步诊断方法论）。
+- **6 个新技能**：`fec-performance-optimization`（Core Web Vitals、内存泄漏、性能预算）、`fec-source-driven-development`（基于官方文档验证的证据驱动决策）、`fec-state-management`（状态架构模式）、`fec-typescript-type-safety`（类型安全强化）、`fec-dependency-upgrade`（依赖升级规划）、`fec-responsive-layout`（响应式布局策略）和 `fec-tailwind-design-system`（基于 Tailwind 的设计系统实现）。
+- **2 个新集成技能**：`fec-api-integration` 和 `fec-motion-interaction`。
+- **示例提示库**：新增 `docs/example-prompts.md` 和 `docs/zh-CN/example-prompts.md`，涵盖技能、Agent、命令、设计工作流、测试、维护和运行时配置等场景化提示目录；已在所有 README 变体中添加链接。
+- **UI 设计系统生成器**：新增 `design-system.mjs` 生成器，包含产品规则、风格原型、UX 质量和 Stack UI 规则数据包；支持 `--persist` 和 `--page` 标志生成 `MASTER.md` 和页面覆盖。
 
 ### 变更
 
-- `/fec-plan` 现为统一规划入口：根据用户意图自动分流到实施/架构规划或测试策略规划。
+- **Agent 重命名**：将 8 个 Agent 从 `fec-frontend-*` 重命名为更短的 `fec-*` 前缀；将 `fec-frontend-code-review` 技能替换为 `fec-code-review`。
+- **技能合并**：将 `fec-interface-polish` 和 `fec-ui-design-direction` 合并为统一的 `fec-ui-design` 技能，同时覆盖产品级视觉方向和细节级打磨。
+- **UI 设计增强**：为 `fec-ui-design` 新增设计系统生成、Master/Page 覆盖、图表 UX、色彩韵律、视觉纹理、反泛化打磨和视觉识别检查。
+- **技能分类**：从 4 个类别细化为 7 个——`implementation-capability`、`testing`、`review-quality`、`design-ui`、`legacy-migration`、`maintenance-docs`；已同步更新 5 种语言的 README 表格。
+- **统一规划入口**：将 `/fec-test-plan` 合并到 `/fec-plan`，根据用户意图自动分流到实施规划或测试策略规划；已更新所有 README 变体、openclaw 文档、示例提示、项目结构和 Marketplace 元数据（9 → 8 个命令）。
+- **规则命名**：所有模板共享规则统一添加 `fec-` 前缀；已更新 README、CHANGELOG、Agent、命令、技能、安装器和测试。
+- **技能描述**：优化技能描述、提示示例和 README 排版；明确 `fec-storybook-component-doc` 的范围为组件文档、设计系统展示和隔离状态预览。
+
+### 修复
+
+- **技能关系**：将技能关系与 Agent 导航解耦，防止错误的交叉引用。
+
+### 移除
+
+- `/fec-build-fix` 斜杠命令和 `fec-build-fixer` Agent——已被新的调试工作流取代。
+- `/fec-test-plan` 斜杠命令——测试规划意图现由 `/fec-plan` 统一处理。
+- `fec-interface-polish` 和 `fec-ui-design-direction` 技能——已合并到 `fec-ui-design`。
 
 ## [2.3.1] - 2026-05-25
 

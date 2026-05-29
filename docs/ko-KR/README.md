@@ -106,8 +106,8 @@ npx frontend-craft@latest list
 사용자: "/fec-scaffold dashboard feature"
 → 프로젝트 규칙에 따라 page / feature / component 디렉토리 트리 생성
 
-사용자: "/fec-build-fix"
-→ lint, type-check, test, build 실패를 점진적으로 수정
+사용자: "/fec-refactor-clean"
+→ 데드 코드, 미사용 export, 스타일, 의존성을 분류하고 안전하게 제거
 ```
 
 아래 슬래시 명령어는 **Claude Code**를 예로 든 것입니다; 다른 런타임도 각자의 명령어 시스템으로 동일한 기능을 제공합니다([`docs/runtimes/`](../runtimes/) 참조).
@@ -127,7 +127,7 @@ npx frontend-craft@latest list
 | `/fec-scaffold`       | 규칙에 따라 page / feature / component 보일러플레이트 생성        | —                                                  |
 | `/fec-plan`           | 통합 계획: 구현 아키텍처 또는 테스트 전략                         | `architecture-proposal-*.md` 또는 `test-plan-*.md` |
 | `/fec-tdd`            | 빨강 → 초록 → 리팩토링 프론트엔드 TDD 루프                        | —                                                  |
-| `/fec-build-fix`      | lint, type-check, test, build, CI 실패를 점진적으로 수정          | `validation-fix-*.md`                              |
+| `/fec-debug`          | 프론트엔드 문제 진단 및 수정: 빌드, 런타임, UI, API 장애          | `debug-*.md`                                       |
 | `/fec-refactor-clean` | 데드 코드, 미사용 export, 스타일, 의존성을 분류하고 안전하게 제거 | `refactor-clean-*.md`                              |
 | `/fec-doc-sync`       | README, 런타임 문서, 기능 표, 메타데이터 동기화                   | —                                                  |
 
