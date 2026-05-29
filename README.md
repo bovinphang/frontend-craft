@@ -129,7 +129,7 @@ For a complete scenario-based prompt library, see [docs/example-prompts.md](docs
 
 ```text
 You: "Review my recent changes before merge. Focus on architecture, type safety, rendering behavior, styles, accessibility, and missing tests."
-You: "Before coding, plan the account billing feature: route structure, component boundaries, data flow, states, validation, tests, and rollout risks."
+You: "Before coding, plan the account billing feature: route structure, component boundaries, data flow, state ownership, validation flow, and rollout risks."
 You: "Build a multi-step registration form with React Hook Form + Zod, file upload, conditional fields, async validation, and accessible errors."
 You: "Implement the UI from Figma node 123:456. Use existing design tokens and components, match spacing and responsive states, and document assumptions."
 You: "`/fec-build-fix` Fix the failing validation commands from this log: <paste log>."
@@ -147,9 +147,9 @@ Slash commands are the primary entry points for structured workflows. Most produ
 | --------------------- | ---------------------------------------------------------------------- | ---------------------------- |
 | `/fec-init`           | Initialize project templates (CLAUDE.md, rules, settings)              | —                            |
 | `/fec-review`         | Structured review of specified or recently changed files               | `code-review-*.md`           |
-| `/fec-test-plan`      | Plan testing layers, risk coverage, and execution order                | `test-plan-*.md`             |
+| `/fec-test-plan`      | Map frontend risks to test layers, priorities, commands, and evidence  | `test-plan-*.md`             |
 | `/fec-scaffold`       | Create page / feature / component boilerplate by convention            | —                            |
-| `/fec-plan`           | Architect features, refactors, or migrations before implementation     | `architecture-proposal-*.md` |
+| `/fec-plan`           | Plan implementation architecture, module boundaries, and rollout steps | `architecture-proposal-*.md` |
 | `/fec-tdd`            | Red → green → refactor loop for frontend TDD                           | —                            |
 | `/fec-build-fix`      | Incrementally repair lint, type-check, test, build, or CI failures     | `validation-fix-*.md`        |
 | `/fec-refactor-clean` | Classify and safely remove dead code, unused exports, styles, and deps | `refactor-clean-*.md`        |
@@ -174,51 +174,51 @@ Category boundaries are intentionally narrow: implementation capabilities cover 
 
 **Implementation capabilities** — activated when building specific frontend behavior:
 
-| Skill                         | Scope                                                                  |
-| ----------------------------- | ---------------------------------------------------------------------- |
-| `fec-data-fetching`           | TanStack Query / server-state fetching, caching, optimistic updates    |
-| `fec-api-integration`         | Typed API clients, auth refresh, uploads, realtime integration         |
-| `fec-state-management`        | State ownership, store selection, URL state, server/form/local boundaries |
-| `fec-form-handling`           | React Hook Form + Zod, dynamic fields, uploads, multi-step flows       |
-| `fec-browser-storage`         | localStorage / sessionStorage / IndexedDB / Cookies selection          |
-| `fec-route-protection`        | Auth and permission routes for React Router, Next.js, Vue Router, Nuxt |
-| `fec-pwa-implementation`      | Manifest, service worker, offline cache, install prompts               |
-| `fec-web-workers`             | Web Worker integration, transferables, Comlink, worker pools           |
-| `fec-canvas-threejs`          | Canvas 2D, Three.js, React Three Fiber, WebGL                          |
-| `fec-svg-animation`           | CSS / Framer Motion / GSAP SVG animation with reduced-motion           |
-| `fec-list-virtualization`     | react-window / TanStack Virtual with measurement strategies            |
+| Skill                     | Scope                                                                     |
+| ------------------------- | ------------------------------------------------------------------------- |
+| `fec-data-fetching`       | TanStack Query / server-state fetching, caching, optimistic updates       |
+| `fec-api-integration`     | Typed API clients, auth refresh, uploads, realtime integration            |
+| `fec-state-management`    | State ownership, store selection, URL state, server/form/local boundaries |
+| `fec-form-handling`       | React Hook Form + Zod, dynamic fields, uploads, multi-step flows          |
+| `fec-browser-storage`     | localStorage / sessionStorage / IndexedDB / Cookies selection             |
+| `fec-route-protection`    | Auth and permission routes for React Router, Next.js, Vue Router, Nuxt    |
+| `fec-pwa-implementation`  | Manifest, service worker, offline cache, install prompts                  |
+| `fec-web-workers`         | Web Worker integration, transferables, Comlink, worker pools              |
+| `fec-canvas-threejs`      | Canvas 2D, Three.js, React Three Fiber, WebGL                             |
+| `fec-svg-animation`       | CSS / Framer Motion / GSAP SVG animation with reduced-motion              |
+| `fec-list-virtualization` | react-window / TanStack Virtual with measurement strategies               |
 
 **Testing** — activated when planning or authoring frontend test coverage:
 
-| Skill                         | Scope                                                                    |
-| ----------------------------- | ------------------------------------------------------------------------ |
-| `fec-testing-strategy`        | Layer selection across static, unit, component, integration, E2E, visual |
-| `fec-component-testing`       | React Testing Library / Vue Test Utils with regression scenarios         |
-| `fec-e2e-testing`             | Playwright / Cypress E2E with Page Object and CI integration             |
-| `fec-tdd-workflow`            | Test-first frontend implementation with red-green-refactor               |
+| Skill                   | Scope                                                                    |
+| ----------------------- | ------------------------------------------------------------------------ |
+| `fec-testing-strategy`  | Layer selection across static, unit, component, integration, E2E, visual |
+| `fec-component-testing` | React Testing Library / Vue Test Utils with regression scenarios         |
+| `fec-e2e-testing`       | Playwright / Cypress E2E with Page Object and CI integration             |
+| `fec-tdd-workflow`      | Test-first frontend implementation with red-green-refactor               |
 
 **Review & quality** — activated during review, validation, or cleanup workflows:
 
-| Skill                      | Scope                                                           |
-| -------------------------- | --------------------------------------------------------------- |
-| `fec-code-review` | Architecture, types, rendering, styles, a11y review             |
-| `fec-typescript-type-safety` | Type contracts, DTO mapping, type guards, generics, type-level checks |
-| `fec-security-review`      | XSS, CSRF, sensitive data leakage, input validation             |
-| `fec-accessibility-check`  | WCAG 2.2, keyboard, focus, touch, and screen-reader behavior    |
-| `fec-dependency-upgrade`   | Dependency upgrades, lockfile review, CVE remediation, migration verification |
-| `fec-validation-fix`       | Run and repair lint, type-check, test, build in one pass        |
-| `fec-performance-optimization` | Core Web Vitals, bundle, rendering, memory, network, and budget reviews |
-| `fec-refactor-clean`       | Safe dead-code, unused export, style, route, dependency cleanup |
+| Skill                          | Scope                                                                         |
+| ------------------------------ | ----------------------------------------------------------------------------- |
+| `fec-code-review`              | Architecture, types, rendering, styles, a11y review                           |
+| `fec-typescript-type-safety`   | Type contracts, DTO mapping, type guards, generics, type-level checks         |
+| `fec-security-review`          | XSS, CSRF, sensitive data leakage, input validation                           |
+| `fec-accessibility-check`      | WCAG 2.2, keyboard, focus, touch, and screen-reader behavior                  |
+| `fec-dependency-upgrade`       | Dependency upgrades, lockfile review, CVE remediation, migration verification |
+| `fec-validation-fix`           | Run and repair lint, type-check, test, build in one pass                      |
+| `fec-performance-optimization` | Core Web Vitals, bundle, rendering, memory, network, and budget reviews       |
+| `fec-refactor-clean`           | Safe dead-code, unused export, style, route, dependency cleanup               |
 
 **Design UI** — activated for design-to-code, design systems, and visual polish:
 
-| Skill                         | Scope                                                              |
-| ----------------------------- | ------------------------------------------------------------------ |
-| `fec-ui-design`              | UI direction, visual identity, polish, states, visual QA           |
-| `fec-tailwind-design-system` | Tailwind tokens, theme extension, variants, class governance, dark mode |
-| `fec-responsive-layout`      | Mobile-first layouts, container queries, data-dense responsive UI |
-| `fec-motion-interaction`      | Interaction motion, page transitions, scroll animation, reduced motion |
-| `fec-implement-from-design`   | Build UI from Figma/Sketch/MasterGo/Pixso/墨刀/摹客 design files   |
+| Skill                         | Scope                                                                         |
+| ----------------------------- | ----------------------------------------------------------------------------- |
+| `fec-ui-design`               | UI direction, visual identity, polish, states, visual QA                      |
+| `fec-tailwind-design-system`  | Tailwind tokens, theme extension, variants, class governance, dark mode       |
+| `fec-responsive-layout`       | Mobile-first layouts, container queries, data-dense responsive UI             |
+| `fec-motion-interaction`      | Interaction motion, page transitions, scroll animation, reduced motion        |
+| `fec-implement-from-design`   | Build UI from Figma/Sketch/MasterGo/Pixso/墨刀/摹客 design files              |
 | `fec-storybook-component-doc` | Storybook component docs, design-system presentation, isolated state previews |
 
 **Legacy migration** — activated during modernization work:
@@ -230,30 +230,30 @@ Category boundaries are intentionally narrow: implementation capabilities cover 
 
 **Maintenance docs** — activated during documentation upkeep:
 
-| Skill          | Scope                                                           |
-| -------------- | --------------------------------------------------------------- |
-| `fec-doc-sync` | Keep public docs in sync with scripts, skills, agents, commands |
+| Skill                           | Scope                                                                                  |
+| ------------------------------- | -------------------------------------------------------------------------------------- |
+| `fec-doc-sync`                  | Keep public docs in sync with scripts, skills, agents, commands                        |
 | `fec-source-driven-development` | Verify version-sensitive frontend decisions against project facts and official sources |
 
 ### Agents
 
 Agents are specialized sub-agents dispatched by the main assistant to handle a focused task. Each returns a structured report.
 
-| Agent                        | Focus                                                                      | Report                       |
-| ---------------------------- | -------------------------------------------------------------------------- | ---------------------------- |
-| `fec-code-reviewer`     | React/Vue/Next/Nuxt, TS, styles, client-side security (confidence-based)   | `code-review-*.md`           |
-| `fec-typescript-reviewer`        | Type safety, async correctness, idiomatic patterns (report-only)           | `typescript-review-*.md`     |
-| `fec-security-reviewer` | XSS, client secrets, dangerous DOM/APIs, CSP, dependency audit             | `security-review-*.md`       |
-| `fec-performance-optimizer`      | Bundle size, render performance, network bottlenecks                       | `performance-review-*.md`    |
-| `fec-architect`         | Page splitting, component architecture, state flow, directory planning     | `architecture-proposal-*.md` |
-| `fec-test-planner`      | Risk-to-layer matrix: static, unit, component, E2E, visual, a11y, security | `test-plan-*.md`             |
-| `fec-build-fixer`       | Incremental lint / type-check / test / build / CI repair                   | `validation-fix-*.md`        |
-| `fec-refactor-cleaner`  | Classify and safely remove unused code, exports, styles, routes, deps      | `refactor-clean-*.md`        |
-| `fec-e2e-runner`        | E2E authoring and runs (Playwright/Cypress), flaky quarantine, traces      | `e2e-summary-*.md`           |
-| `fec-doc-updater`       | Sync README, runtime docs, structure, capability tables, metadata          | —                            |
-| `fec-ui-checker`                 | Visual issue debugging and design fidelity evaluation                      | `ui-fidelity-review-*.md`    |
-| `fec-figma-implementer`          | Precise UI implementation from Figma/Sketch/MasterGo/Pixso/墨刀/摹客       | `design-implementation-*.md` |
-| `fec-design-token-mapper`        | Map design variables to project Design Tokens                              | `token-mapping-*.md`         |
+| Agent                       | Focus                                                                      | Report                       |
+| --------------------------- | -------------------------------------------------------------------------- | ---------------------------- |
+| `fec-code-reviewer`         | React/Vue/Next/Nuxt, TS, styles, client-side security (confidence-based)   | `code-review-*.md`           |
+| `fec-typescript-reviewer`   | Type safety, async correctness, idiomatic patterns (report-only)           | `typescript-review-*.md`     |
+| `fec-security-reviewer`     | XSS, client secrets, dangerous DOM/APIs, CSP, dependency audit             | `security-review-*.md`       |
+| `fec-performance-optimizer` | Bundle size, render performance, network bottlenecks                       | `performance-review-*.md`    |
+| `fec-architect`             | Page splitting, component architecture, state flow, directory planning     | `architecture-proposal-*.md` |
+| `fec-test-planner`          | Risk-to-layer matrix: static, unit, component, E2E, visual, a11y, security | `test-plan-*.md`             |
+| `fec-build-fixer`           | Incremental lint / type-check / test / build / CI repair                   | `validation-fix-*.md`        |
+| `fec-refactor-cleaner`      | Classify and safely remove unused code, exports, styles, routes, deps      | `refactor-clean-*.md`        |
+| `fec-e2e-runner`            | E2E authoring and runs (Playwright/Cypress), flaky quarantine, traces      | `e2e-summary-*.md`           |
+| `fec-doc-updater`           | Sync README, runtime docs, structure, capability tables, metadata          | —                            |
+| `fec-ui-checker`            | Visual issue debugging and design fidelity evaluation                      | `ui-fidelity-review-*.md`    |
+| `fec-figma-implementer`     | Precise UI implementation from Figma/Sketch/MasterGo/Pixso/墨刀/摹客       | `design-implementation-*.md` |
+| `fec-design-token-mapper`   | Map design variables to project Design Tokens                              | `token-mapping-*.md`         |
 
 ### Hooks (event-driven)
 
@@ -288,27 +288,27 @@ Run `/fec-init` to scaffold a ready-to-use rules library and project config into
 <details>
 <summary>Click to see all 19 template files</summary>
 
-| File                          | Purpose                                                           |
-| ----------------------------- | ----------------------------------------------------------------- |
-| `CLAUDE.md`                   | Project description, commands, working principles, security       |
-| `settings.json`               | Permission whitelist/blacklist, environment variables             |
-| `rules/fec-vue.md`                | Vue 3 component standards and anti-patterns                       |
-| `rules/fec-react.md`              | React component standards and anti-patterns                       |
-| `rules/fec-design-system.md`      | Design system, tokens, accessibility                              |
-| `rules/fec-testing.md`            | Testing and validation rules                                      |
-| `rules/fec-git-conventions.md`    | Conventional Commits                                              |
-| `rules/fec-i18n.md`               | Internationalization copy standards                               |
-| `rules/fec-performance.md`        | Frontend performance rules                                        |
+| File                                     | Purpose                                                               |
+| ---------------------------------------- | --------------------------------------------------------------------- |
+| `CLAUDE.md`                              | Project description, commands, working principles, security           |
+| `settings.json`                          | Permission whitelist/blacklist, environment variables                 |
+| `rules/fec-vue.md`                       | Vue 3 component standards and anti-patterns                           |
+| `rules/fec-react.md`                     | React component standards and anti-patterns                           |
+| `rules/fec-design-system.md`             | Design system, tokens, accessibility                                  |
+| `rules/fec-testing.md`                   | Testing and validation rules                                          |
+| `rules/fec-git-conventions.md`           | Conventional Commits                                                  |
+| `rules/fec-i18n.md`                      | Internationalization copy standards                                   |
+| `rules/fec-performance.md`               | Frontend performance rules                                            |
 | `rules/fec-source-driven-development.md` | Source-driven decisions, official docs, version-sensitive assumptions |
-| `rules/fec-api-layer.md`          | API layer typing and error handling                               |
-| `rules/fec-state-management.md`   | State classification, strategy, anti-patterns                     |
-| `rules/fec-error-handling.md`     | Error layering, Error Boundary, fallback UI, reporting            |
-| `rules/fec-naming-conventions.md` | Unified naming for files, components, variables, routes, API, CSS |
-| `rules/fec-code-comments.md`      | When and how to write frontend comments                           |
-| `rules/fec-ci-cd.md`              | CI/CD pipeline stages, GitHub Actions / GitLab CI, secrets        |
-| `rules/fec-refactoring.md`        | Refactoring constraints and feature-parity requirements           |
-| `rules/fec-agent-workflow.md`     | Agent collaboration boundaries and delegation                     |
-| `rules/fec-working-modes.md`      | Research, planning, development, review, finishing modes          |
+| `rules/fec-api-layer.md`                 | API layer typing and error handling                                   |
+| `rules/fec-state-management.md`          | State classification, strategy, anti-patterns                         |
+| `rules/fec-error-handling.md`            | Error layering, Error Boundary, fallback UI, reporting                |
+| `rules/fec-naming-conventions.md`        | Unified naming for files, components, variables, routes, API, CSS     |
+| `rules/fec-code-comments.md`             | When and how to write frontend comments                               |
+| `rules/fec-ci-cd.md`                     | CI/CD pipeline stages, GitHub Actions / GitLab CI, secrets            |
+| `rules/fec-refactoring.md`               | Refactoring constraints and feature-parity requirements               |
+| `rules/fec-agent-workflow.md`            | Agent collaboration boundaries and delegation                         |
+| `rules/fec-working-modes.md`             | Research, planning, development, review, finishing modes              |
 
 </details>
 
@@ -363,23 +363,23 @@ Every review, analysis, and evaluation writes a timestamped Markdown report to `
 <details>
 <summary>Click to see all 15 report types</summary>
 
-| Report type            | Filename pattern                             | Produced by                                                              |
-| ---------------------- | -------------------------------------------- | ------------------------------------------------------------------------ |
-| Code review            | `code-review-YYYY-MM-DD-HHmmss.md`           | `/fec-review`, `fec-code-review`, `fec-code-reviewer`      |
-| TypeScript / JS review | `typescript-review-YYYY-MM-DD-HHmmss.md`     | `fec-typescript-reviewer`                                                    |
+| Report type            | Filename pattern                             | Produced by                                                         |
+| ---------------------- | -------------------------------------------- | ------------------------------------------------------------------- |
+| Code review            | `code-review-YYYY-MM-DD-HHmmss.md`           | `/fec-review`, `fec-code-review`, `fec-code-reviewer`               |
+| TypeScript / JS review | `typescript-review-YYYY-MM-DD-HHmmss.md`     | `fec-typescript-reviewer`                                           |
 | Security review        | `security-review-YYYY-MM-DD-HHmmss.md`       | `fec-security-review`, `fec-security-reviewer`                      |
-| Accessibility          | `accessibility-review-YYYY-MM-DD-HHmmss.md`  | `fec-accessibility-check`                                                |
-| Performance            | `performance-review-YYYY-MM-DD-HHmmss.md`    | `fec-performance-optimizer`                                                  |
+| Accessibility          | `accessibility-review-YYYY-MM-DD-HHmmss.md`  | `fec-accessibility-check`                                           |
+| Performance            | `performance-review-YYYY-MM-DD-HHmmss.md`    | `fec-performance-optimizer`                                         |
 | Architecture           | `architecture-proposal-YYYY-MM-DD-HHmmss.md` | `fec-architect`                                                     |
-| Design fidelity        | `ui-fidelity-review-YYYY-MM-DD-HHmmss.md`    | `fec-ui-checker`                                                             |
-| Design implementation  | `design-implementation-YYYY-MM-DD-HHmmss.md` | `fec-figma-implementer`                                                      |
-| Token mapping          | `token-mapping-YYYY-MM-DD-HHmmss.md`         | `fec-design-token-mapper`                                                    |
-| Design plan            | `design-plan-YYYY-MM-DD-HHmmss.md`           | `fec-implement-from-design`                                              |
+| Design fidelity        | `ui-fidelity-review-YYYY-MM-DD-HHmmss.md`    | `fec-ui-checker`                                                    |
+| Design implementation  | `design-implementation-YYYY-MM-DD-HHmmss.md` | `fec-figma-implementer`                                             |
+| Token mapping          | `token-mapping-YYYY-MM-DD-HHmmss.md`         | `fec-design-token-mapper`                                           |
+| Design plan            | `design-plan-YYYY-MM-DD-HHmmss.md`           | `fec-implement-from-design`                                         |
 | Test plan              | `test-plan-YYYY-MM-DD-HHmmss.md`             | `/fec-test-plan`, `fec-testing-strategy`, `fec-test-planner`        |
-| Validation fix         | `validation-fix-YYYY-MM-DD-HHmmss.md`        | `fec-validation-fix`                                                     |
+| Validation fix         | `validation-fix-YYYY-MM-DD-HHmmss.md`        | `fec-validation-fix`                                                |
 | Refactor clean         | `refactor-clean-YYYY-MM-DD-HHmmss.md`        | `/fec-refactor-clean`, `fec-refactor-clean`, `fec-refactor-cleaner` |
 | E2E run summary        | `e2e-summary-YYYY-MM-DD-HHmmss.md`           | `fec-e2e-runner` (optional)                                         |
-| Migration plan         | `migration-plan-YYYY-MM-DD-HHmmss.md`        | `fec-legacy-to-modern-migration`                                         |
+| Migration plan         | `migration-plan-YYYY-MM-DD-HHmmss.md`        | `fec-legacy-to-modern-migration`                                    |
 
 </details>
 
