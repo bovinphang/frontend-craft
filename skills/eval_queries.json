@@ -155,6 +155,28 @@
       "审查 token 存储安全"
     ]
   },
+  "fec-debug-framework": {
+    "should_trigger": [
+      "Vite 构建报错 Module not found，帮我排查",
+      "页面白屏了，控制台有 TypeError",
+      "这个组件渲染结果和预期不一致，帮我 debug",
+      "接口返回 500 但前端没展示错误信息",
+      "打包后样式丢失，开发环境正常",
+      "React 组件 hydration mismatch 怎么定位",
+      "HMR 更新后页面状态丢失",
+      "排查生产环境偶发性 JS 异常"
+    ],
+    "should_not_trigger": [
+      "给这个模块写单元测试",
+      "设计一个新的 React 组件",
+      "优化首屏加载性能",
+      "做前端安全审查",
+      "升级 TypeScript 到最新版本",
+      "重构这个 hooks 的逻辑",
+      "写一个 Playwright E2E 测试",
+      "给这个 API 设计类型定义"
+    ]
+  },
   "fec-dependency-upgrade": {
     "should_trigger": [
       "把 Vite 从 5 升级到 6，需要评估破坏性变更",

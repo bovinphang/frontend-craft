@@ -61,7 +61,7 @@ description: Use when diagnosing and fixing frontend issues including build fail
 **验证**：修一类根因 → 重跑命令 → 确认错误减少
 **特殊处理**：
 
-- 依赖升级/peer dependency/ESM/CJS 问题同时参考 `fec-dependency-upgrade`
+- 依赖升级/peer dependency/ESM/CJS 问题同时参考「依赖升级」skill
 - CI 专属失败检查 Node 版本、包管理器、环境变量差异
 
 ### Runtime 模块
