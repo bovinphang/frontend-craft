@@ -11,6 +11,7 @@
 - 前端构建必须同时验证开发体验和生产产物，不能只看 dev server 正常
 - 在上下文或任务边界不清时，不启动大规模性能重构；先定位瓶颈再改代码
 - 对长时间运行的命令保留可回看日志，必要时使用终端会话、CI artifact 或测试报告
+- 每项性能建议都要绑定证据、影响范围、验证方式和回退风险
 
 ## 代码分割与懒加载
 
@@ -76,6 +77,7 @@ const Dashboard = () => import('./pages/Dashboard.vue');
 
 ## 检查清单
 
+- [ ] 是否记录核心路由、设备、网络和当前指标
 - [ ] 路由是否按需加载
 - [ ] 重型组件是否懒加载
 - [ ] 大列表是否使用虚拟滚动或分页
@@ -84,6 +86,7 @@ const Dashboard = () => import('./pages/Dashboard.vue');
 - [ ] 是否存在不必要的重渲染
 - [ ] Vite 项目是否单独执行 typecheck
 - [ ] Vite 构建产物是否经过 `vite build` 和本地预览烟测
+- [ ] 是否复查 loading、error、empty、disabled 和移动端状态没有被优化破坏
 
 ## 反模式
 
@@ -95,3 +98,4 @@ const Dashboard = () => import('./pages/Dashboard.vue');
 - 认为 `vite build` 通过就代表 TypeScript 没有错误
 - 设置 `envPrefix: ""` 或把服务端密钥注入客户端 bundle
 - 未先复现卡顿、包体积或 Web Vitals 指标，就做大范围“性能优化”
+- 为追求实验室分数删除状态反馈、降低可访问性或牺牲主路径可维护性

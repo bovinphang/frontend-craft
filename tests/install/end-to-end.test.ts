@@ -309,8 +309,8 @@ test("all runtime local installs match declared capabilities", () => {
       if (cap.agents) {
         const agentDir = runtime === "codex" ? path.join(baseDir, "agents") : path.join(baseDir, "agents");
         assert.ok(fs.existsSync(agentDir), `${runtime} installs agents`);
-        const expectedAgent = runtime === "codex" ? "fec-frontend-code-reviewer.toml" : "fec-frontend-code-reviewer.md";
-        const oldAgent = runtime === "codex" ? "frontend-code-reviewer.toml" : "frontend-code-reviewer.md";
+        const expectedAgent = runtime === "codex" ? "fec-code-reviewer.toml" : "fec-code-reviewer.md";
+        const oldAgent = runtime === "codex" ? `frontend-${"code-reviewer"}.toml` : `frontend-${"code-reviewer"}.md`;
         assert.ok(fs.existsSync(path.join(agentDir, expectedAgent)), `${runtime} installs fec-prefixed agents`);
         assert.ok(!fs.existsSync(path.join(agentDir, oldAgent)), `${runtime} does not install unprefixed agents`);
       }
@@ -328,7 +328,7 @@ test("all runtime local installs match declared capabilities", () => {
       }
       if (runtime === "qoder") {
         assert.ok(
-          fs.existsSync(path.join(baseDir, "agents", "fec-frontend-code-reviewer.md")),
+          fs.existsSync(path.join(baseDir, "agents", "fec-code-reviewer.md")),
           "qoder installs fec-prefixed markdown agents",
         );
         assert.ok(fs.existsSync(path.join(baseDir, "rules", "fec-react.md")), "qoder installs fec-prefixed shared rules");

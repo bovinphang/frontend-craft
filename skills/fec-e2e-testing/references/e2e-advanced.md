@@ -1,4 +1,4 @@
-# E2E Advanced Testing Details
+# E2E 高级测试细节
 
 ## CI 集成（示例）
 

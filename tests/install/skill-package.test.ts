@@ -22,43 +22,77 @@ const distPackageRoot = path.join(root, "dist", "skill-packages");
 const tsxCli = path.join(root, "node_modules", "tsx", "dist", "cli.mjs");
 
 test("pack:skills creates one standalone publish package per skill", () => {
-  execFileSync(process.execPath, [tsxCli, path.join(root, "scripts", "pack-skills.ts")], {
-    cwd: root,
-    encoding: "utf8",
-  });
-  assert.ok(!fs.existsSync(path.join(distPackageRoot, "index.json")), "pack:skills should not write dist/skill-packages");
-
-  const pkg = readJsonFile<{ version: string }>(path.join(root, "package.json"));
-  const skillIds = listSkillIds(skillsDir);
-  const relations = readJsonFile<SkillRelations>(path.join(skillsDir, "relations.json"));
-  const index = readJsonFile<Array<{ id: string; version: string; packagePath: string; sourcePath: string }>>(
-    path.join(packageRoot, "index.json"),
+  execFileSync(
+    process.execPath,
+    [tsxCli, path.join(root, "scripts", "pack-skills.ts")],
+    {
+      cwd: root,
+      encoding: "utf8",
+    },
+  );
+  assert.ok(
+    !fs.existsSync(path.join(distPackageRoot, "index.json")),
+    "pack:skills should not write dist/skill-packages",
   );
 
-    assert.equal(skillIds.length, 30);
+  const pkg = readJsonFile<{ version: string }>(
+    path.join(root, "package.json"),
+  );
+  const skillIds = listSkillIds(skillsDir);
+  const relations = readJsonFile<SkillRelations>(
+    path.join(skillsDir, "relations.json"),
+  );
+  const index = readJsonFile<
+    Array<{
+      id: string;
+      version: string;
+      packagePath: string;
+      sourcePath: string;
+    }>
+  >(path.join(packageRoot, "index.json"));
+
+  assert.equal(skillIds.length, 40);
   assert.deepEqual(index.map((entry) => entry.id).sort(), skillIds);
 
   for (const skillId of skillIds) {
     const sourceDir = path.join(skillsDir, skillId);
     const destDir = path.join(packageRoot, skillId);
     const skillBody = fs.readFileSync(path.join(sourceDir, "SKILL.md"), "utf8");
-    const packageSkillBody = fs.readFileSync(path.join(destDir, "SKILL.md"), "utf8");
+    const packageSkillBody = fs.readFileSync(
+      path.join(destDir, "SKILL.md"),
+      "utf8",
+    );
     const frontmatter = parseSkillFrontmatter(skillBody, skillId);
     const references = extractReferencedFiles(skillBody);
     const relation = relations[skillId];
 
     assertStandaloneSkillBody(packageSkillBody, skillId);
 
-    for (const requiredFile of ["SKILL.md", "README.md", "metadata.json", "package.json", "LICENSE"]) {
-      assert.ok(fs.existsSync(path.join(destDir, requiredFile)), `missing ${requiredFile}: ${skillId}`);
+    for (const requiredFile of [
+      "SKILL.md",
+      "README.md",
+      "metadata.json",
+      "package.json",
+      "LICENSE",
+    ]) {
+      assert.ok(
+        fs.existsSync(path.join(destDir, requiredFile)),
+        `missing ${requiredFile}: ${skillId}`,
+      );
     }
 
-    const standalonePkg = readJsonFile<{ version: string; description: string; keywords: string[]; files: string[] }>(
-      path.join(destDir, "package.json"),
-    );
-    const publishMetadata = readJsonFile<{ version: string; description: string; references: string[]; relations?: SkillRelation }>(
-      path.join(destDir, "metadata.json"),
-    );
+    const standalonePkg = readJsonFile<{
+      version: string;
+      description: string;
+      keywords: string[];
+      files: string[];
+    }>(path.join(destDir, "package.json"));
+    const publishMetadata = readJsonFile<{
+      version: string;
+      description: string;
+      references: string[];
+      relations?: SkillRelation;
+    }>(path.join(destDir, "metadata.json"));
     const entry = index.find((candidate) => candidate.id === skillId);
 
     assert.ok(entry, `missing index entry: ${skillId}`);
@@ -73,7 +107,10 @@ test("pack:skills creates one standalone publish package per skill", () => {
     assert.equal(publishMetadata.description, frontmatter.description);
     assert.deepEqual(publishMetadata.references, references);
     assert.deepEqual(publishMetadata.relations ?? null, relation ?? null);
-    assert.ok(!("relatedAgents" in (publishMetadata.relations ?? {})), `package metadata includes relatedAgents: ${skillId}`);
+    assert.ok(
+      !("relatedAgents" in (publishMetadata.relations ?? {})),
+      `package metadata includes relatedAgents: ${skillId}`,
+    );
     assert.equal(entry?.version, pkg.version);
     assert.equal(entry?.packagePath, toPosixPath(path.relative(root, destDir)));
     assert.equal(entry?.sourcePath, `skills/${skillId}`);
@@ -84,10 +121,14 @@ test("pack:skills creates one standalone publish package per skill", () => {
 });
 
 test("check:skills-publish validates generated standalone packages", () => {
-  execFileSync(process.execPath, [tsxCli, path.join(root, "scripts", "check-skills-publish.ts")], {
-    cwd: root,
-    encoding: "utf8",
-  });
+  execFileSync(
+    process.execPath,
+    [tsxCli, path.join(root, "scripts", "check-skills-publish.ts")],
+    {
+      cwd: root,
+      encoding: "utf8",
+    },
+  );
 });
 
 function listPackagedFiles(destDir: string, expectedFiles: string[]): string[] {

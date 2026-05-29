@@ -1,8 +1,31 @@
 {
+  "fec-api-integration": {
+    "relatedSkills": [
+      "fec-data-fetching",
+      "fec-security-review",
+      "fec-route-protection",
+      "fec-form-handling",
+      "fec-typescript-type-safety",
+      "fec-source-driven-development"
+    ],
+    "boundaryWorkflows": [
+      "Use a data-fetching workflow for TanStack Query cache policy, query keys, optimistic updates, and server-state hooks.",
+      "Use a security review workflow for token storage, XSS, CSRF, file upload trust boundaries, and secret leakage risks.",
+      "Use a route protection workflow for page-level auth redirects, RBAC route guards, and middleware behavior."
+    ],
+    "capabilityTags": [
+      "api",
+      "typed-client",
+      "auth",
+      "upload",
+      "realtime"
+    ]
+  },
   "fec-browser-storage": {
     "relatedSkills": [
       "fec-security-review",
       "fec-pwa-implementation",
+      "fec-state-management",
       "fec-data-fetching"
     ],
     "boundaryWorkflows": [
@@ -20,7 +43,8 @@
     "relatedSkills": [
       "fec-web-workers",
       "fec-svg-animation",
-      "fec-accessibility-check"
+      "fec-accessibility-check",
+      "fec-motion-interaction"
     ],
     "boundaryWorkflows": [
       "Use a worker workflow when expensive graphics computation blocks the main thread.",
@@ -32,6 +56,30 @@
       "threejs",
       "performance",
       "accessibility"
+    ]
+  },
+  "fec-code-review": {
+    "relatedSkills": [
+      "fec-security-review",
+      "fec-accessibility-check",
+      "fec-e2e-testing",
+      "fec-validation-fix",
+      "fec-performance-optimization",
+      "fec-typescript-type-safety",
+      "fec-state-management",
+      "fec-source-driven-development",
+      "fec-dependency-upgrade",
+      "fec-responsive-layout"
+    ],
+    "boundaryWorkflows": [
+      "Use a security review workflow for XSS, CSRF, token, upload, third-party script, and CSP risks.",
+      "Use an accessibility workflow for WCAG, keyboard, focus, semantic, and ARIA risks.",
+      "Use an E2E workflow for critical paths, flaky tests, traces, and CI artifacts."
+    ],
+    "capabilityTags": [
+      "code-review",
+      "quality",
+      "frontend"
     ]
   },
   "fec-component-testing": {
@@ -55,6 +103,7 @@
   },
   "fec-data-fetching": {
     "relatedSkills": [
+      "fec-state-management",
       "fec-form-handling",
       "fec-pwa-implementation",
       "fec-list-virtualization"
@@ -68,6 +117,26 @@
       "data-fetching",
       "server-state",
       "cache"
+    ]
+  },
+  "fec-dependency-upgrade": {
+    "relatedSkills": [
+      "fec-source-driven-development",
+      "fec-validation-fix",
+      "fec-refactor-clean",
+      "fec-security-review",
+      "fec-monorepo-project-standard"
+    ],
+    "boundaryWorkflows": [
+      "Use source-driven development for official release notes, migration guides, version-sensitive behavior, and project facts before deciding an upgrade path.",
+      "Use validation fix when the task is to repair concrete lint, typecheck, test, build, or CI failures after an upgrade.",
+      "Use refactor clean for proven unused dependency removal; keep version migration and lockfile risk in the dependency upgrade workflow."
+    ],
+    "capabilityTags": [
+      "dependency-upgrade",
+      "lockfile",
+      "cve",
+      "migration"
     ]
   },
   "fec-e2e-testing": {
@@ -92,6 +161,7 @@
     "relatedSkills": [
       "fec-component-testing",
       "fec-data-fetching",
+      "fec-state-management",
       "fec-accessibility-check"
     ],
     "boundaryWorkflows": [
@@ -103,41 +173,6 @@
       "forms",
       "validation",
       "accessibility"
-    ]
-  },
-  "fec-frontend-code-review": {
-    "relatedSkills": [
-      "fec-security-review",
-      "fec-accessibility-check",
-      "fec-e2e-testing",
-      "fec-validation-fix"
-    ],
-    "boundaryWorkflows": [
-      "Use a security review workflow for XSS, CSRF, token, upload, third-party script, and CSP risks.",
-      "Use an accessibility workflow for WCAG, keyboard, focus, semantic, and ARIA risks.",
-      "Use an E2E workflow for critical paths, flaky tests, traces, and CI artifacts."
-    ],
-    "capabilityTags": [
-      "code-review",
-      "quality",
-      "frontend"
-    ]
-  },
-  "fec-legacy-web-standard": {
-    "relatedSkills": [
-      "fec-legacy-to-modern-migration",
-      "fec-security-review",
-      "fec-validation-fix"
-    ],
-    "boundaryWorkflows": [
-      "Use a migration workflow for inventory, strategy, and staged migration to React, Vue, or TypeScript.",
-      "Use a security review workflow for XSS, CSRF, open redirect, and third-party script risks in legacy projects.",
-      "Use a validation workflow for existing lint, test, build, or manual verification scripts."
-    ],
-    "capabilityTags": [
-      "legacy",
-      "migration",
-      "quality"
     ]
   },
   "fec-legacy-to-modern-migration": {
@@ -157,6 +192,23 @@
       "modernization"
     ]
   },
+  "fec-legacy-web-standard": {
+    "relatedSkills": [
+      "fec-legacy-to-modern-migration",
+      "fec-security-review",
+      "fec-validation-fix"
+    ],
+    "boundaryWorkflows": [
+      "Use a migration workflow for inventory, strategy, and staged migration to React, Vue, or TypeScript.",
+      "Use a security review workflow for XSS, CSRF, open redirect, and third-party script risks in legacy projects.",
+      "Use a validation workflow for existing lint, test, build, or manual verification scripts."
+    ],
+    "capabilityTags": [
+      "legacy",
+      "migration",
+      "quality"
+    ]
+  },
   "fec-list-virtualization": {
     "relatedSkills": [
       "fec-data-fetching",
@@ -174,11 +226,32 @@
       "large-lists"
     ]
   },
+  "fec-motion-interaction": {
+    "relatedSkills": [
+      "fec-ui-design",
+      "fec-svg-animation",
+      "fec-canvas-threejs",
+      "fec-accessibility-check"
+    ],
+    "boundaryWorkflows": [
+      "Use a UI design workflow to decide visual direction, page hierarchy, and whether motion is appropriate for the product context.",
+      "Use an SVG animation workflow for SVG-only path drawing, icon motion, and illustration motion details.",
+      "Use a Canvas/Three.js workflow for WebGL, shader, 3D, particle, and canvas-rendered animation."
+    ],
+    "capabilityTags": [
+      "motion",
+      "interaction",
+      "animation",
+      "accessibility"
+    ]
+  },
   "fec-nextjs-project-standard": {
     "relatedSkills": [
       "fec-react-project-standard",
       "fec-route-protection",
-      "fec-data-fetching"
+      "fec-data-fetching",
+      "fec-api-integration",
+      "fec-motion-interaction"
     ],
     "boundaryWorkflows": [
       "Use a React project workflow for generic client component architecture and hooks organization.",
@@ -208,6 +281,27 @@
       "routing"
     ]
   },
+  "fec-performance-optimization": {
+    "relatedSkills": [
+      "fec-validation-fix",
+      "fec-code-review",
+      "fec-list-virtualization",
+      "fec-web-workers",
+      "fec-vite-project-standard",
+      "fec-responsive-layout"
+    ],
+    "boundaryWorkflows": [
+      "Use a validation workflow to run build, typecheck, tests, and performance-related scripts after optimization changes.",
+      "Use a code review workflow when performance findings overlap architecture, rendering correctness, or maintainability.",
+      "Use list virtualization or worker workflows only for their specific DOM or main-thread bottlenecks."
+    ],
+    "capabilityTags": [
+      "performance",
+      "web-vitals",
+      "bundle",
+      "runtime"
+    ]
+  },
   "fec-pwa-implementation": {
     "relatedSkills": [
       "fec-data-fetching",
@@ -227,6 +321,10 @@
   },
   "fec-react-project-standard": {
     "relatedSkills": [
+      "fec-typescript-type-safety",
+      "fec-state-management",
+      "fec-tailwind-design-system",
+      "fec-responsive-layout",
       "fec-form-handling",
       "fec-data-fetching",
       "fec-component-testing",
@@ -235,23 +333,46 @@
       "fec-security-review",
       "fec-list-virtualization",
       "fec-svg-animation",
-      "fec-canvas-threejs"
+      "fec-canvas-threejs",
+      "fec-api-integration",
+      "fec-motion-interaction"
     ],
     "boundaryWorkflows": [
-      "Use specialty workflows for complex forms, server state, tests, accessibility, security, large lists, animation, or graphics.",
+      "Use specialty workflows for complex forms, state ownership, TypeScript contracts, server state, tests, accessibility, security, large lists, animation, or graphics.",
       "Keep generic React component architecture and hooks organization in the React project workflow."
     ],
     "capabilityTags": [
       "react",
       "project-standard",
-      "frontend-architecture"
+      "fec-architecture"
+    ]
+  },
+  "fec-responsive-layout": {
+    "relatedSkills": [
+      "fec-ui-design",
+      "fec-accessibility-check",
+      "fec-performance-optimization",
+      "fec-tailwind-design-system"
+    ],
+    "boundaryWorkflows": [
+      "Use UI design when the task is visual direction, product identity, hierarchy, or polish beyond layout behavior.",
+      "Use accessibility check for keyboard, focus, semantics, screen reader behavior, and contrast concerns.",
+      "Use performance optimization when responsive behavior exposes rendering, image, bundle, or main-thread bottlenecks."
+    ],
+    "capabilityTags": [
+      "responsive",
+      "layout",
+      "container-query",
+      "mobile-first"
     ]
   },
   "fec-security-review": {
     "relatedSkills": [
-      "fec-frontend-code-review",
+      "fec-code-review",
       "fec-accessibility-check",
-      "fec-browser-storage"
+      "fec-browser-storage",
+      "fec-dependency-upgrade",
+      "fec-route-protection"
     ],
     "boundaryWorkflows": [
       "Use a general code review workflow for architecture, maintainability, and broad quality review.",
@@ -264,12 +385,55 @@
       "frontend"
     ]
   },
+  "fec-source-driven-development": {
+    "relatedSkills": [
+      "fec-doc-sync",
+      "fec-dependency-upgrade",
+      "fec-api-integration",
+      "fec-vite-project-standard",
+      "fec-nextjs-project-standard",
+      "fec-nuxt-project-standard"
+    ],
+    "boundaryWorkflows": [
+      "Use documentation sync when source-verified decisions change public docs, runtime docs, or metadata.",
+      "Use API integration when source checking leads to frontend-backend contract or error-shape changes.",
+      "Use framework project workflows when the source-verified behavior is specific to Vite, Next.js, Nuxt, React, or Vue."
+    ],
+    "capabilityTags": [
+      "source-driven",
+      "official-docs",
+      "version-sensitive"
+    ]
+  },
+  "fec-state-management": {
+    "relatedSkills": [
+      "fec-data-fetching",
+      "fec-form-handling",
+      "fec-browser-storage",
+      "fec-route-protection",
+      "fec-react-project-standard",
+      "fec-vue3-project-standard"
+    ],
+    "boundaryWorkflows": [
+      "Use a data-fetching workflow for query keys, cache lifetime, invalidation, optimistic updates, and server-state hooks.",
+      "Use a form workflow for field registration, validation, submit flows, and form-specific dirty/error state.",
+      "Use a browser storage workflow when state must persist across reloads, sessions, offline mode, or cookie boundaries."
+    ],
+    "capabilityTags": [
+      "state-management",
+      "store-selection",
+      "url-state",
+      "state-ownership"
+    ]
+  },
   "fec-storybook-component-doc": {
     "relatedSkills": [
       "fec-testing-strategy",
       "fec-component-testing",
       "fec-e2e-testing",
-      "fec-accessibility-check"
+      "fec-accessibility-check",
+      "fec-tailwind-design-system",
+      "fec-responsive-layout"
     ],
     "boundaryWorkflows": [
       "Use a testing strategy workflow to decide whether a risk belongs in Storybook, component tests, E2E, or specialty review.",
@@ -280,6 +444,37 @@
       "storybook",
       "design-system",
       "visual-regression"
+    ]
+  },
+  "fec-svg-animation": {
+    "capabilityTags": [
+      "svg",
+      "animation",
+      "motion"
+    ],
+    "relatedSkills": [
+      "fec-motion-interaction"
+    ]
+  },
+  "fec-tailwind-design-system": {
+    "relatedSkills": [
+      "fec-ui-design",
+      "fec-responsive-layout",
+      "fec-storybook-component-doc",
+      "fec-react-project-standard",
+      "fec-vue3-project-standard"
+    ],
+    "boundaryWorkflows": [
+      "Use UI design for product-specific visual direction, hierarchy, and design-system intent before encoding Tailwind tokens.",
+      "Use responsive layout for cross-device behavior, container queries, data-dense layouts, and viewport verification.",
+      "Use Storybook component documentation to present component variants, states, and design-system examples."
+    ],
+    "capabilityTags": [
+      "tailwind",
+      "design-system",
+      "tokens",
+      "variants",
+      "dark-mode"
     ]
   },
   "fec-tdd-workflow": {
@@ -300,6 +495,26 @@
       "workflow"
     ]
   },
+  "fec-typescript-type-safety": {
+    "relatedSkills": [
+      "fec-code-review",
+      "fec-api-integration",
+      "fec-react-project-standard",
+      "fec-vue3-project-standard",
+      "fec-form-handling"
+    ],
+    "boundaryWorkflows": [
+      "Use a general code review workflow when the task spans architecture, rendering, styles, tests, and maintainability beyond type contracts.",
+      "Use an API integration workflow for runtime API client boundaries, auth refresh, uploads, realtime behavior, and error mapping.",
+      "Use framework project workflows when type decisions are part of broader React, Vue, Next.js, or Nuxt module architecture."
+    ],
+    "capabilityTags": [
+      "typescript",
+      "type-safety",
+      "type-modeling",
+      "dto"
+    ]
+  },
   "fec-testing-strategy": {
     "relatedSkills": [
       "fec-component-testing",
@@ -308,7 +523,7 @@
       "fec-validation-fix",
       "fec-accessibility-check",
       "fec-security-review",
-      "fec-frontend-code-review"
+      "fec-code-review"
     ],
     "boundaryWorkflows": [
       "Use specialty testing workflows after the layer and risk placement are decided.",
@@ -324,7 +539,10 @@
     "relatedSkills": [
       "fec-implement-from-design",
       "fec-accessibility-check",
-      "fec-frontend-code-review"
+      "fec-code-review",
+      "fec-tailwind-design-system",
+      "fec-responsive-layout",
+      "fec-storybook-component-doc"
     ],
     "boundaryWorkflows": [
       "Use an implementation-from-design workflow when an external design file is the source of truth.",
@@ -351,7 +569,8 @@
       "fec-react-project-standard",
       "fec-vue3-project-standard",
       "fec-monorepo-project-standard",
-      "fec-security-review"
+      "fec-security-review",
+      "fec-motion-interaction"
     ],
     "boundaryWorkflows": [
       "Use framework project workflows for component architecture, state, and directory structure.",
@@ -366,6 +585,10 @@
   },
   "fec-vue3-project-standard": {
     "relatedSkills": [
+      "fec-typescript-type-safety",
+      "fec-state-management",
+      "fec-tailwind-design-system",
+      "fec-responsive-layout",
       "fec-form-handling",
       "fec-data-fetching",
       "fec-component-testing",
@@ -377,13 +600,13 @@
       "fec-canvas-threejs"
     ],
     "boundaryWorkflows": [
-      "Use specialty workflows for complex forms, server state, tests, accessibility, security, large lists, animation, or graphics.",
+      "Use specialty workflows for complex forms, state ownership, TypeScript contracts, server state, tests, accessibility, security, large lists, animation, or graphics.",
       "Keep generic Vue component architecture, composables, and Pinia boundaries in the Vue project workflow."
     ],
     "capabilityTags": [
       "vue",
       "project-standard",
-      "frontend-architecture"
+      "fec-architecture"
     ]
   },
   "fec-web-workers": {

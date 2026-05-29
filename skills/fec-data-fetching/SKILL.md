@@ -47,7 +47,7 @@ export function useCreateUser() {
 
 ## Detailed References
 
-Load [references/query-patterns.md](references/query-patterns.md) for QueryClient defaults, optimistic update, infinite queries, prefetching, SSR hydration, and API-layer integration.
+涉及 QueryClient 默认配置、乐观更新、无限滚动查询、预取、SSR 水合和 API 层整合时，加载 [references/query-patterns.md](references/query-patterns.md)。
 
 ## Constraints
 
@@ -60,4 +60,3 @@ Load [references/query-patterns.md](references/query-patterns.md) for QueryClien
 ## Expected Output
 
 数据获取层具备 loading/error/empty/data 状态，重复请求自动去重，mutation 后缓存正确失效或回滚，API 层与 UI 层边界清晰。
-

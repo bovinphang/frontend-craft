@@ -76,6 +76,9 @@
 - 当已有 Token 可用时，不要硬编码颜色、圆角、间距、阴影和字体取值
 - 如果缺少所需 Token，要明确指出，不要悄悄到处硬编码
 - Token 使用方式要与周边模块保持一致
+- Tailwind 项目中，token 应通过语义化 `theme.extend`、CSS 变量或组件 variant 承接；不要把 `blue-600`、`rounded-xl` 等具体值复制成事实标准
+- 组件 variant 应区分语义 tone、尺寸 size、密度 density 和状态 state；不要让一个字符串参数承载多种业务含义
+- 动态 Tailwind class 必须可被构建扫描识别；复杂映射使用显式对象、variant 工具或 safelist
 
 ## 样式规则
 
@@ -210,6 +213,7 @@ function useTheme() {
 - **颜色对比度**: 确保暗色模式下文本与背景的对比度 ≥ 4.5:1（WCAG AA）
 - **表单控件**: 输入框、下拉框、开关等原生控件在暗色模式下需要自定义样式
 - **第三方组件**: 检查 UI 组件库是否支持暗色模式，必要时用 CSS 变量覆盖
+- **Tailwind 组件**: 暗色模式下需复核 focus、disabled、selected、invalid、skeleton、chart 和阴影层级，不只补 `dark:` 背景色
 
 ---
 

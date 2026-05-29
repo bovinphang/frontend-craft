@@ -30,7 +30,7 @@
 
 各執行時的路徑與注意事項詳見 [`docs/runtimes/`](../runtimes/)。
 
-它將 **13 個專業 agent**、**30 個自動啟用 skill**、**9 個斜線指令**、**5 個事件驅動 hook**、面向 6 款設計工具的 **MCP 範本**以及一整套**規則庫**打包為一個可安裝單元。執行一條指令，團隊裡的每一次 AI 會話都將以相同的方式編寫 React、Vue、Next.js 或 Nuxt——型別安全、可存取、安全、一致。
+它將 **13 個專業 agent**、**40 個自動啟用 skill**、**8 個斜線指令**、**5 個事件驅動 hook**、面向 6 款設計工具的 **MCP 範本**以及一整套**規則庫**打包為一個可安裝單元。執行一條指令，團隊裡的每一次 AI 會話都將以相同的方式編寫 React、Vue、Next.js 或 Nuxt——型別安全、可存取、安全、一致。
 
 ```bash
 npx frontend-craft@latest
@@ -44,7 +44,7 @@ npx frontend-craft@latest
 
 | 痛點                                            | frontend-craft 的解法                                                   |
 | ----------------------------------------------- | ----------------------------------------------------------------------- |
-| AI 助手寫出的前端程式碼風格不一、缺型別、不安全 | **30 個 skill** 將團隊規範編碼為可自動啟用的工作流                      |
+| AI 助手寫出的前端程式碼風格不一、缺型別、不安全 | **40 個 skill** 將團隊規範編碼為可自動啟用的工作流                      |
 | 每款 AI 工具都有自己的插件格式                  | **一條 CLI 指令** 把相同的規則、agent 和 hook 安裝到 15 個執行時        |
 | 設計稿到程式碼的交接總有資訊損失                | **MCP 範本** 直接讀取 Figma、Sketch、MasterGo、Pixso、墨刀、摹客        |
 | 程式碼審查隨意、淺層                            | **13 個 agent** 輸出分級報告：程式碼、安全、無障礙、效能、TS、UI 還原度 |
@@ -95,7 +95,7 @@ npx frontend-craft@latest list
 
 ```text
 你："Review my recent changes"
-→ fec-frontend-code-reviewer agent 被調度，輸出 reports/code-review-*.md
+→ fec-code-reviewer agent 被調度，輸出 reports/code-review-*.md
 
 你："/fec-review"
 → 按架構、型別、渲染、樣式、可存取性等維度執行結構化審查
@@ -106,8 +106,8 @@ npx frontend-craft@latest list
 你："/fec-scaffold dashboard feature"
 → 依專案約定建立 page / feature / component 標準目錄結構
 
-你："/fec-build-fix"
-→ 增量修復 lint、type-check、test 和 build 失敗
+你："/fec-refactor-clean"
+→ 分類並安全清理死程式碼、未使用匯出、樣式和依賴
 ```
 
 下文斜線指令以 **Claude Code** 為例；其他執行時透過各自的指令系統提供同等能力（詳見 [`docs/runtimes/`](../runtimes/)）。
@@ -120,17 +120,16 @@ npx frontend-craft@latest list
 
 斜線指令是結構化工作流的主入口，多數會輸出帶時間戳記的 Markdown 報告到 `reports/`。
 
-| 指令                  | 用途                                              | 報告                         |
-| --------------------- | ------------------------------------------------- | ---------------------------- |
-| `/fec-init`           | 初始化專案範本（CLAUDE.md、規則、settings）       | —                            |
-| `/fec-review`         | 對指定或最近變更的檔案執行結構化審查              | `code-review-*.md`           |
-| `/fec-test-plan`      | 規劃測試分層、風險覆蓋與執行順序                  | `test-plan-*.md`             |
-| `/fec-scaffold`       | 依規範建立 page / feature / component 樣板        | —                            |
-| `/fec-plan`           | 實現前規劃功能架構、重構或遷移                    | `architecture-proposal-*.md` |
-| `/fec-tdd`            | 紅 → 綠 → 重構的前端 TDD 循環                     | —                            |
-| `/fec-build-fix`      | 增量修復 lint、type-check、test、build 或 CI 失敗 | `validation-fix-*.md`        |
-| `/fec-refactor-clean` | 分類並安全清理死程式碼、未使用匯出、樣式和依賴    | `refactor-clean-*.md`        |
-| `/fec-doc-sync`       | 同步 README、runtime 文件、能力表和公開 metadata  | —                            |
+| 指令                  | 用途                                                        | 報告                                             |
+| --------------------- | ----------------------------------------------------------- | ------------------------------------------------ |
+| `/fec-init`           | 初始化專案範本（CLAUDE.md、規則、settings）                 | —                                                |
+| `/fec-review`         | 對指定或最近變更的檔案執行結構化審查                        | `code-review-*.md`                               |
+| `/fec-scaffold`       | 依規範建立 page / feature / component 樣板                  | —                                                |
+| `/fec-plan`           | 統一規劃入口：實現架構或測試策略                            | `architecture-proposal-*.md` 或 `test-plan-*.md` |
+| `/fec-tdd`            | 紅 → 綠 → 重構的前端 TDD 循環                               | —                                                |
+| `/fec-debug`          | 前端問題診斷與修復：建置失敗、執行時錯誤、UI 異常、介面問題 | `debug-*.md`                                     |
+| `/fec-refactor-clean` | 分類並安全清理死程式碼、未使用匯出、樣式和依賴              | `refactor-clean-*.md`                            |
+| `/fec-doc-sync`       | 同步 README、runtime 文件、能力表和公開 metadata            | —                                                |
 
 ### 技能（Skills，自動啟用）
 
@@ -151,44 +150,50 @@ npx frontend-craft@latest list
 
 **實作能力** — 建構特定前端能力時啟用：
 
-| 技能                          | 範圍                                                       |
-| ----------------------------- | ---------------------------------------------------------- |
-| `fec-data-fetching`           | TanStack Query / 服務端狀態獲取、快取、樂觀更新            |
-| `fec-form-handling`           | React Hook Form + Zod、動態欄位、上傳、多步流程            |
-| `fec-browser-storage`         | localStorage / sessionStorage / IndexedDB / Cookies 選型   |
-| `fec-route-protection`        | React Router、Next.js、Vue Router、Nuxt 的登入態與權限路由 |
-| `fec-pwa-implementation`      | manifest、Service Worker、離線快取、安裝提示               |
-| `fec-web-workers`             | Web Worker、Transferable、Comlink、Worker 池               |
-| `fec-canvas-threejs`          | Canvas 2D、Three.js、React Three Fiber、WebGL              |
-| `fec-svg-animation`           | CSS / Framer Motion / GSAP SVG 動畫與 reduced-motion       |
-| `fec-list-virtualization`     | react-window / TanStack Virtual 大清單虛擬滾動             |
+| 技能                      | 範圍                                                       |
+| ------------------------- | ---------------------------------------------------------- |
+| `fec-data-fetching`       | TanStack Query / 服務端狀態獲取、快取、樂觀更新            |
+| `fec-api-integration`     | 型別化 API client、鑑權刷新、上傳、即時整合                |
+| `fec-form-handling`       | React Hook Form + Zod、動態欄位、上傳、多步流程            |
+| `fec-browser-storage`     | localStorage / sessionStorage / IndexedDB / Cookies 選型   |
+| `fec-route-protection`    | React Router、Next.js、Vue Router、Nuxt 的登入態與權限路由 |
+| `fec-pwa-implementation`  | manifest、Service Worker、離線快取、安裝提示               |
+| `fec-web-workers`         | Web Worker、Transferable、Comlink、Worker 池               |
+| `fec-canvas-threejs`      | Canvas 2D、Three.js、React Three Fiber、WebGL              |
+| `fec-svg-animation`       | CSS / Framer Motion / GSAP SVG 動畫與 reduced-motion       |
+| `fec-list-virtualization` | react-window / TanStack Virtual 大清單虛擬滾動             |
 
 **測試** — 規劃或撰寫前端測試覆蓋時啟用：
 
-| 技能                          | 範圍                                                     |
-| ----------------------------- | -------------------------------------------------------- |
-| `fec-testing-strategy`        | 靜態檢查、單元、元件、整合、E2E、視覺測試分層            |
-| `fec-component-testing`       | React Testing Library / Vue Test Utils 元件測試與回歸用例 |
-| `fec-e2e-testing`             | Playwright / Cypress E2E 與 Page Object 和 CI 整合       |
-| `fec-tdd-workflow`            | 測試先行的前端實作，紅綠重構循環                        |
+| 技能                    | 範圍                                                      |
+| ----------------------- | --------------------------------------------------------- |
+| `fec-testing-strategy`  | 靜態檢查、單元、元件、整合、E2E、視覺測試分層             |
+| `fec-component-testing` | React Testing Library / Vue Test Utils 元件測試與回歸用例 |
+| `fec-e2e-testing`       | Playwright / Cypress E2E 與 Page Object 和 CI 整合        |
+| `fec-tdd-workflow`      | 測試先行的前端實作，紅綠重構循環                          |
 
 **審查與品質** — 程式碼審查、驗證或清理時啟用：
 
-| 技能                       | 範圍                                           |
-| -------------------------- | ---------------------------------------------- |
-| `fec-frontend-code-review` | 架構、型別、渲染、樣式、可存取性審查           |
-| `fec-security-review`      | XSS、CSRF、敏感資料外洩、輸入驗證              |
-| `fec-accessibility-check`  | WCAG 2.1 AA 無障礙檢查                         |
-| `fec-validation-fix`       | 一次性執行並修復 lint、type-check、test、build |
-| `fec-refactor-clean`       | 安全清理死程式碼、未使用匯出、樣式、路由和依賴 |
+| 技能                           | 範圍                                                    |
+| ------------------------------ | ------------------------------------------------------- |
+| `fec-code-review`              | 架構、型別、渲染、樣式、可存取性審查                    |
+| `fec-security-review`          | XSS、CSRF、敏感資料外洩、輸入驗證                       |
+| `fec-accessibility-check`      | WCAG 2.2、鍵盤、焦點、觸控和螢幕閱讀器行為              |
+| `fec-dependency-upgrade`       | 依賴升級、lockfile 審查、CVE 修復和遷移驗證             |
+| `fec-validation-fix`           | 一次性執行並修復 lint、type-check、test、build          |
+| `fec-performance-optimization` | Core Web Vitals、包體、渲染、記憶體、網路與效能預算審查 |
+| `fec-refactor-clean`           | 安全清理死程式碼、未使用匯出、樣式、路由和依賴          |
 
 **設計 UI** — 設計實作、設計系統或視覺打磨時啟用：
 
-| 技能                          | 範圍                                                    |
-| ----------------------------- | ------------------------------------------------------- |
-| `fec-ui-design`              | UI 方向、視覺識別、界面打磨、狀態、視覺 QA             |
-| `fec-implement-from-design`   | 基於 Figma/Sketch/MasterGo/Pixso/墨刀/摹客設計稿實現 UI |
-| `fec-storybook-component-doc` | Storybook 元件文件、設計系統呈現、隔離狀態預覽          |
+| 技能                          | 範圍                                                     |
+| ----------------------------- | -------------------------------------------------------- |
+| `fec-ui-design`               | UI 方向、視覺識別、界面打磨、狀態、視覺 QA               |
+| `fec-tailwind-design-system`  | Tailwind token、主題擴展、元件變體、class 治理和暗色模式 |
+| `fec-responsive-layout`       | 移動優先布局、容器查詢、資料密集型響應式界面             |
+| `fec-motion-interaction`      | 互動動效、頁面轉場、滾動動畫、reduced-motion             |
+| `fec-implement-from-design`   | 基於 Figma/Sketch/MasterGo/Pixso/墨刀/摹客設計稿實現 UI  |
+| `fec-storybook-component-doc` | Storybook 元件文件、設計系統呈現、隔離狀態預覽           |
 
 **遺留遷移** — 現代化遷移時啟用：
 
@@ -199,29 +204,30 @@ npx frontend-craft@latest list
 
 **文件維護** — 文件維護時啟用：
 
-| 技能           | 範圍                                       |
-| -------------- | ------------------------------------------ |
-| `fec-doc-sync` | 讓公開文件與腳本、技能、代理、指令保持同步 |
+| 技能                            | 範圍                                       |
+| ------------------------------- | ------------------------------------------ |
+| `fec-doc-sync`                  | 讓公開文件與腳本、技能、代理、指令保持同步 |
+| `fec-source-driven-development` | 以專案事實和官方來源驗證版本敏感的前端決策 |
 
 ### 代理（Agents）
 
 代理是由主助手調度的專業子代理，專注處理單一任務並返回結構化報告。
 
-| 代理                         | 聚焦領域                                                  | 報告                         |
-| ---------------------------- | --------------------------------------------------------- | ---------------------------- |
-| `fec-frontend-code-reviewer`     | React/Vue/Next/Nuxt、TS、樣式、用戶端安全（按置信度降噪） | `code-review-*.md`           |
-| `fec-typescript-reviewer`        | 型別安全、非同步正確性、慣用模式（只報告不修改）          | `typescript-review-*.md`     |
-| `fec-frontend-security-reviewer` | XSS、用戶端金鑰、危險 DOM/API、CSP、依賴稽核              | `security-review-*.md`       |
-| `fec-performance-optimizer`      | 打包體積、渲染效能、網路瓶頸                              | `performance-review-*.md`    |
-| `fec-frontend-architect`         | 頁面拆分、元件架構、狀態流、目錄規劃                      | `architecture-proposal-*.md` |
-| `fec-frontend-test-planner`      | 風險-層級映射：靜態、單元、元件、E2E、視覺、無障礙、安全  | `test-plan-*.md`             |
-| `fec-frontend-build-fixer`       | 增量修復 lint / type-check / test / build / CI            | `validation-fix-*.md`        |
-| `fec-frontend-refactor-cleaner`  | 分類並安全清理未使用程式碼、匯出、樣式、路由和依賴        | `refactor-clean-*.md`        |
-| `fec-frontend-e2e-runner`        | E2E 撰寫與執行（Playwright/Cypress）、flaky 隔離、Trace   | `e2e-summary-*.md`           |
-| `fec-frontend-doc-updater`       | 同步 README、runtime 文件、結構、能力表和 metadata        | —                            |
-| `fec-ui-checker`                 | 視覺問題排查與設計還原度評估                              | `ui-fidelity-review-*.md`    |
-| `fec-figma-implementer`          | 依 Figma/Sketch/MasterGo/Pixso/墨刀/摹客設計稿精確實作 UI | `design-implementation-*.md` |
-| `fec-design-token-mapper`        | 將設計變數對應至專案 Design Token                         | `token-mapping-*.md`         |
+| 代理                        | 聚焦領域                                                  | 報告                         |
+| --------------------------- | --------------------------------------------------------- | ---------------------------- |
+| `fec-code-reviewer`         | React/Vue/Next/Nuxt、TS、樣式、用戶端安全（按置信度降噪） | `code-review-*.md`           |
+| `fec-typescript-reviewer`   | 型別安全、非同步正確性、慣用模式（只報告不修改）          | `typescript-review-*.md`     |
+| `fec-security-reviewer`     | XSS、用戶端金鑰、危險 DOM/API、CSP、依賴稽核              | `security-review-*.md`       |
+| `fec-performance-optimizer` | 打包體積、渲染效能、網路瓶頸                              | `performance-review-*.md`    |
+| `fec-architect`             | 頁面拆分、元件架構、狀態流、目錄規劃                      | `architecture-proposal-*.md` |
+| `fec-test-planner`          | 風險-層級映射：靜態、單元、元件、E2E、視覺、無障礙、安全  | `test-plan-*.md`             |
+| `fec-build-fixer`           | 增量修復 lint / type-check / test / build / CI            | `validation-fix-*.md`        |
+| `fec-refactor-cleaner`      | 分類並安全清理未使用程式碼、匯出、樣式、路由和依賴        | `refactor-clean-*.md`        |
+| `fec-e2e-runner`            | E2E 撰寫與執行（Playwright/Cypress）、flaky 隔離、Trace   | `e2e-summary-*.md`           |
+| `fec-doc-updater`           | 同步 README、runtime 文件、結構、能力表和 metadata        | —                            |
+| `fec-ui-checker`            | 視覺問題排查與設計還原度評估                              | `ui-fidelity-review-*.md`    |
+| `fec-figma-implementer`     | 依 Figma/Sketch/MasterGo/Pixso/墨刀/摹客設計稿精確實作 UI | `design-implementation-*.md` |
+| `fec-design-token-mapper`   | 將設計變數對應至專案 Design Token                         | `token-mapping-*.md`         |
 
 ### 鉤子（Hooks，事件驅動）
 
@@ -254,28 +260,29 @@ npx frontend-craft@latest list
 執行 `/fec-init` 即可將一套開箱即用的規則庫和專案設定腳手架化到 `.claude/`：
 
 <details>
-<summary>查看全部 18 個範本檔案</summary>
+<summary>查看全部 19 個範本檔案</summary>
 
-| 檔案                          | 用途                                                   |
-| ----------------------------- | ------------------------------------------------------ |
-| `CLAUDE.md`                   | 專案說明、常用指令、工作原則、安全要求                 |
-| `settings.json`               | 權限白名單／黑名單、環境變數                           |
-| `rules/fec-vue.md`                | Vue 3 元件規範與反模式                                 |
-| `rules/fec-react.md`              | React 元件規範與反模式                                 |
-| `rules/fec-design-system.md`      | 設計系統、Token、可存取性規則                          |
-| `rules/fec-testing.md`            | 測試與校驗規則                                         |
-| `rules/fec-git-conventions.md`    | Conventional Commits 提交規範                          |
-| `rules/fec-i18n.md`               | 國際化文案規範                                         |
-| `rules/fec-performance.md`        | 前端效能最佳化規則                                     |
-| `rules/fec-api-layer.md`          | API 層型別化與錯誤處理規範                             |
-| `rules/fec-state-management.md`   | 狀態分類、管理策略與反模式                             |
-| `rules/fec-error-handling.md`     | 錯誤分層、Error Boundary、降級 UI、上報規範            |
-| `rules/fec-naming-conventions.md` | 檔案、元件、變數、路由、API、CSS 統一命名              |
-| `rules/fec-code-comments.md`      | 何時以及如何寫前端註釋                                 |
-| `rules/fec-ci-cd.md`              | CI/CD 流水線階段、GitHub Actions / GitLab CI、金鑰管理 |
-| `rules/fec-refactoring.md`        | 重構約束與功能等價要求                                 |
-| `rules/fec-agent-workflow.md`     | 子代理協作邊界與委託規則                               |
-| `rules/fec-working-modes.md`      | 調研、計畫、開發、評審、收尾模式指引                   |
+| 檔案                                     | 用途                                                                  |
+| ---------------------------------------- | --------------------------------------------------------------------- |
+| `CLAUDE.md`                              | 專案說明、常用指令、工作原則、安全要求                                |
+| `settings.json`                          | 權限白名單／黑名單、環境變數                                          |
+| `rules/fec-vue.md`                       | Vue 3 元件規範與反模式                                                |
+| `rules/fec-react.md`                     | React 元件規範與反模式                                                |
+| `rules/fec-design-system.md`             | 設計系統、Token、可存取性規則                                         |
+| `rules/fec-testing.md`                   | 測試與校驗規則                                                        |
+| `rules/fec-git-conventions.md`           | Conventional Commits 提交規範                                         |
+| `rules/fec-i18n.md`                      | 國際化文案規範                                                        |
+| `rules/fec-performance.md`               | 前端效能最佳化規則                                                    |
+| `rules/fec-source-driven-development.md` | Source-driven decisions, official docs, version-sensitive assumptions |
+| `rules/fec-api-layer.md`                 | API 層型別化與錯誤處理規範                                            |
+| `rules/fec-state-management.md`          | 狀態分類、管理策略與反模式                                            |
+| `rules/fec-error-handling.md`            | 錯誤分層、Error Boundary、降級 UI、上報規範                           |
+| `rules/fec-naming-conventions.md`        | 檔案、元件、變數、路由、API、CSS 統一命名                             |
+| `rules/fec-code-comments.md`             | 何時以及如何寫前端註釋                                                |
+| `rules/fec-ci-cd.md`                     | CI/CD 流水線階段、GitHub Actions / GitLab CI、金鑰管理                |
+| `rules/fec-refactoring.md`               | 重構約束與功能等價要求                                                |
+| `rules/fec-agent-workflow.md`            | 子代理協作邊界與委託規則                                              |
+| `rules/fec-working-modes.md`             | 調研、計畫、開發、評審、收尾模式指引                                  |
 
 </details>
 
@@ -330,23 +337,23 @@ $env:MODAO_TOKEN = "your-modao-token"
 <details>
 <summary>查看全部 15 種報告類型</summary>
 
-| 報告類型       | 檔名模式                                     | 來源                                                                     |
-| -------------- | -------------------------------------------- | ------------------------------------------------------------------------ |
-| 程式碼審查     | `code-review-YYYY-MM-DD-HHmmss.md`           | `/fec-review`、`fec-frontend-code-review`、`fec-frontend-code-reviewer`      |
-| TS/JS 專項審查 | `typescript-review-YYYY-MM-DD-HHmmss.md`     | `fec-typescript-reviewer`                                                    |
-| 安全審查       | `security-review-YYYY-MM-DD-HHmmss.md`       | `fec-security-review`、`fec-frontend-security-reviewer`                      |
-| 無障礙檢查     | `accessibility-review-YYYY-MM-DD-HHmmss.md`  | `fec-accessibility-check`                                                |
-| 效能分析       | `performance-review-YYYY-MM-DD-HHmmss.md`    | `fec-performance-optimizer`                                                  |
-| 架構方案       | `architecture-proposal-YYYY-MM-DD-HHmmss.md` | `fec-frontend-architect`                                                     |
-| 設計還原度     | `ui-fidelity-review-YYYY-MM-DD-HHmmss.md`    | `fec-ui-checker`                                                             |
-| 設計實現       | `design-implementation-YYYY-MM-DD-HHmmss.md` | `fec-figma-implementer`                                                      |
-| Token 對應     | `token-mapping-YYYY-MM-DD-HHmmss.md`         | `fec-design-token-mapper`                                                    |
-| 設計計畫       | `design-plan-YYYY-MM-DD-HHmmss.md`           | `fec-implement-from-design`                                              |
-| 測試計畫       | `test-plan-YYYY-MM-DD-HHmmss.md`             | `/fec-test-plan`、`fec-testing-strategy`、`fec-frontend-test-planner`        |
-| 驗證修復       | `validation-fix-YYYY-MM-DD-HHmmss.md`        | `fec-validation-fix`                                                     |
-| 重構清理       | `refactor-clean-YYYY-MM-DD-HHmmss.md`        | `/fec-refactor-clean`、`fec-refactor-clean`、`fec-frontend-refactor-cleaner` |
-| E2E 執行摘要   | `e2e-summary-YYYY-MM-DD-HHmmss.md`           | `fec-frontend-e2e-runner`（可選）                                            |
-| 遷移計畫       | `migration-plan-YYYY-MM-DD-HHmmss.md`        | `fec-legacy-to-modern-migration`                                         |
+| 報告類型       | 檔名模式                                     | 來源                                                                |
+| -------------- | -------------------------------------------- | ------------------------------------------------------------------- |
+| 程式碼審查     | `code-review-YYYY-MM-DD-HHmmss.md`           | `/fec-review`、`fec-code-review`、`fec-code-reviewer`               |
+| TS/JS 專項審查 | `typescript-review-YYYY-MM-DD-HHmmss.md`     | `fec-typescript-reviewer`                                           |
+| 安全審查       | `security-review-YYYY-MM-DD-HHmmss.md`       | `fec-security-review`、`fec-security-reviewer`                      |
+| 無障礙檢查     | `accessibility-review-YYYY-MM-DD-HHmmss.md`  | `fec-accessibility-check`                                           |
+| 效能分析       | `performance-review-YYYY-MM-DD-HHmmss.md`    | `fec-performance-optimizer`                                         |
+| 架構方案       | `architecture-proposal-YYYY-MM-DD-HHmmss.md` | `fec-architect`                                                     |
+| 設計還原度     | `ui-fidelity-review-YYYY-MM-DD-HHmmss.md`    | `fec-ui-checker`                                                    |
+| 設計實現       | `design-implementation-YYYY-MM-DD-HHmmss.md` | `fec-figma-implementer`                                             |
+| Token 對應     | `token-mapping-YYYY-MM-DD-HHmmss.md`         | `fec-design-token-mapper`                                           |
+| 設計計畫       | `design-plan-YYYY-MM-DD-HHmmss.md`           | `fec-implement-from-design`                                         |
+| 測試計畫       | `test-plan-YYYY-MM-DD-HHmmss.md`             | `/fec-plan`、`fec-testing-strategy`、`fec-test-planner`             |
+| 驗證修復       | `validation-fix-YYYY-MM-DD-HHmmss.md`        | `fec-validation-fix`                                                |
+| 重構清理       | `refactor-clean-YYYY-MM-DD-HHmmss.md`        | `/fec-refactor-clean`、`fec-refactor-clean`、`fec-refactor-cleaner` |
+| E2E 執行摘要   | `e2e-summary-YYYY-MM-DD-HHmmss.md`           | `fec-e2e-runner`（可選）                                            |
+| 遷移計畫       | `migration-plan-YYYY-MM-DD-HHmmss.md`        | `fec-legacy-to-modern-migration`                                    |
 
 </details>
 

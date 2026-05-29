@@ -2,7 +2,7 @@
   "fec-accessibility-check": {
     "should_trigger": [
       "检查这个弹窗的键盘焦点和 aria 是否正确",
-      "给这个表单做 WCAG 2.1 AA 无障碍审查",
+      "给这个表单做 WCAG 2.2 AA 无障碍审查",
       "这个菜单能不能只用键盘操作",
       "审查页面标题层级和 landmark",
       "按钮只有图标，帮我补可访问名称",
@@ -19,6 +19,28 @@
       "优化虚拟列表滚动性能",
       "用 Storybook 写组件文档",
       "把 jQuery 项目迁移到 Vue"
+    ]
+  },
+  "fec-api-integration": {
+    "should_trigger": [
+      "设计前端 typed API client",
+      "统一处理接口 401 refresh token",
+      "前后端联调时错误状态怎么映射",
+      "文件上传用 multipart 还是预签名 URL",
+      "SSE 和 WebSocket 应该选哪个",
+      "组件里到处 fetch 想收敛成 API 层",
+      "API 422 字段错误怎么展示到表单",
+      "frontend API integration with auth refresh"
+    ],
+    "should_not_trigger": [
+      "TanStack Query queryKey 怎么设计",
+      "后端服务分层和数据库 repository",
+      "React 项目目录怎么划分",
+      "只检查 token 是否能放 localStorage",
+      "写 Playwright 登录 E2E",
+      "配置 Vite proxy",
+      "普通按钮 loading 样式",
+      "PWA Service Worker 缓存接口"
     ]
   },
   "fec-browser-storage": {
@@ -65,6 +87,28 @@
       "检查按钮 aria-label"
     ]
   },
+  "fec-code-review": {
+    "should_trigger": [
+      "帮我 review 这个前端 PR",
+      "做一次合并前代码评审",
+      "检查 React 组件架构和可维护性",
+      "看看这批改动有没有类型和状态风险",
+      "输出 frontend code review 报告",
+      "审查样式一致性和测试缺口",
+      "评估这个 UI 实现能不能合并",
+      "general frontend PR review"
+    ],
+    "should_not_trigger": [
+      "只检查 XSS 和 CSP",
+      "只做 WCAG 无障碍审查",
+      "只运行 test 并修复失败",
+      "写 Playwright E2E",
+      "设计 Next.js 路由结构",
+      "迁移 jQuery 到 React",
+      "优化 WebGL 帧率",
+      "编写 Storybook 文档"
+    ]
+  },
   "fec-component-testing": {
     "should_trigger": [
       "给这个 React 组件补 RTL 单测",
@@ -109,6 +153,50 @@
       "Web Worker 后台解析 CSV",
       "虚拟列表滚动渲染",
       "审查 token 存储安全"
+    ]
+  },
+  "fec-debug-framework": {
+    "should_trigger": [
+      "Vite 构建报错 Module not found，帮我排查",
+      "页面白屏了，控制台有 TypeError",
+      "这个组件渲染结果和预期不一致，帮我 debug",
+      "接口返回 500 但前端没展示错误信息",
+      "打包后样式丢失，开发环境正常",
+      "React 组件 hydration mismatch 怎么定位",
+      "HMR 更新后页面状态丢失",
+      "排查生产环境偶发性 JS 异常"
+    ],
+    "should_not_trigger": [
+      "给这个模块写单元测试",
+      "设计一个新的 React 组件",
+      "优化首屏加载性能",
+      "做前端安全审查",
+      "升级 TypeScript 到最新版本",
+      "重构这个 hooks 的逻辑",
+      "写一个 Playwright E2E 测试",
+      "给这个 API 设计类型定义"
+    ]
+  },
+  "fec-dependency-upgrade": {
+    "should_trigger": [
+      "把 Vite 从 5 升级到 6，需要评估破坏性变更",
+      "package-lock 改了很多，帮我 review 依赖升级风险",
+      "修复 npm audit 里的前端高危 CVE",
+      "React 大版本升级前需要迁移计划",
+      "peer dependency 冲突怎么处理",
+      "这个包从 CJS 切到 ESM 会影响构建吗",
+      "frontend dependency upgrade verification plan",
+      "升级 Storybook 后 CI build 失败需要分析"
+    ],
+    "should_not_trigger": [
+      "只运行 npm test 并修复失败",
+      "清理已证明未使用的组件",
+      "写 React 组件架构规范",
+      "设计 Tailwind token",
+      "审查 XSS 和 CSP",
+      "配置 Playwright 登录流程",
+      "做 UI 视觉打磨",
+      "实现 API client 错误映射"
     ]
   },
   "fec-doc-sync": {
@@ -175,28 +263,6 @@
       "审查文件上传安全风险",
       "普通两个字段搜索框",
       "Vue 组件架构设计"
-    ]
-  },
-  "fec-frontend-code-review": {
-    "should_trigger": [
-      "帮我 review 这个前端 PR",
-      "做一次合并前代码评审",
-      "检查 React 组件架构和可维护性",
-      "看看这批改动有没有类型和状态风险",
-      "输出 frontend code review 报告",
-      "审查样式一致性和测试缺口",
-      "评估这个 UI 实现能不能合并",
-      "general frontend PR review"
-    ],
-    "should_not_trigger": [
-      "只检查 XSS 和 CSP",
-      "只做 WCAG 无障碍审查",
-      "只运行 test 并修复失败",
-      "写 Playwright E2E",
-      "设计 Next.js 路由结构",
-      "迁移 jQuery 到 React",
-      "优化 WebGL 帧率",
-      "编写 Storybook 文档"
     ]
   },
   "fec-implement-from-design": {
@@ -309,6 +375,28 @@
       "维护 jQuery 页面"
     ]
   },
+  "fec-motion-interaction": {
+    "should_trigger": [
+      "给这个产品页设计页面转场动效",
+      "Framer Motion 和 GSAP 这里该选哪个",
+      "滚动叙事动画怎么做且不掉帧",
+      "这个 dashboard 的交互动效太重了帮我降级",
+      "Lottie 图标动画怎么按需加载",
+      "设计 reduced-motion 下的动画兜底",
+      "页面入场 stagger 和布局过渡怎么规划",
+      "frontend interaction motion strategy"
+    ],
+    "should_not_trigger": [
+      "SVG 路径描边动画怎么写",
+      "Three.js 粒子系统怎么优化",
+      "普通 CSS hover 颜色变化",
+      "React 项目目录结构设计",
+      "检查按钮 aria-label",
+      "写 Playwright 动画截图测试",
+      "配置 PWA manifest",
+      "API 错误状态怎么映射"
+    ]
+  },
   "fec-nextjs-project-standard": {
     "should_trigger": [
       "Next.js App Router 项目结构",
@@ -351,6 +439,28 @@
       "jQuery 维护",
       "Canvas 渲染",
       "Web Worker 性能"
+    ]
+  },
+  "fec-performance-optimization": {
+    "should_trigger": [
+      "页面首屏 LCP 很慢怎么定位",
+      "优化这个 React 页面重复渲染和长任务",
+      "bundle size 突然变大帮我分析",
+      "Core Web Vitals 不达标需要性能预算",
+      "Lighthouse performance 分数下降",
+      "滚动卡顿和主线程阻塞排查",
+      "检查内存泄漏和未清理事件监听",
+      "frontend performance optimization with web vitals"
+    ],
+    "should_not_trigger": [
+      "给 Button 写组件单元测试",
+      "规划 React 项目目录结构",
+      "检查 XSS 和 CSP 风险",
+      "同步 README skill 数量",
+      "按 Figma 实现页面",
+      "配置路由权限守卫",
+      "修复 TypeScript 类型错误",
+      "迁移 jQuery 到 Vue"
     ]
   },
   "fec-pwa-implementation": {
@@ -441,6 +551,28 @@
       "jQuery 迁移"
     ]
   },
+  "fec-responsive-layout": {
+    "should_trigger": [
+      "这个页面 375px 下横向溢出，帮我做响应式布局",
+      "用 container query 改这个组件的布局",
+      "移动端表格应该怎么改成可读视图",
+      "dashboard 在平板和桌面断点之间跳变",
+      "检查触摸目标和安全区域适配",
+      "横竖屏切换后底部操作栏挡住内容",
+      "responsive layout review for this web app",
+      "设计移动优先的多列筛选页面"
+    ],
+    "should_not_trigger": [
+      "为产品页定义视觉风格",
+      "设计 Tailwind 组件变体",
+      "只检查 aria 和键盘焦点",
+      "优化 bundle size",
+      "写 Playwright E2E",
+      "实现 React 项目目录结构",
+      "审查 XSS 风险",
+      "升级依赖版本"
+    ]
+  },
   "fec-security-review": {
     "should_trigger": [
       "检查 dangerouslySetInnerHTML 是否安全",
@@ -463,6 +595,50 @@
       "虚拟列表性能"
     ]
   },
+  "fec-source-driven-development": {
+    "should_trigger": [
+      "这个 Next.js 新版本 API 先查官方文档再决定",
+      "帮我确认 Vite 配置项当前版本是否还推荐",
+      "这个浏览器 API 兼容性要以规范和 MDN 为准",
+      "source-driven decision for a frontend library migration",
+      "React Router 版本差异需要查文档",
+      "这个包的 ESM/CJS 行为不要凭记忆判断",
+      "按项目源码和官方 docs 设计公共接口",
+      "验证 Nuxt useFetch 最新推荐用法"
+    ],
+    "should_not_trigger": [
+      "给表单写 Zod 校验",
+      "优化大列表虚拟滚动",
+      "运行 npm test 并修复失败",
+      "检查按钮 aria-label",
+      "写 Playwright 登录流程",
+      "清理未使用依赖",
+      "设计 UI 视觉方向",
+      "审查 token 存储安全"
+    ]
+  },
+  "fec-state-management": {
+    "should_trigger": [
+      "审计这个 dashboard 的状态归属",
+      "哪些状态应该放 URL，哪些放 store",
+      "React 全局状态 Zustand 和 Context 怎么选",
+      "Pinia store 和本地 ref 应该怎么分工",
+      "把重复的派生 state 清理掉",
+      "服务端状态和客户端 store 边界怎么划分",
+      "设计筛选条件、分页和排序的状态归属",
+      "frontend state ownership and store selection"
+    ],
+    "should_not_trigger": [
+      "TanStack Query queryKey 细节怎么设计",
+      "localStorage 安全持久化怎么封装",
+      "React Hook Form 字段校验怎么写",
+      "只检查 XSS 和 token 泄露",
+      "设计 React 项目目录结构",
+      "写 Playwright 登录 E2E",
+      "配置 PWA Service Worker",
+      "优化虚拟列表滚动性能"
+    ]
+  },
   "fec-storybook-component-doc": {
     "should_trigger": [
       "给组件写 Storybook stories",
@@ -483,6 +659,28 @@
       "PWA 配置",
       "Web Worker",
       "jQuery 迁移"
+    ]
+  },
+  "fec-tailwind-design-system": {
+    "should_trigger": [
+      "设计 Tailwind token 和 theme.extend",
+      "这个组件库的 class 太散，想整理成 variants",
+      "Tailwind 暗色模式怎么和 CSS 变量对齐",
+      "检查动态 class 是否会被 purge 掉",
+      "用 CVA 设计 Button 的 size 和 tone",
+      "Tailwind safelist 应该怎么治理",
+      "build a Tailwind design system for this app",
+      "把硬编码颜色迁移到 Tailwind 语义 token"
+    ],
+    "should_not_trigger": [
+      "纯 CSS Grid 响应式布局溢出",
+      "按 Figma 像素还原页面",
+      "写组件 RTL 单测",
+      "审查接口 401 错误映射",
+      "修复 TypeScript 类型错误",
+      "配置路由权限守卫",
+      "升级 npm 依赖",
+      "做通用前端 PR review"
     ]
   },
   "fec-svg-animation": {
@@ -549,6 +747,28 @@
       "只做 WCAG 键盘焦点审查",
       "实现 React 项目目录结构",
       "优化虚拟列表滚动性能"
+    ]
+  },
+  "fec-typescript-type-safety": {
+    "should_trigger": [
+      "审查这些 DTO 和 view model 类型边界",
+      "这个泛型组件类型怎么设计更安全",
+      "用 type guard 收窄 unknown 输入",
+      "检查不安全的 as 和非空断言",
+      "设计判别联合表达异步状态",
+      "给公共 utility type 加类型测试",
+      "TypeScript 类型建模和泛型约束 review",
+      "API 响应类型和运行时校验怎么对齐"
+    ],
+    "should_not_trigger": [
+      "做整个前端 PR 综合评审",
+      "只修复 tsc 编译失败",
+      "写 React 组件 UI",
+      "检查按钮键盘焦点",
+      "配置 Vite env 变量",
+      "写 Playwright E2E",
+      "选择全局 store 方案",
+      "审查 CSP 和 XSS"
     ]
   },
   "fec-ui-design": {

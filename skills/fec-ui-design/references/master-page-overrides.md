@@ -1,4 +1,4 @@
-# Master/Page Overrides
+# 全局/页面级差异覆盖
 
 当项目需要长期保持 UI 一致性时，用 `design-system/MASTER.md` 存放全局设计系统，用 `design-system/pages/<page>.md` 存放页面级差异。
 

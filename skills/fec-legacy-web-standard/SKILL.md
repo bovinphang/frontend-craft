@@ -20,7 +20,7 @@ description: Use when maintaining or safely modifying existing non-framework fro
 
 ## Detailed References
 
-Load [references/legacy-patterns.md](references/legacy-patterns.md) for jQuery namespace, event binding, Ajax, XSS escaping, file organization, and maintenance checklist examples.
+涉及 jQuery 命名空间、事件绑定、Ajax、XSS 转义、文件组织和维护清单示例时，加载 [references/legacy-patterns.md](references/legacy-patterns.md)。
 
 ## Constraints
 

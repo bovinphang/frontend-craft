@@ -9,6 +9,36 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 Project-facing release notes are maintained in English from 2.0.0 onward. Historical entries may preserve their original language.
 
+## [2.4.0] - 2026-05-29
+
+### Added
+
+- **Debug workflow:** added `fec-debug` slash command with type-based routing, `fec-debugger` agent for complex diagnostic scenarios, and `fec-debug-framework` skill with a 5-step diagnostic methodology.
+- **6 new skills:** `fec-performance-optimization` (Core Web Vitals, memory leaks, performance budgets), `fec-source-driven-development` (evidence-based decisions with official-docs verification), `fec-state-management` (state architecture patterns), `fec-typescript-type-safety` (type safety enforcement), `fec-dependency-upgrade` (upgrade planning), `fec-responsive-layout` (responsive layout strategy), and `fec-tailwind-design-system` (Tailwind-based design system implementation).
+- **2 new integration skills:** `fec-api-integration` and `fec-motion-interaction`.
+- **Example prompts library:** added `docs/example-prompts.md` and `docs/zh-CN/example-prompts.md` with scenario-based prompt catalogs covering skills, agents, commands, design workflows, testing, maintenance, and runtime setup; linked from all README variants.
+- **UI design system generator:** added `design-system.mjs` generator with product rules, style archetypes, UX quality and Stack UI rules data packages; supports `--persist` and `--page` flags to write `MASTER.md` and page overrides.
+
+### Changed
+
+- **Agent renaming:** renamed 8 agents from `fec-frontend-*` to shorter `fec-*` prefix; replaced `fec-frontend-code-review` skill with `fec-code-review`.
+- **Skill consolidation:** merged `fec-interface-polish` and `fec-ui-design-direction` into a unified `fec-ui-design` skill covering both product-level visual direction and detail-level polish.
+- **UI design enhancement:** enhanced `fec-ui-design` with design-system generation, Master/Page overrides, chart UX, color rhythm, visual texture, anti-generic polish, and visual identity checks.
+- **Skill taxonomy:** refined from 4 to 7 categories — `implementation-capability`, `testing`, `review-quality`, `design-ui`, `legacy-migration`, `maintenance-docs`; updated README tables across all 5 locales.
+- **Unified planning entry:** merged `/fec-test-plan` into `/fec-plan`, which now auto-routes to implementation or test strategy based on user intent; updated all README variants, openclaw docs, example prompts, project structure, and marketplace metadata (9 → 8 commands).
+- **Rules naming:** renamed all template shared rules with `fec-` prefix for consistent naming convention; updated README, CHANGELOG, agents, commands, skills, installers, and tests.
+- **Skill descriptions:** refined skill descriptions, prompt examples, and README formatting; clarified `fec-storybook-component-doc` scope to component documentation, design-system presentation, and isolated state previews.
+
+### Fixed
+
+- **Skill relations:** decoupled skill relations from agent navigation to prevent incorrect cross-references.
+
+### Removed
+
+- `/fec-build-fix` slash command and `fec-build-fixer` agent — superseded by the new debug workflow.
+- `/fec-test-plan` slash command — test-planning intent is now handled by `/fec-plan`.
+- `fec-interface-polish` and `fec-ui-design-direction` skills — merged into `fec-ui-design`.
+
 ## [2.3.1] - 2026-05-25
 
 ### Added
@@ -28,7 +58,7 @@ Project-facing release notes are maintained in English from 2.0.0 onward. Histor
 
 ### Added
 
-- Added new workflow capabilities: `fec-tdd-workflow`, `fec-refactor-clean`, `fec-doc-sync`, `/fec-plan`, `/fec-tdd`, `/fec-build-fix`, `/fec-refactor-clean`, `/fec-doc-sync`, plus `frontend-build-fixer`, `frontend-refactor-cleaner`, and `frontend-doc-updater`.
+- Added new workflow capabilities: `fec-tdd-workflow`, `fec-refactor-clean`, `fec-doc-sync`, `/fec-plan`, `/fec-tdd`, `/fec-build-fix`, `/fec-refactor-clean`, `/fec-doc-sync`, plus `fec-build-fixer`, `fec-refactor-cleaner`, and `fec-doc-updater`.
 - Added shared rules for agent workflow and working modes, and expanded testing, performance, refactoring, git, and comment rules with TDD, incremental validation, cleanup, and documentation-sync guidance.
 - **Update/upgrade commands:** added `frontend-craft update` and `frontend-craft upgrade` with manifest-based file protection, allowing safe in-place updates without overwriting user-modified files.
 - **esbuild minification:** added an esbuild minification step to the build pipeline, producing smaller compiled output for `dist/`.
@@ -51,7 +81,7 @@ Project-facing release notes are maintained in English from 2.0.0 onward. Histor
 ### Added
 
 - **Qoder runtime support:** added the `qoder` installer, runtime documentation, capability metadata, README coverage, and marketplace keywords. The universal installer now documents and supports 15 AI coding runtimes.
-- **Testing strategy workflow:** added `frontend-test-planner`, `/fec-test-plan`, and `fec-testing-strategy` for risk-based frontend test planning across static checks, unit, component, integration, E2E, visual, accessibility, security, and performance layers.
+- **Testing strategy workflow:** added `fec-test-planner`, `/fec-test-plan`, and `fec-testing-strategy` for risk-based frontend test planning across static checks, unit, component, integration, E2E, visual, accessibility, security, and performance layers.
 - **New frontend workflow skills:** added `fec-ui-design-direction`, `fec-interface-polish`, and `fec-vite-project-standard`; replaced the former validation workflow with `fec-validation-fix`.
 - **Standalone skill publishing pipeline:** added `scripts/pack-skills.ts`, `scripts/check-skills-publish.ts`, shared skill packaging helpers, `npm run pack:skills`, `npm run check:skills-publish`, and `npm run pack:all` for generating and validating one publishable package per skill.
 - **CLI diagnostics and metadata checks:** added `frontend-craft matrix`, `frontend-craft doctor <runtime>`, and `frontend-craft sync-metadata --check` to inspect runtime capabilities, installation health, and public metadata consistency.
@@ -96,7 +126,7 @@ Project-facing release notes are maintained in English from 2.0.0 onward. Histor
 
 ### Changed
 
-- **Agent behavior (`frontend-code-reviewer`):** report-only by default — no longer modifies business files unless explicitly requested.
+- **Agent behavior (`fec-code-reviewer`):** report-only by default — no longer modifies business files unless explicitly requested.
 - **Skill structure**: React, Vue, Next.js, Nuxt, Monorepo, legacy-web, legacy-migration, and implement-from-design skills aligned to a five-section template: Purpose / When to Use / Procedure / Constraints / Expected Output.
 - **Scaffold templates**: fixed React CSS import (`import './<Name>.styles.css'` instead of `import styles from ...`); Vue scaffold uses `<slot />` instead of bare component tag.
 - **Marketplace description**: skills count updated from 13 → 24, with new capabilities (component testing, route protection, PWA, Web Workers, Canvas/Three.js, SVG animation).
@@ -154,7 +184,7 @@ Project-facing release notes are maintained in English from 2.0.0 onward. Histor
 ### Changed
 
 - `testing.md` — 补充 E2E 测试规则
-- `frontend-architect` agent — 增加 `fec-legacy-to-modern-migration` skill 引用
+- `fec-architect` agent — 增加 `fec-legacy-to-modern-migration` skill 引用
 - `fec-legacy-to-modern-migration` skill — 新增重构实施要求：图片（使用原项目资源、禁止内联 SVG）、样式（参考效果不照搬 CSS、优先 flex、禁止内联样式）、目标（视觉交互一致、功能等价、代码更简洁易维护）
 
 ---
@@ -164,8 +194,8 @@ Project-facing release notes are maintained in English from 2.0.0 onward. Histor
 ### Added
 
 - 初始发布
-- 5 个 Agents：frontend-architect、performance-optimizer、ui-checker、figma-implementer、design-token-mapper
-- 9 个 Skills：fec-frontend-code-review、fec-security-review、fec-accessibility-check、fec-react-project-standard、fec-vue3-project-standard、fec-implement-from-design、fec-test-and-fix、fec-legacy-web-standard、fec-legacy-to-modern-migration
+- 5 个 Agents：fec-architect、performance-optimizer、ui-checker、figma-implementer、design-token-mapper
+- 9 个 Skills：fec-code-review、fec-security-review、fec-accessibility-check、fec-react-project-standard、fec-vue3-project-standard、fec-implement-from-design、fec-test-and-fix、fec-legacy-web-standard、fec-legacy-to-modern-migration
 - 3 个 Commands：init、review、scaffold
 - Hooks：SessionStart、PreToolUse、PostToolUse、Stop、Notification
 - 11 个规则模板：CLAUDE.md、settings.json、vue、react、design-system、testing、git-conventions、i18n、performance、api-layer、state-management、error-handling、naming-conventions

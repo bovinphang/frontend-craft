@@ -1,4 +1,4 @@
-# Vue 3 Project Standard Details
+# Vue 3 项目规范详解
 
 ## 项目结构
 

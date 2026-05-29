@@ -30,7 +30,7 @@
 
 各运行时的路径与注意事项详见 [`docs/runtimes/`](docs/runtimes/)。
 
-它将 **13 个专业 agent**、**30 个自动激活 skill**、**9 个斜杠命令**、**5 个事件驱动 hook**、面向 6 款设计工具的 **MCP 模板**以及一整套**规则库**打包为一个可安装单元。运行一条命令，团队里的每一次 AI 会话都将以相同的方式编写 React、Vue、Next.js 或 Nuxt——类型安全、可访问、安全、一致。
+它将 **13 个专业 agent**、**40 个自动激活 skill**、**8 个斜杠命令**、**5 个事件驱动 hook**、面向 6 款设计工具的 **MCP 模板**以及一整套**规则库**打包为一个可安装单元。运行一条命令，团队里的每一次 AI 会话都将以相同的方式编写 React、Vue、Next.js 或 Nuxt——类型安全、可访问、安全、一致。
 
 ```bash
 npx frontend-craft@latest
@@ -44,7 +44,7 @@ npx frontend-craft@latest
 
 | 痛点                                          | frontend-craft 的解法                                                 |
 | --------------------------------------------- | --------------------------------------------------------------------- |
-| AI 助手写出的前端代码风格不一、缺类型、不安全 | **30 个 skill** 将团队规范编码为可自动激活的工作流                    |
+| AI 助手写出的前端代码风格不一、缺类型、不安全 | **40 个 skill** 将团队规范编码为可自动激活的工作流                    |
 | 每款 AI 工具都有自己的插件格式                | **一条 CLI 命令** 把相同的规则、agent 和 hook 安装到 15 个运行时      |
 | 设计稿到代码的交接总有信息损失                | **MCP 模板** 直接读取 Figma、Sketch、MasterGo、Pixso、墨刀、摹客      |
 | 代码评审随意、浅层                            | **13 个 agent** 输出分级报告：代码、安全、无障碍、性能、TS、UI 还原度 |
@@ -106,7 +106,7 @@ npx frontend-craft@latest install claude --local --force
 
 ```text
 你："Review my recent changes"
-→ fec-frontend-code-reviewer agent 被调度，输出 reports/code-review-*.md
+→ fec-code-reviewer agent 被调度，输出 reports/code-review-*.md
 
 你："/fec-review"
 → 按架构、类型、渲染、样式、可访问性等维度执行结构化评审
@@ -117,8 +117,8 @@ npx frontend-craft@latest install claude --local --force
 你："/fec-scaffold dashboard feature"
 → 按项目约定创建 page / feature / component 标准目录结构
 
-你："/fec-build-fix"
-→ 增量修复 lint、type-check、test 和 build 失败
+你："/fec-refactor-clean"
+→ 分类并安全清理死代码、未使用导出、样式和依赖
 ```
 
 下文斜杠命令以 **Claude Code** 为例；其他运行时通过各自的命令系统提供同等能力（详见 [`docs/runtimes/`](docs/runtimes/)）。
@@ -131,10 +131,10 @@ npx frontend-craft@latest install claude --local --force
 
 ```text
 你：「合并前请评审我最近的改动。重点看架构、类型安全、渲染行为、样式、无障碍和缺失测试。」
-你：「先不要写代码，请规划账号账单功能：路由结构、组件边界、数据流、状态、校验、测试和上线风险。」
+你：「先不要写代码，请规划账号账单功能：路由结构、组件边界、数据流、状态归属、校验流程和上线风险。」
 你：「请用 React Hook Form + Zod 构建多步注册表单，包含文件上传、条件字段、异步校验和可访问错误提示。」
 你：「请按 Figma 节点 123:456 实现 UI。复用现有 design token 和组件，匹配间距与响应式状态，并说明假设。」
-你：「`/fec-build-fix` 请根据这段日志修复验证失败：<粘贴日志>。」
+你：「`/fec-refactor-clean` 请清理这个模块里的死代码。」
 ```
 
 ---
@@ -145,17 +145,16 @@ npx frontend-craft@latest install claude --local --force
 
 斜杠命令是结构化工作流的主入口，多数会输出带时间戳的 Markdown 报告到 `reports/`。
 
-| 命令                  | 用途                                              | 报告                         |
-| --------------------- | ------------------------------------------------- | ---------------------------- |
-| `/fec-init`           | 初始化项目模板（CLAUDE.md、规则、settings）       | —                            |
-| `/fec-review`         | 对指定文件或最近变更的代码执行结构化评审          | `code-review-*.md`           |
-| `/fec-test-plan`      | 规划测试分层、风险覆盖与执行顺序                  | `test-plan-*.md`             |
-| `/fec-scaffold`       | 按规范创建 page / feature / component 样板        | —                            |
-| `/fec-plan`           | 实现前规划功能架构、重构或迁移                    | `architecture-proposal-*.md` |
-| `/fec-tdd`            | 红 → 绿 → 重构的前端 TDD 循环                     | —                            |
-| `/fec-build-fix`      | 增量修复 lint、type-check、test、build 或 CI 失败 | `validation-fix-*.md`        |
-| `/fec-refactor-clean` | 分类并安全清理死代码、未使用导出、样式和依赖      | `refactor-clean-*.md`        |
-| `/fec-doc-sync`       | 同步 README、runtime 文档、能力表和公开 metadata  | —                            |
+| 命令                  | 用途                                                        | 报告                                             |
+| --------------------- | ----------------------------------------------------------- | ------------------------------------------------ |
+| `/fec-init`           | 初始化项目模板（CLAUDE.md、规则、settings）                 | —                                                |
+| `/fec-review`         | 对指定文件或最近变更的代码执行结构化评审                    | `code-review-*.md`                               |
+| `/fec-scaffold`       | 按规范创建 page / feature / component 样板                  | —                                                |
+| `/fec-plan`           | 统一规划入口：实现架构或测试策略                            | `architecture-proposal-*.md` 或 `test-plan-*.md` |
+| `/fec-tdd`            | 红 → 绿 → 重构的前端 TDD 循环                               | —                                                |
+| `/fec-debug`          | 前端问题诊断与修复：构建失败、运行时错误、UI 异常、接口问题 | `debug-*.md`                                     |
+| `/fec-refactor-clean` | 分类并安全清理死代码、未使用导出、样式和依赖                | `refactor-clean-*.md`                            |
+| `/fec-doc-sync`       | 同步 README、runtime 文档、能力表和公开 metadata            | —                                                |
 
 ### 技能（Skills，自动激活）
 
@@ -176,44 +175,52 @@ npx frontend-craft@latest install claude --local --force
 
 **实现能力** — 构建特定前端能力时激活：
 
-| 技能                          | 范围                                                       |
-| ----------------------------- | ---------------------------------------------------------- |
-| `fec-data-fetching`           | TanStack Query / 服务端状态获取、缓存、乐观更新            |
-| `fec-form-handling`           | React Hook Form + Zod、动态字段、上传、多步流程            |
-| `fec-browser-storage`         | localStorage / sessionStorage / IndexedDB / Cookies 选型   |
-| `fec-route-protection`        | React Router、Next.js、Vue Router、Nuxt 的登录态与权限路由 |
-| `fec-pwa-implementation`      | manifest、Service Worker、离线缓存、安装提示               |
-| `fec-web-workers`             | Web Worker、Transferable、Comlink、Worker 池               |
-| `fec-canvas-threejs`          | Canvas 2D、Three.js、React Three Fiber、WebGL              |
-| `fec-svg-animation`           | CSS / Framer Motion / GSAP SVG 动画与 reduced-motion       |
-| `fec-list-virtualization`     | react-window / TanStack Virtual 大列表虚拟滚动             |
+| 技能                      | 范围                                                       |
+| ------------------------- | ---------------------------------------------------------- |
+| `fec-data-fetching`       | TanStack Query / 服务端状态获取、缓存、乐观更新            |
+| `fec-api-integration`     | 类型化 API client、鉴权刷新、上传、实时集成                |
+| `fec-state-management`    | 状态归属、store 选型、URL 状态、服务端/表单/本地状态边界   |
+| `fec-form-handling`       | React Hook Form + Zod、动态字段、上传、多步流程            |
+| `fec-browser-storage`     | localStorage / sessionStorage / IndexedDB / Cookies 选型   |
+| `fec-route-protection`    | React Router、Next.js、Vue Router、Nuxt 的登录态与权限路由 |
+| `fec-pwa-implementation`  | manifest、Service Worker、离线缓存、安装提示               |
+| `fec-web-workers`         | Web Worker、Transferable、Comlink、Worker 池               |
+| `fec-canvas-threejs`      | Canvas 2D、Three.js、React Three Fiber、WebGL              |
+| `fec-svg-animation`       | CSS / Framer Motion / GSAP SVG 动画与 reduced-motion       |
+| `fec-list-virtualization` | react-window / TanStack Virtual 大列表虚拟滚动             |
 
 **测试** — 规划或编写前端测试覆盖时激活：
 
-| 技能                          | 范围                                                      |
-| ----------------------------- | --------------------------------------------------------- |
-| `fec-testing-strategy`        | 静态检查、单元、组件、集成、E2E、视觉测试分层             |
-| `fec-component-testing`       | React Testing Library / Vue Test Utils 组件测试与回归用例 |
-| `fec-e2e-testing`             | Playwright / Cypress E2E 与 Page Object 和 CI 集成        |
-| `fec-tdd-workflow`            | 测试先行的前端实现，红绿重构循环                         |
+| 技能                    | 范围                                                      |
+| ----------------------- | --------------------------------------------------------- |
+| `fec-testing-strategy`  | 静态检查、单元、组件、集成、E2E、视觉测试分层             |
+| `fec-component-testing` | React Testing Library / Vue Test Utils 组件测试与回归用例 |
+| `fec-e2e-testing`       | Playwright / Cypress E2E 与 Page Object 和 CI 集成        |
+| `fec-tdd-workflow`      | 测试先行的前端实现，红绿重构循环                          |
 
 **评审与质量** — 代码评审、验证或清理时激活：
 
-| 技能                       | 范围                                           |
-| -------------------------- | ---------------------------------------------- |
-| `fec-frontend-code-review` | 架构、类型、渲染、样式、可访问性评审           |
-| `fec-security-review`      | XSS、CSRF、敏感数据泄露、输入校验              |
-| `fec-accessibility-check`  | WCAG 2.1 AA 无障碍检查                         |
-| `fec-validation-fix`       | 一次性运行并修复 lint、type-check、test、build |
-| `fec-refactor-clean`       | 安全清理死代码、未使用导出、样式、路由和依赖   |
+| 技能                           | 范围                                                  |
+| ------------------------------ | ----------------------------------------------------- |
+| `fec-code-review`              | 架构、类型、渲染、样式、可访问性评审                  |
+| `fec-typescript-type-safety`   | 类型契约、DTO 映射、类型守卫、泛型和类型级检查        |
+| `fec-security-review`          | XSS、CSRF、敏感数据泄露、输入校验                     |
+| `fec-accessibility-check`      | WCAG 2.2、键盘、焦点、触控和屏幕阅读器行为            |
+| `fec-dependency-upgrade`       | 依赖升级、lockfile 评审、CVE 修复和迁移验证           |
+| `fec-validation-fix`           | 一次性运行并修复 lint、type-check、test、build        |
+| `fec-performance-optimization` | Core Web Vitals、包体、渲染、内存、网络与性能预算审查 |
+| `fec-refactor-clean`           | 安全清理死代码、未使用导出、样式、路由和依赖          |
 
 **设计 UI** — 设计实现、设计系统或视觉打磨时激活：
 
-| 技能                          | 范围                                                    |
-| ----------------------------- | ------------------------------------------------------- |
-| `fec-ui-design`              | UI 方向、视觉识别、界面打磨、状态、视觉 QA             |
-| `fec-implement-from-design`   | 基于 Figma/Sketch/MasterGo/Pixso/墨刀/摹客设计稿实现 UI |
-| `fec-storybook-component-doc` | Storybook 组件文档、设计系统呈现、隔离状态预览          |
+| 技能                          | 范围                                                     |
+| ----------------------------- | -------------------------------------------------------- |
+| `fec-ui-design`               | UI 方向、视觉识别、界面打磨、状态、视觉 QA               |
+| `fec-tailwind-design-system`  | Tailwind token、主题扩展、组件变体、class 治理和暗色模式 |
+| `fec-responsive-layout`       | 移动优先布局、容器查询、数据密集型响应式界面             |
+| `fec-motion-interaction`      | 交互动效、页面转场、滚动动画、reduced-motion             |
+| `fec-implement-from-design`   | 基于 Figma/Sketch/MasterGo/Pixso/墨刀/摹客设计稿实现 UI  |
+| `fec-storybook-component-doc` | Storybook 组件文档、设计系统呈现、隔离状态预览           |
 
 **遗留迁移** — 现代化迁移时激活：
 
@@ -224,29 +231,30 @@ npx frontend-craft@latest install claude --local --force
 
 **文档维护** — 文档维护时激活：
 
-| 技能           | 范围                                       |
-| -------------- | ------------------------------------------ |
-| `fec-doc-sync` | 让公开文档与脚本、技能、代理、命令保持同步 |
+| 技能                            | 范围                                       |
+| ------------------------------- | ------------------------------------------ |
+| `fec-doc-sync`                  | 让公开文档与脚本、技能、代理、命令保持同步 |
+| `fec-source-driven-development` | 以项目事实和官方来源验证版本敏感的前端决策 |
 
 ### 代理（Agents）
 
 代理是由主助手调度的专业子代理，专注处理单一任务并返回结构化报告。
 
-| 代理                         | 聚焦领域                                                  | 报告                         |
-| ---------------------------- | --------------------------------------------------------- | ---------------------------- |
-| `fec-frontend-code-reviewer`     | React/Vue/Next/Nuxt、TS、样式、客户端安全（按置信度降噪） | `code-review-*.md`           |
-| `fec-typescript-reviewer`        | 类型安全、异步正确性、惯用模式（只报告不修改）            | `typescript-review-*.md`     |
-| `fec-frontend-security-reviewer` | XSS、客户端密钥、危险 DOM/API、CSP、依赖审计              | `security-review-*.md`       |
-| `fec-performance-optimizer`      | 打包体积、渲染性能、网络瓶颈                              | `performance-review-*.md`    |
-| `fec-frontend-architect`         | 页面拆分、组件架构、状态流、目录规划                      | `architecture-proposal-*.md` |
-| `fec-frontend-test-planner`      | 风险-层级映射：静态、单元、组件、E2E、视觉、无障碍、安全  | `test-plan-*.md`             |
-| `fec-frontend-build-fixer`       | 增量修复 lint / type-check / test / build / CI            | `validation-fix-*.md`        |
-| `fec-frontend-refactor-cleaner`  | 分类并安全清理未使用代码、导出、样式、路由和依赖          | `refactor-clean-*.md`        |
-| `fec-frontend-e2e-runner`        | E2E 编写与运行（Playwright/Cypress）、flaky 隔离、Trace   | `e2e-summary-*.md`           |
-| `fec-frontend-doc-updater`       | 同步 README、runtime 文档、结构、能力表和 metadata        | —                            |
-| `fec-ui-checker`                 | 视觉问题排查与设计还原度评估                              | `ui-fidelity-review-*.md`    |
-| `fec-figma-implementer`          | 按 Figma/Sketch/MasterGo/Pixso/墨刀/摹客设计稿精确实现 UI | `design-implementation-*.md` |
-| `fec-design-token-mapper`        | 将设计变量映射到项目 Design Token                         | `token-mapping-*.md`         |
+| 代理                        | 聚焦领域                                                  | 报告                         |
+| --------------------------- | --------------------------------------------------------- | ---------------------------- |
+| `fec-code-reviewer`         | React/Vue/Next/Nuxt、TS、样式、客户端安全（按置信度降噪） | `code-review-*.md`           |
+| `fec-typescript-reviewer`   | 类型安全、异步正确性、惯用模式（只报告不修改）            | `typescript-review-*.md`     |
+| `fec-security-reviewer`     | XSS、客户端密钥、危险 DOM/API、CSP、依赖审计              | `security-review-*.md`       |
+| `fec-performance-optimizer` | 打包体积、渲染性能、网络瓶颈                              | `performance-review-*.md`    |
+| `fec-architect`             | 页面拆分、组件架构、状态流、目录规划                      | `architecture-proposal-*.md` |
+| `fec-test-planner`          | 风险-层级映射：静态、单元、组件、E2E、视觉、无障碍、安全  | `test-plan-*.md`             |
+| `fec-build-fixer`           | 增量修复 lint / type-check / test / build / CI            | `validation-fix-*.md`        |
+| `fec-refactor-cleaner`      | 分类并安全清理未使用代码、导出、样式、路由和依赖          | `refactor-clean-*.md`        |
+| `fec-e2e-runner`            | E2E 编写与运行（Playwright/Cypress）、flaky 隔离、Trace   | `e2e-summary-*.md`           |
+| `fec-doc-updater`           | 同步 README、runtime 文档、结构、能力表和 metadata        | —                            |
+| `fec-ui-checker`            | 视觉问题排查与设计还原度评估                              | `ui-fidelity-review-*.md`    |
+| `fec-figma-implementer`     | 按 Figma/Sketch/MasterGo/Pixso/墨刀/摹客设计稿精确实现 UI | `design-implementation-*.md` |
+| `fec-design-token-mapper`   | 将设计变量映射到项目 Design Token                         | `token-mapping-*.md`         |
 
 ### 钩子（Hooks，事件驱动）
 
@@ -279,28 +287,29 @@ npx frontend-craft@latest install claude --local --force
 运行 `/fec-init` 即可将一套开箱即用的规则库和项目配置脚手架化到 `.claude/`：
 
 <details>
-<summary>查看全部 18 个模板文件</summary>
+<summary>查看全部 19 个模板文件</summary>
 
-| 文件                          | 用途                                                   |
-| ----------------------------- | ------------------------------------------------------ |
-| `CLAUDE.md`                   | 项目说明、常用命令、工作原则、安全要求                 |
-| `settings.json`               | 权限白名单/黑名单、环境变量                            |
-| `rules/fec-vue.md`                | Vue 3 组件规范与反模式                                 |
-| `rules/fec-react.md`              | React 组件规范与反模式                                 |
-| `rules/fec-design-system.md`      | 设计系统、Token、可访问性规则                          |
-| `rules/fec-testing.md`            | 测试与校验规则                                         |
-| `rules/fec-git-conventions.md`    | Conventional Commits 提交规范                          |
-| `rules/fec-i18n.md`               | 国际化文案规范                                         |
-| `rules/fec-performance.md`        | 前端性能优化规则                                       |
-| `rules/fec-api-layer.md`          | API 层类型化与错误处理规范                             |
-| `rules/fec-state-management.md`   | 状态分类、管理策略与反模式                             |
-| `rules/fec-error-handling.md`     | 错误分层、Error Boundary、降级 UI、上报规范            |
-| `rules/fec-naming-conventions.md` | 文件、组件、变量、路由、API、CSS 统一命名              |
-| `rules/fec-code-comments.md`      | 何时以及如何写前端注释                                 |
-| `rules/fec-ci-cd.md`              | CI/CD 流水线阶段、GitHub Actions / GitLab CI、密钥管理 |
-| `rules/fec-refactoring.md`        | 重构约束与功能等价要求                                 |
-| `rules/fec-agent-workflow.md`     | 子代理协作边界与委托规则                               |
-| `rules/fec-working-modes.md`      | 调研、计划、开发、评审、收尾模式指导                   |
+| 文件                                     | 用途                                                                  |
+| ---------------------------------------- | --------------------------------------------------------------------- |
+| `CLAUDE.md`                              | 项目说明、常用命令、工作原则、安全要求                                |
+| `settings.json`                          | 权限白名单/黑名单、环境变量                                           |
+| `rules/fec-vue.md`                       | Vue 3 组件规范与反模式                                                |
+| `rules/fec-react.md`                     | React 组件规范与反模式                                                |
+| `rules/fec-design-system.md`             | 设计系统、Token、可访问性规则                                         |
+| `rules/fec-testing.md`                   | 测试与校验规则                                                        |
+| `rules/fec-git-conventions.md`           | Conventional Commits 提交规范                                         |
+| `rules/fec-i18n.md`                      | 国际化文案规范                                                        |
+| `rules/fec-performance.md`               | 前端性能优化规则                                                      |
+| `rules/fec-source-driven-development.md` | Source-driven decisions, official docs, version-sensitive assumptions |
+| `rules/fec-api-layer.md`                 | API 层类型化与错误处理规范                                            |
+| `rules/fec-state-management.md`          | 状态分类、管理策略与反模式                                            |
+| `rules/fec-error-handling.md`            | 错误分层、Error Boundary、降级 UI、上报规范                           |
+| `rules/fec-naming-conventions.md`        | 文件、组件、变量、路由、API、CSS 统一命名                             |
+| `rules/fec-code-comments.md`             | 何时以及如何写前端注释                                                |
+| `rules/fec-ci-cd.md`                     | CI/CD 流水线阶段、GitHub Actions / GitLab CI、密钥管理                |
+| `rules/fec-refactoring.md`               | 重构约束与功能等价要求                                                |
+| `rules/fec-agent-workflow.md`            | 子代理协作边界与委托规则                                              |
+| `rules/fec-working-modes.md`             | 调研、计划、开发、评审、收尾模式指导                                  |
 
 </details>
 
@@ -355,23 +364,23 @@ $env:MODAO_TOKEN = "your-modao-token"
 <details>
 <summary>查看全部 15 种报告类型</summary>
 
-| 报告类型       | 文件名模式                                   | 来源                                                                     |
-| -------------- | -------------------------------------------- | ------------------------------------------------------------------------ |
-| 代码审查       | `code-review-YYYY-MM-DD-HHmmss.md`           | `/fec-review`、`fec-frontend-code-review`、`fec-frontend-code-reviewer`      |
-| TS/JS 专项评审 | `typescript-review-YYYY-MM-DD-HHmmss.md`     | `fec-typescript-reviewer`                                                    |
-| 安全审查       | `security-review-YYYY-MM-DD-HHmmss.md`       | `fec-security-review`、`fec-frontend-security-reviewer`                      |
-| 无障碍检查     | `accessibility-review-YYYY-MM-DD-HHmmss.md`  | `fec-accessibility-check`                                                |
-| 性能分析       | `performance-review-YYYY-MM-DD-HHmmss.md`    | `fec-performance-optimizer`                                                  |
-| 架构方案       | `architecture-proposal-YYYY-MM-DD-HHmmss.md` | `fec-frontend-architect`                                                     |
-| 设计还原度     | `ui-fidelity-review-YYYY-MM-DD-HHmmss.md`    | `fec-ui-checker`                                                             |
-| 设计实现       | `design-implementation-YYYY-MM-DD-HHmmss.md` | `fec-figma-implementer`                                                      |
-| Token 映射     | `token-mapping-YYYY-MM-DD-HHmmss.md`         | `fec-design-token-mapper`                                                    |
-| 设计计划       | `design-plan-YYYY-MM-DD-HHmmss.md`           | `fec-implement-from-design`                                              |
-| 测试计划       | `test-plan-YYYY-MM-DD-HHmmss.md`             | `/fec-test-plan`、`fec-testing-strategy`、`fec-frontend-test-planner`        |
-| 验证修复       | `validation-fix-YYYY-MM-DD-HHmmss.md`        | `fec-validation-fix`                                                     |
-| 重构清理       | `refactor-clean-YYYY-MM-DD-HHmmss.md`        | `/fec-refactor-clean`、`fec-refactor-clean`、`fec-frontend-refactor-cleaner` |
-| E2E 运行摘要   | `e2e-summary-YYYY-MM-DD-HHmmss.md`           | `fec-frontend-e2e-runner`（可选）                                            |
-| 迁移计划       | `migration-plan-YYYY-MM-DD-HHmmss.md`        | `fec-legacy-to-modern-migration`                                         |
+| 报告类型       | 文件名模式                                   | 来源                                                                |
+| -------------- | -------------------------------------------- | ------------------------------------------------------------------- |
+| 代码审查       | `code-review-YYYY-MM-DD-HHmmss.md`           | `/fec-review`、`fec-code-review`、`fec-code-reviewer`               |
+| TS/JS 专项评审 | `typescript-review-YYYY-MM-DD-HHmmss.md`     | `fec-typescript-reviewer`                                           |
+| 安全审查       | `security-review-YYYY-MM-DD-HHmmss.md`       | `fec-security-review`、`fec-security-reviewer`                      |
+| 无障碍检查     | `accessibility-review-YYYY-MM-DD-HHmmss.md`  | `fec-accessibility-check`                                           |
+| 性能分析       | `performance-review-YYYY-MM-DD-HHmmss.md`    | `fec-performance-optimizer`                                         |
+| 架构方案       | `architecture-proposal-YYYY-MM-DD-HHmmss.md` | `fec-architect`                                                     |
+| 设计还原度     | `ui-fidelity-review-YYYY-MM-DD-HHmmss.md`    | `fec-ui-checker`                                                    |
+| 设计实现       | `design-implementation-YYYY-MM-DD-HHmmss.md` | `fec-figma-implementer`                                             |
+| Token 映射     | `token-mapping-YYYY-MM-DD-HHmmss.md`         | `fec-design-token-mapper`                                           |
+| 设计计划       | `design-plan-YYYY-MM-DD-HHmmss.md`           | `fec-implement-from-design`                                         |
+| 测试计划       | `test-plan-YYYY-MM-DD-HHmmss.md`             | `/fec-plan`、`fec-testing-strategy`、`fec-test-planner`             |
+| 验证修复       | `validation-fix-YYYY-MM-DD-HHmmss.md`        | `fec-validation-fix`                                                |
+| 重构清理       | `refactor-clean-YYYY-MM-DD-HHmmss.md`        | `/fec-refactor-clean`、`fec-refactor-clean`、`fec-refactor-cleaner` |
+| E2E 运行摘要   | `e2e-summary-YYYY-MM-DD-HHmmss.md`           | `fec-e2e-runner`（可选）                                            |
+| 迁移计划       | `migration-plan-YYYY-MM-DD-HHmmss.md`        | `fec-legacy-to-modern-migration`                                    |
 
 </details>
 
@@ -419,7 +428,7 @@ npx skills check                           # 预览可用更新
 - [安全策略](SECURITY.zh-CN.md) — 私密漏洞报告方式与支持范围（[English](SECURITY.md)）
 - [行为准则](CODE_OF_CONDUCT.zh-CN.md) — 社区参与规范（[English](CODE_OF_CONDUCT.md)）
 - [变更日志](CHANGELOG.zh-CN.md) — 版本说明（[English](CHANGELOG.md)）
-- [项目结构](docs/project-structure.md) — 完整目录布局与文件职责
+- [项目结构](docs/zh-CN/project-structure.md) — 完整目录布局与文件职责（[English](docs/project-structure.md)）
 
 ---
 

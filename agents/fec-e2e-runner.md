@@ -1,5 +1,5 @@
 ---
-name: fec-frontend-e2e-runner
+name: fec-e2e-runner
 description: 前端端到端测试专精子代理：编写与维护关键用户旅程、执行 Playwright/Cypress、治理不稳定用例、管理截图/Trace/视频与 CI 产物。在需要生成、运行或修复 E2E、或保障核心流程可测时委托。若环境已安装 Vercel Agent Browser 等语义化浏览器工具可优先使用，否则以 Playwright 为主。
 tools: Read, Edit, Write, MultiEdit, Glob, Grep, LS, Bash
 model: sonnet
