@@ -30,7 +30,7 @@
 
 Per-runtime paths and caveats live in [`docs/runtimes/`](docs/runtimes/).
 
-It bundles **13 specialized agents**, **30 auto-activated skills**, **9 slash commands**, **5 event-driven hooks**, **MCP templates** for 6 design tools, and a complete **rules library** into a single installable package. Run one command, and every AI session on your team writes React, Vue, Next.js, or Nuxt the same way — typed, accessible, secure, and consistent.
+It bundles **13 specialized agents**, **32 auto-activated skills**, **9 slash commands**, **5 event-driven hooks**, **MCP templates** for 6 design tools, and a complete **rules library** into a single installable package. Run one command, and every AI session on your team writes React, Vue, Next.js, or Nuxt the same way — typed, accessible, secure, and consistent.
 
 ```bash
 npx frontend-craft@latest
@@ -44,7 +44,7 @@ That’s it. The wizard walks you through the rest.
 
 | Problem                                                              | What frontend-craft does                                                                       |
 | -------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------- |
-| AI assistants write inconsistent, untyped, or insecure frontend code | **30 skills** encode team standards — auto-activated when the assistant touches matching files |
+| AI assistants write inconsistent, untyped, or insecure frontend code | **32 skills** encode team standards — auto-activated when the assistant touches matching files |
 | Each AI tool has its own plugin format                               | **One CLI** installs the same rules, agents, and hooks into 15 runtimes                        |
 | Design-to-code handoff is lossy                                      | **MCP templates** read Figma, Sketch, MasterGo, Pixso, 墨刀, and 摹客 directly                 |
 | Reviews are ad-hoc and shallow                                       | **13 agents** produce graded reports: code, security, a11y, performance, TS, UI fidelity       |
@@ -104,7 +104,7 @@ Once installed, you have a full frontend engineering toolkit available in every 
 
 ```text
 You: "Review my recent changes"
-→ The fec-frontend-code-reviewer agent is dispatched, produces reports/code-review-*.md
+→ The fec-code-reviewer agent is dispatched, produces reports/code-review-*.md
 
 You: "/fec-review"
 → Runs a structured review across architecture, types, rendering, styles, a11y
@@ -177,6 +177,7 @@ Category boundaries are intentionally narrow: implementation capabilities cover 
 | Skill                         | Scope                                                                  |
 | ----------------------------- | ---------------------------------------------------------------------- |
 | `fec-data-fetching`           | TanStack Query / server-state fetching, caching, optimistic updates    |
+| `fec-api-integration`         | Typed API clients, auth refresh, uploads, realtime integration         |
 | `fec-form-handling`           | React Hook Form + Zod, dynamic fields, uploads, multi-step flows       |
 | `fec-browser-storage`         | localStorage / sessionStorage / IndexedDB / Cookies selection          |
 | `fec-route-protection`        | Auth and permission routes for React Router, Next.js, Vue Router, Nuxt |
@@ -199,7 +200,7 @@ Category boundaries are intentionally narrow: implementation capabilities cover 
 
 | Skill                      | Scope                                                           |
 | -------------------------- | --------------------------------------------------------------- |
-| `fec-frontend-code-review` | Architecture, types, rendering, styles, a11y review             |
+| `fec-code-review` | Architecture, types, rendering, styles, a11y review             |
 | `fec-security-review`      | XSS, CSRF, sensitive data leakage, input validation             |
 | `fec-accessibility-check`  | WCAG 2.1 AA compliance                                          |
 | `fec-validation-fix`       | Run and repair lint, type-check, test, build in one pass        |
@@ -210,6 +211,7 @@ Category boundaries are intentionally narrow: implementation capabilities cover 
 | Skill                         | Scope                                                              |
 | ----------------------------- | ------------------------------------------------------------------ |
 | `fec-ui-design`              | UI direction, visual identity, polish, states, visual QA           |
+| `fec-motion-interaction`      | Interaction motion, page transitions, scroll animation, reduced motion |
 | `fec-implement-from-design`   | Build UI from Figma/Sketch/MasterGo/Pixso/墨刀/摹客 design files   |
 | `fec-storybook-component-doc` | Storybook component docs, design-system presentation, isolated state previews |
 
@@ -232,16 +234,16 @@ Agents are specialized sub-agents dispatched by the main assistant to handle a f
 
 | Agent                        | Focus                                                                      | Report                       |
 | ---------------------------- | -------------------------------------------------------------------------- | ---------------------------- |
-| `fec-frontend-code-reviewer`     | React/Vue/Next/Nuxt, TS, styles, client-side security (confidence-based)   | `code-review-*.md`           |
+| `fec-code-reviewer`     | React/Vue/Next/Nuxt, TS, styles, client-side security (confidence-based)   | `code-review-*.md`           |
 | `fec-typescript-reviewer`        | Type safety, async correctness, idiomatic patterns (report-only)           | `typescript-review-*.md`     |
-| `fec-frontend-security-reviewer` | XSS, client secrets, dangerous DOM/APIs, CSP, dependency audit             | `security-review-*.md`       |
+| `fec-security-reviewer` | XSS, client secrets, dangerous DOM/APIs, CSP, dependency audit             | `security-review-*.md`       |
 | `fec-performance-optimizer`      | Bundle size, render performance, network bottlenecks                       | `performance-review-*.md`    |
-| `fec-frontend-architect`         | Page splitting, component architecture, state flow, directory planning     | `architecture-proposal-*.md` |
-| `fec-frontend-test-planner`      | Risk-to-layer matrix: static, unit, component, E2E, visual, a11y, security | `test-plan-*.md`             |
-| `fec-frontend-build-fixer`       | Incremental lint / type-check / test / build / CI repair                   | `validation-fix-*.md`        |
-| `fec-frontend-refactor-cleaner`  | Classify and safely remove unused code, exports, styles, routes, deps      | `refactor-clean-*.md`        |
-| `fec-frontend-e2e-runner`        | E2E authoring and runs (Playwright/Cypress), flaky quarantine, traces      | `e2e-summary-*.md`           |
-| `fec-frontend-doc-updater`       | Sync README, runtime docs, structure, capability tables, metadata          | —                            |
+| `fec-architect`         | Page splitting, component architecture, state flow, directory planning     | `architecture-proposal-*.md` |
+| `fec-test-planner`      | Risk-to-layer matrix: static, unit, component, E2E, visual, a11y, security | `test-plan-*.md`             |
+| `fec-build-fixer`       | Incremental lint / type-check / test / build / CI repair                   | `validation-fix-*.md`        |
+| `fec-refactor-cleaner`  | Classify and safely remove unused code, exports, styles, routes, deps      | `refactor-clean-*.md`        |
+| `fec-e2e-runner`        | E2E authoring and runs (Playwright/Cypress), flaky quarantine, traces      | `e2e-summary-*.md`           |
+| `fec-doc-updater`       | Sync README, runtime docs, structure, capability tables, metadata          | —                            |
 | `fec-ui-checker`                 | Visual issue debugging and design fidelity evaluation                      | `ui-fidelity-review-*.md`    |
 | `fec-figma-implementer`          | Precise UI implementation from Figma/Sketch/MasterGo/Pixso/墨刀/摹客       | `design-implementation-*.md` |
 | `fec-design-token-mapper`        | Map design variables to project Design Tokens                              | `token-mapping-*.md`         |
@@ -355,20 +357,20 @@ Every review, analysis, and evaluation writes a timestamped Markdown report to `
 
 | Report type            | Filename pattern                             | Produced by                                                              |
 | ---------------------- | -------------------------------------------- | ------------------------------------------------------------------------ |
-| Code review            | `code-review-YYYY-MM-DD-HHmmss.md`           | `/fec-review`, `fec-frontend-code-review`, `fec-frontend-code-reviewer`      |
+| Code review            | `code-review-YYYY-MM-DD-HHmmss.md`           | `/fec-review`, `fec-code-review`, `fec-code-reviewer`      |
 | TypeScript / JS review | `typescript-review-YYYY-MM-DD-HHmmss.md`     | `fec-typescript-reviewer`                                                    |
-| Security review        | `security-review-YYYY-MM-DD-HHmmss.md`       | `fec-security-review`, `fec-frontend-security-reviewer`                      |
+| Security review        | `security-review-YYYY-MM-DD-HHmmss.md`       | `fec-security-review`, `fec-security-reviewer`                      |
 | Accessibility          | `accessibility-review-YYYY-MM-DD-HHmmss.md`  | `fec-accessibility-check`                                                |
 | Performance            | `performance-review-YYYY-MM-DD-HHmmss.md`    | `fec-performance-optimizer`                                                  |
-| Architecture           | `architecture-proposal-YYYY-MM-DD-HHmmss.md` | `fec-frontend-architect`                                                     |
+| Architecture           | `architecture-proposal-YYYY-MM-DD-HHmmss.md` | `fec-architect`                                                     |
 | Design fidelity        | `ui-fidelity-review-YYYY-MM-DD-HHmmss.md`    | `fec-ui-checker`                                                             |
 | Design implementation  | `design-implementation-YYYY-MM-DD-HHmmss.md` | `fec-figma-implementer`                                                      |
 | Token mapping          | `token-mapping-YYYY-MM-DD-HHmmss.md`         | `fec-design-token-mapper`                                                    |
 | Design plan            | `design-plan-YYYY-MM-DD-HHmmss.md`           | `fec-implement-from-design`                                              |
-| Test plan              | `test-plan-YYYY-MM-DD-HHmmss.md`             | `/fec-test-plan`, `fec-testing-strategy`, `fec-frontend-test-planner`        |
+| Test plan              | `test-plan-YYYY-MM-DD-HHmmss.md`             | `/fec-test-plan`, `fec-testing-strategy`, `fec-test-planner`        |
 | Validation fix         | `validation-fix-YYYY-MM-DD-HHmmss.md`        | `fec-validation-fix`                                                     |
-| Refactor clean         | `refactor-clean-YYYY-MM-DD-HHmmss.md`        | `/fec-refactor-clean`, `fec-refactor-clean`, `fec-frontend-refactor-cleaner` |
-| E2E run summary        | `e2e-summary-YYYY-MM-DD-HHmmss.md`           | `fec-frontend-e2e-runner` (optional)                                         |
+| Refactor clean         | `refactor-clean-YYYY-MM-DD-HHmmss.md`        | `/fec-refactor-clean`, `fec-refactor-clean`, `fec-refactor-cleaner` |
+| E2E run summary        | `e2e-summary-YYYY-MM-DD-HHmmss.md`           | `fec-e2e-runner` (optional)                                         |
 | Migration plan         | `migration-plan-YYYY-MM-DD-HHmmss.md`        | `fec-legacy-to-modern-migration`                                         |
 
 </details>
@@ -417,7 +419,7 @@ To disable telemetry: `DISABLE_TELEMETRY=1`. Details: [skills.sh CLI docs](https
 - [Security Policy](SECURITY.md) — private vulnerability reporting ([简体中文](SECURITY.zh-CN.md))
 - [Code of Conduct](CODE_OF_CONDUCT.md) — community standards ([简体中文](CODE_OF_CONDUCT.zh-CN.md))
 - [Changelog](CHANGELOG.md) — release notes ([简体中文](CHANGELOG.zh-CN.md))
-- [Project structure](docs/project-structure.md) — full directory layout and file responsibilities
+- [Project structure](docs/project-structure.md) — full directory layout and file responsibilities ([简体中文](docs/zh-CN/project-structure.md))
 
 ---
 

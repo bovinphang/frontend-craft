@@ -1,12 +1,12 @@
 ---
-name: fec-frontend-code-reviewer
+name: fec-code-reviewer
 description: 专注于前端代码（React/Vue/Next/Nuxt、TypeScript、样式、客户端安全）的资深评审。在编写或修改前端后委托；默认只输出并落盘评审报告，不直接修改业务代码。按 CRITICAL→LOW 检查、控制噪声并合并同类问题，报告写入 reports。适合结合 git diff 的独立 Code Review。
 tools: Read, Edit, Write, MultiEdit, Glob, Grep, LS, Bash
 model: sonnet
 permissionMode: default
 maxTurns: 14
 skills:
-  - fec-frontend-code-review
+  - fec-code-review
   - fec-security-review
   - fec-accessibility-check
   - fec-react-project-standard
@@ -142,5 +142,5 @@ Fix: …
 ## 报告落盘
 
 - 目录：项目根目录 `reports/`（不存在则创建）。
-- 文件名：`code-review-YYYY-MM-DD-HHmmss.md`（与 `fec-frontend-code-review` skill 一致）。
+- 文件名：`code-review-YYYY-MM-DD-HHmmss.md`（与 `fec-code-review` skill 一致）。
 - 写入后告知用户绝对或相对路径。

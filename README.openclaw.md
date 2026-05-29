@@ -138,7 +138,7 @@ frontend-craft/
 
 | Skill                            | Purpose                                                                              |
 | -------------------------------- | ------------------------------------------------------------------------------------ |
-| `fec-frontend-code-review`       | Architecture, type safety, rendering, styles, accessibility, tests, security         |
+| `fec-code-review`       | Architecture, type safety, rendering, styles, accessibility, tests, security         |
 | `fec-security-review`            | XSS, CSRF, sensitive data leakage, unsafe input handling                             |
 | `fec-accessibility-check`        | WCAG-oriented semantic structure, keyboard support, focus, labels                    |
 | `fec-react-project-standard`     | React + TypeScript project standards                                                 |
@@ -182,7 +182,7 @@ This section is a quick OpenClaw-oriented sample, not the full prompt catalog. F
 
 | Scenario                                   | Skill (reference)                | Example prompt (no skill names)                                                                                                                 |
 | ------------------------------------------ | -------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------- |
-| PR or branch review before merge           | `fec-frontend-code-review`       | “Please review `src/features/checkout/` before I merge: architecture, types, a11y, and tests. Save a markdown report under `reports/`.”         |
+| PR or branch review before merge           | `fec-code-review`       | “Please review `src/features/checkout/` before I merge: architecture, types, a11y, and tests. Save a markdown report under `reports/`.”         |
 | Focus on XSS, secrets, dangerous DOM       | `fec-security-review`            | “Audit `src/lib/auth.ts` and anything that renders or stores user-controlled HTML for XSS and secret leaks; list fixes by severity.”            |
 | New dialog / form — keyboard & ARIA        | `fec-accessibility-check`        | “Check `src/components/ConfirmDialog.tsx` for keyboard traps, focus order, labels, and ARIA; suggest concrete fixes.”                           |
 | Align a React module with team conventions | `fec-react-project-standard`     | “We use React 18 and TanStack Query. Review `src/pages/Dashboard/` against solid React + TS patterns and our existing abstractions.”            |

@@ -11,14 +11,14 @@ frontend-craft/
 |   |-- marketplace.json    # Marketplace directory metadata
 |
 |-- agents/           # Specialized sub-agents for delegation
-|   |-- fec-frontend-architect.md    # Page splitting, component architecture, state flow
-|   |-- fec-frontend-code-reviewer.md # Frontend-focused code review (quality, security, a11y)
-|   |-- fec-frontend-security-reviewer.md # Frontend attack surface: XSS, secrets, CSP, deps
-|   |-- fec-frontend-test-planner.md # Testing strategy, risk matrix, coverage planning
-|   |-- fec-frontend-build-fixer.md # Incremental lint/typecheck/test/build/CI failure repair
-|   |-- fec-frontend-refactor-cleaner.md # Dead-code and unused dependency cleanup
-|   |-- fec-frontend-doc-updater.md # README/runtime docs/capability table synchronization
-|   |-- fec-frontend-e2e-runner.md     # E2E authoring, execution, flaky handling, artifacts, CI
+|   |-- fec-architect.md    # Page splitting, component architecture, state flow
+|   |-- fec-code-reviewer.md # Frontend-focused code review (quality, security, a11y)
+|   |-- fec-security-reviewer.md # Frontend attack surface: XSS, secrets, CSP, deps
+|   |-- fec-test-planner.md # Testing strategy, risk matrix, coverage planning
+|   |-- fec-build-fixer.md # Incremental lint/typecheck/test/build/CI failure repair
+|   |-- fec-refactor-cleaner.md # Dead-code and unused dependency cleanup
+|   |-- fec-doc-updater.md # README/runtime docs/capability table synchronization
+|   |-- fec-e2e-runner.md     # E2E authoring, execution, flaky handling, artifacts, CI
 |   |-- fec-typescript-reviewer.md    # TS/JS type safety, async, security, report-only review
 |   |-- fec-performance-optimizer.md # Performance bottleneck analysis and optimization
 |   |-- fec-ui-checker.md            # UI visual issues, design fidelity evaluation
@@ -26,7 +26,7 @@ frontend-craft/
 |   |-- fec-design-token-mapper.md   # Map design variables to Design Tokens
 |
 |-- skills/           # Workflow definitions and domain knowledge
-|   |-- fec-frontend-code-review/    # Architecture, types, rendering, styles, a11y
+|   |-- fec-code-review/    # Architecture, types, rendering, styles, a11y
 |   |-- fec-security-review/     # XSS, CSRF, sensitive data, input validation
 |   |-- fec-accessibility-check/     # WCAG 2.1 AA accessibility
 |   |-- fec-react-project-standard/  # React + TypeScript project standards
@@ -44,6 +44,7 @@ frontend-craft/
 |   |-- fec-nuxt-project-standard/      # Nuxt 3 SSR/SSG, composables standards
 |   |-- fec-monorepo-project-standard/  # pnpm workspace, Turborepo, Nx standards
 |   |-- fec-data-fetching/              # TanStack Query and server-state workflows
+|   |-- fec-api-integration/            # Typed API clients, auth refresh, uploads, realtime integration
 |   |-- fec-form-handling/              # React Hook Form + Zod form workflows
 |   |-- fec-route-protection/           # Authenticated and permissioned routes
 |   |-- fec-component-testing/          # RTL / Vue Test Utils component tests
@@ -55,6 +56,7 @@ frontend-craft/
 |   |-- fec-list-virtualization/        # Large-list windowing with react-window / TanStack Virtual and measurement strategies
 |   |-- fec-storybook-component-doc/    # Storybook component docs, addons, MDX, interaction and visual test integration
 |   |-- fec-ui-design/                  # UI direction, visual identity, polish, states, visual QA
+|   |-- fec-motion-interaction/         # Interaction motion, page transitions, scroll animation, reduced motion
 |   |-- fec-vite-project-standard/      # Vite config, env safety, HMR, proxy, build and library mode
 |
 |-- commands/         # Slash commands for quick execution

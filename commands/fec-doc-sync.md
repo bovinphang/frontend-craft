@@ -3,7 +3,7 @@ name: fec-doc-sync
 description: 从代码和元数据同步 README、runtime docs、项目结构、能力表、命令清单和报告说明。
 ---
 
-按 `fec-doc-sync` 同步前端工程文档。复杂多语言更新可委托 **`frontend-doc-updater`**。
+按 `fec-doc-sync` 同步前端工程文档。复杂多语言更新可委托 **`fec-doc-updater`**。
 
 ## 执行步骤
 

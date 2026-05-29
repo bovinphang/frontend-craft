@@ -23,10 +23,10 @@
 
 | 场景 | 提示词 | 适用能力 | 预期产物 | 补充说明 |
 | --- | --- | --- | --- | --- |
-| 评审最近改动 | 「合并前请评审我最近的改动。重点看架构、类型安全、渲染行为、样式、无障碍和缺失测试；先列问题。」 | `fec-frontend-code-review`、`fec-frontend-code-reviewer`、`/fec-review` | 按严重级别排序的评审，带文件引用和测试缺口。 | 可补充分支名或 diff 范围。 |
-| PR 合并准备 | 「请把 `src/features/checkout/` 当作 PR 评审，指出阻塞项、风险假设，以及合并前必须补的测试。」 | `fec-frontend-code-reviewer` | 合并准备度判断和结构化报告。 | 若运行时可访问 PR，可贴 PR 链接。 |
+| 评审最近改动 | 「合并前请评审我最近的改动。重点看架构、类型安全、渲染行为、样式、无障碍和缺失测试；先列问题。」 | `fec-code-review`、`fec-code-reviewer`、`/fec-review` | 按严重级别排序的评审，带文件引用和测试缺口。 | 可补充分支名或 diff 范围。 |
+| PR 合并准备 | 「请把 `src/features/checkout/` 当作 PR 评审，指出阻塞项、风险假设，以及合并前必须补的测试。」 | `fec-code-reviewer` | 合并准备度判断和结构化报告。 | 若运行时可访问 PR，可贴 PR 链接。 |
 | TypeScript 专项评审 | 「请审计本次改动中的 `.ts` 和 `.tsx`：不安全类型、异步问题、过宽接口、陈旧派生状态、React/TypeScript 惯用法。」 | `fec-typescript-reviewer` | TypeScript 专项问题清单，通常只报告不修改。 | JS/TS 改动占主要部分时最适合。 |
-| 安全审查 | 「请审计 `src/lib/auth.ts`、API client 和所有渲染用户 HTML 的代码，关注 XSS、token 泄露、不安全存储、CSRF 假设和危险 DOM API。」 | `fec-security-review`、`fec-frontend-security-reviewer` | 按严重程度排序的安全问题和修复建议。 | 补充鉴权模型和存储约束。 |
+| 安全审查 | 「请审计 `src/lib/auth.ts`、API client 和所有渲染用户 HTML 的代码，关注 XSS、token 泄露、不安全存储、CSRF 假设和危险 DOM API。」 | `fec-security-review`、`fec-security-reviewer` | 按严重程度排序的安全问题和修复建议。 | 补充鉴权模型和存储约束。 |
 | 无障碍检查 | 「请检查 `src/components/ConfirmDialog.tsx` 的焦点陷阱、键盘流程、标签、ARIA、读屏行为和 WCAG 2.1 AA 问题。」 | `fec-accessibility-check` | 无障碍问题和可落地修改建议。 | 视觉焦点问题最好附截图。 |
 | 性能审查 | 「请分析 dashboard 性能：包体积、渲染热点、不必要重渲染、数据瀑布流和昂贵的客户端计算。」 | `fec-performance-optimizer` | 瓶颈列表和针对性优化方案。 | 有 profile 或慢路径更好。 |
 | UI 还原度评审 | 「请对比设置页实现与截图/设计链接，列出布局、间距、字体、状态和响应式差异。」 | `fec-ui-checker` | UI 还原度报告和修复建议。 | 提供截图或设计来源。 |
@@ -35,9 +35,9 @@
 
 | 场景 | 提示词 | 适用能力 | 预期产物 | 补充说明 |
 | --- | --- | --- | --- | --- |
-| 功能规划 | 「先不要写代码，请规划账号账单功能：路由结构、组件边界、数据流、状态、校验、测试和上线风险。」 | `/fec-plan`、`fec-frontend-architect` | 架构方案和实施计划。 | 补充验收标准和限制。 |
-| 拆分复杂页面 | 「请先在方案层面重构 `src/pages/Dashboard.tsx`：组件边界、hooks、状态归属和安全迁移步骤。」 | `fec-frontend-architect`、`fec-refactor-clean` | 重构计划和风险控制。 | 如果只要计划，请明确不要改代码。 |
-| 测试策略 | 「针对 checkout 重写，请把风险映射到静态检查、单元测试、组件测试、E2E、视觉检查、无障碍和安全覆盖。」 | `/fec-test-plan`、`fec-testing-strategy`、`fec-frontend-test-planner` | 测试矩阵和优先级。 | 大改动前很适合。 |
+| 功能规划 | 「先不要写代码，请规划账号账单功能：路由结构、组件边界、数据流、状态、校验、测试和上线风险。」 | `/fec-plan`、`fec-architect` | 架构方案和实施计划。 | 补充验收标准和限制。 |
+| 拆分复杂页面 | 「请先在方案层面重构 `src/pages/Dashboard.tsx`：组件边界、hooks、状态归属和安全迁移步骤。」 | `fec-architect`、`fec-refactor-clean` | 重构计划和风险控制。 | 如果只要计划，请明确不要改代码。 |
+| 测试策略 | 「针对 checkout 重写，请把风险映射到静态检查、单元测试、组件测试、E2E、视觉检查、无障碍和安全覆盖。」 | `/fec-test-plan`、`fec-testing-strategy`、`fec-test-planner` | 测试矩阵和优先级。 | 大改动前很适合。 |
 | 遗留迁移 | 「我们有一个 jQuery 多页应用在 `public/js/legacy/`。请制定分阶段迁移到 React + TypeScript 的方案，同时不阻塞日常需求。」 | `fec-legacy-to-modern-migration` | 迁移计划、风险、里程碑和兼容策略。 | 补充发布节奏和遗留约束。 |
 
 ## 功能实现
@@ -51,13 +51,14 @@
 | Vite 配置 | 「请审计 `vite.config.ts`：HMR、环境变量暴露、开发代理、构建产物、依赖预构建和插件顺序。」 | `fec-vite-project-standard` | Vite 配置问题和安全修改。 | 补充构建或 dev server 症状。 |
 | Monorepo 边界 | 「请检查 `apps/web` 和 `packages/ui` 的包边界、workspace 依赖、构建脚本和 Turborepo/Nx 任务图。」 | `fec-monorepo-project-standard` | 边界与任务编排评审。 | 补充包管理器和 workspace 文件。 |
 | 服务端状态 | 「请评审 `src/queries/useReports.ts`：query key、缓存时间、失效策略、乐观更新、错误状态和 suspense/loading 行为。」 | `fec-data-fetching` | TanStack Query / 服务端状态建议或实现。 | 补充 API 变化频率和 UX 预期。 |
+| API 集成 | 「请为 checkout 设计类型化 API 集成层：client 边界、错误映射、鉴权刷新、上传策略，以及订单更新用 polling、SSE 还是 WebSocket。」 | `fec-api-integration` | API client 策略或实现，包含失败状态和联调检查。 | 补充后端归属、鉴权模型和接口契约。 |
 | 复杂表单 | 「请用 React Hook Form + Zod 构建多步注册表单，包含文件上传、条件字段、异步校验和可访问错误提示。」 | `fec-form-handling` | 类型化表单实现，必要时包含测试。 | 补充最终提交 payload。 |
 | 路由保护 | 「请为 `/admin` 添加基于角色的保护：匿名用户重定向，未授权角色拒绝访问，保留 return URL，并避免受保护内容闪现。」 | `fec-route-protection` | Auth guard / middleware 实现。 | 说明鉴权来源和角色模型。 |
 | 浏览器存储 | 「请为 checkout 草稿选择并实现安全的客户端持久化。比较 localStorage、sessionStorage、IndexedDB 和 cookies 是否适合。」 | `fec-browser-storage` | 存储方案建议和实现。 | 说明敏感字段和保留时长。 |
 | 大列表虚拟化 | 「`ProductList` 渲染 20,000 行很卡。请加入虚拟滚动，同时保持键盘导航和动态行高可用。」 | `fec-list-virtualization` | 虚拟滚动实现和性能说明。 | 补充 UI 库限制。 |
 | PWA | 「请把这个应用做成可安装 PWA：manifest、图标、service worker、离线兜底、缓存策略和更新提示。」 | `fec-pwa-implementation` | PWA 实现和验证步骤。 | 说明鉴权/支付路由是否必须走网络。 |
 | Web Worker | 「请用 Web Worker 和 Comlink 把图片处理移出主线程，支持进度更新和取消。」 | `fec-web-workers` | Worker 集成和类型化通信。 | 补充浏览器支持和文件大小限制。 |
-| Canvas / Three.js | 「请添加一个 Three.js 产品展示器：响应式尺寸、可访问降级、性能保护，并验证 canvas 确实渲染。」 | `fec-canvas-threejs` | 3D/canvas 实现和视觉验证。 | 补充资源和交互需求。 |
+| Canvas / Three.js | 「请添加 WebGL shader 背景或 Three.js 产品展示器：响应式尺寸、WebGL2/shader 错误检查、可访问降级、性能保护，并验证 canvas 确实渲染。」 | `fec-canvas-threejs` | 3D/canvas/shader 实现和视觉验证。 | 补充资源、shader 要求和交互约束。 |
 | SVG 动效 | 「请用项目已有动画库为 hero SVG 添加微交互，并为 reduced-motion 用户提供静态降级。」 | `fec-svg-animation` | SVG 动效和降级行为。 | 补充动效约束和目标浏览器。 |
 
 ## UI 与设计
@@ -74,6 +75,7 @@
 | 移动电商 UI | 「请设计移动端电商商品浏览流程：安全触控区域、底部导航、筛选/排序体验、商品媒体、加载/空状态，以及进入 checkout 的路径。」 | `fec-ui-design`、`fec-accessibility-check` | 移动 UI 方向、交互状态和响应式约束。 | 说明这是移动 Web 还是类原生 Web UI。 |
 | 金融界面打磨 | 「请打磨这个 banking 界面，让它显得可信、克制、清晰：余额可见性、交易层级、风险状态、对比度、focus 行为和节制动效。」 | `fec-ui-design`、`fec-security-review` | 适合金融场景的 UI 打磨和风险状态建议。 | 如有合规或脱敏要求请说明。 |
 | 作品集视觉识别 | 「请为设计师/开发者 portfolio 制定有辨识度的视觉方向：项目叙事、导航节奏、case study 布局、媒体呈现、字体性格和 reduced-motion 降级。」 | `fec-ui-design`、`fec-svg-animation` | Portfolio UI 方向和交互建议。 | 提供个人品牌语气和代表项目。 |
+| 交互动效 | 「请为这个产品页规划动效系统：Framer Motion 和 GSAP 如何选、页面转场、滚动动画、reduced-motion 降级、懒加载和性能预算。」 | `fec-motion-interaction`、`fec-ui-design` | 动效方向、工具选择、可访问降级和验证清单。 | 补充品牌语气、设备限制，以及动效是装饰还是功能反馈。 |
 | 反模板 UI 评审 | 「请评审这个页面是否有泛化 AI 应用痕迹：过度使用紫色渐变、堆叠卡片、空泛 hero 文案、产品证据不足、单一色相和缺少交互状态。」 | `fec-ui-design` | 反模式问题和具体替代方向。 | 配合截图或本地 URL 效果更好。 |
 | 交付前 UI QA | 「请做一轮交付前 UI QA，覆盖 375px、768px、1440px：文本溢出、focus ring、hover/active/disabled、reduced motion、加载/空/错误状态和视觉一致性。」 | `fec-ui-design`、`fec-accessibility-check` | UI QA 清单、问题和修复建议。 | 适合实现收尾阶段。 |
 | Design Token 映射 | 「请把 Figma 变量中的颜色、字体、间距、圆角和阴影映射到本仓库 design token 结构，不破坏现有组件。」 | `fec-design-token-mapper` | Token 映射方案或代码修改。 | 补充 token 命名规则。 |
@@ -85,16 +87,16 @@
 | --- | --- | --- | --- | --- |
 | TDD 实现 | 「请用 TDD 给 checkout 添加优惠码校验：先写失败测试，再最小实现，最后重构，并保持测试清单可见。」 | `/fec-tdd`、`fec-tdd-workflow` | 红绿重构循环、测试和代码。 | 适合边界清晰的小功能。 |
 | 组件测试 | 「请为 `UserCard` 写 React Testing Library 测试：渲染、加载/错误状态、user-event 交互、无障碍断言和回归用例。」 | `fec-component-testing` | 符合本地约定的组件测试。 | Vue 项目可要求 Vue Test Utils。 |
-| E2E 冒烟测试 | 「请为登录和 checkout 添加 Playwright 冒烟测试。使用 Page Object、稳定选择器、CI 友好的重试，并在失败时保留 trace。」 | `fec-e2e-testing`、`fec-frontend-e2e-runner` | E2E 测试、运行说明和摘要报告。 | 补充测试账号或 mock 策略。 |
-| flaky E2E 排查 | 「checkout E2E 在 CI 中不稳定。请分析 timing、网络、存储和选择器问题，然后稳定它，不要隐藏真实失败。」 | `fec-e2e-testing`、`fec-frontend-e2e-runner` | 根因分析和针对性修复。 | 提供 CI 日志或 trace。 |
+| E2E 冒烟测试 | 「请为登录和 checkout 添加 Playwright 冒烟测试。使用 Page Object、稳定选择器、CI 友好的重试，并在失败时保留 trace。」 | `fec-e2e-testing`、`fec-e2e-runner` | E2E 测试、运行说明和摘要报告。 | 补充测试账号或 mock 策略。 |
+| flaky E2E 排查 | 「checkout E2E 在 CI 中不稳定。请分析 timing、网络、存储和选择器问题，然后稳定它，不要隐藏真实失败。」 | `fec-e2e-testing`、`fec-e2e-runner` | 根因分析和针对性修复。 | 提供 CI 日志或 trace。 |
 
 ## 维护
 
 | 场景 | 提示词 | 适用能力 | 预期产物 | 补充说明 |
 | --- | --- | --- | --- | --- |
-| 修复构建失败 | 「`pnpm lint`、`pnpm typecheck` 和 `pnpm test` 都失败了。请逐步修复，不要放宽规则或跳过测试。」 | `/fec-build-fix`、`fec-validation-fix`、`fec-frontend-build-fixer` | 最小修复和验证报告。 | 粘贴准确失败命令。 |
-| 清理死代码 | 「请查找并安全移除未使用导出、死路由、过期样式和未使用依赖。保持 public API，并写报告。」 | `/fec-refactor-clean`、`fec-refactor-clean`、`fec-frontend-refactor-cleaner` | 清理计划/变更和报告。 | 发布前很适合。 |
-| 文档同步 | 「请更新公开文档，让 README、runtime docs、能力表和 metadata 与当前 commands、skills、agents、hooks、package 文件一致。」 | `/fec-doc-sync`、`fec-doc-sync`、`fec-frontend-doc-updater` | 同步后的文档和验证说明。 | 不要把临时报告复制进公开文档。 |
+| 修复构建失败 | 「`pnpm lint`、`pnpm typecheck` 和 `pnpm test` 都失败了。请逐步修复，不要放宽规则或跳过测试。」 | `/fec-build-fix`、`fec-validation-fix`、`fec-build-fixer` | 最小修复和验证报告。 | 粘贴准确失败命令。 |
+| 清理死代码 | 「请查找并安全移除未使用导出、死路由、过期样式和未使用依赖。保持 public API，并写报告。」 | `/fec-refactor-clean`、`fec-refactor-clean`、`fec-refactor-cleaner` | 清理计划/变更和报告。 | 发布前很适合。 |
+| 文档同步 | 「请更新公开文档，让 README、runtime docs、能力表和 metadata 与当前 commands、skills、agents、hooks、package 文件一致。」 | `/fec-doc-sync`、`fec-doc-sync`、`fec-doc-updater` | 同步后的文档和验证说明。 | 不要把临时报告复制进公开文档。 |
 | 遗留项目维护 | 「请改进 `public/js/legacy/cart.js`，保持当前 jQuery/MPA 技术栈，降低风险、改善结构，但暂时不要重写成 React。」 | `fec-legacy-web-standard` | 安全的遗留维护变更或建议。 | 补充浏览器兼容限制。 |
 
 ## 高级用户提示词
@@ -111,4 +113,4 @@
 | 斜杠命令构建修复 | 「`/fec-build-fix` 请根据这段日志修复验证失败：<粘贴日志>。」 | `/fec-build-fix` | 增量验证修复。 | 粘贴准确日志。 |
 | 斜杠命令清理 | 「`/fec-refactor-clean` 请安全移除这个包里的未使用导出和依赖。」 | `/fec-refactor-clean` | 清理报告和安全修改。 | 修改后运行测试。 |
 | 斜杠命令文档同步 | 「`/fec-doc-sync` 请同步 README、runtime docs 和 metadata，使其匹配当前包内容。」 | `/fec-doc-sync` | 文档更新和验证说明。 | 发布前使用。 |
-| 显式代理 | 「请委托 `fec-frontend-code-reviewer` 对 `src/features/payments/` 做 PR 风格评审，然后先总结阻塞项。」 | agent dispatch | 专项代理报告和摘要。 | 适合专家评审。 |
+| 显式代理 | 「请委托 `fec-code-reviewer` 对 `src/features/payments/` 做 PR 风格评审，然后先总结阻塞项。」 | agent dispatch | 专项代理报告和摘要。 | 适合专家评审。 |

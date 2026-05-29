@@ -6,7 +6,7 @@ model: sonnet
 permissionMode: default
 maxTurns: 14
 skills:
-  - fec-frontend-code-review
+  - fec-code-review
   - fec-validation-fix
   - fec-react-project-standard
   - fec-vue3-project-standard

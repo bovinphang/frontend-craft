@@ -42,6 +42,9 @@ description: Use when designing or reviewing React + TypeScript project structur
    - 类型约束
    - 关键测试入口
    - 必要的专项 skill 分流
+   - 依赖是否已存在于 `package.json`，缺失时先给安装命令再使用
+   - 重型 UI 能力（动效、图表、3D、编辑器、地图）是否隔离为 leaf component 并按需加载
+   - 图片、视频、字体等资源是否本地化、可缓存，并避免占位 URL 进入交付
 
 ## Detailed References
 
@@ -56,6 +59,8 @@ Load [references/react-project-details.md](references/react-project-details.md) 
 - 禁止绕过模块出口，从 feature 深层路径导入
 - 不要用 `useEffect + setState` 模拟本可直接计算的派生值
 - 避免 prop drilling 过深却不考虑组合或局部封装
+- 不在通用页面组件里同步引入 GSAP、Three.js、Lottie、富文本编辑器或地图 SDK；需要时用动态导入、路由级分包或叶子组件隔离。
+- 不在 React 组件中散落裸 `fetch`、API URL、token refresh 或上传流程；跨边界请求应收敛到 API 集成层。
 
 ## Expected Output
 

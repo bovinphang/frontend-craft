@@ -30,7 +30,7 @@
 
 各运行时的路径与注意事项详见 [`docs/runtimes/`](docs/runtimes/)。
 
-它将 **13 个专业 agent**、**30 个自动激活 skill**、**9 个斜杠命令**、**5 个事件驱动 hook**、面向 6 款设计工具的 **MCP 模板**以及一整套**规则库**打包为一个可安装单元。运行一条命令，团队里的每一次 AI 会话都将以相同的方式编写 React、Vue、Next.js 或 Nuxt——类型安全、可访问、安全、一致。
+它将 **13 个专业 agent**、**32 个自动激活 skill**、**9 个斜杠命令**、**5 个事件驱动 hook**、面向 6 款设计工具的 **MCP 模板**以及一整套**规则库**打包为一个可安装单元。运行一条命令，团队里的每一次 AI 会话都将以相同的方式编写 React、Vue、Next.js 或 Nuxt——类型安全、可访问、安全、一致。
 
 ```bash
 npx frontend-craft@latest
@@ -44,7 +44,7 @@ npx frontend-craft@latest
 
 | 痛点                                          | frontend-craft 的解法                                                 |
 | --------------------------------------------- | --------------------------------------------------------------------- |
-| AI 助手写出的前端代码风格不一、缺类型、不安全 | **30 个 skill** 将团队规范编码为可自动激活的工作流                    |
+| AI 助手写出的前端代码风格不一、缺类型、不安全 | **32 个 skill** 将团队规范编码为可自动激活的工作流                    |
 | 每款 AI 工具都有自己的插件格式                | **一条 CLI 命令** 把相同的规则、agent 和 hook 安装到 15 个运行时      |
 | 设计稿到代码的交接总有信息损失                | **MCP 模板** 直接读取 Figma、Sketch、MasterGo、Pixso、墨刀、摹客      |
 | 代码评审随意、浅层                            | **13 个 agent** 输出分级报告：代码、安全、无障碍、性能、TS、UI 还原度 |
@@ -106,7 +106,7 @@ npx frontend-craft@latest install claude --local --force
 
 ```text
 你："Review my recent changes"
-→ fec-frontend-code-reviewer agent 被调度，输出 reports/code-review-*.md
+→ fec-code-reviewer agent 被调度，输出 reports/code-review-*.md
 
 你："/fec-review"
 → 按架构、类型、渲染、样式、可访问性等维度执行结构化评审
@@ -179,6 +179,7 @@ npx frontend-craft@latest install claude --local --force
 | 技能                          | 范围                                                       |
 | ----------------------------- | ---------------------------------------------------------- |
 | `fec-data-fetching`           | TanStack Query / 服务端状态获取、缓存、乐观更新            |
+| `fec-api-integration`         | 类型化 API client、鉴权刷新、上传、实时集成                |
 | `fec-form-handling`           | React Hook Form + Zod、动态字段、上传、多步流程            |
 | `fec-browser-storage`         | localStorage / sessionStorage / IndexedDB / Cookies 选型   |
 | `fec-route-protection`        | React Router、Next.js、Vue Router、Nuxt 的登录态与权限路由 |
@@ -201,7 +202,7 @@ npx frontend-craft@latest install claude --local --force
 
 | 技能                       | 范围                                           |
 | -------------------------- | ---------------------------------------------- |
-| `fec-frontend-code-review` | 架构、类型、渲染、样式、可访问性评审           |
+| `fec-code-review` | 架构、类型、渲染、样式、可访问性评审           |
 | `fec-security-review`      | XSS、CSRF、敏感数据泄露、输入校验              |
 | `fec-accessibility-check`  | WCAG 2.1 AA 无障碍检查                         |
 | `fec-validation-fix`       | 一次性运行并修复 lint、type-check、test、build |
@@ -212,6 +213,7 @@ npx frontend-craft@latest install claude --local --force
 | 技能                          | 范围                                                    |
 | ----------------------------- | ------------------------------------------------------- |
 | `fec-ui-design`              | UI 方向、视觉识别、界面打磨、状态、视觉 QA             |
+| `fec-motion-interaction`      | 交互动效、页面转场、滚动动画、reduced-motion           |
 | `fec-implement-from-design`   | 基于 Figma/Sketch/MasterGo/Pixso/墨刀/摹客设计稿实现 UI |
 | `fec-storybook-component-doc` | Storybook 组件文档、设计系统呈现、隔离状态预览          |
 
@@ -234,16 +236,16 @@ npx frontend-craft@latest install claude --local --force
 
 | 代理                         | 聚焦领域                                                  | 报告                         |
 | ---------------------------- | --------------------------------------------------------- | ---------------------------- |
-| `fec-frontend-code-reviewer`     | React/Vue/Next/Nuxt、TS、样式、客户端安全（按置信度降噪） | `code-review-*.md`           |
+| `fec-code-reviewer`     | React/Vue/Next/Nuxt、TS、样式、客户端安全（按置信度降噪） | `code-review-*.md`           |
 | `fec-typescript-reviewer`        | 类型安全、异步正确性、惯用模式（只报告不修改）            | `typescript-review-*.md`     |
-| `fec-frontend-security-reviewer` | XSS、客户端密钥、危险 DOM/API、CSP、依赖审计              | `security-review-*.md`       |
+| `fec-security-reviewer` | XSS、客户端密钥、危险 DOM/API、CSP、依赖审计              | `security-review-*.md`       |
 | `fec-performance-optimizer`      | 打包体积、渲染性能、网络瓶颈                              | `performance-review-*.md`    |
-| `fec-frontend-architect`         | 页面拆分、组件架构、状态流、目录规划                      | `architecture-proposal-*.md` |
-| `fec-frontend-test-planner`      | 风险-层级映射：静态、单元、组件、E2E、视觉、无障碍、安全  | `test-plan-*.md`             |
-| `fec-frontend-build-fixer`       | 增量修复 lint / type-check / test / build / CI            | `validation-fix-*.md`        |
-| `fec-frontend-refactor-cleaner`  | 分类并安全清理未使用代码、导出、样式、路由和依赖          | `refactor-clean-*.md`        |
-| `fec-frontend-e2e-runner`        | E2E 编写与运行（Playwright/Cypress）、flaky 隔离、Trace   | `e2e-summary-*.md`           |
-| `fec-frontend-doc-updater`       | 同步 README、runtime 文档、结构、能力表和 metadata        | —                            |
+| `fec-architect`         | 页面拆分、组件架构、状态流、目录规划                      | `architecture-proposal-*.md` |
+| `fec-test-planner`      | 风险-层级映射：静态、单元、组件、E2E、视觉、无障碍、安全  | `test-plan-*.md`             |
+| `fec-build-fixer`       | 增量修复 lint / type-check / test / build / CI            | `validation-fix-*.md`        |
+| `fec-refactor-cleaner`  | 分类并安全清理未使用代码、导出、样式、路由和依赖          | `refactor-clean-*.md`        |
+| `fec-e2e-runner`        | E2E 编写与运行（Playwright/Cypress）、flaky 隔离、Trace   | `e2e-summary-*.md`           |
+| `fec-doc-updater`       | 同步 README、runtime 文档、结构、能力表和 metadata        | —                            |
 | `fec-ui-checker`                 | 视觉问题排查与设计还原度评估                              | `ui-fidelity-review-*.md`    |
 | `fec-figma-implementer`          | 按 Figma/Sketch/MasterGo/Pixso/墨刀/摹客设计稿精确实现 UI | `design-implementation-*.md` |
 | `fec-design-token-mapper`        | 将设计变量映射到项目 Design Token                         | `token-mapping-*.md`         |
@@ -357,20 +359,20 @@ $env:MODAO_TOKEN = "your-modao-token"
 
 | 报告类型       | 文件名模式                                   | 来源                                                                     |
 | -------------- | -------------------------------------------- | ------------------------------------------------------------------------ |
-| 代码审查       | `code-review-YYYY-MM-DD-HHmmss.md`           | `/fec-review`、`fec-frontend-code-review`、`fec-frontend-code-reviewer`      |
+| 代码审查       | `code-review-YYYY-MM-DD-HHmmss.md`           | `/fec-review`、`fec-code-review`、`fec-code-reviewer`      |
 | TS/JS 专项评审 | `typescript-review-YYYY-MM-DD-HHmmss.md`     | `fec-typescript-reviewer`                                                    |
-| 安全审查       | `security-review-YYYY-MM-DD-HHmmss.md`       | `fec-security-review`、`fec-frontend-security-reviewer`                      |
+| 安全审查       | `security-review-YYYY-MM-DD-HHmmss.md`       | `fec-security-review`、`fec-security-reviewer`                      |
 | 无障碍检查     | `accessibility-review-YYYY-MM-DD-HHmmss.md`  | `fec-accessibility-check`                                                |
 | 性能分析       | `performance-review-YYYY-MM-DD-HHmmss.md`    | `fec-performance-optimizer`                                                  |
-| 架构方案       | `architecture-proposal-YYYY-MM-DD-HHmmss.md` | `fec-frontend-architect`                                                     |
+| 架构方案       | `architecture-proposal-YYYY-MM-DD-HHmmss.md` | `fec-architect`                                                     |
 | 设计还原度     | `ui-fidelity-review-YYYY-MM-DD-HHmmss.md`    | `fec-ui-checker`                                                             |
 | 设计实现       | `design-implementation-YYYY-MM-DD-HHmmss.md` | `fec-figma-implementer`                                                      |
 | Token 映射     | `token-mapping-YYYY-MM-DD-HHmmss.md`         | `fec-design-token-mapper`                                                    |
 | 设计计划       | `design-plan-YYYY-MM-DD-HHmmss.md`           | `fec-implement-from-design`                                              |
-| 测试计划       | `test-plan-YYYY-MM-DD-HHmmss.md`             | `/fec-test-plan`、`fec-testing-strategy`、`fec-frontend-test-planner`        |
+| 测试计划       | `test-plan-YYYY-MM-DD-HHmmss.md`             | `/fec-test-plan`、`fec-testing-strategy`、`fec-test-planner`        |
 | 验证修复       | `validation-fix-YYYY-MM-DD-HHmmss.md`        | `fec-validation-fix`                                                     |
-| 重构清理       | `refactor-clean-YYYY-MM-DD-HHmmss.md`        | `/fec-refactor-clean`、`fec-refactor-clean`、`fec-frontend-refactor-cleaner` |
-| E2E 运行摘要   | `e2e-summary-YYYY-MM-DD-HHmmss.md`           | `fec-frontend-e2e-runner`（可选）                                            |
+| 重构清理       | `refactor-clean-YYYY-MM-DD-HHmmss.md`        | `/fec-refactor-clean`、`fec-refactor-clean`、`fec-refactor-cleaner` |
+| E2E 运行摘要   | `e2e-summary-YYYY-MM-DD-HHmmss.md`           | `fec-e2e-runner`（可选）                                            |
 | 迁移计划       | `migration-plan-YYYY-MM-DD-HHmmss.md`        | `fec-legacy-to-modern-migration`                                         |
 
 </details>
@@ -419,7 +421,7 @@ npx skills check                           # 预览可用更新
 - [安全策略](SECURITY.zh-CN.md) — 私密漏洞报告方式与支持范围（[English](SECURITY.md)）
 - [行为准则](CODE_OF_CONDUCT.zh-CN.md) — 社区参与规范（[English](CODE_OF_CONDUCT.md)）
 - [变更日志](CHANGELOG.zh-CN.md) — 版本说明（[English](CHANGELOG.md)）
-- [项目结构](docs/project-structure.md) — 完整目录布局与文件职责
+- [项目结构](docs/zh-CN/project-structure.md) — 完整目录布局与文件职责（[English](docs/project-structure.md)）
 
 ---
 

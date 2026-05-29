@@ -28,7 +28,7 @@ Project-facing release notes are maintained in English from 2.0.0 onward. Histor
 
 ### Added
 
-- Added new workflow capabilities: `fec-tdd-workflow`, `fec-refactor-clean`, `fec-doc-sync`, `/fec-plan`, `/fec-tdd`, `/fec-build-fix`, `/fec-refactor-clean`, `/fec-doc-sync`, plus `frontend-build-fixer`, `frontend-refactor-cleaner`, and `frontend-doc-updater`.
+- Added new workflow capabilities: `fec-tdd-workflow`, `fec-refactor-clean`, `fec-doc-sync`, `/fec-plan`, `/fec-tdd`, `/fec-build-fix`, `/fec-refactor-clean`, `/fec-doc-sync`, plus `fec-build-fixer`, `fec-refactor-cleaner`, and `fec-doc-updater`.
 - Added shared rules for agent workflow and working modes, and expanded testing, performance, refactoring, git, and comment rules with TDD, incremental validation, cleanup, and documentation-sync guidance.
 - **Update/upgrade commands:** added `frontend-craft update` and `frontend-craft upgrade` with manifest-based file protection, allowing safe in-place updates without overwriting user-modified files.
 - **esbuild minification:** added an esbuild minification step to the build pipeline, producing smaller compiled output for `dist/`.
@@ -51,7 +51,7 @@ Project-facing release notes are maintained in English from 2.0.0 onward. Histor
 ### Added
 
 - **Qoder runtime support:** added the `qoder` installer, runtime documentation, capability metadata, README coverage, and marketplace keywords. The universal installer now documents and supports 15 AI coding runtimes.
-- **Testing strategy workflow:** added `frontend-test-planner`, `/fec-test-plan`, and `fec-testing-strategy` for risk-based frontend test planning across static checks, unit, component, integration, E2E, visual, accessibility, security, and performance layers.
+- **Testing strategy workflow:** added `fec-test-planner`, `/fec-test-plan`, and `fec-testing-strategy` for risk-based frontend test planning across static checks, unit, component, integration, E2E, visual, accessibility, security, and performance layers.
 - **New frontend workflow skills:** added `fec-ui-design-direction`, `fec-interface-polish`, and `fec-vite-project-standard`; replaced the former validation workflow with `fec-validation-fix`.
 - **Standalone skill publishing pipeline:** added `scripts/pack-skills.ts`, `scripts/check-skills-publish.ts`, shared skill packaging helpers, `npm run pack:skills`, `npm run check:skills-publish`, and `npm run pack:all` for generating and validating one publishable package per skill.
 - **CLI diagnostics and metadata checks:** added `frontend-craft matrix`, `frontend-craft doctor <runtime>`, and `frontend-craft sync-metadata --check` to inspect runtime capabilities, installation health, and public metadata consistency.
@@ -96,7 +96,7 @@ Project-facing release notes are maintained in English from 2.0.0 onward. Histor
 
 ### Changed
 
-- **Agent behavior (`frontend-code-reviewer`):** report-only by default — no longer modifies business files unless explicitly requested.
+- **Agent behavior (`fec-code-reviewer`):** report-only by default — no longer modifies business files unless explicitly requested.
 - **Skill structure**: React, Vue, Next.js, Nuxt, Monorepo, legacy-web, legacy-migration, and implement-from-design skills aligned to a five-section template: Purpose / When to Use / Procedure / Constraints / Expected Output.
 - **Scaffold templates**: fixed React CSS import (`import './<Name>.styles.css'` instead of `import styles from ...`); Vue scaffold uses `<slot />` instead of bare component tag.
 - **Marketplace description**: skills count updated from 13 → 24, with new capabilities (component testing, route protection, PWA, Web Workers, Canvas/Three.js, SVG animation).
@@ -154,7 +154,7 @@ Project-facing release notes are maintained in English from 2.0.0 onward. Histor
 ### Changed
 
 - `testing.md` — 补充 E2E 测试规则
-- `frontend-architect` agent — 增加 `fec-legacy-to-modern-migration` skill 引用
+- `fec-architect` agent — 增加 `fec-legacy-to-modern-migration` skill 引用
 - `fec-legacy-to-modern-migration` skill — 新增重构实施要求：图片（使用原项目资源、禁止内联 SVG）、样式（参考效果不照搬 CSS、优先 flex、禁止内联样式）、目标（视觉交互一致、功能等价、代码更简洁易维护）
 
 ---
@@ -164,8 +164,8 @@ Project-facing release notes are maintained in English from 2.0.0 onward. Histor
 ### Added
 
 - 初始发布
-- 5 个 Agents：frontend-architect、performance-optimizer、ui-checker、figma-implementer、design-token-mapper
-- 9 个 Skills：fec-frontend-code-review、fec-security-review、fec-accessibility-check、fec-react-project-standard、fec-vue3-project-standard、fec-implement-from-design、fec-test-and-fix、fec-legacy-web-standard、fec-legacy-to-modern-migration
+- 5 个 Agents：fec-architect、performance-optimizer、ui-checker、figma-implementer、design-token-mapper
+- 9 个 Skills：fec-code-review、fec-security-review、fec-accessibility-check、fec-react-project-standard、fec-vue3-project-standard、fec-implement-from-design、fec-test-and-fix、fec-legacy-web-standard、fec-legacy-to-modern-migration
 - 3 个 Commands：init、review、scaffold
 - Hooks：SessionStart、PreToolUse、PostToolUse、Stop、Notification
 - 11 个规则模板：CLAUDE.md、settings.json、vue、react、design-system、testing、git-conventions、i18n、performance、api-layer、state-management、error-handling、naming-conventions

@@ -20,7 +20,8 @@
     "relatedSkills": [
       "fec-web-workers",
       "fec-svg-animation",
-      "fec-accessibility-check"
+      "fec-accessibility-check",
+      "fec-motion-interaction"
     ],
     "boundaryWorkflows": [
       "Use a worker workflow when expensive graphics computation blocks the main thread.",
@@ -105,7 +106,7 @@
       "accessibility"
     ]
   },
-  "fec-frontend-code-review": {
+  "fec-code-review": {
     "relatedSkills": [
       "fec-security-review",
       "fec-accessibility-check",
@@ -178,7 +179,9 @@
     "relatedSkills": [
       "fec-react-project-standard",
       "fec-route-protection",
-      "fec-data-fetching"
+      "fec-data-fetching",
+      "fec-api-integration",
+      "fec-motion-interaction"
     ],
     "boundaryWorkflows": [
       "Use a React project workflow for generic client component architecture and hooks organization.",
@@ -235,7 +238,9 @@
       "fec-security-review",
       "fec-list-virtualization",
       "fec-svg-animation",
-      "fec-canvas-threejs"
+      "fec-canvas-threejs",
+      "fec-api-integration",
+      "fec-motion-interaction"
     ],
     "boundaryWorkflows": [
       "Use specialty workflows for complex forms, server state, tests, accessibility, security, large lists, animation, or graphics.",
@@ -244,12 +249,12 @@
     "capabilityTags": [
       "react",
       "project-standard",
-      "frontend-architecture"
+      "fec-architecture"
     ]
   },
   "fec-security-review": {
     "relatedSkills": [
-      "fec-frontend-code-review",
+      "fec-code-review",
       "fec-accessibility-check",
       "fec-browser-storage"
     ],
@@ -308,7 +313,7 @@
       "fec-validation-fix",
       "fec-accessibility-check",
       "fec-security-review",
-      "fec-frontend-code-review"
+      "fec-code-review"
     ],
     "boundaryWorkflows": [
       "Use specialty testing workflows after the layer and risk placement are decided.",
@@ -324,7 +329,7 @@
     "relatedSkills": [
       "fec-implement-from-design",
       "fec-accessibility-check",
-      "fec-frontend-code-review"
+      "fec-code-review"
     ],
     "boundaryWorkflows": [
       "Use an implementation-from-design workflow when an external design file is the source of truth.",
@@ -351,7 +356,8 @@
       "fec-react-project-standard",
       "fec-vue3-project-standard",
       "fec-monorepo-project-standard",
-      "fec-security-review"
+      "fec-security-review",
+      "fec-motion-interaction"
     ],
     "boundaryWorkflows": [
       "Use framework project workflows for component architecture, state, and directory structure.",
@@ -383,7 +389,7 @@
     "capabilityTags": [
       "vue",
       "project-standard",
-      "frontend-architecture"
+      "fec-architecture"
     ]
   },
   "fec-web-workers": {
@@ -401,6 +407,55 @@
       "web-workers",
       "performance",
       "main-thread"
+    ]
+  },
+  "fec-api-integration": {
+    "relatedSkills": [
+      "fec-data-fetching",
+      "fec-security-review",
+      "fec-route-protection",
+      "fec-form-handling"
+    ],
+    "boundaryWorkflows": [
+      "Use a data-fetching workflow for TanStack Query cache policy, query keys, optimistic updates, and server-state hooks.",
+      "Use a security review workflow for token storage, XSS, CSRF, file upload trust boundaries, and secret leakage risks.",
+      "Use a route protection workflow for page-level auth redirects, RBAC route guards, and middleware behavior."
+    ],
+    "capabilityTags": [
+      "api",
+      "typed-client",
+      "auth",
+      "upload",
+      "realtime"
+    ]
+  },
+  "fec-motion-interaction": {
+    "relatedSkills": [
+      "fec-ui-design",
+      "fec-svg-animation",
+      "fec-canvas-threejs",
+      "fec-accessibility-check"
+    ],
+    "boundaryWorkflows": [
+      "Use a UI design workflow to decide visual direction, page hierarchy, and whether motion is appropriate for the product context.",
+      "Use an SVG animation workflow for SVG-only path drawing, icon motion, and illustration motion details.",
+      "Use a Canvas/Three.js workflow for WebGL, shader, 3D, particle, and canvas-rendered animation."
+    ],
+    "capabilityTags": [
+      "motion",
+      "interaction",
+      "animation",
+      "accessibility"
+    ]
+  },
+  "fec-svg-animation": {
+    "capabilityTags": [
+      "svg",
+      "animation",
+      "motion"
+    ],
+    "relatedSkills": [
+      "fec-motion-interaction"
     ]
   }
 }

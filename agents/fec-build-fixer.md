@@ -1,5 +1,5 @@
 ---
-name: fec-frontend-build-fixer
+name: fec-build-fixer
 description: 前端构建与验证失败修复子代理：增量分析 lint、type-check、test、build、CI 失败，按文件和根因分组，一次修复一类问题并重新验证。适合在本地或 CI 构建失败后使用。
 tools: Read, Edit, Write, MultiEdit, Glob, Grep, LS, Bash
 model: sonnet

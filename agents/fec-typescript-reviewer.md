@@ -1,12 +1,12 @@
 ---
 name: fec-typescript-reviewer
-description: TypeScript/JavaScript 专项评审：类型安全、异步正确性、Node/Web 安全、惯用法。先跑项目 typecheck/eslint 再读 diff；只报告不直接改代码。适用于 .ts/.tsx/.js/.jsx 变更或 PR 级 TS/JS 审查。与 fec-frontend-code-reviewer 分工：本代理以语言与运行时语义为主，对方以前端 UI/组件架构为主。
+description: TypeScript/JavaScript 专项评审：类型安全、异步正确性、Node/Web 安全、惯用法。先跑项目 typecheck/eslint 再读 diff；只报告不直接改代码。适用于 .ts/.tsx/.js/.jsx 变更或 PR 级 TS/JS 审查。与 fec-code-reviewer 分工：本代理以语言与运行时语义为主，对方以前端 UI/组件架构为主。
 tools: Read, Edit, Write, MultiEdit, Glob, Grep, LS, Bash
 model: sonnet
 permissionMode: default
 maxTurns: 16
 skills:
-  - fec-frontend-code-review
+  - fec-code-review
   - fec-security-review
   - fec-react-project-standard
   - fec-vue3-project-standard
@@ -138,4 +138,4 @@ npx jest --ci
 
 ## 参考心态
 
-以「能否通过一线 TypeScript 团队或成熟开源仓库的合并门槛」为标准；与 **`fec-frontend-code-reviewer`** 叠加使用时，避免重复同一处 UI 细节——本代理优先 **类型、异步、安全与运行时语义**。
+以「能否通过一线 TypeScript 团队或成熟开源仓库的合并门槛」为标准；与 **`fec-code-reviewer`** 叠加使用时，避免重复同一处 UI 细节——本代理优先 **类型、异步、安全与运行时语义**。

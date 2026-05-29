@@ -4,19 +4,19 @@
 
 ## 选择原则
 
-- 架构、页面拆分、状态流、目录规划：`frontend-architect`
-- 前端 PR 综合评审：`frontend-code-reviewer`
+- 架构、页面拆分、状态流、目录规划：`fec-architect`
+- 前端 PR 综合评审：`fec-code-reviewer`
 - TypeScript / JavaScript 语义与类型风险：`typescript-reviewer`
-- 安全风险：`frontend-security-reviewer`
-- 测试策略：`frontend-test-planner`
-- E2E 编写与运行：`frontend-e2e-runner`
+- 安全风险：`fec-security-reviewer`
+- 测试策略：`fec-test-planner`
+- E2E 编写与运行：`fec-e2e-runner`
 - 性能瓶颈：`performance-optimizer`
 - UI 视觉与设计稿差异：`ui-checker`
 - 设计稿实现：`figma-implementer`
 - Token 映射：`design-token-mapper`
-- 构建、类型、测试、CI 失败：`frontend-build-fixer`
-- 死代码与无用依赖清理：`frontend-refactor-cleaner`
-- README、runtime docs、能力表同步：`frontend-doc-updater`
+- 构建、类型、测试、CI 失败：`fec-build-fixer`
+- 死代码与无用依赖清理：`fec-refactor-cleaner`
+- README、runtime docs、能力表同步：`fec-doc-updater`
 
 ## 协作约束
 

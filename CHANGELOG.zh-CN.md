@@ -27,7 +27,7 @@
 
 ### 新增
 
-- 新增工作流能力：`fec-tdd-workflow`、`fec-refactor-clean`、`fec-doc-sync`、`/fec-plan`、`/fec-tdd`、`/fec-build-fix`、`/fec-refactor-clean`、`/fec-doc-sync`，以及 `frontend-build-fixer`、`frontend-refactor-cleaner`、`frontend-doc-updater`。
+- 新增工作流能力：`fec-tdd-workflow`、`fec-refactor-clean`、`fec-doc-sync`、`/fec-plan`、`/fec-tdd`、`/fec-build-fix`、`/fec-refactor-clean`、`/fec-doc-sync`，以及 `fec-build-fixer`、`fec-refactor-cleaner`、`fec-doc-updater`。
 - 新增 agent workflow 与 working modes 共享规则，并扩展 testing、performance、refactoring、git、comment 规则，补充 TDD、增量验证、清理和文档同步指导。
 - **更新/升级命令**：新增 `frontend-craft update` 和 `frontend-craft upgrade`，基于 manifest 文件保护机制，支持安全就地更新而不会覆盖用户已修改的文件。
 - **esbuild 压缩**：在构建流水线中新增 esbuild 压缩步骤，使 `dist/` 编译产物更小。
@@ -50,7 +50,7 @@
 ### 新增
 
 - **Qoder runtime 支持**：新增 `qoder` 安装器、runtime 文档、能力元数据、README 说明和 Marketplace 关键词。通用安装器现在记录并支持 15 个 AI coding runtime。
-- **测试策略工作流**：新增 `frontend-test-planner`、`/fec-test-plan` 和 `fec-testing-strategy`，用于按风险规划前端测试层级，覆盖静态检查、单元、组件、集成、E2E、视觉、无障碍、安全与性能等维度。
+- **测试策略工作流**：新增 `fec-test-planner`、`/fec-test-plan` 和 `fec-testing-strategy`，用于按风险规划前端测试层级，覆盖静态检查、单元、组件、集成、E2E、视觉、无障碍、安全与性能等维度。
 - **新前端工作流技能**：新增 `fec-ui-design-direction`、`fec-interface-polish` 和 `fec-vite-project-standard`；原验证修复流程改为 `fec-validation-fix`。
 - **独立 skill 发布管线**：新增 `scripts/pack-skills.ts`、`scripts/check-skills-publish.ts`、共享 skill 打包工具，以及 `npm run pack:skills`、`npm run check:skills-publish`、`npm run pack:all`，可为每个 skill 生成并校验独立可发布包。
 - **CLI 诊断与 metadata 检查**：新增 `frontend-craft matrix`、`frontend-craft doctor <runtime>` 和 `frontend-craft sync-metadata --check`，用于查看 runtime 能力矩阵、安装健康状态与公开 metadata 一致性。
@@ -95,7 +95,7 @@
 
 ### 变更
 
-- **Agent 行为（`frontend-code-reviewer`）**：默认只输出评审报告，不再修改业务文件，除非用户明确要求。
+- **Agent 行为（`fec-code-reviewer`）**：默认只输出评审报告，不再修改业务文件，除非用户明确要求。
 - **Skill 结构**：React、Vue、Next.js、Nuxt、Monorepo、legacy-web、legacy-migration、implement-from-design 等技能统一为五段式结构：Purpose / When to Use / Procedure / Constraints / Expected Output。
 - **脚手架模板**：修正 React CSS import（`import './<Name>.styles.css'` 替代模块化导入）；Vue 模板使用 `<slot />` 替代裸组件标签。
 - **Marketplace 描述**：skills 数量从 13 → 24，补充新能力（组件测试、路由保护、PWA、Web Workers、Canvas/Three.js、SVG 动画）。
@@ -153,7 +153,7 @@
 ### 变更
 
 - `testing.md` — 补充 E2E 测试规则
-- `frontend-architect` agent — 增加 `fec-legacy-to-modern-migration` skill 引用
+- `fec-architect` agent — 增加 `fec-legacy-to-modern-migration` skill 引用
 - `fec-legacy-to-modern-migration` skill — 新增重构实施要求：图片（使用原项目资源、禁止内联 SVG）、样式（参考效果不照搬 CSS、优先 flex、禁止内联样式）、目标（视觉交互一致、功能等价、代码更简洁易维护）
 
 ---
@@ -163,8 +163,8 @@
 ### 新增
 
 - 初始发布
-- 5 个 Agents：frontend-architect、performance-optimizer、ui-checker、figma-implementer、design-token-mapper
-- 9 个 Skills：fec-frontend-code-review、fec-security-review、fec-accessibility-check、fec-react-project-standard、fec-vue3-project-standard、fec-implement-from-design、fec-test-and-fix、fec-legacy-web-standard、fec-legacy-to-modern-migration
+- 5 个 Agents：fec-architect、performance-optimizer、ui-checker、figma-implementer、design-token-mapper
+- 9 个 Skills：fec-code-review、fec-security-review、fec-accessibility-check、fec-react-project-standard、fec-vue3-project-standard、fec-implement-from-design、fec-test-and-fix、fec-legacy-web-standard、fec-legacy-to-modern-migration
 - 3 个 Commands：init、review、scaffold
 - Hooks：SessionStart、PreToolUse、PostToolUse、Stop、Notification
 - 11 个规则模板：CLAUDE.md、settings.json、vue、react、design-system、testing、git-conventions、i18n、performance、api-layer、state-management、error-handling、naming-conventions

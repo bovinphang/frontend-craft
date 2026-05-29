@@ -138,7 +138,7 @@ frontend-craft/
 
 | 技能                             | 用途                                                           |
 | -------------------------------- | -------------------------------------------------------------- |
-| `fec-frontend-code-review`       | 架构、类型安全、渲染、样式、可访问性、测试、安全评审           |
+| `fec-code-review`       | 架构、类型安全、渲染、样式、可访问性、测试、安全评审           |
 | `fec-security-review`            | XSS、CSRF、敏感数据泄露、不安全输入处理                        |
 | `fec-accessibility-check`        | 面向 WCAG 的语义结构、键盘支持、焦点、标签检查                 |
 | `fec-react-project-standard`     | React + TypeScript 项目规范                                    |
@@ -182,7 +182,7 @@ frontend-craft/
 
 | 场景                         | 技能（供查阅）                   | 示例话术（不出现技能名）                                                                                                               |
 | ---------------------------- | -------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------- |
-| 合并前做 PR / 分支评审       | `fec-frontend-code-review`       | 「合并前请评审 `src/features/checkout/`：架构、类型、无障碍和测试；把 Markdown 报告写到 `reports/`。」                                 |
+| 合并前做 PR / 分支评审       | `fec-code-review`       | 「合并前请评审 `src/features/checkout/`：架构、类型、无障碍和测试；把 Markdown 报告写到 `reports/`。」                                 |
 | 聚焦 XSS、密钥、危险 DOM     | `fec-security-review`            | 「请审计 `src/lib/auth.ts` 以及所有渲染或存储用户 HTML 的代码，按严重程度列出 XSS 与密钥泄露风险及修复建议。」                         |
 | 新弹窗 / 表单 — 键盘与 ARIA  | `fec-accessibility-check`        | 「检查 `src/components/ConfirmDialog.tsx` 的键盘陷阱、焦点顺序、标签与 ARIA，并给出可落地的修改建议。」                                |
 | 对齐 React 工程约定          | `fec-react-project-standard`     | 「我们使用 React 18 和 TanStack Query，请对照成熟 React + TS 实践评审 `src/pages/Dashboard/`，并贴合现有抽象。」                       |

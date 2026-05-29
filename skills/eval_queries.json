@@ -21,6 +21,28 @@
       "把 jQuery 项目迁移到 Vue"
     ]
   },
+  "fec-api-integration": {
+    "should_trigger": [
+      "设计前端 typed API client",
+      "统一处理接口 401 refresh token",
+      "前后端联调时错误状态怎么映射",
+      "文件上传用 multipart 还是预签名 URL",
+      "SSE 和 WebSocket 应该选哪个",
+      "组件里到处 fetch 想收敛成 API 层",
+      "API 422 字段错误怎么展示到表单",
+      "frontend API integration with auth refresh"
+    ],
+    "should_not_trigger": [
+      "TanStack Query queryKey 怎么设计",
+      "后端服务分层和数据库 repository",
+      "React 项目目录怎么划分",
+      "只检查 token 是否能放 localStorage",
+      "写 Playwright 登录 E2E",
+      "配置 Vite proxy",
+      "普通按钮 loading 样式",
+      "PWA Service Worker 缓存接口"
+    ]
+  },
   "fec-browser-storage": {
     "should_trigger": [
       "localStorage 里该怎么存用户偏好",
@@ -177,7 +199,7 @@
       "Vue 组件架构设计"
     ]
   },
-  "fec-frontend-code-review": {
+  "fec-code-review": {
     "should_trigger": [
       "帮我 review 这个前端 PR",
       "做一次合并前代码评审",
@@ -219,6 +241,28 @@
       "检查 XSS 风险",
       "设计 monorepo package 边界",
       "写 Web Worker"
+    ]
+  },
+  "fec-motion-interaction": {
+    "should_trigger": [
+      "给这个产品页设计页面转场动效",
+      "Framer Motion 和 GSAP 这里该选哪个",
+      "滚动叙事动画怎么做且不掉帧",
+      "这个 dashboard 的交互动效太重了帮我降级",
+      "Lottie 图标动画怎么按需加载",
+      "设计 reduced-motion 下的动画兜底",
+      "页面入场 stagger 和布局过渡怎么规划",
+      "frontend interaction motion strategy"
+    ],
+    "should_not_trigger": [
+      "SVG 路径描边动画怎么写",
+      "Three.js 粒子系统怎么优化",
+      "普通 CSS hover 颜色变化",
+      "React 项目目录结构设计",
+      "检查按钮 aria-label",
+      "写 Playwright 动画截图测试",
+      "配置 PWA manifest",
+      "API 错误状态怎么映射"
     ]
   },
   "fec-legacy-to-modern-migration": {

@@ -3,7 +3,7 @@ name: fec-test-plan
 description: 为前端功能、PR 或里程碑制定测试分层计划，输出风险到测试层的覆盖矩阵。
 ---
 
-为当前功能或变更制定前端测试策略。若需要独立规划，可委托 **`frontend-test-planner`** 子代理；若用户已经明确要求写具体测试，则直接分流到 `fec-component-testing`、`fec-e2e-testing` 或 `fec-storybook-component-doc`。
+为当前功能或变更制定前端测试策略。若需要独立规划，可委托 **`fec-test-planner`** 子代理；若用户已经明确要求写具体测试，则直接分流到 `fec-component-testing`、`fec-e2e-testing` 或 `fec-storybook-component-doc`。
 
 ## 执行步骤
 

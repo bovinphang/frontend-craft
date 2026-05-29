@@ -3,7 +3,7 @@ name: fec-refactor-clean
 description: 在验证保护下识别并清理前端死代码、未使用导出、过期组件、样式和依赖。
 ---
 
-按 `fec-refactor-clean` 执行安全清理。复杂清理可委托 **`frontend-refactor-cleaner`**。
+按 `fec-refactor-clean` 执行安全清理。复杂清理可委托 **`fec-refactor-cleaner`**。
 
 ## 执行步骤
 

@@ -13,7 +13,7 @@ mcpServers:
   - pixso
   - modao
 skills:
-  - fec-frontend-code-review
+  - fec-code-review
   - fec-ui-design
   - fec-accessibility-check
   - fec-validation-fix

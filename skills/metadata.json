@@ -33,6 +33,41 @@
     ]
   },
   {
+    "id": "fec-api-integration",
+    "name": "API 集成",
+    "category": "implementation-capability",
+    "tags": [
+      "api",
+      "typed-client",
+      "auth-refresh",
+      "upload",
+      "realtime"
+    ],
+    "summary": "Frontend API integration boundaries, typed clients, error mapping, auth refresh, uploads, and realtime choices.",
+    "version": "2.3.1",
+    "license": "MIT",
+    "homepage": "https://github.com/bovinphang/frontend-craft",
+    "repository": "https://github.com/bovinphang/frontend-craft",
+    "keywords": [
+      "implementation-capability",
+      "api",
+      "typed-client",
+      "auth-refresh",
+      "upload",
+      "realtime"
+    ],
+    "platforms": [
+      "skills-cli",
+      "skillreg",
+      "claude-code",
+      "codex",
+      "cursor",
+      "opencode",
+      "openclaw",
+      "generic-skill-runtime"
+    ]
+  },
+  {
     "id": "fec-browser-storage",
     "name": "浏览器存储",
     "category": "implementation-capability",
@@ -282,7 +317,7 @@
     ]
   },
   {
-    "id": "fec-frontend-code-review",
+    "id": "fec-code-review",
     "name": "前端代码审查",
     "category": "review-quality",
     "tags": [
@@ -374,6 +409,41 @@
       "pixso",
       "design-to-code",
       "mcp"
+    ],
+    "platforms": [
+      "skills-cli",
+      "skillreg",
+      "claude-code",
+      "codex",
+      "cursor",
+      "opencode",
+      "openclaw",
+      "generic-skill-runtime"
+    ]
+  },
+  {
+    "id": "fec-motion-interaction",
+    "name": "交互动效",
+    "category": "design-ui",
+    "tags": [
+      "motion",
+      "framer-motion",
+      "gsap",
+      "lottie",
+      "reduced-motion"
+    ],
+    "summary": "Frontend interaction motion strategy, tool selection, performance budgets, and accessible reduced-motion behavior.",
+    "version": "2.3.1",
+    "license": "MIT",
+    "homepage": "https://github.com/bovinphang/frontend-craft",
+    "repository": "https://github.com/bovinphang/frontend-craft",
+    "keywords": [
+      "design-ui",
+      "motion",
+      "framer-motion",
+      "gsap",
+      "lottie",
+      "reduced-motion"
     ],
     "platforms": [
       "skills-cli",
