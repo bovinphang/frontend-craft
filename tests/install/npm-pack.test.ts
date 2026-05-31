@@ -53,6 +53,15 @@ test("npm pack publishes compiled runtime files without TypeScript sources", () 
   assert.deepEqual(staleCompiledFiles, []);
 });
 
+test("package exposes frontend-craft and fec bin commands", () => {
+  const pkg = JSON.parse(fs.readFileSync(path.join(root, "package.json"), "utf8")) as {
+    bin?: Record<string, string>;
+  };
+
+  assert.equal(pkg.bin?.["frontend-craft"], "dist/bin/frontend-craft.js");
+  assert.equal(pkg.bin?.fec, "dist/bin/frontend-craft.js");
+});
+
 test("build output only contains bundled publish runtime directories", () => {
   assert.ok(!fs.existsSync(path.join(root, "dist", "src")), "build should not emit dist/src");
   assert.ok(!fs.existsSync(path.join(root, "dist", "tests")), "build should not emit dist/tests");

@@ -32,12 +32,6 @@
 
 **13 の専門エージェント**、**40 の自動起動スキル**、**8 のスラッシュコマンド**、**5 のイベント駆動フック**、6 つのデザインツールエンドポイント向け **MCP 統合**、そして完全な**ルールライブラリ**をひとつのパッケージにまとめています。コマンドひとつ実行するだけで、チームのすべての AI セッションが React、Vue、Next.js、Nuxt を同じように書きます——型安全で、アクセシブルで、セキュアで、一貫性を持って。
 
-```bash
-npx frontend-craft@latest
-```
-
-これだけです。ウィザードが残りの手順を案内します。
-
 ---
 
 ## なぜ frontend-craft なのか？
@@ -57,15 +51,25 @@ npx frontend-craft@latest
 
 **Node.js 22+** が必要です。**Windows、macOS、Linux** で動作します（すべてのフックとスクリプトは Node.js で実装）。
 
-### 方法 1：対話ウィザード（推奨）
+### 方法 1：グローバル CLI でプロジェクトを初期化（推奨）
+
+```bash
+npm install -g frontend-craft@latest
+cd your-project
+fec init
+```
+
+`fec init` は現在のプロジェクトを初期化するターミナル CLI コマンドです。AI アシスタント内の `/fec-init` スラッシュコマンドは別の入口で、先に frontend-craft を対象ランタイムへインストールしてから使用します。
+
+### 方法 2：グローバルインストール不要の対話ウィザード
 
 ```bash
 npx frontend-craft@latest
 ```
 
-ウィザードで 1 つ以上のランタイムを選択し、グローバルまたはプロジェクト単位でのインストールを決定します。最もわかりやすい始め方です。
+グローバルな `fec` コマンドをインストールしたくない場合はこちらを使います。ウィザードで 1 つ以上のランタイムを選択し、グローバルまたはプロジェクト単位でのインストールを決定します。
 
-### 方法 2：スクリプト向けインストール
+### 方法 3：スクリプト向けインストール
 
 ```bash
 # 現在のプロジェクトにインストール
@@ -83,7 +87,7 @@ npx frontend-craft@latest list
 
 > **CI / スクリプト環境：** 常に `--global` / `-g` または `--local` / `-l` を指定してください。TTY でなく未指定の場合、CLI は `claude --global` をデフォルトとします。
 
-### 方法 3：Claude Code Marketplace
+### 方法 4：Claude Code Marketplace
 
 **Claude Code Marketplace**（ネイティブプラグインフロー）のみでインストールする場合は、[docs/runtimes/claude.md](../runtimes/claude.md) · [简体中文](../runtimes/claude.zh-CN.md) に完全な手順があります。
 

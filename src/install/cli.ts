@@ -56,6 +56,8 @@ Usage:
   frontend-craft install <runtime> [options]
   frontend-craft install --all [options]
   frontend-craft install
+  frontend-craft init [runtime] [options]
+  fec init [runtime] [options]
   frontend-craft update <runtime> [options]
   frontend-craft upgrade <runtime> [options]
   frontend-craft list
@@ -73,6 +75,10 @@ Options:
   --force          Continue Claude CLI install even if a native plugin install is detected
   --all            Install for every supported runtime
 
+Notes:
+  init is an alias for install --local unless --global is explicitly provided.
+  /fec-init is the in-assistant slash command; fec init is the terminal CLI command.
+
 Runtimes:
   ${ALL_RUNTIMES.join(", ")}
 `);
@@ -86,6 +92,7 @@ function isInstallInvocation(argv: string[]): boolean {
 export async function main(argv: string[]): Promise<void> {
   const cmd = isInstallInvocation(argv) ? "install" : argv[0];
   const cmdArgs = isInstallInvocation(argv) ? argv : argv.slice(1);
+  const isInit = cmd === "init";
   const pluginRoot = resolvePluginRoot(import.meta.url);
 
   if (cmd === "version" || cmd === "-v" || cmd === "--version") {
@@ -140,7 +147,7 @@ export async function main(argv: string[]): Promise<void> {
     return;
   }
   const mode = cmd === "update" || cmd === "upgrade" ? "update" : "install";
-  if (cmd !== "install" && cmd !== "update" && cmd !== "upgrade") {
+  if (cmd !== "install" && cmd !== "init" && cmd !== "update" && cmd !== "upgrade") {
     console.error(`Unknown command: ${cmd}`);
     printHelp();
     process.exitCode = 1;
@@ -152,6 +159,7 @@ export async function main(argv: string[]): Promise<void> {
   }
 
   const { runtime, installLocation, dryRun, force, all, hasGlobal, hasLocal } = parseInstallArgs(cmdArgs);
+  const effectiveInstallLocation = installLocation ?? (isInit ? "local" : null);
   if (hasGlobal && hasLocal) {
     console.error("--global and --local cannot be used together.");
     process.exitCode = 1;
@@ -171,9 +179,9 @@ export async function main(argv: string[]): Promise<void> {
   }
 
   let isGlobal: boolean;
-  if (installLocation === "global") {
+  if (effectiveInstallLocation === "global") {
     isGlobal = true;
-  } else if (installLocation === "local") {
+  } else if (effectiveInstallLocation === "local") {
     isGlobal = false;
   } else if (canPrompt) {
     isGlobal = await promptLocation(runtimes);

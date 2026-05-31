@@ -32,12 +32,6 @@
 
 它將 **13 個專業 agent**、**40 個自動啟用 skill**、**8 個斜線指令**、**5 個事件驅動 hook**、面向 6 個設計工具端點的 **MCP 整合**以及一整套**規則庫**打包為一個可安裝單元。執行一條指令，團隊裡的每一次 AI 會話都將以相同的方式編寫 React、Vue、Next.js 或 Nuxt——型別安全、可存取、安全、一致。
 
-```bash
-npx frontend-craft@latest
-```
-
-就這樣。精靈會引導你完成剩餘步驟。
-
 ---
 
 ## 為什麼選擇 frontend-craft？
@@ -57,15 +51,25 @@ npx frontend-craft@latest
 
 需要 **Node.js 22+**。完整支援 **Windows、macOS 和 Linux**（所有鉤子和腳本均使用 Node.js 實作）。
 
-### 方式一：互動精靈（推薦）
+### 方式一：全域 CLI 初始化專案（推薦）
+
+```bash
+npm install -g frontend-craft@latest
+cd your-project
+fec init
+```
+
+`fec init` 是終端機中的 CLI 初始化指令，用來初始化目前專案。AI 助手內的 `/fec-init` 斜線指令是另一個入口，需要先把 frontend-craft 安裝到對應執行時後再使用。
+
+### 方式二：免全域安裝的互動精靈
 
 ```bash
 npx frontend-craft@latest
 ```
 
-精靈會引導你選擇一個或多個執行時，並決定安裝到全域還是目前專案。這是最友好的上手方式。
+不想全域安裝 `fec` 指令時使用這種方式。精靈會引導你選擇一個或多個執行時，並決定安裝到全域還是目前專案。
 
-### 方式二：腳本化安裝
+### 方式三：腳本化安裝
 
 ```bash
 # 安裝到目前專案
@@ -83,7 +87,7 @@ npx frontend-craft@latest list
 
 > **CI / 腳本場景：** 務必帶上 `--global` / `-g` 或 `--local` / `-l`。非 TTY 且未指定時，CLI 預設安裝到 `claude --global`。
 
-### 方式三：Claude Code Marketplace
+### 方式四：Claude Code Marketplace
 
 如果只透過 **Claude Code Marketplace**（原生插件流程）安裝，完整步驟見 [docs/runtimes/claude.zh-CN.md](../runtimes/claude.zh-CN.md) · [English](../runtimes/claude.md)。
 

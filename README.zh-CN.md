@@ -32,12 +32,6 @@
 
 它将 **13 个专业 agent**、**40 个自动激活 skill**、**8 个斜杠命令**、**5 个事件驱动 hook**、面向 6 个设计工具端点的 **MCP 集成**以及一整套**规则库**打包为一个可安装单元。运行一条命令，团队里的每一次 AI 会话都将以相同的方式编写 React、Vue、Next.js 或 Nuxt——类型安全、可访问、安全、一致。
 
-```bash
-npx frontend-craft@latest
-```
-
-就这样。向导会引导你完成剩余步骤。
-
 ---
 
 ## 为什么选择 frontend-craft？
@@ -57,15 +51,25 @@ npx frontend-craft@latest
 
 需要 **Node.js 22+**。完整支持 **Windows、macOS 和 Linux**（所有钩子和脚本均使用 Node.js 实现）。
 
-### 方式一：交互向导（推荐）
+### 方式一：全局 CLI 初始化项目（推荐）
+
+```bash
+npm install -g frontend-craft@latest
+cd your-project
+fec init
+```
+
+`fec init` 是终端里的 CLI 初始化命令，用来初始化当前项目。AI 助手内的 `/fec-init` 斜杠命令是另一个入口，需要先把 frontend-craft 安装到对应运行时后再使用。
+
+### 方式二：免全局安装的交互向导
 
 ```bash
 npx frontend-craft@latest
 ```
 
-向导会引导你选择一个或多个运行时，并决定安装到全局还是当前项目。这是最友好的上手方式。
+不想全局安装 `fec` 命令时使用这种方式。向导会引导你选择一个或多个运行时，并决定安装到全局还是当前项目。
 
-### 方式二：脚本化安装
+### 方式三：脚本化安装
 
 ```bash
 # 安装到当前项目
@@ -83,7 +87,7 @@ npx frontend-craft@latest list
 
 > **CI / 脚本场景：** 始终带上 `--global` / `-g` 或 `--local` / `-l`。非 TTY 且未指定时，CLI 默认安装到 `claude --global`。
 
-### 方式三：Claude Code Marketplace
+### 方式四：Claude Code Marketplace
 
 对 Claude Code 用户，**Claude Code Marketplace** 是推荐的单一来源安装方式。只有在需要跨运行时安装、脚本化/离线复制文件，或非 Marketplace 环境时，才建议对 Claude 使用 CLI。除非显式传入 `--force`，不要在同一个 Claude 作用域同时启用 Marketplace 和 CLI 两份完整插件。
 
