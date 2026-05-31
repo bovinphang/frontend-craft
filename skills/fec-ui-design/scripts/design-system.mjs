@@ -1,17 +1,93 @@
 #!/usr/bin/env node
+// @ts-check
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+
+/**
+ * @typedef {{
+ *   id: string;
+ *   label?: string;
+ *   keywords: string[];
+ *   pattern?: string;
+ *   patterns?: string[];
+ *   risks: string[];
+ *   style?: string;
+ *   space?: string;
+ *   components?: string[];
+ *   motion: string;
+ *   antiPatterns: string[];
+ * }} ProductRule
+ *
+ * @typedef {{
+ *   id: string;
+ *   label?: string;
+ *   keywords: string[];
+ *   usage?: string;
+ *   description?: string;
+ *   risks?: string[];
+ *   avoid?: string[];
+ *   antiPatterns?: string[];
+ *   tokens?: { density?: string };
+ * }} StyleArchetype
+ *
+ * @typedef {{
+ *   id?: string;
+ *   category?: string;
+ *   label?: string;
+ *   checks: string[];
+ * }} UxQualityRule
+ *
+ * @typedef {{
+ *   stack: string;
+ *   label?: string;
+ *   keywords: string[];
+ *   guidance: string[];
+ * }} StackRule
+ *
+ * @typedef {{
+ *   queryParts: string[];
+ *   query: string;
+ *   format: "markdown" | "json";
+ *   project: string;
+ *   page: string;
+ *   stack: string;
+ *   persist: boolean;
+ *   outputDir: string;
+ *   help: boolean;
+ * }} CliArgs
+ *
+ * @typedef {{
+ *   id: string;
+ *   label: string;
+ *   checks: string[];
+ * }} ChecklistGroup
+ *
+ * @typedef {{
+ *   project: string;
+ *   page: string;
+ *   query: string;
+ *   product: { id: string; label: string; pattern: string; risks: string[] };
+ *   style: { id: string; label: string; usage: string | undefined; risks: string[] };
+ *   tokens: { color: string; typography: string; space: string; components: string[] };
+ *   motion: string;
+ *   chart: string;
+ *   antiPatterns: string[];
+ *   checklist: ChecklistGroup[];
+ *   stackGuidance: StackRule | null;
+ * }} Recommendation
+ */
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const skillDir = path.resolve(__dirname, "..");
 const dataDir = path.join(skillDir, "data");
 
-const productRules = readJson("product-rules.json");
-const styleArchetypes = readJson("style-archetypes.json");
-const uxQualityRules = readJson("ux-quality-rules.json");
-const stackRules = readJson("stack-ui-rules.json");
+const productRules = /** @type {ProductRule[]} */ (readJson("product-rules.json"));
+const styleArchetypes = /** @type {StyleArchetype[]} */ (readJson("style-archetypes.json"));
+const uxQualityRules = /** @type {UxQualityRule[]} */ (readJson("ux-quality-rules.json"));
+const stackRules = /** @type {StackRule[]} */ (readJson("stack-ui-rules.json"));
 
+/** @type {Record<string, string>} */
 const colorDirections = {
   saas: "Neutral surfaces with a restrained trust accent, semantic status colors, and one operational highlight.",
   fintech: "Ink, graphite, and calm blue-green tokens with explicit success, risk, warning, and pending states.",
@@ -24,6 +100,7 @@ const colorDirections = {
   "data-dashboard": "Dense neutrals, chart-safe categorical palettes, alert colors with severity order, and subdued chrome.",
 };
 
+/** @type {Record<string, string>} */
 const typographyDirections = {
   saas: "Use a workhorse sans for UI text, tabular numerals for metrics, and compact headings for scan speed.",
   fintech: "Use a precise sans with tabular numerals, conservative weights, and generous numeric spacing.",
@@ -36,6 +113,7 @@ const typographyDirections = {
   "data-dashboard": "Use compact UI type, tabular numerals, and strict alignment for tables and charts.",
 };
 
+/** @type {Record<string, string>} */
 const chartDirections = {
   saas: "Prefer KPI trends, cohort funnels, and status breakdowns with clear comparison periods.",
   fintech: "Use time-series, allocation, variance, and risk bands; disclose units and stale data states.",
@@ -48,6 +126,10 @@ const chartDirections = {
   "data-dashboard": "Choose chart type by task: trend, compare, compose, distribute, correlate, or inspect anomalies.",
 };
 
+/**
+ * @param {string} fileName
+ * @returns {unknown}
+ */
 function readJson(fileName) {
   return JSON.parse(fs.readFileSync(path.join(dataDir, fileName), "utf8"));
 }
@@ -67,9 +149,15 @@ function main() {
   process.stdout.write(output);
 }
 
+/**
+ * @param {string[]} argv
+ * @returns {CliArgs}
+ */
 function parseArgs(argv) {
+  /** @type {CliArgs} */
   const result = {
     queryParts: [],
+    query: "",
     format: "markdown",
     project: "",
     page: "",
@@ -83,7 +171,13 @@ function parseArgs(argv) {
     const token = argv[index];
     if (token === "--help" || token === "-h") result.help = true;
     else if (token === "--persist") result.persist = true;
-    else if (token === "--format") result.format = requireValue(argv, ++index, "--format");
+    else if (token === "--format") {
+      const format = requireValue(argv, ++index, "--format");
+      if (format !== "markdown" && format !== "json") {
+        throw new Error(`Unsupported --format "${format}". Use markdown or json.`);
+      }
+      result.format = format;
+    }
     else if (token === "--project") result.project = requireValue(argv, ++index, "--project");
     else if (token === "--page") result.page = requireValue(argv, ++index, "--page");
     else if (token === "--stack") result.stack = requireValue(argv, ++index, "--stack");
@@ -91,20 +185,26 @@ function parseArgs(argv) {
     else result.queryParts.push(token);
   }
 
-  if (!["markdown", "json"].includes(result.format)) {
-    throw new Error(`Unsupported --format "${result.format}". Use markdown or json.`);
-  }
-
   result.query = result.queryParts.join(" ").trim();
   return result;
 }
 
+/**
+ * @param {string[]} argv
+ * @param {number} index
+ * @param {string} flag
+ * @returns {string}
+ */
 function requireValue(argv, index, flag) {
   const value = argv[index];
   if (!value || value.startsWith("--")) throw new Error(`Missing value for ${flag}`);
   return value;
 }
 
+/**
+ * @param {number} exitCode
+ * @returns {void}
+ */
 function printUsage(exitCode) {
   const usage = [
     'Usage: node skills/fec-ui-design/scripts/design-system.mjs "<query>" [options]',
@@ -121,6 +221,10 @@ function printUsage(exitCode) {
   process.exitCode = exitCode;
 }
 
+/**
+ * @param {CliArgs} args
+ * @returns {Recommendation}
+ */
 function buildRecommendation(args) {
   const query = args.query;
   const tokens = tokenize([query, args.project, args.page, args.stack].filter(Boolean).join(" "));
@@ -160,6 +264,10 @@ function buildRecommendation(args) {
   };
 }
 
+/**
+ * @param {Set<string>} tokens
+ * @returns {ProductRule}
+ */
 function chooseProduct(tokens) {
   let best = productRules[0];
   let bestScore = -1;
@@ -177,6 +285,11 @@ function chooseProduct(tokens) {
   return best;
 }
 
+/**
+ * @param {Set<string>} tokens
+ * @param {ProductRule} product
+ * @returns {StyleArchetype}
+ */
 function chooseStyle(tokens, product) {
   const preferred = styleArchetypes.find((style) => style.id === product.style);
   let best = preferred ?? styleArchetypes[0];
@@ -193,6 +306,11 @@ function chooseStyle(tokens, product) {
   return best;
 }
 
+/**
+ * @param {Set<string>} tokens
+ * @param {ProductRule} product
+ * @returns {ChecklistGroup[]}
+ */
 function chooseChecklist(tokens, product) {
   const priority = new Set(["accessibility", "interaction", "layout", "typography", "animation"]);
   if (product.id === "data-dashboard" || tokens.has("dashboard") || tokens.has("chart")) priority.add("charts");
@@ -201,14 +319,25 @@ function chooseChecklist(tokens, product) {
   if (tokens.has("performance") || tokens.has("canvas") || tokens.has("three")) priority.add("performance");
 
   return uxQualityRules
-    .filter((rule) => priority.has(rule.id ?? rule.category))
-    .map((rule) => ({
-      id: rule.id ?? rule.category,
-      label: rule.label ?? labelFromId(rule.category),
-      checks: rule.checks.slice(0, 4),
-    }));
+    .filter((rule) => {
+      const id = rule.id ?? rule.category;
+      return id ? priority.has(id) : false;
+    })
+    .map((rule) => {
+      const id = rule.id ?? rule.category ?? "general";
+      return {
+        id,
+        label: rule.label ?? labelFromId(id),
+        checks: rule.checks.slice(0, 4),
+      };
+    });
 }
 
+/**
+ * @param {string} stack
+ * @param {Set<string>} tokens
+ * @returns {StackRule | null}
+ */
 function chooseStack(stack, tokens) {
   const desired = normalizeStack(stack);
   const direct = desired
@@ -227,6 +356,10 @@ function chooseStack(stack, tokens) {
   return null;
 }
 
+/**
+ * @param {Recommendation} model
+ * @returns {string}
+ */
 function renderMarkdown(model) {
   const lines = [
     `# Design System Recommendation: ${model.project}`,
@@ -268,6 +401,10 @@ function renderMarkdown(model) {
   return `${lines.join("\n")}\n`;
 }
 
+/**
+ * @param {Recommendation} model
+ * @returns {string}
+ */
 function renderPageOverride(model) {
   const pageName = model.page || "page";
   return [
@@ -294,6 +431,11 @@ function renderPageOverride(model) {
   ].join("\n");
 }
 
+/**
+ * @param {Recommendation} model
+ * @param {CliArgs} args
+ * @returns {void}
+ */
 function persistRecommendation(model, args) {
   const projectSlug = slug(args.project || model.project || "project");
   const projectDir = path.join(path.resolve(args.outputDir), "design-system", projectSlug);
@@ -307,6 +449,10 @@ function persistRecommendation(model, args) {
   }
 }
 
+/**
+ * @param {string} value
+ * @returns {Set<string>}
+ */
 function tokenize(value) {
   return new Set(
     value
@@ -316,10 +462,19 @@ function tokenize(value) {
   );
 }
 
+/**
+ * @param {Set<string>} tokens
+ * @param {Array<string | undefined>} keywords
+ * @returns {number}
+ */
 function score(tokens, keywords) {
   return keywords.reduce((total, keyword) => total + (tokens.has(slug(keyword)) || tokens.has(String(keyword).toLowerCase()) ? 1 : 0), 0);
 }
 
+/**
+ * @param {unknown} value
+ * @returns {string}
+ */
 function slug(value) {
   return String(value)
     .trim()
@@ -328,10 +483,18 @@ function slug(value) {
     .replace(/^-+|-+$/g, "");
 }
 
+/**
+ * @param {string} value
+ * @returns {string}
+ */
 function normalizeStack(value) {
   return value ? slug(value).replace(/-?js$/, "") : "";
 }
 
+/**
+ * @param {string} value
+ * @returns {string}
+ */
 function titleCase(value) {
   return String(value)
     .split(/\s+/g)
@@ -340,10 +503,23 @@ function titleCase(value) {
     .join(" ");
 }
 
+/**
+ * @param {Array<string | undefined | null | false>} values
+ * @returns {string[]}
+ */
 function unique(values) {
-  return [...new Set(values.filter(Boolean))];
+  /** @type {string[]} */
+  const strings = [];
+  for (const value of values) {
+    if (typeof value === "string" && value.length > 0) strings.push(value);
+  }
+  return [...new Set(strings)];
 }
 
+/**
+ * @param {unknown} value
+ * @returns {string}
+ */
 function labelFromId(value) {
   return String(value)
     .split("-")
