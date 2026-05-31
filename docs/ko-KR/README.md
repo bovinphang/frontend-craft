@@ -386,13 +386,22 @@ $env:MODAO_TOKEN = "your-modao-token"
 ## 업데이트
 
 ```bash
-# CLI 관리 설치 업데이트 (원본 설치와 동일한 범위)
+# 발견된 모든 CLI 관리 설치 업데이트
+npx frontend-craft@latest update
+
+# CLI 관리 설치 하나를 명시적으로 업데이트
 npx frontend-craft@latest update <runtime> --local
 npx frontend-craft@latest update <runtime> --global
 # `upgrade`는 `update`의 별칭
+
+# CLI 관리 파일을 안전하게 제거
+npx frontend-craft@latest uninstall [runtime] [--local|--global] [--dry-run] [--force]
+# `remove`는 `uninstall`의 별칭
 ```
 
-CLI는 런타임 디렉토리에 `frontend-craft.manifest.json`을 작성하고 **로컬에서 수정한 파일을 건너뜁니다** — 커스터마이징은 업데이트 후에도 유지됩니다.
+CLI는 런타임 디렉토리에 `frontend-craft.manifest.json`을 작성합니다. runtime을 지정하지 않으면 `update`가 이 manifest를 자동으로 발견하고 **로컬에서 수정한 파일을 건너뜁니다** — 커스터마이징은 업데이트 후에도 유지됩니다.
+
+`uninstall`/`remove`는 manifest에 기록된 파일만 삭제합니다. 수정된 파일은 기본적으로 건너뛰며, 수정된 관리 파일까지 제거하려는 경우에만 `--force`를 추가하세요.
 
 **Claude Code Marketplace** 또는 **submodule** 설치의 업데이트 방법은 [docs/runtimes/claude.md](../runtimes/claude.md) · [简体中文](../runtimes/claude.zh-CN.md)를 참조하세요.
 

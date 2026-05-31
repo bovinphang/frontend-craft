@@ -397,13 +397,22 @@ $env:MODAO_TOKEN = "your-modao-token"
 ## 保持更新
 
 ```bash
-# 更新 CLI 安装（作用域与初次安装一致）
+# 更新自动发现到的所有 CLI 管理安装
+npx frontend-craft@latest update
+
+# 显式更新一个 CLI 管理安装
 npx frontend-craft@latest update <runtime> --local
 npx frontend-craft@latest update <runtime> --global
 # `upgrade` 是 `update` 的别名
+
+# 安全移除 CLI 管理文件
+npx frontend-craft@latest uninstall [runtime] [--local|--global] [--dry-run] [--force]
+# `remove` 是 `uninstall` 的别名
 ```
 
-CLI 会在 runtime 目录写入 `frontend-craft.manifest.json`，并**跳过你本地修改过的文件**——自定义内容在更新后依然保留。
+CLI 会在 runtime 目录写入 `frontend-craft.manifest.json`。不传 runtime 时，`update` 会自动发现这些 manifest，并**跳过你本地修改过的文件**——自定义内容在更新后依然保留。
+
+`uninstall`/`remove` 只删除 manifest 记录的文件，默认跳过已修改文件；只有确认要移除修改过的托管文件时才加 `--force`。
 
 **Claude Code Marketplace** 或 **submodule** 安装的更新方式见 [docs/runtimes/claude.zh-CN.md](docs/runtimes/claude.zh-CN.md) · [English](docs/runtimes/claude.md)。`/fec-init` 只初始化项目配置，不是第二次安装插件本体。
 

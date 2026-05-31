@@ -386,13 +386,22 @@ $env:MODAO_TOKEN = "your-modao-token"
 ## 保持更新
 
 ```bash
-# 更新 CLI 安裝（作用域與初次安裝一致）
+# 更新自動發現到的所有 CLI 管理安裝
+npx frontend-craft@latest update
+
+# 明確更新一個 CLI 管理安裝
 npx frontend-craft@latest update <runtime> --local
 npx frontend-craft@latest update <runtime> --global
 # `upgrade` 是 `update` 的別名
+
+# 安全移除 CLI 管理檔案
+npx frontend-craft@latest uninstall [runtime] [--local|--global] [--dry-run] [--force]
+# `remove` 是 `uninstall` 的別名
 ```
 
-CLI 會在 runtime 目錄寫入 `frontend-craft.manifest.json`，並**跳過你本地修改過的檔案**——自訂內容在更新後依然保留。
+CLI 會在 runtime 目錄寫入 `frontend-craft.manifest.json`。不傳 runtime 時，`update` 會自動發現這些 manifest，並**跳過你本地修改過的檔案**——自訂內容在更新後依然保留。
+
+`uninstall`/`remove` 只刪除 manifest 記錄的檔案，預設跳過已修改檔案；只有確認要移除修改過的託管檔案時才加 `--force`。
 
 **Claude Code Marketplace** 或 **submodule** 安裝的更新方式見 [docs/runtimes/claude.zh-CN.md](../runtimes/claude.zh-CN.md) · [English](../runtimes/claude.md)。
 

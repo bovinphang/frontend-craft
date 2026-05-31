@@ -397,13 +397,22 @@ Every review, analysis, and evaluation writes a timestamped Markdown report to `
 ## Updates
 
 ```bash
-# Update a CLI-managed install (same scope as the original install)
+# Update all discovered CLI-managed installs
+npx frontend-craft@latest update
+
+# Update one CLI-managed install explicitly
 npx frontend-craft@latest update <runtime> --local
 npx frontend-craft@latest update <runtime> --global
 # `upgrade` is an alias for `update`
+
+# Safely remove CLI-managed files
+npx frontend-craft@latest uninstall [runtime] [--local|--global] [--dry-run] [--force]
+# `remove` is an alias for `uninstall`
 ```
 
-The CLI writes `frontend-craft.manifest.json` into the runtime directory and **skips files you’ve modified locally**, so customizations survive updates.
+The CLI writes `frontend-craft.manifest.json` into the runtime directory. `update` discovers those manifests automatically when no runtime is provided and **skips files you’ve modified locally**, so customizations survive updates.
+
+`uninstall`/`remove` only deletes files recorded in the manifest. It skips modified files by default; add `--force` only when you want to remove modified managed files too.
 
 For **Claude Code Marketplace** or **submodule** installs, see [docs/runtimes/claude.md](docs/runtimes/claude.md) · [简体中文](docs/runtimes/claude.zh-CN.md). `/fec-init` only initializes project config; it is not a second plugin install.
 
