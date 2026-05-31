@@ -8,7 +8,7 @@
 [![CI](https://github.com/bovinphang/frontend-craft/actions/workflows/ci.yml/badge.svg)](https://github.com/bovinphang/frontend-craft/actions/workflows/ci.yml)
 [![npm version](https://img.shields.io/npm/v/frontend-craft)](https://www.npmjs.com/package/frontend-craft)
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
-![Node](https://img.shields.io/badge/Node.js-22+-339933?logo=node.js&logoColor=white)
+![Node](https://img.shields.io/badge/Node.js-22+-5FA04E?logo=node.js&logoColor=white)
 ![TypeScript](https://img.shields.io/badge/-TypeScript-3178C6?logo=typescript&logoColor=white)
 ![React](https://img.shields.io/badge/-React-61DAFB?logo=react&logoColor=black)
 ![Vue](https://img.shields.io/badge/-Vue-4FC08D?logo=vue.js&logoColor=white)
@@ -30,7 +30,7 @@
 
 Per-runtime paths and caveats live in [`docs/runtimes/`](docs/runtimes/).
 
-It bundles **13 specialized agents**, **40 auto-activated skills**, **8 slash commands**, **5 event-driven hooks**, **MCP templates** for 6 design tools, and a complete **rules library** into a single installable package. Run one command, and every AI session on your team writes React, Vue, Next.js, or Nuxt the same way — typed, accessible, secure, and consistent.
+It bundles **13 specialized agents**, **40 auto-activated skills**, **8 slash commands**, **5 event-driven hooks**, **MCP integrations** for 6 design-tool endpoints, and a complete **rules library** into a single installable package. Run one command, and every AI session on your team writes React, Vue, Next.js, or Nuxt the same way — typed, accessible, secure, and consistent.
 
 ```bash
 npx frontend-craft@latest
@@ -46,7 +46,7 @@ That’s it. The wizard walks you through the rest.
 | -------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------- |
 | AI assistants write inconsistent, untyped, or insecure frontend code | **40 skills** encode team standards — auto-activated when the assistant touches matching files |
 | Each AI tool has its own plugin format                               | **One CLI** installs the same rules, agents, and hooks into 15 runtimes                        |
-| Design-to-code handoff is lossy                                      | **MCP templates** read Figma, Figma Desktop, Sketch, MasterGo, Pixso, and 墨刀 / Modao         |
+| Design-to-code handoff is lossy                                      | **MCP integrations** bring in richer context from Figma, Figma Desktop, Sketch, MasterGo, Pixso, and 墨刀 |
 | Reviews are ad-hoc and shallow                                       | **13 agents** produce graded reports: code, security, a11y, performance, TS, UI fidelity       |
 | No one remembers to run lint/tests                                   | **Event-driven hooks** validate on save and session end — automatically                        |
 | New projects start from scratch every time                           | **`/fec-init`** scaffolds CLAUDE.md, rules, and settings in seconds                            |
@@ -158,7 +158,7 @@ Slash commands are the primary entry points for structured workflows. Most produ
 
 Skills are workflow definitions that activate automatically based on file patterns, frameworks, or task context. They encode review dimensions, output conventions, and report formats.
 
-Category boundaries are intentionally narrow: implementation capabilities cover concrete frontend behavior; design UI covers design sources, design-system presentation, visual direction, and UI polish; testing covers test strategy and test authoring; review & quality covers audits, validation repair, and cleanup. Maintenance docs stays separate as the docs/metadata sync entry point for future release-workflow expansion.
+The skills below are grouped by use case so you can quickly find project standards, implementation, testing, review, design, migration, and documentation workflows.
 
 **Project standards** — conventions enforced whenever matching frameworks are detected:
 
@@ -268,7 +268,7 @@ Hooks run automatically on AI assistant events — no invocation needed.
 
 ### MCP integration
 
-Plug your AI assistant directly into design tools for lossless design-to-code workflows.
+Plug your AI assistant into design tools for design-to-code workflows with richer design context.
 
 | Service           | Capabilities                                         |
 | ----------------- | ---------------------------------------------------- |
@@ -321,7 +321,7 @@ Run `/fec-init` to scaffold a ready-to-use rules library and project config into
 
 - **Node.js 22+**
 - **npm, pnpm, or yarn**
-- **Git Bash** (Windows only — required for hook scripts)
+- **Git Bash or a compatible shell** (Windows only, when your AI runtime invokes shell-based commands)
 
 ### MCP design-tool tokens
 
