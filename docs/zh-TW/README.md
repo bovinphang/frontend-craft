@@ -8,7 +8,7 @@
 [![CI](https://github.com/bovinphang/frontend-craft/actions/workflows/ci.yml/badge.svg)](https://github.com/bovinphang/frontend-craft/actions/workflows/ci.yml)
 [![npm version](https://img.shields.io/npm/v/frontend-craft)](https://www.npmjs.com/package/frontend-craft)
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](../../LICENSE)
-![Node](https://img.shields.io/badge/Node.js-22+-339933?logo=node.js&logoColor=white)
+![Node](https://img.shields.io/badge/Node.js-22+-5FA04E?logo=node.js&logoColor=white)
 ![TypeScript](https://img.shields.io/badge/-TypeScript-3178C6?logo=typescript&logoColor=white)
 ![React](https://img.shields.io/badge/-React-61DAFB?logo=react&logoColor=black)
 ![Vue](https://img.shields.io/badge/-Vue-4FC08D?logo=vue.js&logoColor=white)
@@ -30,7 +30,7 @@
 
 各執行時的路徑與注意事項詳見 [`docs/runtimes/`](../runtimes/)。
 
-它將 **13 個專業 agent**、**40 個自動啟用 skill**、**8 個斜線指令**、**5 個事件驅動 hook**、面向 6 款設計工具的 **MCP 範本**以及一整套**規則庫**打包為一個可安裝單元。執行一條指令，團隊裡的每一次 AI 會話都將以相同的方式編寫 React、Vue、Next.js 或 Nuxt——型別安全、可存取、安全、一致。
+它將 **13 個專業 agent**、**40 個自動啟用 skill**、**8 個斜線指令**、**5 個事件驅動 hook**、面向 6 個設計工具端點的 **MCP 整合**以及一整套**規則庫**打包為一個可安裝單元。執行一條指令，團隊裡的每一次 AI 會話都將以相同的方式編寫 React、Vue、Next.js 或 Nuxt——型別安全、可存取、安全、一致。
 
 ```bash
 npx frontend-craft@latest
@@ -46,7 +46,7 @@ npx frontend-craft@latest
 | ----------------------------------------------- | ----------------------------------------------------------------------- |
 | AI 助手寫出的前端程式碼風格不一、缺型別、不安全 | **40 個 skill** 將團隊規範編碼為可自動啟用的工作流                      |
 | 每款 AI 工具都有自己的插件格式                  | **一條 CLI 指令** 把相同的規則、agent 和 hook 安裝到 15 個執行時        |
-| 設計稿到程式碼的交接總有資訊損失                | **MCP 範本** 直接讀取 Figma、Sketch、MasterGo、Pixso、墨刀、摹客        |
+| 設計稿到程式碼的交接總有資訊損失                | **MCP 整合** 從 Figma、Figma Desktop、Sketch、MasterGo、Pixso、墨刀引入更完整設計上下文 |
 | 程式碼審查隨意、淺層                            | **13 個 agent** 輸出分級報告：程式碼、安全、無障礙、效能、TS、UI 還原度 |
 | 沒人記得跑 lint 和測試                          | **事件驅動 hook** 在儲存和會話結束時自動校驗                            |
 | 新專案每次都從零開始                            | **`/fec-init`** 幾秒內腳手架化 CLAUDE.md、規則和 settings               |
@@ -114,6 +114,20 @@ npx frontend-craft@latest list
 
 ---
 
+## 範例提示詞
+
+完整的按場景組織提示詞庫請參考 [docs/example-prompts.md](../example-prompts.md)。
+
+```text
+你：「合併前請審查我最近的改動。重點看架構、型別安全、渲染行為、樣式、可存取性和缺失測試。」
+你：「先不要寫程式碼，請規劃帳號帳單功能：路由結構、元件邊界、資料流、狀態歸屬、驗證流程和上線風險。」
+你：「請用 React Hook Form + Zod 建構多步註冊表單，包含檔案上傳、條件欄位、非同步驗證和可存取錯誤提示。」
+你：「請按 Figma 節點 123:456 實作 UI。複用現有 design token 和元件，匹配間距與響應式狀態，並說明假設。」
+你：「`/fec-refactor-clean` 請清理這個模組裡的死程式碼。」
+```
+
+---
+
 ## 裡面有什麼
 
 ### 指令（Commands）
@@ -135,7 +149,7 @@ npx frontend-craft@latest list
 
 技能是根據檔案模式、框架或任務上下文**自動啟用**的工作流定義，編碼了審查維度、輸出約定和報告格式。
 
-分類邊界刻意保持收窄：實作能力面向具體前端行為；設計 UI 面向設計來源、設計系統呈現、視覺方向和 UI 打磨；測試面向測試策略與測試撰寫；審查與品質面向審查、驗證修復和清理。文件維護暫時單獨保留，作為後續發布流程和 metadata 同步能力的入口。
+下方按使用場景分組列出全部自動啟用的技能，便於快速找到專案規範、實作、測試、審查、設計、遷移和文件維護能力。
 
 **專案規範** — 偵測到對應框架時自動生效：
 
@@ -192,7 +206,7 @@ npx frontend-craft@latest list
 | `fec-tailwind-design-system`  | Tailwind token、主題擴展、元件變體、class 治理和暗色模式 |
 | `fec-responsive-layout`       | 移動優先布局、容器查詢、資料密集型響應式界面             |
 | `fec-motion-interaction`      | 互動動效、頁面轉場、滾動動畫、reduced-motion             |
-| `fec-implement-from-design`   | 基於 Figma/Sketch/MasterGo/Pixso/墨刀/摹客設計稿實現 UI  |
+| `fec-implement-from-design`   | 基於 Figma/Sketch/MasterGo/Pixso/墨刀設計稿或摹客素材實現 UI |
 | `fec-storybook-component-doc` | Storybook 元件文件、設計系統呈現、隔離狀態預覽           |
 
 **遺留遷移** — 現代化遷移時啟用：
@@ -221,12 +235,12 @@ npx frontend-craft@latest list
 | `fec-performance-optimizer` | 打包體積、渲染效能、網路瓶頸                              | `performance-review-*.md`    |
 | `fec-architect`             | 頁面拆分、元件架構、狀態流、目錄規劃                      | `architecture-proposal-*.md` |
 | `fec-test-planner`          | 風險-層級映射：靜態、單元、元件、E2E、視覺、無障礙、安全  | `test-plan-*.md`             |
-| `fec-build-fixer`           | 增量修復 lint / type-check / test / build / CI            | `validation-fix-*.md`        |
+| `fec-debugger`              | 複雜前端診斷：建置、執行時、UI 和介面問題                 | `debug-*.md`                 |
 | `fec-refactor-cleaner`      | 分類並安全清理未使用程式碼、匯出、樣式、路由和依賴        | `refactor-clean-*.md`        |
 | `fec-e2e-runner`            | E2E 撰寫與執行（Playwright/Cypress）、flaky 隔離、Trace   | `e2e-summary-*.md`           |
 | `fec-doc-updater`           | 同步 README、runtime 文件、結構、能力表和 metadata        | —                            |
 | `fec-ui-checker`            | 視覺問題排查與設計還原度評估                              | `ui-fidelity-review-*.md`    |
-| `fec-figma-implementer`     | 依 Figma/Sketch/MasterGo/Pixso/墨刀/摹客設計稿精確實作 UI | `design-implementation-*.md` |
+| `fec-figma-implementer`     | 依 Figma/Sketch/MasterGo/Pixso/墨刀設計稿精確實作 UI      | `design-implementation-*.md` |
 | `fec-design-token-mapper`   | 將設計變數對應至專案 Design Token                         | `token-mapping-*.md`         |
 
 ### 鉤子（Hooks，事件驅動）
@@ -235,7 +249,7 @@ npx frontend-craft@latest list
 
 | 事件                      | 行為                                         |
 | ------------------------- | -------------------------------------------- |
-| `SessionStart`            | 自動偵測專案框架與套件管理工具               |
+| `SessionStart`            | 清理 Claude 快取，然後自動偵測專案框架與套件管理工具 |
 | `PreToolUse(Bash)`        | 攔截危險指令（`rm -rf`、force push 等）      |
 | `PostToolUse(Write/Edit)` | 對修改的檔案自動執行 Prettier                |
 | `Stop`                    | 會話結束時執行 lint、type-check、test、build |
@@ -243,7 +257,7 @@ npx frontend-craft@latest list
 
 ### MCP 整合
 
-將 AI 助手直接接入設計工具，實現無損的設計轉程式碼工作流。
+將 AI 助手接入設計工具，建構帶有更完整設計上下文的設計轉程式碼工作流。
 
 | 服務              | 能力                                   |
 | ----------------- | -------------------------------------- |
@@ -260,7 +274,7 @@ npx frontend-craft@latest list
 執行 `/fec-init` 即可將一套開箱即用的規則庫和專案設定腳手架化到 `.claude/`：
 
 <details>
-<summary>查看全部 19 個範本檔案</summary>
+<summary>查看全部 20 個範本檔案</summary>
 
 | 檔案                                     | 用途                                                                  |
 | ---------------------------------------- | --------------------------------------------------------------------- |
@@ -273,6 +287,8 @@ npx frontend-craft@latest list
 | `rules/fec-git-conventions.md`           | Conventional Commits 提交規範                                         |
 | `rules/fec-i18n.md`                      | 國際化文案規範                                                        |
 | `rules/fec-performance.md`               | 前端效能最佳化規則                                                    |
+| `rules/fec-rendering-patterns.md`        | 渲染生命週期、hydration、SSR/CSR 與更新模式                           |
+| `rules/fec-responsive-design.md`         | 響應式佈局、斷點、觸控目標與視口行為                                  |
 | `rules/fec-source-driven-development.md` | Source-driven decisions, official docs, version-sensitive assumptions |
 | `rules/fec-api-layer.md`                 | API 層型別化與錯誤處理規範                                            |
 | `rules/fec-state-management.md`          | 狀態分類、管理策略與反模式                                            |
@@ -294,7 +310,7 @@ npx frontend-craft@latest list
 
 - **Node.js 22+**
 - **npm、pnpm 或 yarn**
-- **Git Bash**（僅 Windows — 執行 hook 腳本所需）
+- **Git Bash 或相容 shell**（僅 Windows，當 AI 執行時需要呼叫 shell 指令時）
 
 ### MCP 設計工具令牌
 

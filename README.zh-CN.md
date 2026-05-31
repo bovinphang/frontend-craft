@@ -8,7 +8,7 @@
 [![CI](https://github.com/bovinphang/frontend-craft/actions/workflows/ci.yml/badge.svg)](https://github.com/bovinphang/frontend-craft/actions/workflows/ci.yml)
 [![npm version](https://img.shields.io/npm/v/frontend-craft)](https://www.npmjs.com/package/frontend-craft)
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
-![Node](https://img.shields.io/badge/Node.js-22+-339933?logo=node.js&logoColor=white)
+![Node](https://img.shields.io/badge/Node.js-22+-5FA04E?logo=node.js&logoColor=white)
 ![TypeScript](https://img.shields.io/badge/-TypeScript-3178C6?logo=typescript&logoColor=white)
 ![React](https://img.shields.io/badge/-React-61DAFB?logo=react&logoColor=black)
 ![Vue](https://img.shields.io/badge/-Vue-4FC08D?logo=vue.js&logoColor=white)
@@ -30,7 +30,7 @@
 
 各运行时的路径与注意事项详见 [`docs/runtimes/`](docs/runtimes/)。
 
-它将 **13 个专业 agent**、**40 个自动激活 skill**、**8 个斜杠命令**、**5 个事件驱动 hook**、面向 6 款设计工具的 **MCP 模板**以及一整套**规则库**打包为一个可安装单元。运行一条命令，团队里的每一次 AI 会话都将以相同的方式编写 React、Vue、Next.js 或 Nuxt——类型安全、可访问、安全、一致。
+它将 **13 个专业 agent**、**40 个自动激活 skill**、**8 个斜杠命令**、**5 个事件驱动 hook**、面向 6 个设计工具端点的 **MCP 集成**以及一整套**规则库**打包为一个可安装单元。运行一条命令，团队里的每一次 AI 会话都将以相同的方式编写 React、Vue、Next.js 或 Nuxt——类型安全、可访问、安全、一致。
 
 ```bash
 npx frontend-craft@latest
@@ -46,7 +46,7 @@ npx frontend-craft@latest
 | --------------------------------------------- | --------------------------------------------------------------------- |
 | AI 助手写出的前端代码风格不一、缺类型、不安全 | **40 个 skill** 将团队规范编码为可自动激活的工作流                    |
 | 每款 AI 工具都有自己的插件格式                | **一条 CLI 命令** 把相同的规则、agent 和 hook 安装到 15 个运行时      |
-| 设计稿到代码的交接总有信息损失                | **MCP 模板** 直接读取 Figma、Figma Desktop、Sketch、MasterGo、Pixso、墨刀 / Modao |
+| 设计稿到代码的交接总有信息损失                | **MCP 集成** 从 Figma、Figma Desktop、Sketch、MasterGo、Pixso、墨刀引入更完整设计上下文 |
 | 代码评审随意、浅层                            | **13 个 agent** 输出分级报告：代码、安全、无障碍、性能、TS、UI 还原度 |
 | 没人记得跑 lint 和测试                        | **事件驱动 hook** 在保存和会话结束时自动校验                          |
 | 新项目每次都从零开始                          | **`/fec-init`** 几秒内脚手架化 CLAUDE.md、规则和 settings             |
@@ -95,8 +95,6 @@ npx frontend-craft@latest install claude --local --force
 ```
 
 完整步骤见 [docs/runtimes/claude.zh-CN.md](docs/runtimes/claude.zh-CN.md) · [English](docs/runtimes/claude.md)。
-
----
 
 ---
 
@@ -160,7 +158,7 @@ npx frontend-craft@latest install claude --local --force
 
 技能是根据文件模式、框架或任务上下文**自动激活**的工作流定义，编码了评审维度、输出约定和报告格式。
 
-分类边界刻意保持收窄：实现能力面向具体前端行为；设计 UI 面向设计来源、设计系统呈现、视觉方向和 UI 打磨；测试面向测试策略与测试编写；评审与质量面向审查、验证修复和清理。文档维护暂时单独保留，作为后续发布流程和 metadata 同步能力的入口。
+下方按使用场景分组列出全部自动激活的技能，便于快速找到项目规范、实现、测试、评审、设计、迁移和文档维护能力。
 
 **项目规范** — 检测到对应框架时自动生效：
 
@@ -270,7 +268,7 @@ npx frontend-craft@latest install claude --local --force
 
 ### MCP 集成
 
-将 AI 助手直接接入设计工具，实现无损的设计转代码工作流。
+将 AI 助手接入设计工具，构建带有更完整设计上下文的设计转代码工作流。
 
 | 服务              | 能力                                 |
 | ----------------- | ------------------------------------ |
@@ -323,7 +321,7 @@ npx frontend-craft@latest install claude --local --force
 
 - **Node.js 22+**
 - **npm、pnpm 或 yarn**
-- **Git Bash**（仅 Windows — 执行 hook 脚本所需）
+- **Git Bash 或兼容 shell**（仅 Windows，当 AI 运行时需要调用 shell 命令时）
 
 ### MCP 设计工具令牌
 
