@@ -57,9 +57,11 @@
 npm install -g frontend-craft@latest
 cd your-project
 fec init
+fec init codex      # 특정 런타임으로 초기화
+fec init claude     # Claude Code로 초기화
 ```
 
-`fec init`은 현재 프로젝트를 초기화하는 터미널 CLI 명령어입니다. AI 어시스턴트 안의 `/fec-init` 슬래시 명령어는 별도 진입점이며, 먼저 frontend-craft를 대상 런타임에 설치한 뒤 사용합니다.
+`fec init`은 현재 프로젝트를 초기화하는 터미널 CLI 명령어입니다. 대화형 터미널에서는 runtime을 생략하면 선택 프롬프트가 표시됩니다. 비대화형 환경에서 runtime을 생략하면 CLI는 `claude`를 기본값으로 사용합니다. `init`은 명시적으로 `--global`을 전달하지 않는 한 기본적으로 현재 프로젝트에 설치합니다. 예: `fec init codex --global`. AI 어시스턴트 안의 `/fec-init` 슬래시 명령어는 별도 진입점이며, 먼저 frontend-craft를 대상 런타임에 설치한 뒤 사용합니다.
 
 ### 방법 2: 전역 설치 없는 대화형 마법사
 
@@ -67,7 +69,7 @@ fec init
 npx frontend-craft@latest
 ```
 
-전역 `fec` 명령어를 설치하고 싶지 않을 때 이 방식을 사용합니다. 마법사에서 하나 이상의 런타임을 선택하고, 전역 또는 프로젝트 단위로 설치할지 결정합니다.
+전역 `fec` 명령어를 설치하고 싶지 않을 때 이 방식을 사용합니다. 마법사는 전체 설치 흐름을 안내합니다. 먼저 하나 이상의 런타임을 선택한 다음, 전역 또는 현재 프로젝트에 설치할지 결정합니다.
 
 ### 방법 3: 스크립트 설치
 
