@@ -32,12 +32,6 @@ Per-runtime paths and caveats live in [`docs/runtimes/`](docs/runtimes/).
 
 It bundles **13 specialized agents**, **40 auto-activated skills**, **8 slash commands**, **5 event-driven hooks**, **MCP integrations** for 6 design-tool endpoints, and a complete **rules library** into a single installable package. Run one command, and every AI session on your team writes React, Vue, Next.js, or Nuxt the same way — typed, accessible, secure, and consistent.
 
-```bash
-npx frontend-craft@latest
-```
-
-That’s it. The wizard walks you through the rest.
-
 ---
 
 ## Why frontend-craft?
@@ -57,15 +51,25 @@ That’s it. The wizard walks you through the rest.
 
 Requires **Node.js 22+**. Works on **Windows, macOS, and Linux**.
 
-### Option 1 — Interactive wizard (recommended)
+### Option 1 - Global CLI project init (recommended)
+
+```bash
+npm install -g frontend-craft@latest
+cd your-project
+fec init
+```
+
+`fec init` is the terminal CLI command for initializing the current project. The in-assistant `/fec-init` slash command is separate and runs after frontend-craft is installed in your AI runtime.
+
+### Option 2 — No-global interactive wizard
 
 ```bash
 npx frontend-craft@latest
 ```
 
-The wizard lets you pick one or more runtimes and whether to install globally or per-project. It’s the friendliest way to get started.
+Use this when you do not want to install a global `fec` command. The wizard lets you pick one or more runtimes and whether to install globally or per-project.
 
-### Option 2 — Scripted install
+### Option 3 — Scripted install
 
 ```bash
 # Install into the current project
@@ -83,7 +87,7 @@ npx frontend-craft@latest list
 
 > **CI / scripts:** always pass `--global` / `-g` or `--local` / `-l`. Without a TTY, the CLI defaults to `claude --global` if neither is set.
 
-### Option 3 — Claude Code Marketplace
+### Option 4 — Claude Code Marketplace
 
 For Claude Code users, **Claude Code Marketplace** is the preferred single-source install. Use the CLI for Claude when you need cross-runtime installs, scripted/offline file copies, or non-Marketplace environments. Do not keep Marketplace and CLI copies active in the same Claude scope unless you explicitly choose that with `--force`.
 

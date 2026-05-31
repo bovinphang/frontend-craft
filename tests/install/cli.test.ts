@@ -38,7 +38,35 @@ test("install help flag prints help without installing", () => {
     encoding: "utf8",
   });
   assert.match(help, /Usage:/);
+  assert.match(help, /frontend-craft init \[runtime\] \[options\]/);
+  assert.match(help, /fec init \[runtime\] \[options\]/);
+  assert.match(help, /init is an alias for install --local/);
   assert.doesNotMatch(help, /Installing frontend-craft/);
+});
+
+test("init defaults to local project installation", () => {
+  const out = execFileSync(process.execPath, [cli, "init", "claude", "--dry-run"], {
+    cwd: root,
+    encoding: "utf8",
+  });
+
+  assert.match(out, new RegExp(`Installing frontend-craft for "claude" -> ${escapeRegExp(path.join(root, ".claude"))}`));
+  assert.doesNotMatch(out, /\(global\)/);
+});
+
+test("init uses local runtime directory unless global is explicit", () => {
+  const local = execFileSync(process.execPath, [cli, "init", "codex", "--dry-run"], {
+    cwd: root,
+    encoding: "utf8",
+  });
+  assert.match(local, new RegExp(`Installing frontend-craft for "codex" -> ${escapeRegExp(path.join(root, ".codex"))}`));
+  assert.doesNotMatch(local, /\(global\)/);
+
+  const global = execFileSync(process.execPath, [cli, "init", "codex", "--global", "--dry-run"], {
+    cwd: root,
+    encoding: "utf8",
+  });
+  assert.match(global, /Installing frontend-craft for "codex" -> .+\.codex \(global\)/);
 });
 
 test("list includes claude, openclaw, and qoder", () => {
@@ -159,3 +187,7 @@ test("selectable prompt render includes selected summary, search, controls, and 
   assert.match(rendered, /> \[x\] Claude Code \(selected\)/);
   assert.match(rendered, /\(1\/\d+\)/);
 });
+
+function escapeRegExp(value: string): string {
+  return value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+}

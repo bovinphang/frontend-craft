@@ -20,7 +20,8 @@
         "node": ">=22.0.0"
     },
     "bin": {
-        "frontend-craft": "dist/bin/frontend-craft.js"
+        "frontend-craft": "dist/bin/frontend-craft.js",
+        "fec": "dist/bin/frontend-craft.js"
     },
     "files": [
         "dist/bin",

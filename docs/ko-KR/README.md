@@ -32,12 +32,6 @@
 
 **13개의 전문 에이전트**, **40개의 자동 활성화 스킬**, **8개의 슬래시 명령어**, **5개의 이벤트 기반 훅**, 6개 디자인 도구 엔드포인트를 위한 **MCP 통합**, 그리고 완전한 **규칙 라이브러리**를 하나의 설치 가능한 패키지로 묶었습니다. 명령어 하나만 실행하면, 팀의 모든 AI 세션이 React, Vue, Next.js, Nuxt를 같은 방식으로 작성합니다 — 타입 안전하고, 접근성 있고, 안전하며, 일관성 있게.
 
-```bash
-npx frontend-craft@latest
-```
-
-이게 전부입니다. 마법사가 나머지 단계를 안내합니다.
-
 ---
 
 ## 왜 frontend-craft인가?
@@ -57,15 +51,25 @@ npx frontend-craft@latest
 
 **Node.js 22+**가 필요합니다. **Windows, macOS, Linux**에서 동작합니다(모든 훅과 스크립트는 Node.js로 구현).
 
-### 방법 1: 대화형 마법사 (권장)
+### 방법 1: 전역 CLI로 프로젝트 초기화 (권장)
+
+```bash
+npm install -g frontend-craft@latest
+cd your-project
+fec init
+```
+
+`fec init`은 현재 프로젝트를 초기화하는 터미널 CLI 명령어입니다. AI 어시스턴트 안의 `/fec-init` 슬래시 명령어는 별도 진입점이며, 먼저 frontend-craft를 대상 런타임에 설치한 뒤 사용합니다.
+
+### 방법 2: 전역 설치 없는 대화형 마법사
 
 ```bash
 npx frontend-craft@latest
 ```
 
-마법사에서 하나 이상의 런타임을 선택하고, 전역 또는 프로젝트 단위로 설치할지 결정합니다. 가장 친절한 시작 방법입니다.
+전역 `fec` 명령어를 설치하고 싶지 않을 때 이 방식을 사용합니다. 마법사에서 하나 이상의 런타임을 선택하고, 전역 또는 프로젝트 단위로 설치할지 결정합니다.
 
-### 방법 2: 스크립트 설치
+### 방법 3: 스크립트 설치
 
 ```bash
 # 현재 프로젝트에 설치
@@ -83,7 +87,7 @@ npx frontend-craft@latest list
 
 > **CI / 스크립트 환경:** 항상 `--global` / `-g` 또는 `--local` / `-l`을 지정하세요. TTY가 아니고 미지정 시, CLI는 `claude --global`을 기본값으로 합니다.
 
-### 방법 3: Claude Code Marketplace
+### 방법 4: Claude Code Marketplace
 
 **Claude Code Marketplace**(네이티브 플러그인 플로우)로만 설치하는 경우, 전체 단계는 [docs/runtimes/claude.md](../runtimes/claude.md) · [简体中文](../runtimes/claude.zh-CN.md)에 있습니다.
 
