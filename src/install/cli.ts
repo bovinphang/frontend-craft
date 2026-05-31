@@ -6,6 +6,7 @@ import { getInstallBaseDir } from "./runtime-homes.js";
 import { RUNTIME_CAPABILITIES, renderRuntimeCapabilityMatrix } from "./runtime-capabilities.js";
 import { resolvePluginRoot } from "./shared/resolve-plugin-root.js";
 import { beginManifestSession, discardManifestSession, endManifestSession, getManifestPath } from "./shared/fs.js";
+import { discoverManifestInstalls, uninstallManagedInstall } from "./manifest-installs.js";
 import {
   cleanupClaudeFrontendCraftCache,
   getClaudeFrontendCraftCacheReport,
@@ -58,25 +59,27 @@ Usage:
   frontend-craft install
   frontend-craft init [runtime] [options]
   fec init [runtime] [options]
-  frontend-craft update <runtime> [options]
-  frontend-craft upgrade <runtime> [options]
+  frontend-craft update [runtime] [options]
+  frontend-craft upgrade [runtime] [options]
+  frontend-craft uninstall|remove [runtime] [options]
   frontend-craft list
   frontend-craft matrix
   frontend-craft doctor <runtime>
   frontend-craft doctor claude --fix-cache [--dry-run]
   frontend-craft sync-metadata --check
   frontend-craft version
-  frontend-craft uninstall <runtime>   (prints manual cleanup hints)
 
 Options:
   --global, -g     Install to tool global config directory
   --local, -l      Install to this project only
   --dry-run        Show actions without writing files
-  --force          Continue Claude CLI install even if a native plugin install is detected
+  --force          Install: continue Claude native conflicts; uninstall: remove modified managed files
   --all            Install for every supported runtime
 
 Notes:
   init is an alias for install --local unless --global is explicitly provided.
+  update without a runtime refreshes discovered frontend-craft manifests.
+  uninstall/remove deletes manifest-managed files and skips modified files unless --force is provided.
   /fec-init is the in-assistant slash command; fec init is the terminal CLI command.
 
 Runtimes:
@@ -138,16 +141,8 @@ export async function main(argv: string[]): Promise<void> {
     printHelp();
     return;
   }
-  if (cmd === "uninstall") {
-    const r = argv[1];
-    console.warn(
-      "Uninstall is not automated. Remove generated directories for your runtime (e.g. .claude/skills, .codex/agents) or re-run install with a clean backup. For installs created before the fec-prefix convention, also remove legacy unprefixed agents, copied hook files, and unprefixed rules such as rules/react.md if you did not customize them.",
-    );
-    if (r) console.warn(`Requested runtime: ${r}`);
-    return;
-  }
   const mode = cmd === "update" || cmd === "upgrade" ? "update" : "install";
-  if (cmd !== "install" && cmd !== "init" && cmd !== "update" && cmd !== "upgrade") {
+  if (cmd !== "install" && cmd !== "init" && cmd !== "update" && cmd !== "upgrade" && cmd !== "uninstall" && cmd !== "remove") {
     console.error(`Unknown command: ${cmd}`);
     printHelp();
     process.exitCode = 1;
@@ -167,7 +162,56 @@ export async function main(argv: string[]): Promise<void> {
   }
 
   const cwd = process.cwd();
+  if (cmd === "uninstall" || cmd === "remove") {
+    const scopes = getScopeFilter(hasLocal, hasGlobal);
+    const runtimes = runtime ? [runtime] : all ? ALL_RUNTIMES : undefined;
+    const installs = discoverManifestInstalls({ cwd, runtimes, scopes });
+    if (runtime && !INSTALLERS[runtime]) {
+      console.error(`Unknown runtime: ${runtime}`);
+      process.exitCode = 1;
+      return;
+    }
+    if (installs.length === 0) {
+      console.log(renderNoInstallsFound("uninstall", runtime, scopes));
+      return;
+    }
+    for (const install of installs) {
+      console.log(`Uninstalling frontend-craft for "${install.runtime}" -> ${install.baseDir}${install.scope === "global" ? " (global)" : ""}`);
+      const result = uninstallManagedInstall({ install, cwd, dryRun, force });
+      for (const file of result.removed) {
+        const action = dryRun ? "[dry-run] would remove" : "Removed";
+        console.log(`${action}${file.modified ? " modified file" : " file"}: ${file.path}`);
+      }
+      for (const file of result.skipped) console.log(`Skipped modified file: ${file}`);
+      for (const file of result.missing) console.log(`Missing file: ${file}`);
+      if (dryRun && result.skipped.length === 0) console.log(`[dry-run] would remove manifest: ${install.manifestPath}`);
+    }
+    return;
+  }
+
   const canPrompt = Boolean(process.stdin.isTTY) || process.env.FRONTEND_CRAFT_FORCE_INTERACTIVE === "1";
+
+  if (mode === "update" && !runtime) {
+    const scopes = getScopeFilter(hasLocal, hasGlobal);
+    const installs = discoverManifestInstalls({ cwd, runtimes: all ? ALL_RUNTIMES : undefined, scopes });
+    if (installs.length === 0) {
+      console.log(renderNoInstallsFound("update", undefined, scopes));
+      return;
+    }
+    for (const install of installs) {
+      await runInstaller({
+        rt: install.runtime,
+        mode,
+        isGlobal: install.scope === "global",
+        baseDir: install.baseDir,
+        pluginRoot,
+        cwd,
+        dryRun,
+      });
+    }
+    return;
+  }
+
   let runtimes = all ? ALL_RUNTIMES : runtime ? [runtime] : [];
   if (!runtimes.length) {
     if (canPrompt) {
@@ -197,49 +241,82 @@ export async function main(argv: string[]): Promise<void> {
       continue;
     }
     const baseDir = getInstallBaseDir({ runtime: rt, isGlobal, cwd });
-    if (rt === "claude" && mode === "install") {
-      const sourceReport = getClaudeInstallSourceReport({ cwd });
-      const hasNativeInstall = sourceReport.native.length > 0;
-      if (hasNativeInstall) {
-        console.log("Claude Code native plugin install detected for frontend-craft.");
-        console.log(renderClaudeInstallSourceReport(sourceReport));
-        if (!force && !dryRun) {
-          console.log("Use --force to install anyway, or keep Claude Code Marketplace as the single active source.");
-          process.exitCode = 1;
-          continue;
-        }
-        console.log(force ? "Continuing because --force was provided." : "Dry run only; no Claude CLI files will be installed.");
-      } else if (sourceReport.hasMultipleActiveSources) {
-        console.log(renderClaudeInstallSourceReport(sourceReport));
+    await runInstaller({ rt, mode, isGlobal, baseDir, pluginRoot, cwd, dryRun, force });
+  }
+}
+
+async function runInstaller({
+  rt,
+  mode,
+  isGlobal,
+  baseDir,
+  pluginRoot,
+  cwd,
+  dryRun,
+  force,
+}: {
+  rt: string;
+  mode: "install" | "update";
+  isGlobal: boolean;
+  baseDir: string;
+  pluginRoot: string;
+  cwd: string;
+  dryRun: boolean;
+  force?: boolean;
+}): Promise<void> {
+  if (rt === "claude" && mode === "install") {
+    const sourceReport = getClaudeInstallSourceReport({ cwd });
+    const hasNativeInstall = sourceReport.native.length > 0;
+    if (hasNativeInstall) {
+      console.log("Claude Code native plugin install detected for frontend-craft.");
+      console.log(renderClaudeInstallSourceReport(sourceReport));
+      if (!force && !dryRun) {
+        console.log("Use --force to install anyway, or keep Claude Code Marketplace as the single active source.");
+        process.exitCode = 1;
+        return;
       }
-    }
-    const ctx: InstallContext = {
-      pluginRoot,
-      cwd,
-      runtime: rt,
-      isGlobal,
-      baseDir,
-      dryRun,
-      mode,
-      capabilities: RUNTIME_CAPABILITIES[rt],
-    };
-    if (mode === "install") {
-      console.log(`Installing frontend-craft for "${rt}" -> ${baseDir}${isGlobal ? " (global)" : ""}`);
-      if (!dryRun && fs.existsSync(getManifestPath(baseDir))) {
-        console.log(`Existing frontend-craft manifest found; use "frontend-craft update ${rt}" to refresh managed files.`);
-      }
-    } else {
-      console.log(`Updating frontend-craft for "${rt}" -> ${baseDir}${isGlobal ? " (global)" : ""}`);
-    }
-    if (!dryRun) beginManifestSession({ baseDir, mode, packageVersion: readPkgVersion(pluginRoot), runtime: rt, isGlobal });
-    try {
-      await INSTALLERS[rt](ctx);
-      if (!dryRun) endManifestSession();
-    } catch (err) {
-      if (!dryRun) discardManifestSession();
-      throw err;
+      console.log(force ? "Continuing because --force was provided." : "Dry run only; no Claude CLI files will be installed.");
+    } else if (sourceReport.hasMultipleActiveSources) {
+      console.log(renderClaudeInstallSourceReport(sourceReport));
     }
   }
+  const ctx: InstallContext = {
+    pluginRoot,
+    cwd,
+    runtime: rt,
+    isGlobal,
+    baseDir,
+    dryRun,
+    mode,
+    capabilities: RUNTIME_CAPABILITIES[rt],
+  };
+  if (mode === "install") {
+    console.log(`Installing frontend-craft for "${rt}" -> ${baseDir}${isGlobal ? " (global)" : ""}`);
+    if (!dryRun && fs.existsSync(getManifestPath(baseDir))) {
+      console.log(`Existing frontend-craft manifest found; use "frontend-craft update ${rt}" to refresh managed files.`);
+    }
+  } else {
+    console.log(`Updating frontend-craft for "${rt}" -> ${baseDir}${isGlobal ? " (global)" : ""}`);
+  }
+  if (!dryRun) beginManifestSession({ baseDir, cwd, mode, packageVersion: readPkgVersion(pluginRoot), runtime: rt, isGlobal });
+  try {
+    await INSTALLERS[rt](ctx);
+    if (!dryRun) endManifestSession();
+  } catch (err) {
+    if (!dryRun) discardManifestSession();
+    throw err;
+  }
+}
+
+function getScopeFilter(hasLocal: boolean, hasGlobal: boolean): Array<"local" | "global"> {
+  if (hasLocal) return ["local"];
+  if (hasGlobal) return ["global"];
+  return ["local", "global"];
+}
+
+function renderNoInstallsFound(action: "update" | "uninstall", runtime: string | undefined, scopes: Array<"local" | "global">): string {
+  const runtimeLabel = runtime ? ` for "${runtime}"` : "";
+  return `No frontend-craft installs found${runtimeLabel} to ${action} (${scopes.join(", ")}).`;
 }
 
 function renderDoctorReport({
