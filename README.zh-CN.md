@@ -57,9 +57,11 @@
 npm install -g frontend-craft@latest
 cd your-project
 fec init
+fec init codex      # 初始化指定运行时
+fec init claude     # 初始化 Claude Code
 ```
 
-`fec init` 是终端里的 CLI 初始化命令，用来初始化当前项目。AI 助手内的 `/fec-init` 斜杠命令是另一个入口，需要先把 frontend-craft 安装到对应运行时后再使用。
+`fec init` 是终端里的 CLI 初始化命令，用来初始化当前项目。在交互式终端中，不传 runtime 时会弹出选择提示；在非交互环境中，不传 runtime 时 CLI 默认使用 `claude`。`init` 默认安装到当前项目，除非显式传入 `--global`，例如 `fec init codex --global`。AI 助手内的 `/fec-init` 斜杠命令是另一个入口，需要先把 frontend-craft 安装到对应运行时后再使用。
 
 ### 方式二：免全局安装的交互向导
 
@@ -67,7 +69,7 @@ fec init
 npx frontend-craft@latest
 ```
 
-不想全局安装 `fec` 命令时使用这种方式。向导会引导你选择一个或多个运行时，并决定安装到全局还是当前项目。
+不想全局安装 `fec` 命令时使用这种方式。向导会走完整安装流程：先选择一个或多个运行时，再决定安装到全局还是当前项目。
 
 ### 方式三：脚本化安装
 

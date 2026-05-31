@@ -57,9 +57,11 @@ Requires **Node.js 22+**. Works on **Windows, macOS, and Linux**.
 npm install -g frontend-craft@latest
 cd your-project
 fec init
+fec init codex      # initialize for a specific runtime
+fec init claude     # initialize for Claude Code
 ```
 
-`fec init` is the terminal CLI command for initializing the current project. The in-assistant `/fec-init` slash command is separate and runs after frontend-craft is installed in your AI runtime.
+`fec init` is the terminal CLI command for initializing the current project. In an interactive terminal, omit the runtime to choose one from the prompt; in non-interactive terminals, the CLI defaults to `claude` when no runtime is specified. `init` installs locally by default unless you explicitly pass `--global`, for example `fec init codex --global`. The in-assistant `/fec-init` slash command is separate and runs after frontend-craft is installed in your AI runtime.
 
 ### Option 2 — No-global interactive wizard
 
@@ -67,7 +69,7 @@ fec init
 npx frontend-craft@latest
 ```
 
-Use this when you do not want to install a global `fec` command. The wizard lets you pick one or more runtimes and whether to install globally or per-project.
+Use this when you do not want to install a global `fec` command. The wizard walks through the full install flow: choose one or more runtimes, then choose whether to install globally or into the current project.
 
 ### Option 3 — Scripted install
 
