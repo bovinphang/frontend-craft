@@ -1,6 +1,8 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import { execFileSync } from "node:child_process";
+import fs from "node:fs";
+import os from "node:os";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import {
@@ -12,18 +14,27 @@ import {
   renderSelectablePrompt,
 } from "../../src/install/interactive.js";
 
-const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "../..");
+const root = path.resolve(
+  path.dirname(fileURLToPath(import.meta.url)),
+  "../..",
+);
 const cli = path.join(root, "dist", "bin", "frontend-craft.js");
 
 test("version prints semver", () => {
-  const out = execFileSync(process.execPath, [cli, "version"], { encoding: "utf8" }).trim();
+  const out = execFileSync(process.execPath, [cli, "version"], {
+    encoding: "utf8",
+  }).trim();
   assert.match(out, /^\d+\.\d+\.\d+/);
 });
 
 test("top-level version and help flags keep their command behavior", () => {
-  const version = execFileSync(process.execPath, [cli, "--version", "--dry-run"], {
-    encoding: "utf8",
-  }).trim();
+  const version = execFileSync(
+    process.execPath,
+    [cli, "--version", "--dry-run"],
+    {
+      encoding: "utf8",
+    },
+  ).trim();
   assert.match(version, /^\d+\.\d+\.\d+/);
 
   const help = execFileSync(process.execPath, [cli, "--help", "--dry-run"], {
@@ -34,9 +45,13 @@ test("top-level version and help flags keep their command behavior", () => {
 });
 
 test("install help flag prints help without installing", () => {
-  const help = execFileSync(process.execPath, [cli, "install", "--help", "--dry-run"], {
-    encoding: "utf8",
-  });
+  const help = execFileSync(
+    process.execPath,
+    [cli, "install", "--help", "--dry-run"],
+    {
+      encoding: "utf8",
+    },
+  );
   assert.match(help, /Usage:/);
   assert.match(help, /frontend-craft init \[runtime\] \[options\]/);
   assert.match(help, /fec init \[runtime\] \[options\]/);
@@ -45,48 +60,107 @@ test("install help flag prints help without installing", () => {
 });
 
 test("init defaults to local project installation", () => {
-  const out = execFileSync(process.execPath, [cli, "init", "claude", "--dry-run"], {
-    cwd: root,
-    encoding: "utf8",
-  });
+  const runtimeHome = fs.mkdtempSync(
+    path.join(os.tmpdir(), "fc-init-default-home-"),
+  );
+  try {
+    const out = execFileSync(
+      process.execPath,
+      [cli, "init", "claude", "--dry-run"],
+      {
+        cwd: root,
+        encoding: "utf8",
+        env: {
+          ...process.env,
+          CLAUDE_CONFIG_DIR: path.join(runtimeHome, "claude"),
+        },
+      },
+    );
 
-  assert.match(out, new RegExp(`Installing frontend-craft for "claude" -> ${escapeRegExp(path.join(root, ".claude"))}`));
-  assert.doesNotMatch(out, /\(global\)/);
+    assert.match(
+      out,
+      new RegExp(
+        `Installing frontend-craft for "claude" -> ${escapeRegExp(path.join(root, ".claude"))}`,
+      ),
+    );
+    assert.doesNotMatch(out, /\(global\)/);
+  } finally {
+    fs.rmSync(runtimeHome, { recursive: true, force: true });
+  }
 });
 
 test("init uses local runtime directory unless global is explicit", () => {
-  const local = execFileSync(process.execPath, [cli, "init", "codex", "--dry-run"], {
-    cwd: root,
-    encoding: "utf8",
-  });
-  assert.match(local, new RegExp(`Installing frontend-craft for "codex" -> ${escapeRegExp(path.join(root, ".codex"))}`));
+  const local = execFileSync(
+    process.execPath,
+    [cli, "init", "codex", "--dry-run"],
+    {
+      cwd: root,
+      encoding: "utf8",
+    },
+  );
+  assert.match(
+    local,
+    new RegExp(
+      `Installing frontend-craft for "codex" -> ${escapeRegExp(path.join(root, ".codex"))}`,
+    ),
+  );
   assert.doesNotMatch(local, /\(global\)/);
 
-  const global = execFileSync(process.execPath, [cli, "init", "codex", "--global", "--dry-run"], {
-    cwd: root,
-    encoding: "utf8",
-  });
-  assert.match(global, /Installing frontend-craft for "codex" -> .+\.codex \(global\)/);
+  const global = execFileSync(
+    process.execPath,
+    [cli, "init", "codex", "--global", "--dry-run"],
+    {
+      cwd: root,
+      encoding: "utf8",
+    },
+  );
+  assert.match(
+    global,
+    /Installing frontend-craft for "codex" -> .+\.codex \(global\)/,
+  );
 });
 
 test("list includes claude, openclaw, and qoder", () => {
-  const out = execFileSync(process.execPath, [cli, "list"], { encoding: "utf8" });
+  const out = execFileSync(process.execPath, [cli, "list"], {
+    encoding: "utf8",
+  });
   assert.match(out, /claude/);
   assert.match(out, /openclaw/);
   assert.match(out, /qoder/);
 });
 
 test("matrix prints runtime capability matrix", () => {
-  const out = execFileSync(process.execPath, [cli, "matrix"], { encoding: "utf8" });
-  assert.match(out, /Runtime\s+Tier\s+Skills\s+Agents\s+Commands\s+Hooks\s+Rules\s+Templates\s+MCP\s+Reports\s+Init/);
-  assert.match(out, /claude\s+full\s+yes\s+yes\s+yes\s+yes\s+yes\s+yes\s+yes\s+yes\s+native/);
-  assert.match(out, /codex\s+full\s+yes\s+yes\s+no\s+no\s+yes\s+yes\s+no\s+yes\s+native/);
-  assert.match(out, /qoder\s+full\s+yes\s+yes\s+yes\s+yes\s+yes\s+yes\s+no\s+yes\s+native/);
-  assert.match(out, /codebuddy\s+skills-rules-only\s+yes\s+no\s+no\s+no\s+no\s+no\s+no\s+yes\s+none/);
+  const out = execFileSync(process.execPath, [cli, "matrix"], {
+    encoding: "utf8",
+  });
+  assert.match(
+    out,
+    /Runtime\s+Tier\s+Skills\s+Agents\s+Commands\s+Hooks\s+Rules\s+Templates\s+MCP\s+Reports\s+Init/,
+  );
+  assert.match(
+    out,
+    /claude\s+full\s+yes\s+yes\s+yes\s+yes\s+yes\s+yes\s+yes\s+yes\s+native/,
+  );
+  assert.match(
+    out,
+    /codex\s+full\s+yes\s+yes\s+no\s+no\s+yes\s+yes\s+no\s+yes\s+native/,
+  );
+  assert.match(
+    out,
+    /qoder\s+full\s+yes\s+yes\s+yes\s+yes\s+yes\s+yes\s+no\s+yes\s+native/,
+  );
+  assert.match(
+    out,
+    /codebuddy\s+skills-rules-only\s+yes\s+no\s+no\s+no\s+no\s+no\s+no\s+yes\s+none/,
+  );
 });
 
 test("sync-metadata check succeeds when public metadata is aligned", () => {
-  const out = execFileSync(process.execPath, [cli, "sync-metadata", "--check"], { encoding: "utf8" });
+  const out = execFileSync(
+    process.execPath,
+    [cli, "sync-metadata", "--check"],
+    { encoding: "utf8" },
+  );
   assert.match(out, /metadata is synchronized/);
 });
 
@@ -137,7 +211,10 @@ test("runtime prompt describes multi-select and all option", () => {
   assert.match(prompt, /Which runtime\(s\) would you like to install for\?/);
   assert.match(prompt, /Selected:\s+Claude Code/);
   assert.match(prompt, /Search: \[type to filter\]/);
-  assert.match(prompt, /Up\/Down navigate - Space toggle - Backspace remove - Enter confirm/);
+  assert.match(
+    prompt,
+    /Up\/Down navigate - Space toggle - Backspace remove - Enter confirm/,
+  );
   assert.match(prompt, /\[x\] Claude Code \(selected\)/);
   assert.match(prompt, /\[ \] Codex/);
   assert.match(prompt, /Claude Code/);
@@ -183,7 +260,10 @@ test("selectable prompt render includes selected summary, search, controls, and 
   const rendered = renderSelectablePrompt(state);
   assert.match(rendered, /Selected:\s+Claude Code/);
   assert.match(rendered, /Search: \[type to filter\]/);
-  assert.match(rendered, /Up\/Down navigate - Space toggle - Backspace remove - Enter confirm/);
+  assert.match(
+    rendered,
+    /Up\/Down navigate - Space toggle - Backspace remove - Enter confirm/,
+  );
   assert.match(rendered, /> \[x\] Claude Code \(selected\)/);
   assert.match(rendered, /\(1\/\d+\)/);
 });

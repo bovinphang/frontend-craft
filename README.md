@@ -91,14 +91,9 @@ npx frontend-craft@latest list
 
 ### Option 4 — Claude Code Marketplace
 
-For Claude Code users, **Claude Code Marketplace** is the preferred single-source install. Use the CLI for Claude when you need cross-runtime installs, scripted/offline file copies, or non-Marketplace environments. Do not keep Marketplace and CLI copies active in the same Claude scope unless you explicitly choose that with `--force`.
+For Claude Code users, **Claude Code Marketplace** is the preferred single-source install. Use the CLI for Claude only when you need cross-runtime installs, scripted/offline file copies, or non-Marketplace environments.
 
-If you do choose a second CLI-managed Claude copy, pass `--force` after `install claude`; it is not a top-level command:
-
-```bash
-npx frontend-craft@latest install claude --global --force
-npx frontend-craft@latest install claude --local --force
-```
+If Marketplace is already installed, the CLI will not install or update a second Claude copy, even with `--force`; update through Claude Code Marketplace instead. If a CLI-managed Claude install already exists in the other scope, interactive terminals ask whether to keep that source updated or uninstall it before switching. Non-interactive terminals stop and print the exact `update`, `uninstall`, and `install` commands to run.
 
 Full Claude-specific steps are in [docs/runtimes/claude.md](docs/runtimes/claude.md) · [简体中文](docs/runtimes/claude.zh-CN.md).
 
@@ -412,7 +407,7 @@ npx frontend-craft@latest uninstall [runtime] [--local|--global] [--dry-run] [--
 
 The CLI writes `frontend-craft.manifest.json` into the runtime directory. `update` discovers those manifests automatically when no runtime is provided and **skips files you’ve modified locally**, so customizations survive updates.
 
-`uninstall`/`remove` only deletes files recorded in the manifest. It skips modified files by default; add `--force` only when you want to remove modified managed files too.
+`uninstall`/`remove` only deletes files recorded in the manifest. It skips modified files by default; add `--force` only when you want to remove modified managed files too. `--force` does not override a Claude Code Marketplace install.
 
 For **Claude Code Marketplace** or **submodule** installs, see [docs/runtimes/claude.md](docs/runtimes/claude.md) · [简体中文](docs/runtimes/claude.zh-CN.md). `/fec-init` only initializes project config; it is not a second plugin install.
 

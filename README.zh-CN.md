@@ -91,14 +91,9 @@ npx frontend-craft@latest list
 
 ### 方式四：Claude Code Marketplace
 
-对 Claude Code 用户，**Claude Code Marketplace** 是推荐的单一来源安装方式。只有在需要跨运行时安装、脚本化/离线复制文件，或非 Marketplace 环境时，才建议对 Claude 使用 CLI。除非显式传入 `--force`，不要在同一个 Claude 作用域同时启用 Marketplace 和 CLI 两份完整插件。
+对 Claude Code 用户，**Claude Code Marketplace** 是推荐的单一来源安装方式。只有在需要跨运行时安装、脚本化/离线复制文件，或非 Marketplace 环境时，才建议对 Claude 使用 CLI。
 
-如果你确实要额外启用一份 CLI 管理的 Claude 安装，请把 `--force` 放在 `install claude` 后面；它不是顶层命令，不能写成 `npx frontend-craft@latest --force`：
-
-```bash
-npx frontend-craft@latest install claude --global --force
-npx frontend-craft@latest install claude --local --force
-```
+如果已经通过 Marketplace 安装，CLI 不会再安装或更新第二份 Claude 副本，即使传入 `--force` 也不会覆盖；请通过 Claude Code Marketplace 更新。如果已存在另一个作用域的 CLI 管理安装，交互式终端会询问是保持已安装来源并更新，还是卸载后切换到当前来源；非交互终端会停止并打印明确的 `update`、`uninstall`、`install` 命令。
 
 完整步骤见 [docs/runtimes/claude.zh-CN.md](docs/runtimes/claude.zh-CN.md) · [English](docs/runtimes/claude.md)。
 
@@ -412,7 +407,7 @@ npx frontend-craft@latest uninstall [runtime] [--local|--global] [--dry-run] [--
 
 CLI 会在 runtime 目录写入 `frontend-craft.manifest.json`。不传 runtime 时，`update` 会自动发现这些 manifest，并**跳过你本地修改过的文件**——自定义内容在更新后依然保留。
 
-`uninstall`/`remove` 只删除 manifest 记录的文件，默认跳过已修改文件；只有确认要移除修改过的托管文件时才加 `--force`。
+`uninstall`/`remove` 只删除 manifest 记录的文件，默认跳过已修改文件；只有确认要移除修改过的托管文件时才加 `--force`。`--force` 不会覆盖 Claude Code Marketplace 安装。
 
 **Claude Code Marketplace** 或 **submodule** 安装的更新方式见 [docs/runtimes/claude.zh-CN.md](docs/runtimes/claude.zh-CN.md) · [English](docs/runtimes/claude.md)。`/fec-init` 只初始化项目配置，不是第二次安装插件本体。
 
