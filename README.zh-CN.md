@@ -389,20 +389,30 @@ $env:MODAO_TOKEN = "your-modao-token"
 
 ---
 
-## 保持更新
+## 更新与移除
+
+`fec` 是 `frontend-craft` 的短命令。如果没有全局安装 `fec`，可以把同样参数接在 `npx frontend-craft@latest` 后使用，例如 `npx frontend-craft@latest update`。
+
+### 更新
 
 ```bash
-# 更新自动发现到的所有 CLI 管理安装
-npx frontend-craft@latest update
+fec update                         # 更新自动发现到的所有 CLI 管理安装
+fec update <runtime> --local        # 更新一个本地 CLI 管理安装
+fec update <runtime> --global       # 更新一个全局 CLI 管理安装
+fec upgrade <runtime> --global      # `upgrade` 是 `update` 的别名
+```
 
-# 显式更新一个 CLI 管理安装
-npx frontend-craft@latest update <runtime> --local
-npx frontend-craft@latest update <runtime> --global
-# `upgrade` 是 `update` 的别名
+### 移除
 
-# 安全移除 CLI 管理文件
-npx frontend-craft@latest uninstall [runtime] [--local|--global] [--dry-run] [--force]
-# `remove` 是 `uninstall` 的别名
+```bash
+fec uninstall                       # 移除自动发现到的所有 CLI 管理安装
+fec remove                          # `remove` 是 `uninstall` 的别名
+fec uninstall <runtime>             # 移除指定 runtime 安装
+fec remove <runtime>                # 使用别名移除指定 runtime
+fec uninstall --global              # 只移除发现到的全局安装
+fec remove --local                  # 只移除发现到的本地安装
+fec uninstall <runtime> --dry-run   # 预览将移除的文件
+fec uninstall <runtime> --force     # 连同已修改的托管文件一起移除
 ```
 
 CLI 会在 runtime 目录写入 `frontend-craft.manifest.json`。不传 runtime 时，`update` 会自动发现这些 manifest，并**跳过你本地修改过的文件**——自定义内容在更新后依然保留。

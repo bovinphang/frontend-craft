@@ -383,20 +383,30 @@ $env:MODAO_TOKEN = "your-modao-token"
 
 ---
 
-## アップデート
+## アップデートと削除
+
+`fec` は `frontend-craft` の短いコマンドです。グローバルの `fec` コマンドをインストールしていない場合は、同じ引数を `npx frontend-craft@latest` に渡してください。例：`npx frontend-craft@latest update`。
+
+### アップデート
 
 ```bash
-# 検出された CLI 管理インストールをすべてアップデート
-npx frontend-craft@latest update
+fec update                         # 検出された CLI 管理インストールをすべてアップデート
+fec update <runtime> --local        # ローカルの CLI 管理インストールを 1 つアップデート
+fec update <runtime> --global       # グローバルの CLI 管理インストールを 1 つアップデート
+fec upgrade <runtime> --global      # `upgrade` は `update` のエイリアス
+```
 
-# CLI 管理インストールを明示してアップデート
-npx frontend-craft@latest update <runtime> --local
-npx frontend-craft@latest update <runtime> --global
-# `upgrade` は `update` のエイリアス
+### 削除
 
-# CLI 管理ファイルを安全に削除
-npx frontend-craft@latest uninstall [runtime] [--local|--global] [--dry-run] [--force]
-# `remove` は `uninstall` のエイリアス
+```bash
+fec uninstall                       # 検出された CLI 管理インストールをすべて削除
+fec remove                          # `remove` は `uninstall` のエイリアス
+fec uninstall <runtime>             # 指定 runtime のインストールを削除
+fec remove <runtime>                # エイリアスで指定 runtime を削除
+fec uninstall --global              # 検出されたグローバルインストールだけを削除
+fec remove --local                  # 検出されたローカルインストールだけを削除
+fec uninstall <runtime> --dry-run   # 削除内容をプレビュー
+fec uninstall <runtime> --force     # 変更済みの管理ファイルも削除
 ```
 
 CLI はランタイムディレクトリに `frontend-craft.manifest.json` を書き込みます。runtime を指定しない場合、`update` はこれらの manifest を自動検出し、**ローカルで修正したファイルをスキップ**します——カスタマイズはアップデート後も保持されます。

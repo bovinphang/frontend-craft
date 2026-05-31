@@ -389,20 +389,30 @@ Every review, analysis, and evaluation writes a timestamped Markdown report to `
 
 ---
 
-## Updates
+## Update and Remove
+
+`fec` is the short command for `frontend-craft`. If you have not installed the global `fec` command, use the same arguments with `npx frontend-craft@latest`, for example `npx frontend-craft@latest update`.
+
+### Update
 
 ```bash
-# Update all discovered CLI-managed installs
-npx frontend-craft@latest update
+fec update                         # Update all discovered CLI-managed installs
+fec update <runtime> --local        # Update one local CLI-managed install
+fec update <runtime> --global       # Update one global CLI-managed install
+fec upgrade <runtime> --global      # `upgrade` is an alias for `update`
+```
 
-# Update one CLI-managed install explicitly
-npx frontend-craft@latest update <runtime> --local
-npx frontend-craft@latest update <runtime> --global
-# `upgrade` is an alias for `update`
+### Remove
 
-# Safely remove CLI-managed files
-npx frontend-craft@latest uninstall [runtime] [--local|--global] [--dry-run] [--force]
-# `remove` is an alias for `uninstall`
+```bash
+fec uninstall                       # Remove all discovered CLI-managed installs
+fec remove                          # `remove` is an alias for `uninstall`
+fec uninstall <runtime>             # Remove a specific runtime install
+fec remove <runtime>                # Same removal through the alias
+fec uninstall --global              # Remove discovered global installs only
+fec remove --local                  # Remove discovered local installs only
+fec uninstall <runtime> --dry-run   # Preview removals
+fec uninstall <runtime> --force     # Remove modified managed files too
 ```
 
 The CLI writes `frontend-craft.manifest.json` into the runtime directory. `update` discovers those manifests automatically when no runtime is provided and **skips files you’ve modified locally**, so customizations survive updates.

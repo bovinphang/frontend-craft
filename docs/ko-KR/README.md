@@ -383,20 +383,30 @@ $env:MODAO_TOKEN = "your-modao-token"
 
 ---
 
-## 업데이트
+## 업데이트와 제거
+
+`fec`는 `frontend-craft`의 짧은 명령어입니다. 전역 `fec` 명령어를 설치하지 않았다면 같은 인자를 `npx frontend-craft@latest` 뒤에 붙여 사용하세요. 예: `npx frontend-craft@latest update`.
+
+### 업데이트
 
 ```bash
-# 발견된 모든 CLI 관리 설치 업데이트
-npx frontend-craft@latest update
+fec update                         # 발견된 모든 CLI 관리 설치 업데이트
+fec update <runtime> --local        # 로컬 CLI 관리 설치 하나 업데이트
+fec update <runtime> --global       # 전역 CLI 관리 설치 하나 업데이트
+fec upgrade <runtime> --global      # `upgrade`는 `update`의 별칭
+```
 
-# CLI 관리 설치 하나를 명시적으로 업데이트
-npx frontend-craft@latest update <runtime> --local
-npx frontend-craft@latest update <runtime> --global
-# `upgrade`는 `update`의 별칭
+### 제거
 
-# CLI 관리 파일을 안전하게 제거
-npx frontend-craft@latest uninstall [runtime] [--local|--global] [--dry-run] [--force]
-# `remove`는 `uninstall`의 별칭
+```bash
+fec uninstall                       # 발견된 모든 CLI 관리 설치 제거
+fec remove                          # `remove`는 `uninstall`의 별칭
+fec uninstall <runtime>             # 특정 runtime 설치 제거
+fec remove <runtime>                # 별칭으로 특정 runtime 제거
+fec uninstall --global              # 발견된 전역 설치만 제거
+fec remove --local                  # 발견된 로컬 설치만 제거
+fec uninstall <runtime> --dry-run   # 제거 내용을 미리 보기
+fec uninstall <runtime> --force     # 수정된 관리 파일도 제거
 ```
 
 CLI는 런타임 디렉토리에 `frontend-craft.manifest.json`을 작성합니다. runtime을 지정하지 않으면 `update`가 이 manifest를 자동으로 발견하고 **로컬에서 수정한 파일을 건너뜁니다** — 커스터마이징은 업데이트 후에도 유지됩니다.
