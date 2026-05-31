@@ -1,12 +1,24 @@
 import fs from "node:fs";
 import path from "node:path";
+import readline from "node:readline";
 import { ALL_RUNTIMES, INSTALLERS } from "./registry.js";
 import { promptLocation, promptRuntime } from "./interactive.js";
 import { getInstallBaseDir } from "./runtime-homes.js";
-import { RUNTIME_CAPABILITIES, renderRuntimeCapabilityMatrix } from "./runtime-capabilities.js";
+import {
+  RUNTIME_CAPABILITIES,
+  renderRuntimeCapabilityMatrix,
+} from "./runtime-capabilities.js";
 import { resolvePluginRoot } from "./shared/resolve-plugin-root.js";
-import { beginManifestSession, discardManifestSession, endManifestSession, getManifestPath } from "./shared/fs.js";
-import { discoverManifestInstalls, uninstallManagedInstall } from "./manifest-installs.js";
+import {
+  beginManifestSession,
+  discardManifestSession,
+  endManifestSession,
+  getManifestPath,
+} from "./shared/fs.js";
+import {
+  discoverManifestInstalls,
+  uninstallManagedInstall,
+} from "./manifest-installs.js";
 import {
   cleanupClaudeFrontendCraftCache,
   getClaudeFrontendCraftCacheReport,
@@ -16,6 +28,10 @@ import {
   renderClaudeInstallSourceReport,
 } from "./claude-cache.js";
 import type { InstallContext } from "./types.js";
+import type { ClaudeCliInstall } from "./claude-cache.js";
+
+type ClaudeCliSource = "cli-global" | "cli-local";
+type ClaudeInstallSource = "marketplace" | ClaudeCliSource;
 
 function readPkgVersion(pluginRoot: string): string {
   try {
@@ -47,7 +63,15 @@ function parseInstallArgs(argv: string[]) {
     else if (a === "--all") all = true;
     else if (!a.startsWith("-")) rest.push(a);
   }
-  return { runtime: rest[0], installLocation, dryRun, force, all, hasGlobal, hasLocal };
+  return {
+    runtime: rest[0],
+    installLocation,
+    dryRun,
+    force,
+    all,
+    hasGlobal,
+    hasLocal,
+  };
 }
 
 function printHelp(): void {
@@ -73,7 +97,7 @@ Options:
   --global, -g     Install to tool global config directory
   --local, -l      Install to this project only
   --dry-run        Show actions without writing files
-  --force          Install: continue Claude native conflicts; uninstall: remove modified managed files
+  --force          Uninstall: remove modified managed files (does not override Claude Marketplace)
   --all            Install for every supported runtime
 
 Notes:
@@ -89,7 +113,10 @@ Runtimes:
 
 function isInstallInvocation(argv: string[]): boolean {
   const first = argv[0];
-  return first == null || ["--dry-run", "--all", "--global", "-g", "--local", "-l"].includes(first);
+  return (
+    first == null ||
+    ["--dry-run", "--all", "--global", "-g", "--local", "-l"].includes(first)
+  );
 }
 
 export async function main(argv: string[]): Promise<void> {
@@ -123,7 +150,18 @@ export async function main(argv: string[]): Promise<void> {
       process.exitCode = 1;
       return;
     }
-    console.log(renderDoctorReport({ runtime, baseDir, cwd, cap, pluginRoot, fixCache, dryRun, isGlobal }));
+    console.log(
+      renderDoctorReport({
+        runtime,
+        baseDir,
+        cwd,
+        cap,
+        pluginRoot,
+        fixCache,
+        dryRun,
+        isGlobal,
+      }),
+    );
     return;
   }
   if (cmd === "sync-metadata") {
@@ -134,7 +172,11 @@ export async function main(argv: string[]): Promise<void> {
       process.exitCode = 1;
       return;
     }
-    console.log(checkOnly ? "metadata is synchronized" : "metadata is synchronized; no changes needed");
+    console.log(
+      checkOnly
+        ? "metadata is synchronized"
+        : "metadata is synchronized; no changes needed",
+    );
     return;
   }
   if (cmd === "help" || cmd === "-h" || cmd === "--help") {
@@ -142,7 +184,14 @@ export async function main(argv: string[]): Promise<void> {
     return;
   }
   const mode = cmd === "update" || cmd === "upgrade" ? "update" : "install";
-  if (cmd !== "install" && cmd !== "init" && cmd !== "update" && cmd !== "upgrade" && cmd !== "uninstall" && cmd !== "remove") {
+  if (
+    cmd !== "install" &&
+    cmd !== "init" &&
+    cmd !== "update" &&
+    cmd !== "upgrade" &&
+    cmd !== "uninstall" &&
+    cmd !== "remove"
+  ) {
     console.error(`Unknown command: ${cmd}`);
     printHelp();
     process.exitCode = 1;
@@ -153,7 +202,8 @@ export async function main(argv: string[]): Promise<void> {
     return;
   }
 
-  const { runtime, installLocation, dryRun, force, all, hasGlobal, hasLocal } = parseInstallArgs(cmdArgs);
+  const { runtime, installLocation, dryRun, force, all, hasGlobal, hasLocal } =
+    parseInstallArgs(cmdArgs);
   const effectiveInstallLocation = installLocation ?? (isInit ? "local" : null);
   if (hasGlobal && hasLocal) {
     console.error("--global and --local cannot be used together.");
@@ -176,24 +226,36 @@ export async function main(argv: string[]): Promise<void> {
       return;
     }
     for (const install of installs) {
-      console.log(`Uninstalling frontend-craft for "${install.runtime}" -> ${install.baseDir}${install.scope === "global" ? " (global)" : ""}`);
+      console.log(
+        `Uninstalling frontend-craft for "${install.runtime}" -> ${install.baseDir}${install.scope === "global" ? " (global)" : ""}`,
+      );
       const result = uninstallManagedInstall({ install, cwd, dryRun, force });
       for (const file of result.removed) {
         const action = dryRun ? "[dry-run] would remove" : "Removed";
-        console.log(`${action}${file.modified ? " modified file" : " file"}: ${file.path}`);
+        console.log(
+          `${action}${file.modified ? " modified file" : " file"}: ${file.path}`,
+        );
       }
-      for (const file of result.skipped) console.log(`Skipped modified file: ${file}`);
+      for (const file of result.skipped)
+        console.log(`Skipped modified file: ${file}`);
       for (const file of result.missing) console.log(`Missing file: ${file}`);
-      if (dryRun && result.skipped.length === 0) console.log(`[dry-run] would remove manifest: ${install.manifestPath}`);
+      if (dryRun && result.skipped.length === 0)
+        console.log(`[dry-run] would remove manifest: ${install.manifestPath}`);
     }
     return;
   }
 
-  const canPrompt = Boolean(process.stdin.isTTY) || process.env.FRONTEND_CRAFT_FORCE_INTERACTIVE === "1";
+  const canPrompt =
+    Boolean(process.stdin.isTTY) ||
+    process.env.FRONTEND_CRAFT_FORCE_INTERACTIVE === "1";
 
   if (mode === "update" && !runtime) {
     const scopes = getScopeFilter(hasLocal, hasGlobal);
-    const installs = discoverManifestInstalls({ cwd, runtimes: all ? ALL_RUNTIMES : undefined, scopes });
+    const installs = discoverManifestInstalls({
+      cwd,
+      runtimes: all ? ALL_RUNTIMES : undefined,
+      scopes,
+    });
     if (installs.length === 0) {
       console.log(renderNoInstallsFound("update", undefined, scopes));
       return;
@@ -217,7 +279,9 @@ export async function main(argv: string[]): Promise<void> {
     if (canPrompt) {
       runtimes = await promptRuntime();
     } else {
-      console.log("Non-interactive terminal detected, defaulting to claude runtime.");
+      console.log(
+        "Non-interactive terminal detected, defaulting to claude runtime.",
+      );
       runtimes = ["claude"];
     }
   }
@@ -230,7 +294,9 @@ export async function main(argv: string[]): Promise<void> {
   } else if (canPrompt) {
     isGlobal = await promptLocation(runtimes);
   } else {
-    console.log("Non-interactive terminal detected, defaulting to global install.");
+    console.log(
+      "Non-interactive terminal detected, defaulting to global install.",
+    );
     isGlobal = true;
   }
 
@@ -241,7 +307,17 @@ export async function main(argv: string[]): Promise<void> {
       continue;
     }
     const baseDir = getInstallBaseDir({ runtime: rt, isGlobal, cwd });
-    await runInstaller({ rt, mode, isGlobal, baseDir, pluginRoot, cwd, dryRun, force });
+    await runInstaller({
+      rt,
+      mode,
+      isGlobal,
+      baseDir,
+      pluginRoot,
+      cwd,
+      dryRun,
+      force,
+      canPrompt,
+    });
   }
 }
 
@@ -254,6 +330,7 @@ async function runInstaller({
   cwd,
   dryRun,
   force,
+  canPrompt,
 }: {
   rt: string;
   mode: "install" | "update";
@@ -263,22 +340,22 @@ async function runInstaller({
   cwd: string;
   dryRun: boolean;
   force?: boolean;
+  canPrompt?: boolean;
 }): Promise<void> {
-  if (rt === "claude" && mode === "install") {
-    const sourceReport = getClaudeInstallSourceReport({ cwd });
-    const hasNativeInstall = sourceReport.native.length > 0;
-    if (hasNativeInstall) {
-      console.log("Claude Code native plugin install detected for frontend-craft.");
-      console.log(renderClaudeInstallSourceReport(sourceReport));
-      if (!force && !dryRun) {
-        console.log("Use --force to install anyway, or keep Claude Code Marketplace as the single active source.");
-        process.exitCode = 1;
-        return;
-      }
-      console.log(force ? "Continuing because --force was provided." : "Dry run only; no Claude CLI files will be installed.");
-    } else if (sourceReport.hasMultipleActiveSources) {
-      console.log(renderClaudeInstallSourceReport(sourceReport));
-    }
+  const resolved = await resolveClaudeInstallConflict({
+    rt,
+    mode,
+    isGlobal,
+    cwd,
+    dryRun,
+    force: Boolean(force),
+    canPrompt: Boolean(canPrompt),
+  });
+  if (!resolved) return;
+  if (resolved.redirect) {
+    isGlobal = resolved.redirect.isGlobal;
+    baseDir = resolved.redirect.baseDir;
+    mode = "update";
   }
   const ctx: InstallContext = {
     pluginRoot,
@@ -291,14 +368,28 @@ async function runInstaller({
     capabilities: RUNTIME_CAPABILITIES[rt],
   };
   if (mode === "install") {
-    console.log(`Installing frontend-craft for "${rt}" -> ${baseDir}${isGlobal ? " (global)" : ""}`);
+    console.log(
+      `Installing frontend-craft for "${rt}" -> ${baseDir}${isGlobal ? " (global)" : ""}`,
+    );
     if (!dryRun && fs.existsSync(getManifestPath(baseDir))) {
-      console.log(`Existing frontend-craft manifest found; use "frontend-craft update ${rt}" to refresh managed files.`);
+      console.log(
+        `Existing frontend-craft manifest found; use "frontend-craft update ${rt}" to refresh managed files.`,
+      );
     }
   } else {
-    console.log(`Updating frontend-craft for "${rt}" -> ${baseDir}${isGlobal ? " (global)" : ""}`);
+    console.log(
+      `Updating frontend-craft for "${rt}" -> ${baseDir}${isGlobal ? " (global)" : ""}`,
+    );
   }
-  if (!dryRun) beginManifestSession({ baseDir, cwd, mode, packageVersion: readPkgVersion(pluginRoot), runtime: rt, isGlobal });
+  if (!dryRun)
+    beginManifestSession({
+      baseDir,
+      cwd,
+      mode,
+      packageVersion: readPkgVersion(pluginRoot),
+      runtime: rt,
+      isGlobal,
+    });
   try {
     await INSTALLERS[rt](ctx);
     if (!dryRun) endManifestSession();
@@ -308,13 +399,217 @@ async function runInstaller({
   }
 }
 
-function getScopeFilter(hasLocal: boolean, hasGlobal: boolean): Array<"local" | "global"> {
+async function resolveClaudeInstallConflict({
+  rt,
+  mode,
+  isGlobal,
+  cwd,
+  dryRun,
+  force,
+  canPrompt,
+}: {
+  rt: string;
+  mode: "install" | "update";
+  isGlobal: boolean;
+  cwd: string;
+  dryRun: boolean;
+  force: boolean;
+  canPrompt: boolean;
+}): Promise<{ redirect?: { isGlobal: boolean; baseDir: string } } | undefined> {
+  if (rt !== "claude") return {};
+
+  const sourceReport = getClaudeInstallSourceReport({ cwd });
+  if (sourceReport.native.length > 0) {
+    console.log("Claude Code Marketplace install detected for frontend-craft.");
+    console.log(renderClaudeInstallSourceReport(sourceReport));
+    console.log(
+      "Update frontend-craft through Claude Code Marketplace. CLI install/update is disabled while Marketplace is active.",
+    );
+    process.exitCode = 1;
+    return undefined;
+  }
+
+  const targetSource: ClaudeCliSource = isGlobal ? "cli-global" : "cli-local";
+  const conflicts = sourceReport.cli.filter(
+    (install) => toClaudeCliSource(install) !== targetSource,
+  );
+  if (conflicts.length === 0) {
+    if (sourceReport.hasMultipleActiveSources)
+      console.log(renderClaudeInstallSourceReport(sourceReport));
+    return {};
+  }
+
+  const existing = conflicts[0];
+  const existingSource = toClaudeCliSource(existing);
+  console.log(
+    `${formatClaudeInstallSource(existingSource)} install detected for frontend-craft.`,
+  );
+  console.log(renderClaudeInstallSourceReport(sourceReport));
+
+  if (dryRun) {
+    console.log(
+      `[dry-run] resolve the existing ${formatClaudeInstallSource(existingSource)} source before using ${formatClaudeInstallSource(targetSource)}.`,
+    );
+    process.exitCode = 1;
+    return undefined;
+  }
+
+  if (!canPrompt) {
+    printClaudeCliConflictGuidance(existingSource, targetSource);
+    process.exitCode = 1;
+    return undefined;
+  }
+
+  const choice = await promptClaudeCliConflictChoice(
+    existingSource,
+    targetSource,
+  );
+  if (choice === "switch") {
+    const removed = uninstallConflictingClaudeCliSources({
+      installs: conflicts,
+      cwd,
+      dryRun,
+      force,
+    });
+    if (!removed) {
+      process.exitCode = 1;
+      return undefined;
+    }
+    return {};
+  }
+
+  const redirectedIsGlobal = existingSource === "cli-global";
+  return {
+    redirect: {
+      isGlobal: redirectedIsGlobal,
+      baseDir: getInstallBaseDir({
+        runtime: "claude",
+        isGlobal: redirectedIsGlobal,
+        cwd,
+      }),
+    },
+  };
+}
+
+function uninstallConflictingClaudeCliSources({
+  installs,
+  cwd,
+  dryRun,
+  force,
+}: {
+  installs: ClaudeCliInstall[];
+  cwd: string;
+  dryRun: boolean;
+  force: boolean;
+}): boolean {
+  for (const cliInstall of installs) {
+    const install = discoverManifestInstalls({
+      cwd,
+      runtimes: ["claude"],
+      scopes: [cliInstall.scope],
+    })[0];
+    if (!install) continue;
+    console.log(
+      `Uninstalling existing ${formatClaudeInstallSource(toClaudeCliSource(cliInstall))} install before switching source.`,
+    );
+    const result = uninstallManagedInstall({ install, cwd, dryRun, force });
+    for (const file of result.removed) {
+      const action = dryRun ? "[dry-run] would remove" : "Removed";
+      console.log(
+        `${action}${file.modified ? " modified file" : " file"}: ${file.path}`,
+      );
+    }
+    for (const file of result.skipped)
+      console.log(`Skipped modified file: ${file}`);
+    for (const file of result.missing) console.log(`Missing file: ${file}`);
+    if (result.skipped.length > 0) {
+      console.log(
+        "Resolve skipped modified files or rerun with --force before switching Claude CLI install source.",
+      );
+      return false;
+    }
+  }
+  return true;
+}
+
+function printClaudeCliConflictGuidance(
+  existingSource: ClaudeCliSource,
+  targetSource: ClaudeCliSource,
+): void {
+  const existingFlag = sourceScopeFlag(existingSource);
+  const targetFlag = sourceScopeFlag(targetSource);
+  console.log(
+    `Keep the existing source updated with: frontend-craft update claude ${existingFlag}`,
+  );
+  console.log(
+    `Or switch sources with: frontend-craft uninstall claude ${existingFlag} && frontend-craft install claude ${targetFlag}`,
+  );
+}
+
+async function promptClaudeCliConflictChoice(
+  existingSource: ClaudeCliSource,
+  targetSource: ClaudeCliSource,
+): Promise<"keep" | "switch"> {
+  console.log("Choose how to resolve the Claude CLI install source conflict:");
+  console.log(
+    `  1. Keep ${formatClaudeInstallSource(existingSource)} and update it`,
+  );
+  console.log(
+    `  2. Uninstall ${formatClaudeInstallSource(existingSource)} and install ${formatClaudeInstallSource(targetSource)}`,
+  );
+  const answer = (await ask("Choice [1]: ")).trim();
+  return answer === "2" ? "switch" : "keep";
+}
+
+function ask(question: string): Promise<string> {
+  if (
+    process.env.FRONTEND_CRAFT_FORCE_INTERACTIVE === "1" &&
+    !process.stdin.isTTY
+  ) {
+    process.stdout.write(question);
+    return Promise.resolve(fs.readFileSync(0, "utf8").split(/\r?\n/)[0] ?? "");
+  }
+
+  return new Promise<string>((resolve) => {
+    const rl = readline.createInterface({
+      input: process.stdin,
+      output: process.stdout,
+    });
+    rl.question(question, (answer) => {
+      rl.close();
+      resolve(answer);
+    });
+    rl.on("close", () => resolve(""));
+  });
+}
+
+function toClaudeCliSource(install: ClaudeCliInstall): ClaudeCliSource {
+  return install.scope === "global" ? "cli-global" : "cli-local";
+}
+
+function formatClaudeInstallSource(source: ClaudeInstallSource): string {
+  if (source === "marketplace") return "Claude Code Marketplace";
+  return source === "cli-global" ? "Claude CLI global" : "Claude CLI local";
+}
+
+function sourceScopeFlag(source: ClaudeCliSource): "--global" | "--local" {
+  return source === "cli-global" ? "--global" : "--local";
+}
+
+function getScopeFilter(
+  hasLocal: boolean,
+  hasGlobal: boolean,
+): Array<"local" | "global"> {
   if (hasLocal) return ["local"];
   if (hasGlobal) return ["global"];
   return ["local", "global"];
 }
 
-function renderNoInstallsFound(action: "update" | "uninstall", runtime: string | undefined, scopes: Array<"local" | "global">): string {
+function renderNoInstallsFound(
+  action: "update" | "uninstall",
+  runtime: string | undefined,
+  scopes: Array<"local" | "global">,
+): string {
   const runtimeLabel = runtime ? ` for "${runtime}"` : "";
   return `No frontend-craft installs found${runtimeLabel} to ${action} (${scopes.join(", ")}).`;
 }
@@ -338,20 +633,45 @@ function renderDoctorReport({
   dryRun: boolean;
   isGlobal: boolean;
 }): string {
-  const lines = [`frontend-craft doctor: ${runtime}`, `baseDir: ${baseDir}`, `tier: ${cap.tier}`];
-  lines.push(`skills: ${status(checkSkills(runtime, baseDir, cwd), cap.skills)}`);
-  lines.push(`agents: ${status(fs.existsSync(path.join(baseDir, "agents")), cap.agents)}`);
-  lines.push(`commands: ${status(checkCommands(runtime, baseDir), cap.commands)}`);
+  const lines = [
+    `frontend-craft doctor: ${runtime}`,
+    `baseDir: ${baseDir}`,
+    `tier: ${cap.tier}`,
+  ];
+  lines.push(
+    `skills: ${status(checkSkills(runtime, baseDir, cwd), cap.skills)}`,
+  );
+  lines.push(
+    `agents: ${status(fs.existsSync(path.join(baseDir, "agents")), cap.agents)}`,
+  );
+  lines.push(
+    `commands: ${status(checkCommands(runtime, baseDir), cap.commands)}`,
+  );
   lines.push(`hooks: ${status(checkHooks(runtime, baseDir), cap.hooks)}`);
-  lines.push(`rules: ${status(checkRules(runtime, baseDir), cap.rules && !isGlobal)}`);
-  lines.push(`templates: ${status(checkTemplates(runtime, baseDir, cwd), cap.templates)}`);
+  lines.push(
+    `rules: ${status(checkRules(runtime, baseDir), cap.rules && !isGlobal)}`,
+  );
+  lines.push(
+    `templates: ${status(checkTemplates(runtime, baseDir, cwd), cap.templates)}`,
+  );
   if (runtime === "claude") {
     const currentVersion = readPkgVersion(pluginRoot);
-    lines.push(renderClaudeInstallSourceReport(getClaudeInstallSourceReport({ cwd })));
+    lines.push(
+      renderClaudeInstallSourceReport(getClaudeInstallSourceReport({ cwd })),
+    );
     if (fixCache) {
-      lines.push(renderClaudeCacheCleanupResult(cleanupClaudeFrontendCraftCache({ currentVersion, dryRun }), dryRun));
+      lines.push(
+        renderClaudeCacheCleanupResult(
+          cleanupClaudeFrontendCraftCache({ currentVersion, dryRun }),
+          dryRun,
+        ),
+      );
     } else {
-      lines.push(renderClaudeCacheReport(getClaudeFrontendCraftCacheReport({ currentVersion })));
+      lines.push(
+        renderClaudeCacheReport(
+          getClaudeFrontendCraftCacheReport({ currentVersion }),
+        ),
+      );
     }
   }
   return lines.join("\n");
@@ -363,11 +683,24 @@ function status(found: boolean, expected: boolean): string {
 }
 
 function checkSkills(runtime: string, baseDir: string, cwd: string): boolean {
-  if (runtime === "codex") return fs.existsSync(path.join(cwd, ".agents", "skills", "fec-react-project-standard"));
+  if (runtime === "codex")
+    return fs.existsSync(
+      path.join(cwd, ".agents", "skills", "fec-react-project-standard"),
+    );
   if (runtime === "gemini") {
-    return fs.existsSync(path.join(baseDir, "extensions", "frontend-craft", "skills", "fec-react-project-standard"));
+    return fs.existsSync(
+      path.join(
+        baseDir,
+        "extensions",
+        "frontend-craft",
+        "skills",
+        "fec-react-project-standard",
+      ),
+    );
   }
-  return fs.existsSync(path.join(baseDir, "skills", "fec-react-project-standard"));
+  return fs.existsSync(
+    path.join(baseDir, "skills", "fec-react-project-standard"),
+  );
 }
 
 function checkCommands(runtime: string, baseDir: string): boolean {
@@ -384,30 +717,50 @@ function checkCommands(runtime: string, baseDir: string): boolean {
 
 function checkHooks(runtime: string, baseDir: string): boolean {
   if (runtime === "qoder") {
-    return fs.existsSync(path.join(baseDir, "settings.json")) && fs.existsSync(path.join(baseDir, "hooks", "fec-security-check.js"));
+    return (
+      fs.existsSync(path.join(baseDir, "settings.json")) &&
+      fs.existsSync(path.join(baseDir, "hooks", "fec-security-check.js"))
+    );
   }
   return fs.existsSync(path.join(baseDir, "hooks.json"));
 }
 
 function checkRules(runtime: string, baseDir: string): boolean {
-  if (runtime === "copilot") return fs.existsSync(path.join(baseDir, "instructions", "frontend-craft.instructions.md"));
-  if (runtime === "cline") return fs.existsSync(path.join(baseDir, ".clinerules"));
+  if (runtime === "copilot")
+    return fs.existsSync(
+      path.join(baseDir, "instructions", "frontend-craft.instructions.md"),
+    );
+  if (runtime === "cline")
+    return fs.existsSync(path.join(baseDir, ".clinerules"));
   return fs.existsSync(path.join(baseDir, "rules"));
 }
 
-function checkTemplates(runtime: string, baseDir: string, cwd: string): boolean {
-  if (runtime === "claude") return fs.existsSync(path.join(cwd, ".claude-plugin", "plugin.json"));
-  if (runtime === "codex") return fs.existsSync(path.join(cwd, "AGENTS.md")) || fs.existsSync(path.join(baseDir, "config.toml"));
+function checkTemplates(
+  runtime: string,
+  baseDir: string,
+  cwd: string,
+): boolean {
+  if (runtime === "claude")
+    return fs.existsSync(path.join(cwd, ".claude-plugin", "plugin.json"));
+  if (runtime === "codex")
+    return (
+      fs.existsSync(path.join(cwd, "AGENTS.md")) ||
+      fs.existsSync(path.join(baseDir, "config.toml"))
+    );
   if (runtime === "gemini") return fs.existsSync(path.join(cwd, "GEMINI.md"));
   if (runtime === "openclaw") return fs.existsSync(path.join(cwd, "AGENTS.md"));
-  if (runtime === "qoder") return fs.existsSync(path.join(baseDir, "settings.json"));
-  if (runtime === "opencode") return fs.existsSync(path.join(baseDir, "opencode.jsonc"));
+  if (runtime === "qoder")
+    return fs.existsSync(path.join(baseDir, "settings.json"));
+  if (runtime === "opencode")
+    return fs.existsSync(path.join(baseDir, "opencode.jsonc"));
   return false;
 }
 
 function checkPublicMetadata(pluginRoot: string): string[] {
   const issues: string[] = [];
-  const pkg = JSON.parse(fs.readFileSync(path.join(pluginRoot, "package.json"), "utf8")) as { version: string };
+  const pkg = JSON.parse(
+    fs.readFileSync(path.join(pluginRoot, "package.json"), "utf8"),
+  ) as { version: string };
   const files = [
     [".claude-plugin/plugin.json", "version"],
     [".claude-plugin/marketplace.json", "plugins.0.version"],
@@ -417,11 +770,19 @@ function checkPublicMetadata(pluginRoot: string): string[] {
   for (const [file, selector] of files) {
     const fullPath = path.join(pluginRoot, file);
     const json = JSON.parse(fs.readFileSync(fullPath, "utf8"));
-    const actual = selector.split(".").reduce((value, key) => value?.[Number.isNaN(Number(key)) ? key : Number(key)], json);
-    if (actual !== pkg.version) issues.push(`${file} ${selector} is ${actual}, expected ${pkg.version}`);
+    const actual = selector
+      .split(".")
+      .reduce(
+        (value, key) => value?.[Number.isNaN(Number(key)) ? key : Number(key)],
+        json,
+      );
+    if (actual !== pkg.version)
+      issues.push(`${file} ${selector} is ${actual}, expected ${pkg.version}`);
   }
 
-  const skillsMetadata = JSON.parse(fs.readFileSync(path.join(pluginRoot, "skills", "metadata.json"), "utf8")) as Array<{
+  const skillsMetadata = JSON.parse(
+    fs.readFileSync(path.join(pluginRoot, "skills", "metadata.json"), "utf8"),
+  ) as Array<{
     id: string;
     version?: string;
     license?: string;
@@ -429,17 +790,32 @@ function checkPublicMetadata(pluginRoot: string): string[] {
     repository?: string;
   }>;
   for (const skill of skillsMetadata) {
-    if (skill.version !== pkg.version) issues.push(`skills/metadata.json ${skill.id}.version is ${skill.version}, expected ${pkg.version}`);
+    if (skill.version !== pkg.version)
+      issues.push(
+        `skills/metadata.json ${skill.id}.version is ${skill.version}, expected ${pkg.version}`,
+      );
   }
 
-  const commandCount = fs.readdirSync(path.join(pluginRoot, "commands")).filter((name) => name.endsWith(".md")).length;
+  const commandCount = fs
+    .readdirSync(path.join(pluginRoot, "commands"))
+    .filter((name) => name.endsWith(".md")).length;
   const skillCount = fs
     .readdirSync(path.join(pluginRoot, "skills"), { withFileTypes: true })
     .filter((entry) => entry.isDirectory()).length;
-  const agentCount = fs.readdirSync(path.join(pluginRoot, "agents")).filter((name) => name.endsWith(".md")).length;
-  const marketplace = fs.readFileSync(path.join(pluginRoot, ".claude-plugin", "marketplace.json"), "utf8");
-  if (!marketplace.includes(`${agentCount} agents`)) issues.push(`marketplace description must mention ${agentCount} agents`);
-  if (!marketplace.includes(`${skillCount} skills`)) issues.push(`marketplace description must mention ${skillCount} skills`);
-  if (!marketplace.includes(`${commandCount} commands`)) issues.push(`marketplace description must mention ${commandCount} commands`);
+  const agentCount = fs
+    .readdirSync(path.join(pluginRoot, "agents"))
+    .filter((name) => name.endsWith(".md")).length;
+  const marketplace = fs.readFileSync(
+    path.join(pluginRoot, ".claude-plugin", "marketplace.json"),
+    "utf8",
+  );
+  if (!marketplace.includes(`${agentCount} agents`))
+    issues.push(`marketplace description must mention ${agentCount} agents`);
+  if (!marketplace.includes(`${skillCount} skills`))
+    issues.push(`marketplace description must mention ${skillCount} skills`);
+  if (!marketplace.includes(`${commandCount} commands`))
+    issues.push(
+      `marketplace description must mention ${commandCount} commands`,
+    );
   return issues;
 }

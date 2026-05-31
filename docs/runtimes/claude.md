@@ -14,6 +14,8 @@ npx frontend-craft@latest install --global claude
 
 Choose one active source of truth for the same Claude scope: Marketplace/native plugin, CLI install, or `--plugin-dir`. They can technically coexist, but running multiple complete copies in the same Claude session can duplicate commands, skills, agents, and hooks.
 
+The CLI enforces this for Marketplace installs: if Claude Code Marketplace already manages `frontend-craft`, `frontend-craft install/update claude` stops and tells you to update through Marketplace instead. `--force` does not override a Marketplace install.
+
 ---
 
 ## Claude Code Marketplace
@@ -157,13 +159,11 @@ For Git submodule installs:
 git submodule update --remote .claude/plugins/frontend-craft
 ```
 
-**CLI installs:** re-run `npx frontend-craft@latest install --local claude` or `... --global claude` for the same scope, and read [CHANGELOG.md](../../CHANGELOG.md) for release notes. If Claude Code Marketplace is already installed, CLI install will warn and require `--force` before writing another active copy.
-
-Use the full command form when forcing a CLI install; `--force` must follow `install claude`:
+**CLI installs:** re-run `npx frontend-craft@latest update claude --local` or `... --global` for the same scope, and read [CHANGELOG.md](../../CHANGELOG.md) for release notes. If Claude Code Marketplace is already installed, the CLI refuses Claude install/update and prints the Marketplace update path. If the opposite CLI scope is already installed, interactive terminals ask whether to keep that source updated or uninstall it before switching; non-interactive terminals print the exact commands to run.
 
 ```bash
-npx frontend-craft@latest install claude --global --force
-npx frontend-craft@latest install claude --local --force
+npx frontend-craft@latest update claude --global
+npx frontend-craft@latest update claude --local
 ```
 
 ---

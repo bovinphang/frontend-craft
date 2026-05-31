@@ -50,7 +50,7 @@
 ### 变更
 
 - **Doctor 命令**：扩展 `doctor` 报告，当 runtime 为 `claude` 时自动显示 Claude 缓存状态。
-- **安装文档**：明确 Claude Code Marketplace 作为 Claude Code 用户的首选单一安装来源；新增同一作用域内 Marketplace + CLI 双份并存的警告，记录 `--force` 冲突解决标志；澄清 `/fec-init` 仅用于项目配置初始化，不是第二次安装插件本体。
+- **安装文档**：明确 Claude Code Marketplace 作为 Claude Code 用户的首选单一安装来源；记录 CLI install/update 即使带 `--force` 也会拒绝 Marketplace 管理的 Claude 安装，并说明 CLI local/global 冲突需保持已安装来源更新，或先卸载再切换。
 - **测试覆盖**：新增 `tests/install/claude-cache.test.ts`；扩展 end-to-end、metadata 一致性及 update 测试覆盖。
 
 ## [2.3.0] - 2026-05-22
