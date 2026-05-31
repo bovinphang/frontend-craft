@@ -1,15 +1,18 @@
 import fs from "node:fs";
 import path from "node:path";
 import crypto from "node:crypto";
+import os from "node:os";
 
 export type InstallMode = "install" | "update";
+export type ManifestRoot = "baseDir" | "cwd" | "home";
 
 type ManifestFile = {
   path: string;
   hash: string;
+  root?: ManifestRoot;
 };
 
-type InstallManifest = {
+export type InstallManifest = {
   packageVersion: string;
   runtime: string;
   scope: "global" | "local";
@@ -19,6 +22,8 @@ type InstallManifest = {
 
 type ManifestSession = {
   baseDir: string;
+  cwd: string;
+  homeDir: string;
   mode: InstallMode;
   packageVersion: string;
   runtime: string;
@@ -33,12 +38,14 @@ let manifestSession: ManifestSession | undefined;
 
 export function beginManifestSession({
   baseDir,
+  cwd = process.cwd(),
   mode,
   packageVersion,
   runtime,
   isGlobal,
 }: {
   baseDir: string;
+  cwd?: string;
   mode: InstallMode;
   packageVersion: string;
   runtime: string;
@@ -47,6 +54,8 @@ export function beginManifestSession({
   const manifestPath = path.join(baseDir, "frontend-craft.manifest.json");
   manifestSession = {
     baseDir: path.resolve(baseDir),
+    cwd: path.resolve(cwd),
+    homeDir: path.resolve(os.homedir()),
     mode,
     packageVersion,
     runtime,
@@ -70,7 +79,7 @@ export function endManifestSession(): void {
   }
 
   const files = [...session.writtenFiles.entries()]
-    .map(([filePath, hash]) => ({ path: filePath, hash }))
+    .map(([fileKey, hash]) => parseManifestFileKey(fileKey, hash))
     .sort((a, b) => a.path.localeCompare(b.path));
   const manifest: InstallManifest = {
     packageVersion: session.packageVersion,
@@ -91,53 +100,88 @@ export function getManifestPath(baseDir: string): string {
   return path.join(baseDir, "frontend-craft.manifest.json");
 }
 
-function readManifestFiles(manifestPath: string): Map<string, string> {
-  if (!fs.existsSync(manifestPath)) return new Map();
+export function readInstallManifest(manifestPath: string): InstallManifest | undefined {
+  if (!fs.existsSync(manifestPath)) return undefined;
   try {
-    const parsed = JSON.parse(fs.readFileSync(manifestPath, "utf8")) as { files?: ManifestFile[] };
-    return new Map((parsed.files ?? []).map((file) => [normalizeManifestPath(file.path), file.hash]));
+    const parsed = JSON.parse(fs.readFileSync(manifestPath, "utf8")) as InstallManifest;
+    return {
+      ...parsed,
+      files: (parsed.files ?? []).map((file) => ({ ...file, path: normalizeManifestPath(file.path) })),
+    };
   } catch {
-    return new Map();
+    return undefined;
   }
 }
 
-function hashContent(content: string | Buffer): string {
+function readManifestFiles(manifestPath: string): Map<string, string> {
+  const manifest = readInstallManifest(manifestPath);
+  return new Map(
+    (manifest?.files ?? []).map((file) => [getManifestFileKey(file.root ?? "baseDir", normalizeManifestPath(file.path)), file.hash]),
+  );
+}
+
+export function hashContent(content: string | Buffer): string {
   return crypto.createHash("sha256").update(content).digest("hex");
 }
 
-function hashFile(filePath: string): string {
+export function hashFile(filePath: string): string {
   return hashContent(fs.readFileSync(filePath));
 }
 
-function getSessionRelativePath(filePath: string): string | undefined {
+function getSessionFileKey(filePath: string): string | undefined {
   const session = manifestSession;
   if (!session) return undefined;
-  const relative = path.relative(session.baseDir, path.resolve(filePath));
-  if (relative.startsWith("..") || path.isAbsolute(relative)) return undefined;
-  return normalizeManifestPath(relative);
+  const resolved = path.resolve(filePath);
+  const roots: Array<[ManifestRoot, string]> = [
+    ["baseDir", session.baseDir],
+    ["cwd", session.cwd],
+    ["home", session.homeDir],
+  ];
+  for (const [root, rootDir] of roots) {
+    const relative = path.relative(rootDir, resolved);
+    if (relative && !relative.startsWith("..") && !path.isAbsolute(relative)) {
+      return getManifestFileKey(root, normalizeManifestPath(relative));
+    }
+  }
+  return undefined;
 }
 
 function normalizeManifestPath(filePath: string): string {
   return filePath.split(path.sep).join("/");
 }
 
+function getManifestFileKey(root: ManifestRoot, filePath: string): string {
+  return `${root}:${filePath}`;
+}
+
+function parseManifestFileKey(fileKey: string, hash: string): ManifestFile {
+  const match = /^(baseDir|cwd|home):(.*)$/.exec(fileKey);
+  if (!match) return { path: fileKey, hash };
+  const root = match[1] as ManifestRoot;
+  return {
+    ...(root === "baseDir" ? {} : { root }),
+    path: match[2],
+    hash,
+  };
+}
+
 function shouldSkipManagedWrite(dest: string): boolean {
   const session = manifestSession;
-  const relative = getSessionRelativePath(dest);
-  if (!session || !relative || session.mode !== "update" || !fs.existsSync(dest)) return false;
-  const previousHash = session.previousFiles.get(relative);
+  const fileKey = getSessionFileKey(dest);
+  if (!session || !fileKey || session.mode !== "update" || !fs.existsSync(dest)) return false;
+  const previousHash = session.previousFiles.get(fileKey);
   if (!previousHash) return false;
   if (hashFile(dest) === previousHash) return false;
-  session.skippedFiles.add(relative);
-  console.log(`Skipped modified file: ${relative}`);
+  session.skippedFiles.add(fileKey);
+  console.log(`Skipped modified file: ${parseManifestFileKey(fileKey, previousHash).path}`);
   return true;
 }
 
 function recordManagedWrite(dest: string, content: string | Buffer): void {
   const session = manifestSession;
-  const relative = getSessionRelativePath(dest);
-  if (!session || !relative) return;
-  session.writtenFiles.set(relative, hashContent(content));
+  const fileKey = getSessionFileKey(dest);
+  if (!session || !fileKey) return;
+  session.writtenFiles.set(fileKey, hashContent(content));
 }
 
 /**
