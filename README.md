@@ -46,7 +46,7 @@ That’s it. The wizard walks you through the rest.
 | -------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------- |
 | AI assistants write inconsistent, untyped, or insecure frontend code | **40 skills** encode team standards — auto-activated when the assistant touches matching files |
 | Each AI tool has its own plugin format                               | **One CLI** installs the same rules, agents, and hooks into 15 runtimes                        |
-| Design-to-code handoff is lossy                                      | **MCP templates** read Figma, Sketch, MasterGo, Pixso, 墨刀, and 摹客 directly                 |
+| Design-to-code handoff is lossy                                      | **MCP templates** read Figma, Figma Desktop, Sketch, MasterGo, Pixso, and 墨刀 / Modao         |
 | Reviews are ad-hoc and shallow                                       | **13 agents** produce graded reports: code, security, a11y, performance, TS, UI fidelity       |
 | No one remembers to run lint/tests                                   | **Event-driven hooks** validate on save and session end — automatically                        |
 | New projects start from scratch every time                           | **`/fec-init`** scaffolds CLAUDE.md, rules, and settings in seconds                            |
@@ -217,7 +217,7 @@ Category boundaries are intentionally narrow: implementation capabilities cover 
 | `fec-tailwind-design-system`  | Tailwind tokens, theme extension, variants, class governance, dark mode       |
 | `fec-responsive-layout`       | Mobile-first layouts, container queries, data-dense responsive UI             |
 | `fec-motion-interaction`      | Interaction motion, page transitions, scroll animation, reduced motion        |
-| `fec-implement-from-design`   | Build UI from Figma/Sketch/MasterGo/Pixso/墨刀/摹客 design files              |
+| `fec-implement-from-design`   | Build UI from Figma/Sketch/MasterGo/Pixso/墨刀 design files, or 摹客 assets   |
 | `fec-storybook-component-doc` | Storybook component docs, design-system presentation, isolated state previews |
 
 **Legacy migration** — activated during modernization work:
@@ -246,12 +246,12 @@ Agents are specialized sub-agents dispatched by the main assistant to handle a f
 | `fec-performance-optimizer` | Bundle size, render performance, network bottlenecks                       | `performance-review-*.md`    |
 | `fec-architect`             | Page splitting, component architecture, state flow, directory planning     | `architecture-proposal-*.md` |
 | `fec-test-planner`          | Risk-to-layer matrix: static, unit, component, E2E, visual, a11y, security | `test-plan-*.md`             |
-| `fec-build-fixer`           | Incremental lint / type-check / test / build / CI repair                   | `validation-fix-*.md`        |
+| `fec-debugger`              | Complex frontend diagnostics for build, runtime, UI, and API failures      | `debug-*.md`                 |
 | `fec-refactor-cleaner`      | Classify and safely remove unused code, exports, styles, routes, deps      | `refactor-clean-*.md`        |
 | `fec-e2e-runner`            | E2E authoring and runs (Playwright/Cypress), flaky quarantine, traces      | `e2e-summary-*.md`           |
 | `fec-doc-updater`           | Sync README, runtime docs, structure, capability tables, metadata          | —                            |
 | `fec-ui-checker`            | Visual issue debugging and design fidelity evaluation                      | `ui-fidelity-review-*.md`    |
-| `fec-figma-implementer`     | Precise UI implementation from Figma/Sketch/MasterGo/Pixso/墨刀/摹客       | `design-implementation-*.md` |
+| `fec-figma-implementer`     | Precise UI implementation from Figma/Sketch/MasterGo/Pixso/墨刀 designs    | `design-implementation-*.md` |
 | `fec-design-token-mapper`   | Map design variables to project Design Tokens                              | `token-mapping-*.md`         |
 
 ### Hooks (event-driven)
@@ -260,7 +260,7 @@ Hooks run automatically on AI assistant events — no invocation needed.
 
 | Event                     | Behavior                                                       |
 | ------------------------- | -------------------------------------------------------------- |
-| `SessionStart`            | Detect project framework and package manager                   |
+| `SessionStart`            | Clean Claude cache, then detect project framework and package manager |
 | `PreToolUse(Bash)`        | Block dangerous commands (`rm -rf`, force push, etc.)          |
 | `PostToolUse(Write/Edit)` | Auto-format modified files with Prettier                       |
 | `Stop`                    | Run lint, type-check, test, and build on session end           |
@@ -285,7 +285,7 @@ Plug your AI assistant directly into design tools for lossless design-to-code wo
 Run `/fec-init` to scaffold a ready-to-use rules library and project config into `.claude/`:
 
 <details>
-<summary>Click to see all 19 template files</summary>
+<summary>Click to see all 20 template files</summary>
 
 | File                                     | Purpose                                                               |
 | ---------------------------------------- | --------------------------------------------------------------------- |
@@ -298,6 +298,8 @@ Run `/fec-init` to scaffold a ready-to-use rules library and project config into
 | `rules/fec-git-conventions.md`           | Conventional Commits                                                  |
 | `rules/fec-i18n.md`                      | Internationalization copy standards                                   |
 | `rules/fec-performance.md`               | Frontend performance rules                                            |
+| `rules/fec-rendering-patterns.md`        | Rendering lifecycle, hydration, SSR/CSR, and update patterns          |
+| `rules/fec-responsive-design.md`         | Responsive layout, breakpoints, touch targets, and viewport behavior  |
 | `rules/fec-source-driven-development.md` | Source-driven decisions, official docs, version-sensitive assumptions |
 | `rules/fec-api-layer.md`                 | API layer typing and error handling                                   |
 | `rules/fec-state-management.md`          | State classification, strategy, anti-patterns                         |

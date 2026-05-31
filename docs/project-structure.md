@@ -15,7 +15,7 @@ frontend-craft/
 |   |-- fec-code-reviewer.md # Frontend-focused code review (quality, security, a11y)
 |   |-- fec-security-reviewer.md # Frontend attack surface: XSS, secrets, CSP, deps
 |   |-- fec-test-planner.md # Testing strategy, risk matrix, coverage planning
-|   |-- fec-build-fixer.md # Incremental lint/typecheck/test/build/CI failure repair
+|   |-- fec-debugger.md # Complex build/runtime/UI/API diagnostics
 |   |-- fec-refactor-cleaner.md # Dead-code and unused dependency cleanup
 |   |-- fec-doc-updater.md # README/runtime docs/capability table synchronization
 |   |-- fec-e2e-runner.md     # E2E authoring, execution, flaky handling, artifacts, CI
@@ -72,7 +72,7 @@ frontend-craft/
 |   |-- fec-scaffold.md # /fec-scaffold - Create page/feature/component
 |   |-- fec-plan.md     # /fec-plan - Implementation planning before frontend changes
 |   |-- fec-tdd.md      # /fec-tdd - Test-driven frontend implementation
-|   |-- fec-build-fix.md # /fec-build-fix - Incremental validation failure repair
+|   |-- fec-debug.md    # /fec-debug - Diagnose and fix frontend failures
 |   |-- fec-refactor-clean.md # /fec-refactor-clean - Safe dead-code cleanup
 |   |-- fec-doc-sync.md # /fec-doc-sync - Public docs and metadata sync
 |
@@ -95,9 +95,9 @@ frontend-craft/
 |   |-- claude/        # CLAUDE.md and settings.json
 |   |-- codex/         # AGENTS.md and config.toml
 |   |-- openclaw/      # AGENTS.md and OPENCLAW-CONFIG.md
-|   |-- shared/rules/  # vue, react, design-system, testing, source-driven development, agent workflow, working modes, etc.
+|   |-- shared/rules/  # 20 rule files: vue, react, rendering patterns, responsive design, testing, source-driven development, etc.
 |
-|-- .mcp.json         # MCP server config (Figma, Sketch, MasterGo, Pixso, 墨刀)
+|-- .mcp.json         # MCP server config (Figma, Figma Desktop, Sketch, MasterGo, Pixso, 墨刀)
 └-- README.md
 ```
 

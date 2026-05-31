@@ -15,7 +15,7 @@ frontend-craft/
 |   |-- fec-code-reviewer.md # 前端专项代码评审（质量、安全、无障碍）
 |   |-- fec-security-reviewer.md # 前端攻击面：XSS、密钥、CSP、依赖
 |   |-- fec-test-planner.md # 测试策略、风险矩阵、覆盖规划
-|   |-- fec-build-fixer.md # 增量修复 lint/typecheck/test/build/CI 失败
+|   |-- fec-debugger.md # 复杂构建/运行时/UI/API 问题诊断
 |   |-- fec-refactor-cleaner.md # 死代码和未使用依赖清理
 |   |-- fec-doc-updater.md # README/runtime 文档/能力表同步
 |   |-- fec-e2e-runner.md     # E2E 编写、执行、flaky 治理、产物、CI
@@ -72,7 +72,7 @@ frontend-craft/
 |   |-- fec-scaffold.md # /fec-scaffold - 创建 page/feature/component
 |   |-- fec-plan.md     # /fec-plan - 前端变更前的实施规划
 |   |-- fec-tdd.md      # /fec-tdd - 测试驱动的前端实现
-|   |-- fec-build-fix.md # /fec-build-fix - 增量修复验证失败
+|   |-- fec-debug.md    # /fec-debug - 诊断并修复前端问题
 |   |-- fec-refactor-clean.md # /fec-refactor-clean - 安全清理死代码
 |   |-- fec-doc-sync.md # /fec-doc-sync - 公开文档和 metadata 同步
 |
@@ -95,9 +95,9 @@ frontend-craft/
 |   |-- claude/        # CLAUDE.md 和 settings.json
 |   |-- codex/         # AGENTS.md 和 config.toml
 |   |-- openclaw/      # AGENTS.md 和 OPENCLAW-CONFIG.md
-|   |-- shared/rules/  # vue、react、design-system、testing、source-driven development、agent workflow、working modes 等
+|   |-- shared/rules/  # 20 个规则文件：vue、react、rendering patterns、responsive design、testing、source-driven development 等
 |
-|-- .mcp.json         # MCP server 配置（Figma、Sketch、MasterGo、Pixso、墨刀）
+|-- .mcp.json         # MCP server 配置（Figma、Figma Desktop、Sketch、MasterGo、Pixso、墨刀）
 └-- README.md
 ```
 

@@ -46,7 +46,7 @@ npx frontend-craft@latest
 | --------------------------------------------- | --------------------------------------------------------------------- |
 | AI 助手写出的前端代码风格不一、缺类型、不安全 | **40 个 skill** 将团队规范编码为可自动激活的工作流                    |
 | 每款 AI 工具都有自己的插件格式                | **一条 CLI 命令** 把相同的规则、agent 和 hook 安装到 15 个运行时      |
-| 设计稿到代码的交接总有信息损失                | **MCP 模板** 直接读取 Figma、Sketch、MasterGo、Pixso、墨刀、摹客      |
+| 设计稿到代码的交接总有信息损失                | **MCP 模板** 直接读取 Figma、Figma Desktop、Sketch、MasterGo、Pixso、墨刀 / Modao |
 | 代码评审随意、浅层                            | **13 个 agent** 输出分级报告：代码、安全、无障碍、性能、TS、UI 还原度 |
 | 没人记得跑 lint 和测试                        | **事件驱动 hook** 在保存和会话结束时自动校验                          |
 | 新项目每次都从零开始                          | **`/fec-init`** 几秒内脚手架化 CLAUDE.md、规则和 settings             |
@@ -219,7 +219,7 @@ npx frontend-craft@latest install claude --local --force
 | `fec-tailwind-design-system`  | Tailwind token、主题扩展、组件变体、class 治理和暗色模式 |
 | `fec-responsive-layout`       | 移动优先布局、容器查询、数据密集型响应式界面             |
 | `fec-motion-interaction`      | 交互动效、页面转场、滚动动画、reduced-motion             |
-| `fec-implement-from-design`   | 基于 Figma/Sketch/MasterGo/Pixso/墨刀/摹客设计稿实现 UI  |
+| `fec-implement-from-design`   | 基于 Figma/Sketch/MasterGo/Pixso/墨刀设计稿或摹客素材实现 UI |
 | `fec-storybook-component-doc` | Storybook 组件文档、设计系统呈现、隔离状态预览           |
 
 **遗留迁移** — 现代化迁移时激活：
@@ -248,12 +248,12 @@ npx frontend-craft@latest install claude --local --force
 | `fec-performance-optimizer` | 打包体积、渲染性能、网络瓶颈                              | `performance-review-*.md`    |
 | `fec-architect`             | 页面拆分、组件架构、状态流、目录规划                      | `architecture-proposal-*.md` |
 | `fec-test-planner`          | 风险-层级映射：静态、单元、组件、E2E、视觉、无障碍、安全  | `test-plan-*.md`             |
-| `fec-build-fixer`           | 增量修复 lint / type-check / test / build / CI            | `validation-fix-*.md`        |
+| `fec-debugger`              | 复杂前端诊断：构建、运行时、UI 和接口问题                 | `debug-*.md`                 |
 | `fec-refactor-cleaner`      | 分类并安全清理未使用代码、导出、样式、路由和依赖          | `refactor-clean-*.md`        |
 | `fec-e2e-runner`            | E2E 编写与运行（Playwright/Cypress）、flaky 隔离、Trace   | `e2e-summary-*.md`           |
 | `fec-doc-updater`           | 同步 README、runtime 文档、结构、能力表和 metadata        | —                            |
 | `fec-ui-checker`            | 视觉问题排查与设计还原度评估                              | `ui-fidelity-review-*.md`    |
-| `fec-figma-implementer`     | 按 Figma/Sketch/MasterGo/Pixso/墨刀/摹客设计稿精确实现 UI | `design-implementation-*.md` |
+| `fec-figma-implementer`     | 按 Figma/Sketch/MasterGo/Pixso/墨刀设计稿精确实现 UI      | `design-implementation-*.md` |
 | `fec-design-token-mapper`   | 将设计变量映射到项目 Design Token                         | `token-mapping-*.md`         |
 
 ### 钩子（Hooks，事件驱动）
@@ -262,7 +262,7 @@ npx frontend-craft@latest install claude --local --force
 
 | 事件                      | 行为                                         |
 | ------------------------- | -------------------------------------------- |
-| `SessionStart`            | 自动检测项目框架和包管理器                   |
+| `SessionStart`            | 清理 Claude 缓存，然后自动检测项目框架和包管理器 |
 | `PreToolUse(Bash)`        | 拦截危险命令（`rm -rf`、force push 等）      |
 | `PostToolUse(Write/Edit)` | 对修改的文件自动执行 Prettier                |
 | `Stop`                    | 会话结束时执行 lint、type-check、test、build |
@@ -287,7 +287,7 @@ npx frontend-craft@latest install claude --local --force
 运行 `/fec-init` 即可将一套开箱即用的规则库和项目配置脚手架化到 `.claude/`：
 
 <details>
-<summary>查看全部 19 个模板文件</summary>
+<summary>查看全部 20 个模板文件</summary>
 
 | 文件                                     | 用途                                                                  |
 | ---------------------------------------- | --------------------------------------------------------------------- |
@@ -300,6 +300,8 @@ npx frontend-craft@latest install claude --local --force
 | `rules/fec-git-conventions.md`           | Conventional Commits 提交规范                                         |
 | `rules/fec-i18n.md`                      | 国际化文案规范                                                        |
 | `rules/fec-performance.md`               | 前端性能优化规则                                                      |
+| `rules/fec-rendering-patterns.md`        | 渲染生命周期、hydration、SSR/CSR 与更新模式                           |
+| `rules/fec-responsive-design.md`         | 响应式布局、断点、触摸目标与视口行为                                  |
 | `rules/fec-source-driven-development.md` | Source-driven decisions, official docs, version-sensitive assumptions |
 | `rules/fec-api-layer.md`                 | API 层类型化与错误处理规范                                            |
 | `rules/fec-state-management.md`          | 状态分类、管理策略与反模式                                            |
