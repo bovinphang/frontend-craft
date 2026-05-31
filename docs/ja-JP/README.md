@@ -386,13 +386,22 @@ $env:MODAO_TOKEN = "your-modao-token"
 ## アップデート
 
 ```bash
-# CLI 管理のインストールをアップデート（元のインストールと同じスコープ）
+# 検出された CLI 管理インストールをすべてアップデート
+npx frontend-craft@latest update
+
+# CLI 管理インストールを明示してアップデート
 npx frontend-craft@latest update <runtime> --local
 npx frontend-craft@latest update <runtime> --global
 # `upgrade` は `update` のエイリアス
+
+# CLI 管理ファイルを安全に削除
+npx frontend-craft@latest uninstall [runtime] [--local|--global] [--dry-run] [--force]
+# `remove` は `uninstall` のエイリアス
 ```
 
-CLI はランタイムディレクトリに `frontend-craft.manifest.json` を書き込み、**ローカルで修正したファイルをスキップ**します——カスタマイズはアップデート後も保持されます。
+CLI はランタイムディレクトリに `frontend-craft.manifest.json` を書き込みます。runtime を指定しない場合、`update` はこれらの manifest を自動検出し、**ローカルで修正したファイルをスキップ**します——カスタマイズはアップデート後も保持されます。
+
+`uninstall`/`remove` は manifest に記録されたファイルだけを削除します。変更済みファイルは既定でスキップされます。変更済みの管理ファイルも削除したい場合のみ `--force` を追加してください。
 
 **Claude Code Marketplace** または **submodule** インストールのアップデート方法は [docs/runtimes/claude.md](../runtimes/claude.md) · [简体中文](../runtimes/claude.zh-CN.md) を参照してください。
 
