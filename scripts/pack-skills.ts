@@ -33,11 +33,15 @@ const root = resolvePluginRoot(import.meta.url);
 const skillsDir = path.join(root, "skills");
 const packageRoot = path.join(root, "skill-packages");
 const pkg = readJsonFile<RootPackage>(path.join(root, "package.json"));
-const metadata = readJsonFile<SkillMetadata[]>(path.join(skillsDir, "metadata.json"));
+const metadata = readJsonFile<SkillMetadata[]>(
+  path.join(skillsDir, "metadata.json"),
+);
 const metadataById = new Map(metadata.map((skill) => [skill.id, skill]));
 const skillIds = listSkillIds(skillsDir);
 const skillIdSet = new Set(skillIds);
-const relations = readJsonFile<SkillRelations>(path.join(skillsDir, "relations.json"));
+const relations = readJsonFile<SkillRelations>(
+  path.join(skillsDir, "relations.json"),
+);
 
 fs.rmSync(packageRoot, { recursive: true, force: true });
 fs.mkdirSync(packageRoot, { recursive: true });
@@ -45,7 +49,8 @@ fs.mkdirSync(packageRoot, { recursive: true });
 const index: SkillPackageIndexEntry[] = [];
 
 for (const [skillId, relation] of Object.entries(relations)) {
-  if (!skillIdSet.has(skillId)) throw new Error(`Unknown skill relation entry: ${skillId}`);
+  if (!skillIdSet.has(skillId))
+    throw new Error(`Unknown skill relation entry: ${skillId}`);
   assertSkillRelation(relation, skillId, skillIdSet);
 }
 
@@ -62,12 +67,16 @@ for (const skillId of skillIds) {
   const relation = relations[skillId];
 
   fs.mkdirSync(destDir, { recursive: true });
-  fs.copyFileSync(path.join(sourceDir, "SKILL.md"), path.join(destDir, "SKILL.md"));
+  fs.copyFileSync(
+    path.join(sourceDir, "SKILL.md"),
+    path.join(destDir, "SKILL.md"),
+  );
   fs.copyFileSync(path.join(root, "LICENSE"), path.join(destDir, "LICENSE"));
 
   for (const reference of references) {
     const sourceReference = path.join(sourceDir, reference);
-    if (!fs.existsSync(sourceReference)) throw new Error(`Missing referenced file: ${skillId}/${reference}`);
+    if (!fs.existsSync(sourceReference))
+      throw new Error(`Missing referenced file: ${skillId}/${reference}`);
     const destReference = path.join(destDir, reference);
     fs.mkdirSync(path.dirname(destReference), { recursive: true });
     fs.copyFileSync(sourceReference, destReference);
@@ -86,7 +95,7 @@ for (const skillId of skillIds) {
   };
 
   const standalonePackage = {
-    name: `@frontend-craft/${skillId}`,
+    name: `@bovinphang/${skillId}`,
     version: pkg.version,
     description: frontmatter.description,
     type: "module",
@@ -97,14 +106,40 @@ for (const skillId of skillIds) {
       directory: `skills/${skillId}`,
     },
     homepage: pkg.homepage,
-    keywords: unique(["agent-skill", "frontend-craft", skillMeta.category, ...skillMeta.tags, ...skillMeta.keywords]),
-    files: ["SKILL.md", "references", "scripts", "data", "metadata.json", "README.md", "LICENSE"],
+    keywords: unique([
+      "agent-skill",
+      "frontend-craft",
+      skillMeta.category,
+      ...skillMeta.tags,
+      ...skillMeta.keywords,
+    ]),
+    files: [
+      "SKILL.md",
+      "references",
+      "scripts",
+      "data",
+      "metadata.json",
+      "README.md",
+      "LICENSE",
+    ],
     publishConfig: { access: "public" },
   };
 
-  fs.writeFileSync(path.join(destDir, "metadata.json"), `${JSON.stringify(publishMetadata, null, 2)}\n`, "utf8");
-  fs.writeFileSync(path.join(destDir, "package.json"), `${JSON.stringify(standalonePackage, null, 2)}\n`, "utf8");
-  fs.writeFileSync(path.join(destDir, "README.md"), renderReadme(skillMeta, frontmatter, references, relation), "utf8");
+  fs.writeFileSync(
+    path.join(destDir, "metadata.json"),
+    `${JSON.stringify(publishMetadata, null, 2)}\n`,
+    "utf8",
+  );
+  fs.writeFileSync(
+    path.join(destDir, "package.json"),
+    `${JSON.stringify(standalonePackage, null, 2)}\n`,
+    "utf8",
+  );
+  fs.writeFileSync(
+    path.join(destDir, "README.md"),
+    renderReadme(skillMeta, frontmatter, references, relation),
+    "utf8",
+  );
 
   index.push({
     id: skillId,
@@ -119,7 +154,11 @@ for (const skillId of skillIds) {
   });
 }
 
-fs.writeFileSync(path.join(packageRoot, "index.json"), `${JSON.stringify(index, null, 2)}\n`, "utf8");
+fs.writeFileSync(
+  path.join(packageRoot, "index.json"),
+  `${JSON.stringify(index, null, 2)}\n`,
+  "utf8",
+);
 
 console.log(`[pack-skills] Packed ${index.length} skills to ${packageRoot}`);
 
@@ -136,7 +175,7 @@ function renderReadme(
   const relatedSection =
     relation?.relatedSkills && relation.relatedSkills.length > 0
       ? `\n## Optional Related Packages\n\n${relation.relatedSkills
-          .map((skillId) => `- \`@frontend-craft/${skillId}\``)
+          .map((skillId) => `- \`@bovinphang/${skillId}\``)
           .join("\n")}\n`
       : "";
 

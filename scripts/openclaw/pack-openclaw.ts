@@ -1,7 +1,13 @@
 /**
  * Prepare npm-packages/openclaw for publishing frontend-craft tarball.
  */
-import { cpSync, mkdirSync, rmSync, writeFileSync, readFileSync } from "node:fs";
+import {
+  cpSync,
+  mkdirSync,
+  rmSync,
+  writeFileSync,
+  readFileSync,
+} from "node:fs";
 import path from "node:path";
 import { execSync } from "node:child_process";
 import { resolvePluginRoot } from "../../src/install/shared/resolve-plugin-root.js";
@@ -13,12 +19,15 @@ const sourceDist = path.join(root, "dist", "openclaw");
 rmSync(packRoot, { recursive: true, force: true });
 mkdirSync(packRoot, { recursive: true });
 
-const mainPkg = JSON.parse(readFileSync(path.join(root, "package.json"), "utf8"));
+const mainPkg = JSON.parse(
+  readFileSync(path.join(root, "package.json"), "utf8"),
+);
 
 const pkg = {
-  name: "frontend-craft",
+  name: "@bovinphang/frontend-craft",
   version: mainPkg.version,
-  description: "OpenClaw native plugin build for Frontend Craft (skills, hooks, workspace init).",
+  description:
+    "OpenClaw native plugin build for Frontend Craft (skills, hooks, workspace init).",
   type: "module",
   license: "MIT",
   author: mainPkg.author,
@@ -26,7 +35,17 @@ const pkg = {
   engines: { node: ">=22.0.0" },
   main: "./dist/index.js",
   exports: { ".": { default: "./dist/index.js" } },
-  files: ["dist", "skills", "commands", "templates", ".mcp.json", "openclaw.plugin.json", "README.md", "README.zh-CN.md", "LICENSE"],
+  files: [
+    "dist",
+    "skills",
+    "commands",
+    "templates",
+    ".mcp.json",
+    "openclaw.plugin.json",
+    "README.md",
+    "README.zh-CN.md",
+    "LICENSE",
+  ],
   openclaw: {
     extensions: ["./dist/index.js"],
     compat: { pluginApi: ">=2026.4.20" },
@@ -39,19 +58,44 @@ const pkg = {
 };
 
 cpSync(sourceDist, path.join(packRoot, "dist"), { recursive: true });
-cpSync(path.join(root, "skills"), path.join(packRoot, "skills"), { recursive: true });
-cpSync(path.join(root, "commands"), path.join(packRoot, "commands"), { recursive: true });
+cpSync(path.join(root, "skills"), path.join(packRoot, "skills"), {
+  recursive: true,
+});
+cpSync(path.join(root, "commands"), path.join(packRoot, "commands"), {
+  recursive: true,
+});
 mkdirSync(path.join(packRoot, "templates"), { recursive: true });
-cpSync(path.join(root, "templates", "openclaw"), path.join(packRoot, "templates", "openclaw"), { recursive: true });
-cpSync(path.join(root, "templates", "shared"), path.join(packRoot, "templates", "shared"), { recursive: true });
+cpSync(
+  path.join(root, "templates", "openclaw"),
+  path.join(packRoot, "templates", "openclaw"),
+  { recursive: true },
+);
+cpSync(
+  path.join(root, "templates", "shared"),
+  path.join(packRoot, "templates", "shared"),
+  { recursive: true },
+);
 cpSync(path.join(root, ".mcp.json"), path.join(packRoot, ".mcp.json"));
-cpSync(path.join(root, "openclaw.plugin.json"), path.join(packRoot, "openclaw.plugin.json"));
+cpSync(
+  path.join(root, "openclaw.plugin.json"),
+  path.join(packRoot, "openclaw.plugin.json"),
+);
 cpSync(path.join(root, "README.openclaw.md"), path.join(packRoot, "README.md"));
-cpSync(path.join(root, "README.openclaw.zh-CN.md"), path.join(packRoot, "README.zh-CN.md"));
+cpSync(
+  path.join(root, "README.openclaw.zh-CN.md"),
+  path.join(packRoot, "README.zh-CN.md"),
+);
 cpSync(path.join(root, "LICENSE"), path.join(packRoot, "LICENSE"));
 
-writeFileSync(path.join(packRoot, "package.json"), JSON.stringify(pkg, null, 2), "utf8");
+writeFileSync(
+  path.join(packRoot, "package.json"),
+  JSON.stringify(pkg, null, 2),
+  "utf8",
+);
 
-execSync(`npm pack --pack-destination "${packRoot}"`, { cwd: packRoot, stdio: "inherit" });
+execSync(`npm pack --pack-destination "${packRoot}"`, {
+  cwd: packRoot,
+  stdio: "inherit",
+});
 
 console.log("Packed frontend-craft from", packRoot, "to", packRoot);

@@ -22,22 +22,37 @@ const root = resolvePluginRoot(import.meta.url);
 const skillsDir = path.join(root, "skills");
 const packageRoot = path.join(root, "skill-packages");
 const pkg = readJsonFile<RootPackage>(path.join(root, "package.json"));
-const metadata = readJsonFile<SkillMetadata[]>(path.join(skillsDir, "metadata.json"));
+const metadata = readJsonFile<SkillMetadata[]>(
+  path.join(skillsDir, "metadata.json"),
+);
 const metadataById = new Map(metadata.map((skill) => [skill.id, skill]));
-const relations = readJsonFile<SkillRelations>(path.join(skillsDir, "relations.json"));
+const relations = readJsonFile<SkillRelations>(
+  path.join(skillsDir, "relations.json"),
+);
 
-if (!fs.existsSync(packageRoot)) fail(`Missing skill package directory: ${packageRoot}`);
+if (!fs.existsSync(packageRoot))
+  fail(`Missing skill package directory: ${packageRoot}`);
 
 const skillIds = listSkillIds(skillsDir);
 const skillIdSet = new Set(skillIds);
-const index = readJsonFile<Array<{ id: string; version: string; packagePath: string; sourcePath: string }>>(
-  path.join(packageRoot, "index.json"),
+const index = readJsonFile<
+  Array<{
+    id: string;
+    version: string;
+    packagePath: string;
+    sourcePath: string;
+  }>
+>(path.join(packageRoot, "index.json"));
+
+assertEqual(
+  JSON.stringify(index.map((entry) => entry.id).sort()),
+  JSON.stringify(skillIds),
+  "index skill ids mismatch",
 );
 
-assertEqual(JSON.stringify(index.map((entry) => entry.id).sort()), JSON.stringify(skillIds), "index skill ids mismatch");
-
 for (const [skillId, relation] of Object.entries(relations)) {
-  if (!skillIdSet.has(skillId)) fail(`Unknown skill relation entry: ${skillId}`);
+  if (!skillIdSet.has(skillId))
+    fail(`Unknown skill relation entry: ${skillId}`);
   try {
     assertSkillRelation(relation, skillId, skillIdSet);
   } catch (error) {
@@ -52,7 +67,10 @@ for (const skillId of skillIds) {
   const sourceDir = path.join(skillsDir, skillId);
   const destDir = path.join(packageRoot, skillId);
   const skillBody = fs.readFileSync(path.join(sourceDir, "SKILL.md"), "utf8");
-  const packageSkillBody = fs.readFileSync(path.join(destDir, "SKILL.md"), "utf8");
+  const packageSkillBody = fs.readFileSync(
+    path.join(destDir, "SKILL.md"),
+    "utf8",
+  );
   try {
     assertStandaloneSkillBody(skillBody, skillId);
     assertStandaloneSkillBody(packageSkillBody, skillId);
@@ -63,32 +81,84 @@ for (const skillId of skillIds) {
   const references = extractReferencedFiles(skillBody);
   const relation = relations[skillId];
 
-  for (const requiredFile of ["SKILL.md", "README.md", "metadata.json", "package.json", "LICENSE"]) {
+  for (const requiredFile of [
+    "SKILL.md",
+    "README.md",
+    "metadata.json",
+    "package.json",
+    "LICENSE",
+  ]) {
     assertExists(path.join(destDir, requiredFile));
   }
 
-  const packageJson = readJsonFile<{ name: string; version: string; keywords: string[] }>(path.join(destDir, "package.json"));
-  const publishMetadata = readJsonFile<SkillMetadata & { description: string; references: string[]; relations?: SkillRelation }>(
-    path.join(destDir, "metadata.json"),
-  );
+  const packageJson = readJsonFile<{
+    name: string;
+    version: string;
+    keywords: string[];
+  }>(path.join(destDir, "package.json"));
+  const publishMetadata = readJsonFile<
+    SkillMetadata & {
+      description: string;
+      references: string[];
+      relations?: SkillRelation;
+    }
+  >(path.join(destDir, "metadata.json"));
   const entry = index.find((candidate) => candidate.id === skillId);
   if (!entry) fail(`Missing index entry for skill: ${skillId}`);
 
-  assertEqual(packageJson.name, `@frontend-craft/${skillId}`, `package name mismatch: ${skillId}`);
-  assertEqual(packageJson.version, pkg.version, `package version mismatch: ${skillId}`);
-  assertEqual(publishMetadata.version, pkg.version, `metadata version mismatch: ${skillId}`);
-  assertEqual(publishMetadata.description, frontmatter.description, `description mismatch: ${skillId}`);
-  assertEqual(JSON.stringify(publishMetadata.references), JSON.stringify(references), `references mismatch: ${skillId}`);
-  assertEqual(JSON.stringify(publishMetadata.relations ?? null), JSON.stringify(relation ?? null), `relations mismatch: ${skillId}`);
+  assertEqual(
+    packageJson.name,
+    `@bovinphang/${skillId}`,
+    `package name mismatch: ${skillId}`,
+  );
+  assertEqual(
+    packageJson.version,
+    pkg.version,
+    `package version mismatch: ${skillId}`,
+  );
+  assertEqual(
+    publishMetadata.version,
+    pkg.version,
+    `metadata version mismatch: ${skillId}`,
+  );
+  assertEqual(
+    publishMetadata.description,
+    frontmatter.description,
+    `description mismatch: ${skillId}`,
+  );
+  assertEqual(
+    JSON.stringify(publishMetadata.references),
+    JSON.stringify(references),
+    `references mismatch: ${skillId}`,
+  );
+  assertEqual(
+    JSON.stringify(publishMetadata.relations ?? null),
+    JSON.stringify(relation ?? null),
+    `relations mismatch: ${skillId}`,
+  );
   assertEqual(entry.version, pkg.version, `index version mismatch: ${skillId}`);
-  assertEqual(entry.packagePath, toPosixPath(path.relative(root, destDir)), `index package path mismatch: ${skillId}`);
-  assertEqual(entry.sourcePath, `skills/${skillId}`, `index source path mismatch: ${skillId}`);
+  assertEqual(
+    entry.packagePath,
+    toPosixPath(path.relative(root, destDir)),
+    `index package path mismatch: ${skillId}`,
+  );
+  assertEqual(
+    entry.sourcePath,
+    `skills/${skillId}`,
+    `index source path mismatch: ${skillId}`,
+  );
 
   const copiedReferenceFiles = listPackagedFiles(destDir, references);
-  assertEqual(JSON.stringify(copiedReferenceFiles), JSON.stringify(references), `copied references mismatch: ${skillId}`);
+  assertEqual(
+    JSON.stringify(copiedReferenceFiles),
+    JSON.stringify(references),
+    `copied references mismatch: ${skillId}`,
+  );
 }
 
-console.log(`[check-skills-publish] OK: ${skillIds.length} standalone skill packages`);
+console.log(
+  `[check-skills-publish] OK: ${skillIds.length} standalone skill packages`,
+);
 
 function listPackagedFiles(destDir: string, expectedFiles: string[]): string[] {
   return expectedFiles
@@ -102,7 +172,8 @@ function assertExists(filePath: string): void {
 }
 
 function assertEqual(actual: string, expected: string, message: string): void {
-  if (actual !== expected) fail(`${message}\nActual: ${actual}\nExpected: ${expected}`);
+  if (actual !== expected)
+    fail(`${message}\nActual: ${actual}\nExpected: ${expected}`);
 }
 
 function fail(message: string): never {

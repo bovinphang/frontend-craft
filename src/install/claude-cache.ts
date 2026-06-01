@@ -52,9 +52,19 @@ export function getClaudeFrontendCraftCacheReport({
   claudeConfigDir?: string;
   currentVersion: string;
 }): ClaudeCacheReport {
-  const cacheDir = path.join(claudeConfigDir, "plugins", "cache", "frontend-craft", "frontend-craft");
+  const cacheDir = path.join(
+    claudeConfigDir,
+    "plugins",
+    "cache",
+    "frontend-craft",
+    "frontend-craft",
+  );
   const installed = readCurrentInstallPaths(claudeConfigDir);
-  const entries = listCacheEntries({ cacheDir, currentInstallPaths: installed.paths, currentVersion });
+  const entries = listCacheEntries({
+    cacheDir,
+    currentInstallPaths: installed.paths,
+    currentVersion,
+  });
   const warning = installed.warning;
   const canDelete = !warning && installed.paths.length > 0;
 
@@ -81,7 +91,10 @@ export function cleanupClaudeFrontendCraftCache({
   currentVersion: string;
   dryRun?: boolean;
 }): ClaudeCacheCleanupResult {
-  const report = getClaudeFrontendCraftCacheReport({ claudeConfigDir, currentVersion });
+  const report = getClaudeFrontendCraftCacheReport({
+    claudeConfigDir,
+    currentVersion,
+  });
   const deleted: ClaudeCacheEntry[] = [];
 
   if (report.canDelete) {
@@ -104,8 +117,14 @@ export function getClaudeInstallSourceReport({
 } = {}): ClaudeInstallSourceReport {
   const native = readNativeInstalls(claudeConfigDir);
   const cli = [
-    readCliManifest(path.join(cwd, ".claude", "frontend-craft.manifest.json"), "local"),
-    readCliManifest(path.join(claudeConfigDir, "frontend-craft.manifest.json"), "global"),
+    readCliManifest(
+      path.join(cwd, ".claude", "frontend-craft.manifest.json"),
+      "local",
+    ),
+    readCliManifest(
+      path.join(claudeConfigDir, "frontend-craft.manifest.json"),
+      "global",
+    ),
   ].filter((entry): entry is ClaudeCliInstall => entry !== undefined);
 
   return {
@@ -115,7 +134,9 @@ export function getClaudeInstallSourceReport({
   };
 }
 
-export function renderClaudeInstallSourceReport(report: ClaudeInstallSourceReport): string {
+export function renderClaudeInstallSourceReport(
+  report: ClaudeInstallSourceReport,
+): string {
   const lines = ["install sources:"];
   if (report.native.length === 0 && report.cli.length === 0) {
     lines.push("  none detected");
@@ -123,20 +144,31 @@ export function renderClaudeInstallSourceReport(report: ClaudeInstallSourceRepor
   }
   for (const install of report.native) {
     const details = [install.version, install.scope].filter(Boolean).join(", ");
-    lines.push(`  native plugin: ${details || "installed"}${install.installPath ? ` (${install.installPath})` : ""}`);
+    lines.push(
+      `  native plugin: ${details || "installed"}${install.installPath ? ` (${install.installPath})` : ""}`,
+    );
   }
   for (const install of report.cli) {
-    lines.push(`  ${install.scope} CLI: ${install.packageVersion ?? "unknown"} (${install.manifestPath})`);
+    lines.push(
+      `  ${install.scope} CLI: ${install.packageVersion ?? "unknown"} (${install.manifestPath})`,
+    );
   }
   if (report.hasMultipleActiveSources) {
-    lines.push("  warning: multiple active sources detected; keep one Claude loader as the source of truth");
+    lines.push(
+      "  warning: multiple active sources detected; keep one Claude loader as the source of truth",
+    );
   }
   return lines.join("\n");
 }
 
-export function renderClaudeCacheReport(report: ClaudeCacheReport, action: "report" | "dry-run" | "fix" = "report"): string {
+export function renderClaudeCacheReport(
+  report: ClaudeCacheReport,
+  action: "report" | "dry-run" | "fix" = "report",
+): string {
   const lines = ["native cache:"];
-  lines.push(`  current installs: ${report.currentInstallPaths.length ? report.currentInstallPaths.join(", ") : "unknown"}`);
+  lines.push(
+    `  current installs: ${report.currentInstallPaths.length ? report.currentInstallPaths.join(", ") : "unknown"}`,
+  );
   if (report.warning) lines.push(`  warning: ${report.warning}`);
   if (report.entries.length === 0) {
     lines.push("  entries: none");
@@ -144,24 +176,39 @@ export function renderClaudeCacheReport(report: ClaudeCacheReport, action: "repo
   }
 
   for (const entry of report.entries) {
-    const reasons = entry.isCurrent ? "current install" : entry.reasons.length ? entry.reasons.join(", ") : "healthy";
-    const verb = action === "dry-run" && entry.shouldDelete ? "would delete" : action === "fix" && entry.shouldDelete ? "delete" : "keep";
+    const reasons = entry.isCurrent
+      ? "current install"
+      : entry.reasons.length
+        ? entry.reasons.join(", ")
+        : "healthy";
+    const verb =
+      action === "dry-run" && entry.shouldDelete
+        ? "would delete"
+        : action === "fix" && entry.shouldDelete
+          ? "delete"
+          : "keep";
     lines.push(`  ${verb} ${entry.version}: ${reasons}`);
   }
 
   return lines.join("\n");
 }
 
-export function renderClaudeCacheCleanupResult(result: ClaudeCacheCleanupResult, dryRun: boolean): string {
+export function renderClaudeCacheCleanupResult(
+  result: ClaudeCacheCleanupResult,
+  dryRun: boolean,
+): string {
   if (dryRun) return renderClaudeCacheReport(result, "dry-run");
   const lines = [renderClaudeCacheReport(result, "fix")];
-  for (const entry of result.deleted) lines.push(`  deleted ${entry.version}: ${entry.path}`);
+  for (const entry of result.deleted)
+    lines.push(`  deleted ${entry.version}: ${entry.path}`);
   if (result.deleted.length === 0) lines.push("  deleted: none");
   return lines.join("\n");
 }
 
 export function getClaudeConfigDir(): string {
-  return expandTilde(process.env.CLAUDE_CONFIG_DIR ?? path.join(os.homedir(), ".claude"));
+  return expandTilde(
+    process.env.CLAUDE_CONFIG_DIR ?? path.join(os.homedir(), ".claude"),
+  );
 }
 
 function listCacheEntries({
@@ -189,7 +236,8 @@ function listCacheEntries({
 
       if (orphaned) reasons.push("orphaned");
       if (!hasDist) reasons.push("missing dist");
-      if (packageVersion && compareSemver(packageVersion, currentVersion) < 0) reasons.push(`package ${packageVersion} < ${currentVersion}`);
+      if (packageVersion && compareSemver(packageVersion, currentVersion) < 0)
+        reasons.push(`package ${packageVersion} < ${currentVersion}`);
 
       return {
         version: entry.name,
@@ -202,41 +250,77 @@ function listCacheEntries({
         shouldDelete: !isCurrent && reasons.length > 0,
       };
     })
-    .sort((a, b) => a.version.localeCompare(b.version, undefined, { numeric: true }));
+    .sort((a, b) =>
+      a.version.localeCompare(b.version, undefined, { numeric: true }),
+    );
 }
 
-function readCurrentInstallPaths(claudeConfigDir: string): { paths: string[]; warning?: string } {
-  const installedPath = path.join(claudeConfigDir, "plugins", "installed_plugins.json");
+function readCurrentInstallPaths(claudeConfigDir: string): {
+  paths: string[];
+  warning?: string;
+} {
+  const installedPath = path.join(
+    claudeConfigDir,
+    "plugins",
+    "installed_plugins.json",
+  );
   if (!fs.existsSync(installedPath)) {
-    return { paths: [], warning: `missing ${installedPath}; refusing to delete cache entries` };
+    return {
+      paths: [],
+      warning: `missing ${installedPath}; refusing to delete cache entries`,
+    };
   }
   try {
     const parsed = JSON.parse(fs.readFileSync(installedPath, "utf8")) as {
       plugins?: Record<string, Array<{ installPath?: string }>>;
     };
-    const paths = (parsed.plugins?.["frontend-craft@frontend-craft"] ?? [])
+    const paths = (
+      parsed.plugins?.["frontend-craft@bovinphang/frontend-craft"] ??
+      parsed.plugins?.["frontend-craft@frontend-craft"] ??
+      []
+    )
       .map((entry) => entry.installPath)
-      .filter((value): value is string => typeof value === "string" && value.length > 0)
+      .filter(
+        (value): value is string =>
+          typeof value === "string" && value.length > 0,
+      )
       .map((value) => path.resolve(value));
-    if (paths.length === 0) return { paths, warning: `missing frontend-craft@frontend-craft entry in ${installedPath}; refusing to delete cache entries` };
+    if (paths.length === 0)
+      return {
+        paths,
+        warning: `missing frontend-craft plugin entry in ${installedPath}; refusing to delete cache entries`,
+      };
     return { paths };
   } catch {
-    return { paths: [], warning: `invalid ${installedPath}; refusing to delete cache entries` };
+    return {
+      paths: [],
+      warning: `invalid ${installedPath}; refusing to delete cache entries`,
+    };
   }
 }
 
 function readNativeInstalls(claudeConfigDir: string): ClaudeNativeInstall[] {
-  const installedPath = path.join(claudeConfigDir, "plugins", "installed_plugins.json");
+  const installedPath = path.join(
+    claudeConfigDir,
+    "plugins",
+    "installed_plugins.json",
+  );
   if (!fs.existsSync(installedPath)) return [];
   try {
     const parsed = JSON.parse(fs.readFileSync(installedPath, "utf8")) as {
-      plugins?: Record<string, Array<{ installPath?: unknown; scope?: unknown; version?: unknown }>>;
+      plugins?: Record<
+        string,
+        Array<{ installPath?: unknown; scope?: unknown; version?: unknown }>
+      >;
     };
     return Object.entries(parsed.plugins ?? {}).flatMap(([key, entries]) => {
       if (!isFrontendCraftPluginKey(key)) return [];
       return entries.map((entry) => ({
         key,
-        installPath: typeof entry.installPath === "string" ? path.resolve(entry.installPath) : undefined,
+        installPath:
+          typeof entry.installPath === "string"
+            ? path.resolve(entry.installPath)
+            : undefined,
         scope: typeof entry.scope === "string" ? entry.scope : undefined,
         version: typeof entry.version === "string" ? entry.version : undefined,
       }));
@@ -247,10 +331,17 @@ function readNativeInstalls(claudeConfigDir: string): ClaudeNativeInstall[] {
 }
 
 function isFrontendCraftPluginKey(key: string): boolean {
-  return key === "frontend-craft@frontend-craft" || key.startsWith("frontend-craft@");
+  return (
+    key === "frontend-craft@bovinphang/frontend-craft" ||
+    key === "frontend-craft@frontend-craft" ||
+    key.startsWith("frontend-craft@")
+  );
 }
 
-function readCliManifest(manifestPath: string, scope: "local" | "global"): ClaudeCliInstall | undefined {
+function readCliManifest(
+  manifestPath: string,
+  scope: "local" | "global",
+): ClaudeCliInstall | undefined {
   if (!fs.existsSync(manifestPath)) return undefined;
   try {
     const parsed = JSON.parse(fs.readFileSync(manifestPath, "utf8")) as {
@@ -261,7 +352,10 @@ function readCliManifest(manifestPath: string, scope: "local" | "global"): Claud
     return {
       scope,
       manifestPath,
-      packageVersion: typeof parsed.packageVersion === "string" ? parsed.packageVersion : undefined,
+      packageVersion:
+        typeof parsed.packageVersion === "string"
+          ? parsed.packageVersion
+          : undefined,
     };
   } catch {
     return { scope, manifestPath };
@@ -272,7 +366,9 @@ function readPackageVersion(entryPath: string): string | undefined {
   const packagePath = path.join(entryPath, "package.json");
   if (!fs.existsSync(packagePath)) return undefined;
   try {
-    const parsed = JSON.parse(fs.readFileSync(packagePath, "utf8")) as { version?: unknown };
+    const parsed = JSON.parse(fs.readFileSync(packagePath, "utf8")) as {
+      version?: unknown;
+    };
     return typeof parsed.version === "string" ? parsed.version : undefined;
   } catch {
     return undefined;
@@ -296,7 +392,8 @@ function parseSemver(value: string): [number, number, number] {
 
 function expandTilde(value: string): string {
   if (value === "~") return os.homedir();
-  if (value.startsWith("~/") || value.startsWith("~\\")) return path.join(os.homedir(), value.slice(2));
+  if (value.startsWith("~/") || value.startsWith("~\\"))
+    return path.join(os.homedir(), value.slice(2));
   return value;
 }
 
