@@ -9,6 +9,31 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 Project-facing release notes are maintained in English from 2.0.0 onward. Historical entries may preserve their original language.
 
+
+
+## [2.5.0] - 2026-06-01
+
+### Added
+
+- **`init` alias and `fec` shortcut:** added `init` as an alias for `install --local` with local-default behavior; exposed `fec` as an additional bin command alongside `frontend-craft` in `package.json`.
+- **Uninstall/remove commands:** added `frontend-craft uninstall` and `frontend-craft remove` that remove manifest-managed files; support `--force` to include user-modified files; discover existing manifest installs across runtimes and scopes.
+- **Update without runtime:** `frontend-craft update` now supports running without specifying a runtime, refreshing all discovered installs automatically.
+- **Manifest root hints:** manifest file tracking now supports root hints (baseDir/cwd/home) for multi-location file management.
+
+### Fixed
+
+- **Runtime install source conflicts:** added detection and interactive resolution when the same runtime is installed from different sources (e.g. marketplace vs CLI); prevents accidental overwrites and guides users through conflict resolution.
+
+### Changed
+
+- **Installation documentation:** updated README installation sections across all 5 locales with runtime selection options, uninstall/remove command documentation, and source conflict guidance.
+- **README sync:** synchronized agent names, design tools, rule file counts, badges, and wording across all README translations.
+
+### Chore
+
+- **Type safety:** added JSDoc type annotations to `design-system.mjs` and enhanced the `typecheck` script to cover skill scripts.
+- **Metadata formatting:** normalized JSON formatting in marketplace and skills metadata files.
+
 ## [2.4.0] - 2026-05-29
 
 ### Added

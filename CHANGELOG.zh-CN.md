@@ -8,6 +8,31 @@
 
 自 **2.0.0** 起，面向发布的说明以英文 `CHANGELOG.md` 为权威来源；历史条目可能保留最初撰写语言。
 
+
+
+## [2.5.0] - 2026-06-01
+
+### 新增
+
+- **`init` 别名与 `fec` 快捷命令**：新增 `init` 作为 `install --local` 的别名，默认执行本地安装；在 `package.json` 中将 `fec` 作为 `frontend-craft` 的额外 bin 命令暴露。
+- **卸载/移除命令**：新增 `frontend-craft uninstall` 和 `frontend-craft remove`，用于移除 manifest 管理的文件；支持 `--force` 以包含用户已修改的文件；可跨 runtime 和安装范围发现已有的 manifest 安装。
+- **无 runtime 更新**：`frontend-craft update` 现在支持不指定 runtime 运行，自动刷新所有已发现的安装。
+- **Manifest 根提示**：manifest 文件跟踪新增根提示（baseDir/cwd/home），支持多位置文件管理。
+
+### 修复
+
+- **Runtime 安装源冲突**：新增检测与交互式解决机制，当同一 runtime 从不同来源（如 Marketplace 与 CLI）安装时，防止意外覆盖并引导用户完成冲突解决。
+
+### 变更
+
+- **安装文档**：更新所有 5 种语言的 README 安装章节，补充 runtime 选择选项、卸载/移除命令文档和源冲突指引。
+- **README 同步**：同步所有 README 翻译中的 Agent 名称、设计工具、规则文件数量、徽章和措辞。
+
+### 工程
+
+- **类型安全**：为 `design-system.mjs` 补充 JSDoc 类型注解，并扩展 `typecheck` 脚本以覆盖 skill 脚本。
+- **元数据格式**：统一 marketplace 和 skills 元数据文件的 JSON 格式。
+
 ## [2.4.0] - 2026-05-29
 
 ### 新增
