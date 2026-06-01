@@ -38,14 +38,14 @@
 
 ## 為什麼選擇 frontend-craft？
 
-| 痛點                                            | frontend-craft 的解法                                                   |
-| ----------------------------------------------- | ----------------------------------------------------------------------- |
-| AI 助手寫出的前端程式碼風格不一、缺型別、不安全 | **40 個 skill** 將團隊規範編碼為可自動啟用的工作流                      |
-| 每款 AI 工具都有自己的插件格式                  | **一條 CLI 指令** 把相同的規則、agent 和 hook 安裝到 15 個執行時        |
+| 痛點                                            | frontend-craft 的解法                                                                   |
+| ----------------------------------------------- | --------------------------------------------------------------------------------------- |
+| AI 助手寫出的前端程式碼風格不一、缺型別、不安全 | **40 個 skill** 將團隊規範編碼為可自動啟用的工作流                                      |
+| 每款 AI 工具都有自己的插件格式                  | **一條 CLI 指令** 把相同的規則、agent 和 hook 安裝到 15 個執行時                        |
 | 設計稿到程式碼的交接總有資訊損失                | **MCP 整合** 從 Figma、Figma Desktop、Sketch、MasterGo、Pixso、墨刀引入更完整設計上下文 |
-| 程式碼審查隨意、淺層                            | **13 個 agent** 輸出分級報告：程式碼、安全、無障礙、效能、TS、UI 還原度 |
-| 沒人記得跑 lint 和測試                          | **事件驅動 hook** 在儲存和會話結束時自動校驗                            |
-| 新專案每次都從零開始                            | **`/fec-init`** 幾秒內腳手架化 CLAUDE.md、規則和 settings               |
+| 程式碼審查隨意、淺層                            | **13 個 agent** 輸出分級報告：程式碼、安全、無障礙、效能、TS、UI 還原度                 |
+| 沒人記得跑 lint 和測試                          | **事件驅動 hook** 在儲存和會話結束時自動校驗                                            |
+| 新專案每次都從零開始                            | **`/fec-init`** 幾秒內腳手架化 CLAUDE.md、規則和 settings                               |
 
 ---
 
@@ -93,7 +93,11 @@ npx frontend-craft@latest list
 
 ### 方式四：Claude Code Marketplace
 
-如果只透過 **Claude Code Marketplace**（原生插件流程）安裝，完整步驟見 [docs/runtimes/claude.zh-CN.md](../runtimes/claude.zh-CN.md) · [English](../runtimes/claude.md)。
+對 Claude Code 用戶，**Claude Code Marketplace** 是推薦的單一來源安裝方式。只有在需要跨執行時安裝、腳本化/離線複製檔案，或非 Marketplace 環境時，才建議對 Claude 使用 CLI。
+
+如果已經透過 Marketplace 安裝，CLI 不會再安裝或更新第二份 Claude 副本，即使傳入 `--force` 也不會覆蓋；請透過 Claude Code Marketplace 更新。如果已存在另一個作用域的 CLI 管理安裝，互動式終端會詢問是保持已安裝來源並更新，還是解除安裝後切換至當前來源；非互動式終端會停止並列印明確的 `update`、`uninstall`、`install` 命令。
+
+完整步驟見 [docs/runtimes/claude.zh-CN.md](../runtimes/claude.zh-CN.md) · [English](../runtimes/claude.md)。
 
 ---
 
@@ -176,6 +180,7 @@ npx frontend-craft@latest list
 | ------------------------- | ---------------------------------------------------------- |
 | `fec-data-fetching`       | TanStack Query / 服務端狀態獲取、快取、樂觀更新            |
 | `fec-api-integration`     | 型別化 API client、鑑權刷新、上傳、即時整合                |
+| `fec-state-management`    | 狀態歸屬、store 選型、URL 狀態、伺服器/表單/本地狀態邊界   |
 | `fec-form-handling`       | React Hook Form + Zod、動態欄位、上傳、多步流程            |
 | `fec-browser-storage`     | localStorage / sessionStorage / IndexedDB / Cookies 選型   |
 | `fec-route-protection`    | React Router、Next.js、Vue Router、Nuxt 的登入態與權限路由 |
@@ -199,6 +204,7 @@ npx frontend-craft@latest list
 | 技能                           | 範圍                                                    |
 | ------------------------------ | ------------------------------------------------------- |
 | `fec-code-review`              | 架構、型別、渲染、樣式、可存取性審查                    |
+| `fec-typescript-type-safety`   | 型別契約、DTO 對映、型別守衛、泛型和型別級檢查          |
 | `fec-security-review`          | XSS、CSRF、敏感資料外洩、輸入驗證                       |
 | `fec-accessibility-check`      | WCAG 2.2、鍵盤、焦點、觸控和螢幕閱讀器行為              |
 | `fec-dependency-upgrade`       | 依賴升級、lockfile 審查、CVE 修復和遷移驗證             |
@@ -208,14 +214,14 @@ npx frontend-craft@latest list
 
 **設計 UI** — 設計實作、設計系統或視覺打磨時啟用：
 
-| 技能                          | 範圍                                                     |
-| ----------------------------- | -------------------------------------------------------- |
-| `fec-ui-design`               | UI 方向、視覺識別、界面打磨、狀態、視覺 QA               |
-| `fec-tailwind-design-system`  | Tailwind token、主題擴展、元件變體、class 治理和暗色模式 |
-| `fec-responsive-layout`       | 移動優先布局、容器查詢、資料密集型響應式界面             |
-| `fec-motion-interaction`      | 互動動效、頁面轉場、滾動動畫、reduced-motion             |
+| 技能                          | 範圍                                                         |
+| ----------------------------- | ------------------------------------------------------------ |
+| `fec-ui-design`               | UI 方向、視覺識別、界面打磨、狀態、視覺 QA                   |
+| `fec-tailwind-design-system`  | Tailwind token、主題擴展、元件變體、class 治理和暗色模式     |
+| `fec-responsive-layout`       | 移動優先布局、容器查詢、資料密集型響應式界面                 |
+| `fec-motion-interaction`      | 互動動效、頁面轉場、滾動動畫、reduced-motion                 |
 | `fec-implement-from-design`   | 基於 Figma/Sketch/MasterGo/Pixso/墨刀設計稿或摹客素材實現 UI |
-| `fec-storybook-component-doc` | Storybook 元件文件、設計系統呈現、隔離狀態預覽           |
+| `fec-storybook-component-doc` | Storybook 元件文件、設計系統呈現、隔離狀態預覽               |
 
 **遺留遷移** — 現代化遷移時啟用：
 
@@ -255,13 +261,13 @@ npx frontend-craft@latest list
 
 鉤子在 AI 助手事件觸發時**自動執行**，無需手動呼叫。
 
-| 事件                      | 行為                                         |
-| ------------------------- | -------------------------------------------- |
+| 事件                      | 行為                                                 |
+| ------------------------- | ---------------------------------------------------- |
 | `SessionStart`            | 清理 Claude 快取，然後自動偵測專案框架與套件管理工具 |
-| `PreToolUse(Bash)`        | 攔截危險指令（`rm -rf`、force push 等）      |
-| `PostToolUse(Write/Edit)` | 對修改的檔案自動執行 Prettier                |
-| `Stop`                    | 會話結束時執行 lint、type-check、test、build |
-| `Notification`            | 跨平台桌面通知（macOS / Linux / Windows）    |
+| `PreToolUse(Bash)`        | 攔截危險指令（`rm -rf`、force push 等）              |
+| `PostToolUse(Write/Edit)` | 對修改的檔案自動執行 Prettier                        |
+| `Stop`                    | 會話結束時執行 lint、type-check、test、build         |
+| `Notification`            | 跨平台桌面通知（macOS / Linux / Windows）            |
 
 ### MCP 整合
 
@@ -413,9 +419,9 @@ fec uninstall <runtime> --force     # 連同已修改的託管檔案一起移除
 
 CLI 會在 runtime 目錄寫入 `frontend-craft.manifest.json`。不傳 runtime 時，`update` 會自動發現這些 manifest，並**跳過你本地修改過的檔案**——自訂內容在更新後依然保留。
 
-`uninstall`/`remove` 只刪除 manifest 記錄的檔案，預設跳過已修改檔案；只有確認要移除修改過的託管檔案時才加 `--force`。
+`uninstall`/`remove` 只刪除 manifest 記錄的檔案，預設跳過已修改檔案；只有確認要移除修改過的託管檔案時才加 `--force`。`--force` 不會覆蓋 Claude Code Marketplace 安裝。
 
-**Claude Code Marketplace** 或 **submodule** 安裝的更新方式見 [docs/runtimes/claude.zh-CN.md](../runtimes/claude.zh-CN.md) · [English](../runtimes/claude.md)。
+**Claude Code Marketplace** 或 **submodule** 安裝的更新方式見 [docs/runtimes/claude.zh-CN.md](../runtimes/claude.zh-CN.md) · [English](../runtimes/claude.md)。`/fec-init` 只初始化專案設定，不是第二次安裝插件本體。
 
 ---
 

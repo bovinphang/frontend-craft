@@ -38,14 +38,14 @@
 
 ## 왜 frontend-craft인가?
 
-| 문제점                                                                       | frontend-craft의 해결책                                                         |
-| ---------------------------------------------------------------------------- | ------------------------------------------------------------------------------- |
-| AI 어시스턴트가 일관성 없고, 타입 없고, 안전하지 않은 프론트엔드 코드를 작성 | **40개 스킬**이 팀 표준을 인코딩 — 해당 파일을 건드릴 때 자동 활성화            |
-| AI 도구마다 플러그인 형식이 다름                                             | **하나의 CLI**로 동일한 규칙, 에이전트, 훅을 15개 런타임에 설치                 |
+| 문제점                                                                       | frontend-craft의 해결책                                                                                     |
+| ---------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------- |
+| AI 어시스턴트가 일관성 없고, 타입 없고, 안전하지 않은 프론트엔드 코드를 작성 | **40개 스킬**이 팀 표준을 인코딩 — 해당 파일을 건드릴 때 자동 활성화                                        |
+| AI 도구마다 플러그인 형식이 다름                                             | **하나의 CLI**로 동일한 규칙, 에이전트, 훅을 15개 런타임에 설치                                             |
 | 디자인에서 코드로의 전달 과정에서 정보 손실                                  | **MCP 통합**이 Figma, Figma Desktop, Sketch, MasterGo, Pixso, 墨刀에서 더 풍부한 디자인 컨텍스트를 가져오기 |
-| 리뷰가 즉흥적이고 얕음                                                       | **13개 에이전트**가 등급별 보고서 출력: 코드, 보안, 접근성, 성능, TS, UI 충실도 |
-| 아무도 lint와 테스트 실행을 기억하지 못함                                    | **이벤트 기반 훅**이 저장 시와 세션 종료 시 자동 검증                           |
-| 새 프로젝트가 매번 처음부터 시작                                             | **`/fec-init`**이 몇 초 만에 CLAUDE.md, 규칙, 설정을 스캐폴드                   |
+| 리뷰가 즉흥적이고 얕음                                                       | **13개 에이전트**가 등급별 보고서 출력: 코드, 보안, 접근성, 성능, TS, UI 충실도                             |
+| 아무도 lint와 테스트 실행을 기억하지 못함                                    | **이벤트 기반 훅**이 저장 시와 세션 종료 시 자동 검증                                                       |
+| 새 프로젝트가 매번 처음부터 시작                                             | **`/fec-init`**이 몇 초 만에 CLAUDE.md, 규칙, 설정을 스캐폴드                                               |
 
 ---
 
@@ -93,7 +93,11 @@ npx frontend-craft@latest list
 
 ### 방법 4: Claude Code Marketplace
 
-**Claude Code Marketplace**(네이티브 플러그인 플로우)로만 설치하는 경우, 전체 단계는 [docs/runtimes/claude.md](../runtimes/claude.md) · [简体中文](../runtimes/claude.zh-CN.md)에 있습니다.
+Claude Code 사용자라면 **Claude Code Marketplace**를 단일 소스 설치 방식으로 권장합니다. CLI를 Claude에 사용하는 것은 교차 런타임 설치, 스크립트/오프라인 파일 복사, 또는 비 Marketplace 환경이 필요한 경우에만 사용하세요.
+
+Marketplace가 이미 설치된 경우, `--force`를 사용해도 CLI는 두 번째 Claude 사본을 설치하거나 업데이트하지 않습니다. 대신 Claude Code Marketplace를 통해 업데이트하세요. 다른 스코프에 CLI 관리 Claude 설치본이 이미 있는 경우, 대화형 터미널에서는 해당 소스를 최신으로 유지할지, 제거 후 전환할지 묻습니다. 비대화형 터미널은 중단하고 실행할 `update`, `uninstall`, `install` 명령어를 정확히 출력합니다.
+
+전체 Claude 전용 단계는 [docs/runtimes/claude.md](../runtimes/claude.md) · [简体中文](../runtimes/claude.zh-CN.md)에 있습니다.
 
 ---
 
@@ -176,6 +180,7 @@ npx frontend-craft@latest list
 | ------------------------- | ------------------------------------------------------------- |
 | `fec-data-fetching`       | TanStack Query / 서버 상태 페칭, 캐시, 낙관적 업데이트        |
 | `fec-api-integration`     | Typed API client, 인증 refresh, 업로드, 실시간 통합           |
+| `fec-state-management`    | 상태 소유권, 스토어 선택, URL 상태, 서버/폼/로컬 상태 경계    |
 | `fec-form-handling`       | React Hook Form + Zod, 동적 필드, 업로드, 멀티스텝            |
 | `fec-browser-storage`     | localStorage / sessionStorage / IndexedDB / Cookies 선택      |
 | `fec-route-protection`    | React Router, Next.js, Vue Router, Nuxt의 인증 및 권한 라우팅 |
@@ -199,6 +204,7 @@ npx frontend-craft@latest list
 | 스킬                           | 범위                                                            |
 | ------------------------------ | --------------------------------------------------------------- |
 | `fec-code-review`              | 아키텍처, 타입, 렌더링, 스타일, 접근성 리뷰                     |
+| `fec-typescript-type-safety`   | 타입 계약, DTO 매핑, 타입 가드, 제네릭, 타입 수준 검사          |
 | `fec-security-review`          | XSS, CSRF, 민감 데이터 유출, 입력 검증                          |
 | `fec-accessibility-check`      | WCAG 2.2, 키보드, 포커스, 터치, 스크린 리더 동작                |
 | `fec-dependency-upgrade`       | 의존성 업그레이드, lockfile 리뷰, CVE 수정, 마이그레이션 검증   |
@@ -208,14 +214,14 @@ npx frontend-craft@latest list
 
 **디자인 UI** — 디자인 구현, 디자인 시스템, 시각적 마무리에서 활성화:
 
-| 스킬                          | 범위                                                            |
-| ----------------------------- | --------------------------------------------------------------- |
-| `fec-ui-design`               | UI 방향, 시각적 정체성, polish, 상태, visual QA                 |
-| `fec-tailwind-design-system`  | Tailwind token, 테마 확장, variants, class 관리, dark mode      |
-| `fec-responsive-layout`       | 모바일 우선, container queries, 데이터 밀집 responsive UI       |
-| `fec-motion-interaction`      | 인터랙션 motion, 페이지 전환, 스크롤 animation, reduced-motion  |
+| 스킬                          | 범위                                                               |
+| ----------------------------- | ------------------------------------------------------------------ |
+| `fec-ui-design`               | UI 방향, 시각적 정체성, polish, 상태, visual QA                    |
+| `fec-tailwind-design-system`  | Tailwind token, 테마 확장, variants, class 관리, dark mode         |
+| `fec-responsive-layout`       | 모바일 우선, container queries, 데이터 밀집 responsive UI          |
+| `fec-motion-interaction`      | 인터랙션 motion, 페이지 전환, 스크롤 animation, reduced-motion     |
 | `fec-implement-from-design`   | Figma/Sketch/MasterGo/Pixso/墨刀 디자인 또는 摹客 에셋에서 UI 구현 |
-| `fec-storybook-component-doc` | Storybook 컴포넌트 문서, 디자인 시스템 표시, 격리 상태 미리보기 |
+| `fec-storybook-component-doc` | Storybook 컴포넌트 문서, 디자인 시스템 표시, 격리 상태 미리보기    |
 
 **레거시 마이그레이션** — 현대화 작업에서 활성화:
 
@@ -255,13 +261,13 @@ npx frontend-craft@latest list
 
 훅은 AI 어시스턴트 이벤트에서 **자동 실행**됩니다. 호출 불필요.
 
-| 이벤트                    | 동작                                                  |
-| ------------------------- | ----------------------------------------------------- |
+| 이벤트                    | 동작                                                              |
+| ------------------------- | ----------------------------------------------------------------- |
 | `SessionStart`            | Claude 캐시를 정리한 뒤 프로젝트 프레임워크 및 패키지 매니저 감지 |
-| `PreToolUse(Bash)`        | 위험한 명령어 차단 (`rm -rf`, force push 등)          |
-| `PostToolUse(Write/Edit)` | 변경된 파일에 자동 Prettier 실행                      |
-| `Stop`                    | 세션 종료 시 lint, type-check, test, build 실행       |
-| `Notification`            | 크로스 플랫폼 데스크톱 알림 (macOS / Linux / Windows) |
+| `PreToolUse(Bash)`        | 위험한 명령어 차단 (`rm -rf`, force push 등)                      |
+| `PostToolUse(Write/Edit)` | 변경된 파일에 자동 Prettier 실행                                  |
+| `Stop`                    | 세션 종료 시 lint, type-check, test, build 실행                   |
+| `Notification`            | 크로스 플랫폼 데스크톱 알림 (macOS / Linux / Windows)             |
 
 ### MCP 통합
 
@@ -413,9 +419,9 @@ fec uninstall <runtime> --force     # 수정된 관리 파일도 제거
 
 CLI는 런타임 디렉토리에 `frontend-craft.manifest.json`을 작성합니다. runtime을 지정하지 않으면 `update`가 이 manifest를 자동으로 발견하고 **로컬에서 수정한 파일을 건너뜁니다** — 커스터마이징은 업데이트 후에도 유지됩니다.
 
-`uninstall`/`remove`는 manifest에 기록된 파일만 삭제합니다. 수정된 파일은 기본적으로 건너뛰며, 수정된 관리 파일까지 제거하려는 경우에만 `--force`를 추가하세요.
+`uninstall`/`remove`는 manifest에 기록된 파일만 삭제합니다. 수정된 파일은 기본적으로 건너뛰며, 수정된 관리 파일까지 제거하려는 경우에만 `--force`를 추가하세요. `--force`는 Claude Code Marketplace 설치를 덮어쓰지 않습니다.
 
-**Claude Code Marketplace** 또는 **submodule** 설치의 업데이트 방법은 [docs/runtimes/claude.md](../runtimes/claude.md) · [简体中文](../runtimes/claude.zh-CN.md)를 참조하세요.
+**Claude Code Marketplace** 또는 **submodule** 설치의 업데이트 방법은 [docs/runtimes/claude.md](../runtimes/claude.md) · [简体中文](../runtimes/claude.zh-CN.md)를 참조하세요. `/fec-init`은 프로젝트 설정만 초기화하며, 두 번째 플러그인 설치가 아닙니다.
 
 ---
 

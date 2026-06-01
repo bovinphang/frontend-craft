@@ -1,97 +1,96 @@
 {
-    "name": "frontend-craft",
-    "version": "2.4.0",
-    "description": "Universal frontend plugin for Claude Code, Codex, Cursor, OpenCode, Gemini CLI, Qoder, Windsurf, Copilot, OpenClaw, and more — skills, agents, commands, hooks, and MCP templates.",
-    "type": "module",
-    "license": "MIT",
-    "author": {
-        "name": "Bovin Phang",
-        "email": "pengbaowen@msn.com"
-    },
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/bovinphang/frontend-craft"
-    },
-    "homepage": "https://github.com/bovinphang/frontend-craft",
-    "bugs": {
-        "url": "https://github.com/bovinphang/frontend-craft/issues"
-    },
-    "engines": {
-        "node": ">=22.0.0"
-    },
-    "bin": {
-        "frontend-craft": "dist/bin/frontend-craft.js",
-        "fec": "dist/bin/frontend-craft.js"
-    },
-    "files": [
-        "dist/bin",
-        "dist/hooks",
-        "agents",
-        "skills",
-        "commands",
-        "hooks",
-        "templates",
-        "assets",
-        ".mcp.json",
-        ".claude-plugin",
-        "openclaw.plugin.json",
-        "README.md",
-        "README.zh-CN.md",
-        "CHANGELOG.zh-CN.md",
-        "CODE_OF_CONDUCT.zh-CN.md",
-        "CONTRIBUTING.zh-CN.md",
-        "SECURITY.zh-CN.md",
-        "CONTRIBUTING.md",
-        "CHANGELOG.md",
-        "CODE_OF_CONDUCT.md",
-        "SECURITY.md",
-        "LICENSE",
-        "docs"
-    ],
-    "scripts": {
-        "clean": "node -e \"require('node:fs').rmSync('dist',{recursive:true,force:true})\"",
-        "typecheck": "npm run typecheck:ts && npm run typecheck:skill-scripts",
-        "typecheck:ts": "tsc --noEmit -p tsconfig.json",
-        "typecheck:skill-scripts": "tsc --allowJs --checkJs --noEmit --strict --module NodeNext --moduleResolution NodeNext --target ES2022 skills/fec-ui-design/scripts/design-system.mjs",
-        "build": "npm run clean && npm run typecheck && tsx scripts/build-dist.ts",
-        "test": "npm run build && node --import tsx --test tests/converters/codex-agents.test.ts tests/install/cli.test.ts tests/install/end-to-end.test.ts tests/install/update.test.ts tests/install/all-runtimes-dry.test.ts tests/install/metadata-consistency.test.ts tests/install/npm-pack.test.ts tests/install/skill-package.test.ts tests/install/ui-design-intelligence.test.ts tests/install/sync-version.test.ts tests/install/claude-cache.test.ts",
-        "build:openclaw": "npm run build && tsx scripts/openclaw/build.ts",
-        "audit:skills": "npm run build && tsx scripts/audit-skills.ts",
-        "typecheck:openclaw": "tsc --noEmit -p tsconfig.openclaw.json",
-        "check:openclaw-dist": "tsx scripts/openclaw/verify-openclaw-dist.ts",
-        "pack:openclaw": "npm run build:openclaw && npm run check:openclaw-dist && tsx scripts/openclaw/pack-openclaw.ts",
-        "pack:skills": "npm run build && tsx scripts/pack-skills.ts",
-        "check:skills-publish": "npm run build && tsx scripts/check-skills-publish.ts",
-        "pack:all": "npm test && npm run pack:openclaw && npm run pack:skills && npm run check:skills-publish",
-        "prepack": "npm run build",
-        "sync:version": "tsx scripts/sync-version.ts",
-        "version": "npm run sync:version && git add package.json package-lock.json .claude-plugin/plugin.json .claude-plugin/marketplace.json openclaw.plugin.json skills/metadata.json",
-        "prepublishOnly": "npm run sync:version && npm test"
-    },
-    "devDependencies": {
-        "@sinclair/typebox": "^0.34.49",
-        "@types/node": "^22.19.15",
-        "esbuild": "^0.28.0",
-        "openclaw": "^2026.4.20",
-        "prettier": "^3.5.0",
-        "tsx": "^4.22.3",
-        "typescript": "^5.7.3"
-    },
-    "keywords": [
-        "frontend",
-        "claude-code",
-        "codex",
-        "cursor",
-        "opencode",
-        "gemini-cli",
-        "qoder",
-        "windsurf",
-        "copilot",
-        "openclaw",
-        "mcp",
-        "design-to-code",
-        "i18n",
-        "playwright",
-        "eslint"
-    ]
+  "name": "frontend-craft",
+  "version": "2.5.0",
+  "description": "Universal frontend plugin for Claude Code, Codex, Cursor, OpenCode, Gemini CLI, Qoder, Windsurf, Copilot, OpenClaw, and more — skills, agents, commands, hooks, and MCP templates.",
+  "type": "module",
+  "license": "MIT",
+  "author": {
+    "name": "Bovin Phang",
+    "email": "pengbaowen@msn.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/bovinphang/frontend-craft"
+  },
+  "homepage": "https://github.com/bovinphang/frontend-craft",
+  "bugs": {
+    "url": "https://github.com/bovinphang/frontend-craft/issues"
+  },
+  "engines": {
+    "node": ">=22.0.0"
+  },
+  "bin": {
+    "frontend-craft": "dist/bin/frontend-craft.js",
+    "fec": "dist/bin/frontend-craft.js"
+  },
+  "files": [
+    "dist/bin",
+    "dist/hooks",
+    "agents",
+    "skills",
+    "commands",
+    "hooks",
+    "templates",
+    ".mcp.json",
+    ".claude-plugin",
+    "openclaw.plugin.json",
+    "README.md",
+    "README.zh-CN.md",
+    "CHANGELOG.zh-CN.md",
+    "CODE_OF_CONDUCT.zh-CN.md",
+    "CONTRIBUTING.zh-CN.md",
+    "SECURITY.zh-CN.md",
+    "CONTRIBUTING.md",
+    "CHANGELOG.md",
+    "CODE_OF_CONDUCT.md",
+    "SECURITY.md",
+    "LICENSE",
+    "docs"
+  ],
+  "scripts": {
+    "clean": "node -e \"require('node:fs').rmSync('dist',{recursive:true,force:true})\"",
+    "typecheck": "npm run typecheck:ts && npm run typecheck:skill-scripts",
+    "typecheck:ts": "tsc --noEmit -p tsconfig.json",
+    "typecheck:skill-scripts": "tsc --allowJs --checkJs --noEmit --strict --module NodeNext --moduleResolution NodeNext --target ES2022 skills/fec-ui-design/scripts/design-system.mjs",
+    "build": "npm run clean && npm run typecheck && tsx scripts/build-dist.ts",
+    "test": "npm run build && node --import tsx --test tests/converters/codex-agents.test.ts tests/install/cli.test.ts tests/install/end-to-end.test.ts tests/install/update.test.ts tests/install/all-runtimes-dry.test.ts tests/install/metadata-consistency.test.ts tests/install/npm-pack.test.ts tests/install/skill-package.test.ts tests/install/ui-design-intelligence.test.ts tests/install/sync-version.test.ts tests/install/claude-cache.test.ts",
+    "build:openclaw": "npm run build && tsx scripts/openclaw/build.ts",
+    "audit:skills": "npm run build && tsx scripts/audit-skills.ts",
+    "typecheck:openclaw": "tsc --noEmit -p tsconfig.openclaw.json",
+    "check:openclaw-dist": "tsx scripts/openclaw/verify-openclaw-dist.ts",
+    "pack:openclaw": "npm run build:openclaw && npm run check:openclaw-dist && tsx scripts/openclaw/pack-openclaw.ts",
+    "pack:skills": "npm run build && tsx scripts/pack-skills.ts",
+    "check:skills-publish": "npm run build && tsx scripts/check-skills-publish.ts",
+    "pack:all": "npm test && npm run pack:openclaw && npm run pack:skills && npm run check:skills-publish",
+    "prepack": "npm run build",
+    "sync:version": "tsx scripts/sync-version.ts",
+    "version": "npm run sync:version && git add package.json package-lock.json .claude-plugin/plugin.json .claude-plugin/marketplace.json openclaw.plugin.json skills/metadata.json",
+    "prepublishOnly": "npm run sync:version && npm test"
+  },
+  "devDependencies": {
+    "@sinclair/typebox": "^0.34.49",
+    "@types/node": "^22.19.15",
+    "esbuild": "^0.28.0",
+    "openclaw": "^2026.4.20",
+    "prettier": "^3.5.0",
+    "tsx": "^4.22.3",
+    "typescript": "^5.7.3"
+  },
+  "keywords": [
+    "frontend",
+    "claude-code",
+    "codex",
+    "cursor",
+    "opencode",
+    "gemini-cli",
+    "qoder",
+    "windsurf",
+    "copilot",
+    "openclaw",
+    "mcp",
+    "design-to-code",
+    "i18n",
+    "playwright",
+    "eslint"
+  ]
 }
