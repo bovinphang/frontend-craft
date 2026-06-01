@@ -148,6 +148,11 @@ test("skill bodies do not contain agent backlinks or package-external skill link
     assert.doesNotMatch(body, /\]\(\.\.\/\.\.\/skills\//, `${dir} links to ../../skills`);
     assert.doesNotMatch(body, /\]\(\.\.\/skills\//, `${dir} links to ../skills`);
     assert.doesNotMatch(body, /`fec-[a-z0-9-]+`/, `${dir} contains inline skill or agent id navigation`);
+    assert.doesNotMatch(
+      body,
+      /[「『“"]fec-[a-z0-9-]+[」』”"]\s*(?:skill|技能)/,
+      `${dir} contains quoted skill id navigation`,
+    );
   }
 });
 

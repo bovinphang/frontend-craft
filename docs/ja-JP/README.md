@@ -1,5 +1,7 @@
 <div align="center">
 
+<img src="../../assets/brand/frontend-craft.png" alt="frontend-craft logo" width="200" />
+
 # frontend-craft
 
 ### ひとつのツールキット。すべての AI コーディングアシスタント。本番品質のフロントエンド標準。

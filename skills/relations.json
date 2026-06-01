@@ -119,6 +119,21 @@
       "cache"
     ]
   },
+  "fec-debug-framework": {
+    "relatedSkills": [
+      "fec-dependency-upgrade"
+    ],
+    "boundaryWorkflows": [
+      "Use a dependency upgrade workflow when the task goal is dependency migration, CVE remediation, lockfile risk review, or major version planning.",
+      "Keep ordinary build failures in the debug workflow first; collect evidence before deciding that dependency versions or package migration are the root cause."
+    ],
+    "capabilityTags": [
+      "debug",
+      "diagnostic",
+      "build-error",
+      "runtime-error"
+    ]
+  },
   "fec-dependency-upgrade": {
     "relatedSkills": [
       "fec-source-driven-development",

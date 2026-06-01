@@ -1,5 +1,7 @@
 <div align="center">
 
+<img src="../../assets/brand/frontend-craft.png" alt="frontend-craft logo" width="200" />
+
 # frontend-craft
 
 ### 一套工具，適配所有 AI 程式設計助手，落地生產級前端規範。

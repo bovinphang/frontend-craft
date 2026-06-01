@@ -1,6 +1,6 @@
 ---
 name: fec-debug-framework
-description: Use when diagnosing and fixing frontend issues including build failures, runtime errors, UI anomalies, and API/data problems. Provides a unified 5-step diagnostic methodology with type-specific modules. Chinese triggers: 调试, debug, 排查, 定位, 报错, 异常, 白屏, 请求失败.
+description: Use when diagnosing frontend build failures, runtime errors, UI anomalies, API/data problems, white screens, request failures, or unexplained production exceptions; Chinese triggers include 调试, debug, 排查, 定位, 报错, 异常, 白屏, 请求失败.
 ---
 
 # 前端诊断框架
@@ -61,7 +61,10 @@ description: Use when diagnosing and fixing frontend issues including build fail
 **验证**：修一类根因 → 重跑命令 → 确认错误减少
 **特殊处理**：
 
-- 依赖升级/peer dependency/ESM/CJS 问题同时参考「依赖升级」skill
+- 依赖版本、peer dependency、ESM/CJS、lockfile 相关失败先作为 build 兼容性问题收集证据
+- 记录 package manager、Node 版本、lockfile diff、相关包版本和完整错误日志
+- 不在缺少证据时升级依赖、手工编辑 lockfile，或把依赖迁移与普通调试修复混在同一批改动
+- 若任务目标本身是版本升级、CVE 修复或 lockfile 风险评审，应转入依赖升级工作流
 - CI 专属失败检查 Node 版本、包管理器、环境变量差异
 
 ### Runtime 模块
