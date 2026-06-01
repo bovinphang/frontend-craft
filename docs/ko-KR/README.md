@@ -1,5 +1,7 @@
 <div align="center">
 
+<img src="../../assets/brand/frontend-craft.png" alt="frontend-craft logo" width="200" />
+
 # frontend-craft
 
 ### 하나의 툴킷. 모든 AI 코딩 어시스턴트. 프로덕션 수준의 프론트엔드 표준.

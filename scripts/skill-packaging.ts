@@ -74,6 +74,7 @@ export function assertStandaloneSkillBody(body: string, skillId: string): void {
     { pattern: /^## 相关技能$/m, label: "related skills section" },
     { pattern: /^## 与子代理的配合$/m, label: "subagent coordination section" },
     { pattern: /`fec-[a-z0-9-]+`/, label: "inline skill or agent id navigation" },
+    { pattern: /[「『“"]fec-[a-z0-9-]+[」』”"]\s*(?:skill|技能)/, label: "quoted skill id navigation" },
     { pattern: /\]\(\.\.\/\.\.\/agents\//, label: "../../agents link" },
     { pattern: /\]\(\.\.\/agents\//, label: "../agents link" },
     { pattern: /\]\(\.\.\/\.\.\/skills\//, label: "../../skills link" },
