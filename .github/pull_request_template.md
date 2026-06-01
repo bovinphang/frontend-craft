@@ -19,7 +19,7 @@ Closes #
 
 - [ ] `npm test`
 - [ ] `npm run typecheck:openclaw` (required when OpenClaw code or templates are affected)
-- [ ] `npx frontend-craft@latest install --all --dry-run --global` or equivalent local dry run, when installer behavior changes
+- [ ] `npx @bovinphang/frontend-craft@latest install --all --dry-run --global` or equivalent local dry run, when installer behavior changes
 - [ ] Not applicable, documentation-only change
 
 ## Documentation and Localization

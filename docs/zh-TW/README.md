@@ -8,7 +8,7 @@
 
 [![Stars](https://img.shields.io/github/stars/bovinphang/frontend-craft?style=flat)](https://github.com/bovinphang/frontend-craft/stargazers)
 [![CI](https://github.com/bovinphang/frontend-craft/actions/workflows/ci.yml/badge.svg)](https://github.com/bovinphang/frontend-craft/actions/workflows/ci.yml)
-[![npm version](https://img.shields.io/npm/v/frontend-craft)](https://www.npmjs.com/package/frontend-craft)
+[![npm version](https://img.shields.io/npm/v/@bovinphang/frontend-craft)](https://www.npmjs.com/package/@bovinphang/frontend-craft)
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](../../LICENSE)
 ![Node](https://img.shields.io/badge/Node.js-22+-5FA04E?logo=node.js&logoColor=white)
 ![TypeScript](https://img.shields.io/badge/-TypeScript-3178C6?logo=typescript&logoColor=white)
@@ -56,7 +56,7 @@
 ### 方式一：全域 CLI 初始化專案（推薦）
 
 ```bash
-npm install -g frontend-craft@latest
+npm install -g @bovinphang/frontend-craft@latest
 cd your-project
 fec init
 fec init codex      # 初始化指定執行時
@@ -68,7 +68,7 @@ fec init claude     # 初始化 Claude Code
 ### 方式二：免全域安裝的互動精靈
 
 ```bash
-npx frontend-craft@latest
+npx @bovinphang/frontend-craft@latest
 ```
 
 不想全域安裝 `fec` 指令時使用這種方式。精靈會走完整安裝流程：先選擇一個或多個執行時，再決定安裝到全域還是目前專案。
@@ -77,16 +77,16 @@ npx frontend-craft@latest
 
 ```bash
 # 安裝到目前專案
-npx frontend-craft@latest install --local claude
+npx @bovinphang/frontend-craft@latest install --local claude
 
 # 全域安裝到某個執行時
-npx frontend-craft@latest install --global codex
+npx @bovinphang/frontend-craft@latest install --global codex
 
 # 預覽所有執行時的安裝內容（不實際寫入）
-npx frontend-craft@latest install --all --dry-run --global
+npx @bovinphang/frontend-craft@latest install --all --dry-run --global
 
 # 列出支援的執行時
-npx frontend-craft@latest list
+npx @bovinphang/frontend-craft@latest list
 ```
 
 > **CI / 腳本場景：** 務必帶上 `--global` / `-g` 或 `--local` / `-l`。非 TTY 且未指定時，CLI 預設安裝到 `claude --global`。
@@ -393,7 +393,7 @@ $env:MODAO_TOKEN = "your-modao-token"
 
 ## 更新與移除
 
-`fec` 是 `frontend-craft` 的短命令。如果沒有全域安裝 `fec`，可以把同樣參數接在 `npx frontend-craft@latest` 後使用，例如 `npx frontend-craft@latest update`。
+`fec` 是 `frontend-craft` 的短命令。如果沒有全域安裝 `fec`，可以把同樣參數接在 `npx @bovinphang/frontend-craft@latest` 後使用，例如 `npx @bovinphang/frontend-craft@latest update`。
 
 ### 更新
 
@@ -437,7 +437,7 @@ npx skills check                           # 預覽可用更新
 
 | CLI                  | 安裝內容                                      |
 | -------------------- | --------------------------------------------- |
-| `npx frontend-craft` | 技能 + 執行時專屬代理、指令、鉤子、規則、範本 |
+| `npx @bovinphang/frontend-craft` | 技能 + 執行時專屬代理、指令、鉤子、規則、範本 |
 | `npx skills`         | 僅技能（適用於已有 Skills CLI 工作流）        |
 
 關閉遙測：`DISABLE_TELEMETRY=1`。詳見 [skills.sh CLI 文件](https://skills.sh/docs/cli)。

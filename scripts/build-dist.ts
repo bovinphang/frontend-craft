@@ -1,9 +1,11 @@
+import { existsSync } from "node:fs";
 import { mkdir, rm } from "node:fs/promises";
 import path from "node:path";
 import { build, type BuildOptions } from "esbuild";
 import { resolvePluginRoot } from "../src/install/shared/resolve-plugin-root.js";
 
 const root = resolvePluginRoot(import.meta.url);
+const cliOutfile = path.join(root, "dist", "bin", "frontend-craft.js");
 
 const hookEntries = [
   ["src/hooks/cleanup-claude-cache.ts", "dist/hooks/fec-cleanup-claude-cache.js"],
@@ -22,6 +24,10 @@ await bundle({
   entryPoint: "bin/frontend-craft.ts",
   outfile: "dist/bin/frontend-craft.js",
 });
+
+if (!existsSync(cliOutfile)) {
+  throw new Error(`[build-dist] CLI bundle missing after build: ${cliOutfile}`);
+}
 
 for (const [entryPoint, outfile] of hookEntries) {
   await bundle({ entryPoint, outfile });

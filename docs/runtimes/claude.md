@@ -5,9 +5,9 @@ Recommended path for most Claude Code users: install through **Claude Code Marke
 Use the CLI only when you need cross-runtime installation, offline/scripted file copies, or a non-Marketplace environment:
 
 ```bash
-npx frontend-craft@latest install --local claude
+npx @bovinphang/frontend-craft@latest install --local claude
 # or
-npx frontend-craft@latest install --global claude
+npx @bovinphang/frontend-craft@latest install --global claude
 ```
 
 > **Non-interactive:** append `--local` or `--global` to skip install-location prompts. See the repository README **Universal Install** for interactive vs. scripted behavior.
@@ -159,11 +159,11 @@ For Git submodule installs:
 git submodule update --remote .claude/plugins/frontend-craft
 ```
 
-**CLI installs:** re-run `npx frontend-craft@latest update claude --local` or `... --global` for the same scope, and read [CHANGELOG.md](../../CHANGELOG.md) for release notes. If Claude Code Marketplace is already installed, the CLI refuses Claude install/update and prints the Marketplace update path. If the opposite CLI scope is already installed, interactive terminals ask whether to keep that source updated or uninstall it before switching; non-interactive terminals print the exact commands to run.
+**CLI installs:** re-run `npx @bovinphang/frontend-craft@latest update claude --local` or `... --global` for the same scope, and read [CHANGELOG.md](../../CHANGELOG.md) for release notes. If Claude Code Marketplace is already installed, the CLI refuses Claude install/update and prints the Marketplace update path. If the opposite CLI scope is already installed, interactive terminals ask whether to keep that source updated or uninstall it before switching; non-interactive terminals print the exact commands to run.
 
 ```bash
-npx frontend-craft@latest update claude --global
-npx frontend-craft@latest update claude --local
+npx @bovinphang/frontend-craft@latest update claude --global
+npx @bovinphang/frontend-craft@latest update claude --local
 ```
 
 ---

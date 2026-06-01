@@ -1,3 +1,4 @@
+import { existsSync } from "node:fs";
 import { mkdir } from "node:fs/promises";
 import path from "node:path";
 import { build } from "esbuild";
@@ -26,6 +27,10 @@ async function main() {
     logLevel: "info",
     external: ["openclaw"],
   });
+
+  if (!existsSync(outfile)) {
+    throw new Error(`[build:openclaw] Bundle missing after build: ${outfile}`);
+  }
 }
 
 main().catch((error) => {

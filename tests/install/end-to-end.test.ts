@@ -447,6 +447,11 @@ test("runtime command installers keep fec command names", () => {
 
 test("all runtime local installs match declared capabilities", () => {
   for (const runtime of ALL_RUNTIMES) {
+    assert.ok(
+      fs.existsSync(cli),
+      `missing CLI bundle before ${runtime} install; run "npm run build" first (${cli})`,
+    );
+
     const dir = fs.mkdtempSync(path.join(os.tmpdir(), `fc-${runtime}-cap-`));
     const claudeHome = fs.mkdtempSync(
       path.join(os.tmpdir(), `fc-${runtime}-cap-claude-home-`),

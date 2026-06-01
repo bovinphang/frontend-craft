@@ -8,7 +8,7 @@
 
 [![Stars](https://img.shields.io/github/stars/bovinphang/frontend-craft?style=flat)](https://github.com/bovinphang/frontend-craft/stargazers)
 [![CI](https://github.com/bovinphang/frontend-craft/actions/workflows/ci.yml/badge.svg)](https://github.com/bovinphang/frontend-craft/actions/workflows/ci.yml)
-[![npm version](https://img.shields.io/npm/v/frontend-craft)](https://www.npmjs.com/package/frontend-craft)
+[![npm version](https://img.shields.io/npm/v/@bovinphang/frontend-craft)](https://www.npmjs.com/package/@bovinphang/frontend-craft)
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 ![Node](https://img.shields.io/badge/Node.js-22+-5FA04E?logo=node.js&logoColor=white)
 ![TypeScript](https://img.shields.io/badge/-TypeScript-3178C6?logo=typescript&logoColor=white)
@@ -56,7 +56,7 @@ Requires **Node.js 22+**. Works on **Windows, macOS, and Linux**.
 ### Option 1 - Global CLI project init (recommended)
 
 ```bash
-npm install -g frontend-craft@latest
+npm install -g @bovinphang/frontend-craft@latest
 cd your-project
 fec init
 fec init codex      # initialize for a specific runtime
@@ -68,7 +68,7 @@ fec init claude     # initialize for Claude Code
 ### Option 2 — No-global interactive wizard
 
 ```bash
-npx frontend-craft@latest
+npx @bovinphang/frontend-craft@latest
 ```
 
 Use this when you do not want to install a global `fec` command. The wizard walks through the full install flow: choose one or more runtimes, then choose whether to install globally or into the current project.
@@ -77,16 +77,16 @@ Use this when you do not want to install a global `fec` command. The wizard walk
 
 ```bash
 # Install into the current project
-npx frontend-craft@latest install --local claude
+npx @bovinphang/frontend-craft@latest install --local claude
 
 # Install globally for a runtime
-npx frontend-craft@latest install --global codex
+npx @bovinphang/frontend-craft@latest install --global codex
 
 # Preview what would be installed across all runtimes
-npx frontend-craft@latest install --all --dry-run --global
+npx @bovinphang/frontend-craft@latest install --all --dry-run --global
 
 # List available runtimes
-npx frontend-craft@latest list
+npx @bovinphang/frontend-craft@latest list
 ```
 
 > **CI / scripts:** always pass `--global` / `-g` or `--local` / `-l`. Without a TTY, the CLI defaults to `claude --global` if neither is set.
@@ -393,7 +393,7 @@ Every review, analysis, and evaluation writes a timestamped Markdown report to `
 
 ## Update and Remove
 
-`fec` is the short command for `frontend-craft`. If you have not installed the global `fec` command, use the same arguments with `npx frontend-craft@latest`, for example `npx frontend-craft@latest update`.
+`fec` is the short command for `frontend-craft`. If you have not installed the global `fec` command, use the same arguments with `npx @bovinphang/frontend-craft@latest`, for example `npx @bovinphang/frontend-craft@latest update`.
 
 ### Update
 
@@ -437,7 +437,7 @@ npx skills check                           # preview available updates
 
 | CLI                  | Installs                                                            |
 | -------------------- | ------------------------------------------------------------------- |
-| `npx frontend-craft` | Skills + runtime-specific agents, commands, hooks, rules, templates |
+| `npx @bovinphang/frontend-craft` | Skills + runtime-specific agents, commands, hooks, rules, templates |
 | `npx skills`         | Skills only (for existing Skills CLI workflows)                     |
 
 To disable telemetry: `DISABLE_TELEMETRY=1`. Details: [skills.sh CLI docs](https://skills.sh/docs/cli).
