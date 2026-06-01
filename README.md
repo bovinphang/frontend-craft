@@ -1,5 +1,7 @@
 <div align="center">
 
+<img src="assets/brand/frontend-craft.png" alt="frontend-craft logo" width="200" />
+
 # frontend-craft
 
 ### One toolkit. Every AI coding assistant. Production-grade frontend standards.
