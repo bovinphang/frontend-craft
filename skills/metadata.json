@@ -33,6 +33,41 @@
     ]
   },
   {
+    "id": "fec-alchemy",
+    "name": "项目吸收与原创化融合",
+    "category": "maintenance-docs",
+    "tags": [
+      "alchemy",
+      "project-absorption",
+      "originality",
+      "reference-analysis",
+      "workflow"
+    ],
+    "summary": "Project absorption workflow for extracting useful ideas from reference systems and redesigning them into original, project-native improvements.",
+    "version": "2.5.0",
+    "license": "MIT",
+    "homepage": "https://github.com/bovinphang/frontend-craft",
+    "repository": "https://github.com/bovinphang/frontend-craft",
+    "keywords": [
+      "maintenance-docs",
+      "alchemy",
+      "project-absorption",
+      "originality",
+      "reference-analysis",
+      "workflow"
+    ],
+    "platforms": [
+      "skills-cli",
+      "skillreg",
+      "claude-code",
+      "codex",
+      "cursor",
+      "opencode",
+      "openclaw",
+      "generic-skill-runtime"
+    ]
+  },
+  {
     "id": "fec-api-integration",
     "name": "API 集成",
     "category": "implementation-capability",

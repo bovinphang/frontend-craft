@@ -22,6 +22,8 @@ The CLI enforces this for Marketplace installs: if Claude Code Marketplace alrea
 
 You can install `frontend-craft` as a Claude Code marketplace plugin. This loads the plugin natively inside Claude Code.
 
+The Marketplace entry resolves the plugin from the published npm package, which includes the compiled `dist/hooks/*.js` runtime files used by Claude hooks. If a Marketplace install reports a missing `dist/hooks/fec-*.js` file, update or reinstall the Marketplace plugin so Claude refreshes its plugin cache instead of copying files into the cache manually.
+
 ---
 
 ## Quick start after Marketplace install
@@ -35,7 +37,7 @@ Get started in a few minutes:
 /plugin marketplace add bovinphang/frontend-craft
 
 # Install plugin
-/plugin install frontend-craft@bovinphang-frontend-craft
+/plugin install frontend-craft@frontend-craft
 
 # Activate
 /reload-plugins
@@ -69,7 +71,7 @@ After initialization, customize for your project:
 /fec-scaffold component DataTable
 
 # List available commands
-/plugin list frontend-craft@bovinphang-frontend-craft
+/plugin list frontend-craft@frontend-craft
 ```
 
 You now have access to the bundled agents, skills, and commands (see the root README **Feature overview** for the current list).
@@ -107,10 +109,14 @@ Clone the repo and load via `--plugin-dir` (no install, suitable for development
 
 ```bash
 git clone https://github.com/bovinphang/frontend-craft.git
+cd frontend-craft
+npm install
+npm run build
+cd ..
 claude --plugin-dir ./frontend-craft
 ```
 
-When using `--plugin-dir` for development, disable or avoid a Marketplace install of the same plugin in that session so you know which copy is running.
+When using `--plugin-dir` for development, run `npm run build` after changing hook or CLI sources because Claude executes the compiled files under `dist/`. Disable or avoid a Marketplace install of the same plugin in that session so you know which copy is running.
 
 ### Option 4: Git Submodule (project-level sharing)
 
@@ -141,14 +147,14 @@ claude --plugin-dir .claude/plugins/frontend-craft
 For Marketplace installs, run in Claude Code:
 
 ```text
-/plugin marketplace update bovinphang-frontend-craft
+/plugin marketplace update frontend-craft
 ```
 
 Or enable auto-update so Claude Code pulls the latest on each start:
 
 1. Run `/plugin` in Claude Code to open the plugin manager
 2. Switch to the **Marketplaces** tab
-3. Select `bovinphang-frontend-craft`
+3. Select `frontend-craft`
 4. Choose **Enable auto-update**
 
 > Third-party Marketplaces do not enable auto-update by default. After enabling, Claude Code will refresh Marketplace data and update installed plugins on each start.

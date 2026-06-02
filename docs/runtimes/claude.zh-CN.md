@@ -22,6 +22,8 @@ CLI 会对 Marketplace 安装执行单一来源保护：如果已经由 Claude C
 
 仍可将 `frontend-craft` 作为 Claude Code 的 Marketplace 插件安装，由 Claude Code 原生加载插件。
 
+Marketplace 条目会从已发布的 npm 包解析插件；npm 包中包含 Claude hooks 使用的已编译 `dist/hooks/*.js` 运行时文件。如果 Marketplace 安装后提示缺少 `dist/hooks/fec-*.js`，请通过 Marketplace 更新或重新安装插件，让 Claude 刷新插件缓存，不建议手动复制文件到缓存目录。
+
 ---
 
 ## Marketplace 安装后的快速开始
@@ -33,7 +35,7 @@ CLI 会对 Marketplace 安装执行单一来源保护：如果已经由 Claude C
 /plugin marketplace add bovinphang/frontend-craft
 
 # 安装插件
-/plugin install frontend-craft@bovinphang-frontend-craft
+/plugin install frontend-craft@frontend-craft
 
 # 激活
 /reload-plugins
@@ -67,7 +69,7 @@ CLI 会对 Marketplace 安装执行单一来源保护：如果已经由 Claude C
 /fec-scaffold component DataTable
 
 # 查看可用命令
-/plugin list frontend-craft@bovinphang-frontend-craft
+/plugin list frontend-craft@frontend-craft
 ```
 
 具体 agents、skills、commands 清单见根目录 README **功能概览**。
@@ -105,10 +107,14 @@ CLI 会对 Marketplace 安装执行单一来源保护：如果已经由 Claude C
 
 ```bash
 git clone https://github.com/bovinphang/frontend-craft.git
+cd frontend-craft
+npm install
+npm run build
+cd ..
 claude --plugin-dir ./frontend-craft
 ```
 
-使用 `--plugin-dir` 做开发调试时，请避免在同一会话里同时启用 Marketplace 版本，这样才能确定当前运行的是哪一份代码。
+使用 `--plugin-dir` 做开发调试时，修改 hooks 或 CLI 源码后需要重新执行 `npm run build`，因为 Claude 会运行 `dist/` 下的已编译文件。请避免在同一会话里同时启用 Marketplace 版本，这样才能确定当前运行的是哪一份代码。
 
 ### 选项 4：Git Submodule（项目内共享）
 
@@ -139,14 +145,14 @@ claude --plugin-dir .claude/plugins/frontend-craft
 通过 Marketplace 安装的插件，在 Claude Code 中执行：
 
 ```text
-/plugin marketplace update bovinphang-frontend-craft
+/plugin marketplace update frontend-craft
 ```
 
 或开启自动更新，每次启动 Claude Code 时拉取最新版本：
 
 1. 在 Claude Code 中执行 `/plugin` 打开插件管理器
 2. 切换到 **Marketplaces** 标签页
-3. 选中 `bovinphang-frontend-craft`
+3. 选中 `frontend-craft`
 4. 选择 **Enable auto-update**
 
 > 第三方 Marketplace 默认不开启自动更新。启用后，Claude Code 每次启动时会刷新 Marketplace 数据并更新已安装插件。

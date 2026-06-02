@@ -12,6 +12,13 @@ interface ClaudePluginManifest {
 
 interface MarketplacePlugin {
   version: string;
+  source?: unknown;
+}
+
+interface MarketplaceNpmSource {
+  source: "npm";
+  package: string;
+  version: string;
 }
 
 interface MarketplaceManifest {
@@ -40,6 +47,9 @@ syncJson<MarketplaceManifest>(
   isMarketplaceManifest,
   (marketplace) => {
     marketplace.plugins[0].version = version;
+    if (isMarketplaceNpmSource(marketplace.plugins[0].source)) {
+      marketplace.plugins[0].source.version = version;
+    }
   },
 );
 
@@ -107,6 +117,15 @@ function isMarketplaceManifest(value: unknown): value is MarketplaceManifest {
   }
 
   return value.plugins.every(isVersionedObject);
+}
+
+function isMarketplaceNpmSource(value: unknown): value is MarketplaceNpmSource {
+  return (
+    isObject(value) &&
+    value.source === "npm" &&
+    typeof value.package === "string" &&
+    typeof value.version === "string"
+  );
 }
 
 function isSkillMetadata(value: unknown): value is SkillMetadataEntry[] {

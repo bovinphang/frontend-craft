@@ -13,7 +13,16 @@ interface VersionedObject {
 }
 
 interface MarketplaceFixture {
-  plugins: [VersionedObject, ...VersionedObject[]];
+  plugins: [
+    VersionedObject & {
+      source?: {
+        source?: string;
+        package?: string;
+        version?: string;
+      };
+    },
+    ...VersionedObject[],
+  ];
 }
 
 interface SkillFixture extends VersionedObject {
@@ -40,6 +49,9 @@ test("sync-version updates public metadata from package.json", () => {
     });
     updateJson(path.join(tempRoot, ".claude-plugin", "marketplace.json"), assertMarketplaceFixture, (marketplace) => {
       marketplace.plugins[0].version = "0.0.0";
+      if (marketplace.plugins[0].source?.source === "npm") {
+        marketplace.plugins[0].source.version = "0.0.0";
+      }
     });
     updateJson(path.join(tempRoot, "openclaw.plugin.json"), assertVersionedObject, (openclaw) => {
       openclaw.version = "0.0.0";
@@ -65,6 +77,11 @@ test("sync-version updates public metadata from package.json", () => {
 
     assert.equal(plugin.version, nextVersion);
     assert.equal(marketplace.plugins[0].version, nextVersion);
+    assert.deepEqual(marketplace.plugins[0].source, {
+      source: "npm",
+      package: "@bovinphang/frontend-craft",
+      version: nextVersion,
+    });
     assert.equal(openclaw.version, nextVersion);
     for (const skill of skills) assert.equal(skill.version, nextVersion, skill.id);
   } finally {
