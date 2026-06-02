@@ -22,6 +22,8 @@ The CLI enforces this for Marketplace installs: if Claude Code Marketplace alrea
 
 You can install `frontend-craft` as a Claude Code marketplace plugin. This loads the plugin natively inside Claude Code.
 
+The Marketplace entry resolves the plugin from the published npm package, which includes the compiled `dist/hooks/*.js` runtime files used by Claude hooks. If a Marketplace install reports a missing `dist/hooks/fec-*.js` file, update or reinstall the Marketplace plugin so Claude refreshes its plugin cache instead of copying files into the cache manually.
+
 ---
 
 ## Quick start after Marketplace install
@@ -107,10 +109,14 @@ Clone the repo and load via `--plugin-dir` (no install, suitable for development
 
 ```bash
 git clone https://github.com/bovinphang/frontend-craft.git
+cd frontend-craft
+npm install
+npm run build
+cd ..
 claude --plugin-dir ./frontend-craft
 ```
 
-When using `--plugin-dir` for development, disable or avoid a Marketplace install of the same plugin in that session so you know which copy is running.
+When using `--plugin-dir` for development, run `npm run build` after changing hook or CLI sources because Claude executes the compiled files under `dist/`. Disable or avoid a Marketplace install of the same plugin in that session so you know which copy is running.
 
 ### Option 4: Git Submodule (project-level sharing)
 
