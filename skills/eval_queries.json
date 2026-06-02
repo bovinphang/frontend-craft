@@ -21,6 +21,31 @@
       "把 jQuery 项目迁移到 Vue"
     ]
   },
+  "fec-alchemy": {
+    "should_trigger": [
+      "分析这个参考仓库，把有价值的能力原创化吸收到当前项目",
+      "对比这个插件和我们的项目，提炼可以融合的架构思路",
+      "不要复制代码，帮我借鉴另一个项目的 commands 和 hooks",
+      "把这个开源项目的工作流改造成适合 frontend-craft 的 skill",
+      "研究相似产品的实现方式，并给当前仓库制定吸收计划",
+      "将参考项目里的优秀工程实践迁移成我们自己的方案",
+      "做一次项目吸收分析，区分可借鉴能力和不该引入的部分",
+      "originally absorb ideas from a reference repo into this project",
+      "参考后端项目的鉴权和可观测性设计，提炼适合当前服务的吸收方案",
+      "把另一个 CLI 工具的配置和错误输出体验原创化改造成我们的方案",
+      "对比这个库项目的公开 API 和版本策略，判断哪些能力适合吸收"
+    ],
+    "should_not_trigger": [
+      "修复这个组件的 TypeScript 类型错误",
+      "给 Button 写 React Testing Library 单测",
+      "只同步 README 里的 skill 数量",
+      "审查 dangerouslySetInnerHTML 的 XSS 风险",
+      "把 Vite 从 5 升级到 6",
+      "优化虚拟列表滚动卡顿",
+      "按 Figma 设计稿实现页面",
+      "配置 PWA manifest 和 Service Worker"
+    ]
+  },
   "fec-api-integration": {
     "should_trigger": [
       "设计前端 typed API client",

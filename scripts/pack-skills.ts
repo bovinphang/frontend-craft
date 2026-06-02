@@ -127,6 +127,7 @@ for (const skillId of skillIds) {
       "references",
       "scripts",
       "data",
+      "assets",
       "metadata.json",
       "README.md",
       "LICENSE",

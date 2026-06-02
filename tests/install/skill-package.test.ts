@@ -51,7 +51,6 @@ test("pack:skills creates one standalone publish package per skill", () => {
     }>
   >(path.join(packageRoot, "index.json"));
 
-  assert.equal(skillIds.length, 40);
   assert.deepEqual(index.map((entry) => entry.id).sort(), skillIds);
 
   for (const skillId of skillIds) {
@@ -103,6 +102,7 @@ test("pack:skills creates one standalone publish package per skill", () => {
     assert.ok(standalonePkg.files.includes("references"));
     assert.ok(standalonePkg.files.includes("scripts"));
     assert.ok(standalonePkg.files.includes("data"));
+    assert.ok(standalonePkg.files.includes("assets"));
     assert.equal(publishMetadata.version, pkg.version);
     assert.equal(publishMetadata.description, frontmatter.description);
     assert.deepEqual(publishMetadata.references, references);

@@ -52,7 +52,7 @@ export function parseSkillFrontmatter(body: string, skillId: string): SkillFront
 }
 
 export function extractReferencedFiles(body: string): string[] {
-  return [...new Set([...body.matchAll(/\]\(((?:references|scripts|data)\/[^)]+)\)/g)].map((match) => match[1]))].sort();
+  return [...new Set([...body.matchAll(/\]\(((?:references|scripts|data|assets)\/[^)]+)\)/g)].map((match) => match[1]))].sort();
 }
 
 export function listSkillIds(skillsDir: string): string[] {

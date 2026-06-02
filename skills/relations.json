@@ -1,4 +1,24 @@
 {
+  "fec-alchemy": {
+    "relatedSkills": [
+      "fec-source-driven-development",
+      "fec-doc-sync",
+      "fec-refactor-clean",
+      "fec-code-review",
+      "fec-testing-strategy"
+    ],
+    "boundaryWorkflows": [
+      "Use source-driven development when reference behavior depends on official docs, version-sensitive APIs, or project facts.",
+      "Use documentation sync when absorbed capabilities change public docs, runtime docs, metadata, or published capability tables.",
+      "Use refactor clean when the absorption work first requires removing proven dead code, duplicate modules, or unused dependencies."
+    ],
+    "capabilityTags": [
+      "project-absorption",
+      "originality",
+      "reference-analysis",
+      "workflow"
+    ]
+  },
   "fec-api-integration": {
     "relatedSkills": [
       "fec-data-fetching",
