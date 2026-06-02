@@ -218,13 +218,23 @@ test("public metadata versions follow package.json", () => {
   };
   const marketplace = JSON.parse(
     fs.readFileSync(path.join(root, ".claude-plugin", "marketplace.json"), "utf8"),
-  ) as { plugins: Array<{ version: string }> };
+  ) as {
+    plugins: Array<{
+      version: string;
+      source?: { source?: string; package?: string; version?: string };
+    }>;
+  };
   const openclaw = JSON.parse(fs.readFileSync(path.join(root, "openclaw.plugin.json"), "utf8")) as {
     version: string;
   };
 
   assert.equal(plugin.version, pkg.version);
   assert.equal(marketplace.plugins[0].version, pkg.version);
+  assert.deepEqual(marketplace.plugins[0].source, {
+    source: "npm",
+    package: "@bovinphang/frontend-craft",
+    version: pkg.version,
+  });
   assert.equal(openclaw.version, pkg.version);
 
   const skills = JSON.parse(fs.readFileSync(path.join(root, "skills", "metadata.json"), "utf8")) as SkillMetadata[];
