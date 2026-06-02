@@ -112,7 +112,7 @@ The canonical skill sources live under `skills/<skill-id>/`. Do not edit generat
 ```bash
 npm run pack:skills            # Build one standalone package per skill
 npm run check:skills-publish   # Verify package metadata, index, and copied references
-npm run pack:all               # Full test + OpenClaw package + standalone skill packages
+npm run pack:all               # Build + test + OpenClaw package + standalone skill packages
 ```
 
 `npm run pack:skills` writes `skill-packages/<skill-id>/` with `SKILL.md`, only the referenced `references/` files, `metadata.json`, `package.json`, `README.md`, and `LICENSE`. It also writes `skill-packages/index.json` for platform crawlers and release automation.
@@ -131,7 +131,7 @@ Use `package.json` scripts as the public development entrypoints.
 | Script                         | Purpose                                                                          |
 | ------------------------------ | -------------------------------------------------------------------------------- |
 | `npm run clean`                | Remove `dist/`.                                                                  |
-| `npm run typecheck`            | Run TypeScript checking for the main project with `tsconfig.json`.               |
+| `npm run typecheck`            | Run main TypeScript checks plus checked skill support scripts.                   |
 | `npm run build`                | Run `clean`, `typecheck`, and bundle CLI/hooks via `scripts/build-dist.ts`.      |
 | `npm test`                     | Build, then run the curated `node:test` suite with `tsx`.                        |
 | `npm run build:openclaw`       | Build the main project, then bundle OpenClaw runtime output.                     |
@@ -139,9 +139,9 @@ Use `package.json` scripts as the public development entrypoints.
 | `npm run typecheck:openclaw`   | Run TypeScript checking for OpenClaw with `tsconfig.openclaw.json`.              |
 | `npm run check:openclaw-dist`  | Verify the generated OpenClaw dist output.                                       |
 | `npm run pack:openclaw`        | Build, verify, and package the OpenClaw plugin.                                  |
-| `npm run pack:skills`          | Build standalone packages under `skill-packages/`.                               |
-| `npm run check:skills-publish` | Build, then verify standalone skill package metadata and copied files.           |
-| `npm run pack:all`             | Run tests, package OpenClaw, package skills, and verify skill publishing output. |
+| `npm run pack:skills`          | Build first, then create standalone packages under `skill-packages/`.            |
+| `npm run check:skills-publish` | Build first, then verify standalone skill package metadata and copied files.     |
+| `npm run pack:all`             | Build, run tests, package OpenClaw, package skills, and verify skill output.     |
 | `npm run sync:version`         | Sync package version metadata across release manifests.                          |
 | `npm run version`              | Run `sync:version`, then stage versioned manifests for npm version workflows.    |
 | `npm run prepack`              | Build before `npm pack`.                                                         |
@@ -161,6 +161,7 @@ Maintenance scripts live under `scripts/` and run from source with `tsx`; they a
 | ------------------------------------------ | ------------------------------------ |
 | `scripts/audit-skills.ts`                  | Skill size and trigger-overlap audit |
 | `scripts/build-dist.ts`                    | CLI and runtime hook bundler         |
+| `scripts/clean-dist.mjs`                   | Remove generated `dist/` output      |
 | `scripts/sync-codex-agents-toml.ts`        | Sync Codex agents configuration      |
 | `scripts/sync-version.ts`                  | Sync release version metadata        |
 | `scripts/pack-skills.ts`                   | Standalone skill package builder     |

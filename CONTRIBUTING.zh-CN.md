@@ -112,7 +112,7 @@ Skill 的权威源文件位于 `skills/<skill-id>/`。不要手动修改 `skill-
 ```bash
 npm run pack:skills            # 为每个 skill 生成独立发布包
 npm run check:skills-publish   # 校验包元数据、索引和引用文件
-npm run pack:all               # 完整测试 + OpenClaw 包 + 独立 skill 包
+npm run pack:all               # 构建 + 测试 + OpenClaw 包 + 独立 skill 包
 ```
 
 `npm run pack:skills` 会生成 `skill-packages/<skill-id>/`，其中包含 `SKILL.md`、该 skill 实际引用的 `references/` 文件、`metadata.json`、`package.json`、`README.md` 和 `LICENSE`。同时会生成 `skill-packages/index.json`，供平台索引或发布自动化使用。
@@ -131,7 +131,7 @@ npm run pack:all               # 完整测试 + OpenClaw 包 + 独立 skill 包
 | Script                         | 用途                                                                       |
 | ------------------------------ | -------------------------------------------------------------------------- |
 | `npm run clean`                | 删除 `dist/`。                                                             |
-| `npm run typecheck`            | 使用 `tsconfig.json` 对主项目做 TypeScript 类型检查。                      |
+| `npm run typecheck`            | 运行主项目 TypeScript 检查，并检查 skill 辅助脚本。                        |
 | `npm run build`                | 运行 `clean`、`typecheck`，并通过 `scripts/build-dist.ts` 打包 CLI/hooks。 |
 | `npm test`                     | 先构建，再通过 `tsx` 运行精选的 `node:test` 测试集。                       |
 | `npm run build:openclaw`       | 构建主项目，然后打包 OpenClaw runtime 输出。                               |
@@ -139,9 +139,9 @@ npm run pack:all               # 完整测试 + OpenClaw 包 + 独立 skill 包
 | `npm run typecheck:openclaw`   | 使用 `tsconfig.openclaw.json` 检查 OpenClaw 类型。                         |
 | `npm run check:openclaw-dist`  | 校验生成的 OpenClaw dist 输出。                                            |
 | `npm run pack:openclaw`        | 构建、校验并打包 OpenClaw 插件。                                           |
-| `npm run pack:skills`          | 在 `skill-packages/` 下生成独立 skill 包。                                 |
-| `npm run check:skills-publish` | 构建后校验独立 skill 包元数据与复制文件。                                  |
-| `npm run pack:all`             | 运行测试、打包 OpenClaw、打包 skills，并校验 skill 发布产物。              |
+| `npm run pack:skills`          | 先构建，再在 `skill-packages/` 下生成独立 skill 包。                       |
+| `npm run check:skills-publish` | 先构建，再校验独立 skill 包元数据与复制文件。                              |
+| `npm run pack:all`             | 构建、运行测试、打包 OpenClaw、打包 skills，并校验 skill 产物。             |
 | `npm run sync:version`         | 同步发布清单中的 package 版本元数据。                                      |
 | `npm run version`              | 运行 `sync:version`，并为 npm version 工作流暂存版本清单。                 |
 | `npm run prepack`              | 在 `npm pack` 前构建。                                                     |
@@ -161,6 +161,7 @@ npm run pack:all               # 完整测试 + OpenClaw 包 + 独立 skill 包
 | ------------------------------------------ | ------------------------------ |
 | `scripts/audit-skills.ts`                  | Skill 大小与触发描述重叠度审计 |
 | `scripts/build-dist.ts`                    | CLI 与 runtime hook 打包       |
+| `scripts/clean-dist.mjs`                   | 删除生成的 `dist/` 输出        |
 | `scripts/sync-codex-agents-toml.ts`        | 同步 Codex agents 配置         |
 | `scripts/sync-version.ts`                  | 同步发布版本元数据             |
 | `scripts/pack-skills.ts`                   | 独立 skill 包构建              |
