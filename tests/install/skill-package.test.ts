@@ -118,6 +118,42 @@ test("pack:skills creates one standalone publish package per skill", () => {
     const copiedReferences = listPackagedFiles(destDir, references);
     assert.deepEqual(copiedReferences, references);
   }
+
+  const sourceDesignScript = path.join(
+    skillsDir,
+    "fec-ui-design",
+    "scripts",
+    "design-system.mjs",
+  );
+  const packagedDesignScript = path.join(
+    packageRoot,
+    "fec-ui-design",
+    "scripts",
+    "design-system.mjs",
+  );
+  assert.ok(
+    fs.existsSync(packagedDesignScript),
+    "missing packaged UI design script",
+  );
+  assert.ok(
+    fs.statSync(packagedDesignScript).size < fs.statSync(sourceDesignScript).size,
+    "packaged UI design script should be minified",
+  );
+
+  const designScriptOutput = execFileSync(
+    process.execPath,
+    [packagedDesignScript, "saas dashboard", "--format", "json"],
+    {
+      cwd: root,
+      encoding: "utf8",
+    },
+  );
+  const designScriptModel = JSON.parse(designScriptOutput) as {
+    query: string;
+    product: { id: string };
+  };
+  assert.equal(designScriptModel.query, "saas dashboard");
+  assert.equal(designScriptModel.product.id, "saas");
 });
 
 test("check:skills-publish validates generated standalone packages", () => {

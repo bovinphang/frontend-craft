@@ -3,6 +3,7 @@
  */
 import fs from "node:fs";
 import path from "node:path";
+import { transform } from "esbuild";
 import { resolvePluginRoot } from "../src/install/shared/resolve-plugin-root.js";
 import {
   assertStandaloneSkillBody,
@@ -79,7 +80,15 @@ for (const skillId of skillIds) {
       throw new Error(`Missing referenced file: ${skillId}/${reference}`);
     const destReference = path.join(destDir, reference);
     fs.mkdirSync(path.dirname(destReference), { recursive: true });
-    fs.copyFileSync(sourceReference, destReference);
+    if (shouldMinifyPackagedScript(reference)) {
+      fs.writeFileSync(
+        destReference,
+        await minifyPackagedScript(sourceReference),
+        "utf8",
+      );
+    } else {
+      fs.copyFileSync(sourceReference, destReference);
+    }
   }
 
   const publishMetadata = {
@@ -184,4 +193,30 @@ function renderReadme(
 
 function unique(values: string[]): string[] {
   return [...new Set(values.filter(Boolean))];
+}
+
+function shouldMinifyPackagedScript(reference: string): boolean {
+  return (
+    reference.startsWith("scripts/") &&
+    [".cjs", ".js", ".mjs"].includes(path.extname(reference))
+  );
+}
+
+async function minifyPackagedScript(sourcePath: string): Promise<string> {
+  const source = fs.readFileSync(sourcePath, "utf8");
+  const hashbang = source.match(/^#![^\r\n]*/)?.[0];
+  const result = await transform(source, {
+    charset: "utf8",
+    format: "esm",
+    legalComments: "none",
+    loader: "js",
+    minify: true,
+    sourcemap: false,
+    sourcesContent: false,
+    target: ["node22"],
+  });
+  const code = result.code.endsWith("\n") ? result.code : `${result.code}\n`;
+
+  if (!hashbang || code.startsWith(hashbang)) return code;
+  return `${hashbang}\n${code.replace(/^#![^\r\n]*(?:\r?\n)?/, "")}`;
 }
