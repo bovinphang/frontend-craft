@@ -10,14 +10,18 @@
 - Git。
 - 本地开发前运行 `npm install`。
 
-常用校验：
+仅修改文档时，重点阅读语言与文档策略以及 Pull Request 自检。修改 skill 或 OpenClaw 时，请在提交 PR 前参考下方对应章节。
+
+快速自检（最小推荐）：
 
 ```bash
-npm test
-npm run pack:skills
-npm run check:skills-publish
-npm run typecheck:openclaw
+npm test                         # 通用校验
+npm run pack:skills              # Skill 变更
+npm run check:skills-publish     # Skill 变更
+npm run typecheck:openclaw       # OpenClaw 变更
 ```
+
+完整的场景化命令请见后文 npm scripts 与 Pull Request 自检。
 
 ## 项目结构
 

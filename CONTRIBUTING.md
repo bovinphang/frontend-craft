@@ -10,14 +10,18 @@ Thanks for your interest in `frontend-craft`. Issues, pull requests, documentati
 - Git.
 - Run `npm install` before local development.
 
-Useful checks:
+For documentation-only changes, focus on the language and documentation policy plus the pull request checklist. For skill or OpenClaw changes, use the focused sections below before opening a pull request.
+
+Quick checks (minimum recommended):
 
 ```bash
-npm test
-npm run pack:skills
-npm run check:skills-publish
-npm run typecheck:openclaw
+npm test                         # General validation
+npm run pack:skills              # Skill changes
+npm run check:skills-publish     # Skill changes
+npm run typecheck:openclaw       # OpenClaw changes
 ```
+
+See the NPM Scripts section and Pull Request Checklist for complete scenario-specific checks.
 
 ## Project Structure
 
