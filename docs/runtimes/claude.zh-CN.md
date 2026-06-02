@@ -33,7 +33,7 @@ CLI 会对 Marketplace 安装执行单一来源保护：如果已经由 Claude C
 /plugin marketplace add bovinphang/frontend-craft
 
 # 安装插件
-/plugin install frontend-craft@bovinphang-frontend-craft
+/plugin install frontend-craft@frontend-craft
 
 # 激活
 /reload-plugins
@@ -67,7 +67,7 @@ CLI 会对 Marketplace 安装执行单一来源保护：如果已经由 Claude C
 /fec-scaffold component DataTable
 
 # 查看可用命令
-/plugin list frontend-craft@bovinphang-frontend-craft
+/plugin list frontend-craft@frontend-craft
 ```
 
 具体 agents、skills、commands 清单见根目录 README **功能概览**。
@@ -139,14 +139,14 @@ claude --plugin-dir .claude/plugins/frontend-craft
 通过 Marketplace 安装的插件，在 Claude Code 中执行：
 
 ```text
-/plugin marketplace update bovinphang-frontend-craft
+/plugin marketplace update frontend-craft
 ```
 
 或开启自动更新，每次启动 Claude Code 时拉取最新版本：
 
 1. 在 Claude Code 中执行 `/plugin` 打开插件管理器
 2. 切换到 **Marketplaces** 标签页
-3. 选中 `bovinphang-frontend-craft`
+3. 选中 `frontend-craft`
 4. 选择 **Enable auto-update**
 
 > 第三方 Marketplace 默认不开启自动更新。启用后，Claude Code 每次启动时会刷新 Marketplace 数据并更新已安装插件。

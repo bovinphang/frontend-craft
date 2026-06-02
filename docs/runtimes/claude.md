@@ -35,7 +35,7 @@ Get started in a few minutes:
 /plugin marketplace add bovinphang/frontend-craft
 
 # Install plugin
-/plugin install frontend-craft@bovinphang-frontend-craft
+/plugin install frontend-craft@frontend-craft
 
 # Activate
 /reload-plugins
@@ -69,7 +69,7 @@ After initialization, customize for your project:
 /fec-scaffold component DataTable
 
 # List available commands
-/plugin list frontend-craft@bovinphang-frontend-craft
+/plugin list frontend-craft@frontend-craft
 ```
 
 You now have access to the bundled agents, skills, and commands (see the root README **Feature overview** for the current list).
@@ -141,14 +141,14 @@ claude --plugin-dir .claude/plugins/frontend-craft
 For Marketplace installs, run in Claude Code:
 
 ```text
-/plugin marketplace update bovinphang-frontend-craft
+/plugin marketplace update frontend-craft
 ```
 
 Or enable auto-update so Claude Code pulls the latest on each start:
 
 1. Run `/plugin` in Claude Code to open the plugin manager
 2. Switch to the **Marketplaces** tab
-3. Select `bovinphang-frontend-craft`
+3. Select `frontend-craft`
 4. Choose **Enable auto-update**
 
 > Third-party Marketplaces do not enable auto-update by default. After enabling, Claude Code will refresh Marketplace data and update installed plugins on each start.
