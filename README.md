@@ -53,45 +53,59 @@ It bundles **13 specialized agents**, **41 auto-activated skills**, **8 slash co
 
 Requires **Node.js 22+**. Works on **Windows, macOS, and Linux**.
 
-### Option 1 - Global CLI project init (recommended)
+### Option 1 - Install the fec CLI globally (recommended)
 
 ```bash
+# 1. Install the fec command globally
 npm install -g @bovinphang/frontend-craft@latest
+
+# 2. Go to your frontend project
 cd your-project
-fec init
-fec init codex      # initialize for a specific runtime
-fec init claude     # initialize for Claude Code
+
+# 3. Choose the AI runtime(s) interactively
+fec setup
+
+# 4. Connect the current project
+fec setup codex
+fec setup claude
+fec setup all
+
+# 5. Connect globally, available across all projects
+fec setup codex --global
+fec setup claude --global
+fec setup all --global
+
+# 6. Preview / query
+fec install --all --dry-run --global
+fec list
 ```
 
-`fec init` is the terminal CLI command for initializing the current project. In an interactive terminal, omit the runtime to choose one from the prompt; in non-interactive terminals, the CLI defaults to `claude` when no runtime is specified. `init` installs locally by default unless you explicitly pass `--global`, for example `fec init codex --global`. The in-assistant `/fec-init` slash command is separate and runs after frontend-craft is installed in your AI runtime.
+`npm install -g` only installs the `fec` terminal command. `fec setup` is the terminal CLI command for connecting frontend-craft to a project; it is not the in-assistant `/fec-init` slash command. In an interactive terminal, running only `fec setup` asks you to choose runtimes. `fec setup <runtime>` and `fec setup all` connect frontend-craft to the current project by default. Only pass `--global` when you want to connect frontend-craft to the selected AI tool's global config directory so it is available across projects.
 
-### Option 2 — No-global interactive wizard
+### Option 2 — Temporary npx run (no global fec command)
 
 ```bash
+# 1. Interactive wizard
 npx @bovinphang/frontend-craft@latest
-```
 
-Use this when you do not want to install a global `fec` command. The wizard walks through the full install flow: choose one or more runtimes, then choose whether to install globally or into the current project.
-
-### Option 3 — Scripted install
-
-```bash
-# Install into the current project
+# 2. Connect the current project
+npx @bovinphang/frontend-craft@latest install --local codex
 npx @bovinphang/frontend-craft@latest install --local claude
+npx @bovinphang/frontend-craft@latest install --all --local
 
-# Install globally for a runtime
+# 3. Connect globally, available across all projects
 npx @bovinphang/frontend-craft@latest install --global codex
+npx @bovinphang/frontend-craft@latest install --global claude
+npx @bovinphang/frontend-craft@latest install --all --global
 
-# Preview what would be installed across all runtimes
+# 4. Preview / query
 npx @bovinphang/frontend-craft@latest install --all --dry-run --global
-
-# List available runtimes
 npx @bovinphang/frontend-craft@latest list
 ```
 
-> **CI / scripts:** always pass `--global` / `-g` or `--local` / `-l`. Without a TTY, the CLI defaults to `claude --global` if neither is set.
+Use `npx` when you do not want to install a global `fec` command. Without arguments, it opens the interactive wizard: choose one or more runtimes, then choose whether to connect globally or into the current project. For scripted all-runtime installs, use `install --all --local` or `install --all --global`; do not write `install all`. For CI / scripts, always pass `--global` / `-g` or `--local` / `-l`; in non-TTY environments without an explicit location, the CLI defaults to `claude --global`.
 
-### Option 4 — Claude Code Marketplace
+### Option 3 — Claude Code Marketplace
 
 For Claude Code users, **Claude Code Marketplace** is the preferred single-source install. Use the CLI for Claude only when you need cross-runtime installs, scripted/offline file copies, or non-Marketplace environments.
 

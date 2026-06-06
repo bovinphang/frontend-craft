@@ -10,6 +10,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 Project-facing release notes are maintained in English from 2.0.0 onward. Historical entries may preserve their original language.
 
 
+## [Unreleased]
+
+### Changed
+
+- **CLI project setup command:** renamed the terminal project initialization shortcut from `fec init` / `frontend-craft init` to `fec setup` / `frontend-craft setup`; the in-assistant `/fec-init` slash command is unchanged.
+
+### Removed
+
+- **CLI `init` compatibility:** removed `init` as a terminal CLI command; use `setup` for local project setup.
+
 
 ## [2.5.0] - 2026-06-01
 

@@ -53,45 +53,59 @@
 
 需要 **Node.js 22+**。完整支持 **Windows、macOS 和 Linux**（所有钩子和脚本均使用 Node.js 实现）。
 
-### 方式一：全局 CLI 初始化项目（推荐）
+### 方式一：全局安装 fec CLI（推荐）
 
 ```bash
+# 1. 全局安装 fec 命令
 npm install -g @bovinphang/frontend-craft@latest
+
+# 2. 进入你的前端项目
 cd your-project
-fec init
-fec init codex      # 初始化指定运行时
-fec init claude     # 初始化 Claude Code
+
+# 3. 交互选择要接入的 AI 运行时
+fec setup
+
+# 4. 接入当前项目
+fec setup codex
+fec setup claude
+fec setup all
+
+# 5. 全局接入，适用于所有项目
+fec setup codex --global
+fec setup claude --global
+fec setup all --global
+
+# 6. 预览 / 查询
+fec install --all --dry-run --global
+fec list
 ```
 
-`fec init` 是终端里的 CLI 初始化命令，用来初始化当前项目。在交互式终端中，不传 runtime 时会弹出选择提示；在非交互环境中，不传 runtime 时 CLI 默认使用 `claude`。`init` 默认安装到当前项目，除非显式传入 `--global`，例如 `fec init codex --global`。AI 助手内的 `/fec-init` 斜杠命令是另一个入口，需要先把 frontend-craft 安装到对应运行时后再使用。
+`npm install -g` 只是安装 `fec` 终端命令。`fec setup` 是终端里的 CLI 项目接入命令，不是 AI 助手内的 `/fec-init` 斜杠命令。在交互式终端中，不带参数的 `fec setup` 会先让你选择 runtime；`fec setup <runtime>` 和 `fec setup all` 会默认接入当前项目。只有传入 `--global` 时，才会接入对应 AI 工具的全局配置目录，适用于所有项目。
 
-### 方式二：免全局安装的交互向导
+### 方式二：用 npx 临时运行（免全局安装 fec）
 
 ```bash
+# 1. 交互向导
 npx @bovinphang/frontend-craft@latest
-```
 
-不想全局安装 `fec` 命令时使用这种方式。向导会走完整安装流程：先选择一个或多个运行时，再决定安装到全局还是当前项目。
-
-### 方式三：脚本化安装
-
-```bash
-# 安装到当前项目
+# 2. 接入当前项目
+npx @bovinphang/frontend-craft@latest install --local codex
 npx @bovinphang/frontend-craft@latest install --local claude
+npx @bovinphang/frontend-craft@latest install --all --local
 
-# 全局安装到某个运行时
+# 3. 全局接入，适用于所有项目
 npx @bovinphang/frontend-craft@latest install --global codex
+npx @bovinphang/frontend-craft@latest install --global claude
+npx @bovinphang/frontend-craft@latest install --all --global
 
-# 预览所有运行时的安装内容（不实际写入）
+# 4. 预览 / 查询
 npx @bovinphang/frontend-craft@latest install --all --dry-run --global
-
-# 列出支持的运行时
 npx @bovinphang/frontend-craft@latest list
 ```
 
-> **CI / 脚本场景：** 始终带上 `--global` / `-g` 或 `--local` / `-l`。非 TTY 且未指定时，CLI 默认安装到 `claude --global`。
+不想全局安装 `fec` 命令时使用 `npx`。不带参数会进入交互向导：先选择一个或多个运行时，再决定接入全局还是当前项目。脚本化安装全部 runtime 时使用 `install --all --local` 或 `install --all --global`，不要写成 `install all`。CI / 脚本场景请始终带上 `--global` / `-g` 或 `--local` / `-l`；非 TTY 且未指定时，CLI 默认安装到 `claude --global`。
 
-### 方式四：Claude Code Marketplace
+### 方式三：Claude Code Marketplace
 
 对 Claude Code 用户，**Claude Code Marketplace** 是推荐的单一来源安装方式。只有在需要跨运行时安装、脚本化/离线复制文件，或非 Marketplace 环境时，才建议对 Claude 使用 CLI。
 

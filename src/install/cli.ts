@@ -81,8 +81,10 @@ Usage:
   frontend-craft install <runtime> [options]
   frontend-craft install --all [options]
   frontend-craft install
-  frontend-craft init [runtime] [options]
-  fec init [runtime] [options]
+  frontend-craft setup [runtime] [options]
+  frontend-craft setup all [options]
+  fec setup [runtime] [options]
+  fec setup all [options]
   frontend-craft update [runtime] [options]
   frontend-craft upgrade [runtime] [options]
   frontend-craft uninstall|remove [runtime] [options]
@@ -101,10 +103,11 @@ Options:
   --all            Install for every supported runtime
 
 Notes:
-  init is an alias for install --local unless --global is explicitly provided.
+  setup connects frontend-craft to the current project. Omit runtime in an interactive terminal to choose runtimes.
+  setup <runtime> and setup all install locally by default unless --global is explicitly provided.
   update without a runtime refreshes discovered frontend-craft manifests.
   uninstall/remove deletes manifest-managed files and skips modified files unless --force is provided.
-  /fec-init is the in-assistant slash command; fec init is the terminal CLI command.
+  /fec-init is the in-assistant slash command; fec setup is the terminal CLI command.
 
 Runtimes:
   ${ALL_RUNTIMES.join(", ")}
@@ -122,7 +125,7 @@ function isInstallInvocation(argv: string[]): boolean {
 export async function main(argv: string[]): Promise<void> {
   const cmd = isInstallInvocation(argv) ? "install" : argv[0];
   const cmdArgs = isInstallInvocation(argv) ? argv : argv.slice(1);
-  const isInit = cmd === "init";
+  const isSetup = cmd === "setup";
   const pluginRoot = resolvePluginRoot(import.meta.url);
 
   if (cmd === "version" || cmd === "-v" || cmd === "--version") {
@@ -186,7 +189,7 @@ export async function main(argv: string[]): Promise<void> {
   const mode = cmd === "update" || cmd === "upgrade" ? "update" : "install";
   if (
     cmd !== "install" &&
-    cmd !== "init" &&
+    cmd !== "setup" &&
     cmd !== "update" &&
     cmd !== "upgrade" &&
     cmd !== "uninstall" &&
@@ -202,9 +205,21 @@ export async function main(argv: string[]): Promise<void> {
     return;
   }
 
-  const { runtime, installLocation, dryRun, force, all, hasGlobal, hasLocal } =
-    parseInstallArgs(cmdArgs);
-  const effectiveInstallLocation = installLocation ?? (isInit ? "local" : null);
+  const parsedInstallArgs = parseInstallArgs(cmdArgs);
+  let runtime: string | undefined = parsedInstallArgs.runtime;
+  let all = parsedInstallArgs.all;
+  const {
+    installLocation,
+    dryRun,
+    force,
+    hasGlobal,
+    hasLocal,
+  } = parsedInstallArgs;
+  if (isSetup && runtime === "all") {
+    runtime = undefined;
+    all = true;
+  }
+  const effectiveInstallLocation = installLocation ?? (isSetup ? "local" : null);
   if (hasGlobal && hasLocal) {
     console.error("--global and --local cannot be used together.");
     process.exitCode = 1;
