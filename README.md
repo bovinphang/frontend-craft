@@ -53,17 +53,17 @@ It bundles **13 specialized agents**, **41 auto-activated skills**, **8 slash co
 
 Requires **Node.js 22+**. Works on **Windows, macOS, and Linux**.
 
-### Option 1 - Global CLI project init (recommended)
+### Option 1 - Global CLI project setup (recommended)
 
 ```bash
 npm install -g @bovinphang/frontend-craft@latest
 cd your-project
-fec init
-fec init codex      # initialize for a specific runtime
-fec init claude     # initialize for Claude Code
+fec setup             # set up frontend-craft for the current project
+fec setup codex       # set up for a specific runtime
+fec setup claude      # set up for Claude Code
 ```
 
-`fec init` is the terminal CLI command for initializing the current project. In an interactive terminal, omit the runtime to choose one from the prompt; in non-interactive terminals, the CLI defaults to `claude` when no runtime is specified. `init` installs locally by default unless you explicitly pass `--global`, for example `fec init codex --global`. The in-assistant `/fec-init` slash command is separate and runs after frontend-craft is installed in your AI runtime.
+`fec setup` is the terminal CLI command for setting up frontend-craft in the current project. In an interactive terminal, omit the runtime to choose one from the prompt; in non-interactive terminals, the CLI defaults to `claude` when no runtime is specified. `setup` installs locally by default unless you explicitly pass `--global`, for example `fec setup codex --global`. The in-assistant `/fec-init` slash command is a separate entry point for initializing project templates and rules after frontend-craft is installed in your AI runtime.
 
 ### Option 2 — No-global interactive wizard
 

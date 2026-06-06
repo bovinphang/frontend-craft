@@ -10,6 +10,17 @@
 
 
 
+## [未发布]
+
+### 变更
+
+- **CLI 项目 setup 命令**：终端里的项目初始化快捷命令从 `fec init` / `frontend-craft init` 重命名为 `fec setup` / `frontend-craft setup`；AI 助手内的 `/fec-init` 斜杠命令保持不变。
+
+### 移除
+
+- **CLI `init` 兼容入口**：移除终端 CLI 的 `init` 命令；本地项目 setup 请改用 `setup`。
+
+
 ## [2.5.0] - 2026-06-01
 
 ### 新增

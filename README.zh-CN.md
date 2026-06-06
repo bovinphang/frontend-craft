@@ -53,17 +53,17 @@
 
 需要 **Node.js 22+**。完整支持 **Windows、macOS 和 Linux**（所有钩子和脚本均使用 Node.js 实现）。
 
-### 方式一：全局 CLI 初始化项目（推荐）
+### 方式一：全局 CLI 设置项目（推荐）
 
 ```bash
 npm install -g @bovinphang/frontend-craft@latest
 cd your-project
-fec init
-fec init codex      # 初始化指定运行时
-fec init claude     # 初始化 Claude Code
+fec setup             # 设置并接入当前项目
+fec setup codex       # 设置指定运行时
+fec setup claude      # 设置 Claude Code
 ```
 
-`fec init` 是终端里的 CLI 初始化命令，用来初始化当前项目。在交互式终端中，不传 runtime 时会弹出选择提示；在非交互环境中，不传 runtime 时 CLI 默认使用 `claude`。`init` 默认安装到当前项目，除非显式传入 `--global`，例如 `fec init codex --global`。AI 助手内的 `/fec-init` 斜杠命令是另一个入口，需要先把 frontend-craft 安装到对应运行时后再使用。
+`fec setup` 是终端里的 CLI 项目设置命令，用来把 frontend-craft 安装并接入当前项目。在交互式终端中，不传 runtime 时会弹出选择提示；在非交互环境中，不传 runtime 时 CLI 默认使用 `claude`。`setup` 默认安装到当前项目，除非显式传入 `--global`，例如 `fec setup codex --global`。AI 助手内的 `/fec-init` 斜杠命令是另一个入口，用来初始化项目模板与规则，需要先把 frontend-craft 安装到对应运行时后再使用。
 
 ### 方式二：免全局安装的交互向导
 

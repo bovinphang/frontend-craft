@@ -53,17 +53,17 @@
 
 需要 **Node.js 22+**。完整支援 **Windows、macOS 和 Linux**（所有鉤子和腳本均使用 Node.js 實作）。
 
-### 方式一：全域 CLI 初始化專案（推薦）
+### 方式一：全域 CLI 設定專案（推薦）
 
 ```bash
 npm install -g @bovinphang/frontend-craft@latest
 cd your-project
-fec init
-fec init codex      # 初始化指定執行時
-fec init claude     # 初始化 Claude Code
+fec setup             # 設定並接入目前專案
+fec setup codex       # 設定指定執行時
+fec setup claude      # 設定 Claude Code
 ```
 
-`fec init` 是終端機中的 CLI 初始化指令，用來初始化目前專案。在互動式終端機中，不傳 runtime 時會顯示選擇提示；在非互動環境中，不傳 runtime 時 CLI 預設使用 `claude`。`init` 預設安裝到目前專案，除非明確傳入 `--global`，例如 `fec init codex --global`。AI 助手內的 `/fec-init` 斜線指令是另一個入口，需要先把 frontend-craft 安裝到對應執行時後再使用。
+`fec setup` 是終端機中的 CLI 專案設定指令，用來把 frontend-craft 安裝並接入目前專案。在互動式終端機中，不傳 runtime 時會顯示選擇提示；在非互動環境中，不傳 runtime 時 CLI 預設使用 `claude`。`setup` 預設安裝到目前專案，除非明確傳入 `--global`，例如 `fec setup codex --global`。AI 助手內的 `/fec-init` 斜線指令是另一個入口，用來初始化專案範本與規則，需要先把 frontend-craft 安裝到對應執行時後再使用。
 
 ### 方式二：免全域安裝的互動精靈
 

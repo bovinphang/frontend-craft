@@ -53,20 +53,20 @@ test("install help flag prints help without installing", () => {
     },
   );
   assert.match(help, /Usage:/);
-  assert.match(help, /frontend-craft init \[runtime\] \[options\]/);
-  assert.match(help, /fec init \[runtime\] \[options\]/);
-  assert.match(help, /init is an alias for install --local/);
+  assert.match(help, /frontend-craft setup \[runtime\] \[options\]/);
+  assert.match(help, /fec setup \[runtime\] \[options\]/);
+  assert.match(help, /setup is an alias for install --local/);
   assert.doesNotMatch(help, /Installing frontend-craft/);
 });
 
-test("init defaults to local project installation", () => {
+test("setup defaults to local project installation", () => {
   const runtimeHome = fs.mkdtempSync(
-    path.join(os.tmpdir(), "fc-init-default-home-"),
+    path.join(os.tmpdir(), "fc-setup-default-home-"),
   );
   try {
     const out = execFileSync(
       process.execPath,
-      [cli, "init", "claude", "--dry-run"],
+      [cli, "setup", "claude", "--dry-run"],
       {
         cwd: root,
         encoding: "utf8",
@@ -89,10 +89,10 @@ test("init defaults to local project installation", () => {
   }
 });
 
-test("init uses local runtime directory unless global is explicit", () => {
+test("setup uses local runtime directory unless global is explicit", () => {
   const local = execFileSync(
     process.execPath,
-    [cli, "init", "codex", "--dry-run"],
+    [cli, "setup", "codex", "--dry-run"],
     {
       cwd: root,
       encoding: "utf8",
@@ -108,7 +108,7 @@ test("init uses local runtime directory unless global is explicit", () => {
 
   const global = execFileSync(
     process.execPath,
-    [cli, "init", "codex", "--global", "--dry-run"],
+    [cli, "setup", "codex", "--global", "--dry-run"],
     {
       cwd: root,
       encoding: "utf8",
@@ -117,6 +117,25 @@ test("init uses local runtime directory unless global is explicit", () => {
   assert.match(
     global,
     /Installing frontend-craft for "codex" -> .+\.codex \(global\)/,
+  );
+});
+
+test("init is no longer a CLI command", () => {
+  assert.throws(
+    () =>
+      execFileSync(process.execPath, [cli, "init", "claude", "--dry-run"], {
+        cwd: root,
+        encoding: "utf8",
+        stdio: "pipe",
+      }),
+    (error: unknown) => {
+      assert.equal((error as { status?: number }).status, 1);
+      assert.match(
+        String((error as { stderr?: Buffer | string }).stderr),
+        /Unknown command: init/,
+      );
+      return true;
+    },
   );
 });
 

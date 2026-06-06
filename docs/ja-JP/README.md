@@ -53,17 +53,17 @@
 
 **Node.js 22+** が必要です。**Windows、macOS、Linux** で動作します（すべてのフックとスクリプトは Node.js で実装）。
 
-### 方法 1：グローバル CLI でプロジェクトを初期化（推奨）
+### 方法 1：グローバル CLI でプロジェクトをセットアップ（推奨）
 
 ```bash
 npm install -g @bovinphang/frontend-craft@latest
 cd your-project
-fec init
-fec init codex      # 特定のランタイム向けに初期化
-fec init claude     # Claude Code 向けに初期化
+fec setup             # 現在のプロジェクトにセットアップ
+fec setup codex       # 特定のランタイム向けにセットアップ
+fec setup claude      # Claude Code 向けにセットアップ
 ```
 
-`fec init` は現在のプロジェクトを初期化するターミナル CLI コマンドです。対話型ターミナルでは、runtime を省略すると選択プロンプトが表示されます。非対話環境で runtime を省略した場合、CLI は `claude` を既定値にします。`init` は明示的に `--global` を渡さない限り、既定で現在のプロジェクトへインストールします。例：`fec init codex --global`。AI アシスタント内の `/fec-init` スラッシュコマンドは別の入口で、先に frontend-craft を対象ランタイムへインストールしてから使用します。
+`fec setup` は現在のプロジェクトに frontend-craft をセットアップするためのターミナル CLI コマンドです。対話型ターミナルでは、runtime を省略すると選択プロンプトが表示されます。非対話環境で runtime を省略した場合、CLI は `claude` を既定値にします。`setup` は明示的に `--global` を渡さない限り、既定で現在のプロジェクトへインストールします。例：`fec setup codex --global`。AI アシスタント内の `/fec-init` スラッシュコマンドは別の入口で、プロジェクトテンプレートとルールを初期化するために使います。先に frontend-craft を対象ランタイムへインストールしてから使用します。
 
 ### 方法 2：グローバルインストール不要の対話ウィザード
 

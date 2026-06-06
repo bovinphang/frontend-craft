@@ -53,17 +53,17 @@
 
 **Node.js 22+**가 필요합니다. **Windows, macOS, Linux**에서 동작합니다(모든 훅과 스크립트는 Node.js로 구현).
 
-### 방법 1: 전역 CLI로 프로젝트 초기화 (권장)
+### 방법 1: 전역 CLI로 프로젝트 설정 (권장)
 
 ```bash
 npm install -g @bovinphang/frontend-craft@latest
 cd your-project
-fec init
-fec init codex      # 특정 런타임으로 초기화
-fec init claude     # Claude Code로 초기화
+fec setup             # 현재 프로젝트에 설정
+fec setup codex       # 특정 런타임으로 설정
+fec setup claude      # Claude Code로 설정
 ```
 
-`fec init`은 현재 프로젝트를 초기화하는 터미널 CLI 명령어입니다. 대화형 터미널에서는 runtime을 생략하면 선택 프롬프트가 표시됩니다. 비대화형 환경에서 runtime을 생략하면 CLI는 `claude`를 기본값으로 사용합니다. `init`은 명시적으로 `--global`을 전달하지 않는 한 기본적으로 현재 프로젝트에 설치합니다. 예: `fec init codex --global`. AI 어시스턴트 안의 `/fec-init` 슬래시 명령어는 별도 진입점이며, 먼저 frontend-craft를 대상 런타임에 설치한 뒤 사용합니다.
+`fec setup`은 현재 프로젝트에 frontend-craft를 설정하는 터미널 CLI 명령어입니다. 대화형 터미널에서는 runtime을 생략하면 선택 프롬프트가 표시됩니다. 비대화형 환경에서 runtime을 생략하면 CLI는 `claude`를 기본값으로 사용합니다. `setup`은 명시적으로 `--global`을 전달하지 않는 한 기본적으로 현재 프로젝트에 설치합니다. 예: `fec setup codex --global`. AI 어시스턴트 안의 `/fec-init` 슬래시 명령어는 프로젝트 템플릿과 규칙을 초기화하는 별도 진입점이며, 먼저 frontend-craft를 대상 런타임에 설치한 뒤 사용합니다.
 
 ### 방법 2: 전역 설치 없는 대화형 마법사
 
