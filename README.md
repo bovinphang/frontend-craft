@@ -161,7 +161,7 @@ Slash commands are the primary entry points for structured workflows. Most produ
 
 Skills are workflow definitions that activate automatically based on file patterns, frameworks, or task context. They encode review dimensions, output conventions, and report formats.
 
-The skills below are grouped by use case so you can quickly find project standards, implementation, testing, review, design, migration, and documentation workflows.
+The skills below are grouped by use case so you can quickly find project standards, implementation, testing, review, design, migration, project evolution, and documentation workflows.
 
 **Project standards** — conventions enforced whenever matching frameworks are detected:
 
@@ -204,6 +204,7 @@ The skills below are grouped by use case so you can quickly find project standar
 | Skill                          | Scope                                                                         |
 | ------------------------------ | ----------------------------------------------------------------------------- |
 | `fec-code-review`              | Architecture, types, rendering, styles, a11y review                           |
+| `fec-debug-framework`          | Systematic diagnostics for build, runtime, UI, and API/data failures          |
 | `fec-typescript-type-safety`   | Type contracts, DTO mapping, type guards, generics, type-level checks         |
 | `fec-security-review`          | XSS, CSRF, sensitive data leakage, input validation                           |
 | `fec-accessibility-check`      | WCAG 2.2, keyboard, focus, touch, and screen-reader behavior                  |
@@ -230,11 +231,16 @@ The skills below are grouped by use case so you can quickly find project standar
 | `fec-legacy-web-standard`        | Standards for JS + jQuery + HTML maintenance               |
 | `fec-legacy-to-modern-migration` | jQuery/MPA → React/Vue 3 + TS strategy and phased workflow |
 
+**Project evolution** — activated when absorbing reference systems into project-native improvements:
+
+| Skill         | Scope                                                                  |
+| ------------- | ---------------------------------------------------------------------- |
+| `fec-alchemy` | Absorb reference system ideas through original, project-native redesign |
+
 **Maintenance docs** — activated during documentation upkeep:
 
 | Skill                           | Scope                                                                                  |
 | ------------------------------- | -------------------------------------------------------------------------------------- |
-| `fec-alchemy`                   | Absorb reference system ideas through original, project-native redesign                 |
 | `fec-doc-sync`                  | Keep frontend docs in sync with code, config, scripts, routes, APIs, env, and deploy facts |
 | `fec-source-driven-development` | Verify version-sensitive frontend decisions against project facts and official sources |
 

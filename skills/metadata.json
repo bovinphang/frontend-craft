@@ -35,7 +35,7 @@
   {
     "id": "fec-alchemy",
     "name": "项目吸收与原创化融合",
-    "category": "maintenance-docs",
+    "category": "project-evolution",
     "tags": [
       "alchemy",
       "project-absorption",
@@ -49,7 +49,7 @@
     "homepage": "https://github.com/bovinphang/frontend-craft",
     "repository": "https://github.com/bovinphang/frontend-craft",
     "keywords": [
-      "maintenance-docs",
+      "project-evolution",
       "alchemy",
       "project-absorption",
       "originality",

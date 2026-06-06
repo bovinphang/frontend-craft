@@ -74,6 +74,7 @@ test("skills metadata uses the public taxonomy categories", () => {
     "review-quality",
     "design-ui",
     "legacy-migration",
+    "project-evolution",
     "maintenance-docs",
   ]);
 
