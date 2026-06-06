@@ -62,16 +62,22 @@ npm install -g @bovinphang/frontend-craft@latest
 # 2. 프론트엔드 프로젝트로 이동
 cd your-project
 
-# 3. 현재 프로젝트에 연결
+# 3. 연결할 AI 런타임을 대화형으로 선택
 fec setup
+
+# 4. 현재 프로젝트에 연결
 fec setup codex
 fec setup claude
 fec setup all
 
-# 4. 또는 전역 연결, 모든 프로젝트에서 사용
+# 5. 전역 연결, 모든 프로젝트에서 사용
 fec setup codex --global
 fec setup claude --global
 fec setup all --global
+
+# 6. 미리보기 / 조회
+fec install --all --dry-run --global
+fec list
 ```
 
 `npm install -g`는 `fec` 터미널 명령어만 설치합니다. `fec setup`은 frontend-craft를 프로젝트에 연결하는 터미널 CLI 명령어이며, AI 어시스턴트 안의 `/fec-init` 슬래시 명령어와는 다릅니다. 대화형 터미널에서 인자 없는 `fec setup`은 runtime 선택을 먼저 요청합니다. `fec setup <runtime>`과 `fec setup all`은 기본적으로 현재 프로젝트에 연결합니다. `--global`을 전달할 때만 선택한 AI 도구의 전역 설정 디렉터리에 연결되어 모든 프로젝트에서 사용할 수 있습니다.
@@ -79,23 +85,25 @@ fec setup all --global
 ### 방법 2: npx로 임시 실행 (전역 fec 불필요)
 
 ```bash
-# 대화형 마법사
+# 1. 대화형 마법사
 npx @bovinphang/frontend-craft@latest
 
-# 스크립트: 현재 프로젝트에 연결
+# 2. 현재 프로젝트에 연결
+npx @bovinphang/frontend-craft@latest install --local codex
 npx @bovinphang/frontend-craft@latest install --local claude
+npx @bovinphang/frontend-craft@latest install --all --local
 
-# 스크립트: 특정 런타임에 전역 연결
+# 3. 전역 연결, 모든 프로젝트에서 사용
 npx @bovinphang/frontend-craft@latest install --global codex
+npx @bovinphang/frontend-craft@latest install --global claude
+npx @bovinphang/frontend-craft@latest install --all --global
 
-# 모든 런타임의 전역 연결 내용 미리보기 (실제 작성하지 않음)
+# 4. 미리보기 / 조회
 npx @bovinphang/frontend-craft@latest install --all --dry-run --global
-
-# 지원되는 런타임 목록
 npx @bovinphang/frontend-craft@latest list
 ```
 
-전역 `fec` 명령어를 설치하고 싶지 않을 때는 `npx`를 사용합니다. 인자 없이 실행하면 대화형 마법사가 열립니다. 먼저 하나 이상의 런타임을 선택한 다음, 전역 또는 현재 프로젝트에 연결할지 결정합니다. CI / 스크립트 환경에서는 항상 `--global` / `-g` 또는 `--local` / `-l`을 지정하세요. TTY가 아니고 미지정 시, CLI는 `claude --global`을 기본값으로 합니다.
+전역 `fec` 명령어를 설치하고 싶지 않을 때는 `npx`를 사용합니다. 인자 없이 실행하면 대화형 마법사가 열립니다. 먼저 하나 이상의 런타임을 선택한 다음, 전역 또는 현재 프로젝트에 연결할지 결정합니다. 모든 runtime을 스크립트로 설치할 때는 `install --all --local` 또는 `install --all --global`을 사용하고, `install all`이라고 쓰지 않습니다. CI / 스크립트 환경에서는 항상 `--global` / `-g` 또는 `--local` / `-l`을 지정하세요. TTY가 아니고 미지정 시, CLI는 `claude --global`을 기본값으로 합니다.
 
 ### 방법 3: Claude Code Marketplace
 

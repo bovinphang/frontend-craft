@@ -62,16 +62,22 @@ npm install -g @bovinphang/frontend-craft@latest
 # 2. Go to your frontend project
 cd your-project
 
-# 3. Connect the current project
+# 3. Choose the AI runtime(s) interactively
 fec setup
+
+# 4. Connect the current project
 fec setup codex
 fec setup claude
 fec setup all
 
-# 4. Or connect globally, available across all projects
+# 5. Connect globally, available across all projects
 fec setup codex --global
 fec setup claude --global
 fec setup all --global
+
+# 6. Preview / query
+fec install --all --dry-run --global
+fec list
 ```
 
 `npm install -g` only installs the `fec` terminal command. `fec setup` is the terminal CLI command for connecting frontend-craft to a project; it is not the in-assistant `/fec-init` slash command. In an interactive terminal, running only `fec setup` asks you to choose runtimes. `fec setup <runtime>` and `fec setup all` connect frontend-craft to the current project by default. Only pass `--global` when you want to connect frontend-craft to the selected AI tool's global config directory so it is available across projects.
@@ -79,23 +85,25 @@ fec setup all --global
 ### Option 2 — Temporary npx run (no global fec command)
 
 ```bash
-# Interactive wizard
+# 1. Interactive wizard
 npx @bovinphang/frontend-craft@latest
 
-# Scripted: connect the current project
+# 2. Connect the current project
+npx @bovinphang/frontend-craft@latest install --local codex
 npx @bovinphang/frontend-craft@latest install --local claude
+npx @bovinphang/frontend-craft@latest install --all --local
 
-# Scripted: connect one runtime globally
+# 3. Connect globally, available across all projects
 npx @bovinphang/frontend-craft@latest install --global codex
+npx @bovinphang/frontend-craft@latest install --global claude
+npx @bovinphang/frontend-craft@latest install --all --global
 
-# Preview global connection content for all runtimes
+# 4. Preview / query
 npx @bovinphang/frontend-craft@latest install --all --dry-run --global
-
-# List available runtimes
 npx @bovinphang/frontend-craft@latest list
 ```
 
-Use `npx` when you do not want to install a global `fec` command. Without arguments, it opens the interactive wizard: choose one or more runtimes, then choose whether to connect globally or into the current project. For CI / scripts, always pass `--global` / `-g` or `--local` / `-l`; in non-TTY environments without an explicit location, the CLI defaults to `claude --global`.
+Use `npx` when you do not want to install a global `fec` command. Without arguments, it opens the interactive wizard: choose one or more runtimes, then choose whether to connect globally or into the current project. For scripted all-runtime installs, use `install --all --local` or `install --all --global`; do not write `install all`. For CI / scripts, always pass `--global` / `-g` or `--local` / `-l`; in non-TTY environments without an explicit location, the CLI defaults to `claude --global`.
 
 ### Option 3 — Claude Code Marketplace
 

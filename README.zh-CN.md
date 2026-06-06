@@ -62,16 +62,22 @@ npm install -g @bovinphang/frontend-craft@latest
 # 2. 进入你的前端项目
 cd your-project
 
-# 3. 接入当前项目
+# 3. 交互选择要接入的 AI 运行时
 fec setup
+
+# 4. 接入当前项目
 fec setup codex
 fec setup claude
 fec setup all
 
-# 4. 或者全局接入，适用于所有项目
+# 5. 全局接入，适用于所有项目
 fec setup codex --global
 fec setup claude --global
 fec setup all --global
+
+# 6. 预览 / 查询
+fec install --all --dry-run --global
+fec list
 ```
 
 `npm install -g` 只是安装 `fec` 终端命令。`fec setup` 是终端里的 CLI 项目接入命令，不是 AI 助手内的 `/fec-init` 斜杠命令。在交互式终端中，不带参数的 `fec setup` 会先让你选择 runtime；`fec setup <runtime>` 和 `fec setup all` 会默认接入当前项目。只有传入 `--global` 时，才会接入对应 AI 工具的全局配置目录，适用于所有项目。
@@ -79,23 +85,25 @@ fec setup all --global
 ### 方式二：用 npx 临时运行（免全局安装 fec）
 
 ```bash
-# 交互向导
+# 1. 交互向导
 npx @bovinphang/frontend-craft@latest
 
-# 脚本化：接入当前项目
+# 2. 接入当前项目
+npx @bovinphang/frontend-craft@latest install --local codex
 npx @bovinphang/frontend-craft@latest install --local claude
+npx @bovinphang/frontend-craft@latest install --all --local
 
-# 脚本化：全局接入某个运行时
+# 3. 全局接入，适用于所有项目
 npx @bovinphang/frontend-craft@latest install --global codex
+npx @bovinphang/frontend-craft@latest install --global claude
+npx @bovinphang/frontend-craft@latest install --all --global
 
-# 预览所有运行时的全局接入内容（不实际写入）
+# 4. 预览 / 查询
 npx @bovinphang/frontend-craft@latest install --all --dry-run --global
-
-# 列出支持的运行时
 npx @bovinphang/frontend-craft@latest list
 ```
 
-不想全局安装 `fec` 命令时使用 `npx`。不带参数会进入交互向导：先选择一个或多个运行时，再决定接入全局还是当前项目。CI / 脚本场景请始终带上 `--global` / `-g` 或 `--local` / `-l`；非 TTY 且未指定时，CLI 默认安装到 `claude --global`。
+不想全局安装 `fec` 命令时使用 `npx`。不带参数会进入交互向导：先选择一个或多个运行时，再决定接入全局还是当前项目。脚本化安装全部 runtime 时使用 `install --all --local` 或 `install --all --global`，不要写成 `install all`。CI / 脚本场景请始终带上 `--global` / `-g` 或 `--local` / `-l`；非 TTY 且未指定时，CLI 默认安装到 `claude --global`。
 
 ### 方式三：Claude Code Marketplace
 

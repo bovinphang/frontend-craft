@@ -62,16 +62,22 @@ npm install -g @bovinphang/frontend-craft@latest
 # 2. フロントエンドプロジェクトへ移動
 cd your-project
 
-# 3. 現在のプロジェクトに接続
+# 3. 接続する AI ランタイムを対話的に選択
 fec setup
+
+# 4. 現在のプロジェクトに接続
 fec setup codex
 fec setup claude
 fec setup all
 
-# 4. またはグローバル接続、すべてのプロジェクトで利用
+# 5. グローバル接続、すべてのプロジェクトで利用
 fec setup codex --global
 fec setup claude --global
 fec setup all --global
+
+# 6. プレビュー / 確認
+fec install --all --dry-run --global
+fec list
 ```
 
 `npm install -g` は `fec` ターミナルコマンドだけをインストールします。`fec setup` は frontend-craft をプロジェクトに接続するターミナル CLI コマンドで、AI アシスタント内の `/fec-init` スラッシュコマンドとは別です。対話型ターミナルでは、引数なしの `fec setup` が runtime の選択を求めます。`fec setup <runtime>` と `fec setup all` は既定で現在のプロジェクトに接続します。`--global` を渡した場合だけ、選択した AI ツールのグローバル設定ディレクトリに接続され、すべてのプロジェクトで利用できます。
@@ -79,23 +85,25 @@ fec setup all --global
 ### 方法 2：npx で一時実行（グローバル fec 不要）
 
 ```bash
-# 対話ウィザード
+# 1. 対話ウィザード
 npx @bovinphang/frontend-craft@latest
 
-# スクリプト向け：現在のプロジェクトに接続
+# 2. 現在のプロジェクトに接続
+npx @bovinphang/frontend-craft@latest install --local codex
 npx @bovinphang/frontend-craft@latest install --local claude
+npx @bovinphang/frontend-craft@latest install --all --local
 
-# スクリプト向け：あるランタイムにグローバル接続
+# 3. グローバル接続、すべてのプロジェクトで利用
 npx @bovinphang/frontend-craft@latest install --global codex
+npx @bovinphang/frontend-craft@latest install --global claude
+npx @bovinphang/frontend-craft@latest install --all --global
 
-# すべてのランタイムのグローバル接続内容をプレビュー（実際には書き込まない）
+# 4. プレビュー / 確認
 npx @bovinphang/frontend-craft@latest install --all --dry-run --global
-
-# 対応ランタイムを一覧表示
 npx @bovinphang/frontend-craft@latest list
 ```
 
-グローバルな `fec` コマンドをインストールしたくない場合は `npx` を使います。引数なしでは対話ウィザードを開きます。まず 1 つ以上のランタイムを選択し、次にグローバルまたは現在のプロジェクトへ接続するかを決定します。CI / スクリプト環境では常に `--global` / `-g` または `--local` / `-l` を指定してください。TTY でなく未指定の場合、CLI は `claude --global` をデフォルトとします。
+グローバルな `fec` コマンドをインストールしたくない場合は `npx` を使います。引数なしでは対話ウィザードを開きます。まず 1 つ以上のランタイムを選択し、次にグローバルまたは現在のプロジェクトへ接続するかを決定します。すべての runtime をスクリプトでインストールする場合は `install --all --local` または `install --all --global` を使い、`install all` とは書きません。CI / スクリプト環境では常に `--global` / `-g` または `--local` / `-l` を指定してください。TTY でなく未指定の場合、CLI は `claude --global` をデフォルトとします。
 
 ### 方法 3：Claude Code Marketplace
 
