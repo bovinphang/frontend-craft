@@ -53,7 +53,7 @@
 
 需要 **Node.js 22+**。完整支援 **Windows、macOS 和 Linux**（所有鉤子和腳本均使用 Node.js 實作）。
 
-### 方式一：用 fec setup 接入目前專案（推薦）
+### 方式一：全域安裝 fec CLI（推薦）
 
 ```bash
 # 1. 全域安裝 fec 指令
@@ -62,49 +62,42 @@ npm install -g @bovinphang/frontend-craft@latest
 # 2. 進入你的前端專案
 cd your-project
 
-# 3. 互動選擇要接入的 AI 執行時
+# 3. 接入目前專案
 fec setup
-
-# 或者直接接入指定執行時 / 所有執行時到目前專案
 fec setup codex
 fec setup claude
 fec setup all
 
-# 全域安裝，適用於所有專案
+# 4. 或者全域接入，適用於所有專案
 fec setup codex --global
 fec setup claude --global
 fec setup all --global
 ```
 
-`fec setup` 是終端機中的 CLI 專案接入指令，不是 AI 助手內的 `/fec-init` 斜線指令。在互動式終端機中，不帶參數的 `fec setup` 會先讓你選擇 runtime；`fec setup <runtime>` 和 `fec setup all` 會預設接入目前專案。傳入 `--global` 時會安裝到對應工具的全域設定目錄，適用於所有專案。非互動場景建議使用 `fec setup <runtime>`、`fec setup all`，或使用下方腳本化安裝裡的 `install --local` / `install --global`。
+`npm install -g` 只是安裝 `fec` 終端機指令。`fec setup` 是終端機中的 CLI 專案接入指令，不是 AI 助手內的 `/fec-init` 斜線指令。在互動式終端機中，不帶參數的 `fec setup` 會先讓你選擇 runtime；`fec setup <runtime>` 和 `fec setup all` 會預設接入目前專案。只有傳入 `--global` 時，才會接入對應 AI 工具的全域設定目錄，適用於所有專案。
 
-### 方式二：免全域安裝的互動精靈
+### 方式二：用 npx 臨時執行（免全域安裝 fec）
 
 ```bash
+# 互動精靈
 npx @bovinphang/frontend-craft@latest
-```
 
-不想全域安裝 `fec` 指令時使用這種方式。精靈會走完整安裝流程：先選擇一個或多個執行時，再決定安裝到全域還是目前專案。
-
-### 方式三：腳本化安裝
-
-```bash
-# 安裝到目前專案
+# 腳本化：接入目前專案
 npx @bovinphang/frontend-craft@latest install --local claude
 
-# 全域安裝到某個執行時
+# 腳本化：全域接入某個執行時
 npx @bovinphang/frontend-craft@latest install --global codex
 
-# 預覽所有執行時的安裝內容（不實際寫入）
+# 預覽所有執行時的全域接入內容（不實際寫入）
 npx @bovinphang/frontend-craft@latest install --all --dry-run --global
 
 # 列出支援的執行時
 npx @bovinphang/frontend-craft@latest list
 ```
 
-> **CI / 腳本場景：** 務必帶上 `--global` / `-g` 或 `--local` / `-l`。非 TTY 且未指定時，CLI 預設安裝到 `claude --global`。
+不想全域安裝 `fec` 指令時使用 `npx`。不帶參數會進入互動精靈：先選擇一個或多個執行時，再決定接入全域還是目前專案。CI / 腳本場景請務必帶上 `--global` / `-g` 或 `--local` / `-l`；非 TTY 且未指定時，CLI 預設安裝到 `claude --global`。
 
-### 方式四：Claude Code Marketplace
+### 方式三：Claude Code Marketplace
 
 對 Claude Code 用戶，**Claude Code Marketplace** 是推薦的單一來源安裝方式。只有在需要跨執行時安裝、腳本化/離線複製檔案，或非 Marketplace 環境時，才建議對 Claude 使用 CLI。
 

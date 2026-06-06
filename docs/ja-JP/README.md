@@ -53,7 +53,7 @@
 
 **Node.js 22+** が必要です。**Windows、macOS、Linux** で動作します（すべてのフックとスクリプトは Node.js で実装）。
 
-### 方法 1：fec setup で現在のプロジェクトに接続（推奨）
+### 方法 1：fec CLI をグローバルインストール（推奨）
 
 ```bash
 # 1. fec コマンドをグローバルにインストール
@@ -62,49 +62,42 @@ npm install -g @bovinphang/frontend-craft@latest
 # 2. フロントエンドプロジェクトへ移動
 cd your-project
 
-# 3. 接続する AI ランタイムを対話的に選択
+# 3. 現在のプロジェクトに接続
 fec setup
-
-# または特定のランタイム / すべてのランタイムを現在のプロジェクトに接続
 fec setup codex
 fec setup claude
 fec setup all
 
-# グローバルインストール、すべてのプロジェクトで利用
+# 4. またはグローバル接続、すべてのプロジェクトで利用
 fec setup codex --global
 fec setup claude --global
 fec setup all --global
 ```
 
-`fec setup` は frontend-craft をプロジェクトに接続するターミナル CLI コマンドで、AI アシスタント内の `/fec-init` スラッシュコマンドとは別です。対話型ターミナルでは、引数なしの `fec setup` が runtime の選択を求めます。`fec setup <runtime>` と `fec setup all` は既定で現在のプロジェクトに接続します。`--global` を渡すと、選択したツールのグローバル設定ディレクトリにインストールされ、すべてのプロジェクトで利用できます。非対話環境では `fec setup <runtime>`、`fec setup all`、または下のスクリプト向け `install --local` / `install --global` を使ってください。
+`npm install -g` は `fec` ターミナルコマンドだけをインストールします。`fec setup` は frontend-craft をプロジェクトに接続するターミナル CLI コマンドで、AI アシスタント内の `/fec-init` スラッシュコマンドとは別です。対話型ターミナルでは、引数なしの `fec setup` が runtime の選択を求めます。`fec setup <runtime>` と `fec setup all` は既定で現在のプロジェクトに接続します。`--global` を渡した場合だけ、選択した AI ツールのグローバル設定ディレクトリに接続され、すべてのプロジェクトで利用できます。
 
-### 方法 2：グローバルインストール不要の対話ウィザード
+### 方法 2：npx で一時実行（グローバル fec 不要）
 
 ```bash
+# 対話ウィザード
 npx @bovinphang/frontend-craft@latest
-```
 
-グローバルな `fec` コマンドをインストールしたくない場合はこちらを使います。ウィザードは完全なインストール手順を案内します。まず 1 つ以上のランタイムを選択し、次にグローバルまたは現在のプロジェクトへインストールするかを決定します。
-
-### 方法 3：スクリプト向けインストール
-
-```bash
-# 現在のプロジェクトにインストール
+# スクリプト向け：現在のプロジェクトに接続
 npx @bovinphang/frontend-craft@latest install --local claude
 
-# あるランタイムにグローバルインストール
+# スクリプト向け：あるランタイムにグローバル接続
 npx @bovinphang/frontend-craft@latest install --global codex
 
-# すべてのランタイムへのインストール内容をプレビュー（実際には書き込まない）
+# すべてのランタイムのグローバル接続内容をプレビュー（実際には書き込まない）
 npx @bovinphang/frontend-craft@latest install --all --dry-run --global
 
 # 対応ランタイムを一覧表示
 npx @bovinphang/frontend-craft@latest list
 ```
 
-> **CI / スクリプト環境：** 常に `--global` / `-g` または `--local` / `-l` を指定してください。TTY でなく未指定の場合、CLI は `claude --global` をデフォルトとします。
+グローバルな `fec` コマンドをインストールしたくない場合は `npx` を使います。引数なしでは対話ウィザードを開きます。まず 1 つ以上のランタイムを選択し、次にグローバルまたは現在のプロジェクトへ接続するかを決定します。CI / スクリプト環境では常に `--global` / `-g` または `--local` / `-l` を指定してください。TTY でなく未指定の場合、CLI は `claude --global` をデフォルトとします。
 
-### 方法 4：Claude Code Marketplace
+### 方法 3：Claude Code Marketplace
 
 Claude Code ユーザーには、**Claude Code Marketplace** からの单一ソースでのインストールを推奨します。CLI を Claude 用に使うのは、クロスランタイムインストール、スクリプト/オフラインのファイルコピー、または非 Marketplace 環境の場合に限ってください。
 
