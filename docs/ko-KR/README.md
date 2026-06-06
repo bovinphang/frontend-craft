@@ -53,17 +53,30 @@
 
 **Node.js 22+**가 필요합니다. **Windows, macOS, Linux**에서 동작합니다(모든 훅과 스크립트는 Node.js로 구현).
 
-### 방법 1: 전역 CLI로 프로젝트 설정 (권장)
+### 방법 1: fec setup으로 현재 프로젝트 연결 (권장)
 
 ```bash
+# 1. fec 명령어를 전역으로 설치
 npm install -g @bovinphang/frontend-craft@latest
+
+# 2. 프론트엔드 프로젝트로 이동
 cd your-project
-fec setup             # 현재 프로젝트에 설정
-fec setup codex       # 특정 런타임으로 설정
-fec setup claude      # Claude Code로 설정
+
+# 3. 연결할 AI 런타임을 대화형으로 선택
+fec setup
+
+# 또는 특정 런타임 / 모든 런타임을 현재 프로젝트에 바로 연결
+fec setup codex
+fec setup claude
+fec setup all
+
+# 전역 설치, 모든 프로젝트에서 사용
+fec setup codex --global
+fec setup claude --global
+fec setup all --global
 ```
 
-`fec setup`은 현재 프로젝트에 frontend-craft를 설정하는 터미널 CLI 명령어입니다. 대화형 터미널에서는 runtime을 생략하면 선택 프롬프트가 표시됩니다. 비대화형 환경에서 runtime을 생략하면 CLI는 `claude`를 기본값으로 사용합니다. `setup`은 명시적으로 `--global`을 전달하지 않는 한 기본적으로 현재 프로젝트에 설치합니다. 예: `fec setup codex --global`. AI 어시스턴트 안의 `/fec-init` 슬래시 명령어는 프로젝트 템플릿과 규칙을 초기화하는 별도 진입점이며, 먼저 frontend-craft를 대상 런타임에 설치한 뒤 사용합니다.
+`fec setup`은 frontend-craft를 프로젝트에 연결하는 터미널 CLI 명령어이며, AI 어시스턴트 안의 `/fec-init` 슬래시 명령어와는 다릅니다. 대화형 터미널에서 인자 없는 `fec setup`은 runtime 선택을 먼저 요청합니다. `fec setup <runtime>`과 `fec setup all`은 기본적으로 현재 프로젝트에 연결합니다. `--global`을 전달하면 선택한 도구의 전역 설정 디렉터리에 설치되어 모든 프로젝트에서 사용할 수 있습니다. 비대화형 환경에서는 `fec setup <runtime>`, `fec setup all`, 또는 아래의 스크립트용 `install --local` / `install --global`을 사용하세요.
 
 ### 방법 2: 전역 설치 없는 대화형 마법사
 

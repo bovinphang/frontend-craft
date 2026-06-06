@@ -54,8 +54,10 @@ test("install help flag prints help without installing", () => {
   );
   assert.match(help, /Usage:/);
   assert.match(help, /frontend-craft setup \[runtime\] \[options\]/);
+  assert.match(help, /frontend-craft setup all \[options\]/);
   assert.match(help, /fec setup \[runtime\] \[options\]/);
-  assert.match(help, /setup is an alias for install --local/);
+  assert.match(help, /fec setup all \[options\]/);
+  assert.match(help, /setup <runtime> and setup all install locally by default/);
   assert.doesNotMatch(help, /Installing frontend-craft/);
 });
 
@@ -117,6 +119,102 @@ test("setup uses local runtime directory unless global is explicit", () => {
   assert.match(
     global,
     /Installing frontend-craft for "codex" -> .+\.codex \(global\)/,
+  );
+});
+
+test("setup all installs every runtime locally by default", () => {
+  const runtimeHome = fs.mkdtempSync(
+    path.join(os.tmpdir(), "fc-setup-all-local-home-"),
+  );
+  try {
+    const out = execFileSync(
+      process.execPath,
+      [cli, "setup", "all", "--dry-run"],
+      {
+        cwd: root,
+        encoding: "utf8",
+        env: isolatedRuntimeEnv(runtimeHome),
+      },
+    );
+
+    assert.match(
+      out,
+      new RegExp(
+        `Installing frontend-craft for "claude" -> ${escapeRegExp(path.join(root, ".claude"))}`,
+      ),
+    );
+    assert.match(
+      out,
+      new RegExp(
+        `Installing frontend-craft for "codex" -> ${escapeRegExp(path.join(root, ".codex"))}`,
+      ),
+    );
+    assert.match(
+      out,
+      new RegExp(
+        `Installing frontend-craft for "qoder" -> ${escapeRegExp(path.join(root, ".qoder"))}`,
+      ),
+    );
+    assert.doesNotMatch(out, /\(global\)/);
+  } finally {
+    fs.rmSync(runtimeHome, { recursive: true, force: true });
+  }
+});
+
+test("setup all can install every runtime globally when global is explicit", () => {
+  const runtimeHome = fs.mkdtempSync(
+    path.join(os.tmpdir(), "fc-setup-all-global-home-"),
+  );
+  try {
+    const out = execFileSync(
+      process.execPath,
+      [cli, "setup", "all", "--global", "--dry-run"],
+      {
+        cwd: root,
+        encoding: "utf8",
+        env: isolatedRuntimeEnv(runtimeHome),
+      },
+    );
+
+    assert.match(
+      out,
+      new RegExp(
+        `Installing frontend-craft for "claude" -> ${escapeRegExp(path.join(runtimeHome, "claude"))} \\(global\\)`,
+      ),
+    );
+    assert.match(
+      out,
+      new RegExp(
+        `Installing frontend-craft for "codex" -> ${escapeRegExp(path.join(runtimeHome, "codex"))} \\(global\\)`,
+      ),
+    );
+    assert.match(
+      out,
+      new RegExp(
+        `Installing frontend-craft for "qoder" -> ${escapeRegExp(path.join(runtimeHome, "qoder"))} \\(global\\)`,
+      ),
+    );
+  } finally {
+    fs.rmSync(runtimeHome, { recursive: true, force: true });
+  }
+});
+
+test("install all remains an unknown runtime", () => {
+  assert.throws(
+    () =>
+      execFileSync(process.execPath, [cli, "install", "all", "--dry-run"], {
+        cwd: root,
+        encoding: "utf8",
+        stdio: "pipe",
+      }),
+    (error: unknown) => {
+      assert.equal((error as { status?: number }).status, 1);
+      assert.match(
+        String((error as { stderr?: Buffer | string }).stderr),
+        /Unknown runtime: all/,
+      );
+      return true;
+    },
   );
 });
 
@@ -289,4 +387,25 @@ test("selectable prompt render includes selected summary, search, controls, and 
 
 function escapeRegExp(value: string): string {
   return value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+}
+
+function isolatedRuntimeEnv(runtimeHome: string): NodeJS.ProcessEnv {
+  return {
+    ...process.env,
+    CLAUDE_CONFIG_DIR: path.join(runtimeHome, "claude"),
+    CURSOR_CONFIG_DIR: path.join(runtimeHome, "cursor"),
+    GEMINI_CONFIG_DIR: path.join(runtimeHome, "gemini"),
+    CODEX_HOME: path.join(runtimeHome, "codex"),
+    COPILOT_CONFIG_DIR: path.join(runtimeHome, "copilot"),
+    ANTIGRAVITY_CONFIG_DIR: path.join(runtimeHome, "antigravity"),
+    WINDSURF_CONFIG_DIR: path.join(runtimeHome, "windsurf"),
+    AUGMENT_CONFIG_DIR: path.join(runtimeHome, "augment"),
+    TRAE_CONFIG_DIR: path.join(runtimeHome, "trae"),
+    CODEBUDDY_CONFIG_DIR: path.join(runtimeHome, "codebuddy"),
+    CLINE_CONFIG_DIR: path.join(runtimeHome, "cline"),
+    OPENCODE_CONFIG_DIR: path.join(runtimeHome, "opencode"),
+    KILO_CONFIG_DIR: path.join(runtimeHome, "kilo"),
+    OPENCLAW_CONFIG_DIR: path.join(runtimeHome, "openclaw"),
+    QODER_CONFIG_DIR: path.join(runtimeHome, "qoder"),
+  };
 }

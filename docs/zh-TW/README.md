@@ -53,17 +53,30 @@
 
 需要 **Node.js 22+**。完整支援 **Windows、macOS 和 Linux**（所有鉤子和腳本均使用 Node.js 實作）。
 
-### 方式一：全域 CLI 設定專案（推薦）
+### 方式一：用 fec setup 接入目前專案（推薦）
 
 ```bash
+# 1. 全域安裝 fec 指令
 npm install -g @bovinphang/frontend-craft@latest
+
+# 2. 進入你的前端專案
 cd your-project
-fec setup             # 設定並接入目前專案
-fec setup codex       # 設定指定執行時
-fec setup claude      # 設定 Claude Code
+
+# 3. 互動選擇要接入的 AI 執行時
+fec setup
+
+# 或者直接接入指定執行時 / 所有執行時到目前專案
+fec setup codex
+fec setup claude
+fec setup all
+
+# 全域安裝，適用於所有專案
+fec setup codex --global
+fec setup claude --global
+fec setup all --global
 ```
 
-`fec setup` 是終端機中的 CLI 專案設定指令，用來把 frontend-craft 安裝並接入目前專案。在互動式終端機中，不傳 runtime 時會顯示選擇提示；在非互動環境中，不傳 runtime 時 CLI 預設使用 `claude`。`setup` 預設安裝到目前專案，除非明確傳入 `--global`，例如 `fec setup codex --global`。AI 助手內的 `/fec-init` 斜線指令是另一個入口，用來初始化專案範本與規則，需要先把 frontend-craft 安裝到對應執行時後再使用。
+`fec setup` 是終端機中的 CLI 專案接入指令，不是 AI 助手內的 `/fec-init` 斜線指令。在互動式終端機中，不帶參數的 `fec setup` 會先讓你選擇 runtime；`fec setup <runtime>` 和 `fec setup all` 會預設接入目前專案。傳入 `--global` 時會安裝到對應工具的全域設定目錄，適用於所有專案。非互動場景建議使用 `fec setup <runtime>`、`fec setup all`，或使用下方腳本化安裝裡的 `install --local` / `install --global`。
 
 ### 方式二：免全域安裝的互動精靈
 

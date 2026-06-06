@@ -53,17 +53,30 @@ It bundles **13 specialized agents**, **41 auto-activated skills**, **8 slash co
 
 Requires **Node.js 22+**. Works on **Windows, macOS, and Linux**.
 
-### Option 1 - Global CLI project setup (recommended)
+### Option 1 - Connect the current project with fec setup (recommended)
 
 ```bash
+# 1. Install the fec command globally
 npm install -g @bovinphang/frontend-craft@latest
+
+# 2. Go to your frontend project
 cd your-project
-fec setup             # set up frontend-craft for the current project
-fec setup codex       # set up for a specific runtime
-fec setup claude      # set up for Claude Code
+
+# 3. Choose the AI runtime(s) interactively
+fec setup
+
+# Or connect a specific runtime / every runtime to the current project
+fec setup codex
+fec setup claude
+fec setup all
+
+# Global install, available across all projects
+fec setup codex --global
+fec setup claude --global
+fec setup all --global
 ```
 
-`fec setup` is the terminal CLI command for setting up frontend-craft in the current project. In an interactive terminal, omit the runtime to choose one from the prompt; in non-interactive terminals, the CLI defaults to `claude` when no runtime is specified. `setup` installs locally by default unless you explicitly pass `--global`, for example `fec setup codex --global`. The in-assistant `/fec-init` slash command is a separate entry point for initializing project templates and rules after frontend-craft is installed in your AI runtime.
+`fec setup` is the terminal CLI command for connecting frontend-craft to a project; it is not the in-assistant `/fec-init` slash command. In an interactive terminal, running only `fec setup` asks you to choose runtimes. `fec setup <runtime>` and `fec setup all` connect frontend-craft to the current project by default. Pass `--global` to install into the selected tool's global config directory so it is available across projects. In non-interactive environments, prefer `fec setup <runtime>`, `fec setup all`, or the scripted `install --local` / `install --global` commands below.
 
 ### Option 2 — No-global interactive wizard
 

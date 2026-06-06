@@ -53,17 +53,30 @@
 
 **Node.js 22+** が必要です。**Windows、macOS、Linux** で動作します（すべてのフックとスクリプトは Node.js で実装）。
 
-### 方法 1：グローバル CLI でプロジェクトをセットアップ（推奨）
+### 方法 1：fec setup で現在のプロジェクトに接続（推奨）
 
 ```bash
+# 1. fec コマンドをグローバルにインストール
 npm install -g @bovinphang/frontend-craft@latest
+
+# 2. フロントエンドプロジェクトへ移動
 cd your-project
-fec setup             # 現在のプロジェクトにセットアップ
-fec setup codex       # 特定のランタイム向けにセットアップ
-fec setup claude      # Claude Code 向けにセットアップ
+
+# 3. 接続する AI ランタイムを対話的に選択
+fec setup
+
+# または特定のランタイム / すべてのランタイムを現在のプロジェクトに接続
+fec setup codex
+fec setup claude
+fec setup all
+
+# グローバルインストール、すべてのプロジェクトで利用
+fec setup codex --global
+fec setup claude --global
+fec setup all --global
 ```
 
-`fec setup` は現在のプロジェクトに frontend-craft をセットアップするためのターミナル CLI コマンドです。対話型ターミナルでは、runtime を省略すると選択プロンプトが表示されます。非対話環境で runtime を省略した場合、CLI は `claude` を既定値にします。`setup` は明示的に `--global` を渡さない限り、既定で現在のプロジェクトへインストールします。例：`fec setup codex --global`。AI アシスタント内の `/fec-init` スラッシュコマンドは別の入口で、プロジェクトテンプレートとルールを初期化するために使います。先に frontend-craft を対象ランタイムへインストールしてから使用します。
+`fec setup` は frontend-craft をプロジェクトに接続するターミナル CLI コマンドで、AI アシスタント内の `/fec-init` スラッシュコマンドとは別です。対話型ターミナルでは、引数なしの `fec setup` が runtime の選択を求めます。`fec setup <runtime>` と `fec setup all` は既定で現在のプロジェクトに接続します。`--global` を渡すと、選択したツールのグローバル設定ディレクトリにインストールされ、すべてのプロジェクトで利用できます。非対話環境では `fec setup <runtime>`、`fec setup all`、または下のスクリプト向け `install --local` / `install --global` を使ってください。
 
 ### 方法 2：グローバルインストール不要の対話ウィザード
 
