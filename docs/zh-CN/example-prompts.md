@@ -17,7 +17,7 @@
 | 初始化项目规则   | 「请用 frontend-craft 为当前运行时初始化这个仓库的项目模板；如果已有文件，覆盖前先询问我。」                          | `/fec-init`                  | 安装运行时配置、规则和项目说明，或给出覆盖方案。 | 最好在业务仓库根目录执行。 |
 | 选择安装位置     | 「我想在这台机器上同时给 Codex 和 Claude Code 使用 frontend-craft。请说明应该本地安装还是全局安装，并给出准确命令。」 | runtime docs                 | 简短建议和安装命令。                             | 说明个人使用还是团队共享。 |
 | 学会怎么提问     | 「请根据这个仓库给我 5 条 frontend-craft 提示词，分别用于评审、开发、测试、排查构建失败和设计稿实现。」               | 文档指引                     | 贴合当前项目的提示词集合。                       | 安装后第一次使用很适合。   |
-| 确认能力是否可用 | 「请检查这个仓库，并总结当前可用的 frontend-craft commands、skills、agents、hooks 和 MCP 模板。」                     | `fec-doc-sync`、runtime docs | 基于已安装文件的能力摘要。                       | 升级后很有用。             |
+| 确认能力是否可用 | 「请检查这个仓库，并总结当前可用的 frontend-craft commands、skills、agents、hooks 和 MCP 模板。」                     | runtime docs                 | 基于已安装文件的能力摘要。                       | 升级后很有用。             |
 
 ## 评审与质量
 
@@ -103,7 +103,8 @@
 | ------------ | ------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------- | -------------------------------------------- | ---------------------------------- |
 | 修复构建失败 | 「`pnpm lint`、`pnpm typecheck` 和 `pnpm test` 都失败了。请逐步修复，不要放宽规则或跳过测试。」                           | `/fec-build-fix`、`fec-validation-fix`、`fec-build-fixer`                 | 最小修复和验证报告。                         | 粘贴准确失败命令。                 |
 | 清理死代码   | 「请查找并安全移除未使用导出、死路由、过期样式和未使用依赖。保持 public API，并写报告。」                                 | `/fec-refactor-clean`、`fec-refactor-clean`、`fec-refactor-cleaner`       | 清理计划/变更和报告。                        | 发布前很适合。                     |
-| 文档同步     | 「请更新公开文档，让 README、runtime docs、能力表和 metadata 与当前 commands、skills、agents、hooks、package 文件一致。」 | `/fec-doc-sync`、`fec-doc-sync`、`fec-doc-updater`                        | 同步后的文档和验证说明。                     | 不要把临时报告复制进公开文档。     |
+| 文档同步     | 「请更新 README 和 docs，让安装步骤、脚本、环境变量、API 路由、UI 路由和部署说明与当前前端代码和配置一致。」             | `/fec-doc-sync`、`fec-doc-sync`、`fec-doc-updater`                        | 同步后的文档和验证说明。                     | 不要把临时报告复制进公开文档。     |
+| 能力文档同步 | 「这个仓库发布 skills 和 commands。请同步能力表、metadata、runtime docs 和 package 文件，使其匹配已安装内容。」          | `/fec-doc-sync`、`fec-doc-sync`、`fec-doc-updater`                        | 基于已安装文件的分发文档。                   | 用于 skill/agent/command 仓库。     |
 | 来源驱动升级 | 「请规划 React Router/TanStack Query/Vite 的安全升级。核对官方迁移说明、当前项目用法、破坏性变更，并给出验证步骤。」      | `fec-dependency-upgrade`、`fec-source-driven-development`、`fec-doc-sync` | 升级决策说明、影响文件、迁移风险和验证清单。 | 如果公开指南变化，再配合文档同步。 |
 | 遗留项目维护 | 「请改进 `public/js/legacy/cart.js`，保持当前 jQuery/MPA 技术栈，降低风险、改善结构，但暂时不要重写成 React。」           | `fec-legacy-web-standard`                                                 | 安全的遗留维护变更或建议。                   | 补充浏览器兼容限制。               |
 
@@ -120,5 +121,5 @@
 | 斜杠命令 TDD     | 「`/fec-tdd` 请用失败测试优先的方式添加密码强度校验。」                                               | `/fec-tdd`            | TDD 循环和已验证改动。          | 保持范围小。                          |
 | 斜杠命令构建修复 | 「`/fec-build-fix` 请根据这段日志修复验证失败：<粘贴日志>。」                                         | `/fec-build-fix`      | 增量验证修复。                  | 粘贴准确日志。                        |
 | 斜杠命令清理     | 「`/fec-refactor-clean` 请安全移除这个包里的未使用导出和依赖。」                                      | `/fec-refactor-clean` | 清理报告和安全修改。            | 修改后运行测试。                      |
-| 斜杠命令文档同步 | 「`/fec-doc-sync` 请同步 README、runtime docs 和 metadata，使其匹配当前包内容。」                     | `/fec-doc-sync`       | 文档更新和验证说明。            | 发布前使用。                          |
+| 斜杠命令文档同步 | 「`/fec-doc-sync` 请同步 README、docs、env examples、脚本、API/路由说明和部署文档，使其匹配当前项目。」 | `/fec-doc-sync`       | 文档更新和验证说明。            | 发布前使用。                          |
 | 显式代理         | 「请委托 `fec-code-reviewer` 对 `src/features/payments/` 做 PR 风格评审，然后先总结阻塞项。」         | agent dispatch        | 专项代理报告和摘要。            | 适合专家评审。                        |

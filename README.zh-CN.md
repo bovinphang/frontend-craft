@@ -155,7 +155,7 @@ npx @bovinphang/frontend-craft@latest list
 | `/fec-tdd`            | 红 → 绿 → 重构的前端 TDD 循环                               | —                                                |
 | `/fec-debug`          | 前端问题诊断与修复：构建失败、运行时错误、UI 异常、接口问题 | `debug-*.md`                                     |
 | `/fec-refactor-clean` | 分类并安全清理死代码、未使用导出、样式和依赖                | `refactor-clean-*.md`                            |
-| `/fec-doc-sync`       | 同步 README、runtime 文档、能力表和公开 metadata            | —                                                |
+| `/fec-doc-sync`       | 同步 README、docs、环境变量、脚本、API/路由说明和部署文档 | —                                                |
 
 ### 技能（Skills，自动激活）
 
@@ -235,7 +235,7 @@ npx @bovinphang/frontend-craft@latest list
 | 技能                            | 范围                                       |
 | ------------------------------- | ------------------------------------------ |
 | `fec-alchemy`                   | 将参考系统能力原创化吸收到当前项目原生体系 |
-| `fec-doc-sync`                  | 让公开文档与脚本、技能、代理、命令保持同步 |
+| `fec-doc-sync`                  | 让前端文档与代码、配置、脚本、路由、API、环境变量和部署事实保持同步 |
 | `fec-source-driven-development` | 以项目事实和官方来源验证版本敏感的前端决策 |
 
 ### 代理（Agents）

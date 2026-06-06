@@ -155,7 +155,7 @@ Slash commands are the primary entry points for structured workflows. Most produ
 | `/fec-tdd`            | Red → green → refactor loop for frontend TDD                           | —                                                |
 | `/fec-debug`          | Diagnose and fix frontend issues: build, runtime, UI, and API failures | `debug-*.md`                                     |
 | `/fec-refactor-clean` | Classify and safely remove dead code, unused exports, styles, and deps | `refactor-clean-*.md`                            |
-| `/fec-doc-sync`       | Sync READMEs, runtime docs, capability tables, and metadata            | —                                                |
+| `/fec-doc-sync`       | Sync READMEs, docs, env notes, scripts, API/route notes, and deploy docs | —                                                |
 
 ### Skills (auto-activated)
 
@@ -235,7 +235,7 @@ The skills below are grouped by use case so you can quickly find project standar
 | Skill                           | Scope                                                                                  |
 | ------------------------------- | -------------------------------------------------------------------------------------- |
 | `fec-alchemy`                   | Absorb reference system ideas through original, project-native redesign                 |
-| `fec-doc-sync`                  | Keep public docs in sync with scripts, skills, agents, commands                        |
+| `fec-doc-sync`                  | Keep frontend docs in sync with code, config, scripts, routes, APIs, env, and deploy facts |
 | `fec-source-driven-development` | Verify version-sensitive frontend decisions against project facts and official sources |
 
 ### Agents
