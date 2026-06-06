@@ -155,13 +155,13 @@ npx @bovinphang/frontend-craft@latest list
 | `/fec-tdd`            | 紅 → 綠 → 重構的前端 TDD 循環                               | —                                                |
 | `/fec-debug`          | 前端問題診斷與修復：建置失敗、執行時錯誤、UI 異常、介面問題 | `debug-*.md`                                     |
 | `/fec-refactor-clean` | 分類並安全清理死程式碼、未使用匯出、樣式和依賴              | `refactor-clean-*.md`                            |
-| `/fec-doc-sync`       | 同步 README、runtime 文件、能力表和公開 metadata            | —                                                |
+| `/fec-doc-sync`       | 同步 README、docs、環境變數、腳本、API/路由說明和部署文件 | —                                                |
 
 ### 技能（Skills，自動啟用）
 
 技能是根據檔案模式、框架或任務上下文**自動啟用**的工作流定義，編碼了審查維度、輸出約定和報告格式。
 
-下方按使用場景分組列出全部自動啟用的技能，便於快速找到專案規範、實作、測試、審查、設計、遷移和文件維護能力。
+下方按使用場景分組列出全部自動啟用的技能，便於快速找到專案規範、實作、測試、審查、設計、遷移、專案演進和文件維護能力。
 
 **專案規範** — 偵測到對應框架時自動生效：
 
@@ -204,6 +204,7 @@ npx @bovinphang/frontend-craft@latest list
 | 技能                           | 範圍                                                    |
 | ------------------------------ | ------------------------------------------------------- |
 | `fec-code-review`              | 架構、型別、渲染、樣式、可存取性審查                    |
+| `fec-debug-framework`          | 系統化診斷建置、執行時、UI 和 API/資料問題              |
 | `fec-typescript-type-safety`   | 型別契約、DTO 對映、型別守衛、泛型和型別級檢查          |
 | `fec-security-review`          | XSS、CSRF、敏感資料外洩、輸入驗證                       |
 | `fec-accessibility-check`      | WCAG 2.2、鍵盤、焦點、觸控和螢幕閱讀器行為              |
@@ -230,12 +231,17 @@ npx @bovinphang/frontend-craft@latest list
 | `fec-legacy-web-standard`        | JS + jQuery + HTML 傳統專案的開發與維護規範    |
 | `fec-legacy-to-modern-migration` | jQuery/MPA → React/Vue 3 + TS 策略與分階段流程 |
 
+**專案演進** — 吸收參考系統並原創化落到目前專案時啟用：
+
+| 技能          | 範圍                                       |
+| ------------- | ------------------------------------------ |
+| `fec-alchemy` | 將參考系統能力原創化吸收到目前專案原生體系 |
+
 **文件維護** — 文件維護時啟用：
 
 | 技能                            | 範圍                                       |
 | ------------------------------- | ------------------------------------------ |
-| `fec-alchemy`                   | 將參考系統能力原創化吸收到目前專案原生體系 |
-| `fec-doc-sync`                  | 讓公開文件與腳本、技能、代理、指令保持同步 |
+| `fec-doc-sync`                  | 讓前端文件與程式碼、設定、腳本、路由、API、環境變數和部署事實保持同步 |
 | `fec-source-driven-development` | 以專案事實和官方來源驗證版本敏感的前端決策 |
 
 ### 代理（Agents）

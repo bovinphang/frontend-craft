@@ -35,7 +35,7 @@
   {
     "id": "fec-alchemy",
     "name": "项目吸收与原创化融合",
-    "category": "maintenance-docs",
+    "category": "project-evolution",
     "tags": [
       "alchemy",
       "project-absorption",
@@ -49,7 +49,7 @@
     "homepage": "https://github.com/bovinphang/frontend-craft",
     "repository": "https://github.com/bovinphang/frontend-craft",
     "keywords": [
-      "maintenance-docs",
+      "project-evolution",
       "alchemy",
       "project-absorption",
       "originality",
@@ -354,11 +354,12 @@
     "tags": [
       "docs",
       "readme",
-      "metadata",
+      "env",
+      "api",
       "sync",
-      "runtime-docs"
+      "deploy-docs"
     ],
-    "summary": "Frontend Craft skill for 文档同步.",
+    "summary": "Sync frontend project docs with code, config, routes, APIs, env examples, scripts, tests, and deployment facts.",
     "version": "2.5.0",
     "license": "MIT",
     "homepage": "https://github.com/bovinphang/frontend-craft",
@@ -367,9 +368,10 @@
       "maintenance-docs",
       "docs",
       "readme",
-      "metadata",
+      "env",
+      "api",
       "sync",
-      "runtime-docs"
+      "deploy-docs"
     ],
     "platforms": [
       "skills-cli",
