@@ -1,4 +1,4 @@
----
+﻿---
 name: fec-legacy-web-standard
 description: Use when maintaining or safely modifying existing non-framework frontend code: vanilla JavaScript, jQuery, HTML/CSS, MPA pages, server-rendered templates, legacy plugins, or long-lived code that should stay in its current stack. Use migration skill when planning a move to React/Vue/TypeScript; Chinese triggers include 传统前端, 原生 JS, jQuery.
 ---
@@ -18,7 +18,7 @@ description: Use when maintaining or safely modifying existing non-framework fro
 5. HTML/CSS 保持语义、label、alt、BEM/既有命名和低选择器深度。
 6. 安全重点检查 `.html()`、`innerHTML`、URL 参数渲染、CSRF token 和文件上传。
 
-## Detailed References
+## 详细参考
 
 涉及 jQuery 命名空间、事件绑定、Ajax、XSS 转义、文件组织和维护清单示例时，加载 [references/legacy-patterns.md](references/legacy-patterns.md)。
 

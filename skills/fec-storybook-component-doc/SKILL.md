@@ -1,4 +1,4 @@
----
+﻿---
 name: fec-storybook-component-doc
 description: Use when setting up or reviewing Storybook component documentation, design-system presentation, isolated component state previews, stories, addons, decorators, MDX docs, component-state interaction checks, visual baselines, or Chromatic. For real-browser cross-page journeys or broader coverage planning, choose the matching testing workflow first; Chinese triggers include Storybook, 组件文档, Design System, 视觉回归.
 ---
@@ -18,9 +18,9 @@ description: Use when setting up or reviewing Storybook component documentation,
 5. 需要自动化时接入 interaction tests、addon-a11y、Chromatic 或 Storybook Test Runner；这些能力服务于组件文档和设计系统展示，不承接跨页业务旅程。
 6. 设计系统组件应记录 token 来源、Tailwind/class 变体、暗色模式、响应式尺寸和不支持的组合，避免消费者靠猜测拼装。
 
-## Detailed References
+## 详细参考
 
-- Load [references/story-patterns.md](references/story-patterns.md) for `main.ts`, `preview.ts`, stories, decorators, MDX, interaction tests, and visual regression examples.
+- 需要 `main.ts`、`preview.ts`、stories、decorators、MDX、交互测试和视觉回归示例时，加载 [references/story-patterns.md](references/story-patterns.md)。
 
 ## Constraints
 

@@ -1,11 +1,15 @@
----
+﻿---
 name: fec-debug-framework
 description: Use when diagnosing frontend build failures, runtime errors, UI anomalies, API/data problems, white screens, request failures, or unexplained production exceptions; Chinese triggers include 调试, debug, 排查, 定位, 报错, 异常, 白屏, 请求失败.
 ---
 
 # 前端诊断框架
 
-## 核心方法论（5 步法）
+## Purpose
+
+用证据驱动的分类、收集、假设、验证和修复流程定位前端故障，避免凭直觉扩大改动范围。
+
+## Procedure
 
 所有前端问题诊断遵循统一流程：
 
@@ -134,29 +138,20 @@ description: Use when diagnosing frontend build failures, runtime errors, UI ano
 
 ---
 
-## 报告格式
+## 详细参考
 
-保存至 `reports/debug-YYYY-MM-DD-HHmmss.md`：
+撰写诊断报告时，加载 [references/report-template.md](references/report-template.md)。
 
-### 诊断报告
-
-| 项目       | 内容                       |
-| ---------- | -------------------------- |
-| 问题类型   | build / runtime / ui / api |
-| 问题描述   | 用户报告的现象             |
-| 收集的证据 | 关键日志、截图、请求记录   |
-| 假设与验证 | 每个假设的验证结果         |
-| 根因       | 最终确认的根本原因         |
-| 修复内容   | 修改的文件和具体改动       |
-| 验证结果   | 修复后的验证命令和结果     |
-| 剩余风险   | 未覆盖的边界或潜在回归     |
-
----
-
-## 强约束
+## Constraints
 
 - 不在缺少证据时猜测根因
 - 不通过关闭规则、删除测试或降低类型安全来「修复」
 - 每次只改一个变量来验证假设
 - 不在验证前扩大改动范围
 - 同一假设连续 3 次验证失败，停止并报告阻塞
+
+## Expected Output
+
+- 诊断报告保存为 `reports/debug-YYYY-MM-DD-HHmmss.md`
+- 报告包含问题类型、关键证据、假设验证记录、根因、修复内容、验证结果和剩余风险
+- build/runtime/ui/api 问题均能说明复现路径、验证命令或下一步阻塞点

@@ -1,4 +1,4 @@
----
+﻿---
 name: fec-form-handling
 description: Use when building or reviewing substantial forms with React Hook Form, Zod schemas, typed validation, dynamic fields, controlled third-party inputs, file upload, multi-step flows, dependent validation, or form performance. Do not use for trivial 1-3 field forms without validation; Chinese triggers include 表单, 表单校验, 动态字段.
 ---
@@ -11,13 +11,13 @@ description: Use when building or reviewing substantial forms with React Hook Fo
 
 ## Procedure
 
-1. 先判断复杂度：10+ 字段、动态字段、联动校验、文件上传、多步流程或输入卡顿时使用 React Hook Form + Zod；极简表单可用原生受控组件。
-2. 用 Zod 定义运行时 schema，并用 `z.infer` 推导 TypeScript 类型；schema 是外部输入边界，不要只写 TS 类型。
-3. `useForm` 必须提供 `defaultValues`，通过 `zodResolver` 统一校验；错误提示用 `aria-invalid`、`aria-describedby` 和 `role="alert"`。
-4. 第三方受控组件用 `Controller`，原生 input 优先 `register`；不要混用两套状态源。
+1. 先识别框架、项目既有表单库、schema 校验库、组件库和复杂度；10+ 字段、动态字段、联动校验、文件上传、多步流程或输入卡顿时再引入专门表单方案。
+2. 按项目栈选型：React 可考虑 React Hook Form + Zod；Vue 可考虑 vee-validate / FormKit + Zod、Yup 或 Valibot；简单表单可用框架原生状态和基础校验。
+3. 用运行时 schema 或明确校验函数守住外部输入边界；TypeScript 类型可从 schema 推导，但不要只写 TS 类型。
+4. 明确默认值、字段注册、受控/非受控边界和组件库适配；错误提示用 `aria-invalid`、`aria-describedby` 和 `role="alert"`。
 5. 提交时处理 loading、服务端错误、重复提交和 reset；大型表单用局部订阅和子组件隔离控制重渲染。
 
-## Quick Start
+## React Quick Start
 
 ```tsx
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -59,17 +59,17 @@ export function LoginFormView() {
 }
 ```
 
-## Detailed References
+## 详细参考
 
-涉及 `Controller`、`useFieldArray`、联动校验、文件上传、多步表单、异步校验和性能模式时，加载 [references/advanced-form-patterns.md](references/advanced-form-patterns.md)。
+涉及是否需要表单库、框架选型、`Controller`、`useFieldArray`、联动校验、文件上传、多步表单、异步校验和性能模式时，加载 [references/advanced-form-patterns.md](references/advanced-form-patterns.md)。
 
 ## Constraints
 
-- React Hook Form 默认非受控；只有第三方受控组件才用 `Controller`。
-- `defaultValues` 必须完整，避免 undefined 触发受控/非受控警告。
-- `reset()` 应传服务器返回或明确的完整默认对象。
+- 沿用仓库既有表单库、schema 库和组件库适配方式，不为单个表单引入第二套体系。
+- 默认值必须完整，避免 undefined 触发受控/非受控警告或初始化抖动。
+- reset 应传服务器返回或明确的完整默认对象。
 - 异步校验必须 debounce 或放到提交边界，避免每次键入请求。
-- Zod `refine` / `superRefine` 的 `path` 必须指向实际字段。
+- schema 级联动校验的错误 path 必须指向实际字段。
 
 ## Expected Output
 

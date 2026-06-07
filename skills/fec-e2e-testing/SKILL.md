@@ -1,4 +1,4 @@
----
+﻿---
 name: fec-e2e-testing
 description: Use when creating, maintaining, debugging, or reviewing real-browser end-to-end tests with Playwright or Cypress, including Page Object models, CI artifacts, traces, flaky tests, cross-page visual regression, and critical user journeys such as login, payment, permissions, or CRUD. For layer planning or tests close to UI components, choose the matching testing workflow first; Chinese triggers include E2E, 端到端测试, Playwright, Cypress.
 ---
@@ -20,10 +20,10 @@ description: Use when creating, maintaining, debugging, or reviewing real-browse
 7. 对关键浏览器能力、支付、权限、上传和实时通信流程，记录测试环境、种子数据和清理策略。
 8. 测试数据必须可重复：优先使用 API seed、数据库 fixture、测试账号或 mock 服务；随机数据需带唯一前缀并在 teardown 清理。
 
-## Detailed References
+## 详细参考
 
-- Load [references/playwright-patterns.md](references/playwright-patterns.md) for directory layout, Page Object, spec structure, config, flaky debugging, and artifact examples.
-- Load [references/e2e-advanced.md](references/e2e-advanced.md) when the task needs CI examples, Markdown report templates, Web3/wallet flows, high-risk financial flows, or visual regression setup.
+- 需要目录结构、Page Object、spec 组织、配置、flaky 调试和产物示例时，加载 [references/playwright-patterns.md](references/playwright-patterns.md)。
+- 需要 CI 示例、Markdown 报告模板、Web3/钱包流程、高风险金融流程或视觉回归配置时，加载 [references/e2e-advanced.md](references/e2e-advanced.md)。
 
 ## Constraints
 

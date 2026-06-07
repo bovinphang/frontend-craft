@@ -1,4 +1,4 @@
----
+﻿---
 name: fec-accessibility-check
 description: Use when reviewing or improving frontend accessibility, semantic structure, keyboard support, focus management, ARIA labels, screen reader behavior, WCAG 2.2 issues, touch accessibility, or assistive-technology regressions; Chinese triggers include 无障碍, accessibility, a11y, WCAG, 屏幕阅读器.
 ---
@@ -20,7 +20,7 @@ description: Use when reviewing or improving frontend accessibility, semantic st
 7. 复核 WCAG 2.2 新增高频风险：可见焦点不被遮挡、拖拽操作有替代路径、目标尺寸过小、帮助入口和认证流程不依赖记忆负担。
 8. 输出分级报告；报告格式见 [references/report-template.md](references/report-template.md)。
 
-## Detailed References
+## 详细参考
 
 撰写无障碍审查报告时，加载 [references/report-template.md](references/report-template.md)。需要验证屏幕阅读器公告、焦点读法和动态区域时，加载 [references/screen-reader-testing.md](references/screen-reader-testing.md)。
 

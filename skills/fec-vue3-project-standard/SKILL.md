@@ -1,4 +1,4 @@
----
+﻿---
 name: fec-vue3-project-standard
 description: Use when designing or reviewing Vue 3 + TypeScript project structure, SFC/component boundaries, composables organization, route composition, Pinia ownership, API/error/styling defaults, directives, or repository-wide Vue conventions. Prefer narrower skills for forms, data fetching, tests, accessibility, virtualization, animation, or security deep dives; Chinese triggers include Vue 3 项目规范, Vue 组件架构.
 ---
@@ -21,7 +21,7 @@ description: Use when designing or reviewing Vue 3 + TypeScript project structur
 6. Tailwind token/variant 或响应式布局需求应分流到对应专项 skill，避免把样式系统规则塞进 Vue 组件规范。
 5. 状态归属复杂时先做状态清单；DTO、公共 props 或泛型 composable 复杂时先收敛 TypeScript 类型契约。
 
-## Detailed References
+## 详细参考
 
 需要具体 Vue 3 项目结构、组件模式、Composables、slots、Provide/Inject、路由、Pinia、API 层、错误处理、指令、样式、TypeScript、测试、性能或审查清单时，加载 [references/vue3-project-details.md](references/vue3-project-details.md)。
 

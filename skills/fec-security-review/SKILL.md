@@ -1,4 +1,4 @@
----
+﻿---
 name: fec-security-review
 description: Use when reviewing frontend security risks such as XSS, CSRF, sensitive data exposure, unsafe DOM APIs, untrusted user input, authentication/token handling, payment flows, file upload, CSP, dependency risk, or third-party scripts; Chinese triggers include 安全审查, 安全检查.
 ---
@@ -18,10 +18,10 @@ description: Use when reviewing frontend security risks such as XSS, CSRF, sensi
 5. 高危问题标记为阻塞合并；前端校验只能改善体验，不能作为唯一安全边界。
 6. 输出分级安全报告；报告格式见 [references/report-template.md](references/report-template.md)。
 
-## Detailed References
+## 详细参考
 
-- Load [references/security-checklist.md](references/security-checklist.md) for XSS, CSP, sensitive data, CSRF, dependency, and input validation details.
-- Load [references/report-template.md](references/report-template.md) when writing the security review report.
+- 需要 XSS、CSP、敏感数据、CSRF、依赖和输入校验细节时，加载 [references/security-checklist.md](references/security-checklist.md)。
+- 撰写安全审查报告时，加载 [references/report-template.md](references/report-template.md)。
 
 ## Constraints
 

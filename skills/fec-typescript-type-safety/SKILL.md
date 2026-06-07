@@ -1,4 +1,4 @@
----
+﻿---
 name: fec-typescript-type-safety
 description: Use when designing, implementing, or reviewing TypeScript type contracts, advanced generics, discriminated unions, type guards, API DTOs, component props, public utility types, or type-level regressions in frontend projects. Prefer code review for broad PR review; Chinese triggers include TypeScript 类型安全, 类型建模, 泛型, 判别联合, 类型收窄.
 ---
@@ -140,7 +140,7 @@ type UserStatus = UserViewModel["status"];
 type _UserStatusTest = Expect<Equal<UserStatus, "active" | "disabled">>;
 ```
 
-## Detailed References
+## 详细参考
 
 涉及高级泛型约束、映射类型、模板字面量类型、类型测试、DTO 映射或类型审查清单时，加载 [references/type-safety-patterns.md](references/type-safety-patterns.md)。
 

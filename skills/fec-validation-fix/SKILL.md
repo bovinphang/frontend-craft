@@ -1,4 +1,4 @@
----
+﻿---
 name: fec-validation-fix
 description: Use when running existing project validation commands and fixing failures after code changes, including lint, type-check, unit/integration test, build, CI, or local script failures. Do not use when the task is to design or author new component/E2E tests; Chinese triggers include 验证, 检查失败, 修复失败, CI 失败.
 ---
@@ -31,7 +31,7 @@ description: Use when running existing project validation commands and fixing fa
 - 对 CI 专属失败记录 Node 版本、包管理器、环境变量、路径大小写和工作目录差异。
 - 修复测试时优先修产品代码或测试等待方式，不用删除断言掩盖真实回归。
 
-## 强约束
+## Constraints
 
 - 不要盲目关闭规则来消除报错
 - 除非有明确理由，不要为了通过检查而降低类型安全
@@ -40,9 +40,12 @@ description: Use when running existing project validation commands and fixing fa
 - 不要删除失败测试来让验证通过
 - 不要只运行失败命令的片段就声称整体验证通过
 
+## 详细参考
+
+撰写验证修复报告时，加载 [references/report-template.md](references/report-template.md)。
+
 ## Expected Output
 
 - lint / type-check / test / build 等验证命令全部通过
 - 失败项已修复或给出明确原因和后续行动
 - 修复报告保存为 `reports/validation-fix-YYYY-MM-DD-HHmmss.md`
-- 报告包含命令状态表、问题根因、修复说明、变更文件和剩余风险

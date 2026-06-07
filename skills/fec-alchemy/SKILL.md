@@ -68,7 +68,7 @@ description: Use when absorbing ideas, capabilities, workflows, architecture, qu
 
 仓库级任务中，如果宿主工具支持文件编辑，应创建或更新项目本地计划文档。
 
-## References
+## 详细参考
 
 - [references/methodology.md](references/methodology.md) - 详细吸收方法论。
 - [references/originality-and-licensing.md](references/originality-and-licensing.md) - 原创性、许可证和来源风险约束。

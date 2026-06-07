@@ -1,23 +1,23 @@
----
+﻿---
 name: fec-data-fetching
-description: Use when implementing or reviewing TanStack Query/React Query server-state flows: typed queries, query keys, caching, invalidation, mutations, optimistic updates, infinite queries, prefetch, SSR hydration, or API-layer integration. Do not use for local UI state or Service Worker caching; Chinese triggers include 数据获取, 缓存, 乐观更新.
+description: Use when implementing or reviewing frontend server-state flows: typed queries, request caching, invalidation, mutations, optimistic updates, infinite queries, prefetch, SSR hydration, or API-layer integration. Do not use for local UI state or Service Worker caching; Chinese triggers include 数据获取, 缓存, 乐观更新.
 ---
 
-# TanStack Query 数据获取
+# Server State 数据获取
 
 ## Purpose
 
-用声明式 server state 管理替代手写 `useEffect + loading`。
+为前端 server state 建立清晰的数据获取、缓存、失效和提交边界，避免请求状态散落在页面组件中。
 
 ## Procedure
 
-1. 判断状态来源：来自服务端且需要缓存、去重、刷新、分页或 mutation 时使用 TanStack Query；纯本地 UI 状态用 `useState`/store。
-2. 建立 `QueryClientProvider`，按业务数据新鲜度设置 `staleTime`、`gcTime`、retry 和窗口聚焦刷新。
-3. 设计稳定 query key：数组结构包含实体、动作和所有影响结果的参数。
-4. API 函数保持纯请求函数，Query hook 负责缓存、select、loading/error/empty 状态。
-5. mutation 成功后 invalidation；需要即时反馈时使用 optimistic update 并在 `onError` 回滚。
+1. 判断状态来源：来自服务端且需要缓存、去重、刷新、分页或 mutation 时使用请求缓存方案；纯本地 UI 状态用组件 state 或 store。
+2. 先沿用项目已有数据获取库；新增依赖时 React/Vue/Solid/Svelte 可考虑 TanStack Query，也可沿用 SWR、Nuxt/Nitro 数据获取或项目封装。
+3. 设计稳定 cache key/query key：结构包含实体、动作和所有影响结果的参数。
+4. API 函数保持纯请求函数，数据 hook/composable 负责缓存、select、loading/error/empty 状态。
+5. mutation 成功后 invalidation；需要即时反馈时使用 optimistic update 并在失败时回滚。
 
-## Quick Start
+## React Quick Start
 
 ```tsx
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
@@ -45,17 +45,17 @@ export function useCreateUser() {
 }
 ```
 
-## Detailed References
+## 详细参考
 
-涉及 QueryClient 默认配置、乐观更新、无限滚动查询、预取、SSR 水合和 API 层整合时，加载 [references/query-patterns.md](references/query-patterns.md)。
+涉及是否需要查询库、QueryClient 默认配置、Vue adapter、乐观更新、无限滚动查询、预取、SSR 水合和 API 层整合时，加载 [references/query-patterns.md](references/query-patterns.md)。
 
 ## Constraints
 
-- 相同数据必须复用相同 query key；参数缺失会造成缓存串读。
+- 相同数据必须复用相同 cache key/query key；参数缺失会造成缓存串读。
 - `staleTime` 过长会显示旧数据，过短会造成频繁请求。
-- TanStack Query 不管理本地 UI 状态；不要把 modal、输入框值放进 query cache。
-- 乐观更新必须保存快照并在 `onError` 回滚。
-- Next.js App Router SSR 需要 `dehydrate` / `HydrationBoundary`。
+- 请求缓存库不管理本地 UI 状态；不要把 modal、输入框值放进 query cache。
+- 乐观更新必须保存快照并在失败时回滚。
+- SSR/SSG 场景必须使用框架支持的预取、水合或服务端数据边界。
 
 ## Expected Output
 

@@ -1,4 +1,4 @@
----
+﻿---
 name: fec-web-workers
 description: Use when moving expensive browser work off the main thread with Web Workers, SharedWorker, worker pools, Comlink, transferable objects, Vite/Webpack worker integration, or UI responsiveness fixes. Do not use for lightweight synchronous work or DOM manipulation; Chinese triggers include Web Worker, 后台线程, 主线程阻塞.
 ---
@@ -17,10 +17,10 @@ description: Use when moving expensive browser work off the main thread with Web
 4. 传大对象时优先 Transferable Objects；不要让结构化克隆吞掉 Worker 带来的收益。
 5. 在组件或页面卸载时 `terminate()`，并通过 Profiler、Performance 面板或 FPS 指标验证主线程改善。
 
-## Detailed References
+## 详细参考
 
-- Load [references/basic-worker.md](references/basic-worker.md) for plain Worker files, bundler imports, React lifecycle wrapping, and cleanup.
-- Load [references/advanced-workers.md](references/advanced-workers.md) for Transferable Objects, Comlink, Worker pools, SharedWorker, CSP, and SharedArrayBuffer notes.
+- 需要原生 Worker 文件、构建工具导入、React 生命周期封装和清理示例时，加载 [references/basic-worker.md](references/basic-worker.md)。
+- 需要 Transferable Objects、Comlink、Worker pool、SharedWorker、CSP 和 SharedArrayBuffer 注意事项时，加载 [references/advanced-workers.md](references/advanced-workers.md)。
 
 ## Constraints
 
@@ -33,4 +33,3 @@ description: Use when moving expensive browser work off the main thread with Web
 ## Expected Output
 
 计算密集型操作在后台线程执行，主线程输入和滚动恢复流畅，错误与取消路径明确，Worker 在卸载时被终止且无内存泄漏。
-
