@@ -1,4 +1,4 @@
----
+﻿---
 name: fec-react-project-standard
 description: Use when designing or reviewing React + TypeScript project structure, feature/module boundaries, component architecture, hooks organization, routing composition, state/API/error/styling defaults, or repository-wide React conventions. Prefer narrower skills for forms, data fetching, tests, accessibility, virtualization, animation, or security deep dives; Chinese triggers include React 项目规范, React 组件架构.
 ---
@@ -50,7 +50,7 @@ description: Use when designing or reviewing React + TypeScript project structur
    - 页面级 Error Boundary、模块级 fallback、API 错误映射和用户可恢复动作是否一致
    - Tailwind token/variant 或响应式布局需求是否应分流到对应专项 skill
 
-## Detailed References
+## 详细参考
 
 需要具体 React 项目结构、组件模式、Hooks、路由、状态归属、API 层形状、错误处理、样式默认值、TypeScript 约定或审查清单时，加载 [references/react-project-details.md](references/react-project-details.md)。
 

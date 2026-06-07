@@ -1,4 +1,4 @@
----
+﻿---
 name: fec-list-virtualization
 description: Use when optimizing or reviewing large lists, virtual scrolling, windowing, react-window, TanStack Virtual, variable-height rows, dynamic measurement, infinite scroll, grid virtualization, or scroll performance; Chinese triggers include 虚拟列表, 大列表优化, 滚动性能.
 ---
@@ -12,14 +12,14 @@ description: Use when optimizing or reviewing large lists, virtual scrolling, wi
 ## Procedure
 
 1. 先确认列表规模和瓶颈：500+ 项、滚动掉帧、DOM 节点过多或内存飙升才引入虚拟化。
-2. 固定高度列表用 `react-window`；动态高度、跨框架或高级场景用 TanStack Virtual；遗留项目可维护 `react-virtualized`。
+2. 先遵循项目现有框架、依赖和设计系统约束，再按场景选库：React 可考虑 `react-window` 或 TanStack Virtual；Vue/Solid/Svelte、动态测量、网格或跨框架场景优先考虑 TanStack Virtual；遗留 `react-virtualized` 只维护不新增。
 3. 明确 item size、overscan、容器高度、key、滚动容器和 resize 行为。
 4. 无限滚动时分离数据分页和 DOM 虚拟化；数据获取可联用数据获取 workflow。
 5. 验证 DOM 节点数、滚动 FPS、键盘/屏幕阅读器体验和 Ctrl+F/SEO 限制。
 
-## Detailed References
+## 详细参考
 
-涉及固定高度列表、可变/动态高度、无限滚动、网格虚拟化和性能注意事项时，加载 [references/virtualization-patterns.md](references/virtualization-patterns.md)。
+涉及是否需要虚拟化、库选型、固定高度、可变/动态高度、无限滚动、网格虚拟化和性能注意事项时，加载 [references/virtualization-patterns.md](references/virtualization-patterns.md)。
 
 ## Constraints
 

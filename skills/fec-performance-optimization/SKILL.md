@@ -1,4 +1,4 @@
----
+﻿---
 name: fec-performance-optimization
 description: Use when diagnosing or improving frontend performance, Core Web Vitals, bundle size, runtime rendering cost, network waterfalls, memory leaks, long tasks, Lighthouse findings, or performance budgets; Chinese triggers include 性能优化, 页面卡顿, 首屏慢, 包体积, Web Vitals.
 ---
@@ -67,6 +67,10 @@ description: Use when diagnosing or improving frontend performance, Core Web Vit
 - 不引入大型新依赖解决小问题；先利用项目已有工具和浏览器能力。
 - 不把后端、网络和浏览器侧问题混为一谈；前端能验证的部分要单独列证据。
 
+## 详细参考
+
+撰写性能分析报告时，加载 [references/report-template.md](references/report-template.md)。
+
 ## Expected Output
 
-输出性能分析报告，包含基线、指标或观察证据、瓶颈位置、优先级、改法、验证命令和剩余风险。报告保存为 `reports/performance-review-YYYY-MM-DD-HHmmss.md`。
+输出有证据链的性能分析报告，说明基线、瓶颈、优化建议、验证方式和剩余风险。报告保存为 `reports/performance-review-YYYY-MM-DD-HHmmss.md`。

@@ -1,4 +1,4 @@
----
+﻿---
 name: fec-refactor-clean
 description: Use when safely removing dead frontend code, unused exports, stale components, obsolete routes, unused dependencies, or cleanup targets found by tools such as knip, depcheck, ts-prune, TypeScript, ESLint, or manual review. Do not use for feature rewrites that change behavior; Chinese triggers include 死代码, 清理未使用, refactor clean, 依赖清理, 删除无用代码.
 ---
@@ -41,8 +41,11 @@ description: Use when safely removing dead frontend code, unused exports, stale 
 - 不用“看起来没人用”作为证据；必须有搜索、工具输出、类型错误消失或测试保护。
 - 不把依赖大版本升级伪装成清理；升级风险、release notes 和 lockfile 变更应分流到依赖升级工作流。
 
+## 详细参考
+
+撰写清理报告时，加载 [references/report-template.md](references/report-template.md)。
+
 ## Expected Output
 
 - 清理报告保存为 `reports/refactor-clean-YYYY-MM-DD-HHmmss.md`。
-- 报告包含候选项、风险分类、已清理项、跳过原因、运行命令和剩余风险。
 - 代码清理后相关验证命令通过，或明确说明阻塞原因。

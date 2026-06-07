@@ -1,4 +1,4 @@
----
+﻿---
 name: fec-browser-storage
 description: Use when choosing, implementing, or reviewing browser storage such as localStorage, sessionStorage, IndexedDB, cookies, client persistence, offline data, secure storage, or cleanup strategy; Chinese triggers include 浏览器存储, 客户端持久化.
 ---
@@ -17,7 +17,7 @@ description: Use when choosing, implementing, or reviewing browser storage such 
 4. 敏感数据按安全规则处理，不把明文 token、密码、信用卡信息放进可被 JS 读取的存储。
 5. 审查隐私模式、存储配额、清理策略和跨浏览器兼容性。
 
-## Detailed References
+## 详细参考
 
 涉及存储选型表、localStorage/sessionStorage 封装、IndexedDB 示例、Cookie 辅助方法和敏感数据规则时，加载 [references/storage-patterns.md](references/storage-patterns.md)。
 

@@ -1,4 +1,4 @@
----
+﻿---
 name: fec-canvas-threejs
 description: Use when building or reviewing Canvas 2D, Three.js/WebGL, React Three Fiber, GLSL shaders, ShaderToy-to-WebGL adaptation, 2D/3D visualization, game rendering, animation loops, GPU resource cleanup, or rendering performance. Do not use for standard DOM UI, charts already covered by a chart library, or non-graphical performance work; Chinese triggers include Canvas, Three.js, WebGL, GLSL, Shader, 3D, 数据可视化, 游戏.
 ---
@@ -45,7 +45,7 @@ return () => {
 };
 ```
 
-## Detailed References
+## 详细参考
 
 涉及 Canvas 2D 绘图、动画循环、Three.js 场景搭建、React Three Fiber、InstancedMesh 和性能清理时，加载 [references/rendering-patterns.md](references/rendering-patterns.md)。
 
