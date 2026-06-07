@@ -1,4 +1,4 @@
-﻿---
+---
 name: fec-pwa-implementation
 description: Use when adding or reviewing Progressive Web App capabilities such as installability, manifest metadata, Service Worker registration, Workbox caching, offline fallback, app update prompts, maskable icons, or iOS PWA compatibility. Do not use for general API caching or non-installable performance tuning; Chinese triggers include PWA, 离线, Service Worker.
 ---

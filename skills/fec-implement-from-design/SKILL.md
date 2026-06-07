@@ -1,4 +1,4 @@
-﻿---
+---
 name: fec-implement-from-design
 description: Use when implementing UI from Figma, Sketch, MasterGo, Pixso, Modao, MockingBot, screenshots, design selections, design tokens, or design-to-code tasks for production frontend components/pages; Chinese triggers include 设计稿, 按设计实现.
 ---

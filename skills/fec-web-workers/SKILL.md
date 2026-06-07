@@ -1,4 +1,4 @@
-﻿---
+---
 name: fec-web-workers
 description: Use when moving expensive browser work off the main thread with Web Workers, SharedWorker, worker pools, Comlink, transferable objects, Vite/Webpack worker integration, or UI responsiveness fixes. Do not use for lightweight synchronous work or DOM manipulation; Chinese triggers include Web Worker, 后台线程, 主线程阻塞.
 ---

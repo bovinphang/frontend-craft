@@ -1,4 +1,4 @@
-﻿---
+---
 name: fec-accessibility-check
 description: Use when reviewing or improving frontend accessibility, semantic structure, keyboard support, focus management, ARIA labels, screen reader behavior, WCAG 2.2 issues, touch accessibility, or assistive-technology regressions; Chinese triggers include 无障碍, accessibility, a11y, WCAG, 屏幕阅读器.
 ---

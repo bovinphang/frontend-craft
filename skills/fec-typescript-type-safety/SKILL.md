@@ -1,4 +1,4 @@
-﻿---
+---
 name: fec-typescript-type-safety
 description: Use when designing, implementing, or reviewing TypeScript type contracts, advanced generics, discriminated unions, type guards, API DTOs, component props, public utility types, or type-level regressions in frontend projects. Prefer code review for broad PR review; Chinese triggers include TypeScript 类型安全, 类型建模, 泛型, 判别联合, 类型收窄.
 ---

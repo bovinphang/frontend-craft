@@ -1,4 +1,4 @@
-﻿---
+---
 name: fec-validation-fix
 description: Use when running existing project validation commands and fixing failures after code changes, including lint, type-check, unit/integration test, build, CI, or local script failures. Do not use when the task is to design or author new component/E2E tests; Chinese triggers include 验证, 检查失败, 修复失败, CI 失败.
 ---

@@ -1,4 +1,4 @@
-﻿---
+---
 name: fec-state-management
 description: Use when choosing, implementing, reviewing, or refactoring frontend state ownership across React, Vue, Next.js, Nuxt, URL state, server state, form state, browser persistence, or global stores. Prefer narrower skills for TanStack Query cache details, browser storage persistence, or form validation internals; Chinese triggers include 状态管理, 状态归属, store 选型.
 ---

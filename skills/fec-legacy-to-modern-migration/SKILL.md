@@ -1,4 +1,4 @@
-﻿---
+---
 name: fec-legacy-to-modern-migration
 description: Use when planning or implementing an intentional migration from JavaScript, jQuery, HTML/CSS, server-rendered templates, MPA legacy frontend code, or older framework code toward a modern frontend stack while preserving behavior. Do not use for routine legacy bug fixes that stay in the old stack; Chinese triggers include 遗留项目, 技术栈升级, jQuery 迁移.
 ---
