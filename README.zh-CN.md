@@ -147,7 +147,7 @@ npx @bovinphang/frontend-craft@latest list
 ```text
 你：「合并前请评审我最近的改动。重点看架构、类型安全、渲染行为、样式、无障碍和缺失测试。」
 你：「先不要写代码，请规划账号账单功能：路由结构、组件边界、数据流、状态归属、校验流程和上线风险。」
-你：「请用 React Hook Form + Zod 构建多步注册表单，包含文件上传、条件字段、异步校验和可访问错误提示。」
+你：「请构建多步注册表单：根据项目框架选择表单与 schema 校验方案，包含文件上传、条件字段、异步校验和可访问错误提示。」
 你：「请按 Figma 节点 123:456 实现 UI。复用现有 design token 和组件，匹配间距与响应式状态，并说明假设。」
 你：「`/fec-refactor-clean` 请清理这个模块里的死代码。」
 ```
@@ -192,17 +192,17 @@ npx @bovinphang/frontend-craft@latest list
 
 | 技能                      | 范围                                                       |
 | ------------------------- | ---------------------------------------------------------- |
-| `fec-data-fetching`       | TanStack Query / 服务端状态获取、缓存、乐观更新            |
+| `fec-data-fetching`       | 服务端状态获取、缓存、失效、SSR、无限加载                  |
 | `fec-api-integration`     | 类型化 API client、鉴权刷新、上传、实时集成                |
 | `fec-state-management`    | 状态归属、store 选型、URL 状态、服务端/表单/本地状态边界   |
-| `fec-form-handling`       | React Hook Form + Zod、动态字段、上传、多步流程            |
+| `fec-form-handling`       | 跨框架表单选型、schema 校验、动态字段、上传                 |
 | `fec-browser-storage`     | localStorage / sessionStorage / IndexedDB / Cookies 选型   |
 | `fec-route-protection`    | React Router、Next.js、Vue Router、Nuxt 的登录态与权限路由 |
 | `fec-pwa-implementation`  | manifest、Service Worker、离线缓存、安装提示               |
 | `fec-web-workers`         | Web Worker、Transferable、Comlink、Worker 池               |
 | `fec-canvas-threejs`      | Canvas 2D、Three.js、React Three Fiber、WebGL              |
 | `fec-svg-animation`       | CSS / Framer Motion / GSAP SVG 动画与 reduced-motion       |
-| `fec-list-virtualization` | react-window / TanStack Virtual 大列表虚拟滚动             |
+| `fec-list-virtualization` | 按框架选型的大列表虚拟滚动、测量、网格和无限滚动            |
 
 **测试** — 规划或编写前端测试覆盖时激活：
 
@@ -243,7 +243,7 @@ npx @bovinphang/frontend-craft@latest list
 | 技能                             | 范围                                           |
 | -------------------------------- | ---------------------------------------------- |
 | `fec-legacy-web-standard`        | JS + jQuery + HTML 遗留项目的开发与维护规范    |
-| `fec-legacy-to-modern-migration` | jQuery/MPA → React/Vue 3 + TS 策略与分阶段流程 |
+| `fec-legacy-to-modern-migration` | 遗留前端现代化、目标栈识别与分阶段迁移流程 |
 
 **项目演进** — 吸收参考系统并原创化落到当前项目时激活：
 
@@ -386,11 +386,12 @@ $env:MODAO_TOKEN = "your-modao-token"
 每一次评审、分析和评估都会输出带时间戳的 Markdown 报告到 `reports/`，可作为审计记录和 PR 交付物。
 
 <details>
-<summary>查看全部 15 种报告类型</summary>
+<summary>查看全部 16 种报告类型</summary>
 
 | 报告类型       | 文件名模式                                   | 来源                                                                |
 | -------------- | -------------------------------------------- | ------------------------------------------------------------------- |
 | 代码审查       | `code-review-YYYY-MM-DD-HHmmss.md`           | `/fec-review`、`fec-code-review`、`fec-code-reviewer`               |
+| 调试诊断       | `debug-YYYY-MM-DD-HHmmss.md`                 | `/fec-debug`、`fec-debug-framework`、`fec-debugger`                 |
 | TS/JS 专项评审 | `typescript-review-YYYY-MM-DD-HHmmss.md`     | `fec-typescript-reviewer`                                           |
 | 安全审查       | `security-review-YYYY-MM-DD-HHmmss.md`       | `fec-security-review`、`fec-security-reviewer`                      |
 | 无障碍检查     | `accessibility-review-YYYY-MM-DD-HHmmss.md`  | `fec-accessibility-check`                                           |

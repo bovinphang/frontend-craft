@@ -146,22 +146,22 @@ frontend-craft/
 | `fec-implement-from-design`      | 基于 Figma、Sketch、MasterGo、Pixso、墨刀或截图实现 UI         |
 | `fec-validation-fix`             | 执行校验命令、分析失败并安全修复                               |
 | `fec-legacy-web-standard`        | JavaScript + jQuery + HTML/CSS 传统前端规范                    |
-| `fec-legacy-to-modern-migration` | jQuery / MPA 迁移到 React 或 Vue + TypeScript 的策略           |
+| `fec-legacy-to-modern-migration` | 遗留前端现代化、目标栈识别与分阶段迁移策略                     |
 | `fec-testing-strategy`           | 测试层级选择、风险矩阵与覆盖规划                               |
 | `fec-e2e-testing`                | Playwright / Cypress E2E 结构、产物、CI 与不稳定用例治理       |
 | `fec-nextjs-project-standard`    | Next.js App Router、SSR/SSG、路由、元数据、中间件              |
 | `fec-nuxt-project-standard`      | Nuxt 3 SSR/SSG、组合式函数、路由、中间件                       |
 | `fec-monorepo-project-standard`  | pnpm workspace、Turborepo、Nx 结构与任务编排                   |
-| `fec-data-fetching`              | TanStack Query / 服务端状态获取、缓存、失效、乐观更新          |
+| `fec-data-fetching`              | 服务端状态获取、缓存、失效、SSR 与无限加载                     |
 | `fec-state-management`           | 状态归属、store 选型、URL/服务端/表单/本地状态边界             |
-| `fec-form-handling`              | React Hook Form + Zod 表单、动态字段、上传、多步流程           |
+| `fec-form-handling`              | 跨框架表单选型、schema 校验、动态字段、上传、多步流程          |
 | `fec-tailwind-design-system`     | Tailwind token、主题扩展、组件变体、class 治理和暗色模式       |
 | `fec-responsive-layout`          | 移动优先布局、容器查询、数据密集型响应式界面                   |
 | `fec-browser-storage`            | localStorage/sessionStorage/IndexedDB/Cookies 选型与安全持久化 |
 | `fec-route-protection`           | React Router、Next.js、Vue Router、Nuxt 的权限路由保护         |
 | `fec-component-testing`          | RTL / Vue Test Utils 组件测试与回归用例                        |
 | `fec-storybook-component-doc`    | Storybook 组件文档、Addon、MDX、交互与视觉测试集成             |
-| `fec-list-virtualization`        | react-window / TanStack Virtual 大列表虚拟滚动                 |
+| `fec-list-virtualization`        | 按框架选型的大列表虚拟滚动、测量、网格和无限滚动               |
 | `fec-pwa-implementation`         | PWA manifest、Service Worker、离线缓存与安装提示               |
 | `fec-web-workers`                | Web Worker、Transferable、Comlink、Worker 池                   |
 | `fec-canvas-threejs`             | Canvas 2D、Three.js、React Three Fiber、WebGL 性能与可访问性   |
@@ -195,19 +195,19 @@ frontend-craft/
 | 按设计稿 / 截图实现 UI       | `fec-implement-from-design`      | 「请按 Figma 节点 `123:456` 实现该界面：间距与设计 Token 对齐，复用现有 `Button`，并说明假设条件。」                                   |
 | CI 或本地脚本失败            | `fec-validation-fix`             | 「`pnpm lint` 和 `pnpm test` 都挂了，请定位根因并修复，不要放宽类型或跳过检查。」                                                      |
 | 维护 jQuery / MPA 老页面     | `fec-legacy-web-standard`        | 「`public/js/legacy/*.js` 仍在生产使用，请在保持行为的前提下给出可维护性改进与模式建议。」                                             |
-| 规划 jQuery → React/Vue 迁移 | `fec-legacy-to-modern-migration` | 「我们有 `static/app.js` 的 jQuery + 多页应用，请输出迁到 React + TypeScript 的分阶段方案、风险与里程碑。」                            |
+| 规划遗留前端现代化         | `fec-legacy-to-modern-migration` | 「我们有 `static/app.js` 的 jQuery + 多页应用，请评估保留 MPA、局部现代化或迁到目标栈的分阶段方案、风险与里程碑。」                  |
 | 规划前端测试覆盖             | `fec-testing-strategy`           | 「这次 checkout 重构先别急着写测试，请把风险映射到静态检查、单元/组件、E2E、视觉、无障碍和安全覆盖。」                                 |
 | 补充或稳定 E2E               | `fec-e2e-testing`                | 「请用 Playwright 给登录流程加冒烟用例：目录清晰、使用 Page Object，并说明如何在 CI 里跑。」                                           |
 | Next.js App Router 功能      | `fec-nextjs-project-standard`    | 「请评审 `app/(dashboard)/reports/page.tsx` 及相关 server actions 是否符合 Next.js App Router 最佳实践（数据获取、错误、元数据等）。」 |
 | Nuxt 3 页面或布局            | `fec-nuxt-project-standard`      | 「请评审 `pages/admin/*.vue` 与 `composables/useApi.ts` 是否符合 Nuxt 3 的 SSR、数据与组合式用法惯例。」                               |
 | Monorepo 边界与任务编排      | `fec-monorepo-project-standard`  | 「`apps/web` 依赖 `packages/ui`，请检查包边界、workspace 配置和 Turborepo 任务图是否有问题。」                                         |
-| 服务端数据获取               | `fec-data-fetching`              | 「请评审 `src/queries/useReports.ts` 的 TanStack Query 模式：缓存 key、失效策略和乐观更新。」                                          |
+| 服务端数据获取               | `fec-data-fetching`              | 「请评审 `src/data/reports.ts` 的服务端状态获取：缓存 key、失效策略、SSR 水合，以及是否需要查询库。」                                  |
 | 状态归属与 store 选型        | `fec-state-management`           | 「请审计 dashboard 的状态：哪些属于 URL 参数、TanStack Query、本地 state 或全局 store，并给出安全迁移方案。」                          |
-| 复杂表单与校验               | `fec-form-handling`              | 「用 React Hook Form + Zod 构建多步注册表单，包含文件上传和动态条件字段。」                                                            |
+| 复杂表单与校验               | `fec-form-handling`              | 「构建多步注册表单：按项目框架选择表单库和 schema 校验方案，包含文件上传和动态条件字段。」                                             |
 | 为应用添加路由守卫           | `fec-route-protection`           | 「为 React Router 的 `/admin` 路由做权限保护：未登录用户重定向，基于角色控制访问。」                                                   |
 | 编写组件单元测试             | `fec-component-testing`          | 「为 `src/components/UserCard.tsx` 编写 RTL 测试：渲染、user-event 交互和快照回归用例。」                                              |
 | 组件库文档化                 | `fec-storybook-component-doc`    | 「为 `packages/ui/` 搭建 Storybook：MDX 文档、无障碍 addon 和交互测试。」                                                              |
-| 渲染上万条列表数据           | `fec-list-virtualization`        | 「`ProductList` 渲染上万行太卡，请用 react-window 或 TanStack Virtual 做虚拟滚动并测量滚动性能。」                                     |
+| 渲染上万条列表数据           | `fec-list-virtualization`        | 「`ProductList` 渲染上万行太卡，请按现有框架、动态高度、浏览器查找和 SEO 约束选择虚拟滚动方案并测量性能。」                            |
 | 添加离线支持                 | `fec-pwa-implementation`         | 「把这个 React 应用做成 PWA：manifest、Service Worker、离线缓存策略和安装提示。」                                                      |
 | 重计算移出主线程             | `fec-web-workers`                | 「把图片处理逻辑移到 Web Worker，用 Comlink 通信，保持 UI 响应。」                                                                     |
 | 构建交互式 3D 场景           | `fec-canvas-threejs`             | 「在 `src/components/ProductViewer.tsx` 添加 Three.js 产品展示，兼顾性能和降级方案。」                                                 |

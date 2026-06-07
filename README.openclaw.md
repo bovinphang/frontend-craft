@@ -146,22 +146,22 @@ frontend-craft/
 | `fec-implement-from-design`      | Implement UI from Figma, Sketch, MasterGo, Pixso, Modao, or screenshots              |
 | `fec-validation-fix`             | Run validation commands, diagnose failures, and fix safely                           |
 | `fec-legacy-web-standard`        | JavaScript + jQuery + HTML/CSS legacy frontend standards                             |
-| `fec-legacy-to-modern-migration` | jQuery / MPA migration strategy to React or Vue + TypeScript                         |
+| `fec-legacy-to-modern-migration` | Legacy frontend modernization, target-stack selection, and phased migration          |
 | `fec-testing-strategy`           | Testing layer selection, risk matrix, and coverage planning                          |
 | `fec-e2e-testing`                | Playwright / Cypress E2E structure, artifacts, CI, and flaky test handling           |
 | `fec-nextjs-project-standard`    | Next.js App Router, SSR/SSG, routing, metadata, middleware                           |
 | `fec-nuxt-project-standard`      | Nuxt 3 SSR/SSG, composables, routing, middleware                                     |
 | `fec-monorepo-project-standard`  | pnpm workspace, Turborepo, Nx structure and task orchestration                       |
-| `fec-data-fetching`              | TanStack Query / server-state fetching, caching, invalidation, optimistic updates    |
+| `fec-data-fetching`              | Server-state fetching, caching, invalidation, SSR, and infinite loading              |
 | `fec-state-management`           | State ownership, store selection, URL/server/form/local state boundaries             |
-| `fec-form-handling`              | React Hook Form + Zod forms, dynamic fields, uploads, multi-step flows               |
+| `fec-form-handling`              | Framework-aware forms, schema validation, dynamic fields, uploads, multi-step flows  |
 | `fec-tailwind-design-system`     | Tailwind tokens, theme extension, variants, class governance, dark mode              |
 | `fec-responsive-layout`          | Mobile-first layouts, container queries, data-dense responsive UI                    |
 | `fec-browser-storage`            | localStorage/sessionStorage/IndexedDB/Cookies selection and safe client persistence  |
 | `fec-route-protection`           | Authenticated and permissioned routes for React Router, Next.js, Vue Router, Nuxt    |
 | `fec-component-testing`          | React Testing Library / Vue Test Utils component tests and regression scenarios      |
 | `fec-storybook-component-doc`    | Storybook component docs, addons, MDX, interaction and visual test integration       |
-| `fec-list-virtualization`        | Large-list windowing with react-window / TanStack Virtual and measurement strategies |
+| `fec-list-virtualization`        | Framework-aware virtualization, item measurement, grids, and infinite scrolling      |
 | `fec-pwa-implementation`         | Manifest, service worker, offline cache, install prompts, update handling            |
 | `fec-web-workers`                | Web Worker integration, transferable objects, Comlink, worker pools                  |
 | `fec-canvas-threejs`             | Canvas 2D, Three.js, React Three Fiber, WebGL performance and accessibility          |
@@ -195,19 +195,19 @@ This section is a quick OpenClaw-oriented sample, not the full prompt catalog. F
 | Implement from Figma / screenshot          | `fec-implement-from-design`      | “Implement this screen from Figma node `123:456`: match spacing and design tokens, reuse our `Button`, and note any assumptions.”                |
 | CI red or local script failures            | `fec-validation-fix`             | “`pnpm lint` and `pnpm test` are failing—find the root causes, fix them, and don’t weaken types or skip checks.”                                 |
 | Maintain jQuery / MPA legacy pages         | `fec-legacy-web-standard`        | “For `public/js/legacy/*.js`, suggest safe refactors and patterns that keep current behavior; we still ship this in production.”                 |
-| Plan jQuery → React/Vue migration          | `fec-legacy-to-modern-migration` | “We have `static/app.js` in jQuery + MPA. Outline a phased migration to React + TypeScript with risks and milestones.”                           |
+| Plan legacy frontend modernization         | `fec-legacy-to-modern-migration` | “We have `static/app.js` in jQuery + MPA. Evaluate keeping the MPA, local modernization, or moving to our target stack with risks and milestones.” |
 | Plan frontend test coverage                | `fec-testing-strategy`           | “For this checkout refactor, map risks to static checks, unit/component tests, E2E, visual, a11y, and security coverage before we write tests.”  |
 | Add or stabilize E2E                       | `fec-e2e-testing`                | “Add a Playwright smoke test for login; use a clear folder layout and Page Objects, and mention how to run it in CI.”                            |
 | Next.js App Router feature                 | `fec-nextjs-project-standard`    | “Review `app/(dashboard)/reports/page.tsx` and related server actions for Next.js App Router best practices (data fetching, errors, metadata).”  |
 | Nuxt 3 feature or layout                   | `fec-nuxt-project-standard`      | “Review `pages/admin/*.vue` and `composables/useApi.ts` for Nuxt 3 SSR/data/composables conventions.”                                            |
 | Monorepo boundaries and tasks              | `fec-monorepo-project-standard`  | “`apps/web` depends on `packages/ui`—check package boundaries, workspace config, and Turborepo task graph for issues.”                           |
-| Server-state data fetching                 | `fec-data-fetching`              | “Review `src/queries/useReports.ts` for TanStack Query patterns: caching keys, invalidation, and optimistic updates.”                            |
+| Server-state data fetching                 | `fec-data-fetching`              | “Review `src/data/reports.ts` for server-state fetching, cache keys, invalidation, SSR hydration, and whether a query library is warranted.”       |
 | State ownership and store selection        | `fec-state-management`           | “Audit our dashboard state: decide what belongs in URL params, TanStack Query, local state, or the global store, then propose a safe migration.” |
-| Complex form with validation               | `fec-form-handling`              | “Build a multi-step registration form with Zod validation, file upload, and dynamic conditional fields using React Hook Form.”                   |
+| Complex form with validation               | `fec-form-handling`              | “Build a multi-step registration form; choose the project-appropriate form library and schema validation approach, with uploads and dynamic fields.” |
 | Add route guards to an app                 | `fec-route-protection`           | “Secure the `/admin` routes in our React Router app: redirect unauthenticated users and enforce role-based access.”                              |
 | Write component unit tests                 | `fec-component-testing`          | “Add RTL tests for `src/components/UserCard.tsx`: render, user-event interactions, and snapshot for regression.”                                 |
 | Document a component library               | `fec-storybook-component-doc`    | “Set up Storybook for `packages/ui/` with MDX docs, accessibility addon, and interaction tests.”                                                 |
-| Render thousands of list rows              | `fec-list-virtualization`        | “Our `ProductList` renders 10k items—virtualize it with react-window or TanStack Virtual and measure scroll performance.”                        |
+| Render thousands of list rows              | `fec-list-virtualization`        | “Our `ProductList` renders 10k items—choose a virtualization approach for our framework, dynamic heights, browser search, and SEO constraints.”   |
 | Add offline support                        | `fec-pwa-implementation`         | “Make this React app a PWA: manifest, service worker, offline cache strategy, and install prompt.”                                               |
 | Heavy computation off main thread          | `fec-web-workers`                | “Move the image-processing logic to a Web Worker with Comlink to keep the UI responsive.”                                                        |
 | Build an interactive 3D scene              | `fec-canvas-threejs`             | “Add a Three.js product viewer to `src/components/ProductViewer.tsx` with performance and fallback considerations.”                              |

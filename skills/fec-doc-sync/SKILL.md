@@ -11,13 +11,14 @@ description: Use when synchronizing frontend project documentation with source-o
 
 ## Procedure
 
-1. 识别项目栈、文档入口和本次需要同步的范围。
+1. 识别项目栈、文档入口和本次需要同步的范围；README 同步必须扫描根目录 `README*`、`docs/*/README*`、包、应用、部署或运行时相关 README，并排除 `node_modules`、构建产物和第三方依赖目录。
 2. 收集事实来源：`package.json`、lockfile、框架和构建配置、`.env.example`、路由、API clients 或 server routes、types/schemas、组件、测试、CI、build/deploy config。
 3. 比对 README、docs、ADR、changelog、example prompts、setup/deploy/env docs 中的命令、环境变量、路由、API 行为、部署步骤和支持矩阵。
 4. 只更新稳定的公共约定；不要把临时调试结论、一次性报告或未落地设计写入长期文档。
-5. 若仓库已有多语言文档，同步关键事实、命令名、环境变量、路由/API 名称和版本约束。
-6. 当目标仓库本身是 skill/agent/command 分发仓库时，再同步能力表、metadata、runtime docs 和 marketplace 描述。
-7. 运行相关文档一致性、类型检查、测试、构建或打包检查。
+5. 若仓库已有多语言文档或国际化 README，主 README 的公共事实更新后必须检查其它语言 README 是否需要同步；功能名称、命令名、脚本名、包名、组件/API 名称、报告文件名、路径、环境变量、路由/API 名称、版本约束和支持矩阵必须跨语言一致。
+6. 产品文案可保持本地化表达，但不得保留旧事实、旧默认推荐或过期示例；无法高质量翻译时，至少同步关键事实，并在输出中标出人工翻译风险。
+7. 当项目暴露插件、SDK、CLI、组件库、模板或集成能力时，同步对应的功能清单、集成说明、命令/脚本说明、公开 metadata、示例提示词或示例用法。
+8. 运行相关文档一致性、旧口径搜索、报告格式一致性、类型检查、测试、构建或打包检查。
 
 ## Constraints
 
@@ -26,10 +27,13 @@ description: Use when synchronizing frontend project documentation with source-o
 - 不把未确认的 TODO、草案或实验能力写成已支持行为。
 - 不修改用户项目私有文档，除非用户明确指定。
 - 多语言文档若无法完整翻译，至少保持命令名、环境变量、路由/API 名称、版本约束和报告格式一致。
+- 不把国际化 README 同步简化成只改主 README；公共事实、功能清单、报告清单、命令/脚本说明和示例用法必须检查所有语言入口。
 - 不把 ADR 当作长篇复盘；只记录背景、决策、取舍、影响范围、验证和回滚线索。
 
 ## Expected Output
 
 - 列出已同步的 README/docs/ADR/changelog/env/setup/deploy 文档。
+- 列出已检查的 README/docs 入口，并说明哪些语言文件已同步、哪些无需同步、哪些需要人工确认。
 - 总结使用的事实来源、更新范围、验证命令和未覆盖风险。
+- 汇总旧口径搜索、报告文件名/路径/命令一致性和多语言关键事实一致性验证结果。
 - 标出仍需人工确认的产品文案、翻译、外部服务配置或发布说明。

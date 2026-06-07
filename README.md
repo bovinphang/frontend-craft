@@ -147,7 +147,7 @@ For a complete scenario-based prompt library, see [docs/example-prompts.md](docs
 ```text
 You: "Review my recent changes before merge. Focus on architecture, type safety, rendering behavior, styles, accessibility, and missing tests."
 You: "Before coding, plan the account billing feature: route structure, component boundaries, data flow, state ownership, validation flow, and rollout risks."
-You: "Build a multi-step registration form with React Hook Form + Zod, file upload, conditional fields, async validation, and accessible errors."
+You: "Build a multi-step registration form; choose the right form and schema validation approach for this project, with file upload, conditional fields, async validation, and accessible errors."
 You: "Implement the UI from Figma node 123:456. Use existing design tokens and components, match spacing and responsive states, and document assumptions."
 You: "`/fec-refactor-clean` Clean up dead code in this module."
 ```
@@ -192,17 +192,17 @@ The skills below are grouped by use case so you can quickly find project standar
 
 | Skill                     | Scope                                                                     |
 | ------------------------- | ------------------------------------------------------------------------- |
-| `fec-data-fetching`       | TanStack Query / server-state fetching, caching, optimistic updates       |
+| `fec-data-fetching`       | Server-state fetching, caching, invalidation, SSR, infinite loading       |
 | `fec-api-integration`     | Typed API clients, auth refresh, uploads, realtime integration            |
 | `fec-state-management`    | State ownership, store selection, URL state, server/form/local boundaries |
-| `fec-form-handling`       | React Hook Form + Zod, dynamic fields, uploads, multi-step flows          |
+| `fec-form-handling`       | Framework-aware forms, schema validation, dynamic fields, uploads         |
 | `fec-browser-storage`     | localStorage / sessionStorage / IndexedDB / Cookies selection             |
 | `fec-route-protection`    | Auth and permission routes for React Router, Next.js, Vue Router, Nuxt    |
 | `fec-pwa-implementation`  | Manifest, service worker, offline cache, install prompts                  |
 | `fec-web-workers`         | Web Worker integration, transferables, Comlink, worker pools              |
 | `fec-canvas-threejs`      | Canvas 2D, Three.js, React Three Fiber, WebGL                             |
 | `fec-svg-animation`       | CSS / Framer Motion / GSAP SVG animation with reduced-motion              |
-| `fec-list-virtualization` | react-window / TanStack Virtual with measurement strategies               |
+| `fec-list-virtualization` | Framework-aware list virtualization, measurement, grids, infinite scroll  |
 
 **Testing** — activated when planning or authoring frontend test coverage:
 
@@ -243,7 +243,7 @@ The skills below are grouped by use case so you can quickly find project standar
 | Skill                            | Scope                                                      |
 | -------------------------------- | ---------------------------------------------------------- |
 | `fec-legacy-web-standard`        | Standards for JS + jQuery + HTML maintenance               |
-| `fec-legacy-to-modern-migration` | jQuery/MPA → React/Vue 3 + TS strategy and phased workflow |
+| `fec-legacy-to-modern-migration` | Legacy frontend modernization, target-stack selection, phased workflow |
 
 **Project evolution** — activated when absorbing reference systems into project-native improvements:
 
@@ -386,11 +386,12 @@ $env:MODAO_TOKEN = "your-modao-token"
 Every review, analysis, and evaluation writes a timestamped Markdown report to `reports/`. These serve as an audit trail and a handoff artifact for PRs.
 
 <details>
-<summary>Click to see all 15 report types</summary>
+<summary>Click to see all 16 report types</summary>
 
 | Report type            | Filename pattern                             | Produced by                                                         |
 | ---------------------- | -------------------------------------------- | ------------------------------------------------------------------- |
 | Code review            | `code-review-YYYY-MM-DD-HHmmss.md`           | `/fec-review`, `fec-code-review`, `fec-code-reviewer`               |
+| Debug diagnostics      | `debug-YYYY-MM-DD-HHmmss.md`                 | `/fec-debug`, `fec-debug-framework`, `fec-debugger`                 |
 | TypeScript / JS review | `typescript-review-YYYY-MM-DD-HHmmss.md`     | `fec-typescript-reviewer`                                           |
 | Security review        | `security-review-YYYY-MM-DD-HHmmss.md`       | `fec-security-review`, `fec-security-reviewer`                      |
 | Accessibility          | `accessibility-review-YYYY-MM-DD-HHmmss.md`  | `fec-accessibility-check`                                           |
