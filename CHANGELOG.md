@@ -10,15 +10,44 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 Project-facing release notes are maintained in English from 2.0.0 onward. Historical entries may preserve their original language.
 
 
-## [Unreleased]
+## [2.6.0] - 2026-06-07
+
+### Added
+
+- **`fec-alchemy` skill:** new project absorption workflow that extracts useful ideas from reference systems and redesigns them into original, project-native improvements; ships with `SKILL.md`, intake / absorption-plan templates, and reference docs covering methodology, originality, and licensing.
+- **`fec setup all` subcommand:** installs frontend-craft for every supported runtime in one shot, defaulting to the current project unless `--global` is passed; help text now distinguishes the terminal `fec setup` command from the in-assistant `/fec-init` slash command.
+- **`fec-debug-framework` in README skill tables:** the skill was already shipped in `skills/` but is now surfaced in every README locale and marketplace metadata.
+- **`scripts/sync-version.ts`:** propagates `package.json` version to `.claude-plugin/plugin.json`, `.claude-plugin/marketplace.json` (including the npm source pin), `openclaw.plugin.json`, and per-skill entries in `skills/metadata.json`. Run via `npm run sync:version`; wired into the `version` lifecycle script.
+- **Skill-pack script minification:** `pack-skills.ts` and `skill-packaging.ts` are now minified with esbuild during build, producing smaller standalone skill packages in `skill-packages/`.
+- **Reference docs for key skills:** added dedicated reference documents for `fec-debug-framework`, `fec-performance-optimization`, `fec-refactor-clean`, and `fec-validation-fix`, linked from the localized "详细参考" section of each `SKILL.md`.
 
 ### Changed
 
-- **CLI project setup command:** renamed the terminal project initialization shortcut from `fec init` / `frontend-craft init` to `fec setup` / `frontend-craft setup`; the in-assistant `/fec-init` slash command is unchanged.
+- **`fec-doc-sync` scope expansion:** the doc-sync workflow and skill descriptions now cover env notes, scripts, API/route notes, and deploy facts in addition to user-facing docs; example prompts, the `/fec-doc-sync` command doc, and `skills/metadata.json` were updated to match.
+- **Skill taxonomy — new `project-evolution` category:** added to the taxonomy allowlist (in addition to the existing `implementation-capability`, `testing`, `review-quality`, `design-ui`, `legacy-migration`, `maintenance-docs`); `fec-alchemy` lives here, and the README skill tables, marketplace keywords, and `tests/install/metadata-consistency.test.ts` allowlist were updated across all 5 locales.
+- **Skill count:** 40 → 41 across all README locales and `skills/metadata.json`.
+- **README install sections restructured:** the en / zh-CN / zh-TW / ja-JP / ko-KR READMEs were reorganized into 3 install options (down from 4), with numbered steps (1–6), `install --all` examples for both `--local` and `--global`, and a final "Preview / query" step that surfaces `dry-run` and `fec list`. Option 1 is now explicitly "Install the fec CLI globally" so the `npm install -g` step is unambiguous; `Claude Code Marketplace` moved to Option 3 to reflect its position among the paths.
+- **CLI setup help text:** clarified that `npm install -g` only installs the `fec` terminal command and that `--global` is required to write to the AI tool's global config; scripted all-runtime installs must use `install --all`, not `install all`.
+- **`SKILL.md` References localization:** the "References" section header is now rendered as `详细参考` (Detailed References) in every `SKILL.md` to match the existing Chinese-first documentation convention.
+- **`pnpm-lock.yaml`:** now tracked in version control — pnpm is the canonical package manager for the repo.
+- **Marketplace plugin source pin:** `marketplace.json` source entry now follows `package.json` version consistently via `sync-version.ts` instead of being edited by hand.
+- **CLI project setup command:** renamed the terminal project initialization shortcut from `fec init` / `frontend-craft init` to `fec setup` / `frontend-craft setup`; the in-assistant `/fec-init` slash command is unchanged. `src/install/cli.ts` help text, command dispatcher, and default install location updated; `tests/install/cli.test.ts` asserts the new `setup` command and that legacy `init` is rejected.
+
+### Fixed
+
+- **Plugin install command scope:** README, runtime docs, and marketplace descriptions now reference the `@bovinphang/frontend-craft` npm scope consistently; the previous `@frontend-craft` references (no scope) were misleading.
 
 ### Removed
 
-- **CLI `init` compatibility:** removed `init` as a terminal CLI command; use `setup` for local project setup.
+- **CLI `init` command:** `init` is no longer accepted as a terminal CLI command and exits with "Unknown command: init"; use `setup` for local project setup.
+
+### Chore
+
+- **`SKILL.md` BOM cleanup:** removed the UTF-8 byte order mark (BOM, U+FEFF) from the first line of 23 `SKILL.md` files; the BOM was rendering as an unknown glyph in some editors and tooling.
+- **JSON metadata formatting:** normalized indentation and trailing-newline conventions in `marketplace.json` and `skills/metadata.json` after the `sync-version.ts` migration.
+- **`CONTRIBUTING` guide:** added scenario-specific check instructions (skill authoring, installer changes, runtime template changes, OpenClaw packaging) so contributors know which commands to run before opening a PR.
+- **Runtime docs:** added build and Marketplace troubleshooting notes to per-runtime install docs under `docs/runtimes/`.
+- **npm package scope migration:** published package is now `@bovinphang/frontend-craft`; install commands, `pack:skills` output paths, README badges, and OpenClaw staging paths were updated in lockstep.
 
 
 ## [2.5.0] - 2026-06-01

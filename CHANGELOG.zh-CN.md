@@ -10,15 +10,44 @@
 
 
 
-## [未发布]
+## [2.6.0] - 2026-06-07
+
+### 新增
+
+- **`fec-alchemy` 技能**：新增「项目吸收与原创化融合」工作流，从参考系统提取可借鉴的设计并以项目原生方式重构为原创能力；随附 `SKILL.md`、intake / absorption-plan 模板，以及涵盖方法论、原创性、许可证的参考文档。
+- **`fec setup all` 子命令**：一键为所有受支持的 runtime 安装 frontend-craft，默认安装到当前项目，除非显式传入 `--global`；帮助文本现在区分终端 `fec setup` 命令与 AI 助手内的 `/fec-init` 斜杠命令。
+- **README 技能表补全 `fec-debug-framework`**：该技能此前已在 `skills/` 中提供，现统一收录到各语言 README 技能表与 marketplace 元数据中。
+- **`scripts/sync-version.ts`**：将 `package.json` 的版本号同步到 `.claude-plugin/plugin.json`、`.claude-plugin/marketplace.json`（包含 npm source 钉版）、`openclaw.plugin.json`，以及 `skills/metadata.json` 的每条技能记录。可通过 `npm run sync:version` 执行；已接入 `version` 生命周期脚本。
+- **技能打包脚本压缩**：`pack-skills.ts` 与 `skill-packaging.ts` 在构建期通过 esbuild 压缩，输出到 `skill-packages/` 的独立技能包体积更小。
+- **关键技能参考文档**：为 `fec-debug-framework`、`fec-performance-optimization`、`fec-refactor-clean`、`fec-validation-fix` 新增独立参考文档，从各 `SKILL.md` 本地化后的「详细参考」一节链接。
 
 ### 变更
 
-- **CLI 项目 setup 命令**：终端里的项目初始化快捷命令从 `fec init` / `frontend-craft init` 重命名为 `fec setup` / `frontend-craft setup`；AI 助手内的 `/fec-init` 斜杠命令保持不变。
+- **`fec-doc-sync` 同步范围扩展**：文档同步工作流与技能描述现在覆盖环境变量说明、脚本、接口/路由说明与部署文档，不再局限于面向用户的文档；示例提示词、`/fec-doc-sync` 命令文档以及 `skills/metadata.json` 同步更新。
+- **技能分类新增 `project-evolution`**：在原 `implementation-capability` / `testing` / `review-quality` / `design-ui` / `legacy-migration` / `maintenance-docs` 之外新增 `project-evolution`，`fec-alchemy` 归入此类；各语言 README 技能表、marketplace 关键词以及 `tests/install/metadata-consistency.test.ts` 白名单同步更新。
+- **技能数量**：40 → 41，已同步到各语言 README 与 `skills/metadata.json`。
+- **README 安装章节重构**：en / zh-CN / zh-TW / ja-JP / ko-KR 五种语言的 README 重新组织为 3 个安装选项（从 4 个收敛），步骤编号 1–6，并补充 `--local` / `--global` 两种场景下的 `install --all` 示例，新增「Preview / query」步骤展示 `dry-run` 与 `fec list`。「选项 1」改为「全局安装 fec CLI」，使 `npm install -g` 步骤不再有歧义；Claude Code Marketplace 下移至「选项 3」。
+- **CLI setup 帮助文本**：明确说明 `npm install -g` 仅安装终端 `fec` 命令，若要写入 AI 工具的全局配置需额外传 `--global`；脚本化的全 runtime 安装必须使用 `install --all`，不能使用 `install all`。
+- **`SKILL.md` References 本地化**：每份 `SKILL.md` 的「References」章节标题统一为「详细参考」，与既有中文优先的文档约定一致。
+- **`pnpm-lock.yaml` 纳入版本控制**：pnpm 已成为仓库规范化的包管理器。
+- **Marketplace 插件 source 钉版**：`marketplace.json` 的 source 字段现由 `sync-version.ts` 与 `package.json` 保持一致，无需手工修改。
+- **CLI 项目 setup 命令重命名**：终端里的项目初始化快捷命令从 `fec init` / `frontend-craft init` 重命名为 `fec setup` / `frontend-craft setup`；AI 助手内的 `/fec-init` 斜杠命令保持不变。`src/install/cli.ts` 的帮助文本、命令分发与默认安装位置同步更新；`tests/install/cli.test.ts` 已断言新 `setup` 命令并校验旧 `init` 会被拒绝。
+
+### 修复
+
+- **插件安装命令作用域**：README、runtime 文档与 marketplace 描述现在统一引用 `@bovinphang/frontend-craft` npm 作用域；先前未带作用域的 `@frontend-craft` 引用已修正。
 
 ### 移除
 
-- **CLI `init` 兼容入口**：移除终端 CLI 的 `init` 命令；本地项目 setup 请改用 `setup`。
+- **CLI `init` 命令**：终端 CLI 不再接受 `init`，遇到时直接退出并提示「Unknown command: init」；本地项目 setup 请改用 `setup`。
+
+### 工程
+
+- **`SKILL.md` BOM 清理**：从 23 份 `SKILL.md` 的首行移除 UTF-8 字节顺序标记（BOM, U+FEFF），避免部分编辑器与工具把首字符渲染为不可识别字形。
+- **JSON 元数据格式统一**：`sync-version.ts` 迁移后，统一 `marketplace.json` 与 `skills/metadata.json` 的缩进与末尾换行规范。
+- **`CONTRIBUTING` 贡献指南**：补充分场景的检查指引（技能编写、安装器变更、runtime 模板变更、OpenClaw 打包），让贡献者在提 PR 前明确应执行哪些命令。
+- **Runtime 文档**：在 `docs/runtimes/` 的各 runtime 安装文档中补充构建与 Marketplace 排错说明。
+- **npm 包作用域迁移**：发布包更名为 `@bovinphang/frontend-craft`；安装命令、`pack:skills` 输出路径、README 徽标与 OpenClaw staging 路径同步刷新。
 
 
 ## [2.5.0] - 2026-06-01
