@@ -147,7 +147,7 @@ Marketplace が既にインストールされている場合、CLI は `--force`
 ```text
 あなた：「マージ前に最近の変更をレビューして。アーキテクチャ、型安全性、レンダリング挙動、スタイル、アクセシビリティ、足りないテストを重点的に見て。」
 あなた：「コードを書く前に、アカウント請求機能を計画して。ルート構成、コンポーネント境界、データフロー、状態の所有、バリデーションフロー、リリースリスクを含めて。」
-あなた：「React Hook Form + Zod で、ファイルアップロード、条件付きフィールド、非同期バリデーション、アクセシブルなエラーを含む複数ステップ登録フォームを作って。」
+あなた：「複数ステップ登録フォームを作って。プロジェクトのフレームワークに合うフォームと schema バリデーションの方針を選び、ファイルアップロード、条件付きフィールド、非同期バリデーション、アクセシブルなエラーを含めて。」
 あなた：「Figma ノード 123:456 に基づいて UI を実装して。既存の design token とコンポーネントを再利用し、余白とレスポンシブ状態を合わせ、前提も記録して。」
 あなた：「`/fec-refactor-clean` このモジュールのデッドコードを整理して。」
 ```
@@ -192,17 +192,17 @@ Marketplace が既にインストールされている場合、CLI は `--force`
 
 | スキル                    | 範囲                                                                         |
 | ------------------------- | ---------------------------------------------------------------------------- |
-| `fec-data-fetching`       | TanStack Query / サーバー状態取得、キャッシュ、楽観的更新                    |
+| `fec-data-fetching`       | サーバー状態取得、キャッシュ、無効化、SSR、無限読み込み                      |
 | `fec-api-integration`     | 型付き API client、認証 refresh、アップロード、リアルタイム統合              |
 | `fec-state-management`    | 状態の所属、ストア選定、URL 状態、サーバー/フォーム/ローカル状態の境界       |
-| `fec-form-handling`       | React Hook Form + Zod、動的フィールド、アップロード、マルチステップ          |
+| `fec-form-handling`       | フレームワークに応じたフォーム選定、schema バリデーション、動的フィールド、アップロード |
 | `fec-browser-storage`     | localStorage / sessionStorage / IndexedDB / Cookies の選定                   |
 | `fec-route-protection`    | React Router、Next.js、Vue Router、Nuxt の認証・権限ルーティング             |
 | `fec-pwa-implementation`  | マニフェスト、サービスワーカー、オフラインキャッシュ、インストールプロンプト |
 | `fec-web-workers`         | Web Worker、Transferable、Comlink、ワーカープール                            |
 | `fec-canvas-threejs`      | Canvas 2D、Three.js、React Three Fiber、WebGL                                |
 | `fec-svg-animation`       | CSS / Framer Motion / GSAP SVG アニメーションと reduced-motion               |
-| `fec-list-virtualization` | react-window / TanStack Virtual による大規模リスト仮想化                     |
+| `fec-list-virtualization` | フレームワークに応じた大規模リスト仮想化、計測、グリッド、無限スクロール     |
 
 **テスト** — フロントエンドテストの計画や作成時に起動：
 
@@ -243,7 +243,7 @@ Marketplace が既にインストールされている場合、CLI は `--force`
 | スキル                           | 範囲                                                           |
 | -------------------------------- | -------------------------------------------------------------- |
 | `fec-legacy-web-standard`        | JS + jQuery + HTML のレガシープロジェクト開発・保守基準        |
-| `fec-legacy-to-modern-migration` | jQuery/MPA → React/Vue 3 + TS への移行戦略と段階的ワークフロー |
+| `fec-legacy-to-modern-migration` | レガシーフロントエンドのモダナイズ、ターゲットスタック選定、段階的ワークフロー |
 
 **プロジェクト進化** — 参照システムをプロジェクトネイティブな改善として吸収する時に起動：
 
@@ -386,11 +386,12 @@ $env:MODAO_TOKEN = "your-modao-token"
 すべてのレビュー、分析、評価は `reports/` にタイムスタンプ付き Markdown レポートとして書き出されます。これらは監査証跡および PR の成果物として機能します。
 
 <details>
-<summary>全 15 レポートタイプを表示</summary>
+<summary>全 16 レポートタイプを表示</summary>
 
 | レポートタイプ           | ファイル名パターン                           | 生成元                                                              |
 | ------------------------ | -------------------------------------------- | ------------------------------------------------------------------- |
 | コードレビュー           | `code-review-YYYY-MM-DD-HHmmss.md`           | `/fec-review`、`fec-code-review`、`fec-code-reviewer`               |
+| デバッグ診断             | `debug-YYYY-MM-DD-HHmmss.md`                 | `/fec-debug`、`fec-debug-framework`、`fec-debugger`                 |
 | TypeScript / JS レビュー | `typescript-review-YYYY-MM-DD-HHmmss.md`     | `fec-typescript-reviewer`                                           |
 | セキュリティレビュー     | `security-review-YYYY-MM-DD-HHmmss.md`       | `fec-security-review`、`fec-security-reviewer`                      |
 | アクセシビリティ         | `accessibility-review-YYYY-MM-DD-HHmmss.md`  | `fec-accessibility-check`                                           |

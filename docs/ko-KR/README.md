@@ -147,7 +147,7 @@ Marketplace가 이미 설치된 경우, `--force`를 사용해도 CLI는 두 번
 ```text
 사용자: "병합 전에 최근 변경사항을 리뷰해줘. 아키텍처, 타입 안전성, 렌더링 동작, 스타일, 접근성, 누락된 테스트를 중점적으로 봐줘."
 사용자: "코딩하기 전에 계정 결제 기능을 계획해줘: 라우트 구조, 컴포넌트 경계, 데이터 흐름, 상태 소유권, 검증 흐름, 출시 리스크까지."
-사용자: "React Hook Form + Zod로 파일 업로드, 조건부 필드, 비동기 검증, 접근 가능한 오류가 포함된 다단계 등록 폼을 만들어줘."
+사용자: "다단계 등록 폼을 만들어줘. 프로젝트 프레임워크에 맞는 폼과 schema 검증 방식을 선택하고, 파일 업로드, 조건부 필드, 비동기 검증, 접근 가능한 오류를 포함해줘."
 사용자: "Figma 노드 123:456을 기준으로 UI를 구현해줘. 기존 design token과 컴포넌트를 재사용하고, 간격과 반응형 상태를 맞추고, 가정도 문서화해줘."
 사용자: "`/fec-refactor-clean` 이 모듈의 데드 코드를 정리해줘."
 ```
@@ -192,17 +192,17 @@ Marketplace가 이미 설치된 경우, `--force`를 사용해도 CLI는 두 번
 
 | 스킬                      | 범위                                                          |
 | ------------------------- | ------------------------------------------------------------- |
-| `fec-data-fetching`       | TanStack Query / 서버 상태 페칭, 캐시, 낙관적 업데이트        |
+| `fec-data-fetching`       | 서버 상태 페칭, 캐시, 무효화, SSR, 무한 로딩                  |
 | `fec-api-integration`     | Typed API client, 인증 refresh, 업로드, 실시간 통합           |
 | `fec-state-management`    | 상태 소유권, 스토어 선택, URL 상태, 서버/폼/로컬 상태 경계    |
-| `fec-form-handling`       | React Hook Form + Zod, 동적 필드, 업로드, 멀티스텝            |
+| `fec-form-handling`       | 프레임워크별 폼 선택, schema 검증, 동적 필드, 업로드          |
 | `fec-browser-storage`     | localStorage / sessionStorage / IndexedDB / Cookies 선택      |
 | `fec-route-protection`    | React Router, Next.js, Vue Router, Nuxt의 인증 및 권한 라우팅 |
 | `fec-pwa-implementation`  | 매니페스트, 서비스 워커, 오프라인 캐시, 설치 프롬프트         |
 | `fec-web-workers`         | Web Worker, Transferable, Comlink, 워커 풀                    |
 | `fec-canvas-threejs`      | Canvas 2D, Three.js, React Three Fiber, WebGL                 |
 | `fec-svg-animation`       | CSS / Framer Motion / GSAP SVG 애니메이션과 reduced-motion    |
-| `fec-list-virtualization` | react-window / TanStack Virtual를 이용한 대규모 리스트 가상화 |
+| `fec-list-virtualization` | 프레임워크별 대규모 리스트 가상화, 측정, 그리드, 무한 스크롤 |
 
 **테스트** — 프론트엔드 테스트 범위를 계획하거나 작성할 때 활성화:
 
@@ -243,7 +243,7 @@ Marketplace가 이미 설치된 경우, `--force`를 사용해도 CLI는 두 번
 | 스킬                             | 범위                                                               |
 | -------------------------------- | ------------------------------------------------------------------ |
 | `fec-legacy-web-standard`        | JS + jQuery + HTML 레거시 프로젝트 개발 및 유지보수 기준           |
-| `fec-legacy-to-modern-migration` | jQuery/MPA → React/Vue 3 + TS 마이그레이션 전략 및 단계별 워크플로 |
+| `fec-legacy-to-modern-migration` | 레거시 프론트엔드 현대화, 대상 스택 선택, 단계별 워크플로 |
 
 **프로젝트 진화** — 참조 시스템을 프로젝트 네이티브 개선으로 흡수할 때 활성화:
 
@@ -386,11 +386,12 @@ $env:MODAO_TOKEN = "your-modao-token"
 모든 리뷰, 분석, 평가는 `reports/`에 타임스탬프가 찍힌 Markdown 보고서로 작성됩니다. 이는 감사 추적 및 PR 산출물로 기능합니다.
 
 <details>
-<summary>전체 15개 보고서 유형 보기</summary>
+<summary>전체 16개 보고서 유형 보기</summary>
 
 | 보고서 유형          | 파일명 패턴                                  | 생성 출처                                                           |
 | -------------------- | -------------------------------------------- | ------------------------------------------------------------------- |
 | 코드 리뷰            | `code-review-YYYY-MM-DD-HHmmss.md`           | `/fec-review`, `fec-code-review`, `fec-code-reviewer`               |
+| 디버그 진단          | `debug-YYYY-MM-DD-HHmmss.md`                 | `/fec-debug`, `fec-debug-framework`, `fec-debugger`                 |
 | TypeScript / JS 리뷰 | `typescript-review-YYYY-MM-DD-HHmmss.md`     | `fec-typescript-reviewer`                                           |
 | 보안 리뷰            | `security-review-YYYY-MM-DD-HHmmss.md`       | `fec-security-review`, `fec-security-reviewer`                      |
 | 접근성               | `accessibility-review-YYYY-MM-DD-HHmmss.md`  | `fec-accessibility-check`                                           |

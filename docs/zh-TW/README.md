@@ -147,7 +147,7 @@ npx @bovinphang/frontend-craft@latest list
 ```text
 你：「合併前請審查我最近的改動。重點看架構、型別安全、渲染行為、樣式、可存取性和缺失測試。」
 你：「先不要寫程式碼，請規劃帳號帳單功能：路由結構、元件邊界、資料流、狀態歸屬、驗證流程和上線風險。」
-你：「請用 React Hook Form + Zod 建構多步註冊表單，包含檔案上傳、條件欄位、非同步驗證和可存取錯誤提示。」
+你：「請建構多步註冊表單：依專案框架選擇表單與 schema 驗證方案，包含檔案上傳、條件欄位、非同步驗證和可存取錯誤提示。」
 你：「請按 Figma 節點 123:456 實作 UI。複用現有 design token 和元件，匹配間距與響應式狀態，並說明假設。」
 你：「`/fec-refactor-clean` 請清理這個模組裡的死程式碼。」
 ```
@@ -192,17 +192,17 @@ npx @bovinphang/frontend-craft@latest list
 
 | 技能                      | 範圍                                                       |
 | ------------------------- | ---------------------------------------------------------- |
-| `fec-data-fetching`       | TanStack Query / 服務端狀態獲取、快取、樂觀更新            |
+| `fec-data-fetching`       | 服務端狀態獲取、快取、失效、SSR、無限載入                  |
 | `fec-api-integration`     | 型別化 API client、鑑權刷新、上傳、即時整合                |
 | `fec-state-management`    | 狀態歸屬、store 選型、URL 狀態、伺服器/表單/本地狀態邊界   |
-| `fec-form-handling`       | React Hook Form + Zod、動態欄位、上傳、多步流程            |
+| `fec-form-handling`       | 跨框架表單選型、schema 驗證、動態欄位、上傳                 |
 | `fec-browser-storage`     | localStorage / sessionStorage / IndexedDB / Cookies 選型   |
 | `fec-route-protection`    | React Router、Next.js、Vue Router、Nuxt 的登入態與權限路由 |
 | `fec-pwa-implementation`  | manifest、Service Worker、離線快取、安裝提示               |
 | `fec-web-workers`         | Web Worker、Transferable、Comlink、Worker 池               |
 | `fec-canvas-threejs`      | Canvas 2D、Three.js、React Three Fiber、WebGL              |
 | `fec-svg-animation`       | CSS / Framer Motion / GSAP SVG 動畫與 reduced-motion       |
-| `fec-list-virtualization` | react-window / TanStack Virtual 大清單虛擬滾動             |
+| `fec-list-virtualization` | 依框架選型的大清單虛擬滾動、測量、網格和無限滾動            |
 
 **測試** — 規劃或撰寫前端測試覆蓋時啟用：
 
@@ -243,7 +243,7 @@ npx @bovinphang/frontend-craft@latest list
 | 技能                             | 範圍                                           |
 | -------------------------------- | ---------------------------------------------- |
 | `fec-legacy-web-standard`        | JS + jQuery + HTML 傳統專案的開發與維護規範    |
-| `fec-legacy-to-modern-migration` | jQuery/MPA → React/Vue 3 + TS 策略與分階段流程 |
+| `fec-legacy-to-modern-migration` | 遺留前端現代化、目標技術棧識別與分階段遷移流程 |
 
 **專案演進** — 吸收參考系統並原創化落到目前專案時啟用：
 
@@ -386,11 +386,12 @@ $env:MODAO_TOKEN = "your-modao-token"
 每一次審查、分析和評估都會輸出帶時間戳記的 Markdown 報告到 `reports/`，可作為稽核記錄和 PR 交付物。
 
 <details>
-<summary>查看全部 15 種報告類型</summary>
+<summary>查看全部 16 種報告類型</summary>
 
 | 報告類型       | 檔名模式                                     | 來源                                                                |
 | -------------- | -------------------------------------------- | ------------------------------------------------------------------- |
 | 程式碼審查     | `code-review-YYYY-MM-DD-HHmmss.md`           | `/fec-review`、`fec-code-review`、`fec-code-reviewer`               |
+| 除錯診斷       | `debug-YYYY-MM-DD-HHmmss.md`                 | `/fec-debug`、`fec-debug-framework`、`fec-debugger`                 |
 | TS/JS 專項審查 | `typescript-review-YYYY-MM-DD-HHmmss.md`     | `fec-typescript-reviewer`                                           |
 | 安全審查       | `security-review-YYYY-MM-DD-HHmmss.md`       | `fec-security-review`、`fec-security-reviewer`                      |
 | 無障礙檢查     | `accessibility-review-YYYY-MM-DD-HHmmss.md`  | `fec-accessibility-check`                                           |
