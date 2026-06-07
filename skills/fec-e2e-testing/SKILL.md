@@ -1,4 +1,4 @@
-﻿---
+---
 name: fec-e2e-testing
 description: Use when creating, maintaining, debugging, or reviewing real-browser end-to-end tests with Playwright or Cypress, including Page Object models, CI artifacts, traces, flaky tests, cross-page visual regression, and critical user journeys such as login, payment, permissions, or CRUD. For layer planning or tests close to UI components, choose the matching testing workflow first; Chinese triggers include E2E, 端到端测试, Playwright, Cypress.
 ---

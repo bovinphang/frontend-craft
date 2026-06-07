@@ -1,4 +1,4 @@
-﻿---
+---
 name: fec-form-handling
 description: Use when building or reviewing substantial forms with React Hook Form, Zod schemas, typed validation, dynamic fields, controlled third-party inputs, file upload, multi-step flows, dependent validation, or form performance. Do not use for trivial 1-3 field forms without validation; Chinese triggers include 表单, 表单校验, 动态字段.
 ---

@@ -1,4 +1,4 @@
-﻿---
+---
 name: fec-browser-storage
 description: Use when choosing, implementing, or reviewing browser storage such as localStorage, sessionStorage, IndexedDB, cookies, client persistence, offline data, secure storage, or cleanup strategy; Chinese triggers include 浏览器存储, 客户端持久化.
 ---

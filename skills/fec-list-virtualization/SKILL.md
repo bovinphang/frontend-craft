@@ -1,4 +1,4 @@
-﻿---
+---
 name: fec-list-virtualization
 description: Use when optimizing or reviewing large lists, virtual scrolling, windowing, react-window, TanStack Virtual, variable-height rows, dynamic measurement, infinite scroll, grid virtualization, or scroll performance; Chinese triggers include 虚拟列表, 大列表优化, 滚动性能.
 ---

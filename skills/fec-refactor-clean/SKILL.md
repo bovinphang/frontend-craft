@@ -1,4 +1,4 @@
-﻿---
+---
 name: fec-refactor-clean
 description: Use when safely removing dead frontend code, unused exports, stale components, obsolete routes, unused dependencies, or cleanup targets found by tools such as knip, depcheck, ts-prune, TypeScript, ESLint, or manual review. Do not use for feature rewrites that change behavior; Chinese triggers include 死代码, 清理未使用, refactor clean, 依赖清理, 删除无用代码.
 ---

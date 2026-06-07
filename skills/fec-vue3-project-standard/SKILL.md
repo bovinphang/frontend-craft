@@ -1,4 +1,4 @@
-﻿---
+---
 name: fec-vue3-project-standard
 description: Use when designing or reviewing Vue 3 + TypeScript project structure, SFC/component boundaries, composables organization, route composition, Pinia ownership, API/error/styling defaults, directives, or repository-wide Vue conventions. Prefer narrower skills for forms, data fetching, tests, accessibility, virtualization, animation, or security deep dives; Chinese triggers include Vue 3 项目规范, Vue 组件架构.
 ---

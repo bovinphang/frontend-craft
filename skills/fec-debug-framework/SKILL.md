@@ -1,4 +1,4 @@
-﻿---
+---
 name: fec-debug-framework
 description: Use when diagnosing frontend build failures, runtime errors, UI anomalies, API/data problems, white screens, request failures, or unexplained production exceptions; Chinese triggers include 调试, debug, 排查, 定位, 报错, 异常, 白屏, 请求失败.
 ---
