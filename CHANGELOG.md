@@ -9,6 +9,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 Project-facing release notes are maintained in English from 2.0.0 onward. Historical entries may preserve their original language.
 
+## [Unreleased]
+
+### Added
+
+- **`fec-web-video-presentation` skill:** adds an original Frontend Craft workflow for turning articles, scripts, lessons, and demos into recordable 16:9 step-driven web presentations, including compact references, starter theme data, and a cross-platform Vite/React scaffold helper.
+
+### Changed
+
+- **Garden Skills absorption:** strengthened UI design direction, image-generation routing, and source-driven local knowledge retrieval workflows through project-native guidance without copying Garden implementations, templates, or provider-specific image scripts.
+- **Skill count:** 43 → 44 across README locales, marketplace metadata, standalone skill metadata, and trigger eval queries.
+
 
 ## [2.6.0] - 2026-06-07
 

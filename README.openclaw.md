@@ -143,6 +143,7 @@ frontend-craft/
 | `fec-accessibility-check`        | WCAG-oriented semantic structure, keyboard support, focus, labels                    |
 | `fec-react-project-standard`     | React + TypeScript project standards                                                 |
 | `fec-vue3-project-standard`      | Vue 3 + TypeScript project standards                                                 |
+| `fec-typescript-project-standard`     | TypeScript config, public API types, declarations, DTOs, and generics                |
 | `fec-implement-from-design`      | Implement UI from Figma, Sketch, MasterGo, Pixso, Modao, or screenshots              |
 | `fec-validation-fix`             | Run validation commands, diagnose failures, and fix safely                           |
 | `fec-legacy-web-standard`        | JavaScript + jQuery + HTML/CSS legacy frontend standards                             |
@@ -167,7 +168,7 @@ frontend-craft/
 | `fec-canvas-threejs`             | Canvas 2D, Three.js, React Three Fiber, WebGL performance and accessibility          |
 | `fec-svg-animation`              | SVG animation with CSS, Framer Motion, GSAP, reduced-motion fallbacks                |
 | `fec-ui-design`                  | UI direction, visual identity, polish, states, visual QA                             |
-| `fec-typescript-project-standard`     | TypeScript config, public API types, declarations, DTOs, and generics                |
+| `fec-web-video-presentation`     | Recordable 16:9 step-driven web presentations from articles, scripts, lessons, demos |
 | `fec-dependency-upgrade`         | Dependency upgrades, lockfile review, CVE remediation, migration verification        |
 | `fec-vite-project-standard`      | Vite config, env safety, HMR, dev proxy, build optimization, library mode            |
 
@@ -213,6 +214,7 @@ This section is a quick OpenClaw-oriented sample, not the full prompt catalog. F
 | Build an interactive 3D scene              | `fec-canvas-threejs`             | “Add a Three.js product viewer to `src/components/ProductViewer.tsx` with performance and fallback considerations.”                              |
 | Add SVG motion to a landing page           | `fec-svg-animation`              | “Animate the hero SVG with Framer Motion, and ensure reduced-motion users get a static fallback.”                                                |
 | Design and polish UI                       | `fec-ui-design`                  | “Review `src/components/Dashboard.tsx` for UI direction, visual identity, spacing, states, and motion polish.”                                   |
+| Build a recordable web presentation        | `fec-web-video-presentation`     | “Turn this product demo script into a 16:9 browser presentation with script beats, chapter steps, theme tokens, and recording guidance.”          |
 | Optimize Vite build config                 | `fec-vite-project-standard`      | “Audit our `vite.config.ts` for HMR, dev proxy, env variable safety, and library mode best practices.”                                           |
 
 **Slash commands (markdown under `commands/`)**

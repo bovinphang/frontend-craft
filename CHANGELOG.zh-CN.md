@@ -8,6 +8,17 @@
 
 自 **2.0.0** 起，面向发布的说明以英文 `CHANGELOG.md` 为权威来源；历史条目可能保留最初撰写语言。
 
+## [Unreleased]
+
+### 新增
+
+- **`fec-web-video-presentation` 技能**：新增 Frontend Craft 原生网页视频演示工作流，可将文章、口播稿、课程和 demo 转成可录屏的 16:9 步进网页演示，并附带精简参考文档、starter theme 数据和跨平台 Vite/React 脚手架 helper。
+
+### 变更
+
+- **Garden Skills 吸收**：以项目原生方式增强 UI 设计方向、图片生成路由和来源驱动本地知识检索流程，不复制 Garden 实现、模板或供应商绑定的出图脚本。
+- **技能数量**：43 → 44，已同步到各语言 README、marketplace 元数据、独立技能元数据和触发评测样例。
+
 
 
 ## [2.6.0] - 2026-06-07

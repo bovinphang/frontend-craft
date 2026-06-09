@@ -32,7 +32,7 @@
 
 Per-runtime paths and caveats live in [`docs/runtimes/`](docs/runtimes/).
 
-It bundles **13 specialized agents**, **42 auto-activated skills**, **8 slash commands**, **5 event-driven hooks**, **MCP integrations** for 6 design-tool endpoints, and a complete **rules library** into a single installable package. Run one command, and every AI session on your team writes React, Vue, Next.js, or Nuxt the same way — typed, accessible, secure, and consistent.
+It bundles **13 specialized agents**, **44 auto-activated skills**, **8 slash commands**, **5 event-driven hooks**, **MCP integrations** for 6 design-tool endpoints, and a complete **rules library** into a single installable package. Run one command, and every AI session on your team writes React, Vue, Next.js, or Nuxt the same way — typed, accessible, secure, and consistent.
 
 ---
 
@@ -40,7 +40,7 @@ It bundles **13 specialized agents**, **42 auto-activated skills**, **8 slash co
 
 | Problem                                                              | What frontend-craft does                                                                       |
 | -------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------- |
-| AI assistants write inconsistent, untyped, or insecure frontend code | **43 skills** encode team standards — auto-activated when the assistant touches matching files |
+| AI assistants write inconsistent, untyped, or insecure frontend code | **44 skills** encode team standards — auto-activated when the assistant touches matching files |
 | Each AI tool has its own plugin format                               | **One CLI** installs the same rules, agents, and hooks into 15 runtimes                        |
 | Design-to-code handoff is lossy                                      | **MCP integrations** bring in richer context from Figma, Figma Desktop, Sketch, MasterGo, Pixso, and 墨刀 |
 | Reviews are ad-hoc and shallow                                       | **13 agents** produce graded reports: code, security, a11y, performance, TS, UI fidelity       |
@@ -187,6 +187,7 @@ The skills below are grouped by use case so you can quickly find project standar
 | `fec-nuxt-project-standard`     | Nuxt 3 SSR/SSG, composables, data fetching, middleware                |
 | `fec-vite-project-standard`     | Vite config, env safety, HMR, dev proxy, build optimization           |
 | `fec-monorepo-project-standard` | pnpm workspace, Turborepo, Nx structure and task orchestration        |
+| `fec-typescript-project-standard`   | TypeScript config, public API types, declarations, DTOs, generics             |
 
 **Implementation capabilities** — activated when building specific frontend behavior:
 
@@ -219,7 +220,6 @@ The skills below are grouped by use case so you can quickly find project standar
 | ------------------------------ | ----------------------------------------------------------------------------- |
 | `fec-code-review`              | Architecture, types, rendering, styles, a11y review                           |
 | `fec-debug-framework`          | Systematic diagnostics for build, runtime, UI, and API/data failures          |
-| `fec-typescript-project-standard`   | TypeScript config, public API types, declarations, DTOs, generics             |
 | `fec-security-review`          | XSS, CSRF, sensitive data leakage, input validation                           |
 | `fec-accessibility-check`      | WCAG 2.2, keyboard, focus, touch, and screen-reader behavior                  |
 | `fec-dependency-upgrade`       | Dependency upgrades, lockfile review, CVE remediation, migration verification |
@@ -233,6 +233,7 @@ The skills below are grouped by use case so you can quickly find project standar
 | ----------------------------- | ----------------------------------------------------------------------------- |
 | `fec-ui-design`               | Product-context UI direction, anti-generic design dials, media strategy, states, visual QA |
 | `fec-image-generation`        | Diagrams, image generation/editing, visual assets, PNG QA and repair loops     |
+| `fec-web-video-presentation` | Recordable 16:9 step-driven web presentations from articles, scripts, lessons, and demos |
 | `fec-tailwind-design-system`  | Tailwind tokens, theme extension, variants, class governance, dark mode       |
 | `fec-responsive-layout`       | Mobile-first layouts, container queries, data-dense responsive UI             |
 | `fec-motion-interaction`      | Context-aware motion intensity, page transitions, scroll animation, reduced motion |

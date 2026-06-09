@@ -32,7 +32,7 @@
 
 各运行时的路径与注意事项详见 [`docs/runtimes/`](docs/runtimes/)。
 
-它将 **13 个专业 agent**、**43 个自动激活 skill**、**8 个斜杠命令**、**5 个事件驱动 hook**、面向 6 个设计工具端点的 **MCP 集成**以及一整套**规则库**打包为一个可安装单元。运行一条命令，团队里的每一次 AI 会话都将以相同的方式编写 React、Vue、Next.js 或 Nuxt——类型安全、可访问、安全、一致。
+它将 **13 个专业 agent**、**44 个自动激活 skill**、**8 个斜杠命令**、**5 个事件驱动 hook**、面向 6 个设计工具端点的 **MCP 集成**以及一整套**规则库**打包为一个可安装单元。运行一条命令，团队里的每一次 AI 会话都将以相同的方式编写 React、Vue、Next.js 或 Nuxt——类型安全、可访问、安全、一致。
 
 ---
 
@@ -40,7 +40,7 @@
 
 | 痛点                                          | frontend-craft 的解法                                                 |
 | --------------------------------------------- | --------------------------------------------------------------------- |
-| AI 助手写出的前端代码风格不一、缺类型、不安全 | **43 个 skill** 将团队规范编码为可自动激活的工作流                    |
+| AI 助手写出的前端代码风格不一、缺类型、不安全 | **44 个 skill** 将团队规范编码为可自动激活的工作流                    |
 | 每款 AI 工具都有自己的插件格式                | **一条 CLI 命令** 把相同的规则、agent 和 hook 安装到 15 个运行时      |
 | 设计稿到代码的交接总有信息损失                | **MCP 集成** 从 Figma、Figma Desktop、Sketch、MasterGo、Pixso、墨刀引入更完整设计上下文 |
 | 代码评审随意、浅层                            | **13 个 agent** 输出分级报告：代码、安全、无障碍、性能、TS、UI 还原度 |
@@ -187,6 +187,7 @@ npx @bovinphang/frontend-craft@latest list
 | `fec-nuxt-project-standard`     | Nuxt 3 SSR/SSG、组合式 API、数据获取、中间件          |
 | `fec-vite-project-standard`     | Vite 配置、环境变量安全、HMR、开发代理、构建优化      |
 | `fec-monorepo-project-standard` | pnpm workspace、Turborepo、Nx 结构与任务编排          |
+| `fec-typescript-project-standard`   | TypeScript 配置、公开类型、声明文件、DTO 和泛型       |
 
 **实现能力** — 构建特定前端能力时激活：
 
@@ -219,7 +220,6 @@ npx @bovinphang/frontend-craft@latest list
 | ------------------------------ | ----------------------------------------------------- |
 | `fec-code-review`              | 架构、类型、渲染、样式、可访问性评审                  |
 | `fec-debug-framework`          | 系统化诊断构建、运行时、UI 和 API/数据问题            |
-| `fec-typescript-project-standard`   | TypeScript 配置、公开类型、声明文件、DTO 和泛型       |
 | `fec-security-review`          | XSS、CSRF、敏感数据泄露、输入校验                     |
 | `fec-accessibility-check`      | WCAG 2.2、键盘、焦点、触控和屏幕阅读器行为            |
 | `fec-dependency-upgrade`       | 依赖升级、lockfile 评审、CVE 修复和迁移验证           |
@@ -233,6 +233,7 @@ npx @bovinphang/frontend-craft@latest list
 | ----------------------------- | -------------------------------------------------------- |
 | `fec-ui-design`               | 产品语境 UI 方向、反模板设计拨盘、媒体策略、状态、视觉 QA |
 | `fec-image-generation`        | 图表、图片生成/编辑、视觉资产、PNG 自检和修复循环        |
+| `fec-web-video-presentation` | 将文章、口播稿、课程和 demo 转成可录屏的 16:9 步进网页演示 |
 | `fec-tailwind-design-system`  | Tailwind token、主题扩展、组件变体、class 治理和暗色模式 |
 | `fec-responsive-layout`       | 移动优先布局、容器查询、数据密集型响应式界面             |
 | `fec-motion-interaction`      | 场景化动效强度、页面转场、滚动动画、reduced-motion       |
