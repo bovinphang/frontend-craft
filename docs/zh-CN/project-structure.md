@@ -31,11 +31,11 @@ frontend-craft/
 |   |-- fec-accessibility-check/     # WCAG 2.2、键盘、焦点和屏幕阅读器无障碍检查
 |   |-- fec-react-project-standard/  # React + TypeScript 项目规范
 |   |-- fec-vue3-project-standard/   # Vue 3 + TypeScript 项目规范
-|   |-- fec-implement-from-design/   # 从设计文件实现 UI
+|   |-- fec-implement-from-design/   # 基于设计工具、截图和视觉参考实现 UI
 |   |-- fec-validation-fix/            # lint、type-check、test、build 与修复
 |   |-- fec-performance-optimization/  # Core Web Vitals、包体、渲染、网络、内存
 |   |-- fec-source-driven-development/ # 官方来源、项目事实、版本敏感决策
-|   |-- fec-typescript-type-safety/   # 类型契约、DTO 映射、类型守卫和泛型
+|   |-- fec-typescript-project-standard/   # TypeScript 配置、公开类型、声明文件、DTO 和泛型
 |   |-- fec-state-management/         # 状态归属、store 选型、URL/服务端/表单/本地边界
 |   |-- fec-tailwind-design-system/   # Tailwind token、组件变体、暗色模式和 class 治理
 |   |-- fec-responsive-layout/        # 移动优先布局、容器查询和触摸友好的响应式 UI
@@ -52,6 +52,7 @@ frontend-craft/
 |   |-- fec-monorepo-project-standard/  # pnpm workspace、Turborepo、Nx 规范
 |   |-- fec-data-fetching/              # TanStack Query 和服务端状态工作流
 |   |-- fec-api-integration/            # 类型化 API client、鉴权刷新、上传、实时集成
+|   |-- fec-backend-requirements-handoff/ # 前后端 UI 数据与状态需求交接
 |   |-- fec-form-handling/              # React Hook Form + Zod 表单工作流
 |   |-- fec-route-protection/           # 鉴权路由和权限路由
 |   |-- fec-component-testing/          # RTL / Vue Test Utils 组件测试
@@ -62,8 +63,10 @@ frontend-craft/
 |   |-- fec-browser-storage/            # localStorage/sessionStorage/IndexedDB/Cookies 选型与安全客户端持久化
 |   |-- fec-list-virtualization/        # react-window / TanStack Virtual 大列表窗口化与测量策略
 |   |-- fec-storybook-component-doc/    # Storybook 组件文档、addon、MDX、交互和视觉测试集成
-|   |-- fec-ui-design/                  # UI 方向、视觉识别、打磨、状态、视觉 QA
-|   |-- fec-motion-interaction/         # 交互动效、页面转场、滚动动画、reduced motion
+|   |-- fec-ui-design/                  # 产品语境 UI 方向、设计拨盘、媒体策略、视觉 QA
+|   |-- fec-image-generation/           # 图表/图片生成、编辑工作流、PNG 自检和修复循环
+|   |-- fec-web-video-presentation/    # 可录屏的 16:9 步进网页视频演示
+|   |-- fec-motion-interaction/         # 场景化动效强度、页面转场、滚动动画、reduced motion
 |   |-- fec-vite-project-standard/      # Vite 配置、环境变量安全、HMR、代理、构建与 library mode
 |
 |-- commands/         # 快速执行的斜杠命令

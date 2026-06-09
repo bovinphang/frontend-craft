@@ -23,7 +23,9 @@ description: Use when creating, maintaining, debugging, or reviewing real-browse
 ## 详细参考
 
 - 需要目录结构、Page Object、spec 组织、配置、flaky 调试和产物示例时，加载 [references/playwright-patterns.md](references/playwright-patterns.md)。
-- 需要 CI 示例、Markdown 报告模板、Web3/钱包流程、高风险金融流程或视觉回归配置时，加载 [references/e2e-advanced.md](references/e2e-advanced.md)。
+- 需要 CI 示例和 Markdown 报告模板时，加载 [references/e2e-ci-reporting.md](references/e2e-ci-reporting.md)。
+- 需要 Web3/钱包流程或高风险金融流程时，加载 [references/e2e-special-scenarios.md](references/e2e-special-scenarios.md)。
+- 需要跨页面截图或视觉回归配置时，加载 [references/e2e-visual-regression.md](references/e2e-visual-regression.md)。
 
 ## Constraints
 

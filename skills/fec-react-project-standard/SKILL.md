@@ -36,7 +36,7 @@ description: Use when designing or reviewing React + TypeScript project structur
    - 哪些逻辑应下沉为通用能力
    - 哪些状态应本地管理，哪些应交给 store / query / URL
    - 状态归属复杂时使用状态管理流程先做状态清单
-   - DTO、公共 props 或泛型组件复杂时使用 TypeScript 类型安全流程先收敛类型契约
+   - DTO、公共 props、泛型组件或 `tsconfig` 边界复杂时，先使用 TypeScript 项目规范流程收敛跨框架类型契约
 
 4. 输出时补齐关键质量项
    - loading / error / empty / data 状态
@@ -49,10 +49,16 @@ description: Use when designing or reviewing React + TypeScript project structur
    - 图片、视频、字体等资源是否本地化、可缓存，并避免占位 URL 进入交付
    - 页面级 Error Boundary、模块级 fallback、API 错误映射和用户可恢复动作是否一致
    - Tailwind token/variant 或响应式布局需求是否应分流到对应专项 skill
+   - 对明显架构性能风险做轻量筛查，如重型依赖边界、过宽 Context、高频派生值和懒加载 fallback；需要指标证据时进入性能优化 workflow
 
 ## 详细参考
 
-需要具体 React 项目结构、组件模式、Hooks、路由、状态归属、API 层形状、错误处理、样式默认值、TypeScript 约定或审查清单时，加载 [references/react-project-details.md](references/react-project-details.md)。
+按需要加载更细的参考文件：
+
+- 项目目录、组件分层、组件边界和组件目录建议：加载 [references/react-project-structure.md](references/react-project-structure.md)。
+- 组件模式、Hooks、路由、状态归属、API 层、错误处理和 Suspense/懒加载：加载 [references/react-runtime-patterns.md](references/react-runtime-patterns.md)。
+- 样式、注释、TypeScript、测试、反模式和输出检查清单：加载 [references/react-quality-patterns.md](references/react-quality-patterns.md)。
+- React 项目规范层面的轻量性能约定：加载 [references/react-performance-patterns.md](references/react-performance-patterns.md)。
 
 ## Constraints
 
@@ -66,11 +72,12 @@ description: Use when designing or reviewing React + TypeScript project structur
 - 不在通用页面组件里同步引入 GSAP、Three.js、Lottie、富文本编辑器或地图 SDK；需要时用动态导入、路由级分包或叶子组件隔离。
 - 不在 React 组件中散落裸 `fetch`、API URL、token refresh 或上传流程；跨边界请求应收敛到 API 集成层。
 - 不用 Error Boundary 处理普通 API 失败；请求错误应优先落到 loading/error/empty/data 状态和可恢复操作。
+- 不把 React 性能建议写成无证据的全局 memo 化；先定位请求瀑布、bundle 边界、重复渲染或 effect 误用。
 
 ## Expected Output
 
 - 组件边界清晰，pages/features/components 分层明确
-- Props 类型完整且明确，无 `any` 滥用
+- Props 类型完整且明确；复杂公共类型或外部数据收窄已分流到 TypeScript 项目规范流程
 - 可复用逻辑已提取为 hooks，loading/error/empty/data 状态齐全
 - API 层具备类型约束和统一错误处理，状态管理符合就近原则
 - URL 状态、服务端状态、表单状态和全局客户端状态边界明确
@@ -81,3 +88,4 @@ description: Use when designing or reviewing React + TypeScript project structur
 - 必要时说明为什么这样分层
 - 对新增模块，优先输出最小可落地结构，而不是一次性过度设计
 - 对重构任务，优先保证可迁移性和风险可控
+- 对性能相关 React 变更，说明触发的风险类别、证据来源和验证命令

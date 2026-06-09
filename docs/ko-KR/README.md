@@ -32,7 +32,7 @@
 
 각 런타임의 경로와 주의사항은 [`docs/runtimes/`](../runtimes/)에 있습니다.
 
-**13개의 전문 에이전트**, **41개의 자동 활성화 스킬**, **8개의 슬래시 명령어**, **5개의 이벤트 기반 훅**, 6개 디자인 도구 엔드포인트를 위한 **MCP 통합**, 그리고 완전한 **규칙 라이브러리**를 하나의 설치 가능한 패키지로 묶었습니다. 명령어 하나만 실행하면, 팀의 모든 AI 세션이 React, Vue, Next.js, Nuxt를 같은 방식으로 작성합니다 — 타입 안전하고, 접근성 있고, 안전하며, 일관성 있게.
+**13개의 전문 에이전트**, **44개의 자동 활성화 스킬**, **8개의 슬래시 명령어**, **5개의 이벤트 기반 훅**, 6개 디자인 도구 엔드포인트를 위한 **MCP 통합**, 그리고 완전한 **규칙 라이브러리**를 하나의 설치 가능한 패키지로 묶었습니다. 명령어 하나만 실행하면, 팀의 모든 AI 세션이 React, Vue, Next.js, Nuxt를 같은 방식으로 작성합니다 — 타입 안전하고, 접근성 있고, 안전하며, 일관성 있게.
 
 ---
 
@@ -40,7 +40,7 @@
 
 | 문제점                                                                       | frontend-craft의 해결책                                                                                     |
 | ---------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------- |
-| AI 어시스턴트가 일관성 없고, 타입 없고, 안전하지 않은 프론트엔드 코드를 작성 | **41개 스킬**이 팀 표준을 인코딩 — 해당 파일을 건드릴 때 자동 활성화                                        |
+| AI 어시스턴트가 일관성 없고, 타입 없고, 안전하지 않은 프론트엔드 코드를 작성 | **44개 스킬**이 팀 표준을 인코딩 — 해당 파일을 건드릴 때 자동 활성화                                        |
 | AI 도구마다 플러그인 형식이 다름                                             | **하나의 CLI**로 동일한 규칙, 에이전트, 훅을 15개 런타임에 설치                                             |
 | 디자인에서 코드로의 전달 과정에서 정보 손실                                  | **MCP 통합**이 Figma, Figma Desktop, Sketch, MasterGo, Pixso, 墨刀에서 더 풍부한 디자인 컨텍스트를 가져오기 |
 | 리뷰가 즉흥적이고 얕음                                                       | **13개 에이전트**가 등급별 보고서 출력: 코드, 보안, 접근성, 성능, TS, UI 충실도                             |
@@ -187,6 +187,7 @@ Marketplace가 이미 설치된 경우, `--force`를 사용해도 CLI는 두 번
 | `fec-nuxt-project-standard`     | Nuxt 3 SSR/SSG, Composition API, 데이터 페칭, 미들웨어       |
 | `fec-vite-project-standard`     | Vite 설정, 환경 변수 안전, HMR, 개발 프록시, 빌드 최적화     |
 | `fec-monorepo-project-standard` | pnpm workspace, Turborepo, Nx 구조 및 태스크 오케스트레이션  |
+| `fec-typescript-project-standard`   | TypeScript 설정, 공개 API 타입, 선언 파일, DTO, 제네릭          |
 
 **구현 기능** — 특정 프론트엔드 기능을 구축할 때 활성화:
 
@@ -219,7 +220,6 @@ Marketplace가 이미 설치된 경우, `--force`를 사용해도 CLI는 두 번
 | ------------------------------ | --------------------------------------------------------------- |
 | `fec-code-review`              | 아키텍처, 타입, 렌더링, 스타일, 접근성 리뷰                     |
 | `fec-debug-framework`          | 빌드, 런타임, UI, API/데이터 장애의 체계적 진단                 |
-| `fec-typescript-type-safety`   | 타입 계약, DTO 매핑, 타입 가드, 제네릭, 타입 수준 검사          |
 | `fec-security-review`          | XSS, CSRF, 민감 데이터 유출, 입력 검증                          |
 | `fec-accessibility-check`      | WCAG 2.2, 키보드, 포커스, 터치, 스크린 리더 동작                |
 | `fec-dependency-upgrade`       | 의존성 업그레이드, lockfile 리뷰, CVE 수정, 마이그레이션 검증   |
@@ -231,11 +231,13 @@ Marketplace가 이미 설치된 경우, `--force`를 사용해도 CLI는 두 번
 
 | 스킬                          | 범위                                                               |
 | ----------------------------- | ------------------------------------------------------------------ |
-| `fec-ui-design`               | UI 방향, 시각적 정체성, polish, 상태, visual QA                    |
+| `fec-ui-design`               | 제품 맥락 UI 방향, 반템플릿 디자인 다이얼, 미디어 전략, 상태, visual QA |
+| `fec-image-generation`        | 다이어그램, 이미지 생성/편집, 비주얼 에셋, PNG QA 및 수정 루프     |
+| `fec-web-video-presentation` | 글, 스크립트, 레슨, demo를 녹화 가능한 16:9 step-driven 웹 프레젠테이션으로 변환 |
 | `fec-tailwind-design-system`  | Tailwind token, 테마 확장, variants, class 관리, dark mode         |
 | `fec-responsive-layout`       | 모바일 우선, container queries, 데이터 밀집 responsive UI          |
-| `fec-motion-interaction`      | 인터랙션 motion, 페이지 전환, 스크롤 animation, reduced-motion     |
-| `fec-implement-from-design`   | Figma/Sketch/MasterGo/Pixso/墨刀 디자인 또는 摹客 에셋에서 UI 구현 |
+| `fec-motion-interaction`      | 맥락 기반 motion 강도, 페이지 전환, 스크롤 animation, reduced-motion |
+| `fec-implement-from-design`   | 디자인 도구, 스크린샷 또는 section 단위 시각 참조에서 UI 구현      |
 | `fec-storybook-component-doc` | Storybook 컴포넌트 문서, 디자인 시스템 표시, 격리 상태 미리보기    |
 
 **레거시 마이그레이션** — 현대화 작업에서 활성화:
@@ -255,6 +257,7 @@ Marketplace가 이미 설치된 경우, `--force`를 사용해도 CLI는 두 번
 
 | 스킬                            | 범위                                                  |
 | ------------------------------- | ----------------------------------------------------- |
+| `fec-backend-requirements-handoff` | Frontend-to-backend handoff for UI data needs, actions, states, rules, and questions |
 | `fec-doc-sync`                  | 프론트엔드 문서를 코드, 설정, 스크립트, 라우트, API, 환경 변수, 배포 사실과 동기화 |
 | `fec-source-driven-development` | 프로젝트 사실과 공식 소스로 버전 의존 결정을 검증     |
 

@@ -68,6 +68,29 @@
       "PWA Service Worker 缓存接口"
     ]
   },
+  "fec-backend-requirements-handoff": {
+    "should_trigger": [
+      "帮我把这个页面的数据需求整理给后端",
+      "写一份前端视角的后端需求交接文档",
+      "这个 dashboard 需要哪些后端数据，帮我列给 API 团队",
+      "不要设计接口，只描述 UI 需要展示什么和能做什么",
+      "前后端联调前先梳理用户动作、空态和错误态",
+      "把订单详情页的权限和业务规则问题整理成后端问题清单",
+      "frontend-to-backend requirements handoff for this feature",
+      "document backend data needs for the checkout UI",
+      "我需要向后端说明这个列表页的筛选、分页和状态需求"
+    ],
+    "should_not_trigger": [
+      "实现 typed API client 和错误映射",
+      "给接口封装 refresh token 队列",
+      "设计数据库表结构和索引",
+      "写后端 controller 和 service",
+      "修复 React 组件里的 loading 状态",
+      "做一次完整代码审查",
+      "同步 README 里的脚本说明",
+      "配置 Vite dev server proxy"
+    ]
+  },
   "fec-browser-storage": {
     "should_trigger": [
       "localStorage 里该怎么存用户偏好",
@@ -288,6 +311,31 @@
       "审查文件上传安全风险",
       "普通两个字段搜索框",
       "Vue 组件架构设计"
+    ]
+  },
+  "fec-image-generation": {
+    "should_trigger": [
+      "帮我生成一张技术架构图并导出 PNG，还要检查标签有没有重叠",
+      "生成 ER 图、UML 类图和序列图的可编辑源与图片",
+      "给这个产品做一组海报和品牌板视觉探索",
+      "请生成一个 UI 样机图并自检导出的 PNG 是否裁切",
+      "把这张图片做编辑工作流，保留主体但替换背景",
+      "制作 ML 模型结构图，标清 tensor shape 并避免连线堆叠",
+      "生成信息图和学术图，导出后自动修复标签截断",
+      "为这个故事生成漫画分镜和头像资产",
+      "run PNG QA on this generated architecture diagram",
+      "image generation workflow for posters, product shots, and mockups"
+    ],
+    "should_not_trigger": [
+      "只打磨现有 dashboard 的间距和 hover 状态",
+      "按 Figma 像素还原页面",
+      "实现 Three.js 交互式 3D 场景",
+      "给 SVG 图标加 reduced-motion 动画",
+      "检查按钮 aria-label 和键盘焦点",
+      "修复 React Query 缓存失效",
+      "写 Playwright 登录 E2E",
+      "配置 Tailwind token 和 dark mode",
+      "优化虚拟列表滚动性能"
     ]
   },
   "fec-implement-from-design": {
@@ -554,28 +602,6 @@
       "迁移 jQuery 到 React"
     ]
   },
-  "fec-route-protection": {
-    "should_trigger": [
-      "实现未登录跳转登录页",
-      "RBAC 权限路由怎么设计",
-      "React Router 私有路由守卫",
-      "Next middleware 鉴权和 redirect",
-      "Vue Router beforeEach 权限判断",
-      "Nuxt route middleware 登录态",
-      "防止 open redirect",
-      "route guard with roles"
-    ],
-    "should_not_trigger": [
-      "审查 token 是否安全存储",
-      "设计 React 项目结构",
-      "配置 TanStack Query",
-      "写 E2E 登录流程",
-      "表单校验",
-      "PWA 离线缓存",
-      "普通菜单键盘可访问性",
-      "jQuery 迁移"
-    ]
-  },
   "fec-responsive-layout": {
     "should_trigger": [
       "这个页面 375px 下横向溢出，帮我做响应式布局",
@@ -596,6 +622,28 @@
       "实现 React 项目目录结构",
       "审查 XSS 风险",
       "升级依赖版本"
+    ]
+  },
+  "fec-route-protection": {
+    "should_trigger": [
+      "实现未登录跳转登录页",
+      "RBAC 权限路由怎么设计",
+      "React Router 私有路由守卫",
+      "Next middleware 鉴权和 redirect",
+      "Vue Router beforeEach 权限判断",
+      "Nuxt route middleware 登录态",
+      "防止 open redirect",
+      "route guard with roles"
+    ],
+    "should_not_trigger": [
+      "审查 token 是否安全存储",
+      "设计 React 项目结构",
+      "配置 TanStack Query",
+      "写 E2E 登录流程",
+      "表单校验",
+      "PWA 离线缓存",
+      "普通菜单键盘可访问性",
+      "jQuery 迁移"
     ]
   },
   "fec-security-review": {
@@ -686,28 +734,6 @@
       "jQuery 迁移"
     ]
   },
-  "fec-tailwind-design-system": {
-    "should_trigger": [
-      "设计 Tailwind token 和 theme.extend",
-      "这个组件库的 class 太散，想整理成 variants",
-      "Tailwind 暗色模式怎么和 CSS 变量对齐",
-      "检查动态 class 是否会被 purge 掉",
-      "用 CVA 设计 Button 的 size 和 tone",
-      "Tailwind safelist 应该怎么治理",
-      "build a Tailwind design system for this app",
-      "把硬编码颜色迁移到 Tailwind 语义 token"
-    ],
-    "should_not_trigger": [
-      "纯 CSS Grid 响应式布局溢出",
-      "按 Figma 像素还原页面",
-      "写组件 RTL 单测",
-      "审查接口 401 错误映射",
-      "修复 TypeScript 类型错误",
-      "配置路由权限守卫",
-      "升级 npm 依赖",
-      "做通用前端 PR review"
-    ]
-  },
   "fec-svg-animation": {
     "should_trigger": [
       "SVG 路径描边动画",
@@ -728,6 +754,28 @@
       "写 E2E 测试",
       "检查 XSS",
       "虚拟列表性能"
+    ]
+  },
+  "fec-tailwind-design-system": {
+    "should_trigger": [
+      "设计 Tailwind token 和 theme.extend",
+      "这个组件库的 class 太散，想整理成 variants",
+      "Tailwind 暗色模式怎么和 CSS 变量对齐",
+      "检查动态 class 是否会被 purge 掉",
+      "用 CVA 设计 Button 的 size 和 tone",
+      "Tailwind safelist 应该怎么治理",
+      "build a Tailwind design system for this app",
+      "把硬编码颜色迁移到 Tailwind 语义 token"
+    ],
+    "should_not_trigger": [
+      "纯 CSS Grid 响应式布局溢出",
+      "按 Figma 像素还原页面",
+      "写组件 RTL 单测",
+      "审查接口 401 错误映射",
+      "修复 TypeScript 类型错误",
+      "配置路由权限守卫",
+      "升级 npm 依赖",
+      "做通用前端 PR review"
     ]
   },
   "fec-tdd-workflow": {
@@ -774,26 +822,28 @@
       "优化虚拟列表滚动性能"
     ]
   },
-  "fec-typescript-type-safety": {
+  "fec-typescript-project-standard": {
     "should_trigger": [
+      "TypeScript 项目 tsconfig strict 怎么配置",
       "审查这些 DTO 和 view model 类型边界",
       "这个泛型组件类型怎么设计更安全",
       "用 type guard 收窄 unknown 输入",
-      "检查不安全的 as 和非空断言",
       "设计判别联合表达异步状态",
-      "给公共 utility type 加类型测试",
       "TypeScript 类型建模和泛型约束 review",
-      "API 响应类型和运行时校验怎么对齐"
+      "TS SDK 的 package exports 和 d.ts 怎么发布",
+      "monorepo package 的 project references 怎么配置",
+      "public API 类型和声明文件一致性怎么检查",
+      "Node CLI 的 moduleResolution 和类型声明怎么设"
     ],
     "should_not_trigger": [
-      "做整个前端 PR 综合评审",
-      "只修复 tsc 编译失败",
-      "写 React 组件 UI",
-      "检查按钮键盘焦点",
-      "配置 Vite env 变量",
-      "写 Playwright E2E",
-      "选择全局 store 方案",
-      "审查 CSP 和 XSS"
+      "React 项目组件目录怎么分层",
+      "Vue composable 和 Pinia store 怎么组织",
+      "Vite dev server proxy 怎么配置",
+      "TanStack Query queryKey 怎么设计",
+      "表单校验错误怎么展示",
+      "检查弹窗键盘焦点和 aria",
+      "写 Playwright 登录流程",
+      "优化虚拟列表滚动性能"
     ]
   },
   "fec-ui-design": {
@@ -888,6 +938,28 @@
       "PWA Service Worker",
       "jQuery 迁移",
       "XSS 安全审查"
+    ]
+  },
+  "fec-web-video-presentation": {
+    "should_trigger": [
+      "把这篇文章做成可以录屏的 16:9 网页视频演示",
+      "我有一段口播稿，帮我规划成点击推进的动态网页 presentation",
+      "为这个产品 demo 做一个 step-driven browser recording deck",
+      "把课程大纲转成像视频一样播放的 React 演示页面",
+      "生成网页视频脚手架，支持主题 token 和录屏",
+      "把技术分享拆成 script、outline 和可录制章节",
+      "做一个每次按空格推进一个口播节拍的 16:9 演示",
+      "create a recordable web video presentation from this talk script"
+    ],
+    "should_not_trigger": [
+      "普通 landing page 视觉打磨",
+      "从 Figma 节点实现一个按钮组件",
+      "生成一张系统架构图 PNG",
+      "修复 Vite 构建错误",
+      "给 React 表单写组件测试",
+      "检查 dashboard 的 WCAG 对比度",
+      "把 jQuery 页面迁移到 Vue",
+      "规划 API 鉴权刷新流程"
     ]
   },
   "fec-web-workers": {

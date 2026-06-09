@@ -103,6 +103,41 @@
     ]
   },
   {
+    "id": "fec-backend-requirements-handoff",
+    "name": "前后端需求交接",
+    "category": "maintenance-docs",
+    "tags": [
+      "backend-requirements",
+      "api-collaboration",
+      "handoff",
+      "data-needs",
+      "frontend-backend"
+    ],
+    "summary": "Frontend-to-backend requirements handoff for describing UI data needs, user actions, states, permissions, business rules, uncertainties, and backend discussion points without dictating implementation.",
+    "version": "2.6.0",
+    "license": "MIT",
+    "homepage": "https://github.com/bovinphang/frontend-craft",
+    "repository": "https://github.com/bovinphang/frontend-craft",
+    "keywords": [
+      "maintenance-docs",
+      "backend-requirements",
+      "api-collaboration",
+      "handoff",
+      "data-needs",
+      "frontend-backend"
+    ],
+    "platforms": [
+      "skills-cli",
+      "skillreg",
+      "claude-code",
+      "codex",
+      "cursor",
+      "opencode",
+      "openclaw",
+      "generic-skill-runtime"
+    ]
+  },
+  {
     "id": "fec-browser-storage",
     "name": "浏览器存储",
     "category": "implementation-capability",
@@ -457,6 +492,54 @@
     ]
   },
   {
+    "id": "fec-image-generation",
+    "name": "图片生成与图表工作流",
+    "category": "design-ui",
+    "tags": [
+      "image-generation",
+      "image-editing",
+      "diagram-generation",
+      "png-qa",
+      "visual-assets",
+      "infographic",
+      "mockup",
+      "autofix"
+    ],
+    "summary": "Image and diagram generation workflow for deterministic diagrams, raster visual assets, image edits, and bounded PNG QA repair loops.",
+    "version": "2.6.0",
+    "license": "MIT",
+    "homepage": "https://github.com/bovinphang/frontend-craft",
+    "repository": "https://github.com/bovinphang/frontend-craft",
+    "keywords": [
+      "design-ui",
+      "image-generation",
+      "image-editing",
+      "diagram-generation",
+      "png-qa",
+      "visual-assets",
+      "infographic",
+      "mockup",
+      "autofix",
+      "er-diagram",
+      "uml",
+      "sequence-diagram",
+      "architecture-diagram",
+      "poster",
+      "storyboard",
+      "brand-board"
+    ],
+    "platforms": [
+      "skills-cli",
+      "skillreg",
+      "claude-code",
+      "codex",
+      "cursor",
+      "opencode",
+      "openclaw",
+      "generic-skill-runtime"
+    ]
+  },
+  {
     "id": "fec-implement-from-design",
     "name": "设计稿实现",
     "category": "design-ui",
@@ -466,9 +549,11 @@
       "mastergo",
       "pixso",
       "design-to-code",
+      "screenshot-reference",
+      "visual-reference",
       "mcp"
     ],
-    "summary": "Frontend Craft skill for 设计稿实现.",
+    "summary": "Production design-to-code workflow for design tools, screenshots, and section-level visual references with token mapping and accessibility safeguards.",
     "version": "2.6.0",
     "license": "MIT",
     "homepage": "https://github.com/bovinphang/frontend-craft",
@@ -480,6 +565,8 @@
       "mastergo",
       "pixso",
       "design-to-code",
+      "screenshot-reference",
+      "visual-reference",
       "mcp"
     ],
     "platforms": [
@@ -639,12 +726,13 @@
     "category": "design-ui",
     "tags": [
       "motion",
+      "motion-intensity",
       "framer-motion",
       "gsap",
       "lottie",
       "reduced-motion"
     ],
-    "summary": "Frontend interaction motion strategy, tool selection, performance budgets, and accessible reduced-motion behavior.",
+    "summary": "Context-aware frontend motion strategy, intensity selection, tool choice, performance budgets, and accessible reduced-motion behavior.",
     "version": "2.6.0",
     "license": "MIT",
     "homepage": "https://github.com/bovinphang/frontend-craft",
@@ -652,6 +740,7 @@
     "keywords": [
       "design-ui",
       "motion",
+      "motion-intensity",
       "framer-motion",
       "gsap",
       "lottie",
@@ -879,6 +968,41 @@
     ]
   },
   {
+    "id": "fec-responsive-layout",
+    "name": "响应式布局",
+    "category": "design-ui",
+    "tags": [
+      "responsive",
+      "layout",
+      "container-query",
+      "mobile-first",
+      "touch-target"
+    ],
+    "summary": "Responsive frontend layout strategy for mobile-first breakpoints, container queries, fluid grids, data-dense screens, touch targets, and cross-device verification.",
+    "version": "2.6.0",
+    "license": "MIT",
+    "homepage": "https://github.com/bovinphang/frontend-craft",
+    "repository": "https://github.com/bovinphang/frontend-craft",
+    "keywords": [
+      "design-ui",
+      "responsive",
+      "layout",
+      "container-query",
+      "mobile-first",
+      "touch-target"
+    ],
+    "platforms": [
+      "skills-cli",
+      "skillreg",
+      "claude-code",
+      "codex",
+      "cursor",
+      "opencode",
+      "openclaw",
+      "generic-skill-runtime"
+    ]
+  },
+  {
     "id": "fec-route-protection",
     "name": "路由保护",
     "category": "implementation-capability",
@@ -903,41 +1027,6 @@
       "middleware",
       "react-router",
       "vue-router"
-    ],
-    "platforms": [
-      "skills-cli",
-      "skillreg",
-      "claude-code",
-      "codex",
-      "cursor",
-      "opencode",
-      "openclaw",
-      "generic-skill-runtime"
-    ]
-  },
-  {
-    "id": "fec-responsive-layout",
-    "name": "响应式布局",
-    "category": "design-ui",
-    "tags": [
-      "responsive",
-      "layout",
-      "container-query",
-      "mobile-first",
-      "touch-target"
-    ],
-    "summary": "Responsive frontend layout strategy for mobile-first breakpoints, container queries, fluid grids, data-dense screens, touch targets, and cross-device verification.",
-    "version": "2.6.0",
-    "license": "MIT",
-    "homepage": "https://github.com/bovinphang/frontend-craft",
-    "repository": "https://github.com/bovinphang/frontend-craft",
-    "keywords": [
-      "design-ui",
-      "responsive",
-      "layout",
-      "container-query",
-      "mobile-first",
-      "touch-target"
     ],
     "platforms": [
       "skills-cli",
@@ -1023,76 +1112,6 @@
     ]
   },
   {
-    "id": "fec-storybook-component-doc",
-    "name": "Storybook 组件文档化",
-    "category": "design-ui",
-    "tags": [
-      "storybook",
-      "design-system",
-      "component-doc",
-      "visual-testing",
-      "mdx"
-    ],
-    "summary": "Storybook component documentation, design-system presentation, isolated state previews, and Storybook-scoped visual baselines.",
-    "version": "2.6.0",
-    "license": "MIT",
-    "homepage": "https://github.com/bovinphang/frontend-craft",
-    "repository": "https://github.com/bovinphang/frontend-craft",
-    "keywords": [
-      "design-ui",
-      "storybook",
-      "design-system",
-      "component-doc",
-      "visual-testing",
-      "mdx"
-    ],
-    "platforms": [
-      "skills-cli",
-      "skillreg",
-      "claude-code",
-      "codex",
-      "cursor",
-      "opencode",
-      "openclaw",
-      "generic-skill-runtime"
-    ]
-  },
-  {
-    "id": "fec-tailwind-design-system",
-    "name": "Tailwind 设计系统",
-    "category": "design-ui",
-    "tags": [
-      "tailwind",
-      "design-system",
-      "tokens",
-      "variants",
-      "dark-mode"
-    ],
-    "summary": "Tailwind CSS design-system workflow for token mapping, theme extension, component variants, class governance, responsive utilities, and dark mode.",
-    "version": "2.6.0",
-    "license": "MIT",
-    "homepage": "https://github.com/bovinphang/frontend-craft",
-    "repository": "https://github.com/bovinphang/frontend-craft",
-    "keywords": [
-      "design-ui",
-      "tailwind",
-      "design-system",
-      "tokens",
-      "variants",
-      "dark-mode"
-    ],
-    "platforms": [
-      "skills-cli",
-      "skillreg",
-      "claude-code",
-      "codex",
-      "cursor",
-      "opencode",
-      "openclaw",
-      "generic-skill-runtime"
-    ]
-  },
-  {
     "id": "fec-state-management",
     "name": "前端状态管理",
     "category": "implementation-capability",
@@ -1128,6 +1147,41 @@
     ]
   },
   {
+    "id": "fec-storybook-component-doc",
+    "name": "Storybook 组件文档化",
+    "category": "design-ui",
+    "tags": [
+      "storybook",
+      "design-system",
+      "component-doc",
+      "visual-testing",
+      "mdx"
+    ],
+    "summary": "Storybook component documentation, design-system presentation, isolated state previews, and Storybook-scoped visual baselines.",
+    "version": "2.6.0",
+    "license": "MIT",
+    "homepage": "https://github.com/bovinphang/frontend-craft",
+    "repository": "https://github.com/bovinphang/frontend-craft",
+    "keywords": [
+      "design-ui",
+      "storybook",
+      "design-system",
+      "component-doc",
+      "visual-testing",
+      "mdx"
+    ],
+    "platforms": [
+      "skills-cli",
+      "skillreg",
+      "claude-code",
+      "codex",
+      "cursor",
+      "opencode",
+      "openclaw",
+      "generic-skill-runtime"
+    ]
+  },
+  {
     "id": "fec-svg-animation",
     "name": "SVG 动画",
     "category": "implementation-capability",
@@ -1150,6 +1204,41 @@
       "framer-motion",
       "gsap",
       "micro-interaction"
+    ],
+    "platforms": [
+      "skills-cli",
+      "skillreg",
+      "claude-code",
+      "codex",
+      "cursor",
+      "opencode",
+      "openclaw",
+      "generic-skill-runtime"
+    ]
+  },
+  {
+    "id": "fec-tailwind-design-system",
+    "name": "Tailwind 设计系统",
+    "category": "design-ui",
+    "tags": [
+      "tailwind",
+      "design-system",
+      "tokens",
+      "variants",
+      "dark-mode"
+    ],
+    "summary": "Tailwind CSS design-system workflow for token mapping, theme extension, component variants, class governance, responsive utilities, and dark mode.",
+    "version": "2.6.0",
+    "license": "MIT",
+    "homepage": "https://github.com/bovinphang/frontend-craft",
+    "repository": "https://github.com/bovinphang/frontend-craft",
+    "keywords": [
+      "design-ui",
+      "tailwind",
+      "design-system",
+      "tokens",
+      "variants",
+      "dark-mode"
     ],
     "platforms": [
       "skills-cli",
@@ -1232,39 +1321,29 @@
     ]
   },
   {
-    "id": "fec-ui-design",
-    "name": "UI 设计",
-    "category": "design-ui",
+    "id": "fec-typescript-project-standard",
+    "name": "TypeScript 项目规范",
+    "category": "project-standard",
     "tags": [
-      "ui-design",
-      "visual-direction",
-      "visual-identity",
-      "ui-polish",
-      "anti-generic",
-      "visual-qa",
-      "design-system",
-      "industry-ui",
-      "chart-ux"
+      "typescript",
+      "project-standard",
+      "type-safety",
+      "tsconfig",
+      "declarations"
     ],
-    "summary": "Frontend Craft skill for product UI direction, distinctive visual identity, polish, interaction states, and visual QA.",
+    "summary": "Universal TypeScript project standards for tsconfig, strictness, module resolution, declarations, package exports, public API types, DTOs, generics, and type narrowing.",
     "version": "2.6.0",
     "license": "MIT",
     "homepage": "https://github.com/bovinphang/frontend-craft",
     "repository": "https://github.com/bovinphang/frontend-craft",
     "keywords": [
-      "design-ui",
-      "ui-design",
-      "visual-direction",
-      "visual-identity",
-      "ui-polish",
-      "anti-generic",
-      "visual-qa",
-      "design-system",
-      "industry-ui",
-      "chart-ux",
-      "design-system-generation",
-      "industry-specific-ui",
-      "master-page-overrides"
+      "project-standard",
+      "typescript",
+      "type-safety",
+      "tsconfig",
+      "declarations",
+      "generics",
+      "dto"
     ],
     "platforms": [
       "skills-cli",
@@ -1278,28 +1357,43 @@
     ]
   },
   {
-    "id": "fec-typescript-type-safety",
-    "name": "TypeScript 类型安全",
-    "category": "review-quality",
+    "id": "fec-ui-design",
+    "name": "UI 设计",
+    "category": "design-ui",
     "tags": [
-      "typescript",
-      "type-safety",
-      "generics",
-      "type-guards",
-      "dto"
+      "ui-design",
+      "visual-direction",
+      "visual-identity",
+      "ui-polish",
+      "anti-generic",
+      "anti-generic-ui",
+      "design-dials",
+      "visual-qa",
+      "design-system",
+      "industry-ui",
+      "chart-ux"
     ],
-    "summary": "TypeScript type modeling, contracts, discriminated unions, type guards, DTO mapping, advanced generics, and type-level regression checks.",
+    "summary": "Product-context UI direction with anti-generic design dials, distinctive visual identity, media strategy, interaction states, and visual QA.",
     "version": "2.6.0",
     "license": "MIT",
     "homepage": "https://github.com/bovinphang/frontend-craft",
     "repository": "https://github.com/bovinphang/frontend-craft",
     "keywords": [
-      "review-quality",
-      "typescript",
-      "type-safety",
-      "generics",
-      "type-guards",
-      "dto"
+      "design-ui",
+      "ui-design",
+      "visual-direction",
+      "visual-identity",
+      "ui-polish",
+      "anti-generic",
+      "anti-generic-ui",
+      "design-dials",
+      "visual-qa",
+      "design-system",
+      "industry-ui",
+      "chart-ux",
+      "design-system-generation",
+      "industry-specific-ui",
+      "master-page-overrides"
     ],
     "platforms": [
       "skills-cli",
@@ -1409,6 +1503,43 @@
       "composition-api",
       "pinia",
       "components"
+    ],
+    "platforms": [
+      "skills-cli",
+      "skillreg",
+      "claude-code",
+      "codex",
+      "cursor",
+      "opencode",
+      "openclaw",
+      "generic-skill-runtime"
+    ]
+  },
+  {
+    "id": "fec-web-video-presentation",
+    "name": "网页视频演示",
+    "category": "design-ui",
+    "tags": [
+      "web-video",
+      "presentation",
+      "recording",
+      "script-outline",
+      "react",
+      "vite"
+    ],
+    "summary": "Turn articles, scripts, lessons, and product demos into recordable 16:9 step-driven web presentations with theme tokens and recording guidance.",
+    "version": "2.6.0",
+    "license": "MIT",
+    "homepage": "https://github.com/bovinphang/frontend-craft",
+    "repository": "https://github.com/bovinphang/frontend-craft",
+    "keywords": [
+      "design-ui",
+      "web-video",
+      "presentation",
+      "recording",
+      "script-outline",
+      "react",
+      "vite"
     ],
     "platforms": [
       "skills-cli",

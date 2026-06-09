@@ -143,6 +143,7 @@ frontend-craft/
 | `fec-accessibility-check`        | 面向 WCAG 的语义结构、键盘支持、焦点、标签检查                 |
 | `fec-react-project-standard`     | React + TypeScript 项目规范                                    |
 | `fec-vue3-project-standard`      | Vue 3 + TypeScript 项目规范                                    |
+| `fec-typescript-project-standard`     | TypeScript 配置、公开类型、声明文件、DTO 和泛型                |
 | `fec-implement-from-design`      | 基于 Figma、Sketch、MasterGo、Pixso、墨刀或截图实现 UI         |
 | `fec-validation-fix`             | 执行校验命令、分析失败并安全修复                               |
 | `fec-legacy-web-standard`        | JavaScript + jQuery + HTML/CSS 传统前端规范                    |
@@ -167,7 +168,7 @@ frontend-craft/
 | `fec-canvas-threejs`             | Canvas 2D、Three.js、React Three Fiber、WebGL 性能与可访问性   |
 | `fec-svg-animation`              | CSS、Framer Motion、GSAP SVG 动画与 reduced-motion 降级        |
 | `fec-ui-design`                  | UI 方向、视觉识别、界面打磨、状态与视觉 QA                     |
-| `fec-typescript-type-safety`     | 类型契约、DTO 映射、类型守卫、泛型和类型级检查                 |
+| `fec-web-video-presentation`     | 将文章、口播稿、课程和 demo 转成可录屏的 16:9 步进网页演示     |
 | `fec-dependency-upgrade`         | 依赖升级、lockfile 评审、CVE 修复和迁移验证                    |
 | `fec-vite-project-standard`      | Vite 配置、环境变量安全、HMR、开发代理、构建优化与库模式       |
 
@@ -213,6 +214,7 @@ frontend-craft/
 | 构建交互式 3D 场景           | `fec-canvas-threejs`             | 「在 `src/components/ProductViewer.tsx` 添加 Three.js 产品展示，兼顾性能和降级方案。」                                                 |
 | 为落地页添加 SVG 动效        | `fec-svg-animation`              | 「用 Framer Motion 为 hero 区 SVG 添加动画，并为 reduced-motion 用户提供静态降级方案。」                                               |
 | 设计与打磨 UI                | `fec-ui-design`                  | 「请评审 `src/components/Dashboard.tsx` 的 UI 方向、视觉识别、间距、状态和动效打磨。」                                                 |
+| 构建可录屏网页演示           | `fec-web-video-presentation`     | 「把这段产品 demo 口播稿转成 16:9 浏览器演示：拆口播节拍、章节 step、主题 token，并给出录屏指引。」                                    |
 | 优化 Vite 构建配置           | `fec-vite-project-standard`      | 「请审计 `vite.config.ts` 的 HMR、开发代理、环境变量安全和库模式最佳实践。」                                                           |
 
 **斜杠命令（`commands/` 下的 Markdown）**

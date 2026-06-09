@@ -9,6 +9,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 Project-facing release notes are maintained in English from 2.0.0 onward. Historical entries may preserve their original language.
 
+## [Unreleased]
+
+### Added
+
+- **`fec-web-video-presentation` skill:** adds an original Frontend Craft workflow for turning articles, scripts, lessons, and demos into recordable 16:9 step-driven web presentations, including compact references, starter theme data, and a cross-platform Vite/React scaffold helper.
+
+### Changed
+
+- **Garden Skills absorption:** strengthened UI design direction, image-generation routing, and source-driven local knowledge retrieval workflows through project-native guidance without copying Garden implementations, templates, or provider-specific image scripts.
+- **Skill count:** 43 → 44 across README locales, marketplace metadata, standalone skill metadata, and trigger eval queries.
+
 
 ## [2.6.0] - 2026-06-07
 
@@ -78,7 +89,7 @@ Project-facing release notes are maintained in English from 2.0.0 onward. Histor
 ### Added
 
 - **Debug workflow:** added `fec-debug` slash command with type-based routing, `fec-debugger` agent for complex diagnostic scenarios, and `fec-debug-framework` skill with a 5-step diagnostic methodology.
-- **6 new skills:** `fec-performance-optimization` (Core Web Vitals, memory leaks, performance budgets), `fec-source-driven-development` (evidence-based decisions with official-docs verification), `fec-state-management` (state architecture patterns), `fec-typescript-type-safety` (type safety enforcement), `fec-dependency-upgrade` (upgrade planning), `fec-responsive-layout` (responsive layout strategy), and `fec-tailwind-design-system` (Tailwind-based design system implementation).
+- **6 new skills:** `fec-performance-optimization` (Core Web Vitals, memory leaks, performance budgets), `fec-source-driven-development` (evidence-based decisions with official-docs verification), `fec-state-management` (state architecture patterns), `fec-typescript-project-standard` (TypeScript project standards and type safety), `fec-dependency-upgrade` (upgrade planning), `fec-responsive-layout` (responsive layout strategy), and `fec-tailwind-design-system` (Tailwind-based design system implementation).
 - **2 new integration skills:** `fec-api-integration` and `fec-motion-interaction`.
 - **Example prompts library:** added `docs/example-prompts.md` and `docs/zh-CN/example-prompts.md` with scenario-based prompt catalogs covering skills, agents, commands, design workflows, testing, maintenance, and runtime setup; linked from all README variants.
 - **UI design system generator:** added `design-system.mjs` generator with product rules, style archetypes, UX quality and Stack UI rules data packages; supports `--persist` and `--page` flags to write `MASTER.md` and page overrides.

@@ -25,7 +25,7 @@
       "fec-security-review",
       "fec-route-protection",
       "fec-form-handling",
-      "fec-typescript-type-safety",
+      "fec-typescript-project-standard",
       "fec-source-driven-development"
     ],
     "boundaryWorkflows": [
@@ -39,6 +39,26 @@
       "auth",
       "upload",
       "realtime"
+    ]
+  },
+  "fec-backend-requirements-handoff": {
+    "relatedSkills": [
+      "fec-api-integration",
+      "fec-doc-sync",
+      "fec-source-driven-development",
+      "fec-testing-strategy",
+      "fec-route-protection"
+    ],
+    "boundaryWorkflows": [
+      "Use API integration when the contract shape, typed client, auth refresh, error mapping, upload, or realtime implementation is being designed.",
+      "Use documentation sync when backend decisions change public docs, API notes, route docs, or env/config documentation.",
+      "Use route protection when the handoff centers on auth redirects, RBAC, permission routes, or middleware behavior."
+    ],
+    "capabilityTags": [
+      "backend-requirements",
+      "handoff",
+      "api-collaboration",
+      "data-needs"
     ]
   },
   "fec-browser-storage": {
@@ -85,7 +105,7 @@
       "fec-e2e-testing",
       "fec-validation-fix",
       "fec-performance-optimization",
-      "fec-typescript-type-safety",
+      "fec-typescript-project-standard",
       "fec-state-management",
       "fec-source-driven-development",
       "fec-dependency-upgrade",
@@ -208,6 +228,30 @@
       "forms",
       "validation",
       "accessibility"
+    ]
+  },
+  "fec-image-generation": {
+    "relatedSkills": [
+      "fec-ui-design",
+      "fec-implement-from-design",
+      "fec-canvas-threejs",
+      "fec-svg-animation",
+      "fec-responsive-layout",
+      "fec-accessibility-check",
+      "fec-web-video-presentation"
+    ],
+    "boundaryWorkflows": [
+      "Use UI design for product-specific visual direction, brand tone, hierarchy, and visual QA of generated assets.",
+      "Use implementation-from-design when a Figma, Sketch, MasterGo, Pixso, screenshot, or other external design source is authoritative.",
+      "Use Canvas/Three.js or SVG animation workflows when the generated visual becomes an interactive renderer, shader, or motion asset rather than a static image."
+    ],
+    "capabilityTags": [
+      "image-generation",
+      "image-editing",
+      "diagram-generation",
+      "png-qa",
+      "visual-assets",
+      "autofix"
     ]
   },
   "fec-legacy-to-modern-migration": {
@@ -356,7 +400,7 @@
   },
   "fec-react-project-standard": {
     "relatedSkills": [
-      "fec-typescript-type-safety",
+      "fec-typescript-project-standard",
       "fec-state-management",
       "fec-tailwind-design-system",
       "fec-responsive-layout",
@@ -530,26 +574,6 @@
       "workflow"
     ]
   },
-  "fec-typescript-type-safety": {
-    "relatedSkills": [
-      "fec-code-review",
-      "fec-api-integration",
-      "fec-react-project-standard",
-      "fec-vue3-project-standard",
-      "fec-form-handling"
-    ],
-    "boundaryWorkflows": [
-      "Use a general code review workflow when the task spans architecture, rendering, styles, tests, and maintainability beyond type contracts.",
-      "Use an API integration workflow for runtime API client boundaries, auth refresh, uploads, realtime behavior, and error mapping.",
-      "Use framework project workflows when type decisions are part of broader React, Vue, Next.js, or Nuxt module architecture."
-    ],
-    "capabilityTags": [
-      "typescript",
-      "type-safety",
-      "type-modeling",
-      "dto"
-    ]
-  },
   "fec-testing-strategy": {
     "relatedSkills": [
       "fec-component-testing",
@@ -570,14 +594,39 @@
       "quality-gate"
     ]
   },
+  "fec-typescript-project-standard": {
+    "relatedSkills": [
+      "fec-code-review",
+      "fec-api-integration",
+      "fec-react-project-standard",
+      "fec-vue3-project-standard",
+      "fec-vite-project-standard",
+      "fec-monorepo-project-standard",
+      "fec-validation-fix"
+    ],
+    "boundaryWorkflows": [
+      "Use framework project workflows for component architecture, routing, state ownership, and framework-specific module boundaries.",
+      "Use API integration when runtime API clients, auth refresh, uploads, realtime behavior, or error mapping go beyond TypeScript type contracts.",
+      "Use validation fix when the task is to repair concrete lint, typecheck, test, build, or CI failures after TypeScript changes."
+    ],
+    "capabilityTags": [
+      "typescript",
+      "project-standard",
+      "type-safety",
+      "tsconfig",
+      "declarations"
+    ]
+  },
   "fec-ui-design": {
     "relatedSkills": [
+      "fec-image-generation",
       "fec-implement-from-design",
       "fec-accessibility-check",
       "fec-code-review",
       "fec-tailwind-design-system",
       "fec-responsive-layout",
-      "fec-storybook-component-doc"
+      "fec-storybook-component-doc",
+      "fec-web-video-presentation"
     ],
     "boundaryWorkflows": [
       "Use an implementation-from-design workflow when an external design file is the source of truth.",
@@ -620,7 +669,7 @@
   },
   "fec-vue3-project-standard": {
     "relatedSkills": [
-      "fec-typescript-type-safety",
+      "fec-typescript-project-standard",
       "fec-state-management",
       "fec-tailwind-design-system",
       "fec-responsive-layout",
@@ -642,6 +691,27 @@
       "vue",
       "project-standard",
       "fec-architecture"
+    ]
+  },
+  "fec-web-video-presentation": {
+    "relatedSkills": [
+      "fec-ui-design",
+      "fec-image-generation",
+      "fec-motion-interaction",
+      "fec-responsive-layout",
+      "fec-accessibility-check"
+    ],
+    "boundaryWorkflows": [
+      "Use a UI design workflow for product-specific visual direction, asset strategy, anti-generic design, and visual QA of scenes.",
+      "Use image generation when the presentation needs custom raster assets, diagrams, storyboard frames, or generated visual references.",
+      "Use motion and responsive layout workflows when scene transitions, reduced-motion behavior, viewport scaling, or recording stability need deeper treatment."
+    ],
+    "capabilityTags": [
+      "web-video",
+      "presentation",
+      "recording",
+      "script-outline",
+      "step-driven-stage"
     ]
   },
   "fec-web-workers": {

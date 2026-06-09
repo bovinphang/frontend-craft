@@ -31,11 +31,11 @@ frontend-craft/
 |   |-- fec-accessibility-check/     # WCAG 2.2 accessibility, keyboard, focus, screen readers
 |   |-- fec-react-project-standard/  # React + TypeScript project standards
 |   |-- fec-vue3-project-standard/   # Vue 3 + TypeScript project standards
-|   |-- fec-implement-from-design/   # Implement UI from design files
+|   |-- fec-implement-from-design/   # Implement UI from design tools, screenshots, and visual references
 |   |-- fec-validation-fix/            # lint, type-check, test, build and fix
 |   |-- fec-performance-optimization/  # Core Web Vitals, bundle, rendering, network, memory
 |   |-- fec-source-driven-development/ # Official sources, project facts, version-sensitive decisions
-|   |-- fec-typescript-type-safety/   # Type contracts, DTO mapping, type guards, generics
+|   |-- fec-typescript-project-standard/   # TypeScript config, public API types, declarations, DTOs, generics
 |   |-- fec-state-management/         # State ownership, store selection, URL/server/form/local boundaries
 |   |-- fec-tailwind-design-system/   # Tailwind tokens, variants, dark mode, class governance
 |   |-- fec-responsive-layout/        # Mobile-first layouts, container queries, touch-safe responsive UI
@@ -52,6 +52,7 @@ frontend-craft/
 |   |-- fec-monorepo-project-standard/  # pnpm workspace, Turborepo, Nx standards
 |   |-- fec-data-fetching/              # TanStack Query and server-state workflows
 |   |-- fec-api-integration/            # Typed API clients, auth refresh, uploads, realtime integration
+|   |-- fec-backend-requirements-handoff/ # Frontend-to-backend UI data and state needs
 |   |-- fec-form-handling/              # React Hook Form + Zod form workflows
 |   |-- fec-route-protection/           # Authenticated and permissioned routes
 |   |-- fec-component-testing/          # RTL / Vue Test Utils component tests
@@ -62,8 +63,10 @@ frontend-craft/
 |   |-- fec-browser-storage/            # localStorage/sessionStorage/IndexedDB/Cookies selection and safe client persistence
 |   |-- fec-list-virtualization/        # Large-list windowing with react-window / TanStack Virtual and measurement strategies
 |   |-- fec-storybook-component-doc/    # Storybook component docs, addons, MDX, interaction and visual test integration
-|   |-- fec-ui-design/                  # UI direction, visual identity, polish, states, visual QA
-|   |-- fec-motion-interaction/         # Interaction motion, page transitions, scroll animation, reduced motion
+|   |-- fec-ui-design/                  # Product-context UI direction, design dials, media strategy, visual QA
+|   |-- fec-image-generation/           # Diagram/image generation, editing workflows, PNG QA and repair loops
+|   |-- fec-web-video-presentation/    # Recordable 16:9 step-driven web video presentations
+|   |-- fec-motion-interaction/         # Context-aware motion intensity, transitions, scroll animation, reduced motion
 |   |-- fec-vite-project-standard/      # Vite config, env safety, HMR, proxy, build and library mode
 |
 |-- commands/         # Slash commands for quick execution

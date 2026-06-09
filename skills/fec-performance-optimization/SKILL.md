@@ -21,6 +21,7 @@ description: Use when diagnosing or improving frontend performance, Core Web Vit
    - 对页面体验优先使用 Lighthouse、Performance trace、React Profiler、Vue Devtools、Memory snapshot 或 RUM 数据。
    - 对包体优先看构建产物、source map、依赖重复、首屏 chunk 和动态 import 边界。
    - 对运行时卡顿优先看长任务、重复渲染、昂贵计算、同步循环、布局抖动和大列表。
+   - 如果已有线上监控、平台指标或 CI 产物，先用它们确认受影响路由、设备、时间窗和用户主路径，再决定读哪些源码。
 
 3. 分层定位
    - 加载层：关键 CSS、字体、图片、脚本阻塞、预加载和缓存。
@@ -34,6 +35,7 @@ description: Use when diagnosing or improving frontend performance, Core Web Vit
    - 优先处理高频主路径和 P95 体验；低频后台任务不抢占首屏预算。
    - 先做低风险高收益改动，如懒加载、去重、缓存、尺寸预留、虚拟列表、稳定引用和释放资源。
    - 对会牺牲可维护性的技巧，必须说明收益证据和替代方案。
+   - 建议进入实现前先过候选门禁：是否有指标支撑、能否定位到路由/组件/chunk/请求、是否可由前端验证、是否存在更小改动。
 
 5. 验证回归
    - 重新运行受影响构建、测试和性能采集命令。
@@ -66,11 +68,13 @@ description: Use when diagnosing or improving frontend performance, Core Web Vit
 - 不为一次 Lighthouse 分数牺牲真实用户主路径。
 - 不引入大型新依赖解决小问题；先利用项目已有工具和浏览器能力。
 - 不把后端、网络和浏览器侧问题混为一谈；前端能验证的部分要单独列证据。
+- 不从 repo-wide grep 直接跳到优化结论；先用指标或复现路径收窄候选，再读相关源码。
 
 ## 详细参考
 
 撰写性能分析报告时，加载 [references/report-template.md](references/report-template.md)。
+需要按 React、Vue、Next.js 或 Nuxt 分类定位框架专项性能风险时，加载 [references/framework-performance-patterns.md](references/framework-performance-patterns.md)。
 
 ## Expected Output
 
-输出有证据链的性能分析报告，说明基线、瓶颈、优化建议、验证方式和剩余风险。报告保存为 `reports/performance-review-YYYY-MM-DD-HHmmss.md`。
+输出有证据链的性能分析报告，说明基线、候选门禁、瓶颈、优化建议、验证方式和剩余风险。报告保存为 `reports/performance-review-YYYY-MM-DD-HHmmss.md`。

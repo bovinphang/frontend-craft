@@ -32,7 +32,7 @@
 
 各執行時的路徑與注意事項詳見 [`docs/runtimes/`](../runtimes/)。
 
-它將 **13 個專業 agent**、**41 個自動啟用 skill**、**8 個斜線指令**、**5 個事件驅動 hook**、面向 6 個設計工具端點的 **MCP 整合**以及一整套**規則庫**打包為一個可安裝單元。執行一條指令，團隊裡的每一次 AI 會話都將以相同的方式編寫 React、Vue、Next.js 或 Nuxt——型別安全、可存取、安全、一致。
+它將 **13 個專業 agent**、**44 個自動啟用 skill**、**8 個斜線指令**、**5 個事件驅動 hook**、面向 6 個設計工具端點的 **MCP 整合**以及一整套**規則庫**打包為一個可安裝單元。執行一條指令，團隊裡的每一次 AI 會話都將以相同的方式編寫 React、Vue、Next.js 或 Nuxt——型別安全、可存取、安全、一致。
 
 ---
 
@@ -40,7 +40,7 @@
 
 | 痛點                                            | frontend-craft 的解法                                                                   |
 | ----------------------------------------------- | --------------------------------------------------------------------------------------- |
-| AI 助手寫出的前端程式碼風格不一、缺型別、不安全 | **41 個 skill** 將團隊規範編碼為可自動啟用的工作流                                      |
+| AI 助手寫出的前端程式碼風格不一、缺型別、不安全 | **44 個 skill** 將團隊規範編碼為可自動啟用的工作流                                      |
 | 每款 AI 工具都有自己的插件格式                  | **一條 CLI 指令** 把相同的規則、agent 和 hook 安裝到 15 個執行時                        |
 | 設計稿到程式碼的交接總有資訊損失                | **MCP 整合** 從 Figma、Figma Desktop、Sketch、MasterGo、Pixso、墨刀引入更完整設計上下文 |
 | 程式碼審查隨意、淺層                            | **13 個 agent** 輸出分級報告：程式碼、安全、無障礙、效能、TS、UI 還原度                 |
@@ -187,6 +187,7 @@ npx @bovinphang/frontend-craft@latest list
 | `fec-nuxt-project-standard`     | Nuxt 3 SSR/SSG、組合式 API、資料獲取、中介軟體        |
 | `fec-vite-project-standard`     | Vite 設定、環境變數安全、HMR、開發代理、建置最佳化    |
 | `fec-monorepo-project-standard` | pnpm workspace、Turborepo、Nx 結構與任務編排          |
+| `fec-typescript-project-standard`   | TypeScript 設定、公開型別、宣告檔、DTO 和泛型          |
 
 **實作能力** — 建構特定前端能力時啟用：
 
@@ -219,7 +220,6 @@ npx @bovinphang/frontend-craft@latest list
 | ------------------------------ | ------------------------------------------------------- |
 | `fec-code-review`              | 架構、型別、渲染、樣式、可存取性審查                    |
 | `fec-debug-framework`          | 系統化診斷建置、執行時、UI 和 API/資料問題              |
-| `fec-typescript-type-safety`   | 型別契約、DTO 對映、型別守衛、泛型和型別級檢查          |
 | `fec-security-review`          | XSS、CSRF、敏感資料外洩、輸入驗證                       |
 | `fec-accessibility-check`      | WCAG 2.2、鍵盤、焦點、觸控和螢幕閱讀器行為              |
 | `fec-dependency-upgrade`       | 依賴升級、lockfile 審查、CVE 修復和遷移驗證             |
@@ -231,11 +231,13 @@ npx @bovinphang/frontend-craft@latest list
 
 | 技能                          | 範圍                                                         |
 | ----------------------------- | ------------------------------------------------------------ |
-| `fec-ui-design`               | UI 方向、視覺識別、界面打磨、狀態、視覺 QA                   |
+| `fec-ui-design`               | 產品語境 UI 方向、反模板設計撥盤、媒體策略、狀態、視覺 QA     |
+| `fec-image-generation`        | 圖表、圖片生成/編輯、視覺資產、PNG 自檢和修復循環             |
+| `fec-web-video-presentation` | 將文章、口播稿、課程和 demo 轉成可錄屏的 16:9 步進網頁演示 |
 | `fec-tailwind-design-system`  | Tailwind token、主題擴展、元件變體、class 治理和暗色模式     |
 | `fec-responsive-layout`       | 移動優先布局、容器查詢、資料密集型響應式界面                 |
-| `fec-motion-interaction`      | 互動動效、頁面轉場、滾動動畫、reduced-motion                 |
-| `fec-implement-from-design`   | 基於 Figma/Sketch/MasterGo/Pixso/墨刀設計稿或摹客素材實現 UI |
+| `fec-motion-interaction`      | 場景化動效強度、頁面轉場、滾動動畫、reduced-motion           |
+| `fec-implement-from-design`   | 基於設計工具、截圖或分區級視覺參考實現 UI                    |
 | `fec-storybook-component-doc` | Storybook 元件文件、設計系統呈現、隔離狀態預覽               |
 
 **遺留遷移** — 現代化遷移時啟用：
@@ -255,6 +257,7 @@ npx @bovinphang/frontend-craft@latest list
 
 | 技能                            | 範圍                                       |
 | ------------------------------- | ------------------------------------------ |
+| `fec-backend-requirements-handoff` | 前端向後端交接 UI 資料需求、使用者動作、狀態、業務規則與待確認問題 |
 | `fec-doc-sync`                  | 讓前端文件與程式碼、設定、腳本、路由、API、環境變數和部署事實保持同步 |
 | `fec-source-driven-development` | 以專案事實和官方來源驗證版本敏感的前端決策 |
 

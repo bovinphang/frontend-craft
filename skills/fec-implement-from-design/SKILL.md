@@ -41,6 +41,7 @@ description: Use when implementing UI from Figma, Sketch, MasterGo, Pixso, Modao
 - `modao` — 墨刀原型数据
 - `sketch` — Sketch 选区截图
 - 如以上 MCP 均不可用，请求用户提供设计截图或标注（适用于摹客等无 MCP 工具）
+- 如果没有权威设计稿，但任务明确要求视觉型网站、品牌页、作品集或高审美重设计，可把用户提供或本地生成的分区级参考图作为临时视觉事实来源；这种来源必须先分析后实现，并在计划中标明不是权威设计系统。
 
 ### 2. 读取设计上下文
 
@@ -51,6 +52,9 @@ description: Use when implementing UI from Figma, Sketch, MasterGo, Pixso, Modao
 - 如果 MCP 提供了资源文件或 SVG / 图片源，直接使用
 - 如果 MCP 已提供真实资源，不要自行造占位资源
 - 如果用户提供截图而非 MCP 数据，从截图中推断布局、颜色、字体等视觉信息
+- 如果使用图像/截图参考，先提取区块结构、视觉层级、主色和功能色、字体气质、间距节奏、媒体位置、交互状态暗示和响应式风险，再写代码。
+- 对多区块页面优先使用清晰的分区级参考图或局部细节图；不要从压缩长图里猜测按钮、字号、间距和组件状态。
+- 视觉参考中的不可读文字、假截图、不可检查素材或冲突状态不能直接照搬；需要转译成项目真实内容、真实状态或明确占位说明。
 
 ### 3. 搜索可复用组件
 
@@ -73,6 +77,7 @@ description: Use when implementing UI from Figma, Sketch, MasterGo, Pixso, Modao
 - 响应式行为
 - 复用还是新建的决策
 - 设计缺口或歧义点
+- 图像/截图来源的可靠性，以及哪些视觉细节会被项目 token、组件约定或可访问性要求覆盖
 
 ### 5. 按框架实现
 
@@ -113,6 +118,8 @@ description: Use when implementing UI from Figma, Sketch, MasterGo, Pixso, Modao
 - 除非有合理理由，不要用硬编码替代已 Token 化的样式
 - 不要忽略 hover、active、disabled、loading、empty、error 等状态
 - 摹客等无 MCP 工具场景下，主动向用户索要关键截图和标注信息，不要凭空编造视觉数据
+- 不把生成图像当作可直接复制的代码规范；它只提供视觉证据，最终实现必须服从当前项目组件、token、可访问性和性能边界
+- 不用一张不可读整页图替代分区分析；关键区块、CTA、表单、导航和状态必须可检查
 
 ## Expected Output
 

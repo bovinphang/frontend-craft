@@ -25,6 +25,12 @@
 - 关联文件、路由、chunk、组件或请求
 - 支持该判断的 trace、bundle、日志或截图证据
 
+## 候选门禁
+
+| 候选问题 | 指标支撑 | 定位范围 | 前端可验证性 | 结论 |
+| --- | --- | --- | --- | --- |
+| ... | RUM / trace / bundle / network | route / component / chunk / request | 是 / 否 / 需协作 | investigate / defer / reject |
+
 ## 优先级
 
 | 优先级 | 问题 | 用户影响 | 风险 |
