@@ -64,6 +64,7 @@ frontend-craft/
 |   |-- fec-list-virtualization/        # react-window / TanStack Virtual 大列表窗口化与测量策略
 |   |-- fec-storybook-component-doc/    # Storybook 组件文档、addon、MDX、交互和视觉测试集成
 |   |-- fec-ui-design/                  # 产品语境 UI 方向、设计拨盘、媒体策略、视觉 QA
+|   |-- fec-image-generation/           # 图表/图片生成、编辑工作流、PNG 自检和修复循环
 |   |-- fec-motion-interaction/         # 场景化动效强度、页面转场、滚动动画、reduced motion
 |   |-- fec-vite-project-standard/      # Vite 配置、环境变量安全、HMR、代理、构建与 library mode
 |

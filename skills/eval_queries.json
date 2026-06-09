@@ -335,6 +335,31 @@
       "写 Web Worker"
     ]
   },
+  "fec-image-generation": {
+    "should_trigger": [
+      "帮我生成一张技术架构图并导出 PNG，还要检查标签有没有重叠",
+      "生成 ER 图、UML 类图和序列图的可编辑源与图片",
+      "给这个产品做一组海报和品牌板视觉探索",
+      "请生成一个 UI 样机图并自检导出的 PNG 是否裁切",
+      "把这张图片做编辑工作流，保留主体但替换背景",
+      "制作 ML 模型结构图，标清 tensor shape 并避免连线堆叠",
+      "生成信息图和学术图，导出后自动修复标签截断",
+      "为这个故事生成漫画分镜和头像资产",
+      "run PNG QA on this generated architecture diagram",
+      "image generation workflow for posters, product shots, and mockups"
+    ],
+    "should_not_trigger": [
+      "只打磨现有 dashboard 的间距和 hover 状态",
+      "按 Figma 像素还原页面",
+      "实现 Three.js 交互式 3D 场景",
+      "给 SVG 图标加 reduced-motion 动画",
+      "检查按钮 aria-label 和键盘焦点",
+      "修复 React Query 缓存失效",
+      "写 Playwright 登录 E2E",
+      "配置 Tailwind token 和 dark mode",
+      "优化虚拟列表滚动性能"
+    ]
+  },
   "fec-legacy-to-modern-migration": {
     "should_trigger": [
       "把 jQuery MPA 迁移到 React TypeScript",

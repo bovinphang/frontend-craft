@@ -230,6 +230,29 @@
       "accessibility"
     ]
   },
+  "fec-image-generation": {
+    "relatedSkills": [
+      "fec-ui-design",
+      "fec-implement-from-design",
+      "fec-canvas-threejs",
+      "fec-svg-animation",
+      "fec-responsive-layout",
+      "fec-accessibility-check"
+    ],
+    "boundaryWorkflows": [
+      "Use UI design for product-specific visual direction, brand tone, hierarchy, and visual QA of generated assets.",
+      "Use implementation-from-design when a Figma, Sketch, MasterGo, Pixso, screenshot, or other external design source is authoritative.",
+      "Use Canvas/Three.js or SVG animation workflows when the generated visual becomes an interactive renderer, shader, or motion asset rather than a static image."
+    ],
+    "capabilityTags": [
+      "image-generation",
+      "image-editing",
+      "diagram-generation",
+      "png-qa",
+      "visual-assets",
+      "autofix"
+    ]
+  },
   "fec-legacy-to-modern-migration": {
     "relatedSkills": [
       "fec-legacy-web-standard",
@@ -572,6 +595,7 @@
   },
   "fec-ui-design": {
     "relatedSkills": [
+      "fec-image-generation",
       "fec-implement-from-design",
       "fec-accessibility-check",
       "fec-code-review",

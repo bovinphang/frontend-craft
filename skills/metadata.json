@@ -533,6 +533,54 @@
     ]
   },
   {
+    "id": "fec-image-generation",
+    "name": "图片生成与图表工作流",
+    "category": "design-ui",
+    "tags": [
+      "image-generation",
+      "image-editing",
+      "diagram-generation",
+      "png-qa",
+      "visual-assets",
+      "infographic",
+      "mockup",
+      "autofix"
+    ],
+    "summary": "Image and diagram generation workflow for deterministic diagrams, raster visual assets, image edits, and bounded PNG QA repair loops.",
+    "version": "2.6.0",
+    "license": "MIT",
+    "homepage": "https://github.com/bovinphang/frontend-craft",
+    "repository": "https://github.com/bovinphang/frontend-craft",
+    "keywords": [
+      "design-ui",
+      "image-generation",
+      "image-editing",
+      "diagram-generation",
+      "png-qa",
+      "visual-assets",
+      "infographic",
+      "mockup",
+      "autofix",
+      "er-diagram",
+      "uml",
+      "sequence-diagram",
+      "architecture-diagram",
+      "poster",
+      "storyboard",
+      "brand-board"
+    ],
+    "platforms": [
+      "skills-cli",
+      "skillreg",
+      "claude-code",
+      "codex",
+      "cursor",
+      "opencode",
+      "openclaw",
+      "generic-skill-runtime"
+    ]
+  },
+  {
     "id": "fec-legacy-to-modern-migration",
     "name": "遗留系统迁移",
     "category": "legacy-migration",

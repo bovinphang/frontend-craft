@@ -40,7 +40,7 @@ It bundles **13 specialized agents**, **42 auto-activated skills**, **8 slash co
 
 | Problem                                                              | What frontend-craft does                                                                       |
 | -------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------- |
-| AI assistants write inconsistent, untyped, or insecure frontend code | **42 skills** encode team standards — auto-activated when the assistant touches matching files |
+| AI assistants write inconsistent, untyped, or insecure frontend code | **43 skills** encode team standards — auto-activated when the assistant touches matching files |
 | Each AI tool has its own plugin format                               | **One CLI** installs the same rules, agents, and hooks into 15 runtimes                        |
 | Design-to-code handoff is lossy                                      | **MCP integrations** bring in richer context from Figma, Figma Desktop, Sketch, MasterGo, Pixso, and 墨刀 |
 | Reviews are ad-hoc and shallow                                       | **13 agents** produce graded reports: code, security, a11y, performance, TS, UI fidelity       |
@@ -232,6 +232,7 @@ The skills below are grouped by use case so you can quickly find project standar
 | Skill                         | Scope                                                                         |
 | ----------------------------- | ----------------------------------------------------------------------------- |
 | `fec-ui-design`               | Product-context UI direction, anti-generic design dials, media strategy, states, visual QA |
+| `fec-image-generation`        | Diagrams, image generation/editing, visual assets, PNG QA and repair loops     |
 | `fec-tailwind-design-system`  | Tailwind tokens, theme extension, variants, class governance, dark mode       |
 | `fec-responsive-layout`       | Mobile-first layouts, container queries, data-dense responsive UI             |
 | `fec-motion-interaction`      | Context-aware motion intensity, page transitions, scroll animation, reduced motion |

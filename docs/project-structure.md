@@ -64,6 +64,7 @@ frontend-craft/
 |   |-- fec-list-virtualization/        # Large-list windowing with react-window / TanStack Virtual and measurement strategies
 |   |-- fec-storybook-component-doc/    # Storybook component docs, addons, MDX, interaction and visual test integration
 |   |-- fec-ui-design/                  # Product-context UI direction, design dials, media strategy, visual QA
+|   |-- fec-image-generation/           # Diagram/image generation, editing workflows, PNG QA and repair loops
 |   |-- fec-motion-interaction/         # Context-aware motion intensity, transitions, scroll animation, reduced motion
 |   |-- fec-vite-project-standard/      # Vite config, env safety, HMR, proxy, build and library mode
 |
