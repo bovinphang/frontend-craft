@@ -19,11 +19,17 @@ description: Use when designing or reviewing Vue 3 + TypeScript project structur
 4. 输出时补齐状态归属、API 层、错误处理、样式隔离和专项 skill 分流。
 5. 页面和模块要有可恢复错误 UI；全局 `errorHandler`、`onErrorCaptured`、请求错误映射和路由错误页分工明确。
 6. Tailwind token/variant 或响应式布局需求应分流到对应专项 skill，避免把样式系统规则塞进 Vue 组件规范。
-5. 状态归属复杂时先做状态清单；DTO、公共 props 或泛型 composable 复杂时先收敛 TypeScript 类型契约。
+7. 状态归属复杂时先做状态清单；DTO、公共 props 或泛型 composable 复杂时先收敛 TypeScript 类型契约。
+8. 设计可复用 composable 时明确输入是否支持 plain value、ref、computed 或 getter；测试 Vue 组件时覆盖 Pinia、Router、Teleport、Suspense 和 async setup 的常见边界。
 
 ## 详细参考
 
-需要具体 Vue 3 项目结构、组件模式、Composables、slots、Provide/Inject、路由、Pinia、API 层、错误处理、指令、样式、TypeScript、测试、性能或审查清单时，加载 [references/vue3-project-details.md](references/vue3-project-details.md)。
+按需要加载更细的参考文件：
+
+- 项目目录、组件分层、组件规范、注释和 TypeScript：加载 [references/vue3-project-structure.md](references/vue3-project-structure.md)。
+- Composables、slots、Provide/Inject 和路由组织：加载 [references/vue3-composables-routing.md](references/vue3-composables-routing.md)。
+- Pinia、API 层、错误处理、指令、样式、测试、反模式和输出检查清单：加载 [references/vue3-state-api-quality.md](references/vue3-state-api-quality.md)。
+- Vue 项目规范层面的轻量性能约定：加载 [references/vue3-performance-patterns.md](references/vue3-performance-patterns.md)。
 
 ## Constraints
 
@@ -36,6 +42,8 @@ description: Use when designing or reviewing Vue 3 + TypeScript project structur
 - 避免在 `v-for` 中使用 `v-if`（提取为 computed 过滤）
 - 禁止直接从 feature 内部深层路径导入，绕过 `index.ts`
 - 不用全局错误处理吞掉组件内可恢复的 API、表单或权限错误。
+- 不把函数型参数误当 getter 自动调用；composable 参数若可能是回调，应避免使用 getter 型输入约定。
+- 不依赖快照作为 Vue 组件唯一断言；异步组件、Teleport 和 Pinia 场景要有用户可见行为断言。
 
 ## Expected Output
 
@@ -47,3 +55,4 @@ description: Use when designing or reviewing Vue 3 + TypeScript project structur
 - API 调用有类型约束和统一错误处理
 - 样式使用 scoped 隔离，关键行为有测试覆盖
 - 文件结构与项目约定一致（pages / features / components 分离）
+- 可复用 composable 的输入响应性、Pinia/Router 边界和异步组件测试策略已说明

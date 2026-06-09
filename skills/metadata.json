@@ -68,6 +68,41 @@
     ]
   },
   {
+    "id": "fec-backend-requirements-handoff",
+    "name": "前后端需求交接",
+    "category": "maintenance-docs",
+    "tags": [
+      "backend-requirements",
+      "api-collaboration",
+      "handoff",
+      "data-needs",
+      "frontend-backend"
+    ],
+    "summary": "Frontend-to-backend requirements handoff for describing UI data needs, user actions, states, permissions, business rules, uncertainties, and backend discussion points without dictating implementation.",
+    "version": "2.6.0",
+    "license": "MIT",
+    "homepage": "https://github.com/bovinphang/frontend-craft",
+    "repository": "https://github.com/bovinphang/frontend-craft",
+    "keywords": [
+      "maintenance-docs",
+      "backend-requirements",
+      "api-collaboration",
+      "handoff",
+      "data-needs",
+      "frontend-backend"
+    ],
+    "platforms": [
+      "skills-cli",
+      "skillreg",
+      "claude-code",
+      "codex",
+      "cursor",
+      "opencode",
+      "openclaw",
+      "generic-skill-runtime"
+    ]
+  },
+  {
     "id": "fec-api-integration",
     "name": "API 集成",
     "category": "implementation-capability",

@@ -18,7 +18,8 @@ description: Use when creating or reviewing Next.js 14+ App Router projects, fil
 3. 明确 SSR / SSG / ISR / CSR 渲染模式和 Next fetch/cache 策略。
 4. 为路由补齐 `loading.tsx`、`error.tsx`、`not-found.tsx`、metadata 和敏感逻辑的服务端边界。
 5. 引入第三方库前检查是否支持 Server Component；浏览器专属、动效、图表、编辑器和 WebGL 库必须放进客户端叶子组件并按需加载。
-6. 客户端组件架构问题分流到 React 项目 workflow。
+6. 对动态渲染、缓存失效、RSC 序列化、route handler、middleware 和首屏 bundle 做证据优先审查；不确定时先收集构建、trace、headers 或路由行为证据。
+7. 客户端组件架构问题分流到 React 项目 workflow。
 
 ## 项目结构
 
@@ -73,6 +74,8 @@ src/
 - 客户端组件：`useEffect` + `useState`，或 SWR / React Query
 - 优先在服务端获取数据，减少客户端水合
 - 使用 `loading.tsx` 和 Suspense 包裹异步区块，提供流式体验
+- 缓存策略要写清 `force-cache`、`no-store`、`revalidate`、tag/path revalidation 或用户私有数据约束
+- 任何会让路由从静态变动态的读取（cookies、headers、searchParams、未缓存 fetch）都要说明原因和验证方式
 
 ## 路由与布局
 
@@ -102,6 +105,8 @@ src/
 - 不把密钥、内部 API 地址或服务端 token 放入 `NEXT_PUBLIC_` 环境变量。
 - 不让大型动效库、3D 场景、富文本编辑器或地图 SDK 进入根布局同步 bundle。
 - 首屏媒体必须有确定尺寸、真实资源和合理 priority；不要用远程占位图撑布局。
+- 不在没有指标、响应头、构建输出或路由行为证据时断言某路由“已缓存”或“必须动态”。
+- Middleware 只处理路由级轻量决策，不承载重型鉴权查询、日志批处理或可放到 route handler 的业务逻辑。
 
 ## 与客户端 UI 模式的分工
 
@@ -115,3 +120,4 @@ src/
 - 渲染模式选择正确（SSR/SSG/ISR/CSR），数据获取路径清晰
 - 元数据和 SEO 配置完整（title、description、openGraph）
 - 敏感逻辑在服务端，客户端组件仅处理交互
+- 缓存、动态渲染和首屏 bundle 决策有可复查证据，性能风险可分流到专项性能 workflow

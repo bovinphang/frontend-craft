@@ -19,6 +19,26 @@
       "workflow"
     ]
   },
+  "fec-backend-requirements-handoff": {
+    "relatedSkills": [
+      "fec-api-integration",
+      "fec-doc-sync",
+      "fec-source-driven-development",
+      "fec-testing-strategy",
+      "fec-route-protection"
+    ],
+    "boundaryWorkflows": [
+      "Use API integration when the contract shape, typed client, auth refresh, error mapping, upload, or realtime implementation is being designed.",
+      "Use documentation sync when backend decisions change public docs, API notes, route docs, or env/config documentation.",
+      "Use route protection when the handoff centers on auth redirects, RBAC, permission routes, or middleware behavior."
+    ],
+    "capabilityTags": [
+      "backend-requirements",
+      "handoff",
+      "api-collaboration",
+      "data-needs"
+    ]
+  },
   "fec-api-integration": {
     "relatedSkills": [
       "fec-data-fetching",

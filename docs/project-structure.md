@@ -52,6 +52,7 @@ frontend-craft/
 |   |-- fec-monorepo-project-standard/  # pnpm workspace, Turborepo, Nx standards
 |   |-- fec-data-fetching/              # TanStack Query and server-state workflows
 |   |-- fec-api-integration/            # Typed API clients, auth refresh, uploads, realtime integration
+|   |-- fec-backend-requirements-handoff/ # Frontend-to-backend UI data and state needs
 |   |-- fec-form-handling/              # React Hook Form + Zod form workflows
 |   |-- fec-route-protection/           # Authenticated and permissioned routes
 |   |-- fec-component-testing/          # RTL / Vue Test Utils component tests

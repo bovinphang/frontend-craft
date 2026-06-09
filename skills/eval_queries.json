@@ -46,6 +46,29 @@
       "配置 PWA manifest 和 Service Worker"
     ]
   },
+  "fec-backend-requirements-handoff": {
+    "should_trigger": [
+      "帮我把这个页面的数据需求整理给后端",
+      "写一份前端视角的后端需求交接文档",
+      "这个 dashboard 需要哪些后端数据，帮我列给 API 团队",
+      "不要设计接口，只描述 UI 需要展示什么和能做什么",
+      "前后端联调前先梳理用户动作、空态和错误态",
+      "把订单详情页的权限和业务规则问题整理成后端问题清单",
+      "frontend-to-backend requirements handoff for this feature",
+      "document backend data needs for the checkout UI",
+      "我需要向后端说明这个列表页的筛选、分页和状态需求"
+    ],
+    "should_not_trigger": [
+      "实现 typed API client 和错误映射",
+      "给接口封装 refresh token 队列",
+      "设计数据库表结构和索引",
+      "写后端 controller 和 service",
+      "修复 React 组件里的 loading 状态",
+      "做一次完整代码审查",
+      "同步 README 里的脚本说明",
+      "配置 Vite dev server proxy"
+    ]
+  },
   "fec-api-integration": {
     "should_trigger": [
       "设计前端 typed API client",

@@ -52,6 +52,7 @@ frontend-craft/
 |   |-- fec-monorepo-project-standard/  # pnpm workspace、Turborepo、Nx 规范
 |   |-- fec-data-fetching/              # TanStack Query 和服务端状态工作流
 |   |-- fec-api-integration/            # 类型化 API client、鉴权刷新、上传、实时集成
+|   |-- fec-backend-requirements-handoff/ # 前后端 UI 数据与状态需求交接
 |   |-- fec-form-handling/              # React Hook Form + Zod 表单工作流
 |   |-- fec-route-protection/           # 鉴权路由和权限路由
 |   |-- fec-component-testing/          # RTL / Vue Test Utils 组件测试

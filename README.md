@@ -32,7 +32,7 @@
 
 Per-runtime paths and caveats live in [`docs/runtimes/`](docs/runtimes/).
 
-It bundles **13 specialized agents**, **41 auto-activated skills**, **8 slash commands**, **5 event-driven hooks**, **MCP integrations** for 6 design-tool endpoints, and a complete **rules library** into a single installable package. Run one command, and every AI session on your team writes React, Vue, Next.js, or Nuxt the same way — typed, accessible, secure, and consistent.
+It bundles **13 specialized agents**, **42 auto-activated skills**, **8 slash commands**, **5 event-driven hooks**, **MCP integrations** for 6 design-tool endpoints, and a complete **rules library** into a single installable package. Run one command, and every AI session on your team writes React, Vue, Next.js, or Nuxt the same way — typed, accessible, secure, and consistent.
 
 ---
 
@@ -40,7 +40,7 @@ It bundles **13 specialized agents**, **41 auto-activated skills**, **8 slash co
 
 | Problem                                                              | What frontend-craft does                                                                       |
 | -------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------- |
-| AI assistants write inconsistent, untyped, or insecure frontend code | **41 skills** encode team standards — auto-activated when the assistant touches matching files |
+| AI assistants write inconsistent, untyped, or insecure frontend code | **42 skills** encode team standards — auto-activated when the assistant touches matching files |
 | Each AI tool has its own plugin format                               | **One CLI** installs the same rules, agents, and hooks into 15 runtimes                        |
 | Design-to-code handoff is lossy                                      | **MCP integrations** bring in richer context from Figma, Figma Desktop, Sketch, MasterGo, Pixso, and 墨刀 |
 | Reviews are ad-hoc and shallow                                       | **13 agents** produce graded reports: code, security, a11y, performance, TS, UI fidelity       |
@@ -255,6 +255,7 @@ The skills below are grouped by use case so you can quickly find project standar
 
 | Skill                           | Scope                                                                                  |
 | ------------------------------- | -------------------------------------------------------------------------------------- |
+| `fec-backend-requirements-handoff` | Frontend-to-backend handoff for UI data needs, actions, states, rules, and questions |
 | `fec-doc-sync`                  | Keep frontend docs in sync with code, config, scripts, routes, APIs, env, and deploy facts |
 | `fec-source-driven-development` | Verify version-sensitive frontend decisions against project facts and official sources |
 

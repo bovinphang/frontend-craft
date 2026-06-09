@@ -174,7 +174,19 @@ test("install claude into temp dir creates hooks and skills", () => {
           "skills",
           "fec-react-project-standard",
           "references",
-          "react-project-details.md",
+          "react-project-structure.md",
+        ),
+      ),
+    );
+    assert.ok(
+      fs.existsSync(
+        path.join(
+          dir,
+          ".claude",
+          "skills",
+          "fec-performance-optimization",
+          "references",
+          "framework-performance-patterns.md",
         ),
       ),
     );
