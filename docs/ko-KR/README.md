@@ -231,11 +231,11 @@ Marketplace가 이미 설치된 경우, `--force`를 사용해도 CLI는 두 번
 
 | 스킬                          | 범위                                                               |
 | ----------------------------- | ------------------------------------------------------------------ |
-| `fec-ui-design`               | UI 방향, 시각적 정체성, polish, 상태, visual QA                    |
+| `fec-ui-design`               | 제품 맥락 UI 방향, 반템플릿 디자인 다이얼, 미디어 전략, 상태, visual QA |
 | `fec-tailwind-design-system`  | Tailwind token, 테마 확장, variants, class 관리, dark mode         |
 | `fec-responsive-layout`       | 모바일 우선, container queries, 데이터 밀집 responsive UI          |
-| `fec-motion-interaction`      | 인터랙션 motion, 페이지 전환, 스크롤 animation, reduced-motion     |
-| `fec-implement-from-design`   | Figma/Sketch/MasterGo/Pixso/墨刀 디자인 또는 摹客 에셋에서 UI 구현 |
+| `fec-motion-interaction`      | 맥락 기반 motion 강도, 페이지 전환, 스크롤 animation, reduced-motion |
+| `fec-implement-from-design`   | 디자인 도구, 스크린샷 또는 section 단위 시각 참조에서 UI 구현      |
 | `fec-storybook-component-doc` | Storybook 컴포넌트 문서, 디자인 시스템 표시, 격리 상태 미리보기    |
 
 **레거시 마이그레이션** — 현대화 작업에서 활성화:

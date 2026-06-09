@@ -31,7 +31,7 @@ frontend-craft/
 |   |-- fec-accessibility-check/     # WCAG 2.2 accessibility, keyboard, focus, screen readers
 |   |-- fec-react-project-standard/  # React + TypeScript project standards
 |   |-- fec-vue3-project-standard/   # Vue 3 + TypeScript project standards
-|   |-- fec-implement-from-design/   # Implement UI from design files
+|   |-- fec-implement-from-design/   # Implement UI from design tools, screenshots, and visual references
 |   |-- fec-validation-fix/            # lint, type-check, test, build and fix
 |   |-- fec-performance-optimization/  # Core Web Vitals, bundle, rendering, network, memory
 |   |-- fec-source-driven-development/ # Official sources, project facts, version-sensitive decisions
@@ -63,8 +63,8 @@ frontend-craft/
 |   |-- fec-browser-storage/            # localStorage/sessionStorage/IndexedDB/Cookies selection and safe client persistence
 |   |-- fec-list-virtualization/        # Large-list windowing with react-window / TanStack Virtual and measurement strategies
 |   |-- fec-storybook-component-doc/    # Storybook component docs, addons, MDX, interaction and visual test integration
-|   |-- fec-ui-design/                  # UI direction, visual identity, polish, states, visual QA
-|   |-- fec-motion-interaction/         # Interaction motion, page transitions, scroll animation, reduced motion
+|   |-- fec-ui-design/                  # Product-context UI direction, design dials, media strategy, visual QA
+|   |-- fec-motion-interaction/         # Context-aware motion intensity, transitions, scroll animation, reduced motion
 |   |-- fec-vite-project-standard/      # Vite config, env safety, HMR, proxy, build and library mode
 |
 |-- commands/         # Slash commands for quick execution

@@ -67,6 +67,14 @@ import { fileURLToPath } from "node:url";
  *   project: string;
  *   page: string;
  *   query: string;
+ *   designRead: string;
+ *   designDials: {
+ *     visualTension: number;
+ *     motionIntensity: number;
+ *     informationDensity: number;
+ *     mediaAuthenticity: number;
+ *     contentPersuasion: number;
+ *   };
  *   product: { id: string; label: string; pattern: string; risks: string[] };
  *   style: { id: string; label: string; usage: string | undefined; risks: string[] };
  *   tokens: { color: string; typography: string; space: string; components: string[] };
@@ -230,6 +238,7 @@ function buildRecommendation(args) {
   const tokens = tokenize([query, args.project, args.page, args.stack].filter(Boolean).join(" "));
   const product = chooseProduct(tokens);
   const style = chooseStyle(tokens, product);
+  const designDials = deriveDesignDials(tokens, product, style);
   const checklist = chooseChecklist(tokens, product);
   const stackGuidance = chooseStack(args.stack, tokens);
   const pattern = product.pattern ?? product.patterns?.[0] ?? "Task-first interface with explicit states and durable visual hierarchy";
@@ -238,6 +247,8 @@ function buildRecommendation(args) {
     project: args.project || titleCase(query),
     page: args.page || "",
     query,
+    designRead: renderDesignRead(product, style, designDials),
+    designDials,
     product: {
       id: product.id,
       label: product.label ?? labelFromId(product.id),
@@ -312,11 +323,17 @@ function chooseStyle(tokens, product) {
  * @returns {ChecklistGroup[]}
  */
 function chooseChecklist(tokens, product) {
-  const priority = new Set(["accessibility", "interaction", "layout", "typography", "animation"]);
+  const priority = new Set(["accessibility", "interaction", "layout", "typography", "animation", "state-completeness"]);
   if (product.id === "data-dashboard" || tokens.has("dashboard") || tokens.has("chart")) priority.add("charts");
   if (tokens.has("form") || tokens.has("booking") || tokens.has("checkout")) priority.add("forms");
   if (tokens.has("mobile") || tokens.has("app")) priority.add("navigation");
   if (tokens.has("performance") || tokens.has("canvas") || tokens.has("three")) priority.add("performance");
+  if (isPromotional(tokens, product)) {
+    priority.add("first-viewport");
+    priority.add("cta-quality");
+    priority.add("section-variety");
+    priority.add("media-authenticity");
+  }
 
   return uxQualityRules
     .filter((rule) => {
@@ -331,6 +348,96 @@ function chooseChecklist(tokens, product) {
         checks: rule.checks.slice(0, 4),
       };
     });
+}
+
+/**
+ * @param {Set<string>} tokens
+ * @param {ProductRule} product
+ * @param {StyleArchetype} style
+ * @returns {Recommendation["designDials"]}
+ */
+function deriveDesignDials(tokens, product, style) {
+  /** @type {Recommendation["designDials"]} */
+  const dials = {
+    visualTension: 5,
+    motionIntensity: 3,
+    informationDensity: 5,
+    mediaAuthenticity: 5,
+    contentPersuasion: 5,
+  };
+
+  if (["data-dashboard", "saas", "fintech", "healthcare"].includes(product.id)) {
+    dials.visualTension = 3;
+    dials.motionIntensity = product.id === "saas" ? 3 : 2;
+    dials.informationDensity = product.id === "data-dashboard" ? 8 : 6;
+    dials.mediaAuthenticity = 4;
+    dials.contentPersuasion = 4;
+  }
+
+  if (["ecommerce", "creative", "wellness"].includes(product.id) || isPromotional(tokens, product)) {
+    dials.visualTension = product.id === "creative" ? 8 : 7;
+    dials.motionIntensity = product.id === "creative" ? 6 : 5;
+    dials.informationDensity = 4;
+    dials.mediaAuthenticity = 8;
+    dials.contentPersuasion = 8;
+  }
+
+  if (product.id === "gaming" || style.id === "immersive") {
+    dials.visualTension = 8;
+    dials.motionIntensity = 7;
+    dials.informationDensity = 6;
+    dials.mediaAuthenticity = 7;
+    dials.contentPersuasion = 5;
+  }
+
+  if (["minimal", "minimal-utilitarian"].includes(style.id)) {
+    dials.visualTension = Math.min(dials.visualTension, 4);
+    dials.motionIntensity = Math.min(dials.motionIntensity, 3);
+  }
+
+  if (["editorial-premium", "image-led-landing", "brand-system-board"].includes(style.id)) {
+    dials.visualTension = Math.max(dials.visualTension, 7);
+    dials.mediaAuthenticity = Math.max(dials.mediaAuthenticity, 8);
+    dials.contentPersuasion = Math.max(dials.contentPersuasion, 7);
+  }
+
+  if (tokens.has("regulated") || tokens.has("public") || tokens.has("government") || tokens.has("accessibility")) {
+    dials.visualTension = Math.min(dials.visualTension, 3);
+    dials.motionIntensity = Math.min(dials.motionIntensity, 2);
+    dials.informationDensity = Math.max(dials.informationDensity, 5);
+  }
+
+  return dials;
+}
+
+/**
+ * @param {ProductRule} product
+ * @param {StyleArchetype} style
+ * @param {Recommendation["designDials"]} dials
+ * @returns {string}
+ */
+function renderDesignRead(product, style, dials) {
+  return [
+    `Reading this as ${product.label ?? labelFromId(product.id)} work`,
+    `with a ${style.label ?? labelFromId(style.id)} visual direction`,
+    `and dial targets ${dials.visualTension}/${dials.motionIntensity}/${dials.informationDensity}/${dials.mediaAuthenticity}/${dials.contentPersuasion}`,
+  ].join(", ");
+}
+
+/**
+ * @param {Set<string>} tokens
+ * @param {ProductRule} product
+ * @returns {boolean}
+ */
+function isPromotional(tokens, product) {
+  return product.id === "creative"
+    || product.id === "ecommerce"
+    || tokens.has("landing")
+    || tokens.has("marketing")
+    || tokens.has("portfolio")
+    || tokens.has("brand")
+    || tokens.has("website")
+    || tokens.has("hero");
 }
 
 /**
@@ -364,9 +471,18 @@ function renderMarkdown(model) {
   const lines = [
     `# Design System Recommendation: ${model.project}`,
     "",
+    `- Design read: ${model.designRead}`,
     `- Product category: ${model.product.label} (${model.product.id})`,
     `- Recommended pattern: ${model.product.pattern}`,
     `- Style archetype: ${model.style.label} (${model.style.id})`,
+    "",
+    "## Design Dials",
+    "",
+    `- Visual tension: ${model.designDials.visualTension}/10`,
+    `- Motion intensity: ${model.designDials.motionIntensity}/10`,
+    `- Information density: ${model.designDials.informationDensity}/10`,
+    `- Media authenticity: ${model.designDials.mediaAuthenticity}/10`,
+    `- Content persuasion: ${model.designDials.contentPersuasion}/10`,
     "",
     "## Token Direction",
     "",
@@ -416,10 +532,12 @@ function renderPageOverride(model) {
     "## Page Intent",
     "",
     `Use the Master direction, then adapt layout and component density for ${pageName}. Keep overrides narrow and delete any rule that merely repeats the Master.`,
+    `Design read: ${model.designRead}.`,
     "",
     "## Override Strategy",
     "",
     `- Primary pattern: ${model.product.pattern}`,
+    `- Dials: visual ${model.designDials.visualTension}/10, motion ${model.designDials.motionIntensity}/10, density ${model.designDials.informationDensity}/10, media ${model.designDials.mediaAuthenticity}/10, persuasion ${model.designDials.contentPersuasion}/10`,
     `- Visual emphasis: ${model.style.usage}`,
     `- Chart behavior: ${model.chart}`,
     "",

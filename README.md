@@ -231,11 +231,11 @@ The skills below are grouped by use case so you can quickly find project standar
 
 | Skill                         | Scope                                                                         |
 | ----------------------------- | ----------------------------------------------------------------------------- |
-| `fec-ui-design`               | UI direction, visual identity, polish, states, visual QA                      |
+| `fec-ui-design`               | Product-context UI direction, anti-generic design dials, media strategy, states, visual QA |
 | `fec-tailwind-design-system`  | Tailwind tokens, theme extension, variants, class governance, dark mode       |
 | `fec-responsive-layout`       | Mobile-first layouts, container queries, data-dense responsive UI             |
-| `fec-motion-interaction`      | Interaction motion, page transitions, scroll animation, reduced motion        |
-| `fec-implement-from-design`   | Build UI from Figma/Sketch/MasterGo/Pixso/墨刀 design files, or 摹客 assets   |
+| `fec-motion-interaction`      | Context-aware motion intensity, page transitions, scroll animation, reduced motion |
+| `fec-implement-from-design`   | Build UI from design tools, screenshots, or section-level visual references   |
 | `fec-storybook-component-doc` | Storybook component docs, design-system presentation, isolated state previews |
 
 **Legacy migration** — activated during modernization work:

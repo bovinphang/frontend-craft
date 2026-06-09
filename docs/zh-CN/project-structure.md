@@ -31,7 +31,7 @@ frontend-craft/
 |   |-- fec-accessibility-check/     # WCAG 2.2、键盘、焦点和屏幕阅读器无障碍检查
 |   |-- fec-react-project-standard/  # React + TypeScript 项目规范
 |   |-- fec-vue3-project-standard/   # Vue 3 + TypeScript 项目规范
-|   |-- fec-implement-from-design/   # 从设计文件实现 UI
+|   |-- fec-implement-from-design/   # 基于设计工具、截图和视觉参考实现 UI
 |   |-- fec-validation-fix/            # lint、type-check、test、build 与修复
 |   |-- fec-performance-optimization/  # Core Web Vitals、包体、渲染、网络、内存
 |   |-- fec-source-driven-development/ # 官方来源、项目事实、版本敏感决策
@@ -63,8 +63,8 @@ frontend-craft/
 |   |-- fec-browser-storage/            # localStorage/sessionStorage/IndexedDB/Cookies 选型与安全客户端持久化
 |   |-- fec-list-virtualization/        # react-window / TanStack Virtual 大列表窗口化与测量策略
 |   |-- fec-storybook-component-doc/    # Storybook 组件文档、addon、MDX、交互和视觉测试集成
-|   |-- fec-ui-design/                  # UI 方向、视觉识别、打磨、状态、视觉 QA
-|   |-- fec-motion-interaction/         # 交互动效、页面转场、滚动动画、reduced motion
+|   |-- fec-ui-design/                  # 产品语境 UI 方向、设计拨盘、媒体策略、视觉 QA
+|   |-- fec-motion-interaction/         # 场景化动效强度、页面转场、滚动动画、reduced motion
 |   |-- fec-vite-project-standard/      # Vite 配置、环境变量安全、HMR、代理、构建与 library mode
 |
 |-- commands/         # 快速执行的斜杠命令

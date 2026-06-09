@@ -231,11 +231,11 @@ npx @bovinphang/frontend-craft@latest list
 
 | 技能                          | 范围                                                     |
 | ----------------------------- | -------------------------------------------------------- |
-| `fec-ui-design`               | UI 方向、视觉识别、界面打磨、状态、视觉 QA               |
+| `fec-ui-design`               | 产品语境 UI 方向、反模板设计拨盘、媒体策略、状态、视觉 QA |
 | `fec-tailwind-design-system`  | Tailwind token、主题扩展、组件变体、class 治理和暗色模式 |
 | `fec-responsive-layout`       | 移动优先布局、容器查询、数据密集型响应式界面             |
-| `fec-motion-interaction`      | 交互动效、页面转场、滚动动画、reduced-motion             |
-| `fec-implement-from-design`   | 基于 Figma/Sketch/MasterGo/Pixso/墨刀设计稿或摹客素材实现 UI |
+| `fec-motion-interaction`      | 场景化动效强度、页面转场、滚动动画、reduced-motion       |
+| `fec-implement-from-design`   | 基于设计工具、截图或分区级视觉参考实现 UI                |
 | `fec-storybook-component-doc` | Storybook 组件文档、设计系统呈现、隔离状态预览           |
 
 **遗留迁移** — 现代化迁移时激活：

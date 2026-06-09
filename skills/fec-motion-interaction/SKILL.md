@@ -31,12 +31,16 @@ description: Use when designing, implementing, or reviewing frontend interaction
    - Level 3-4：加入短 stagger、局部 spring 和轻量 reveal，适合仪表盘、设置页和管理台。
    - Level 5-6：加入视差、布局 morph、指针响应，适合产品展示和交互式首页。
    - Level 7+：使用滚动叙事、固定段落或 3D/WebGL 配合，必须单独做移动端和 reduced-motion 降级。
+   - 场景默认值：公共服务、医疗、金融和强可访问性产品从 Level 1-2 起步；SaaS 工具和数据后台从 Level 2-3 起步；营销页、品牌页和作品集可从 Level 4-6 起步；实验性活动页或沉浸式叙事才考虑 Level 7+。
+   - 如果 UI 设计流程已经设定了动效强度拨盘，沿用该拨盘；不要因为引入了某个动效库就自动提高强度。
 
 4. 建立性能边界
    - 只高频动画 `transform`、`opacity`，谨慎使用 `filter` 和 `clip-path`。
    - GSAP、Lottie、Three.js、重型动画组件必须动态导入或隔离在叶子组件。
    - 持续动画需要暂停条件：不可见、标签页隐藏、用户关闭、低电量或 reduced motion。
    - 不在滚动事件中同步读写布局；使用 IntersectionObserver、ScrollTimeline 或节流后的 rAF。
+   - 滚动叙事、stagger、spring、磁吸指针和视差效果必须各自有明确职责；同一屏不要同时堆叠多种高强度运动语言。
+   - 长页面中重复 reveal 动画要控制节奏，避免每个区块都以同一种延迟、方向和 easing 进入，造成模板感和滚动疲劳。
 
 5. 设计可访问降级
    - 所有非必要动效读取 `prefers-reduced-motion`，降级为静态、淡入或即时状态。
@@ -50,12 +54,15 @@ description: Use when designing, implementing, or reviewing frontend interaction
    - 检查首次加载 bundle 是否因动效库显著膨胀。
    - 手动开启 reduced motion，确认动画被禁用或弱化。
    - 用性能面板或实际设备确认滚动和关键交互没有明显掉帧。
+   - 检查动效强度是否匹配页面类型：工作台不应出现营销式滚动剧场，作品集也不应只有默认 hover 淡入。
+   - 对滚动触发序列确认用户可以快速到达内容，不因 pinned 区块、过长时间轴或不可中断过渡丢失上下文。
 
 ## Constraints
 
 - 不在同一个组件内混用 Framer Motion 和 GSAP 控制同一元素。
 - 不用动效掩盖 loading、empty、error、disabled 等状态缺失。
 - 不为普通后台表格、配置页和高频工作台默认加入大幅视差或滚动劫持。
+- 不让所有区块使用相同 reveal 模板；动效节奏应随信息层级和用户任务变化。
 - 不动画 `width`、`height`、`top`、`left`、`margin`、`padding` 等会频繁触发布局的属性。
 - 不把大型 Lottie JSON、GSAP 插件或 3D 场景放入首屏同步包。
 - 不让动画改变阅读顺序、焦点顺序或键盘可达性。

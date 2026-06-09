@@ -52,5 +52,40 @@
     "priority": "medium",
     "checks": ["Chart type matches data question", "Units and legends are visible", "Data has text/table fallback", "Color is supplemented by shape or labels"],
     "avoid": ["Pie charts for many categories", "Color-only series distinction"]
+  },
+  {
+    "category": "first-viewport",
+    "label": "First viewport",
+    "priority": "high",
+    "checks": ["Hero or workspace fits common laptop heights", "Primary CTA or task entry is visible without scrolling", "Desktop navigation stays on one line", "The next section leaves a readable cue when the page is promotional"],
+    "avoid": ["Oversized top padding", "Hero copy pushing actions below the fold", "Two-line desktop nav"]
+  },
+  {
+    "category": "cta-quality",
+    "label": "CTA quality",
+    "priority": "high",
+    "checks": ["CTA text contrast meets WCAG AA", "Primary CTA label stays on one line at desktop", "Each CTA intent uses one consistent label", "Ghost buttons remain visible over media backgrounds"],
+    "avoid": ["White text on light buttons", "Multiple contact labels for the same action", "Transparent buttons over busy imagery"]
+  },
+  {
+    "category": "section-variety",
+    "label": "Section variety",
+    "priority": "medium",
+    "checks": ["Adjacent sections use distinct layout jobs", "Bento cell count matches real content", "Feature grids have clear visual priority", "Small uppercase eyebrow labels are used sparingly"],
+    "avoid": ["Three equal cards as the default rhythm", "Three or more zigzag sections in a row", "Empty bento cells for decoration"]
+  },
+  {
+    "category": "media-authenticity",
+    "label": "Media authenticity",
+    "priority": "high",
+    "checks": ["Visual pages use real or generated assets with a clear role", "Product pages show inspectable product or state", "Screenshots represent real UI or are labeled as concepts", "Images reserve aspect ratio and have meaningful alt text when informative"],
+    "avoid": ["Text-only promotional pages", "Fake dashboard rectangles", "Blurred stock atmosphere as the main subject"]
+  },
+  {
+    "category": "state-completeness",
+    "label": "State completeness",
+    "priority": "critical",
+    "checks": ["Loading shape matches final layout", "Empty states include a useful next action", "Errors are recoverable and close to the source", "Selected, invalid, disabled, hover, focus, and reduced-motion states are covered"],
+    "avoid": ["Generic spinners everywhere", "Empty states that only say no data", "Disabled controls communicated only by opacity"]
   }
 ]

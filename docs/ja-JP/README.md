@@ -231,11 +231,11 @@ Marketplace が既にインストールされている場合、CLI は `--force`
 
 | スキル                        | 範囲                                                                          |
 | ----------------------------- | ----------------------------------------------------------------------------- |
-| `fec-ui-design`               | UI 方向性、ビジュアル識別、ポリッシュ、状態、ビジュアル QA                    |
+| `fec-ui-design`               | プロダクト文脈に沿った UI 方向性、反テンプレート設計ダイヤル、メディア戦略、状態、ビジュアル QA |
 | `fec-tailwind-design-system`  | Tailwind token、テーマ拡張、variants、class 管理、ダークモード                |
 | `fec-responsive-layout`       | モバイルファースト、container queries、データ密集 responsive UI               |
-| `fec-motion-interaction`      | インタラクション motion、ページ遷移、スクロール animation、reduced-motion     |
-| `fec-implement-from-design`   | Figma/Sketch/MasterGo/Pixso/墨刀 のデザイン、または摹客アセットから UI を実装 |
+| `fec-motion-interaction`      | 文脈に応じた motion 強度、ページ遷移、スクロール animation、reduced-motion    |
+| `fec-implement-from-design`   | デザインツール、スクリーンショット、または section 単位のビジュアル参照から UI を実装 |
 | `fec-storybook-component-doc` | Storybook コンポーネント文書、デザインシステム表示、隔離状態プレビュー        |
 
 **レガシー移行** — モダナイゼーション時に起動：
