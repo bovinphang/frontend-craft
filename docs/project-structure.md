@@ -35,7 +35,7 @@ frontend-craft/
 |   |-- fec-validation-fix/            # lint, type-check, test, build and fix
 |   |-- fec-performance-optimization/  # Core Web Vitals, bundle, rendering, network, memory
 |   |-- fec-source-driven-development/ # Official sources, project facts, version-sensitive decisions
-|   |-- fec-typescript-type-safety/   # Type contracts, DTO mapping, type guards, generics
+|   |-- fec-typescript-project-standard/   # TypeScript config, public API types, declarations, DTOs, generics
 |   |-- fec-state-management/         # State ownership, store selection, URL/server/form/local boundaries
 |   |-- fec-tailwind-design-system/   # Tailwind tokens, variants, dark mode, class governance
 |   |-- fec-responsive-layout/        # Mobile-first layouts, container queries, touch-safe responsive UI

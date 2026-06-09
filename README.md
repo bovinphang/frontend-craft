@@ -219,7 +219,7 @@ The skills below are grouped by use case so you can quickly find project standar
 | ------------------------------ | ----------------------------------------------------------------------------- |
 | `fec-code-review`              | Architecture, types, rendering, styles, a11y review                           |
 | `fec-debug-framework`          | Systematic diagnostics for build, runtime, UI, and API/data failures          |
-| `fec-typescript-type-safety`   | Type contracts, DTO mapping, type guards, generics, type-level checks         |
+| `fec-typescript-project-standard`   | TypeScript config, public API types, declarations, DTOs, generics             |
 | `fec-security-review`          | XSS, CSRF, sensitive data leakage, input validation                           |
 | `fec-accessibility-check`      | WCAG 2.2, keyboard, focus, touch, and screen-reader behavior                  |
 | `fec-dependency-upgrade`       | Dependency upgrades, lockfile review, CVE remediation, migration verification |

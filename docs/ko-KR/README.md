@@ -219,7 +219,7 @@ Marketplace가 이미 설치된 경우, `--force`를 사용해도 CLI는 두 번
 | ------------------------------ | --------------------------------------------------------------- |
 | `fec-code-review`              | 아키텍처, 타입, 렌더링, 스타일, 접근성 리뷰                     |
 | `fec-debug-framework`          | 빌드, 런타임, UI, API/데이터 장애의 체계적 진단                 |
-| `fec-typescript-type-safety`   | 타입 계약, DTO 매핑, 타입 가드, 제네릭, 타입 수준 검사          |
+| `fec-typescript-project-standard`   | TypeScript 설정, 공개 API 타입, 선언 파일, DTO, 제네릭          |
 | `fec-security-review`          | XSS, CSRF, 민감 데이터 유출, 입력 검증                          |
 | `fec-accessibility-check`      | WCAG 2.2, 키보드, 포커스, 터치, 스크린 리더 동작                |
 | `fec-dependency-upgrade`       | 의존성 업그레이드, lockfile 리뷰, CVE 수정, 마이그레이션 검증   |

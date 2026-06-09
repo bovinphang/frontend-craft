@@ -797,28 +797,6 @@
       "优化虚拟列表滚动性能"
     ]
   },
-  "fec-typescript-type-safety": {
-    "should_trigger": [
-      "审查这些 DTO 和 view model 类型边界",
-      "这个泛型组件类型怎么设计更安全",
-      "用 type guard 收窄 unknown 输入",
-      "检查不安全的 as 和非空断言",
-      "设计判别联合表达异步状态",
-      "给公共 utility type 加类型测试",
-      "TypeScript 类型建模和泛型约束 review",
-      "API 响应类型和运行时校验怎么对齐"
-    ],
-    "should_not_trigger": [
-      "做整个前端 PR 综合评审",
-      "只修复 tsc 编译失败",
-      "写 React 组件 UI",
-      "检查按钮键盘焦点",
-      "配置 Vite env 变量",
-      "写 Playwright E2E",
-      "选择全局 store 方案",
-      "审查 CSP 和 XSS"
-    ]
-  },
   "fec-ui-design": {
     "should_trigger": [
       "这个后台页面应该走什么 UI 设计方向",
@@ -933,6 +911,30 @@
       "普通 5ms 计算",
       "操作 DOM 更新 UI",
       "写组件测试"
+    ]
+  },
+  "fec-typescript-project-standard": {
+    "should_trigger": [
+      "TypeScript 项目 tsconfig strict 怎么配置",
+      "审查这些 DTO 和 view model 类型边界",
+      "这个泛型组件类型怎么设计更安全",
+      "用 type guard 收窄 unknown 输入",
+      "设计判别联合表达异步状态",
+      "TypeScript 类型建模和泛型约束 review",
+      "TS SDK 的 package exports 和 d.ts 怎么发布",
+      "monorepo package 的 project references 怎么配置",
+      "public API 类型和声明文件一致性怎么检查",
+      "Node CLI 的 moduleResolution 和类型声明怎么设"
+    ],
+    "should_not_trigger": [
+      "React 项目组件目录怎么分层",
+      "Vue composable 和 Pinia store 怎么组织",
+      "Vite dev server proxy 怎么配置",
+      "TanStack Query queryKey 怎么设计",
+      "表单校验错误怎么展示",
+      "检查弹窗键盘焦点和 aria",
+      "写 Playwright 登录流程",
+      "优化虚拟列表滚动性能"
     ]
   }
 }

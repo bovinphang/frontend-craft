@@ -97,6 +97,6 @@ export function EntityPicker<TEntity extends Entity>({
 报告类型安全问题时，需包含：
 
 - 过于宽泛、过于狭窄或不合理的类型边界。
-- 尽管通过 TypeScript 但可能在运行时失败的行為。
+- 尽管通过 TypeScript 但可能在运行时失败的行为。
 - 最小替换类型或守卫方案。
 - 该变更是否需要测试或类型测试。

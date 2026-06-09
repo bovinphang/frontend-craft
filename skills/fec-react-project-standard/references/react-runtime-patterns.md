@@ -28,7 +28,7 @@
 
 ### 表单
 
-- 受控字段 + 校验错误对象是一类可行实现；中大型表单优先 **React Hook Form**（或 Formik）+ **Zod**（类型与校验与 `templates/shared/rules/fec-typescript.md` 一致）。
+- 受控字段 + 校验错误对象是一类可行实现；中大型表单优先 **React Hook Form**（或 Formik）+ **Zod**，复杂表单值、DTO 和校验类型契约分流到 `fec-typescript-project-standard`。
 - 避免单组件内巨型 `useState` 表单对象与重复校验逻辑，可拆字段子组件或抽 `useFormSchema`。
 
 ### Error Boundary

@@ -27,9 +27,9 @@
 
 ## TypeScript 规范
 
-通用 TypeScript / JavaScript 约定（类型与接口、`any`/`unknown`、React Props、不可变更新、错误处理、Zod、模式与安全等）见插件模板 **`templates/shared/rules/fec-typescript.md`**（初始化到项目后为 `.claude/rules/fec-typescript.md`）。
+通用 TypeScript 工程规则由 `fec-typescript-project-standard` 负责，包括 `tsconfig`、strictness、DTO / view model 边界、`unknown` 收窄、public API 类型、声明产物和类型测试。
 
-- **函数签名**：参数上的复杂联合、内联对象、冗长回调应优先抽成具名类型（见同文件「函数参数：复杂类型宜具名」）。
+React 规范只补充组件、Props、事件和 TSX 泛型写法；复杂类型建模或跨框架类型契约先分流到 `fec-typescript-project-standard`。
 
 ### React 项目补充约定
 
@@ -119,7 +119,7 @@ describe("UserForm", () => {
 - [ ] 可复用逻辑是否已提取为 hooks
 - [ ] loading / error / empty / data 状态是否齐全
 - [ ] API 层是否具备类型约束和统一错误处理
-- [ ] 是否避免滥用 `any`，外部/接口数据是否在边界收窄或校验
+- [ ] 复杂 DTO、外部数据收窄、公共类型或 `tsconfig` 问题是否已分流到 `fec-typescript-project-standard`
 - [ ] 状态管理是否符合就近原则
 - [ ] 路由级或重型模块是否考虑懒加载
 - [ ] 样式方案是否与仓库保持一致

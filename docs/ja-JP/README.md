@@ -219,7 +219,7 @@ Marketplace が既にインストールされている場合、CLI は `--force`
 | ------------------------------ | ----------------------------------------------------------------------------- |
 | `fec-code-review`              | アーキテクチャ、型、レンダリング、スタイル、a11y レビュー                     |
 | `fec-debug-framework`          | ビルド、ランタイム、UI、API/データ障害の体系的な診断                          |
-| `fec-typescript-type-safety`   | 型契約、DTO マッピング、型ガード、ジェネリクス、型レベルチェック              |
+| `fec-typescript-project-standard`   | TypeScript 設定、公開 API 型、宣言ファイル、DTO、ジェネリクス                |
 | `fec-security-review`          | XSS、CSRF、機密データ漏洩、入力検証                                           |
 | `fec-accessibility-check`      | WCAG 2.2、キーボード、フォーカス、タッチ、スクリーンリーダー動作              |
 | `fec-dependency-upgrade`       | 依存関係アップグレード、lockfile レビュー、CVE 修正、移行検証                 |

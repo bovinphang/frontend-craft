@@ -167,7 +167,7 @@ frontend-craft/
 | `fec-canvas-threejs`             | Canvas 2D, Three.js, React Three Fiber, WebGL performance and accessibility          |
 | `fec-svg-animation`              | SVG animation with CSS, Framer Motion, GSAP, reduced-motion fallbacks                |
 | `fec-ui-design`                  | UI direction, visual identity, polish, states, visual QA                             |
-| `fec-typescript-type-safety`     | Type contracts, DTO mapping, type guards, generics, and type-level checks            |
+| `fec-typescript-project-standard`     | TypeScript config, public API types, declarations, DTOs, and generics                |
 | `fec-dependency-upgrade`         | Dependency upgrades, lockfile review, CVE remediation, migration verification        |
 | `fec-vite-project-standard`      | Vite config, env safety, HMR, dev proxy, build optimization, library mode            |
 

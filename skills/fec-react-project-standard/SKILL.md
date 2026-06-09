@@ -36,7 +36,7 @@ description: Use when designing or reviewing React + TypeScript project structur
    - 哪些逻辑应下沉为通用能力
    - 哪些状态应本地管理，哪些应交给 store / query / URL
    - 状态归属复杂时使用状态管理流程先做状态清单
-   - DTO、公共 props 或泛型组件复杂时使用 TypeScript 类型安全流程先收敛类型契约
+   - DTO、公共 props、泛型组件或 `tsconfig` 边界复杂时，先使用 TypeScript 项目规范流程收敛跨框架类型契约
 
 4. 输出时补齐关键质量项
    - loading / error / empty / data 状态
@@ -77,7 +77,7 @@ description: Use when designing or reviewing React + TypeScript project structur
 ## Expected Output
 
 - 组件边界清晰，pages/features/components 分层明确
-- Props 类型完整且明确，无 `any` 滥用
+- Props 类型完整且明确；复杂公共类型或外部数据收窄已分流到 TypeScript 项目规范流程
 - 可复用逻辑已提取为 hooks，loading/error/empty/data 状态齐全
 - API 层具备类型约束和统一错误处理，状态管理符合就近原则
 - URL 状态、服务端状态、表单状态和全局客户端状态边界明确

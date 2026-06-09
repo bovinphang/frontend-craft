@@ -219,7 +219,7 @@ npx @bovinphang/frontend-craft@latest list
 | ------------------------------ | ----------------------------------------------------- |
 | `fec-code-review`              | 架构、类型、渲染、样式、可访问性评审                  |
 | `fec-debug-framework`          | 系统化诊断构建、运行时、UI 和 API/数据问题            |
-| `fec-typescript-type-safety`   | 类型契约、DTO 映射、类型守卫、泛型和类型级检查        |
+| `fec-typescript-project-standard`   | TypeScript 配置、公开类型、声明文件、DTO 和泛型       |
 | `fec-security-review`          | XSS、CSRF、敏感数据泄露、输入校验                     |
 | `fec-accessibility-check`      | WCAG 2.2、键盘、焦点、触控和屏幕阅读器行为            |
 | `fec-dependency-upgrade`       | 依赖升级、lockfile 评审、CVE 修复和迁移验证           |

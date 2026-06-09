@@ -1313,27 +1313,28 @@
     ]
   },
   {
-    "id": "fec-typescript-type-safety",
-    "name": "TypeScript 类型安全",
-    "category": "review-quality",
+    "id": "fec-typescript-project-standard",
+    "name": "TypeScript 项目规范",
+    "category": "project-standard",
     "tags": [
       "typescript",
+      "project-standard",
       "type-safety",
-      "generics",
-      "type-guards",
-      "dto"
+      "tsconfig",
+      "declarations"
     ],
-    "summary": "TypeScript type modeling, contracts, discriminated unions, type guards, DTO mapping, advanced generics, and type-level regression checks.",
+    "summary": "Universal TypeScript project standards for tsconfig, strictness, module resolution, declarations, package exports, public API types, DTOs, generics, and type narrowing.",
     "version": "2.6.0",
     "license": "MIT",
     "homepage": "https://github.com/bovinphang/frontend-craft",
     "repository": "https://github.com/bovinphang/frontend-craft",
     "keywords": [
-      "review-quality",
+      "project-standard",
       "typescript",
       "type-safety",
+      "tsconfig",
+      "declarations",
       "generics",
-      "type-guards",
       "dto"
     ],
     "platforms": [

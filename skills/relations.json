@@ -45,7 +45,7 @@
       "fec-security-review",
       "fec-route-protection",
       "fec-form-handling",
-      "fec-typescript-type-safety",
+      "fec-typescript-project-standard",
       "fec-source-driven-development"
     ],
     "boundaryWorkflows": [
@@ -105,7 +105,7 @@
       "fec-e2e-testing",
       "fec-validation-fix",
       "fec-performance-optimization",
-      "fec-typescript-type-safety",
+      "fec-typescript-project-standard",
       "fec-state-management",
       "fec-source-driven-development",
       "fec-dependency-upgrade",
@@ -376,7 +376,7 @@
   },
   "fec-react-project-standard": {
     "relatedSkills": [
-      "fec-typescript-type-safety",
+      "fec-typescript-project-standard",
       "fec-state-management",
       "fec-tailwind-design-system",
       "fec-responsive-layout",
@@ -550,26 +550,6 @@
       "workflow"
     ]
   },
-  "fec-typescript-type-safety": {
-    "relatedSkills": [
-      "fec-code-review",
-      "fec-api-integration",
-      "fec-react-project-standard",
-      "fec-vue3-project-standard",
-      "fec-form-handling"
-    ],
-    "boundaryWorkflows": [
-      "Use a general code review workflow when the task spans architecture, rendering, styles, tests, and maintainability beyond type contracts.",
-      "Use an API integration workflow for runtime API client boundaries, auth refresh, uploads, realtime behavior, and error mapping.",
-      "Use framework project workflows when type decisions are part of broader React, Vue, Next.js, or Nuxt module architecture."
-    ],
-    "capabilityTags": [
-      "typescript",
-      "type-safety",
-      "type-modeling",
-      "dto"
-    ]
-  },
   "fec-testing-strategy": {
     "relatedSkills": [
       "fec-component-testing",
@@ -640,7 +620,7 @@
   },
   "fec-vue3-project-standard": {
     "relatedSkills": [
-      "fec-typescript-type-safety",
+      "fec-typescript-project-standard",
       "fec-state-management",
       "fec-tailwind-design-system",
       "fec-responsive-layout",
@@ -679,6 +659,29 @@
       "web-workers",
       "performance",
       "main-thread"
+    ]
+  },
+  "fec-typescript-project-standard": {
+    "relatedSkills": [
+      "fec-code-review",
+      "fec-api-integration",
+      "fec-react-project-standard",
+      "fec-vue3-project-standard",
+      "fec-vite-project-standard",
+      "fec-monorepo-project-standard",
+      "fec-validation-fix"
+    ],
+    "boundaryWorkflows": [
+      "Use framework project workflows for component architecture, routing, state ownership, and framework-specific module boundaries.",
+      "Use API integration when runtime API clients, auth refresh, uploads, realtime behavior, or error mapping go beyond TypeScript type contracts.",
+      "Use validation fix when the task is to repair concrete lint, typecheck, test, build, or CI failures after TypeScript changes."
+    ],
+    "capabilityTags": [
+      "typescript",
+      "project-standard",
+      "type-safety",
+      "tsconfig",
+      "declarations"
     ]
   }
 }

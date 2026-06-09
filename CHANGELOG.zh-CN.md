@@ -78,7 +78,7 @@
 ### 新增
 
 - **调试工作流**：新增 `/fec-debug` 斜杠命令（按类型自动路由）、`fec-debugger` agent（复杂诊断场景）和 `fec-debug-framework` skill（5 步诊断方法论）。
-- **6 个新技能**：`fec-performance-optimization`（Core Web Vitals、内存泄漏、性能预算）、`fec-source-driven-development`（基于官方文档验证的证据驱动决策）、`fec-state-management`（状态架构模式）、`fec-typescript-type-safety`（类型安全强化）、`fec-dependency-upgrade`（依赖升级规划）、`fec-responsive-layout`（响应式布局策略）和 `fec-tailwind-design-system`（基于 Tailwind 的设计系统实现）。
+- **6 个新技能**：`fec-performance-optimization`（Core Web Vitals、内存泄漏、性能预算）、`fec-source-driven-development`（基于官方文档验证的证据驱动决策）、`fec-state-management`（状态架构模式）、`fec-typescript-project-standard`（TypeScript 项目规范与类型安全）、`fec-dependency-upgrade`（依赖升级规划）、`fec-responsive-layout`（响应式布局策略）和 `fec-tailwind-design-system`（基于 Tailwind 的设计系统实现）。
 - **2 个新集成技能**：`fec-api-integration` 和 `fec-motion-interaction`。
 - **示例提示库**：新增 `docs/example-prompts.md` 和 `docs/zh-CN/example-prompts.md`，涵盖技能、Agent、命令、设计工作流、测试、维护和运行时配置等场景化提示目录；已在所有 README 变体中添加链接。
 - **UI 设计系统生成器**：新增 `design-system.mjs` 生成器，包含产品规则、风格原型、UX 质量和 Stack UI 规则数据包；支持 `--persist` 和 `--page` 标志生成 `MASTER.md` 和页面覆盖。

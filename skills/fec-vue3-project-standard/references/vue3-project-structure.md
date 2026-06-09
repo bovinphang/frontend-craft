@@ -144,7 +144,9 @@ src/
 
 ## TypeScript 规范
 
-通用 TypeScript / JavaScript 约定见插件模板 **`templates/shared/rules/fec-typescript.md`**（初始化到项目后为 `.claude/rules/fec-typescript.md`）。
+通用 TypeScript 工程规则由 `fec-typescript-project-standard` 负责，包括 `tsconfig`、strictness、DTO / view model 边界、`unknown` 收窄、public API 类型、声明产物和类型测试。
+
+Vue 规范只补充 SFC、Props / Emits、暴露方法、Provide / Inject 和 composable 响应性类型；复杂类型建模或跨框架类型契约先分流到 `fec-typescript-project-standard`。
 
 ### Vue 3 项目补充约定
 
@@ -171,6 +173,5 @@ const emit = defineEmits<Emits>();
 
 - Props 和 Emits 使用 TypeScript interface 定义
 - 使用 `withDefaults` 设置默认值
-- 禁止使用 `any`，优先使用精确类型
 - `defineExpose` 暴露的方法需有类型约束
 

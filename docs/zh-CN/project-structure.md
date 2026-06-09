@@ -35,7 +35,7 @@ frontend-craft/
 |   |-- fec-validation-fix/            # lint、type-check、test、build 与修复
 |   |-- fec-performance-optimization/  # Core Web Vitals、包体、渲染、网络、内存
 |   |-- fec-source-driven-development/ # 官方来源、项目事实、版本敏感决策
-|   |-- fec-typescript-type-safety/   # 类型契约、DTO 映射、类型守卫和泛型
+|   |-- fec-typescript-project-standard/   # TypeScript 配置、公开类型、声明文件、DTO 和泛型
 |   |-- fec-state-management/         # 状态归属、store 选型、URL/服务端/表单/本地边界
 |   |-- fec-tailwind-design-system/   # Tailwind token、组件变体、暗色模式和 class 治理
 |   |-- fec-responsive-layout/        # 移动优先布局、容器查询和触摸友好的响应式 UI

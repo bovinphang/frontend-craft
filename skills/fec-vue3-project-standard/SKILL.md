@@ -19,7 +19,7 @@ description: Use when designing or reviewing Vue 3 + TypeScript project structur
 4. 输出时补齐状态归属、API 层、错误处理、样式隔离和专项 skill 分流。
 5. 页面和模块要有可恢复错误 UI；全局 `errorHandler`、`onErrorCaptured`、请求错误映射和路由错误页分工明确。
 6. Tailwind token/variant 或响应式布局需求应分流到对应专项 skill，避免把样式系统规则塞进 Vue 组件规范。
-7. 状态归属复杂时先做状态清单；DTO、公共 props 或泛型 composable 复杂时先收敛 TypeScript 类型契约。
+7. 状态归属复杂时先做状态清单；DTO、公共 props、泛型 composable 或 `tsconfig` 边界复杂时，先使用 TypeScript 项目规范流程收敛跨框架类型契约。
 8. 设计可复用 composable 时明确输入是否支持 plain value、ref、computed 或 getter；测试 Vue 组件时覆盖 Pinia、Router、Teleport、Suspense 和 async setup 的常见边界。
 
 ## 详细参考

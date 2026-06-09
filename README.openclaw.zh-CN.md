@@ -167,7 +167,7 @@ frontend-craft/
 | `fec-canvas-threejs`             | Canvas 2D、Three.js、React Three Fiber、WebGL 性能与可访问性   |
 | `fec-svg-animation`              | CSS、Framer Motion、GSAP SVG 动画与 reduced-motion 降级        |
 | `fec-ui-design`                  | UI 方向、视觉识别、界面打磨、状态与视觉 QA                     |
-| `fec-typescript-type-safety`     | 类型契约、DTO 映射、类型守卫、泛型和类型级检查                 |
+| `fec-typescript-project-standard`     | TypeScript 配置、公开类型、声明文件、DTO 和泛型                |
 | `fec-dependency-upgrade`         | 依赖升级、lockfile 评审、CVE 修复和迁移验证                    |
 | `fec-vite-project-standard`      | Vite 配置、环境变量安全、HMR、开发代理、构建优化与库模式       |
 
