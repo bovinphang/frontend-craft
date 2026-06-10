@@ -383,6 +383,51 @@
     ]
   },
   {
+    "id": "fec-drawio-studio",
+    "name": "可编辑技术图表工作流",
+    "category": "design-ui",
+    "tags": [
+      "drawio",
+      "diagrams.net",
+      "diagram",
+      "architecture-diagram",
+      "uml",
+      "erd",
+      "autolayout",
+      "shape-search"
+    ],
+    "summary": "Editable draw.io / diagrams.net workflow for technical diagrams, official shape lookup, brand symbols, Graphviz layout, code structure maps, validation, and export fallback.",
+    "version": "2.6.0",
+    "license": "MIT",
+    "homepage": "https://github.com/bovinphang/frontend-craft",
+    "repository": "https://github.com/bovinphang/frontend-craft",
+    "keywords": [
+      "design-ui",
+      "drawio",
+      "diagrams.net",
+      "diagram",
+      "architecture-diagram",
+      "uml",
+      "erd",
+      "autolayout",
+      "shape-search",
+      "editable-diagram",
+      "sequence-diagram",
+      "flowchart",
+      "code-structure-map"
+    ],
+    "platforms": [
+      "skills-cli",
+      "skillreg",
+      "claude-code",
+      "codex",
+      "cursor",
+      "opencode",
+      "openclaw",
+      "generic-skill-runtime"
+    ]
+  },
+  {
     "id": "fec-doc-sync",
     "name": "文档同步",
     "category": "maintenance-docs",

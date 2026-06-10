@@ -1,183 +1,40 @@
 # 渲染模式选型
 
-当项目需要选择渲染策略或评估 SSR / CSR / SSG / ISR 时，参考本文件。
+当项目需要选择或评估 CSR / SSR / SSG / ISR / RSC 时，参考本文件。本文只保留跨框架决策约束；Next.js App Router 细节交给 `fec-nextjs-project-standard`，Nuxt 细节交给 `fec-nuxt-project-standard`，性能证据交给 `fec-performance-optimization`。
 
 ## 渲染模式概览
 
-| 模式    | 全称                            | 生成时机                | 适用框架                 |
-| ------- | ------------------------------- | ----------------------- | ------------------------ |
-| **CSR** | Client-Side Rendering           | 运行时（浏览器）        | React SPA, Vue SPA, Vite |
-| **SSR** | Server-Side Rendering           | 请求时（服务端）        | Next.js, Nuxt, Remix     |
-| **SSG** | Static Site Generation          | 构建时                  | Next.js, Astro, Hugo     |
-| **ISR** | Incremental Static Regeneration | 构建时 + 运行时按需更新 | Next.js, Nuxt            |
-| **RSC** | React Server Components         | 请求时（服务端组件）    | Next.js App Router       |
+| 模式 | 生成时机 | 典型适用 |
+| ---- | -------- | -------- |
+| CSR | 浏览器运行时 | 登录后后台、内部工具、高交互 SPA |
+| SSR | 请求时服务端 | SEO 关键且内容实时的公开页 |
+| SSG | 构建时 | 文档、博客、营销页、变化慢的公开内容 |
+| ISR | 构建时 + 按需再生成 | 页面数量多、内容更新频繁但允许延迟 |
+| RSC | 服务端组件渲染 | Next.js App Router 中需要减少客户端 JS 的场景 |
 
-## 选型决策矩阵
+## 选型原则
 
-### 核心决策因素
+- SEO 必须且内容实时：优先 SSR，并明确缓存、超时和错误降级。
+- SEO 必须且内容稳定：优先 SSG；页面数量巨大或更新频繁时考虑 ISR。
+- 登录后后台、强交互工作区、内部工具：优先 CSR，公开登录/注册页可单独 SSG/SSR。
+- 混合产品：公开页与私有页可以采用不同模式，不为统一架构牺牲体验或成本。
+- 页面数量、更新频率、服务器成本、部署平台、缓存策略和团队运维能力必须一起评估。
+- RSC 只在支持的框架和路由体系中使用；客户端交互、浏览器 API 和高频状态仍放在客户端叶子组件。
 
-| 因素                  | 权重 | 推荐模式                           |
-| --------------------- | ---- | ---------------------------------- |
-| **SEO 必须**          | 高   | SSR / SSG / ISR                    |
-| **首屏速度必须 < 1s** | 高   | SSG / ISR                          |
-| **内容实时性**        | 中   | SSR（实时）/ ISR（秒级延迟可接受） |
-| **服务器成本敏感**    | 中   | SSG / CSR（无需 Node 服务）        |
-| **交互复杂度**        | 中   | CSR / RSC                          |
-| **页面数量 > 10000**  | 中   | SSR / ISR（SSG 构建时间过长）      |
-| **纯后台管理系统**    | 低   | CSR                                |
+## 实施约束
 
-### 场景推荐
-
-```
-目标场景是什么？
-├── 营销官网 / 博客 / 文档站
-│   ├── 内容更新频率低（天级）→ SSG
-│   └── 内容更新频率高（小时级）→ ISR
-│
-├── 电商 / 社交网络 / 新闻门户
-│   ├── 商品页（SEO + 可缓存）→ SSR + CDN 缓存
-│   ├── 搜索结果（实时）→ SSR
-│   └── 分类页（变化慢）→ ISR
-│
-├── SaaS Dashboard / 后台管理系统
-│   ├── 登录后页面 → CSR
-│   └── 登录/注册页（SEO）→ SSG
-│
-├── 混合场景（公开页 + 私有页）
-│   └── 混合模式：公开页 SSR/SSG，私有页 CSR
-│
-└── 内容密集型（博客 + 商品 + Dashboard）
-    └── RSC（Next.js App Router）
-```
-
-### 详细对比
-
-| 维度           | CSR                      | SSR                   | SSG                   | ISR                     |
-| -------------- | ------------------------ | --------------------- | --------------------- | ----------------------- |
-| **SEO**        | ❌ 搜索引擎看到空壳 HTML | ✅ 完整 HTML          | ✅ 完整 HTML          | ✅ 完整 HTML            |
-| **FCP**        | ⚠️ 慢（需下载执行 JS）   | ✅ 快（服务端已渲染） | ✅ 最快（纯静态文件） | ✅ 最快（同 SSG）       |
-| **TTI**        | ⚠️ 慢（hydrate 后交互）  | ⚠️ 中（hydrate 开销） | ✅ 快                 | ✅ 快                   |
-| **内容实时性** | ✅ 实时                  | ✅ 实时               | ❌ 构建时固定         | ⚠️ 可配置（秒/分钟级）  |
-| **服务器成本** | ✅ 无需 Node 服务        | ❌ 需 Node 服务       | ✅ 仅需 CDN           | ⚠️ 需 Node 服务（按需） |
-| **构建时间**   | ✅ 快                    | —                     | ⚠️ 页面多时慢         | ✅ 增量构建             |
-| **缓存友好**   | ⚠️ API 级缓存            | ⚠️ 页面级缓存         | ✅ CDN 全量缓存       | ✅ CDN + 按需失效       |
-| **复杂度**     | ✅ 低                    | ⚠️ 中                 | ✅ 低                 | ⚠️ 中                   |
-
-## 各模式实施要点
-
-### CSR（客户端渲染）
-
-适用：后台管理系统、内部工具、登录后页面。
-
-```tsx
-// 纯 SPA 入口
-import { createRoot } from "react-dom/client";
-import { App } from "./App";
-
-createRoot(document.getElementById("root")!).render(<App />);
-```
-
-**SEO 补救**：对需要 SEO 的页面使用动态 import 加载预渲染版本，或使用 Prerender SPA Plugin。
-
-### SSR（服务端渲染）
-
-适用：电商、新闻、社交等 SEO 关键场景。
-
-```tsx
-// Next.js Pages Router
-export async function getServerSideProps() {
-  const data = await fetchProductData();
-  return { props: { data } };
-}
-
-// Next.js App Router (RSC)
-async function ProductPage() {
-  const data = await fetchProductData(); // 服务端直接 await
-  return <ProductLayout data={data} />;
-}
-```
-
-**注意**：
-
-- SSR 页面必须考虑服务端兼容性（无 window/document）
-- Hydration 不匹配会导致客户端重新渲染（SSR 水合失败）
-- 服务端数据获取必须有超时和错误降级
-
-### SSG（静态站点生成）
-
-适用：博客、文档、营销落地页。
-
-```tsx
-// Next.js 构建时生成
-export async function getStaticProps() {
-  const posts = await fetchPosts();
-  return { props: { posts } };
-}
-
-export async function getStaticPaths() {
-  const posts = await fetchPosts();
-  return {
-    paths: posts.map((p) => `/blog/${p.slug}`),
-    fallback: false, // 未预渲染的 404
-  };
-}
-```
-
-### ISR（增量静态再生）
-
-适用：页面数量多、内容更新频繁但非实时。
-
-```tsx
-export async function getStaticProps() {
-  const product = await fetchProduct();
-  return {
-    props: { product },
-    revalidate: 60, // 60 秒内返回缓存版本，后台异步更新
-  };
-}
-```
-
-## React Server Components（RSC）
-
-Next.js App Router 的默认模式，服务端组件不发送 JS 到客户端：
-
-```tsx
-// 服务端组件（默认）— 可直接 await 数据库查询
-async function ProductList() {
-  const products = await db.products.findMany();
-  return (
-    <div>
-      {products.map((p) => (
-        <ProductCard key={p.id} product={p} />
-      ))}
-    </div>
-  );
-}
-
-// 客户端组件 — 需要交互/状态时显式标记
-("use client");
-
-function AddToCartButton({ productId }: { productId: string }) {
-  const [loading, setLoading] = useState(false);
-  return (
-    <button onClick={() => addToCart(productId)}>
-      {loading ? "..." : "加入购物车"}
-    </button>
-  );
-}
-```
-
-**RSC 优势**：
-
-- 服务端组件的 JS 不发送到客户端，减小 bundle
-- 直接 await 数据库/API 调用，无需 useEffect + loading 状态
-- 服务端组件可嵌套客户端组件，按需选择
+- SSR / RSC 路径不得直接依赖 `window`、`document`、localStorage 或浏览器专属库。
+- Hydration 前后的 HTML、时间、随机数、用户偏好和媒体查询结果要保持一致，避免水合不匹配。
+- 服务端数据获取必须有超时、错误降级和缓存策略。
+- SSG / ISR 需要明确未预渲染路径、revalidate / 失效策略和回滚方式。
+- 客户端大型动效库、图表、编辑器、地图、WebGL/Canvas 等应按需加载，不进入根布局同步 bundle。
+- 不在没有响应头、构建输出、trace、路由行为或线上指标证据时断言某路由“已缓存”或“必须动态”。
 
 ## 检查清单
 
-- [ ] 明确哪些页面需要 SEO（公开页 vs 私有页）
-- [ ] 明确哪些页面需要实时数据（SSR），哪些可接受延迟（ISR/SSG）
-- [ ] 评估页面数量（> 10000 时 SSG 构建时间可能不可接受）
-- [ ] 评估服务器成本（SSR 需 Node 服务，SSG 仅需 CDN）
-- [ ] 确认 Hydration 一致性（SSR 页面首屏 HTML 与客户端渲染匹配）
-- [ ] 为 SSR 页面设置合理的缓存策略（CDN 缓存 + revalidate）
+- [ ] 明确公开页与私有页、SEO 需求和实时性需求。
+- [ ] 明确每类页面使用 CSR / SSR / SSG / ISR / RSC 的理由。
+- [ ] 评估页面数量、构建时间、服务器成本和缓存失效策略。
+- [ ] 检查 SSR/RSC 代码没有浏览器 API 依赖和不可序列化 props。
+- [ ] 确认 loading、error、not-found、离线和权限状态不会因渲染模式丢失。
+- [ ] 用构建输出、响应头、trace 或路由行为验证最终模式。

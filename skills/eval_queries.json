@@ -247,6 +247,32 @@
       "实现 API client 错误映射"
     ]
   },
+  "fec-drawio-studio": {
+    "should_trigger": [
+      "生成一个可编辑的 draw.io 架构图并导出 PNG",
+      "把这个微服务系统画成 .drawio 文件",
+      "用 diagrams.net 做 ER 图，要求后续能编辑",
+      "查一下 AWS Lambda 在 draw.io 里的官方 shape style",
+      "给这个 TypeScript 项目生成模块依赖图并自动布局",
+      "生成 UML 类图并用 draw.io CLI 导出 SVG",
+      "draw.io 自动布局一个超过 20 个节点的服务拓扑",
+      "用 Graphviz 布局后生成 diagrams.net 编辑链接",
+      "制作可编辑序列图并检查 .drawio 是否有断边",
+      "create an editable drawio architecture diagram with official cloud shapes"
+    ],
+    "should_not_trigger": [
+      "生成一张产品宣传海报图片",
+      "编辑这张照片并替换背景",
+      "实现 Three.js 交互式 3D 拓扑图",
+      "给 SVG logo 加路径描边动画",
+      "只写 Mermaid 到 README 中",
+      "按 Figma 设计稿实现页面",
+      "检查 dashboard 的按钮 hover 状态",
+      "用 Playwright 截图做视觉回归",
+      "优化 Canvas 粒子动画性能",
+      "生成漫画头像和品牌板"
+    ]
+  },
   "fec-doc-sync": {
     "should_trigger": [
       "同步 README 中的 skill 和 agent 数量",
