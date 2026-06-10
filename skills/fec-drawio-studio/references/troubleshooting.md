@@ -19,3 +19,11 @@ CDN-referenced symbols require network access during render. Use `brand-symbols.
 ## Embedded PNG Looks Corrupt
 
 Run `png-embed-fix.mjs` after final `drawio -e` PNG export. The command is idempotent.
+
+## Browser URL Opens Blank On Windows
+
+Use `diagram-url.mjs --json` and open the emitted `windowsShortcut` content as a `.url` file, or run `diagram-url.mjs --shortcut`. This preserves the `#R` or `#create=` fragment that carries the compressed diagram.
+
+## Mermaid Or CSV URL Fails
+
+Mermaid and CSV must use `diagram-url.mjs --create --type mermaid|csv`. The older viewer/editor `#R` mode is XML-only.

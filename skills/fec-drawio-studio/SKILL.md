@@ -13,12 +13,16 @@ description: Use when creating editable technical diagrams with draw.io / diagra
 
 1. 判断图表路线
    - 需要长期维护在 Markdown 中的简单图，优先 Mermaid。
-   - 需要官方图标、泳道、复杂布局、可编辑 PNG/SVG/PDF 或 `.drawio` 源时，使用本工作流。
+   - 需要官方图标、泳道、复杂布局、层/标签/元数据、可编辑 PNG/SVG/PDF 或 `.drawio` 源时，使用本工作流。
+   - 需要快速浏览器打开或分享时，用 [diagram-url.mjs](scripts/diagram-url.mjs) 生成 URL；需要本地可审计交付时，始终保存 `.drawio` 源。
+   - 用户已经有 Mermaid 或 CSV 内容时，可用 `diagram-url.mjs --create --type mermaid|csv` 交给 diagrams.net 导入；需要长期维护或精确形状时，再转成 XML。
+   - 如果当前宿主已经配置 draw.io MCP App/Tool，可把它作为预览或编辑入口；本 skill 不要求安装 MCP server。
    - 需要照片、海报、视觉概念或位图编辑时，走图片生成路线。
 
 2. 建立图表规格
    - 明确图表类型、受众、输出格式、节点清单、关系、层级分组和保存位置。
    - 用户指定 ERD、UML、Sequence、Architecture、ML/DL 或 Flowchart 时，读取 [diagram-patterns.md](references/diagram-patterns.md)。
+   - 需要选择 XML、Mermaid、CSV、容器、层、标签、metadata 或暗色模式策略时，读取 [xml-and-mermaid.md](references/xml-and-mermaid.md)。
    - 需要特定厂商/云/网络/流程图形状时，运行 [shape-query.mjs](scripts/shape-query.mjs)；需要 AI、数据库或基础设施品牌符号时，运行 [brand-symbols.mjs](scripts/brand-symbols.mjs)。
 
 3. 生成 `.drawio` 源
@@ -35,7 +39,7 @@ description: Use when creating editable technical diagrams with draw.io / diagra
      ```bash
      drawio -x -f png --width 2000 -o diagram.png diagram.drawio
      ```
-   - 若 CLI 不可用，用 [diagram-url.mjs](scripts/diagram-url.mjs) 生成 diagrams.net viewer/editor URL。
+   - 若 CLI 不可用，用 [diagram-url.mjs](scripts/diagram-url.mjs) 生成 diagrams.net viewer/editor URL；严格离线或数据驻留敏感时先读取 [data-residency.md](references/data-residency.md)。
 
 5. 交付最终产物
    - 保存 `.drawio` 源文件和用户需要的 PNG/SVG/PDF/JPG。
@@ -53,9 +57,12 @@ description: Use when creating editable technical diagrams with draw.io / diagra
 
 - 不把 draw.io 用作普通图片模型；文本密集或结构化图必须保留可编辑源。
 - 不猜测复杂 `shape=mxgraph.*` 样式；优先用形状查询工具获取官方样式。
+- 不为 draw.io 工作流引入 MCP server 运行时依赖；MCP App/Tool 只作为用户环境已有时的可选互操作入口。
+- Mermaid/CSV URL 是导入捷径，不替代 `.drawio` 源文件、lint 和可编辑交付。
 - 不在预览 PNG 中嵌入 XML；嵌入只用于最终交付。
 - Graphviz、draw.io desktop 和联网品牌图标都是可选外部能力；缺失时必须降级而不是反复重试。
 - 品牌图标和第三方形状索引遵循 [THIRD_PARTY_NOTICES.md](data/THIRD_PARTY_NOTICES.md) 中的来源与许可说明。
+- 参考外部 draw.io MCP 生态时，只吸收路线、约束和互操作经验，不复制其服务实现或长篇提示词。
 
 ## Expected Output
 

@@ -45,3 +45,13 @@ Fallback URL:
 ```bash
 node skills/fec-drawio-studio/scripts/diagram-url.mjs diagram.drawio --edit
 ```
+
+Create/import URL for XML, Mermaid or CSV:
+
+```bash
+node skills/fec-drawio-studio/scripts/diagram-url.mjs diagram.drawio --create --type xml --json
+node skills/fec-drawio-studio/scripts/diagram-url.mjs flow.mmd --create --type mermaid
+node skills/fec-drawio-studio/scripts/diagram-url.mjs org.csv --create --type csv --lightbox
+```
+
+Use `--base-url` for a self-hosted diagrams.net endpoint. Use `--shortcut` or the JSON `windowsShortcut` field when opening the URL through Windows shell tooling.

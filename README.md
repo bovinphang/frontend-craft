@@ -233,7 +233,7 @@ The skills below are grouped by use case so you can quickly find project standar
 | ----------------------------- | ----------------------------------------------------------------------------- |
 | `fec-ui-design`               | Product-context UI direction, anti-generic design dials, media strategy, states, visual QA |
 | `fec-image-generation`        | Diagrams, image generation/editing, visual assets, PNG QA and repair loops     |
-| `fec-drawio-studio`         | Editable draw.io / diagrams.net technical diagrams, shape lookup, auto-layout, code maps |
+| `fec-drawio-studio`         | Editable draw.io / diagrams.net technical diagrams, XML/Mermaid/CSV URL handoff, shape lookup, auto-layout, code maps |
 | `fec-web-video-presentation` | Recordable 16:9 step-driven web presentations from articles, scripts, lessons, and demos |
 | `fec-tailwind-design-system`  | Tailwind tokens, theme extension, variants, class governance, dark mode       |
 | `fec-responsive-layout`       | Mobile-first layouts, container queries, data-dense responsive UI             |
