@@ -1,65 +1,65 @@
 {
-  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
-  "name": "frontend-craft",
-  "description": "Shared Claude Code plugin for frontend teams — agents, skills, hooks, and project templates for code review, design-to-code, architecture planning, security review, and UI debugging. All reports auto-saved as Markdown.",
-  "owner": {
-    "name": "Bovin Phang",
-    "email": "pengbaowen@msn.com"
-  },
-  "metadata": {
-    "description": "Shared Claude Code plugin for frontend teams"
-  },
-  "plugins": [
-    {
-      "name": "frontend-craft",
-      "source": {
-        "source": "npm",
-        "package": "@bovinphang/frontend-craft",
-        "version": "2.6.0"
-      },
-      "description": "Enterprise frontend team Claude Code plugin — 13 agents, 45 skills, 8 commands, shared rule templates, and production-ready hooks for code review, TypeScript review, type-safety modeling, state management, Tailwind design systems, responsive layout, dependency upgrades, security review, testing strategy, E2E, component testing, route protection, API integration, backend requirements handoff, interaction motion, performance optimization, scaffolding, design-to-code (Figma/Sketch/MasterGo/Pixso/墨刀/摹客), UI design and polish, image generation, editable draw.io drawio studio, web video presentations, Vite standards, legacy-to-modern migration, React/Vue/Next.js/Nuxt/monorepo standards, PWA, Web Workers, Canvas/Three.js, SVG animation, CI/CD, architecture planning, project absorption, and UI debugging with multi-design-tool MCP integration. All reports auto-saved as Markdown files to reports/ directory.",
-      "version": "2.6.0",
-      "author": {
+    "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
+    "name": "frontend-craft",
+    "description": "Shared Claude Code plugin for frontend teams — agents, skills, hooks, and project templates for code review, design-to-code, architecture planning, security review, and UI debugging. All reports auto-saved as Markdown.",
+    "owner": {
         "name": "Bovin Phang",
         "email": "pengbaowen@msn.com"
-      },
-      "homepage": "https://github.com/bovinphang/frontend-craft",
-      "repository": "https://github.com/bovinphang/frontend-craft",
-      "license": "MIT",
-      "keywords": [
-        "frontend",
-        "vue3",
-        "react",
-        "figma",
-        "sketch",
-        "mastergo",
-        "pixso",
-        "modao",
-        "mockplus",
-        "qoder",
-        "mcp",
-        "design-to-code",
-        "enterprise",
-        "performance"
-      ],
-      "category": "workflow",
-      "tags": [
-        "frontend",
-        "vue3",
-        "react",
-        "figma",
-        "sketch",
-        "mastergo",
-        "pixso",
-        "modao",
-        "qoder",
-        "mcp",
-        "design-to-code",
-        "enterprise",
-        "security",
-        "i18n"
-      ],
-      "strict": false
-    }
-  ]
+    },
+    "metadata": {
+        "description": "Shared Claude Code plugin for frontend teams"
+    },
+    "plugins": [
+        {
+            "name": "frontend-craft",
+            "source": {
+                "source": "npm",
+                "package": "@bovinphang/frontend-craft",
+                "version": "2.7.0"
+            },
+            "description": "Enterprise frontend team Claude Code plugin — 13 agents, 45 skills, 8 commands, shared rule templates, and production-ready hooks for code review, TypeScript review, type-safety modeling, state management, Tailwind design systems, responsive layout, dependency upgrades, security review, testing strategy, E2E, component testing, route protection, API integration, backend requirements handoff, interaction motion, performance optimization, scaffolding, design-to-code (Figma/Sketch/MasterGo/Pixso/墨刀/摹客), UI design and polish, image generation, editable draw.io drawio studio, web video presentations, Vite standards, legacy-to-modern migration, React/Vue/Next.js/Nuxt/monorepo standards, PWA, Web Workers, Canvas/Three.js, SVG animation, CI/CD, architecture planning, project absorption, and UI debugging with multi-design-tool MCP integration. All reports auto-saved as Markdown files to reports/ directory.",
+            "version": "2.7.0",
+            "author": {
+                "name": "Bovin Phang",
+                "email": "pengbaowen@msn.com"
+            },
+            "homepage": "https://github.com/bovinphang/frontend-craft",
+            "repository": "https://github.com/bovinphang/frontend-craft",
+            "license": "MIT",
+            "keywords": [
+                "frontend",
+                "vue3",
+                "react",
+                "figma",
+                "sketch",
+                "mastergo",
+                "pixso",
+                "modao",
+                "mockplus",
+                "qoder",
+                "mcp",
+                "design-to-code",
+                "enterprise",
+                "performance"
+            ],
+            "category": "workflow",
+            "tags": [
+                "frontend",
+                "vue3",
+                "react",
+                "figma",
+                "sketch",
+                "mastergo",
+                "pixso",
+                "modao",
+                "qoder",
+                "mcp",
+                "design-to-code",
+                "enterprise",
+                "security",
+                "i18n"
+            ],
+            "strict": false
+        }
+    ]
 }
