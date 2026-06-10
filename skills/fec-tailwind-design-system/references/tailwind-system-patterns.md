@@ -35,9 +35,13 @@ const toneClass = {
 ## 暗色模式
 
 - 优先选择单一的项目级策略：`class`、`data-theme` 或 CSS 变量。
-- 如果应用支持手动切换主题，在 body 绘制前初始化已选主题。
+- 如果应用支持手动切换主题，在 body 绘制前初始化已选主题，避免首屏先亮后暗或先暗后亮的主题闪烁。
 - 在亮色和暗色主题下都测试 disabled、focus、selected、invalid、chart 和 skeleton 状态。
 - 不要把降低透明度作为 disabled 的唯一提示；要保留对比度和可感知性。
+- Tailwind 项目使用 `darkMode: "class"` 或等价配置时，主题切换逻辑应同时维护根节点 class / data attribute，并持久化用户偏好。
+- CSS 变量方案中，Tailwind token 应引用语义变量；不要为亮色和暗色分别散落两套工具类字面量。
+- 在 `<head>` 或框架等价入口中放置极小同步初始化脚本时，只读取本地主题偏好和系统偏好，不执行业务逻辑、不访问服务端数据。
+- 暗色模式需复核图片亮度、阴影层级、表单控件、第三方组件、图表色板和 focus ring；不要只补背景色。
 
 ## 响应式工具类
 

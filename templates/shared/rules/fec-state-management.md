@@ -1,163 +1,60 @@
 # 状态管理规范
 
+本文件约定前端状态归属底线。状态清单、Store 形状示例、URL 状态、持久化适配器和 SSR 隔离细节交给 `fec-state-management`；请求缓存细节交给数据获取 workflow；表单字段和校验交给表单 workflow。
+
 ## 状态分类
 
-| 类型         | 示例                             | 存放位置            |
-| ------------ | -------------------------------- | ------------------- |
-| 组件 UI 状态 | modal 开关、tab 索引、hover 状态 | 组件内 state        |
-| 表单状态     | 输入值、校验错误                 | 表单库或组件 state  |
-| 服务端数据   | 用户列表、订单详情               | 数据请求库缓存      |
-| 全局业务状态 | 当前用户、权限、主题             | 全局 Store          |
-| URL 状态     | 当前页码、筛选条件、排序         | 路由参数 / 搜索参数 |
+| 类型 | 示例 | 默认归属 |
+| ---- | ---- | -------- |
+| 本地 UI 状态 | modal 开关、tab、展开行、hover 编辑态 | 组件内 state / ref |
+| 表单状态 | 输入值、脏字段、校验错误、提交中 | 表单库或表单组件 |
+| 服务端状态 | 列表、详情、分页结果、远程错误 | 请求缓存库 |
+| URL 状态 | 搜索词、筛选、排序、页码、选中 tab | 路由参数 / search params |
+| 全局客户端状态 | 登录用户、主题、权限快照、购物车草稿 | 全局 store |
+| 浏览器持久化状态 | 偏好、非敏感草稿、离线队列 | 存储层 + 状态适配器 |
 
 ## 核心原则
 
-- **就近管理**: 状态放在需要它的最近公共祖先
-- **单一数据源**: 同一份数据只在一个地方维护
-- **派生优于同步**: 可计算的值用 computed / useMemo，而不是手动同步多个 state
-- **最小状态**: 不存储可以从已有状态推导的值
+- **先归属，后选库**：不要先选 Redux、Zustand、Pinia 或 Context；先确定每个状态的唯一 owner。
+- **就近管理**：状态放在需要它的最近公共祖先。
+- **单一数据源**：同一份数据只在一个地方维护。
+- **派生优于同步**：可从 props、server state、URL 或已有 state 推导的值，不另存一份。
+- **最小全局状态**：全局 store 只保存真正跨页面、跨 feature 或需要统一动作的客户端状态。
 
-## React 状态管理
+## React 状态边界
 
-### 本地状态
+- 单组件或小子树使用 `useState` / `useReducer`。
+- 低频全局配置、主题或依赖注入可用 Context；高频变化的大对象不要放 Context。
+- 中等复杂业务状态可用 Zustand、Jotai 或仓库既有方案；大型严格动作流可用 Redux Toolkit。
+- 服务端数据使用请求缓存库，不复制到全局 store。
 
-```tsx
-// 简单值 - useState
-const [count, setCount] = useState(0);
+## Vue 状态边界
 
-// 复杂逻辑 - useReducer
-const [state, dispatch] = useReducer(formReducer, initialState);
-```
+- 局部状态使用 `ref` / `reactive` / `computed`。
+- 局部跨层级上下文使用 `provide/inject`。
+- 全局业务状态使用 Pinia 或项目既有 store。
+- 服务端数据优先使用请求库或 composable 管理，不原封不动写入 Pinia。
 
-### 全局状态（Zustand 示例）
+## URL 与持久化状态
 
-<!-- 请根据项目实际选型调整：Redux Toolkit / Zustand / Jotai -->
-
-```tsx
-const useAuthStore = create<AuthState>((set) => ({
-  user: null,
-  login: async (credentials) => {
-    const user = await authApi.login(credentials);
-    set({ user });
-  },
-  logout: () => set({ user: null }),
-}));
-```
-
-### 服务端状态
-
-<!-- 请根据项目实际选型调整：React Query / SWR -->
-
-```tsx
-const { data, isLoading, error } = useQuery({
-  queryKey: ["users", params],
-  queryFn: () => fetchUsers(params),
-  staleTime: 5 * 60 * 1000,
-});
-```
-
-## Vue 状态管理
-
-### 本地状态
-
-```typescript
-const count = ref(0);
-const form = reactive({ name: "", email: "" });
-```
-
-### 全局状态（Pinia）
-
-```typescript
-export const useAuthStore = defineStore("auth", () => {
-  const user = ref<User | null>(null);
-
-  async function login(credentials: LoginParams) {
-    user.value = await authApi.login(credentials);
-  }
-
-  function logout() {
-    user.value = null;
-  }
-
-  const isLoggedIn = computed(() => user.value !== null);
-
-  return { user: readonly(user), isLoggedIn, login, logout };
-});
-```
-
-### 服务端状态
-
-<!-- 请根据项目实际选型调整：VueQuery / 自定义 composable -->
-
-```typescript
-const { data, isLoading, error } = useQuery({
-  queryKey: ["users", params],
-  queryFn: () => fetchUsers(toValue(params)),
-});
-```
-
-## 选型决策矩阵
-
-### React 全局状态管理选型
-
-| 维度           | Context API                            | Zustand                                | Redux Toolkit                   | Jotai               |
-| -------------- | -------------------------------------- | -------------------------------------- | ------------------------------- | ------------------- |
-| **适用场景**   | 全局常量（主题、语言、用户信息）       | 复杂业务状态（购物车、Dashboard 筛选） | 大型应用，需要严格的状态流控制  | 细粒度原子状态      |
-| **重渲染性能** | ❌ 任何 value 变化导致所有消费者重渲染 | ✅ 通过 selector 精确订阅              | ✅ connect/useSelector 精确订阅 | ✅ 原子级订阅       |
-| **样板代码**   | 少（Provider + createContext）         | 极少（一个 create 调用）               | 多（slice / action / selector） | 极少（atom）        |
-| **DevTools**   | ❌ 无                                  | ✅ Redux DevTools（中间件）            | ✅ Redux DevTools               | ✅ 专用 DevTools    |
-| **TypeScript** | ⚠️ 需手动类型标注                      | ✅ 自动推导                            | ✅ 自动推导                     | ✅ 自动推导         |
-| **中间件**     | ❌                                     | ✅（persist / devtools / immer）       | ✅（thunk / listener）          | ✅                  |
-| **Provider**   | ✅ 必须包裹                            | ❌ 不需要（外部 store）                | ✅ Provider                     | ❌（可选 Provider） |
-
-**推荐决策流程**：
-
-```
-状态是否跨组件共享？
-├── 否 → useState / useReducer（本地状态）
-└── 是
-    ├── 值是否几乎不变？（主题、语言、配置）
-    │   └── 是 → Context API
-    │
-    ├── 是否需要严格状态流 + 时间旅行调试？
-    │   └── 是 → Redux Toolkit
-    │
-    ├── 状态是否高度关联、需要集中管理？
-    │   └── 是 → Zustand
-    │
-    └── 状态是否独立、需要细粒度订阅？
-        └── 是 → Jotai
-```
-
-### Vue 全局状态管理选型
-
-| 维度           | provide/inject                     | Pinia            |
-| -------------- | ---------------------------------- | ---------------- |
-| **适用场景**   | 局部跨层级传递（主题、表单上下文） | 全局业务状态     |
-| **响应式**     | ✅（传入 reactive/ref）            | ✅               |
-| **DevTools**   | ❌                                 | ✅ Vue DevTools  |
-| **TypeScript** | ⚠️ 需 InjectionKey                 | ✅ 自动推导      |
-| **SSR 安全**   | ⚠️ 需注意作用域                    | ✅ 内置 SSR 支持 |
-
-**Vue 选型结论**：Pinia 是 Vue 3 官方推荐，新项目直接使用。provide/inject 仅用于局部上下文传递。
-
----
+- 搜索、筛选、排序、分页、选中 tab 等需要分享或刷新保留的视图状态优先放 URL。
+- 浏览器持久化只保存稳定偏好或非敏感草稿，并明确字段白名单、版本号、迁移路径、过期策略和敏感字段排除。
+- SSR 场景不要在模块顶层创建带用户数据的单例 store；每次请求需要独立实例。
 
 ## 反模式
 
-- 将所有状态都放进全局 store（应优先本地状态）
-- 在 store 中存放 UI 临时状态（modal 开关、表单输入等）
-- 手动同步多份相同数据而不是用计算属性
-- 在组件中直接修改 store 的内部数据（应通过 action / mutation）
-- 将服务端响应原封不动存入全局 store 而不用请求缓存库
-- 过度使用 Context / provide 替代 props 传递
-- 用 Context 管理频繁更新的状态（导致全量消费者重渲染，应改用 Zustand/Pinia）
+- 将所有状态都放进全局 store。
+- 在 store 中存放 UI 临时状态或表单每个字段。
+- 手动同步多份相同数据，而不是从源状态派生。
+- 将服务端响应原封不动存入全局 store，而不用请求缓存库。
+- 用 Context / provide 承载高频变化大对象，导致大范围重渲染。
+- 持久化 token、权限细节、个人敏感数据或未版本化的大对象。
 
 ## 检查清单
 
-- [ ] 每个状态都有明确的归属（本地 / 全局 / URL / 服务端缓存）
-- [ ] 可派生的值没有被存为独立 state
-- [ ] 全局 store 仅包含真正需要跨组件共享的数据
-- [ ] 服务端数据通过请求库管理，而非手动存入 store
-- [ ] URL 状态（搜索、分页、筛选）与路由参数同步
-- [ ] Context 仅用于低频变更的全局值（主题、语言、用户信息）
+- [ ] 每个状态都有明确归属：本地 / 表单 / 服务端缓存 / URL / 全局 store / 浏览器持久化。
+- [ ] 可派生的值没有被存为独立 state。
+- [ ] 全局 store 只包含真正跨边界共享的数据。
+- [ ] 服务端数据通过请求库管理，刷新、回退、权限变化和错误状态仍可恢复。
+- [ ] URL 状态与路由参数同步，刷新和分享行为符合预期。
+- [ ] 持久化状态有白名单、版本、迁移和敏感字段排除。

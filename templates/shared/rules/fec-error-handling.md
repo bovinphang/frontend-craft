@@ -1,200 +1,56 @@
 # 错误处理规范
 
+本文件约定前端错误处理的常驻边界。React/Vue 组件边界细节交给对应框架 skill，API 错误映射和鉴权刷新交给 `fec-api-integration`，安全敏感错误交给 `fec-security-review`。
+
 ## 错误分层
 
-| 层级 | 错误类型 | 处理方式 |
-|------|----------|----------|
-| 全局 | 未捕获异常、Promise rejection | 全局捕获 + 上报 + 降级 UI |
-| 路由/页面 | 页面级组件渲染错误 | Error Boundary + 页面级降级 |
-| 模块 | 功能模块内的运行时错误 | Error Boundary + 模块级降级 |
-| 组件 | 数据请求失败、操作失败 | 用户提示 + 重试机制 |
-| 表单 | 校验失败 | 字段级错误提示 |
+| 层级 | 错误类型 | 默认处理 |
+| ---- | -------- | -------- |
+| 全局 | 未捕获异常、Promise rejection | 捕获、上报、全局降级 UI |
+| 路由 / 页面 | 页面级渲染异常 | Error Boundary / 框架错误边界 + 页面级降级 |
+| 模块 | 功能模块运行时异常 | 模块级边界 + 局部降级 |
+| 组件 / 请求 | 数据请求失败、操作失败 | 用户可理解提示 + 可恢复动作 |
+| 表单 | 校验失败 | 字段级错误提示和修正入口 |
 
-## 全局错误捕获
+## 全局与模块边界
 
-### React
-
-```tsx
-// main.tsx — 未捕获的 Promise
-window.addEventListener("unhandledrejection", (event) => {
-  reportError(event.reason);
-});
-
-// 推荐：react-error-boundary，业务侧保持函数组件 + FallbackComponent
-import { ErrorBoundary } from "react-error-boundary";
-
-function GlobalErrorFallback({
-  error,
-  resetErrorBoundary,
-}: {
-  error: Error;
-  resetErrorBoundary: () => void;
-}) {
-  return (
-    <div role="alert">
-      <p>页面出现异常</p>
-      <button type="button" onClick={resetErrorBoundary}>
-        重试
-      </button>
-    </div>
-  );
-}
-
-// 根节点包裹示例（root 来自 createRoot(document.getElementById("root")!) 等）
-root.render(
-  <ErrorBoundary
-    FallbackComponent={GlobalErrorFallback}
-    onError={(error, info) => {
-      reportError(error, { componentStack: info.componentStack });
-    }}
-  >
-    <App />
-  </ErrorBoundary>,
-);
-```
-
-### Vue
-
-```typescript
-// main.ts
-app.config.errorHandler = (err, instance, info) => {
-    reportError(err, {
-        component: instance?.$options.name,
-        lifecycleHook: info,
-    });
-};
-
-window.addEventListener('unhandledrejection', (event) => {
-    reportError(event.reason);
-});
-```
-
-## Error Boundary 策略
-
-```
-App (GlobalErrorBoundary)
-├── Header
-├── Main
-│   ├── Sidebar (ErrorBoundary)
-│   └── Content
-│       ├── Dashboard (ErrorBoundary)
-│       └── UserList (ErrorBoundary)
-└── Footer
-```
-
-- 每个独立功能模块用 Error Boundary 包裹
-- 模块崩溃不应导致整个页面白屏
-- 降级 UI 应提供"重试"操作
+- 应在应用入口注册未捕获异常和 Promise rejection 监听，并接入项目错误上报平台。
+- React 使用项目统一的 Error Boundary 方案；业务组件保持函数式，不新增手写类组件边界。
+- Vue 使用项目统一的 `app.config.errorHandler`、`onErrorCaptured` 或框架级错误边界。
+- 独立功能模块应有局部降级能力，模块崩溃不应导致整个页面白屏。
+- Error Boundary 处理渲染异常；普通 API 失败应落到 loading/error/empty/data 状态和可恢复操作。
 
 ## API 错误处理
 
-### 统一错误格式
-
-```typescript
-interface ApiError {
-    code: string;
-    message: string;
-    details?: Record<string, string[]>;
-}
-```
-
-### 错误分级处理
-
-```typescript
-function handleApiError(error: ApiError) {
-    switch (error.code) {
-        case 'UNAUTHORIZED':
-            redirectToLogin();
-            break;
-        case 'FORBIDDEN':
-            showToast('无权限执行此操作');
-            break;
-        case 'VALIDATION_ERROR':
-            return error.details; // 返回给表单显示字段级错误
-        case 'NETWORK_ERROR':
-            showToast('网络异常，请检查网络连接');
-            break;
-        default:
-            showToast(error.message || '操作失败，请稍后重试');
-            reportError(error);
-    }
-}
-```
-
-### 请求拦截器
-
-在 axios / fetch 封装层统一处理：
-
-- 401 → 跳转登录（或刷新 token）
-- 403 → 权限不足提示
-- 500 → 通用错误提示 + 上报
-- 网络超时 → 超时提示 + 可选重试
-
-### 用户可恢复动作
-
-每类错误都应对应明确下一步：
-
-- `401`：重新登录或静默刷新失败后跳转登录
-- `403`：说明无权限并提供返回或申请权限路径
-- `404`：返回列表、重新搜索或创建入口
-- `409`：展示冲突对象和刷新/覆盖/取消选择
-- `422`：字段级错误回填表单
-- `429`：告知等待时间或稍后重试
-- `5xx` / 网络错误：重试、离线提示或联系支持
-
-UI 可显示 request id / trace id 方便支持排查，但不得暴露内部堆栈、SQL、服务名或敏感字段。
+- 请求层统一归一错误形状，组件不直接解析后端异常、token refresh 或重试策略。
+- 每类错误都应对应明确下一步：重试、重新登录、修改输入、返回上级、刷新冲突数据、联系支持或稍后再试。
+- `401`、`403`、`404`、`409`、`422`、`429`、`5xx` 和网络错误应有可区分的用户提示和日志语义。
+- UI 可显示 request id / trace id 方便支持排查，但不得暴露内部堆栈、SQL、服务名、密钥或敏感字段。
 
 ## 用户体验
 
-### 错误状态 UI
-
-每个数据展示区域应处理四种状态：
-
-1. **Loading** — 骨架屏或 spinner
-2. **Error** — 错误描述 + 重试按钮
-3. **Empty** — 空状态引导
-4. **Success** — 正常数据展示
-
-### 降级 UI 设计
-
-- 全局级：显示友好的错误页面，提供"返回首页"和"重试"
-- 模块级：显示该模块的占位错误卡片，页面其他部分正常
-- 操作级：Toast 提示 + 具体的下一步指引
-
-### 重试策略
-
-- 用户手动重试（按钮）
-- 自动重试（指数退避，最多 3 次）
-- 数据请求库的内置重试（React Query retries 等）
+- 每个数据展示区域处理 Loading、Error、Empty、Success 四种状态。
+- 全局级错误页提供返回首页、刷新或重试路径；模块级降级只影响该模块；操作级错误给出下一步。
+- 重试策略要克制：用户手动重试优先，自动重试需有上限、退避和停止条件。
+- 错误提示应保留用户已输入内容，避免因失败丢失表单或上下文。
 
 ## 错误上报
 
-<!-- 请根据项目实际的错误监控平台调整：Sentry / 自建 / 其他 -->
-
-上报内容应包含：
-
-- 错误堆栈
-- 用户 ID / 会话 ID
-- 当前页面 URL
-- 浏览器/设备信息
-- 复现上下文（操作步骤、请求参数）
+上报内容应包含错误堆栈、页面 URL、浏览器/设备信息、用户或会话标识、操作上下文、请求标识和版本信息。上报前清理 token、密码、个人敏感字段和大体积 payload。
 
 ## 反模式
 
-- 空 catch 块吞掉错误
-- 所有错误统一用 `alert()` 提示
-- 接口失败时 UI 无任何反馈
-- Error Boundary 没有重试机制，用户只能刷新页面
-- 在组件中到处写重复的 try/catch 而不是统一封装
-- 不上报错误，依赖用户反馈来发现问题
-- 用 Error Boundary 承接普通 API 错误，导致用户无法理解或恢复
-- 把后端原始异常、内部错误码或敏感字段直接展示给用户
+- 空 `catch` 块吞掉错误。
+- 所有错误统一用 `alert()` 或一个模糊 toast。
+- 接口失败时 UI 无反馈，或把后端原始异常直接展示给用户。
+- Error Boundary 没有重试或返回路径。
+- 在组件中到处写重复 `try/catch`，而不是统一封装请求边界。
+- 用 Error Boundary 承接普通 API 错误，导致用户无法理解或恢复。
 
 ## 检查清单
 
-- [ ] 全局有未捕获异常和 Promise rejection 的监听
-- [ ] 关键功能模块有 Error Boundary（React）或 onErrorCaptured（Vue）包裹
-- [ ] API 请求有统一的错误拦截和分级处理
-- [ ] 所有数据展示区域处理了 Loading / Error / Empty / Success 四种状态
-- [ ] 降级 UI 提供了"重试"操作
-- [ ] 错误信息上报到监控平台
+- [ ] 全局未捕获异常和 Promise rejection 已监听。
+- [ ] 关键页面或模块有框架错误边界和局部降级 UI。
+- [ ] API 请求有统一错误归一、分级处理和可恢复动作。
+- [ ] 数据区域覆盖 Loading / Error / Empty / Success。
+- [ ] 错误上报包含足够定位信息且不泄露敏感数据。
