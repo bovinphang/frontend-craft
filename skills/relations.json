@@ -194,6 +194,27 @@
       "migration"
     ]
   },
+  "fec-drawio-studio": {
+    "relatedSkills": [
+      "fec-image-generation",
+      "fec-canvas-threejs",
+      "fec-svg-animation",
+      "fec-ui-design",
+      "fec-source-driven-development"
+    ],
+    "boundaryWorkflows": [
+      "Use image generation for raster-first posters, visual concepts, product images, and PNG QA beyond editable technical diagrams.",
+      "Use Canvas/Three.js when the diagram becomes an interactive runtime visualization, simulation, game scene, shader, or 3D renderer.",
+      "Use SVG animation for motion-specific vector micro-interactions; use drawio studio for static or editable technical SVG exports."
+    ],
+    "capabilityTags": [
+      "drawio",
+      "editable-diagram",
+      "autolayout",
+      "shape-search",
+      "code-structure-map"
+    ]
+  },
   "fec-e2e-testing": {
     "relatedSkills": [
       "fec-testing-strategy",
