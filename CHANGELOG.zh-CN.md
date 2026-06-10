@@ -8,17 +8,42 @@
 
 自 **2.0.0** 起，面向发布的说明以英文 `CHANGELOG.md` 为权威来源；历史条目可能保留最初撰写语言。
 
-## [Unreleased]
+## [2.7.0] - 2026-06-10
 
 ### 新增
 
-- **`fec-web-video-presentation` 技能**：新增 Frontend Craft 原生网页视频演示工作流，可将文章、口播稿、课程和 demo 转成可录屏的 16:9 步进网页演示，并附带精简参考文档、starter theme 数据和跨平台 Vite/React 脚手架 helper。
+- **`fec-drawio-studio` 技能**：可编辑 draw.io / diagrams.net 技术图工作流，涵盖官方 shape 查询、品牌符号、Graphviz 自动布局、多语言代码结构映射（TS / JS / Go / Python / Rust）、校验、导出兜底，并支持 `XML / Mermaid / CSV` URL 交付（`diagram-url --create`），可使用自托管 `baseUrl`、lightbox、暗色主题与 Windows `.url` 快捷方式。
+- **`fec-image-generation` 技能**：覆盖示意图、图表、海报、UI mockup、信息图与图像编辑流程，并提供 `scripts/png-qa.mjs` 进行有界自修复的 PNG 视觉 QA（已纳入 `typecheck:skill-scripts` 校验范围）。
+- **`fec-backend-requirements-handoff` 技能**：前端→后端需求交接，描述 UI 数据需求、用户操作、状态、权限、业务规则、不确定点和需要后端澄清的问题，不规定实现方式。
+- **`fec-web-video-presentation` 技能**：将文章、口播稿、课程和 demo 转为可录屏的 16:9 步进式网页演示，包含精简参考文档、starter theme 数据和跨平台 Vite/React 脚手架 helper。
+- **参考文档模块化拆分**：将多个技能的单体参考文档拆分为聚焦模块——`fec-e2e-testing`（e2e-ci-reporting / e2e-special-scenarios / e2e-visual-regression）、`fec-legacy-to-modern-migration`（migration-execution-checklist / migration-strategy-and-mapping）、`fec-performance-optimization`（framework-performance-patterns）、`fec-react-project-standard`（react-project-structure / react-runtime-patterns / react-quality-patterns / react-performance-patterns）、`fec-vue3-project-standard`（vue3-project-structure / vue3-composables-routing / vue3-state-api-quality / vue3-performance-patterns）；各 `SKILL.md` 同步指向新的聚焦参考。
+- **新技能的安装覆盖**：新增 `tests/install/image-generation-skill.test.ts`、`tests/install/drawio-studio-skill.test.ts`，并扩展 `tests/install/ui-design-intelligence.test.ts`（designRead、designDials、按页面意图拨盘行为）和 `tests/install/end-to-end.test.ts`（新技能 id、taxonomy、relations）。
 
 ### 变更
 
-- **Garden Skills 吸收**：以项目原生方式增强 UI 设计方向、图片生成路由和来源驱动本地知识检索流程，不复制 Garden 实现、模板或供应商绑定的出图脚本。
-- **技能数量**：43 → 44，已同步到各语言 README、marketplace 元数据、独立技能元数据和触发评测样例。
+- **BREAKING — `fec-typescript-type-safety` 重命名为 `fec-typescript-project-standard`**：技能目录、id 与 metadata 条目已统一重命名；原 type-safety 内容作为 `references/type-safety.md` 收纳到新技能下，并新增顶层 `SKILL.md` 覆盖 TypeScript 项目规范（配置、对外 API 类型、声明文件、DTO、泛型）。`agents/fec-typescript-reviewer.md`、`skills/metadata.json`、`skills/relations.json` 中的引用已同步更新。**迁移指引**：将所有 `fec-typescript-type-safety` 引用（agent / skill frontmatter、`relations.json`、评测样例、自定义文档）替换为 `fec-typescript-project-standard`。
+- **Skill 分类 — `project-standard` 类别落地**：2.6.0 已在 metadata 中声明 `project-standard` 分类，本版本正式将重命名后的 TypeScript 技能归入该类，并同步各语言 README 技能表。原有 7 个分类保持不变。
+- **技能数量**：41 → 45，已同步到各语言 README（en / zh-CN / zh-TW / ja-JP / ko-KR）、`skills/metadata.json`、`.claude-plugin/marketplace.json` 描述与 `skills/eval_queries.json` 触发评测样例。README 文案、项目结构文档、示例提示表对每个能力条目按类型（skill / agent / cmd）重新打标。
+- **`fec-ui-design` 增强**：新增产品语境读取、设计拨盘（`visualTension`、`motionIntensity`、`informationDensity`、`mediaAuthenticity`、`contentPersuasion`）、反通用化 UI 引导与视觉参考策略；扩展 `design-system.mjs` 脚本、`style-archetypes.json`、`ux-quality-rules.json`、`design-intelligence.md` 与 `pre-delivery-checklist.md` 数据；同步更新多语言 README 与项目结构文档。
+- **`fec-motion-interaction` 增强**：新增 context-aware motion intensity 引导，与 `fec-ui-design` 设计拨盘对齐。
+- **`fec-implement-from-design` 增强**：在原有 Figma / Sketch / MasterGo / Pixso / 墨刀 / 摹客 基础上，新增 screenshot / section-level 视觉参考输入。
+- **`fec-drawio-studio` lint 强化**：`diagram-lint` 禁止 XML 注释、未转义 `&` 与尖括号、自闭合边单元格、缺失根 / 图层单元格，并对顶点标签内未带 `html=1` 样式的 HTML 内容发出警告。安装测试覆盖 `diagram-url` 与 `diagram-lint`。
+- **`fec-legacy-to-modern-migration`、`fec-tailwind-design-system`、`fec-responsive-layout`**：补充 Playwright 等效的验证指引，要求迁移与视觉敏感类任务构建前后行为清单并按风险选择合适的验证层（Playwright / 视觉 diff / typecheck / 单测）。
+- **Shared rules 精简**：`templates/shared/rules/fec-*.md` 收敛为项目常驻的硬约束；UI 设计、Tailwind 设计系统、响应式布局、TypeScript 建模、错误处理框架内部细节、渲染模式等产品化内容转由对应技能承载；`fec-i18n.md`、`fec-responsive-design.md`、`fec-typescript.md`、`fec-state-management.md`、`fec-design-system.md`、`fec-rendering-patterns.md`、`fec-error-handling.md`、`fec-ci-cd.md`、`fec-refactoring.md` 同步精简。
+- **多语言 README 同步**：在 5 个语言版本中补齐 `fec-drawio-studio` 的「XML/Mermaid/CSV URL 交付」描述与 `fec-ui-design` 的设计拨盘表述；将已移除的 `/fec-build-fix` 斜杠命令与 `fec-build-fixer` agent 引用替换为 `/fec-debug` 与 `fec-debugger`；`docs/example-prompts.md` 及其 zh-CN 镜像已覆盖全部 45 个技能。
+- **Marketplace 元数据**：`marketplace.json` 描述与 `package.json` keywords 同步反映 45 个技能面，并按仓库 prettier 配置重新缩进。
+- **`fec-doc-sync` 范围**：继续保持对 env 说明、脚本、API / 路由说明与部署事实的覆盖；示例提示、`/fec-doc-sync` 命令文档与 `skills/metadata.json` 已对齐。
 
+### 移除
+
+- **`fec-typescript-type-safety` 技能目录**：原目录已移除；其内容迁移至 `fec-typescript-project-standard` 的 `references/type-safety.md`。如自定义规则、agent、skill 引用了旧 id，请同步更新。
+
+### Chore
+
+- **JSON 元数据重排**：`marketplace.json` 与 `skills/metadata.json` 缩进与末尾换行风格统一。
+- **项目结构文档**：`docs/project-structure.md` 及其 `zh-CN` 镜像同步列举新技能与重组后的参考模块。
+- **安装测试覆盖**：新增 `tests/install/image-generation-skill.test.ts`、`tests/install/drawio-studio-skill.test.ts`；现有 end-to-end 与 metadata-consistency 测试同步更新以断言新技能 id、taxonomy 与 relations。
+- **技能脚本类型检查**：`typecheck:skill-scripts` 同时覆盖 `skills/fec-image-generation/scripts/png-qa.mjs`。
 
 
 ## [2.6.0] - 2026-06-07

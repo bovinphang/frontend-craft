@@ -9,16 +9,42 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 Project-facing release notes are maintained in English from 2.0.0 onward. Historical entries may preserve their original language.
 
-## [Unreleased]
+## [2.7.0] - 2026-06-10
 
 ### Added
 
-- **`fec-web-video-presentation` skill:** adds an original Frontend Craft workflow for turning articles, scripts, lessons, and demos into recordable 16:9 step-driven web presentations, including compact references, starter theme data, and a cross-platform Vite/React scaffold helper.
+- **`fec-drawio-studio` skill:** editable draw.io / diagrams.net workflow for technical diagrams, including official shape lookup, brand symbols, Graphviz auto-layout, code structure maps (TS / JS / Go / Python / Rust), validation, export fallback, and an `XML / Mermaid / CSV` URL handoff (`diagram-url --create`) with self-hosted `baseUrl`, lightbox, dark and Windows `.url` shortcut support.
+- **`fec-image-generation` skill:** diagrams, charts, posters, UI mockups, infographics, and image-edit workflows, plus `scripts/png-qa.mjs` for PNG visual QA with bounded self-repair (registered in `typecheck:skill-scripts`).
+- **`fec-backend-requirements-handoff` skill:** frontend-to-backend handoff for UI data needs, user actions, states, permissions, business rules, uncertainties, and backend discussion points — without dictating implementation.
+- **`fec-web-video-presentation` skill:** recordable 16:9 step-driven web presentations from articles, scripts, lessons, and demos, with compact references, starter theme data, and a cross-platform Vite/React scaffold helper.
+- **Modular reference docs:** split several monolithic reference files into focused modules — `fec-e2e-testing` (e2e-ci-reporting / e2e-special-scenarios / e2e-visual-regression), `fec-legacy-to-modern-migration` (migration-execution-checklist / migration-strategy-and-mapping), `fec-performance-optimization` (framework-performance-patterns), `fec-react-project-standard` (react-project-structure / react-runtime-patterns / react-quality-patterns / react-performance-patterns), and `fec-vue3-project-standard` (vue3-project-structure / vue3-composables-routing / vue3-state-api-quality / vue3-performance-patterns). Each `SKILL.md` now points at the new focused references.
+- **Install coverage for the new skills:** `tests/install/image-generation-skill.test.ts`, `tests/install/drawio-studio-skill.test.ts`, expanded `tests/install/ui-design-intelligence.test.ts` (designRead, designDials, page-intent dial behavior) and `tests/install/end-to-end.test.ts` (new skill ids, taxonomy, relations).
 
 ### Changed
 
-- **Garden Skills absorption:** strengthened UI design direction, image-generation routing, and source-driven local knowledge retrieval workflows through project-native guidance without copying Garden implementations, templates, or provider-specific image scripts.
-- **Skill count:** 43 → 44 across README locales, marketplace metadata, standalone skill metadata, and trigger eval queries.
+- **BREAKING — `fec-typescript-type-safety` renamed to `fec-typescript-project-standard`:** the skill directory, id, and metadata entry are renamed; type-safety content is preserved as `references/type-safety.md` inside the new skill, and a top-level `SKILL.md` covers TypeScript project standards (config, public API types, declarations, DTOs, generics). `agents/fec-typescript-reviewer.md` and all `skills/metadata.json` / `skills/relations.json` references were updated. **Migration:** replace every `fec-typescript-type-safety` reference (in agent / skill frontmatter, `relations.json`, eval queries, custom docs) with `fec-typescript-project-standard`.
+- **Skill taxonomy — new `project-standard` category:** the `project-standard` taxonomy was already declared in 2.6.0 metadata; this release populates it with the renamed TypeScript skill and aligns README skill tables across all 5 locales. `fec-monorepo-project-standard` remains in `project-evolution`/standard mix; the existing 7 categories are unchanged.
+- **Skill count:** 41 → 45 across README locales (en / zh-CN / zh-TW / ja-JP / ko-KR), `skills/metadata.json`, `.claude-plugin/marketplace.json` description, and `skills/eval_queries.json` trigger queries. README wording, project-structure docs, and example-prompts tables were re-tagged to label every capability entry by type (skill / agent / cmd).
+- **`fec-ui-design` enhancements:** added product-context reading, design dials (`visualTension`, `motionIntensity`, `informationDensity`, `mediaAuthenticity`, `contentPersuasion`), anti-generic UI guidance, and a visual-references strategy. `design-system.mjs` script, `style-archetypes.json`, `ux-quality-rules.json`, `design-intelligence.md`, and `pre-delivery-checklist.md` data were extended; multi-locale READMEs and project-structure docs were updated.
+- **`fec-motion-interaction` enhancements:** added context-aware motion-intensity guidance, aligning with `fec-ui-design` design dials.
+- **`fec-implement-from-design` enhancements:** added screenshot / section-level visual references alongside the existing Figma / Sketch / MasterGo / Pixso / 墨刀 / 摹客 sources.
+- **`fec-drawio-studio` lint hardening:** `diagram-lint` now forbids XML comments, unescaped ampersands and angle brackets, self-closing edge cells, missing root / layer cells, and warns when vertex labels contain HTML without the `html=1` style. New install tests cover `diagram-url` and `diagram-lint`.
+- **`fec-legacy-to-modern-migration`, `fec-tailwind-design-system`, `fec-responsive-layout`:** added Playwright-equivalent validation guidance so migration and visual-sensitive tasks build a before/after behavior checklist and pick the validation layer (Playwright / visual diff / typecheck / unit) matched to the change risk.
+- **Shared rules slim-down:** `templates/shared/rules/fec-*.md` were condensed to standing project-resident hard constraints. Productized guidance for UI design, Tailwind design systems, responsive layout, TypeScript modeling, error-handling framework internals, and rendering patterns now lives in their dedicated skills instead of being inlined into rules; `fec-i18n.md`, `fec-responsive-design.md`, `fec-typescript.md`, `fec-state-management.md`, `fec-design-system.md`, `fec-rendering-patterns.md`, `fec-error-handling.md`, `fec-ci-cd.md`, and `fec-refactoring.md` were all trimmed.
+- **Multilingual README sync:** the new "XML/Mermaid/CSV URL handoff" description for `fec-drawio-studio` and the new design-dial framing for `fec-ui-design` are reflected in all 5 locales. Old references to the removed `/fec-build-fix` slash command and `fec-build-fixer` agent were replaced with the real `/fec-debug` command and `fec-debugger` agent. `docs/example-prompts.md` (and its zh-CN mirror) now covers all 45 skills.
+- **Marketplace metadata:** `marketplace.json` description and `package.json` keywords updated to reflect the 45-skill surface; re-indented to the repository's prettier configuration.
+- **`fec-doc-sync` scope:** the doc-sync workflow continues to cover env notes, scripts, API / route notes, and deploy facts in addition to user-facing docs; example prompts, the `/fec-doc-sync` command doc, and `skills/metadata.json` align.
+
+### Removed
+
+- **`fec-typescript-type-safety` skill directory:** the legacy directory was removed; its content lives in `fec-typescript-project-standard` (`references/type-safety.md`). Update any custom rules, agents, or skills that referenced the old id.
+
+### Chore
+
+- **JSON metadata reformat:** `marketplace.json` and `skills/metadata.json` indentation / trailing-newline conventions normalized.
+- **Project-structure docs:** `docs/project-structure.md` and its `zh-CN` mirror updated to enumerate the new skills and reorganized reference modules.
+- **Install test coverage:** added `tests/install/image-generation-skill.test.ts` and `tests/install/drawio-studio-skill.test.ts`; existing end-to-end and metadata-consistency tests updated to assert the new skill ids, taxonomy, and relations.
+- **Skill-script typecheck:** `typecheck:skill-scripts` now also covers `skills/fec-image-generation/scripts/png-qa.mjs`.
 
 
 ## [2.6.0] - 2026-06-07
