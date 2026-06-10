@@ -160,15 +160,15 @@ Marketplace가 이미 설치된 경우, `--force`를 사용해도 CLI는 두 번
 
 슬래시 명령어는 구조화된 워크플로의 주요 진입점입니다. 대부분 `reports/`에 타임스탬프가 찍힌 Markdown 보고서를 출력합니다.
 
-| 명령어                | 용도                                                              | 보고서                                             |
-| --------------------- | ----------------------------------------------------------------- | -------------------------------------------------- |
-| `/fec-init`           | 프로젝트 템플릿 초기화 (CLAUDE.md, 규칙, 설정)                    | —                                                  |
-| `/fec-review`         | 지정되거나 최근 변경된 파일의 구조화된 리뷰                       | `code-review-*.md`                                 |
-| `/fec-scaffold`       | 규칙에 따라 page / feature / component 보일러플레이트 생성        | —                                                  |
-| `/fec-plan`           | 통합 계획: 구현 아키텍처 또는 테스트 전략                         | `architecture-proposal-*.md` 또는 `test-plan-*.md` |
-| `/fec-tdd`            | 빨강 → 초록 → 리팩토링 프론트엔드 TDD 루프                        | —                                                  |
-| `/fec-debug`          | 프론트엔드 문제 진단 및 수정: 빌드, 런타임, UI, API 장애          | `debug-*.md`                                       |
-| `/fec-refactor-clean` | 데드 코드, 미사용 export, 스타일, 의존성을 분류하고 안전하게 제거 | `refactor-clean-*.md`                              |
+| 명령어                | 용도                                                                 | 보고서                                             |
+| --------------------- | -------------------------------------------------------------------- | -------------------------------------------------- |
+| `/fec-init`           | 프로젝트 템플릿 초기화 (CLAUDE.md, 규칙, 설정)                       | —                                                  |
+| `/fec-review`         | 지정되거나 최근 변경된 파일의 구조화된 리뷰                          | `code-review-*.md`                                 |
+| `/fec-scaffold`       | 규칙에 따라 page / feature / component 보일러플레이트 생성           | —                                                  |
+| `/fec-plan`           | 통합 계획: 구현 아키텍처 또는 테스트 전략                            | `architecture-proposal-*.md` 또는 `test-plan-*.md` |
+| `/fec-tdd`            | 빨강 → 초록 → 리팩토링 프론트엔드 TDD 루프                           | —                                                  |
+| `/fec-debug`          | 프론트엔드 문제 진단 및 수정: 빌드, 런타임, UI, API 장애             | `debug-*.md`                                       |
+| `/fec-refactor-clean` | 데드 코드, 미사용 export, 스타일, 의존성을 분류하고 안전하게 제거    | `refactor-clean-*.md`                              |
 | `/fec-doc-sync`       | README, docs, 환경 변수, 스크립트, API/라우트 설명, 배포 문서 동기화 | —                                                  |
 
 ### 스킬 (자동 활성화)
@@ -179,15 +179,15 @@ Marketplace가 이미 설치된 경우, `--force`를 사용해도 CLI는 두 번
 
 **프로젝트 표준** — 해당 프레임워크가 감지되면 자동 적용:
 
-| 스킬                            | 범위                                                         |
-| ------------------------------- | ------------------------------------------------------------ |
-| `fec-react-project-standard`    | React + TypeScript (구조, 컴포넌트, 라우팅, 상태, API 계층)  |
-| `fec-vue3-project-standard`     | Vue 3 + TypeScript (구조, 컴포넌트, 라우팅, Pinia, API 계층) |
-| `fec-nextjs-project-standard`   | Next.js 14+ App Router, SSR/SSG, 스트리밍, 메타데이터        |
-| `fec-nuxt-project-standard`     | Nuxt 3 SSR/SSG, Composition API, 데이터 페칭, 미들웨어       |
-| `fec-vite-project-standard`     | Vite 설정, 환경 변수 안전, HMR, 개발 프록시, 빌드 최적화     |
-| `fec-monorepo-project-standard` | pnpm workspace, Turborepo, Nx 구조 및 태스크 오케스트레이션  |
-| `fec-typescript-project-standard`   | TypeScript 설정, 공개 API 타입, 선언 파일, DTO, 제네릭          |
+| 스킬                              | 범위                                                         |
+| --------------------------------- | ------------------------------------------------------------ |
+| `fec-react-project-standard`      | React + TypeScript (구조, 컴포넌트, 라우팅, 상태, API 계층)  |
+| `fec-vue3-project-standard`       | Vue 3 + TypeScript (구조, 컴포넌트, 라우팅, Pinia, API 계층) |
+| `fec-nextjs-project-standard`     | Next.js 14+ App Router, SSR/SSG, 스트리밍, 메타데이터        |
+| `fec-nuxt-project-standard`       | Nuxt 3 SSR/SSG, Composition API, 데이터 페칭, 미들웨어       |
+| `fec-vite-project-standard`       | Vite 설정, 환경 변수 안전, HMR, 개발 프록시, 빌드 최적화     |
+| `fec-monorepo-project-standard`   | pnpm workspace, Turborepo, Nx 구조 및 태스크 오케스트레이션  |
+| `fec-typescript-project-standard` | TypeScript 설정, 공개 API 타입, 선언 파일, DTO, 제네릭       |
 
 **구현 기능** — 특정 프론트엔드 기능을 구축할 때 활성화:
 
@@ -203,7 +203,7 @@ Marketplace가 이미 설치된 경우, `--force`를 사용해도 CLI는 두 번
 | `fec-web-workers`         | Web Worker, Transferable, Comlink, 워커 풀                    |
 | `fec-canvas-threejs`      | Canvas 2D, Three.js, React Three Fiber, WebGL                 |
 | `fec-svg-animation`       | CSS / Framer Motion / GSAP SVG 애니메이션과 reduced-motion    |
-| `fec-list-virtualization` | 프레임워크별 대규모 리스트 가상화, 측정, 그리드, 무한 스크롤 |
+| `fec-list-virtualization` | 프레임워크별 대규모 리스트 가상화, 측정, 그리드, 무한 스크롤  |
 
 **테스트** — 프론트엔드 테스트 범위를 계획하거나 작성할 때 활성화:
 
@@ -229,38 +229,38 @@ Marketplace가 이미 설치된 경우, `--force`를 사용해도 CLI는 두 번
 
 **디자인 UI** — 디자인 구현, 디자인 시스템, 시각적 마무리에서 활성화:
 
-| 스킬                          | 범위                                                               |
-| ----------------------------- | ------------------------------------------------------------------ |
-| `fec-ui-design`               | 제품 맥락 UI 방향, 반템플릿 디자인 다이얼, 미디어 전략, 상태, visual QA |
-| `fec-image-generation`        | 다이어그램, 이미지 생성/편집, 비주얼 에셋, PNG QA 및 수정 루프     |
-| `fec-drawio-studio`         | 편집 가능한 draw.io / diagrams.net 기술 다이어그램, shape 검색, 자동 레이아웃, 코드 구조도 |
-| `fec-web-video-presentation` | 글, 스크립트, 레슨, demo를 녹화 가능한 16:9 step-driven 웹 프레젠테이션으로 변환 |
-| `fec-tailwind-design-system`  | Tailwind token, 테마 확장, variants, class 관리, dark mode         |
-| `fec-responsive-layout`       | 모바일 우선, container queries, 데이터 밀집 responsive UI          |
-| `fec-motion-interaction`      | 맥락 기반 motion 강도, 페이지 전환, 스크롤 animation, reduced-motion |
-| `fec-implement-from-design`   | 디자인 도구, 스크린샷 또는 section 단위 시각 참조에서 UI 구현      |
-| `fec-storybook-component-doc` | Storybook 컴포넌트 문서, 디자인 시스템 표시, 격리 상태 미리보기    |
+| 스킬                          | 범위                                                                                                                     |
+| ----------------------------- | ------------------------------------------------------------------------------------------------------------------------ |
+| `fec-ui-design`               | 제품 맥락 UI 방향, 반템플릿 디자인 다이얼, 미디어 전략, 상태, visual QA                                                  |
+| `fec-image-generation`        | 다이어그램, 이미지 생성/편집, 비주얼 에셋, PNG QA 및 수정 루프                                                           |
+| `fec-drawio-studio`           | 편집 가능한 draw.io / diagrams.net 기술 다이어그램, XML/Mermaid/CSV URL 핸드오프, shape 검색, 자동 레이아웃, 코드 구조도 |
+| `fec-web-video-presentation`  | 글, 스크립트, 레슨, demo를 녹화 가능한 16:9 step-driven 웹 프레젠테이션으로 변환                                         |
+| `fec-tailwind-design-system`  | Tailwind token, 테마 확장, variants, class 관리, dark mode                                                               |
+| `fec-responsive-layout`       | 모바일 우선, container queries, 데이터 밀집 responsive UI                                                                |
+| `fec-motion-interaction`      | 맥락 기반 motion 강도, 페이지 전환, 스크롤 animation, reduced-motion                                                     |
+| `fec-implement-from-design`   | 디자인 도구, 스크린샷 또는 section 단위 시각 참조에서 UI 구현                                                            |
+| `fec-storybook-component-doc` | Storybook 컴포넌트 문서, 디자인 시스템 표시, 격리 상태 미리보기                                                          |
 
 **레거시 마이그레이션** — 현대화 작업에서 활성화:
 
-| 스킬                             | 범위                                                               |
-| -------------------------------- | ------------------------------------------------------------------ |
-| `fec-legacy-web-standard`        | JS + jQuery + HTML 레거시 프로젝트 개발 및 유지보수 기준           |
+| 스킬                             | 범위                                                      |
+| -------------------------------- | --------------------------------------------------------- |
+| `fec-legacy-web-standard`        | JS + jQuery + HTML 레거시 프로젝트 개발 및 유지보수 기준  |
 | `fec-legacy-to-modern-migration` | 레거시 프론트엔드 현대화, 대상 스택 선택, 단계별 워크플로 |
 
 **프로젝트 진화** — 참조 시스템을 프로젝트 네이티브 개선으로 흡수할 때 활성화:
 
-| 스킬          | 범위                                                  |
-| ------------- | ----------------------------------------------------- |
+| 스킬          | 범위                                                      |
+| ------------- | --------------------------------------------------------- |
 | `fec-alchemy` | 참조 시스템 역량을 독창적인 프로젝트 네이티브 설계로 흡수 |
 
 **문서 유지보수** — 문서 작업에서 활성화:
 
-| 스킬                            | 범위                                                  |
-| ------------------------------- | ----------------------------------------------------- |
+| 스킬                               | 범위                                                                                 |
+| ---------------------------------- | ------------------------------------------------------------------------------------ |
 | `fec-backend-requirements-handoff` | Frontend-to-backend handoff for UI data needs, actions, states, rules, and questions |
-| `fec-doc-sync`                  | 프론트엔드 문서를 코드, 설정, 스크립트, 라우트, API, 환경 변수, 배포 사실과 동기화 |
-| `fec-source-driven-development` | 프로젝트 사실과 공식 소스로 버전 의존 결정을 검증     |
+| `fec-doc-sync`                     | 프론트엔드 문서를 코드, 설정, 스크립트, 라우트, API, 환경 변수, 배포 사실과 동기화   |
+| `fec-source-driven-development`    | 프로젝트 사실과 공식 소스로 버전 의존 결정을 검증                                    |
 
 ### 에이전트
 
@@ -461,10 +461,10 @@ npx skills update                          # 최신 버전으로 업데이트
 npx skills check                           # 사용 가능한 업데이트 미리보기
 ```
 
-| CLI                  | 설치 내용                                             |
-| -------------------- | ----------------------------------------------------- |
+| CLI                              | 설치 내용                                             |
+| -------------------------------- | ----------------------------------------------------- |
 | `npx @bovinphang/frontend-craft` | 스킬 + 런타임 전용 에이전트, 명령어, 훅, 규칙, 템플릿 |
-| `npx skills`         | 스킬만 (기존 Skills CLI 워크플로용)                   |
+| `npx skills`                     | 스킬만 (기존 Skills CLI 워크플로용)                   |
 
 텔레메트리 비활성화: `DISABLE_TELEMETRY=1`. 자세한 내용은 [skills.sh CLI 문서](https://skills.sh/docs/cli) 참조.
 

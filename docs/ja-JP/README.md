@@ -160,15 +160,15 @@ Marketplace が既にインストールされている場合、CLI は `--force`
 
 スラッシュコマンドは構造化ワークフローの主要なエントリーポイントです。ほとんどが `reports/` にタイムスタンプ付き Markdown レポートを出力します。
 
-| コマンド              | 用途                                                                | レポート                                             |
-| --------------------- | ------------------------------------------------------------------- | ---------------------------------------------------- |
-| `/fec-init`           | プロジェクトテンプレート（CLAUDE.md、ルール、設定）を初期化         | —                                                    |
-| `/fec-review`         | 指定または最近変更したファイルの構造化レビュー                      | `code-review-*.md`                                   |
-| `/fec-scaffold`       | 規約に従い page / feature / component のボイラープレートを作成      | —                                                    |
-| `/fec-plan`           | 統合計画：実装アーキテクチャまたはテスト戦略                        | `architecture-proposal-*.md` または `test-plan-*.md` |
-| `/fec-tdd`            | 赤 → 緑 → リファクタリングのフロントエンド TDD ループ               | —                                                    |
-| `/fec-debug`          | フロントエンド問題の診断と修復：ビルド、ランタイム、UI、API 障害    | `debug-*.md`                                         |
-| `/fec-refactor-clean` | デッドコード、未使用 export、スタイル、依存関係を分類して安全に削除 | `refactor-clean-*.md`                                |
+| コマンド              | 用途                                                                   | レポート                                             |
+| --------------------- | ---------------------------------------------------------------------- | ---------------------------------------------------- |
+| `/fec-init`           | プロジェクトテンプレート（CLAUDE.md、ルール、設定）を初期化            | —                                                    |
+| `/fec-review`         | 指定または最近変更したファイルの構造化レビュー                         | `code-review-*.md`                                   |
+| `/fec-scaffold`       | 規約に従い page / feature / component のボイラープレートを作成         | —                                                    |
+| `/fec-plan`           | 統合計画：実装アーキテクチャまたはテスト戦略                           | `architecture-proposal-*.md` または `test-plan-*.md` |
+| `/fec-tdd`            | 赤 → 緑 → リファクタリングのフロントエンド TDD ループ                  | —                                                    |
+| `/fec-debug`          | フロントエンド問題の診断と修復：ビルド、ランタイム、UI、API 障害       | `debug-*.md`                                         |
+| `/fec-refactor-clean` | デッドコード、未使用 export、スタイル、依存関係を分類して安全に削除    | `refactor-clean-*.md`                                |
 | `/fec-doc-sync`       | README、docs、環境変数、スクリプト、API/ルート説明、デプロイ文書を同期 | —                                                    |
 
 ### スキル（自動起動）
@@ -179,31 +179,31 @@ Marketplace が既にインストールされている場合、CLI は `--force`
 
 **プロジェクト標準** — 該当フレームワークが検出されると自動適用：
 
-| スキル                          | 範囲                                                                    |
-| ------------------------------- | ----------------------------------------------------------------------- |
-| `fec-react-project-standard`    | React + TypeScript（構造、コンポーネント、ルーティング、状態、API 層）  |
-| `fec-vue3-project-standard`     | Vue 3 + TypeScript（構造、コンポーネント、ルーティング、Pinia、API 層） |
-| `fec-nextjs-project-standard`   | Next.js 14+ App Router、SSR/SSG、ストリーミング、メタデータ             |
-| `fec-nuxt-project-standard`     | Nuxt 3 SSR/SSG、Composition API、データ取得、ミドルウェア               |
-| `fec-vite-project-standard`     | Vite 設定、環境変数安全性、HMR、開発プロキシ、ビルド最適化              |
-| `fec-monorepo-project-standard` | pnpm workspace、Turborepo、Nx の構造とタスクオーケストレーション        |
-| `fec-typescript-project-standard`   | TypeScript 設定、公開 API 型、宣言ファイル、DTO、ジェネリクス                |
+| スキル                            | 範囲                                                                    |
+| --------------------------------- | ----------------------------------------------------------------------- |
+| `fec-react-project-standard`      | React + TypeScript（構造、コンポーネント、ルーティング、状態、API 層）  |
+| `fec-vue3-project-standard`       | Vue 3 + TypeScript（構造、コンポーネント、ルーティング、Pinia、API 層） |
+| `fec-nextjs-project-standard`     | Next.js 14+ App Router、SSR/SSG、ストリーミング、メタデータ             |
+| `fec-nuxt-project-standard`       | Nuxt 3 SSR/SSG、Composition API、データ取得、ミドルウェア               |
+| `fec-vite-project-standard`       | Vite 設定、環境変数安全性、HMR、開発プロキシ、ビルド最適化              |
+| `fec-monorepo-project-standard`   | pnpm workspace、Turborepo、Nx の構造とタスクオーケストレーション        |
+| `fec-typescript-project-standard` | TypeScript 設定、公開 API 型、宣言ファイル、DTO、ジェネリクス           |
 
 **実装機能** — 特定のフロントエンド機能を構築する際に起動：
 
-| スキル                    | 範囲                                                                         |
-| ------------------------- | ---------------------------------------------------------------------------- |
-| `fec-data-fetching`       | サーバー状態取得、キャッシュ、無効化、SSR、無限読み込み                      |
-| `fec-api-integration`     | 型付き API client、認証 refresh、アップロード、リアルタイム統合              |
-| `fec-state-management`    | 状態の所属、ストア選定、URL 状態、サーバー/フォーム/ローカル状態の境界       |
+| スキル                    | 範囲                                                                                    |
+| ------------------------- | --------------------------------------------------------------------------------------- |
+| `fec-data-fetching`       | サーバー状態取得、キャッシュ、無効化、SSR、無限読み込み                                 |
+| `fec-api-integration`     | 型付き API client、認証 refresh、アップロード、リアルタイム統合                         |
+| `fec-state-management`    | 状態の所属、ストア選定、URL 状態、サーバー/フォーム/ローカル状態の境界                  |
 | `fec-form-handling`       | フレームワークに応じたフォーム選定、schema バリデーション、動的フィールド、アップロード |
-| `fec-browser-storage`     | localStorage / sessionStorage / IndexedDB / Cookies の選定                   |
-| `fec-route-protection`    | React Router、Next.js、Vue Router、Nuxt の認証・権限ルーティング             |
-| `fec-pwa-implementation`  | マニフェスト、サービスワーカー、オフラインキャッシュ、インストールプロンプト |
-| `fec-web-workers`         | Web Worker、Transferable、Comlink、ワーカープール                            |
-| `fec-canvas-threejs`      | Canvas 2D、Three.js、React Three Fiber、WebGL                                |
-| `fec-svg-animation`       | CSS / Framer Motion / GSAP SVG アニメーションと reduced-motion               |
-| `fec-list-virtualization` | フレームワークに応じた大規模リスト仮想化、計測、グリッド、無限スクロール     |
+| `fec-browser-storage`     | localStorage / sessionStorage / IndexedDB / Cookies の選定                              |
+| `fec-route-protection`    | React Router、Next.js、Vue Router、Nuxt の認証・権限ルーティング                        |
+| `fec-pwa-implementation`  | マニフェスト、サービスワーカー、オフラインキャッシュ、インストールプロンプト            |
+| `fec-web-workers`         | Web Worker、Transferable、Comlink、ワーカープール                                       |
+| `fec-canvas-threejs`      | Canvas 2D、Three.js、React Three Fiber、WebGL                                           |
+| `fec-svg-animation`       | CSS / Framer Motion / GSAP SVG アニメーションと reduced-motion                          |
+| `fec-list-virtualization` | フレームワークに応じた大規模リスト仮想化、計測、グリッド、無限スクロール                |
 
 **テスト** — フロントエンドテストの計画や作成時に起動：
 
@@ -229,38 +229,38 @@ Marketplace が既にインストールされている場合、CLI は `--force`
 
 **デザイン UI** — デザイン実装、デザインシステム、視覚仕上げで起動：
 
-| スキル                        | 範囲                                                                          |
-| ----------------------------- | ----------------------------------------------------------------------------- |
-| `fec-ui-design`               | プロダクト文脈に沿った UI 方向性、反テンプレート設計ダイヤル、メディア戦略、状態、ビジュアル QA |
-| `fec-image-generation`        | 図表、画像生成/編集、ビジュアルアセット、PNG QA と修復ループ                  |
-| `fec-drawio-studio`         | 編集可能な draw.io / diagrams.net 技術図、shape 検索、自動レイアウト、コード構造図 |
-| `fec-web-video-presentation` | 記事、台本、レッスン、demo から録画可能な 16:9 step-driven Web プレゼンを作成 |
-| `fec-tailwind-design-system`  | Tailwind token、テーマ拡張、variants、class 管理、ダークモード                |
-| `fec-responsive-layout`       | モバイルファースト、container queries、データ密集 responsive UI               |
-| `fec-motion-interaction`      | 文脈に応じた motion 強度、ページ遷移、スクロール animation、reduced-motion    |
-| `fec-implement-from-design`   | デザインツール、スクリーンショット、または section 単位のビジュアル参照から UI を実装 |
-| `fec-storybook-component-doc` | Storybook コンポーネント文書、デザインシステム表示、隔離状態プレビュー        |
+| スキル                        | 範囲                                                                                                             |
+| ----------------------------- | ---------------------------------------------------------------------------------------------------------------- |
+| `fec-ui-design`               | プロダクト文脈に沿った UI 方向性、反テンプレート設計ダイヤル、メディア戦略、状態、ビジュアル QA                  |
+| `fec-image-generation`        | 図表、画像生成/編集、ビジュアルアセット、PNG QA と修復ループ                                                     |
+| `fec-drawio-studio`           | 編集可能な draw.io / diagrams.net 技術図、XML/Mermaid/CSV URL 受け渡し、shape 検索、自動レイアウト、コード構造図 |
+| `fec-web-video-presentation`  | 記事、台本、レッスン、demo から録画可能な 16:9 step-driven Web プレゼンを作成                                    |
+| `fec-tailwind-design-system`  | Tailwind token、テーマ拡張、variants、class 管理、ダークモード                                                   |
+| `fec-responsive-layout`       | モバイルファースト、container queries、データ密集 responsive UI                                                  |
+| `fec-motion-interaction`      | 文脈に応じた motion 強度、ページ遷移、スクロール animation、reduced-motion                                       |
+| `fec-implement-from-design`   | デザインツール、スクリーンショット、または section 単位のビジュアル参照から UI を実装                            |
+| `fec-storybook-component-doc` | Storybook コンポーネント文書、デザインシステム表示、隔離状態プレビュー                                           |
 
 **レガシー移行** — モダナイゼーション時に起動：
 
-| スキル                           | 範囲                                                           |
-| -------------------------------- | -------------------------------------------------------------- |
-| `fec-legacy-web-standard`        | JS + jQuery + HTML のレガシープロジェクト開発・保守基準        |
+| スキル                           | 範囲                                                                           |
+| -------------------------------- | ------------------------------------------------------------------------------ |
+| `fec-legacy-web-standard`        | JS + jQuery + HTML のレガシープロジェクト開発・保守基準                        |
 | `fec-legacy-to-modern-migration` | レガシーフロントエンドのモダナイズ、ターゲットスタック選定、段階的ワークフロー |
 
 **プロジェクト進化** — 参照システムをプロジェクトネイティブな改善として吸収する時に起動：
 
-| スキル        | 範囲                                                               |
-| ------------- | ------------------------------------------------------------------ |
+| スキル        | 範囲                                                           |
+| ------------- | -------------------------------------------------------------- |
 | `fec-alchemy` | 参照システムの能力を独自のプロジェクトネイティブ設計として吸収 |
 
 **ドキュメント保守** — ドキュメント作業時に起動：
 
-| スキル                          | 範囲                                                               |
-| ------------------------------- | ------------------------------------------------------------------ |
-| `fec-backend-requirements-handoff` | Frontend-to-backend handoff for UI data needs, actions, states, rules, and questions |
-| `fec-doc-sync`                  | フロントエンド文書をコード、設定、スクリプト、ルート、API、環境変数、デプロイ事実と同期 |
-| `fec-source-driven-development` | プロジェクト事実と公式ソースでバージョン依存の判断を検証           |
+| スキル                             | 範囲                                                                                    |
+| ---------------------------------- | --------------------------------------------------------------------------------------- |
+| `fec-backend-requirements-handoff` | Frontend-to-backend handoff for UI data needs, actions, states, rules, and questions    |
+| `fec-doc-sync`                     | フロントエンド文書をコード、設定、スクリプト、ルート、API、環境変数、デプロイ事実と同期 |
+| `fec-source-driven-development`    | プロジェクト事実と公式ソースでバージョン依存の判断を検証                                |
 
 ### エージェント
 
@@ -461,10 +461,10 @@ npx skills update                          # 最新版にアップデート
 npx skills check                           # 利用可能なアップデートをプレビュー
 ```
 
-| CLI                  | インストール内容                                                              |
-| -------------------- | ----------------------------------------------------------------------------- |
+| CLI                              | インストール内容                                                              |
+| -------------------------------- | ----------------------------------------------------------------------------- |
 | `npx @bovinphang/frontend-craft` | スキル + ランタイム固有のエージェント、コマンド、フック、ルール、テンプレート |
-| `npx skills`         | スキルのみ（既存の Skills CLI ワークフロー向け）                              |
+| `npx skills`                     | スキルのみ（既存の Skills CLI ワークフロー向け）                              |
 
 テレメトリを無効化：`DISABLE_TELEMETRY=1`。詳細は [skills.sh CLI ドキュメント](https://skills.sh/docs/cli) を参照。
 

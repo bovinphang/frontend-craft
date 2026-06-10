@@ -169,7 +169,7 @@ npx @bovinphang/frontend-craft@latest list
 | `/fec-tdd`            | 紅 → 綠 → 重構的前端 TDD 循環                               | —                                                |
 | `/fec-debug`          | 前端問題診斷與修復：建置失敗、執行時錯誤、UI 異常、介面問題 | `debug-*.md`                                     |
 | `/fec-refactor-clean` | 分類並安全清理死程式碼、未使用匯出、樣式和依賴              | `refactor-clean-*.md`                            |
-| `/fec-doc-sync`       | 同步 README、docs、環境變數、腳本、API/路由說明和部署文件 | —                                                |
+| `/fec-doc-sync`       | 同步 README、docs、環境變數、腳本、API/路由說明和部署文件   | —                                                |
 
 ### 技能（Skills，自動啟用）
 
@@ -179,15 +179,15 @@ npx @bovinphang/frontend-craft@latest list
 
 **專案規範** — 偵測到對應框架時自動生效：
 
-| 技能                            | 範圍                                                  |
-| ------------------------------- | ----------------------------------------------------- |
-| `fec-react-project-standard`    | React + TypeScript（結構、元件、路由、狀態、API 層）  |
-| `fec-vue3-project-standard`     | Vue 3 + TypeScript（結構、元件、路由、Pinia、API 層） |
-| `fec-nextjs-project-standard`   | Next.js 14+ App Router、SSR/SSG、流式渲染、元資料     |
-| `fec-nuxt-project-standard`     | Nuxt 3 SSR/SSG、組合式 API、資料獲取、中介軟體        |
-| `fec-vite-project-standard`     | Vite 設定、環境變數安全、HMR、開發代理、建置最佳化    |
-| `fec-monorepo-project-standard` | pnpm workspace、Turborepo、Nx 結構與任務編排          |
-| `fec-typescript-project-standard`   | TypeScript 設定、公開型別、宣告檔、DTO 和泛型          |
+| 技能                              | 範圍                                                  |
+| --------------------------------- | ----------------------------------------------------- |
+| `fec-react-project-standard`      | React + TypeScript（結構、元件、路由、狀態、API 層）  |
+| `fec-vue3-project-standard`       | Vue 3 + TypeScript（結構、元件、路由、Pinia、API 層） |
+| `fec-nextjs-project-standard`     | Next.js 14+ App Router、SSR/SSG、流式渲染、元資料     |
+| `fec-nuxt-project-standard`       | Nuxt 3 SSR/SSG、組合式 API、資料獲取、中介軟體        |
+| `fec-vite-project-standard`       | Vite 設定、環境變數安全、HMR、開發代理、建置最佳化    |
+| `fec-monorepo-project-standard`   | pnpm workspace、Turborepo、Nx 結構與任務編排          |
+| `fec-typescript-project-standard` | TypeScript 設定、公開型別、宣告檔、DTO 和泛型         |
 
 **實作能力** — 建構特定前端能力時啟用：
 
@@ -196,14 +196,14 @@ npx @bovinphang/frontend-craft@latest list
 | `fec-data-fetching`       | 服務端狀態獲取、快取、失效、SSR、無限載入                  |
 | `fec-api-integration`     | 型別化 API client、鑑權刷新、上傳、即時整合                |
 | `fec-state-management`    | 狀態歸屬、store 選型、URL 狀態、伺服器/表單/本地狀態邊界   |
-| `fec-form-handling`       | 跨框架表單選型、schema 驗證、動態欄位、上傳                 |
+| `fec-form-handling`       | 跨框架表單選型、schema 驗證、動態欄位、上傳                |
 | `fec-browser-storage`     | localStorage / sessionStorage / IndexedDB / Cookies 選型   |
 | `fec-route-protection`    | React Router、Next.js、Vue Router、Nuxt 的登入態與權限路由 |
 | `fec-pwa-implementation`  | manifest、Service Worker、離線快取、安裝提示               |
 | `fec-web-workers`         | Web Worker、Transferable、Comlink、Worker 池               |
 | `fec-canvas-threejs`      | Canvas 2D、Three.js、React Three Fiber、WebGL              |
 | `fec-svg-animation`       | CSS / Framer Motion / GSAP SVG 動畫與 reduced-motion       |
-| `fec-list-virtualization` | 依框架選型的大清單虛擬滾動、測量、網格和無限滾動            |
+| `fec-list-virtualization` | 依框架選型的大清單虛擬滾動、測量、網格和無限滾動           |
 
 **測試** — 規劃或撰寫前端測試覆蓋時啟用：
 
@@ -229,17 +229,17 @@ npx @bovinphang/frontend-craft@latest list
 
 **設計 UI** — 設計實作、設計系統或視覺打磨時啟用：
 
-| 技能                          | 範圍                                                         |
-| ----------------------------- | ------------------------------------------------------------ |
-| `fec-ui-design`               | 產品語境 UI 方向、反模板設計撥盤、媒體策略、狀態、視覺 QA     |
-| `fec-image-generation`        | 圖表、圖片生成/編輯、視覺資產、PNG 自檢和修復循環             |
-| `fec-drawio-studio`         | 可編輯 draw.io / diagrams.net 技術圖、形狀檢索、自動布局和程式碼結構圖 |
-| `fec-web-video-presentation` | 將文章、口播稿、課程和 demo 轉成可錄屏的 16:9 步進網頁演示 |
-| `fec-tailwind-design-system`  | Tailwind token、主題擴展、元件變體、class 治理和暗色模式     |
-| `fec-responsive-layout`       | 移動優先布局、容器查詢、資料密集型響應式界面                 |
-| `fec-motion-interaction`      | 場景化動效強度、頁面轉場、滾動動畫、reduced-motion           |
-| `fec-implement-from-design`   | 基於設計工具、截圖或分區級視覺參考實現 UI                    |
-| `fec-storybook-component-doc` | Storybook 元件文件、設計系統呈現、隔離狀態預覽               |
+| 技能                          | 範圍                                                                                             |
+| ----------------------------- | ------------------------------------------------------------------------------------------------ |
+| `fec-ui-design`               | 產品語境 UI 方向、反模板設計撥盤、媒體策略、狀態、視覺 QA                                        |
+| `fec-image-generation`        | 圖表、圖片生成/編輯、視覺資產、PNG 自檢和修復循環                                                |
+| `fec-drawio-studio`           | 可編輯 draw.io / diagrams.net 技術圖、XML/Mermaid/CSV URL 交付、形狀檢索、自動布局和程式碼結構圖 |
+| `fec-web-video-presentation`  | 將文章、口播稿、課程和 demo 轉成可錄屏的 16:9 步進網頁演示                                       |
+| `fec-tailwind-design-system`  | Tailwind token、主題擴展、元件變體、class 治理和暗色模式                                         |
+| `fec-responsive-layout`       | 移動優先布局、容器查詢、資料密集型響應式界面                                                     |
+| `fec-motion-interaction`      | 場景化動效強度、頁面轉場、滾動動畫、reduced-motion                                               |
+| `fec-implement-from-design`   | 基於設計工具、截圖或分區級視覺參考實現 UI                                                        |
+| `fec-storybook-component-doc` | Storybook 元件文件、設計系統呈現、隔離狀態預覽                                                   |
 
 **遺留遷移** — 現代化遷移時啟用：
 
@@ -256,11 +256,11 @@ npx @bovinphang/frontend-craft@latest list
 
 **文件維護** — 文件維護時啟用：
 
-| 技能                            | 範圍                                       |
-| ------------------------------- | ------------------------------------------ |
-| `fec-backend-requirements-handoff` | 前端向後端交接 UI 資料需求、使用者動作、狀態、業務規則與待確認問題 |
-| `fec-doc-sync`                  | 讓前端文件與程式碼、設定、腳本、路由、API、環境變數和部署事實保持同步 |
-| `fec-source-driven-development` | 以專案事實和官方來源驗證版本敏感的前端決策 |
+| 技能                               | 範圍                                                                  |
+| ---------------------------------- | --------------------------------------------------------------------- |
+| `fec-backend-requirements-handoff` | 前端向後端交接 UI 資料需求、使用者動作、狀態、業務規則與待確認問題    |
+| `fec-doc-sync`                     | 讓前端文件與程式碼、設定、腳本、路由、API、環境變數和部署事實保持同步 |
+| `fec-source-driven-development`    | 以專案事實和官方來源驗證版本敏感的前端決策                            |
 
 ### 代理（Agents）
 
@@ -461,10 +461,10 @@ npx skills update                          # 更新至最新版本
 npx skills check                           # 預覽可用更新
 ```
 
-| CLI                  | 安裝內容                                      |
-| -------------------- | --------------------------------------------- |
+| CLI                              | 安裝內容                                      |
+| -------------------------------- | --------------------------------------------- |
 | `npx @bovinphang/frontend-craft` | 技能 + 執行時專屬代理、指令、鉤子、規則、範本 |
-| `npx skills`         | 僅技能（適用於已有 Skills CLI 工作流）        |
+| `npx skills`                     | 僅技能（適用於已有 Skills CLI 工作流）        |
 
 關閉遙測：`DISABLE_TELEMETRY=1`。詳見 [skills.sh CLI 文件](https://skills.sh/docs/cli)。
 
