@@ -33,12 +33,14 @@ test("install writes a frontend-craft manifest for the runtime scope", () => {
       packageVersion?: string;
       runtime?: string;
       scope?: string;
+      language?: string;
       files?: Array<{ path: string; hash: string }>;
     };
 
     assert.match(manifest.packageVersion ?? "", /^\d+\.\d+\.\d+/);
     assert.equal(manifest.runtime, "claude");
     assert.equal(manifest.scope, "local");
+    assert.equal(manifest.language, "en");
     assert.ok(
       manifest.files?.some(
         (file) => file.path === "skills/fec-react-project-standard/SKILL.md",
@@ -50,6 +52,85 @@ test("install writes a frontend-craft manifest for the runtime scope", () => {
       ),
     );
     assert.ok(manifest.files?.some((file) => file.path === "hooks.json"));
+  } finally {
+    fs.rmSync(dir, { recursive: true, force: true });
+    fs.rmSync(claudeHome, { recursive: true, force: true });
+  }
+});
+
+test("install with Simplified Chinese writes localized content and manifest language", () => {
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), "fc-lang-zh-"));
+  const claudeHome = fs.mkdtempSync(
+    path.join(os.tmpdir(), "fc-lang-zh-claude-home-"),
+  );
+  try {
+    execFileSync(
+      process.execPath,
+      [cli, "install", "claude", "--local", "--lang", "zh-CN"],
+      {
+        cwd: dir,
+        encoding: "utf8",
+        env: { ...process.env, CLAUDE_CONFIG_DIR: claudeHome },
+      },
+    );
+
+    const commandPath = path.join(dir, ".claude", "commands", "fec-init.md");
+    const skillPath = path.join(
+      dir,
+      ".claude",
+      "skills",
+      "fec-react-project-standard",
+      "SKILL.md",
+    );
+    const manifestPath = path.join(
+      dir,
+      ".claude",
+      "frontend-craft.manifest.json",
+    );
+    const manifest = JSON.parse(fs.readFileSync(manifestPath, "utf8")) as {
+      language?: string;
+    };
+
+    assert.match(fs.readFileSync(commandPath, "utf8"), /检测 runtime/);
+    assert.match(fs.readFileSync(skillPath, "utf8"), /React 项目规范/);
+    assert.equal(manifest.language, "zh-CN");
+  } finally {
+    fs.rmSync(dir, { recursive: true, force: true });
+    fs.rmSync(claudeHome, { recursive: true, force: true });
+  }
+});
+
+test("update reuses manifest language when --lang is omitted", () => {
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), "fc-lang-update-"));
+  const claudeHome = fs.mkdtempSync(
+    path.join(os.tmpdir(), "fc-lang-update-claude-home-"),
+  );
+  try {
+    execFileSync(
+      process.execPath,
+      [cli, "install", "claude", "--local", "--lang", "zh-CN"],
+      {
+        cwd: dir,
+        encoding: "utf8",
+        env: { ...process.env, CLAUDE_CONFIG_DIR: claudeHome },
+      },
+    );
+
+    execFileSync(process.execPath, [cli, "update", "claude", "--local"], {
+      cwd: dir,
+      encoding: "utf8",
+      env: { ...process.env, CLAUDE_CONFIG_DIR: claudeHome },
+    });
+
+    const commandPath = path.join(dir, ".claude", "commands", "fec-init.md");
+    const manifest = JSON.parse(
+      fs.readFileSync(
+        path.join(dir, ".claude", "frontend-craft.manifest.json"),
+        "utf8",
+      ),
+    ) as { language?: string };
+    assert.match(fs.readFileSync(commandPath, "utf8"), /检测 runtime/);
+    assert.equal(manifest.language, "zh-CN");
   } finally {
     fs.rmSync(dir, { recursive: true, force: true });
     fs.rmSync(claudeHome, { recursive: true, force: true });
@@ -285,7 +366,7 @@ test("Claude CLI scope conflict can keep the existing source and update it inter
 
     const out = execFileSync(
       process.execPath,
-      [cli, "install", "claude", "--local"],
+      [cli, "install", "claude", "--local", "--lang", "en"],
       {
         cwd: dir,
         encoding: "utf8",
@@ -327,7 +408,7 @@ test("Claude CLI scope conflict can uninstall the existing source and install th
 
     const out = execFileSync(
       process.execPath,
-      [cli, "install", "claude", "--local"],
+      [cli, "install", "claude", "--local", "--lang", "en"],
       {
         cwd: dir,
         encoding: "utf8",

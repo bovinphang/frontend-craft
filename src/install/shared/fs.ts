@@ -2,6 +2,7 @@ import fs from "node:fs";
 import path from "node:path";
 import crypto from "node:crypto";
 import os from "node:os";
+import type { InstallLanguage } from "../language.js";
 
 export type InstallMode = "install" | "update";
 export type ManifestRoot = "baseDir" | "cwd" | "home";
@@ -16,6 +17,7 @@ export type InstallManifest = {
   packageVersion: string;
   runtime: string;
   scope: "global" | "local";
+  language?: InstallLanguage;
   installedAt: string;
   files: ManifestFile[];
 };
@@ -28,6 +30,7 @@ type ManifestSession = {
   packageVersion: string;
   runtime: string;
   scope: "global" | "local";
+  language: InstallLanguage;
   manifestPath: string;
   previousFiles: Map<string, string>;
   writtenFiles: Map<string, string>;
@@ -43,6 +46,7 @@ export function beginManifestSession({
   packageVersion,
   runtime,
   isGlobal,
+  language,
 }: {
   baseDir: string;
   cwd?: string;
@@ -50,6 +54,7 @@ export function beginManifestSession({
   packageVersion: string;
   runtime: string;
   isGlobal: boolean;
+  language: InstallLanguage;
 }): void {
   const manifestPath = path.join(baseDir, "frontend-craft.manifest.json");
   manifestSession = {
@@ -60,6 +65,7 @@ export function beginManifestSession({
     packageVersion,
     runtime,
     scope: isGlobal ? "global" : "local",
+    language,
     manifestPath,
     previousFiles: readManifestFiles(manifestPath),
     writtenFiles: new Map(),
@@ -85,6 +91,7 @@ export function endManifestSession(): void {
     packageVersion: session.packageVersion,
     runtime: session.runtime,
     scope: session.scope,
+    language: session.language,
     installedAt: new Date().toISOString(),
     files,
   };

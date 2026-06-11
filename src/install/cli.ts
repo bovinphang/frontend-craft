@@ -2,7 +2,15 @@ import fs from "node:fs";
 import path from "node:path";
 import readline from "node:readline";
 import { ALL_RUNTIMES, INSTALLERS } from "./registry.js";
-import { promptLocation, promptRuntime } from "./interactive.js";
+import { promptLanguage, promptLocation, promptRuntime } from "./interactive.js";
+import {
+  DEFAULT_LANGUAGE,
+  isInstallLanguage,
+  resolveContentRoot,
+  resolveInstallLanguage,
+  SUPPORTED_LANGUAGES,
+  type InstallLanguage,
+} from "./language.js";
 import { getInstallBaseDir } from "./runtime-homes.js";
 import {
   RUNTIME_CAPABILITIES,
@@ -14,6 +22,7 @@ import {
   discardManifestSession,
   endManifestSession,
   getManifestPath,
+  readInstallManifest,
 } from "./shared/fs.js";
 import {
   discoverManifestInstalls,
@@ -50,8 +59,10 @@ function parseInstallArgs(argv: string[]) {
   let dryRun = false;
   let force = false;
   let all = false;
+  let language: string | undefined;
   const rest: string[] = [];
-  for (const a of argv) {
+  for (let i = 0; i < argv.length; i++) {
+    const a = argv[i];
     if (a === "--global" || a === "-g") {
       hasGlobal = true;
       installLocation = "global";
@@ -61,7 +72,11 @@ function parseInstallArgs(argv: string[]) {
     } else if (a === "--dry-run") dryRun = true;
     else if (a === "--force") force = true;
     else if (a === "--all") all = true;
-    else if (!a.startsWith("-")) rest.push(a);
+    else if (a === "--lang") {
+      language = argv[++i] ?? "";
+    } else if (a.startsWith("--lang=")) {
+      language = a.slice("--lang=".length);
+    } else if (!a.startsWith("-")) rest.push(a);
   }
   return {
     runtime: rest[0],
@@ -71,6 +86,7 @@ function parseInstallArgs(argv: string[]) {
     all,
     hasGlobal,
     hasLocal,
+    language,
   };
 }
 
@@ -98,6 +114,7 @@ Usage:
 Options:
   --global, -g     Install to tool global config directory
   --local, -l      Install to this project only
+  --lang <lang>    Install content language: ${SUPPORTED_LANGUAGES.join(", ")} (default: ${DEFAULT_LANGUAGE})
   --dry-run        Show actions without writing files
   --force          Uninstall: remove modified managed files (does not override Claude Marketplace)
   --all            Install for every supported runtime
@@ -118,7 +135,8 @@ function isInstallInvocation(argv: string[]): boolean {
   const first = argv[0];
   return (
     first == null ||
-    ["--dry-run", "--all", "--global", "-g", "--local", "-l"].includes(first)
+    ["--dry-run", "--all", "--global", "-g", "--local", "-l", "--lang"].includes(first) ||
+    first.startsWith("--lang=")
   );
 }
 
@@ -215,6 +233,15 @@ export async function main(argv: string[]): Promise<void> {
     hasGlobal,
     hasLocal,
   } = parsedInstallArgs;
+  const requestedLanguage = parsedInstallArgs.language;
+  if (requestedLanguage !== undefined && !isInstallLanguage(requestedLanguage)) {
+    console.error(
+      `Unsupported language: ${requestedLanguage || "(missing)"}. Supported languages: ${SUPPORTED_LANGUAGES.join(", ")}`,
+    );
+    process.exitCode = 1;
+    return;
+  }
+  const languageArg = requestedLanguage as InstallLanguage | undefined;
   if (isSetup && runtime === "all") {
     runtime = undefined;
     all = true;
@@ -276,6 +303,7 @@ export async function main(argv: string[]): Promise<void> {
       return;
     }
     for (const install of installs) {
+      const language = languageArg ?? install.manifest.language ?? DEFAULT_LANGUAGE;
       await runInstaller({
         rt: install.runtime,
         mode,
@@ -284,6 +312,7 @@ export async function main(argv: string[]): Promise<void> {
         pluginRoot,
         cwd,
         dryRun,
+        language,
       });
     }
     return;
@@ -301,6 +330,15 @@ export async function main(argv: string[]): Promise<void> {
     }
   }
 
+  let language: InstallLanguage | undefined = languageArg;
+  if (!language && mode === "install") {
+    if (canPrompt) {
+      language = await promptLanguage();
+    } else {
+      language = DEFAULT_LANGUAGE;
+    }
+  }
+
   let isGlobal: boolean;
   if (effectiveInstallLocation === "global") {
     isGlobal = true;
@@ -314,6 +352,14 @@ export async function main(argv: string[]): Promise<void> {
     );
     isGlobal = true;
   }
+
+  if (!language && mode === "update" && runtime) {
+    const baseDir = getInstallBaseDir({ runtime, isGlobal, cwd });
+    language =
+      readInstallManifest(getManifestPath(baseDir))?.language ??
+      DEFAULT_LANGUAGE;
+  }
+  language ??= resolveInstallLanguage(languageArg);
 
   for (const rt of runtimes) {
     if (!INSTALLERS[rt]) {
@@ -332,6 +378,7 @@ export async function main(argv: string[]): Promise<void> {
       dryRun,
       force,
       canPrompt,
+      language,
     });
   }
 }
@@ -346,6 +393,7 @@ async function runInstaller({
   dryRun,
   force,
   canPrompt,
+  language,
 }: {
   rt: string;
   mode: "install" | "update";
@@ -356,6 +404,7 @@ async function runInstaller({
   dryRun: boolean;
   force?: boolean;
   canPrompt?: boolean;
+  language: InstallLanguage;
 }): Promise<void> {
   const resolved = await resolveClaudeInstallConflict({
     rt,
@@ -374,12 +423,14 @@ async function runInstaller({
   }
   const ctx: InstallContext = {
     pluginRoot,
+    contentRoot: resolveContentRoot(pluginRoot, language),
     cwd,
     runtime: rt,
     isGlobal,
     baseDir,
     dryRun,
     mode,
+    language,
     capabilities: RUNTIME_CAPABILITIES[rt],
   };
   if (mode === "install") {
@@ -404,6 +455,7 @@ async function runInstaller({
       packageVersion: readPkgVersion(pluginRoot),
       runtime: rt,
       isGlobal,
+      language,
     });
   try {
     await INSTALLERS[rt](ctx);

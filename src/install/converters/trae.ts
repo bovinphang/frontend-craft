@@ -7,12 +7,12 @@ import { ensureDir, readUtf8, writeUtf8 } from "../shared/fs.js";
  * @param {import('../types.js').InstallContext} ctx
  */
 export async function installTrae(ctx: InstallContext): Promise<void> {
-  const { pluginRoot, baseDir, dryRun, isGlobal } = ctx;
+  const { contentRoot, baseDir, dryRun, isGlobal } = ctx;
   if (dryRun) return console.log(`[dry-run] trae -> ${baseDir}`);
   if (isGlobal) return;
   const rulesDir = path.join(baseDir, "rules");
   ensureDir(rulesDir);
-  const rulesSrc = path.join(pluginRoot, "templates", "shared", "rules");
+  const rulesSrc = path.join(contentRoot, "templates", "shared", "rules");
   /** @type {string[]} */
   const parts = ["# Frontend Craft - Trae rules bundle\n"];
   if (fs.existsSync(rulesSrc)) {

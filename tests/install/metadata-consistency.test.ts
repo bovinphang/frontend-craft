@@ -269,6 +269,19 @@ test("tracked source and docs do not contain mojibake markers", () => {
   }
 });
 
+test("root distributable content is English-only", () => {
+  const hanPattern = /[\u3400-\u4dbf\u4e00-\u9fff\uf900-\ufaff]/;
+  const contentRoots = ["agents", "commands", "skills", "templates"];
+  const files = contentRoots.flatMap((contentRoot) =>
+    collectFiles(path.join(root, contentRoot)).filter((file) => /\.(md|json|toml)$/.test(file)),
+  );
+
+  for (const file of files) {
+    const body = fs.readFileSync(file, "utf8");
+    assert.doesNotMatch(body, hanPattern, `root content must be English-only: ${path.relative(root, file)}`);
+  }
+});
+
 test("README skill tree uses fec-prefixed public skill directories", () => {
   const docs = [
     "README.md",
