@@ -1,7 +1,7 @@
 [
   {
     "id": "fec-accessibility-check",
-    "name": "无障碍检查",
+    "name": "Accessibility check",
     "category": "review-quality",
     "tags": [
       "a11y",
@@ -9,7 +9,7 @@
       "accessibility",
       "audit"
     ],
-    "summary": "Frontend Craft skill for 无障碍检查.",
+    "summary": "Frontend Craft skill for accessibility check.",
     "version": "2.7.0",
     "license": "MIT",
     "homepage": "https://github.com/bovinphang/frontend-craft",
@@ -34,7 +34,7 @@
   },
   {
     "id": "fec-alchemy",
-    "name": "项目吸收与原创化融合",
+    "name": "Integration of project absorption and originality",
     "category": "project-evolution",
     "tags": [
       "alchemy",
@@ -69,7 +69,7 @@
   },
   {
     "id": "fec-api-integration",
-    "name": "API 集成",
+    "name": "API integration",
     "category": "implementation-capability",
     "tags": [
       "api",
@@ -104,7 +104,7 @@
   },
   {
     "id": "fec-backend-requirements-handoff",
-    "name": "前后端需求交接",
+    "name": "Handover of front-end and back-end requirements",
     "category": "maintenance-docs",
     "tags": [
       "backend-requirements",
@@ -139,7 +139,7 @@
   },
   {
     "id": "fec-browser-storage",
-    "name": "浏览器存储",
+    "name": "browser storage",
     "category": "implementation-capability",
     "tags": [
       "storage",
@@ -148,7 +148,7 @@
       "cookie",
       "client-persistence"
     ],
-    "summary": "Frontend Craft skill for 浏览器存储.",
+    "summary": "Frontend Craft skill for browser storage.",
     "version": "2.7.0",
     "license": "MIT",
     "homepage": "https://github.com/bovinphang/frontend-craft",
@@ -174,7 +174,7 @@
   },
   {
     "id": "fec-canvas-threejs",
-    "name": "Canvas 与 Three.js",
+    "name": "Canvas and Three.js",
     "category": "implementation-capability",
     "tags": [
       "canvas",
@@ -184,7 +184,7 @@
       "visualization",
       "r3f"
     ],
-    "summary": "Frontend Craft skill for Canvas 与 Three.js.",
+    "summary": "Frontend Craft skill for Canvas with Three.js.",
     "version": "2.7.0",
     "license": "MIT",
     "homepage": "https://github.com/bovinphang/frontend-craft",
@@ -211,7 +211,7 @@
   },
   {
     "id": "fec-code-review",
-    "name": "前端代码审查",
+    "name": "Front-end code review",
     "category": "review-quality",
     "tags": [
       "code-review",
@@ -219,7 +219,7 @@
       "quality",
       "best-practices"
     ],
-    "summary": "Frontend Craft skill for 前端代码审查.",
+    "summary": "Frontend Craft skill for front-end code review.",
     "version": "2.7.0",
     "license": "MIT",
     "homepage": "https://github.com/bovinphang/frontend-craft",
@@ -244,7 +244,7 @@
   },
   {
     "id": "fec-component-testing",
-    "name": "组件测试",
+    "name": "Component testing",
     "category": "testing",
     "tags": [
       "rtl",
@@ -253,7 +253,7 @@
       "user-event",
       "regression"
     ],
-    "summary": "Frontend Craft skill for 组件测试.",
+    "summary": "Frontend Craft skill for component testing.",
     "version": "2.7.0",
     "license": "MIT",
     "homepage": "https://github.com/bovinphang/frontend-craft",
@@ -279,7 +279,7 @@
   },
   {
     "id": "fec-data-fetching",
-    "name": "TanStack Query 数据获取",
+    "name": "TanStack Query data acquisition",
     "category": "implementation-capability",
     "tags": [
       "react-query",
@@ -288,7 +288,7 @@
       "optimistic-update",
       "server-state"
     ],
-    "summary": "Frontend Craft skill for TanStack Query 数据获取.",
+    "summary": "Frontend Craft skill for TanStack Query data acquisition.",
     "version": "2.7.0",
     "license": "MIT",
     "homepage": "https://github.com/bovinphang/frontend-craft",
@@ -314,7 +314,7 @@
   },
   {
     "id": "fec-debug-framework",
-    "name": "前端诊断框架",
+    "name": "Front-end diagnostic framework",
     "category": "review-quality",
     "tags": [
       "debug",
@@ -349,7 +349,7 @@
   },
   {
     "id": "fec-dependency-upgrade",
-    "name": "依赖升级",
+    "name": "Dependency upgrade",
     "category": "review-quality",
     "tags": [
       "dependency-upgrade",
@@ -384,7 +384,7 @@
   },
   {
     "id": "fec-drawio-studio",
-    "name": "可编辑技术图表工作流",
+    "name": "Editable technical diagram workflow",
     "category": "design-ui",
     "tags": [
       "drawio",
@@ -429,7 +429,7 @@
   },
   {
     "id": "fec-doc-sync",
-    "name": "文档同步",
+    "name": "Document synchronization",
     "category": "maintenance-docs",
     "tags": [
       "docs",
@@ -466,7 +466,7 @@
   },
   {
     "id": "fec-e2e-testing",
-    "name": "E2E 测试规范",
+    "name": "E2E Test Specification",
     "category": "testing",
     "tags": [
       "playwright",
@@ -476,7 +476,7 @@
       "ci",
       "pom"
     ],
-    "summary": "Frontend Craft skill for E2E 测试规范.",
+    "summary": "Frontend Craft skill for E2E test specification.",
     "version": "2.7.0",
     "license": "MIT",
     "homepage": "https://github.com/bovinphang/frontend-craft",
@@ -503,7 +503,7 @@
   },
   {
     "id": "fec-form-handling",
-    "name": "表单处理",
+    "name": "form processing",
     "category": "implementation-capability",
     "tags": [
       "react-hook-form",
@@ -512,7 +512,7 @@
       "dynamic-forms",
       "file-upload"
     ],
-    "summary": "Frontend Craft skill for 表单处理.",
+    "summary": "Frontend Craft skill for form processing.",
     "version": "2.7.0",
     "license": "MIT",
     "homepage": "https://github.com/bovinphang/frontend-craft",
@@ -538,7 +538,7 @@
   },
   {
     "id": "fec-image-generation",
-    "name": "图片生成与图表工作流",
+    "name": "Image generation and chart workflow",
     "category": "design-ui",
     "tags": [
       "image-generation",
@@ -586,7 +586,7 @@
   },
   {
     "id": "fec-implement-from-design",
-    "name": "设计稿实现",
+    "name": "Implementation of design draft",
     "category": "design-ui",
     "tags": [
       "figma",
@@ -627,7 +627,7 @@
   },
   {
     "id": "fec-legacy-to-modern-migration",
-    "name": "遗留系统迁移",
+    "name": "Legacy system migration",
     "category": "legacy-migration",
     "tags": [
       "migration",
@@ -637,7 +637,7 @@
       "vue",
       "modernization"
     ],
-    "summary": "Frontend Craft skill for 遗留系统迁移.",
+    "summary": "Frontend Craft skill for legacy system migration.",
     "version": "2.7.0",
     "license": "MIT",
     "homepage": "https://github.com/bovinphang/frontend-craft",
@@ -664,7 +664,7 @@
   },
   {
     "id": "fec-legacy-web-standard",
-    "name": "传统前端规范",
+    "name": "Traditional front-end specifications",
     "category": "legacy-migration",
     "tags": [
       "jquery",
@@ -672,7 +672,7 @@
       "legacy",
       "vanilla-js"
     ],
-    "summary": "Frontend Craft skill for 传统前端规范.",
+    "summary": "Frontend Craft skill for traditional front-end specifications.",
     "version": "2.7.0",
     "license": "MIT",
     "homepage": "https://github.com/bovinphang/frontend-craft",
@@ -697,7 +697,7 @@
   },
   {
     "id": "fec-list-virtualization",
-    "name": "列表虚拟化优化",
+    "name": "List virtualization optimization",
     "category": "implementation-capability",
     "tags": [
       "virtualization",
@@ -706,7 +706,7 @@
       "tanstack-virtual",
       "performance"
     ],
-    "summary": "Frontend Craft skill for 列表虚拟化优化.",
+    "summary": "Frontend Craft skill for list virtualization optimization.",
     "version": "2.7.0",
     "license": "MIT",
     "homepage": "https://github.com/bovinphang/frontend-craft",
@@ -732,7 +732,7 @@
   },
   {
     "id": "fec-monorepo-project-standard",
-    "name": "Monorepo 项目规范",
+    "name": "Monorepo project specifications",
     "category": "project-standard",
     "tags": [
       "monorepo",
@@ -741,7 +741,7 @@
       "nx",
       "workspace"
     ],
-    "summary": "Frontend Craft skill for Monorepo 项目规范.",
+    "summary": "Frontend Craft skill for Monorepo project specifications.",
     "version": "2.7.0",
     "license": "MIT",
     "homepage": "https://github.com/bovinphang/frontend-craft",
@@ -767,7 +767,7 @@
   },
   {
     "id": "fec-motion-interaction",
-    "name": "交互动效",
+    "name": "interactive effects",
     "category": "design-ui",
     "tags": [
       "motion",
@@ -804,7 +804,7 @@
   },
   {
     "id": "fec-nextjs-project-standard",
-    "name": "Next.js 项目规范",
+    "name": "Next.js project specifications",
     "category": "project-standard",
     "tags": [
       "nextjs",
@@ -813,7 +813,7 @@
       "rsc",
       "react"
     ],
-    "summary": "Frontend Craft skill for Next.js 项目规范.",
+    "summary": "Frontend Craft skill for Next.js project specification.",
     "version": "2.7.0",
     "license": "MIT",
     "homepage": "https://github.com/bovinphang/frontend-craft",
@@ -839,7 +839,7 @@
   },
   {
     "id": "fec-nuxt-project-standard",
-    "name": "Nuxt 项目规范",
+    "name": "Nuxt project specifications",
     "category": "project-standard",
     "tags": [
       "nuxt",
@@ -848,7 +848,7 @@
       "ssg",
       "data-fetching"
     ],
-    "summary": "Frontend Craft skill for Nuxt 项目规范.",
+    "summary": "Frontend Craft skill for Nuxt project specifications.",
     "version": "2.7.0",
     "license": "MIT",
     "homepage": "https://github.com/bovinphang/frontend-craft",
@@ -874,7 +874,7 @@
   },
   {
     "id": "fec-performance-optimization",
-    "name": "前端性能优化",
+    "name": "Front-end performance optimization",
     "category": "review-quality",
     "tags": [
       "performance",
@@ -909,7 +909,7 @@
   },
   {
     "id": "fec-pwa-implementation",
-    "name": "PWA 实现",
+    "name": "PWA implementation",
     "category": "implementation-capability",
     "tags": [
       "pwa",
@@ -918,7 +918,7 @@
       "workbox",
       "installable"
     ],
-    "summary": "Frontend Craft skill for PWA 实现.",
+    "summary": "Frontend Craft skill for PWA implementation.",
     "version": "2.7.0",
     "license": "MIT",
     "homepage": "https://github.com/bovinphang/frontend-craft",
@@ -944,7 +944,7 @@
   },
   {
     "id": "fec-react-project-standard",
-    "name": "React 项目规范",
+    "name": "React project specifications",
     "category": "project-standard",
     "tags": [
       "react",
@@ -953,7 +953,7 @@
       "components",
       "architecture"
     ],
-    "summary": "Frontend Craft skill for React 项目规范.",
+    "summary": "Frontend Craft skill for React project specification.",
     "version": "2.7.0",
     "license": "MIT",
     "homepage": "https://github.com/bovinphang/frontend-craft",
@@ -979,7 +979,7 @@
   },
   {
     "id": "fec-refactor-clean",
-    "name": "重构清理",
+    "name": "Refactoring cleanup",
     "category": "review-quality",
     "tags": [
       "refactor",
@@ -988,7 +988,7 @@
       "unused-exports",
       "dependencies"
     ],
-    "summary": "Frontend Craft skill for 重构清理.",
+    "summary": "Frontend Craft skill for refactoring cleanup.",
     "version": "2.7.0",
     "license": "MIT",
     "homepage": "https://github.com/bovinphang/frontend-craft",
@@ -1014,7 +1014,7 @@
   },
   {
     "id": "fec-responsive-layout",
-    "name": "响应式布局",
+    "name": "Responsive layout",
     "category": "design-ui",
     "tags": [
       "responsive",
@@ -1049,7 +1049,7 @@
   },
   {
     "id": "fec-route-protection",
-    "name": "路由保护",
+    "name": "Route protection",
     "category": "implementation-capability",
     "tags": [
       "auth",
@@ -1059,7 +1059,7 @@
       "react-router",
       "vue-router"
     ],
-    "summary": "Frontend Craft skill for 路由保护.",
+    "summary": "Frontend Craft skill for Route Protection.",
     "version": "2.7.0",
     "license": "MIT",
     "homepage": "https://github.com/bovinphang/frontend-craft",
@@ -1086,7 +1086,7 @@
   },
   {
     "id": "fec-security-review",
-    "name": "前端安全审查",
+    "name": "Front-end security review",
     "category": "review-quality",
     "tags": [
       "xss",
@@ -1096,7 +1096,7 @@
       "owasp",
       "dompurify"
     ],
-    "summary": "Frontend Craft skill for 前端安全审查.",
+    "summary": "Frontend Craft skill for frontend security review.",
     "version": "2.7.0",
     "license": "MIT",
     "homepage": "https://github.com/bovinphang/frontend-craft",
@@ -1123,7 +1123,7 @@
   },
   {
     "id": "fec-source-driven-development",
-    "name": "来源驱动开发",
+    "name": "Source-driven development",
     "category": "maintenance-docs",
     "tags": [
       "source-driven",
@@ -1158,7 +1158,7 @@
   },
   {
     "id": "fec-state-management",
-    "name": "前端状态管理",
+    "name": "Front-end status management",
     "category": "implementation-capability",
     "tags": [
       "state-management",
@@ -1193,7 +1193,7 @@
   },
   {
     "id": "fec-storybook-component-doc",
-    "name": "Storybook 组件文档化",
+    "name": "Storybook component documentation",
     "category": "design-ui",
     "tags": [
       "storybook",
@@ -1228,7 +1228,7 @@
   },
   {
     "id": "fec-svg-animation",
-    "name": "SVG 动画",
+    "name": "SVG animation",
     "category": "implementation-capability",
     "tags": [
       "svg",
@@ -1237,7 +1237,7 @@
       "gsap",
       "micro-interaction"
     ],
-    "summary": "Frontend Craft skill for SVG 动画.",
+    "summary": "Frontend Craft skill for SVG animation.",
     "version": "2.7.0",
     "license": "MIT",
     "homepage": "https://github.com/bovinphang/frontend-craft",
@@ -1263,7 +1263,7 @@
   },
   {
     "id": "fec-tailwind-design-system",
-    "name": "Tailwind 设计系统",
+    "name": "Tailwind design system",
     "category": "design-ui",
     "tags": [
       "tailwind",
@@ -1298,7 +1298,7 @@
   },
   {
     "id": "fec-tdd-workflow",
-    "name": "TDD 工作流",
+    "name": "TDD workflow",
     "category": "testing",
     "tags": [
       "tdd",
@@ -1307,7 +1307,7 @@
       "regression",
       "frontend-tests"
     ],
-    "summary": "Frontend Craft skill for TDD 工作流.",
+    "summary": "Frontend Craft skill for TDD workflow.",
     "version": "2.7.0",
     "license": "MIT",
     "homepage": "https://github.com/bovinphang/frontend-craft",
@@ -1332,7 +1332,7 @@
   },
   {
     "id": "fec-testing-strategy",
-    "name": "测试策略",
+    "name": "testing strategy",
     "category": "testing",
     "tags": [
       "testing-strategy",
@@ -1341,7 +1341,7 @@
       "risk",
       "quality-gate"
     ],
-    "summary": "Frontend Craft skill for 测试策略.",
+    "summary": "Frontend Craft skill for testing strategies.",
     "version": "2.7.0",
     "license": "MIT",
     "homepage": "https://github.com/bovinphang/frontend-craft",
@@ -1367,7 +1367,7 @@
   },
   {
     "id": "fec-typescript-project-standard",
-    "name": "TypeScript 项目规范",
+    "name": "TypeScript project specifications",
     "category": "project-standard",
     "tags": [
       "typescript",
@@ -1403,7 +1403,7 @@
   },
   {
     "id": "fec-ui-design",
-    "name": "UI 设计",
+    "name": "UI design",
     "category": "design-ui",
     "tags": [
       "ui-design",
@@ -1453,7 +1453,7 @@
   },
   {
     "id": "fec-validation-fix",
-    "name": "验证与修复",
+    "name": "Verification and repair",
     "category": "review-quality",
     "tags": [
       "validation",
@@ -1463,7 +1463,7 @@
       "build",
       "fix"
     ],
-    "summary": "Frontend Craft skill for 验证与修复.",
+    "summary": "Frontend Craft skill for verification and repair.",
     "version": "2.7.0",
     "license": "MIT",
     "homepage": "https://github.com/bovinphang/frontend-craft",
@@ -1490,7 +1490,7 @@
   },
   {
     "id": "fec-vite-project-standard",
-    "name": "Vite 项目规范",
+    "name": "Vite project specifications",
     "category": "project-standard",
     "tags": [
       "vite",
@@ -1500,7 +1500,7 @@
       "bundle",
       "dev-server"
     ],
-    "summary": "Frontend Craft skill for Vite 项目规范.",
+    "summary": "Frontend Craft skill for Vite project specifications.",
     "version": "2.7.0",
     "license": "MIT",
     "homepage": "https://github.com/bovinphang/frontend-craft",
@@ -1527,7 +1527,7 @@
   },
   {
     "id": "fec-vue3-project-standard",
-    "name": "Vue 3 项目规范",
+    "name": "Vue 3 project specifications",
     "category": "project-standard",
     "tags": [
       "vue3",
@@ -1536,7 +1536,7 @@
       "pinia",
       "components"
     ],
-    "summary": "Frontend Craft skill for Vue 3 项目规范.",
+    "summary": "Frontend Craft skill for Vue 3 project specification.",
     "version": "2.7.0",
     "license": "MIT",
     "homepage": "https://github.com/bovinphang/frontend-craft",
@@ -1562,7 +1562,7 @@
   },
   {
     "id": "fec-web-video-presentation",
-    "name": "网页视频演示",
+    "name": "Web video demonstration",
     "category": "design-ui",
     "tags": [
       "web-video",

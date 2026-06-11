@@ -1,155 +1,155 @@
-# Skill 模板规范
+# Skill Template Specification
 
-> 所有 Skill 必须遵循 agentskills 结构：目录名、frontmatter `name` 和公开 skill id 保持一致；frontmatter 只保留 `name` 与 `description`。
+> All Skills must follow the agentskills structure: directory name, frontmatter `name` and public skill id remain consistent; frontmatter only retains `name` and `description`.
 
 ---
 
-## 目录结构
+## Directory structure
 
 ```text
-skills/fec-[主题]/
+skills/fec-[topic]/
   SKILL.md
-  references/   # 可选：按需加载的详细规范、示例或清单
-  scripts/      # 可选：需要确定性执行的脚本
-  assets/       # 可选：输出会用到的模板或资源
+references/ # Optional: detailed specifications, examples or manifests loaded on demand
+scripts/ # Optional: scripts that require deterministic execution
+assets/ # Optional: templates or resources that will be used in the output
 ```
 
 ## Frontmatter
 
 ```yaml
 ---
-name: fec-[主题]
+name: fec-[topic]
 description: Use when ...
 ---
 ```
 
-- `name` 必须等于父目录名。
-- `description` 是主要触发依据，必须写清"做什么"和"什么时候用"。
-- 不要在 frontmatter 中加入 `version`、`metadata` 或触发说明以外的字段。
-- 使用 `Use when ...` 开头，并包含必要的英文/中文关键词。
+- `name` must equal the parent directory name.
+- `description` is the main triggering basis, and "what to do" and "when to use" must be written clearly.
+- Do not include fields other than `version`, `metadata` or trigger description in frontmatter.
+- Start with `Use when ...` and include necessary English/Chinese keywords.
 
 ---
 
-## 模板结构
+## Template structure
 
 ```markdown
-# Skill: [Skill 名称]
+# Skill: [Skill name]
 
 ## Purpose
 
-一句话说明这个 Skill 解决什么问题，面向什么场景。
+In one sentence, explain what problem this Skill solves and what scenario it is intended for.
 
 ## Procedure
 
-分步骤实现指南，每步包含代码示例。
+Step-by-step implementation guide with code examples for each step.
 
-### 1. [步骤标题]
+### 1. [Step title]
 
-说明 + 代码示例
+Instructions + Code Examples
 
-### 2. [步骤标题]
+### 2. [Step title]
 
-说明 + 代码示例
+Instructions + Code Examples
 
 ...
 
 ## Constraints
 
-- 边界条件 / 注意事项 1
-- 反模式 / 陷阱 1
-- 性能 / 安全约束 1
+- Boundary conditions/Notes 1
+- Anti-Pattern/Trap 1
+- Performance / Security Constraints 1
 
 ## Expected Output
 
-明确产出物是什么，如何验证。
+Make it clear what the output is and how to verify it.
 
 ```
 
 ---
 
-## 编写规范
+## Writing specifications
 
 ### Purpose
 
-- 一句话，不超过 30 字
-- 说明解决什么问题，而非如何解决
-- 示例: "管理表单状态、校验和提交，避免受控组件的性能问题"
+- One sentence, no more than 30 words
+- Describe what problem to solve, not how to solve it
+- Example: "Manage form status, validation and submission to avoid performance issues with controlled components"
 
 ### Trigger and Boundary
 
-- 触发条件主要写在 frontmatter `description`，正文不要再重复长篇 `When to Use`。
-- `description` 必须包含 should-trigger 场景和近邻 should-not-trigger 边界。
-- 示例: `Use when building substantial forms with React Hook Form and Zod. Do not use for trivial 1-3 field forms without validation.`
+- The trigger conditions are mainly written in frontmatter `description`, and the main text should not repeat the long `When to Use`.
+- `description` must contain should-trigger scenarios and adjacent should-not-trigger boundaries.
+- Example: `Use when building substantial forms with React Hook Form and Zod. Do not use for trivial 1-3 field forms without validation.`
 
 ### Capability Relations
 
-- `SKILL.md` 必须自包含，不能依赖另一个 skill 或 agent 才能理解或执行。
-- 不要在 skill 正文添加 `Related Agent`。
-- 不要从 skill 正文链接到 `../agents`、`../../agents`、`../skills` 或 `../../skills`。
-- 相关 skill、边界 workflow 和能力标签统一维护在 `skills/relations.json`。
-- Agent 可以在自己的 frontmatter `skills:` 字段中引用 skills；skill 不反向引用 agent。
+- `SKILL.md` must be self-contained and cannot depend on another skill or agent to understand or execute.
+- Do not add `Related Agent` in the skill body.
+- Do not link to `../agents`, `../../agents`, `../skills`, or `../../skills` from the skill body.
+- Related skills, boundary workflows and capability labels are maintained in `skills/relations.json`.
+- Agents can reference skills in their own frontmatter `skills:` field; skills do not back-reference agents.
 
 ### Procedure
 
-- 按实施顺序分步骤，每步有编号和标题
-- 每个步骤包含：
-  - 1-2 句说明
-  - 可运行的代码示例（TypeScript 优先）
-  - 关键参数的注释说明
-- 涉及安装的步骤先给出安装命令
-- 代码示例遵循项目已有的编码规范
-- 优先展示完整的最小可运行示例，而非片段
-- `SKILL.md` 只保留每次使用都需要的核心流程；接近 **180-220 行**时优先拆到 `references/`。
-- 长代码、框架变体、进阶配置、评估清单放入一层 `references/` 文件，并从 `SKILL.md` 明确说明何时加载。
+- Divided into steps according to the order of implementation, each step has a number and title
+- Each step contains:
+- 1-2 sentence description
+- Runnable code examples (TypeScript preferred)
+- Comments on key parameters
+- For installation steps, the installation command is given first.
+- Code examples follow the existing coding standards of the project
+- Prioritize showing complete minimum runnable examples rather than fragments
+- `SKILL.md` only retains the core processes required for each use; when it is close to **180-220 lines**, it will be split to `references/` first.
+- Long codes, framework variants, advanced configurations, and evaluation checklists are placed into one layer of `references/` files and explicitly stated when to load from `SKILL.md`.
 
 ### Constraints
 
-- 列出 3-6 条关键约束
-- 包括：性能陷阱、安全注意、反模式、兼容性限制
-- 每条简洁，必要时附简短解释
-- 示例:
-  - 虚拟列表中的项目不在 DOM 中直到滚动到，搜索引擎可能无法索引
+- List 3-6 key constraints
+- Includes: performance pitfalls, security considerations, anti-patterns, compatibility limitations
+- Each item is concise, with a brief explanation if necessary
+- Example:
+- Items in the virtual list are not in the DOM until scrolled and may not be indexed by search engines
 
 ### Expected Output
 
-- 明确说明产出物是什么
-- 如何验证产出是否正确
-- 1-3 句话
+- Clearly state what the output is
+- How to verify that the output is correct
+- 1-3 sentences
 
 ---
 
-## 代码示例约定
+## Code example conventions
 
-- 使用 TypeScript（.tsx / .ts），除非场景明确要求 JavaScript
-- 遵循 React 18+ / Vue 3+ 现代语法
-- 变量和函数名语义化，避免缩写（除非是行业约定如 `ctx`、`ref`）
-- 关键行添加行内注释说明"为什么"而非"是什么"
-- 安装命令使用 `npm install`（不锁包管理器）
+- Use TypeScript (.tsx/.ts) unless the scenario explicitly requires JavaScript
+- Follow React 18+ / Vue 3+ modern syntax
+- Make variable and function names semantic and avoid abbreviations (unless it is an industry convention such as `ctx`, `ref`)
+- Add inline comments to key lines to explain "why" rather than "what"
+- Use `npm install` for the installation command (unlock the package manager)
 
 ---
 
 ## Progressive Disclosure
 
-- `SKILL.md`：触发后每次都需要的操作顺序、约束、边界和最小示例。
-- `references/`：按需加载的详细示例、框架变体、配置模板和长检查清单。
-- 避免把同一说明同时写在 `SKILL.md` 和 reference 中；正文只做导航。
-- reference 只放一层，链接必须使用相对路径。
+- `SKILL.md`: Sequence of operations, constraints, bounds and minimal examples required every time after triggering.
+- `references/`: Detailed examples, framework variants, configuration templates and long checklists loaded on demand.
+- Avoid writing the same description in both `SKILL.md` and reference; the main text is only for navigation.
+- The reference is only placed one level, and the link must use a relative path.
 
 ---
 
-## 触发评估
+## Trigger evaluation
 
-每个 skill 维护正负样例，用于 description 优化：
+Each skill maintains positive and negative samples for description optimization:
 
-- `should_trigger`：8-10 条真实用户问法。
-- `should_not_trigger`：8-10 条近邻误触发问法。
-- 高重叠 skill 优先覆盖 React/Vue/Next/Nuxt、review/security/a11y、component/E2E/Storybook、legacy/migration。
+- `should_trigger`: 8-10 real user questions.
+- `should_not_trigger`: 8-10 neighbor false trigger questions.
+- High-overlapping skills preferentially cover React/Vue/Next/Nuxt, review/security/a11y, component/E2E/Storybook, and legacy/migration.
 
 ---
 
-## 文件命名
+## File naming
 
-- 目录格式: `skills/fec-{主题}/`
-- 必备文件: `skills/fec-{主题}/SKILL.md`
-- 使用小写和连字符
-- 示例: `skills/fec-storybook-component-doc/`、`skills/fec-list-virtualization/`
+- Directory format: `skills/fec-{topic}/`
+- Required files: `skills/fec-{topic}/SKILL.md`
+- Use lowercase and hyphens
+- Example: `skills/fec-storybook-component-doc/`, `skills/fec-list-virtualization/`

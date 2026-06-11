@@ -1,19 +1,19 @@
 ---
 name: fec-refactor-clean
-description: 在验证保护下识别并清理前端死代码、未使用导出、过期组件、样式和依赖。
+description: Identify and clean up front-end dead code, unused exports, outdated components, styles and dependencies under validation protection.
 ---
 
-按 `fec-refactor-clean` 执行安全清理。复杂清理可委托 **`fec-refactor-cleaner`**。
+Press `fec-refactor-clean` to perform a safe clean. Complex cleanup can be delegated to **`fec-refactor-cleaner`**.
 
-## 执行步骤
+## Execution steps
 
-1. 建立当前验证基线。
-2. 使用仓库已有工具或 `rg` 收集未使用候选项。
-3. 检查动态引用、路由、barrel export、Storybook、测试和样式入口。
-4. 将候选项分为 SAFE、CAUTION、DANGER。
-5. 仅清理 SAFE 项；其他项输出建议和证据。
-6. 每批清理后重新运行受影响验证命令。
+1. Establish the current verification baseline.
+2. Use existing tools in the warehouse or `rg` to collect unused candidates.
+3. Check dynamic references, routing, barrel export, Storybook, test and style entry.
+4. Divide the candidates into SAFE, CAUTION, and DANGER.
+5. Only clean SAFE items; other items output suggestions and evidence.
+6. Rerun the affected verification commands after each batch cleanup.
 
-## 输出要求
+## Output requirements
 
-将清理报告保存到 `reports/refactor-clean-YYYY-MM-DD-HHmmss.md`。
+Save the clean report to `reports/refactor-clean-YYYY-MM-DD-HHmmss.md`.

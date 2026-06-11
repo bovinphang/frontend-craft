@@ -1,30 +1,30 @@
 ---
 name: fec-debug
-description: 前端问题诊断与修复：覆盖构建失败、运行时错误、UI 异常、接口问题，使用统一诊断框架按类型分流。
+description: Front-end problem diagnosis and repair: covering build failures, runtime errors, UI exceptions, and interface problems, using a unified diagnostic framework to classify problems by type.
 ---
 
-按 `fec-debug-framework` 执行前端问题诊断与修复。先分类问题类型（build / runtime / ui / api），再进入对应诊断模块执行 5 步法（分类→收集→假设→验证→修复）。复杂或跨类型问题可委托 **`fec-debugger`** 子代理。
+Press `fec-debug-framework` to perform front-end problem diagnosis and repair. First classify the problem type (build/runtime/ui/api), and then enter the corresponding diagnosis module to perform the 5-step method (classification → collection → hypothesis → verification → repair). Complex or cross-type issues can be delegated to the **`fec-debugger`** subagent.
 
-## 问题类型速查
+## Question type quick check
 
-| 类型    | 典型场景                                        |
+| Type | Typical Scenario |
 | ------- | ----------------------------------------------- |
-| build   | lint/type-check/test/build/CI 失败              |
-| runtime | JS 异常、白屏、组件渲染错误、路由异常、状态丢失 |
-| ui      | 样式错位、交互异常、动画卡顿、响应式问题        |
-| api     | 请求失败、超时、数据不一致、CORS、缓存问题      |
+| build | lint/type-check/test/build/CI failed |
+| runtime | JS exception, white screen, component rendering error, routing exception, state loss |
+| ui | style misalignment, abnormal interaction, animation lag, responsiveness issues |
+| api | Request failure, timeout, data inconsistency, CORS, cache issues |
 
-## 执行步骤
+## Execution steps
 
-1. 读取用户描述的问题，按 `fec-debug-framework` Step 1 分类问题类型。
-2. 进入对应诊断模块，执行 Step 2 收集证据。
-3. 基于证据提出假设（Step 3），逐一验证（Step 4）。
-4. 确认根因后执行最小修复（Step 5），运行受影响验证命令。
-5. 输出诊断报告到 `reports/debug-YYYY-MM-DD-HHmmss.md`。
+1. Read the problems described by users and classify the problem types according to `fec-debug-framework` Step 1.
+2. Enter the corresponding diagnostic module and perform Step 2 to collect evidence.
+3. Propose hypotheses based on evidence (Step 3) and verify them one by one (Step 4).
+4. After confirming the root cause, perform minimal repair (Step 5) and run the affected verification command.
+5. Output the diagnostic report to `reports/debug-YYYY-MM-DD-HHmmss.md`.
 
-## 强约束
+##Strong constraints
 
-- 不通过关闭规则、删除测试或降低类型安全来「修复」问题
-- 不顺手重构无关代码
-- 不在缺少证据时猜测根因
-- 修复后必须验证，不能只改不测
+- Don't "fix" the problem by turning off rules, removing tests, or reducing type safety
+- Not easily refactoring irrelevant code
+- Don't guess at root cause when evidence is lacking
+- It must be verified after repairing, you cannot just change it for accidents

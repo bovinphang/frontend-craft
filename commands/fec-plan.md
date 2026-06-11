@@ -1,94 +1,94 @@
 ---
 name: fec-plan
-description: 统一前端规划入口——实现/架构计划或测试策略。默认走实施路径；当用户明确要测试计划、覆盖矩阵、测试分层、risk-to-test 等时，输出完整测试策略。
+description: Unified front-end planning entrance - implementation/architecture plan or testing strategy. The implementation path is taken by default; when the user clearly wants test plan, coverage matrix, test layering, risk-to-test, etc., the complete test strategy is output.
 ---
 
-在改代码前创建前端计划。根据用户意图自动分流到实施规划或测试规划。
+Create a front-end plan before changing the code. Automatically divert traffic to implementation planning or test planning based on user intent.
 
-## 意图识别
+## Intent recognition
 
-- **实施规划**（默认）：用户要拆组件、设计数据流、安排目录结构、迁移步骤、架构方案。
-- **测试规划**：用户明确说"测试计划"、"测试策略"、"覆盖矩阵"、"测试分层"、"测什么"、"risk-to-test"等。
-- **混合**：用户同时有实施和测试诉求。
+- **Implementation Planning** (default): Users need to dismantle components, design data flows, arrange directory structures, migration steps, and architecture plans.
+- **Test Planning**: The user clearly states "test plan", "test strategy", "coverage matrix", "test layering", "what to test", "risk-to-test", etc.
+- **Mixed**: Users have both implementation and testing requirements.
 
-若意图不清，先问用户想看实施计划还是测试策略。
+If the intention is unclear, first ask the user if they want to see the implementation plan or test strategy.
 
-## 实施规划路径
+## Implementation planning path
 
-1. 重述用户目标、成功标准和不在范围内的内容。
-2. 阅读相关代码、模板、规则、配置、测试和已有实现，避免脱离项目现状。
-3. 若涉及页面拆分、状态流、目录结构、数据流或大型重构，委托 **`fec-architect`**。
-4. 输出计划：
-   - 影响范围
-   - 关键文件或模块
-   - 架构与模块边界
-   - 数据流 / 状态流 / API 交互
-   - 实施阶段
-   - 回滚或渐进迁移策略
-   - 风险与缓解
-   - 最小验证门禁（lint、type-check、test、build、E2E 或人工验收）
-5. 对版本敏感、依赖升级或外部库相关决策，列出事实来源、版本范围、迁移影响和需要查证的文档。
-6. 在用户确认前不执行实现。
+1. Restate user goals, success criteria, and out-of-scope content.
+2. Read relevant codes, templates, rules, configurations, tests and existing implementations to avoid deviating from the current status of the project.
+3. If it involves page splitting, state flow, directory structure, data flow or large-scale reconstruction, entrust **`fec-architect`**.
+4. Output plan:
+   - Scope of influence
+   - Key files or modules
+   - Architecture and module boundaries
+   - Data flow/state flow/API interaction
+   - Implementation phase
+   - Rollback or gradual migration strategy
+   - Risks and Mitigation
+   - Minimal verification access (lint, type-check, test, build, E2E or manual acceptance)
+5. For decisions related to version sensitivity, dependency upgrades or external libraries, list the source of fact, version range, migration impact and documents that need to be verified.
+6. Implementation is not performed until user confirmation.
 
-实施规划保存到 `reports/architecture-proposal-YYYY-MM-DD-HHmmss.md`。
+The implementation plan is saved to `reports/architecture-proposal-YYYY-MM-DD-HHmmss.md`.
 
-## 测试规划路径
+## Test planning path
 
-1. 确定范围：
-   - 用户指定功能、PR、文件或业务流程时，以该范围为准。
-   - 用户未指定时，查看最近变更并推断主要风险面。
-   - 若用户要的是模块拆分、状态流、目录结构或迁移步骤，回到实施规划路径。
+1. Determine the scope:
+   - When users specify functions, PRs, files or business processes, this scope shall prevail.
+   - When not specified by the user, view recent changes and infer the main risk areas.
+   - If the user wants module splitting, state flow, directory structure or migration steps, return to the implementation planning path.
 
-2. 使用 `fec-testing-strategy` Skill 建立测试分层矩阵：
-   - 静态检查
-   - 单元测试
-   - 组件测试
-   - 轻量集成测试
-   - E2E 测试
-   - 视觉 / Storybook / interaction
-   - a11y / 安全 / 性能等专项质量验证
+2. Use the `fec-testing-strategy` Skill to create a test layering matrix:
+   - Static checking
+   - unit testing
+   - Component testing
+   - Lightweight integration testing
+   - E2E testing
+   - Visual/Storybook/interaction
+   - a11y / safety / performance and other special quality verification
 
-3. 对每个风险给出建议测试层、优先级、建议命令、责任 skill 和失败定位证据。
+3. Provide recommended test layers, priorities, recommended commands, responsibility skills and failure location evidence for each risk.
 
-4. 标明哪些风险只需要现有门禁覆盖，哪些需要新增测试，哪些暂不覆盖并说明原因。
+4. Indicate which risks only need to be covered by existing access control, which ones need new testing, and which ones are not covered yet and explain the reasons.
 
-5. 必要时委托 **`fec-test-planner`** 子代理生成独立测试计划。
+5. Delegate the **`fec-test-planner`** subagent to generate independent test plans when necessary.
 
-6. 将计划保存到 `reports/test-plan-YYYY-MM-DD-HHmmss.md`：
+6. Save the plan to `reports/test-plan-YYYY-MM-DD-HHmmss.md`:
 
    ```markdown
-   # 前端测试计划
+   # Front-end test plan
 
-   > 生成时间: YYYY-MM-DD HH:mm
-   > 范围: ...
+   > Generation time: YYYY-MM-DD HH:mm
+   > Scope: ...
 
-   ## 风险概览
+   ## Risk Overview
 
    | Risk | Impact | Suggested Layer | Priority | Evidence |
    | ---- | ------ | --------------- | -------- | -------- |
 
-   ## 覆盖矩阵
+   ## Covering matrix
 
    | Layer | What to Cover | Tooling / Command | Skill |
-   | ----- | ------------- | ----------------- | ----- |
+   | ----- | ------------- | ------------------ | ----- |
 
-   ## 执行顺序
+   ## Execution order
 
-   ## 不覆盖项与原因
+   ## Items not covered and reasons
    ```
 
-7. 若用户要求继续实现测试，按矩阵分流到对应专项 skill 或 agent。
+7. If the user requires to continue to implement the test, it will be diverted to the corresponding special skill or agent according to the matrix.
 
-## 混合路径
+## Mixed paths
 
-当用户同时需要实施计划和测试策略时：
+When users need to implement plans and test strategies at the same time:
 
-1. 先输出完整实施规划。
-2. 在实施规划末尾追加"测试策略"章节，列出关键风险对应的测试层级和验证门禁。
-3. 只有用户明确要求完整覆盖矩阵时，才额外生成 `test-plan-*` 独立报告。
+1. First output the complete implementation plan.
+2. Add a "Testing Strategy" chapter to the end of the implementation plan to list the testing levels and verification access controls corresponding to key risks.
+3. Additional `test-plan-*` independent reports will only be generated if the user explicitly requests complete coverage matrix.
 
-## 边界
+## Boundary
 
-- 不在计划阶段直接写代码，除非用户明确要求继续实现。
-- 不默认要求补齐完整测试金字塔，只按风险和维护成本选择覆盖。
-- 不负责大规模编写测试文件；用户明确要求落地时再分流到专项测试 skill。
+- Do not write code directly in the planning stage unless the user explicitly requests to continue implementation.
+- It is not required by default to complete the complete test pyramid, and coverage is only selected based on risk and maintenance cost.
+- Not responsible for large-scale writing of test files; when users clearly require implementation, they will be diverted to special testing skills.

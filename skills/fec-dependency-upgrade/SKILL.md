@@ -1,34 +1,34 @@
 ---
 name: fec-dependency-upgrade
-description: Use when planning, implementing, or reviewing frontend dependency upgrades, package migrations, lockfile changes, major framework version bumps, CVE remediation, peer dependency conflicts, ESM/CJS shifts, build-tool compatibility, or CI verification matrices; Chinese triggers include 依赖升级, 版本升级, lockfile, peer dependency, CVE 修复, 大版本迁移.
+description: Use when planning, implementing, or reviewing frontend dependency upgrades, package migrations, lockfile changes, major framework version bumps, CVE remediation, peer dependency conflicts, ESM/CJS shifts, build-tool compatibility, or CI verification matrices; Chinese triggers include dependency upgrades, version upgrades, lockfile, peer dependency, CVE fixes, major version migrations.
 ---
 
-# 依赖升级
+# Dependency upgrade
 
-适用于前端依赖升级、漏洞修复、大版本迁移和 lockfile 风险评审。需要具体流程和检查清单时加载 [references/dependency-upgrade-workflow.md](references/dependency-upgrade-workflow.md)。
+Suitable for front-end dependency upgrades, bug fixes, major version migrations and lockfile risk reviews. Load [references/dependency-upgrade-workflow.md](references/dependency-upgrade-workflow.md) when you need specific processes and checklists.
 
 ## Purpose
 
-用来源驱动和小批验证的方式升级依赖，降低破坏性变更、供应链风险和 CI 回归。
+Reduce disruptive changes, supply chain risks, and CI regressions by upgrading dependencies in a provenance-driven and small-batch verification manner.
 
 ## Procedure
 
-1. 建立事实基线：读取 package manager、lockfile、Node 版本、workspace 范围、CI 命令和当前验证状态。
-2. 分类升级目标：安全修复、补丁升级、小版本升级、大版本迁移、框架迁移、构建工具迁移或依赖清理。
-3. 查证来源：对版本敏感的库读取官方 release notes、migration guide、peer dependency、Node/browser 支持和弃用项。
-4. 拆小批次：安全补丁可集中处理；大版本、构建工具、框架和测试工具必须单独批次验证。
-5. 处理兼容边界：检查 ESM/CJS、TypeScript 类型、CSS 处理、SSR/RSC、插件 API、peer dependency 和 polyfill 变化。
-6. 运行验证矩阵：至少覆盖 install、typecheck、unit/component tests、build；关键应用补 E2E、Storybook 或手工冒烟。
-7. 同步文档：记录升级原因、版本、破坏性变更、迁移命令、回滚方式和仍需人工验证的路径。
+1. Establish a baseline of truth: Read package manager, lockfile, Node version, workspace scope, CI commands, and current verification status.
+2. Classified upgrade goals: security fixes, patch upgrades, minor version upgrades, major version migrations, framework migrations, build tool migrations, or dependency cleanup.
+3. Verify sources: For version-sensitive libraries, read official release notes, migration guide, peer dependency, Node/browser support and deprecation items.
+4. Split into smaller batches: Security patches can be processed centrally; large versions, build tools, frameworks and testing tools must be verified in separate batches.
+5. Address compatibility boundaries: Check for ESM/CJS, TypeScript types, CSS handling, SSR/RSC, plugin APIs, peer dependencies, and polyfill changes.
+6. Run the verification matrix: at least cover install, typecheck, unit/component tests, and build; for key applications, add E2E, Storybook, or manual smoke.
+7. Synchronization documentation: Record upgrade reasons, versions, destructive changes, migration commands, rollback methods, and paths that still require manual verification.
 
 ## Constraints
 
-- 不在缺少来源和验证的情况下进行大版本连跳。
-- 不为了消除 audit 警告盲目升级运行时关键包；先判断可利用路径和修复影响。
-- 不手工编辑 lockfile 规避依赖冲突。
-- 不把依赖升级和无关重构混在一个批次。
-- 不移除 peer dependency 或构建插件，除非有证据证明没有被运行时、子包或 CI 使用。
+- No more big version jumps without source and verification.
+- Do not blindly upgrade critical runtime packages to eliminate audit warnings; first determine the exploitable paths and repair the impact.
+- Avoid manual editing of lockfile to avoid dependency conflicts.
+- Do not mix dependency upgrades and unrelated refactorings in one batch.
+- Do not remove peer dependencies or build plugins unless proven not to be used by runtimes, subpackages or CIs.
 
 ## Expected Output
 
-输出升级清单、风险分类、来源依据、批次策略、修改范围、验证命令、失败处理和回滚建议。完成后 lockfile 与 package 清单一致，关键验证通过，破坏性变更有记录。
+Output upgrade list, risk classification, source basis, batch strategy, modification scope, verification command, failure handling and rollback suggestions. After completion, the lockfile is consistent with the package manifest, key verification is passed, and destructive changes are recorded.

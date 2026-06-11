@@ -1,19 +1,19 @@
 ---
 name: fec-doc-sync
-description: 从代码和项目事实源同步 README、docs、环境变量、脚本、API/路由/组件说明和部署说明。
+description: Sync README, docs, environment variables, scripts, API/routing/component descriptions and deployment instructions from code and project sources of truth.
 ---
 
-按 `fec-doc-sync` 同步前端工程文档。复杂多语言更新可委托 **`fec-doc-updater`**。
+Press `fec-doc-sync` to synchronize front-end project documents. Complex multi-language updates can be delegated to **`fec-doc-updater`**.
 
-## 执行步骤
+## Execution steps
 
-1. 读取事实来源：`package.json`、lockfile、config、`.env.example`、路由、API clients/server routes、types/schemas、组件、测试、CI、build/deploy config。
-2. 比对 README、docs、ADR、changelog、example prompts、setup/deploy/env docs。
-3. 更新稳定的命令、环境变量、路由/API 行为、组件说明、部署步骤、版本约束和迁移说明。
-4. 多语言文档保持关键信息一致。
-5. 当目标仓库本身是 skill/agent/command 分发仓库时，也同步能力表、metadata、runtime docs 和 marketplace 描述。
-6. 运行文档一致性、typecheck、测试、构建或相关打包检查。
+1. Read sources of truth: `package.json`, lockfile, config, `.env.example`, routes, API clients/server routes, types/schemas, components, tests, CI, build/deploy config.
+2. Compare README, docs, ADR, changelog, example prompts, setup/deploy/env docs.
+3. Update stable commands, environment variables, routing/API behavior, component descriptions, deployment steps, version constraints, and migration instructions.
+4. Keep key information consistent across multi-language documents.
+5. When the target warehouse itself is a skill/agent/command distribution warehouse, the capability table, metadata, runtime docs and marketplace description are also synchronized.
+6. Run document consistency, typecheck, test, build or related packaging checks.
 
-## 输出要求
+## Output requirements
 
-总结更新范围、事实来源、验证命令和仍需人工校对的翻译风险。
+Summarize update scope, sources of fact, verification orders and translation risks that still require manual proofreading.

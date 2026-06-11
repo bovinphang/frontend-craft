@@ -1,40 +1,40 @@
 ---
 name: fec-init
-description: 按当前 AI runtime 初始化 frontend-craft 项目模板、rules 或降级说明。
+description: Initialize frontend-craft project template, rules or downgrade instructions according to the current AI runtime.
 ---
 
-将 frontend-craft 提供的项目模板复制到当前项目对应 runtime 的配置目录中。优先根据当前目录已有配置判断 runtime；无法判断时，按用户正在使用的工具选择。
+Copy the project template provided by frontend-craft to the configuration directory corresponding to the runtime of the current project. Priority will be given to judging the runtime based on the existing configuration in the current directory; if it cannot be judged, it will be selected based on the tool the user is using.
 
-## 执行步骤
+## Execution steps
 
-1. 检测 runtime：
-   - 存在 `.claude/` 或 Claude Code 插件环境 → `claude`
-   - 存在 `.codex/` 或 `AGENTS.md` → `codex`
-   - 存在 `.openclaw/`、`OPENCLAW-CONFIG.md` 或 `openclaw.plugin.json` → `openclaw`
-   - 存在 `.qoder/`、`.qoder/settings.json`、`.qoder/rules/` 或 `.qoder/skills/` → `qoder`
-   - 存在 `.cursor/` → `cursor`
-   - 存在 `.windsurf/` → `windsurf`
-   - 存在 `.opencode/` → `opencode`
-   - 存在 `.kilo/` → `kilo`
-   - 存在 `.gemini/` 或 `GEMINI.md` → `gemini`
-   - 存在 `.github/copilot-instructions.md` 或 `.github/instructions/` → `copilot`
-   - 存在 `.trae/`、`.augment/`、`.codebuddy/`、`.clinerules` 时按对应 runtime 处理
-   - 仍无法判断时，询问用户当前要初始化的 runtime。
+1. Detect runtime:
+   - Existence of `.claude/` or Claude Code plug-in environment → `claude`
+   - `.codex/` or `AGENTS.md` exists → `codex`
+   - Existence of `.openclaw/`, `OPENCLAW-CONFIG.md` or `openclaw.plugin.json` → `openclaw`
+   - Existence of `.qoder/`, `.qoder/settings.json`, `.qoder/rules/` or `.qoder/skills/` → `qoder`
+   - exists `.cursor/` → `cursor`
+   - exists `.windsurf/` → `windsurf`
+   - exists `.opencode/` → `opencode`
+   - exists `.kilo/` → `kilo`
+   - exists `.gemini/` or `GEMINI.md` → `gemini`
+   - Exist `.github/copilot-instructions.md` or `.github/instructions/` → `copilot`
+   - When `.trae/`, `.augment/`, `.codebuddy/`, `.clinerules` exist, they will be processed according to the corresponding runtime
+   - When still unable to determine, ask the user for the runtime currently to be initialized.
 
-2. 按 runtime 初始化，不要在未确认时覆盖已有文件：
-   - `claude`：复制 Claude 模板、hooks、commands、agents、skills 与 shared rules 到 `.claude/`；如 `.claude/CLAUDE.md` 已存在，先确认。
-   - `codex`：复制 `templates/codex/AGENTS.md` 到项目根目录（如不存在）、`templates/codex/config.toml` 到 `.codex/config.toml`、shared rules 到 `.codex/rules/`；skills/agents 应由 CLI 安装流程负责。
-   - `openclaw`：复制 `templates/openclaw/*.md` 到项目根目录、commands/skills 到 `.openclaw/`；如文件已存在，先确认。
-   - `qoder`：复制 skills 到 `.qoder/skills/`、commands 到 `.qoder/commands/`、agents 到 `.qoder/agents/`、shared rules 到 `.qoder/rules/`、hook scripts 到 `.qoder/hooks/`，并生成或合并 `.qoder/settings.json` 的 hooks 配置。
-   - `cursor`：复制 shared rules 到 `.cursor/rules/*.mdc`，保留 `fec-` skills 目录；说明 Cursor 不支持本插件 hooks。
-   - `windsurf`：复制 commands 到 `.windsurf/workflows/`、shared rules 到 `.windsurf/rules/`、skills 到 `.windsurf/skills/`。
-   - `opencode` / `kilo`：复制 commands 到 `.opencode/command/` 或 `.kilo/command/`，skills 到对应 `skills/`；OpenCode 可补 `.opencode/opencode.jsonc`。
-   - `gemini`：复制 skills 到 `.gemini/extensions/frontend-craft/skills/`，如无 `GEMINI.md` 则由 Claude 模板改写生成。
-   - `copilot`：合并 shared rules 到 `.github/instructions/frontend-craft.instructions.md`，commands 到 `.github/prompts/`。
-   - `trae` / `cline`：只写入规则 bundle，并明确这是 rules-only 降级模式。
-   - `antigravity` / `augment` / `codebuddy`：只安装 skills；输出“此 runtime 当前无 commands/hooks 原生适配”。
+2. Initialize by runtime, do not overwrite existing files without confirmation:
+   - `claude`: Copy Claude templates, hooks, commands, agents, skills and shared rules to `.claude/`; if `.claude/CLAUDE.md` already exists, confirm first.
+   - `codex`: Copy `templates/codex/AGENTS.md` to the project root (if it does not exist), `templates/codex/config.toml` to `.codex/config.toml`, shared rules to `.codex/rules/`; skills/agents should be taken care of by the CLI installation process.
+   - `openclaw`: Copy `templates/openclaw/*.md` to the project root directory and commands/skills to `.openclaw/`; if the file already exists, confirm first.
+   - `qoder`: Copy skills to `.qoder/skills/`, commands to `.qoder/commands/`, agents to `.qoder/agents/`, shared rules to `.qoder/rules/`, hook scripts to `.qoder/hooks/`, and generate or merge the hooks configuration of `.qoder/settings.json`.
+   - `cursor`: Copy shared rules to `.cursor/rules/*.mdc`, retain the `fec-` skills directory; Note that Cursor does not support hooks of this plug-in.
+   - `windsurf`: Copy commands to `.windsurf/workflows/`, shared rules to `.windsurf/rules/`, and skills to `.windsurf/skills/`.
+   - `opencode` / `kilo`: Copy commands to `.opencode/command/` or `.kilo/command/`, and skills to the corresponding `skills/`; OpenCode can complement `.opencode/opencode.jsonc`.
+   - `gemini`: Copy skills to `.gemini/extensions/frontend-craft/skills/`. If there is no `GEMINI.md`, it will be generated by rewriting the Claude template.
+   - `copilot`: merge shared rules into `.github/instructions/frontend-craft.instructions.md`, commands into `.github/prompts/`.
+   - `trae` / `cline`: Write only rules bundles, and make it clear that this is rules-only downgrade mode.
+   - `antigravity` / `augment` / `codebuddy`: only install skills; output "This runtime currently has no commands/hooks native adaptation".
 
-3. Claude runtime 下，将以下模板文件从插件的 `${FRONTEND_CRAFT_ROOT}/templates/claude/` 与 `${FRONTEND_CRAFT_ROOT}/templates/shared/rules/` 复制到项目根目录的 `.claude/`：
+3. Under Claude runtime, copy the following template files from the plug-in's `${FRONTEND_CRAFT_ROOT}/templates/claude/` and `${FRONTEND_CRAFT_ROOT}/templates/shared/rules/` to `.claude/` in the project root directory:
    - `templates/claude/CLAUDE.md` → `.claude/CLAUDE.md`
    - `templates/claude/settings.json` → `.claude/settings.json`
    - `templates/shared/rules/fec-vue.md` → `.claude/rules/fec-vue.md`
@@ -48,8 +48,7 @@ description: 按当前 AI runtime 初始化 frontend-craft 项目模板、rules 
    - `templates/shared/rules/fec-responsive-design.md` → `.claude/rules/fec-responsive-design.md`
    - `templates/shared/rules/fec-rendering-patterns.md` → `.claude/rules/fec-rendering-patterns.md`
    - `templates/shared/rules/fec-api-layer.md` → `.claude/rules/fec-api-layer.md`
-   - `templates/shared/rules/fec-state-management.md` → `.claude/rules/fec-state-management.md`
-   - `templates/shared/rules/fec-error-handling.md` → `.claude/rules/fec-error-handling.md`
+   - `templates/shared/rules/fec-state-management.md` → `.claude/rules/fec-state-management.md`- `templates/shared/rules/fec-error-handling.md` → `.claude/rules/fec-error-handling.md`
    - `templates/shared/rules/fec-naming-conventions.md` → `.claude/rules/fec-naming-conventions.md`
    - `templates/shared/rules/fec-typescript.md` → `.claude/rules/fec-typescript.md`
    - `templates/shared/rules/fec-code-comments.md` → `.claude/rules/fec-code-comments.md`
@@ -58,13 +57,13 @@ description: 按当前 AI runtime 初始化 frontend-craft 项目模板、rules 
    - `templates/shared/rules/fec-agent-workflow.md` → `.claude/rules/fec-agent-workflow.md`
    - `templates/shared/rules/fec-working-modes.md` → `.claude/rules/fec-working-modes.md`
 
-4. 复制完成后，不要只输出提醒。先检查项目根目录中的 `package.json`、常见框架配置文件和 `.github/workflows/`，推断适用规则，然后向用户提供初始化后配置选项：
-   - 推荐：自动检测并裁剪规则（默认推荐项）。根据检测结果展示建议保留和建议移除的规则，用户确认后再修改 `.claude/CLAUDE.md` 底部的规则导入部分。
-   - 手动选择要保留的规则。列出已复制的规则文件，让用户选择要保留的规则，再按选择更新 `.claude/CLAUDE.md`。
-   - 暂不调整，仅输出清单。保持复制结果不变，只输出初始化完成信息、文件清单和后续建议。
+4. Don’t just output a reminder after copying is complete. First check `package.json`, common framework configuration files and `.github/workflows/` in the project root directory, infer applicable rules, and then provide post-initialization configuration options to the user:
+   - Recommendation: Automatically detect and tailor rules (default recommendation). The rules recommended to be retained and recommended to be removed are displayed based on the detection results. The user can modify the rule import section at the bottom of `.claude/CLAUDE.md` after confirmation.
+   - Manually select rules to keep. List the copied rule files, let the user select the rules to keep, and then press Select to update `.claude/CLAUDE.md`.
+   - No adjustments for now, only output list. Keep the copy results unchanged and only output the initialization completion information, file list and follow-up suggestions.
 
-   推荐项的判断应保持保守：只自动建议移除明显不匹配的规则，例如纯 React 项目移除 `@./rules/fec-vue.md`、纯 Vue 项目移除 `@./rules/fec-react.md`、无 TypeScript/JavaScript 源码时移除 `@./rules/fec-typescript.md`。对 `@./rules/fec-i18n.md`、`@./rules/fec-ci-cd.md`、`@./rules/fec-refactoring.md` 这类依赖项目上下文的规则，优先展示为建议项并说明依据；无法确定时默认保留。
+   The judgment of recommended items should be conservative: only automatically recommend the removal of obviously mismatched rules, such as removing `@./rules/fec-vue.md` for pure React projects, removing `@./rules/fec-react.md` for pure Vue projects, and removing `@./rules/fec-typescript.md` when there is no TypeScript/JavaScript source code. For rules such as `@./rules/fec-i18n.md`, `@./rules/fec-ci-cd.md`, and `@./rules/fec-refactoring.md` that depend on the project context, priority is given to displaying them as suggestions and explaining the basis; if they cannot be determined, they are retained by default.
 
-   如果当前运行环境支持结构化提问工具，使用选择题形式提问，并明确标注推荐项；否则使用编号选项。用户选择并确认前，不要修改 `.claude/CLAUDE.md` 的规则导入部分。完成裁剪或用户选择暂不调整后，再提醒用户根据项目实际情况修改 `CLAUDE.md` 的项目基础信息、常用命令、`rules/fec-react.md` 或 `rules/fec-vue.md` 中的技术栈配置，并检查 `settings.json` 中的权限列表是否符合项目需求。
+   If the current operating environment supports structured questioning tools, use multiple-choice questions and clearly mark recommended items; otherwise, use numbered options. Do not modify the rule import part of `.claude/CLAUDE.md` before the user selects and confirms it. After the trimming is completed or the user chooses not to adjust it temporarily, the user is reminded to modify the basic project information, common commands, `rules/fec-react.md` or `rules/fec-vue.md` according to the actual situation of the project, and check whether the permission list in `settings.json` meets the project requirements.
 
-5. 输出初始化完成的确认信息和文件清单。
+5. Output the confirmation information and file list of initialization completion.

@@ -1,66 +1,66 @@
 ---
 name: fec-review
-description: 对指定文件或最近变更的前端代码进行规范化评审，输出分级评审报告并保存为 Markdown 文件。
+description: Conduct a standardized review of the specified file or recently changed front-end code, output a graded review report and save it as a Markdown file.
 ---
 
-对前端代码进行全面评审。先读项目现状和 diff，再输出有证据的发现；不把猜测写成阻塞项。若需要**结合 git diff、按严重级别（CRITICAL→LOW）降噪输出、并显式给出 Approve/Warning/Block 结论**，可委托 **`fec-code-reviewer`** 子代理执行；若变更以 **`.ts` / `.tsx` / `.js` / `.jsx`** 为主且需先跑 **typecheck/eslint**、PR 合并就绪检查与 TS/JS 惯用法专项结论，可委托 **`typescript-reviewer`**（报告为 `typescript-review-*.md`）。否则继续按本命令与 `fec-code-review` Skill 流程即可。
+Conduct a comprehensive review of the front-end code. Read the project status and diff first, and then output the findings with evidence; do not write guesses as blocking items. If you need to **combine git diff, reduce noise output by severity level (CRITICAL→LOW), and explicitly give Approve/Warning/Block conclusions**, you can entrust the **`fec-code-reviewer`** subagent to execute; if the changes are mainly **`.ts` / `.tsx` / `.js` / `.jsx`** and you need to run **typecheck/eslint**, PR merge readiness check and Special conclusions on TS/JS idioms can be delegated to **`typescript-reviewer`** (reported as `typescript-review-*.md`). Otherwise, continue to press this command and the `fec-code-review` Skill process.
 
-## 执行步骤
+## Execution steps
 
-1. 确定评审范围：
+1. Determine the scope of the review:
 
-   - 如果用户指定了文件路径，评审指定文件
-   - 如果用户没有指定文件，运行 `git diff --name-only HEAD` 获取最近变更的文件列表
-   - 如果没有 git 变更记录，提示用户指定需要评审的文件或目录
+   - If the user specifies a file path, review the specified file
+   - If the user does not specify a file, run `git diff --name-only HEAD` to get a list of recently changed files
+   - If there is no git change record, prompt the user to specify the file or directory that needs to be reviewed
 
-2. 过滤只保留前端相关文件（`.ts`, `.tsx`, `.vue`, `.js`, `.jsx`, `.css`, `.scss`, `.less`, `.html`）
+2. Filter to only keep front-end related files (`.ts`, `.tsx`, `.vue`, `.js`, `.jsx`, `.css`, `.scss`, `.less`, `.html`)
 
-3. 使用 `fec-code-review` Skill 的评审维度逐项检查：
+3. Use the review dimensions of `fec-code-review` Skill to check item by item:
 
-   - 架构（组件边界、职责分离）
-   - 类型安全（any 使用、props 类型）
-   - 渲染与状态（重复渲染、key 稳定性）
-   - 样式（Token 使用、响应式）
-   - Tailwind / 设计系统（token、variant、暗色模式、动态 class）
-   - 可访问性（语义化、ARIA、键盘操作）
-   - 可维护性（文件体积、命名、重复逻辑）
-   - 测试（关键覆盖、测试模式）
-   - 安全（XSS、敏感信息、输入校验）
-   - 性能（首屏依赖、重复请求、长任务、大列表）
-   - 依赖升级（lockfile、peer dependency、CVE、大版本迁移验证）
+   - Architecture (component boundaries, separation of responsibilities)
+   - Type safety (any usage, props type)
+   - Rendering and status (repeated rendering, key stability)
+   - Style (Token usage, responsiveness)
+   - Tailwind / design system (token, variant, dark mode, dynamic class)
+   - Accessibility (semantics, ARIA, keyboard operation)
+   - Maintainability (file size, naming, repetitive logic)
+   - Testing (critical coverage, test patterns)
+   - Security (XSS, sensitive information, input validation)
+   - Performance (first screen dependencies, repeated requests, long tasks, large lists)
+   - Dependency upgrade (lockfile, peer dependency, CVE, major version migration verification)
 
-   每个问题必须包含文件位置、影响、置信度和建议验证方式。
+   Each question must include file location, impact, confidence level, and recommended verification method.
 
-4. 按以下格式输出评审报告：
+4. Output the review report in the following format:
 
    ```
-   # 代码审查报告
+   # Code review report
 
-   > 生成时间: YYYY-MM-DD HH:mm
-   > 评审工具: frontend-craft
+   > Generation time: YYYY-MM-DD HH:mm
+   > Review tool: frontend-craft
 
-   **评审范围**: N 个文件
+   **Review Scope**: N documents
 
-   ## 🔴 必须修改 (N项)
-   - **[文件:行号]** 问题描述 → 建议修改
+   ## 🔴 Must be modified (N items)
+   - **[File:line number]** Problem description → Suggested changes
 
-   ## 🟡 建议优化 (N项)
-   - **[文件:行号]** 问题描述 → 建议修改
+   ## 🟡 Suggested optimizations (N items)
+   - **[File:line number]** Problem description → Suggested modifications
 
-   ## 🔵 可选优化项 (N项)
-   - **[文件:行号]** 问题描述
+   ## 🔵 Optional optimization items (N items)
+   - **[File:line number]** Problem description
 
-   ## 🟢 做得好的地方
-   - ...
+   ## 🟢 Things done well
+   -...
 
-   ## 风险等级：低 / 中 / 高
+   ## Risk Level: Low / Medium / High
 
-   **总体评价**: 可合并 / 待修改后合并 / 需要重构
+   **Overall Rating**: Can be merged / merged after modification / needs to be refactored
    ```
 
-5. 将报告内容使用 Write 工具保存为 Markdown 文件：
-   - 目录：项目根目录下的 `reports/`（如不存在则创建）
-   - 文件名：`code-review-YYYY-MM-DD-HHmmss.md`（使用当前时间戳）
-   - 保存后告知用户报告文件路径
+5. Use the Write tool to save the report content as a Markdown file:
+   - Directory: `reports/` in the project root directory (create it if it does not exist)
+   - Filename: `code-review-YYYY-MM-DD-HHmmss.md` (use current timestamp)
+   - Inform the user of the report file path after saving
 
-6. 如果用户同意修改，直接修复"必须修改"中可以自动修复的项目。
+6. If the user agrees to the modification, directly repair the items that can be automatically repaired in "Must Modify".
