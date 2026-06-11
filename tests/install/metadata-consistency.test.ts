@@ -269,6 +269,90 @@ test("tracked source and docs do not contain mojibake markers", () => {
   }
 });
 
+test("root distributable content is English-only", () => {
+  const hanPattern = /[\u3400-\u4dbf\u4e00-\u9fff\uf900-\ufaff]/;
+  const contentRoots = ["agents", "commands", "skills", "templates"];
+  const files = contentRoots.flatMap((contentRoot) =>
+    collectFiles(path.join(root, contentRoot)).filter((file) => /\.(md|json|toml)$/.test(file)),
+  );
+
+  for (const file of files) {
+    const body = fs.readFileSync(file, "utf8");
+    assert.doesNotMatch(body, hanPattern, `root content must be English-only: ${path.relative(root, file)}`);
+  }
+});
+
+test("zh-CN localized content keeps natural Chinese copy", () => {
+  const localizedRoot = path.join(root, "localized", "zh-CN");
+  const localizedContentRoots = ["agents", "commands", "skills", "templates"];
+  const files = localizedContentRoots.flatMap((contentRoot) =>
+    collectFiles(path.join(localizedRoot, contentRoot)).filter((file) => {
+      const relative = path.relative(localizedRoot, file);
+      return (
+        /\.(md|json|toml)$/.test(file) &&
+        relative !== path.join("skills", "fec-drawio-studio", "data", "shape-index.json") &&
+        relative !== path.join("skills", "fec-drawio-studio", "data", "brand-icons.json")
+      );
+    }),
+  );
+  const hanPattern = /[\u3400-\u4dbf\u4e00-\u9fff\uf900-\ufaff]/;
+  const artificialMarkers = [/语言包：简体中文/, /^description:\s*Use when\b/m, /Chinese triggers include/];
+  const untranslatedSectionHeadings = [/^## Purpose$/m, /^## Procedure$/m, /^## Constraints$/m, /^## Expected Output$/m];
+
+  for (const file of files) {
+    const relative = path.relative(root, file);
+    const body = fs.readFileSync(file, "utf8");
+    for (const marker of artificialMarkers) {
+      assert.doesNotMatch(body, marker, `localized zh-CN content should not contain ${marker}: ${relative}`);
+    }
+    for (const heading of untranslatedSectionHeadings) {
+      assert.doesNotMatch(body, heading, `localized zh-CN section heading should be translated: ${relative}`);
+    }
+    let inFence = false;
+    for (const line of body.split(/\r?\n/)) {
+      if (/^\s*```/.test(line)) {
+        inFence = !inFence;
+        continue;
+      }
+      if (inFence) continue;
+      assert.ok(
+        !containsLikelyEnglishInstruction(line),
+        `localized zh-CN prose should be translated: ${relative}: ${line.trim()}`,
+      );
+    }
+  }
+
+  const localizedSkillsDir = path.join(localizedRoot, "skills");
+  for (const dir of fs.readdirSync(localizedSkillsDir, { withFileTypes: true }).filter((entry) => entry.isDirectory())) {
+    const skillPath = path.join(localizedSkillsDir, dir.name, "SKILL.md");
+    const body = fs.readFileSync(skillPath, "utf8");
+    const description = body.match(/^description:\s*(.+)$/m)?.[1] ?? "";
+    assert.match(description, hanPattern, `localized skill description should contain Chinese: ${dir.name}`);
+  }
+
+  const relations = JSON.parse(fs.readFileSync(path.join(localizedSkillsDir, "relations.json"), "utf8")) as SkillRelations;
+  for (const [skillId, relation] of Object.entries(relations)) {
+    for (const workflow of relation.boundaryWorkflows ?? []) {
+      assert.match(workflow, hanPattern, `localized boundary workflow should contain Chinese: ${skillId}`);
+      assert.doesNotMatch(workflow, /^Use\b/, `localized boundary workflow should not start with English routing prose: ${skillId}`);
+    }
+  }
+
+  const anchors: Array<[string, RegExp]> = [
+    ["commands/fec-init.md", /检测 runtime/],
+    ["agents/fec-code-reviewer.md", /评审流程/],
+    ["skills/fec-react-project-standard/SKILL.md", /React 项目规范/],
+    ["skills/metadata.json", /React 项目规范/],
+    ["skills/eval_queries.json", /测试驱动开发这个前端功能/],
+    ["templates/shared/rules/fec-react.md", /React 规则/],
+  ];
+
+  for (const [relative, expected] of anchors) {
+    const body = fs.readFileSync(path.join(localizedRoot, relative), "utf8");
+    assert.match(body, expected, `localized zh-CN anchor text missing: ${relative}`);
+  }
+});
+
 test("README skill tree uses fec-prefixed public skill directories", () => {
   const docs = [
     "README.md",
@@ -376,4 +460,90 @@ function collectFiles(dir: string): string[] {
     else out.push(file);
   }
   return out;
+}
+
+function containsLikelyEnglishInstruction(line: string): boolean {
+  const trimmed = line.trim();
+  if (!trimmed || /[\u3400-\u4dbf\u4e00-\u9fff\uf900-\ufaff]/.test(trimmed)) return false;
+  if (/^```/.test(trimmed)) return false;
+  if (/^(name|description|tools|model|permissionMode|maxTurns|skills):\s*/.test(trimmed)) return false;
+  if (/^-\s*fec-[a-z0-9-]+$/.test(trimmed)) return false;
+  if (/^[-*+]*\s*`[^`]+`\s*$/.test(trimmed)) return false;
+  if (/^"\w+":\s*\{.*#[0-9a-fA-F]{3,8}.*\},?$/.test(trimmed)) return false;
+  if (/^["\w-]+:\s*["\w./:@| -]*,?$/.test(trimmed)) return false;
+  if (/^[|:\-\s]+$/.test(trimmed)) return false;
+
+  if (
+    /(^|[\s"'|:[\]-])(Use|Do not|When|If|Keep|Prefer|Choose|Create|Generate|Run|Open|Save|Include|Avoid|Check|Every|The|For|This|These|Fallback|Preview|Final|Input|Output|Source|Edit|Asset|Required|Subject|Style|Must|Replacement|Invariants|Mode|Behavior|Notes)\b/.test(
+      trimmed,
+    )
+  ) {
+    return true;
+  }
+  if (
+    /^[-*+]\s+[A-Z][A-Za-z]+ing\b\s+.+/.test(trimmed) ||
+    /^[-*+]\s+(Add|Adding|Name|Naming|Specify|Specifying|Remove|Removing|Stuff|Stuffing)\b/.test(trimmed)
+  ) {
+    return true;
+  }
+
+  const words = trimmed.match(/[A-Za-z][A-Za-z.-]*/g) ?? [];
+  if (words.length < 6) return false;
+
+  const proseWords = new Set([
+    "a",
+    "an",
+    "the",
+    "and",
+    "or",
+    "but",
+    "when",
+    "while",
+    "where",
+    "with",
+    "without",
+    "because",
+    "into",
+    "from",
+    "that",
+    "this",
+    "these",
+    "those",
+    "can",
+    "could",
+    "should",
+    "must",
+    "only",
+    "default",
+    "existing",
+    "optional",
+    "local",
+    "render",
+    "diagram",
+    "workflow",
+    "final",
+    "report",
+    "check",
+    "prefer",
+    "avoid",
+    "keep",
+    "use",
+    "run",
+    "open",
+    "save",
+    "create",
+    "choose",
+    "contains",
+    "requires",
+    "available",
+    "generated",
+    "source",
+    "target",
+    "browser",
+    "network",
+    "host",
+    "fallback",
+  ]);
+  const proseWordCount = words.filter((word) => proseWords.has(word.toLowerCase())).length;
+  return proseWordCount >= 2;
 }

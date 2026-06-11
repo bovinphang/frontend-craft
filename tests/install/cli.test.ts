@@ -7,8 +7,10 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 import {
   buildRuntimePromptText,
+  createLanguagePromptState,
   createLocationPromptState,
   createRuntimePromptState,
+  parseLanguageInput,
   parseLocationInput,
   parseRuntimeInput,
   renderSelectablePrompt,
@@ -58,6 +60,7 @@ test("install help flag prints help without installing", () => {
   assert.match(help, /fec setup \[runtime\] \[options\]/);
   assert.match(help, /fec setup all \[options\]/);
   assert.match(help, /setup <runtime> and setup all install locally by default/);
+  assert.match(help, /--lang <lang>/);
   assert.doesNotMatch(help, /Installing frontend-craft/);
 });
 
@@ -323,6 +326,38 @@ test("location parser defaults to global and accepts local", () => {
   assert.equal(parseLocationInput("invalid"), true);
 });
 
+test("install rejects unsupported language", () => {
+  assert.throws(
+    () =>
+      execFileSync(
+        process.execPath,
+        [cli, "install", "claude", "--dry-run", "--lang", "fr"],
+        {
+          cwd: root,
+          encoding: "utf8",
+          stdio: "pipe",
+        },
+      ),
+    (error: unknown) => {
+      assert.equal((error as { status?: number }).status, 1);
+      assert.match(
+        String((error as { stderr?: Buffer | string }).stderr),
+        /Unsupported language: fr/,
+      );
+      return true;
+    },
+  );
+});
+
+test("language parser defaults to English and accepts Simplified Chinese", () => {
+  assert.equal(parseLanguageInput(""), "en");
+  assert.equal(parseLanguageInput("1"), "en");
+  assert.equal(parseLanguageInput("en"), "en");
+  assert.equal(parseLanguageInput("2"), "zh-CN");
+  assert.equal(parseLanguageInput("zh-CN"), "zh-CN");
+  assert.equal(parseLanguageInput("invalid"), "en");
+});
+
 test("runtime prompt describes multi-select and all option", () => {
   const prompt = buildRuntimePromptText();
   assert.match(prompt, /Which runtime\(s\) would you like to install for\?/);
@@ -370,6 +405,16 @@ test("location selectable prompt remains single-select", () => {
   state.toggle();
   assert.deepEqual(state.selected, ["global"]);
   assert.equal(state.confirm(), true);
+});
+
+test("language selectable prompt remains single-select and defaults to English", () => {
+  const state = createLanguagePromptState();
+  assert.deepEqual(state.selected, ["en"]);
+
+  state.move(1);
+  state.toggle();
+  assert.deepEqual(state.selected, ["zh-CN"]);
+  assert.equal(state.confirm(), "zh-CN");
 });
 
 test("selectable prompt render includes selected summary, search, controls, and pagination", () => {

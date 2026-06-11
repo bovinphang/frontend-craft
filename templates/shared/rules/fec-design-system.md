@@ -1,72 +1,72 @@
-# 设计系统规则
+# Design system rules
 
-凡是任务涉及 UI 实现、设计稿转代码、样式、设计 Token 或组件复用时，都应用本文件。本文只保留项目常驻设计约束；产品化设计方向、设计系统生成、页面级 override、UI QA 细节交给 `fec-ui-design`；Tailwind token、variant、dark mode 和 class 治理交给 `fec-tailwind-design-system`；响应式布局交给 `fec-responsive-layout`。
+This document should be used whenever the task involves UI implementation, design draft conversion to code, style, design token, or component reuse. This article only retains the project's resident design constraints; product design direction, design system generation, page-level override, and UI QA details are handed over to `fec-ui-design`; Tailwind token, variant, dark mode and class management are handed over to `fec-tailwind-design-system`; responsive layout is handed over to `fec-responsive-layout`.
 
-## 核心优先级
+## Core priority
 
-1. 复用已有组件。
-2. 在已有组件上扩展。
-3. 创建新的叶子组件。
-4. 只有在理由充分、边界清晰且会被复用时，才创建新的共享基础组件。
+1. Reuse existing components.
+2. Expand on existing components.
+3. Create a new leaf component.
+4. Only create new shared base components if there is good reason, clear boundaries, and if they will be reused.
 
-## 产品化设计方向
+## Product design direction
 
-- 工具型页面、SaaS 后台、CRM、运营台：优先安静、密集、可扫描，首屏直接呈现核心工作区。
-- 品牌页、作品集、发布页：可以更有表现力，但 H1 应是品牌、产品、对象或品类，说明文案放在副标题。
-- 可视化、游戏、创作工具：可以使用更强视觉资产和动效，但必须保持交互可控、状态清晰。
-- 每个重要界面都应有贴合业务的视觉锚点，例如真实媒体、数据形态、行业材质、字体性格、空间组织或交互节奏。
-- 大胆设计必须服务场景；高频工具重效率和稳定，展示型页面重主体识别和记忆点。
+- Tool-type pages, SaaS backend, CRM, and operations desk: Prioritize quiet, dense, and scannable, and the core work area is directly displayed on the first screen.
+- Brand page, portfolio, release page: It can be more expressive, but H1 should be the brand, product, object or category, and the description copy should be placed in the subtitle.
+- Visualization, games, and creative tools: You can use stronger visual assets and animations, but you must keep the interaction controllable and the status clear.
+- Every important interface should have a visual anchor that fits the business, such as real media, data form, industry material, font character, spatial organization or interaction rhythm.
+- Bold design must serve the scene; high-frequency tools focus on efficiency and stability, and display-type pages focus on subject recognition and memory points.
 
-避免：
+Avoid:
 
-- 把日常高频工具做成营销落地页。
-- 默认使用紫色渐变、装饰光斑、堆叠卡片、空泛 hero 或无语境默认字体。
-- 页面区块大面积卡片化，尤其是卡片套卡片。
-- 用可见说明文字解释常见控件本该表达的功能。
-- 让整个界面只由一个色相的深浅变化组成。
+- Turn daily high-frequency tools into marketing landing pages.
+- Use purple gradient, decorative light spots, stacked cards, empty hero or non-contextual default font by default.
+- Large areas of the page are card-based, especially card sets.
+- Use visible explanatory text to explain the functions that common controls are supposed to express.
+- Let the entire interface consist of only one shade of hue.
 
-## 设计稿转代码规则
+## Design draft conversion code rules
 
-- 有设计上下文时，先通过 MCP 或截图/标注读取事实来源，不靠猜测决定布局、间距、字体、颜色或状态。
-- 设计稿中的颜色、间距、圆角、阴影和字体应映射到现有 token、CSS 变量、主题变量或组件 variant。
-- 创建新组件前先检查现有组件库和业务组件，优先复用。
-- 默认验证 mobile(375px)、tablet(768px)、desktop(1440px)。
-- 像素还原要求以项目约定为准；没有约定时，核心结构、间距、字体、状态和交互优先于机械追求截图重合。
-- 复杂设计任务实现前先给出简短实现计划，说明复用组件、新建组件、可能改动文件、响应式策略和 token 映射。
+- When given design context, read the source of truth first through MCP or screenshots/annotations, and don’t rely on guesswork to determine layout, spacing, fonts, colors, or status.
+- Colors, spacing, rounded corners, shadows, and fonts in the design should be mapped to existing tokens, CSS variables, theme variables, or component variants.
+- Check existing component libraries and business components before creating new components and prioritize reuse.
+- Default verification is mobile(375px), tablet(768px), desktop(1440px).
+- Pixel restoration requirements are subject to the project agreement; if there is no agreement, the core structure, spacing, fonts, status and interaction will take precedence over mechanical pursuit of screenshot overlap.
+- Before implementing complex design tasks, a brief implementation plan is given, describing reused components, new components, possible changed files, responsive strategies and token mapping.
 
-## 设计 Token 与样式
+## Design Token and style
 
-- 优先使用已有 design token、CSS 变量或主题变量；不要硬编码颜色、圆角、间距、阴影和字体取值。
-- 缺少所需 token 时要明确指出，并集中补齐或记录，不在多个组件里散落字面量。
-- Tailwind 项目中，token 应通过语义化 `theme.extend`、CSS 变量或组件 variant 承接；不要把 `blue-600`、`rounded-xl` 等具体值复制成事实标准。
-- 组件 variant 应区分语义 tone、尺寸 size、密度 density 和状态 state；不要让一个字符串参数同时承载多种业务含义。
-- 动态 Tailwind class 必须可被构建扫描识别；复杂映射使用显式对象、variant 工具或 safelist。
-- 优先使用局部、受控的样式，不做大范围全局覆盖；与项目现有 CSS Modules、Tailwind、组件库或样式体系保持一致。
+- Prefer using existing design tokens, CSS variables, or theme variables; do not hard-code colors, rounded corners, spacing, shadows, and font values.
+- When required tokens are missing, clearly point them out and centrally complete or record them, rather than scattering literals in multiple components.
+- In the Tailwind project, tokens should be inherited through semantic `theme.extend`, CSS variables or component variants; do not copy specific values such as `blue-600` and `rounded-xl` into de facto standards.
+- Component variants should distinguish semantic tone, size, density and state; do not let a string parameter carry multiple business meanings at the same time.
+- Dynamic Tailwind classes must be recognized by build scans; use explicit objects, variant tools, or safelist for complex mappings.
+- Prioritize the use of local, controlled styles instead of large-scale global coverage; be consistent with the project's existing CSS Modules, Tailwind, component libraries or style systems.
 
-## 界面质感基线
+## Interface texture baseline
 
-- 嵌套圆角保持光学关系：外层圆角约等于内层圆角 + 间距。
-- 图标按钮、箭头、播放三角等非对称图形按视觉中心微调。
-- 小控件命中区域至少 40x40px，空间允许时优先 44x44px。
-- 标题和短文本可用 `text-wrap: balance`，短中正文可用 `text-wrap: pretty`。
-- 计数器、价格、时间、表格数字使用 `font-variant-numeric: tabular-nums`。
-- 动效只声明实际变化属性，禁止 `transition: all` 和 `will-change: all`，并尊重 `prefers-reduced-motion`。
+- Nested fillets maintain an optical relationship: the outer fillet is approximately equal to the inner fillet + spacing.
+- Asymmetric graphics such as icon buttons, arrows, and playback triangles are fine-tuned according to the visual center.
+- The hit area of the small control should be at least 40x40px, and 44x44px is preferred if space allows.
+- `text-wrap: balance` can be used for titles and short texts, and `text-wrap: pretty` can be used for short and medium text.
+- Use `font-variant-numeric: tabular-nums` for counters, prices, times, and tabular numbers.
+- Animation only declares actual change attributes, prohibits `transition: all` and `will-change: all`, and respects `prefers-reduced-motion`.
 
-## 暗色模式
+## Dark mode
 
-- 项目级暗色模式只选择一种主策略：CSS 变量、根节点 class、`data-theme` 或组件库主题。
-- 支持手动切换主题时，要在首屏绘制前初始化用户偏好，避免主题闪烁；实现细节交给 Tailwind / design-system skill reference。
-- 亮色与暗色都要复核 disabled、focus、selected、invalid、skeleton、chart、表单控件、第三方组件和阴影层级。
-- 不只靠降低透明度表达 disabled，不只补背景色而忽略文本、边框、图表和焦点状态。
+- Project-level dark mode only selects one main strategy: CSS variables, root node class, `data-theme` or component library theme.
+- When supporting manual theme switching, user preferences must be initialized before the first screen is drawn to avoid theme flickering; the implementation details are left to Tailwind / design-system skill reference.
+- Review disabled, focus, selected, invalid, skeleton, chart, form controls, third-party components and shadow levels for both light and dark colors.
+- Don't just reduce the transparency to express disabled, don't just fill in the background color and ignore text, borders, charts and focus states.
 
-## 可访问性基线
+## Accessibility Baseline
 
-- 优先使用语义化 HTML。
-- 表单控件具备标签，纯图标按钮具备可访问名称。
-- 菜单、标签页、对话框和自定义控件支持键盘操作。
-- 焦点样式可见，标题层级正确，真实表格数据使用表格语义。
-- 颜色对比度、触摸目标、reduced-motion 和错误提示不能被视觉 polish 破坏。
+- Prefer semantic HTML.
+- Form controls have labels and pure icon buttons have accessible names.
+- Menus, tabs, dialog boxes and custom controls support keyboard operation.
+- Focus styles are visible, title levels are correct, and real table data uses table semantics.
+- Color contrast, touch targets, reduced-motion and error prompts cannot be destroyed by visual polish.
 
-## UI 任务输出
+## UI task output
 
-实现完成后说明复用了什么、新建了什么、与设计稿或项目 token 的偏差、缺少哪些资源或交互细节。复杂 UI 还应说明状态覆盖、响应式验证和剩余设计风险。
+After the implementation is completed, explain what was reused, what was newly created, deviations from the design draft or project token, and what resources or interaction details are missing. Complex UIs should also account for state overrides, responsive validation, and remaining design risks.

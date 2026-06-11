@@ -27,19 +27,19 @@ export function buildHooksJson(pluginRoot: string): string {
  * @param {{ pluginRoot: string; baseDir: string; cwd: string; dryRun: boolean }} ctx
  */
 export async function installClaude(ctx: InstallContext): Promise<void> {
-  const { pluginRoot, baseDir, dryRun, cwd, isGlobal } = ctx;
+  const { pluginRoot, contentRoot, baseDir, dryRun, cwd, isGlobal } = ctx;
   if (dryRun) {
     console.log(`[dry-run] would install Claude Code files into ${baseDir}`);
     return;
   }
   ensureDir(baseDir);
-  copyDir(path.join(pluginRoot, "skills"), path.join(baseDir, "skills"));
-  copyDir(path.join(pluginRoot, "agents"), path.join(baseDir, "agents"));
-  copyDir(path.join(pluginRoot, "commands"), path.join(baseDir, "commands"));
+  copyDir(path.join(contentRoot, "skills"), path.join(baseDir, "skills"));
+  copyDir(path.join(contentRoot, "agents"), path.join(baseDir, "agents"));
+  copyDir(path.join(contentRoot, "commands"), path.join(baseDir, "commands"));
   if (!isGlobal) {
-    copyDir(path.join(pluginRoot, "templates", "shared", "rules"), path.join(baseDir, "rules"));
+    copyDir(path.join(contentRoot, "templates", "shared", "rules"), path.join(baseDir, "rules"));
   }
-  const claudeTemplateDir = path.join(pluginRoot, "templates", "claude");
+  const claudeTemplateDir = path.join(contentRoot, "templates", "claude");
   if (fs.existsSync(claudeTemplateDir)) {
     for (const f of fs.readdirSync(claudeTemplateDir)) {
       const dest = path.join(baseDir, f);

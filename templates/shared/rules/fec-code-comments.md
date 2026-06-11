@@ -1,33 +1,33 @@
-# 代码注释
+# Code comments
 
-编写或评审前端实现时应用本文件。
+Use this document when writing or reviewing front-end implementations.
 
-## 原则
+## Principles
 
-- 意图优先靠**命名、类型与结构**表达；注释用于说明**为什么**、**约束与背景**，而不是复述代码在做什么。
-- 避免「整文件零注释」：在**非显而易见**处用**简短**注释降低误改成本，与「不写废话注释」不矛盾。
+- Intention is expressed first through **naming, type and structure**; comments are used to explain **why**, **constraints and background**, rather than reiterating what the code is doing.
+- Avoid "zero comments in the entire file": Use **short** comments in **non-obvious** places to reduce the cost of accidental modifications, which is not inconsistent with "no nonsense comments".
 
-## 应当注释的情况
+## Situations that should be commented
 
-- **业务或产品规则**：权限、展示条件、校验逻辑背后的依据（与需求或领域约定相关时）。
-- **非直观的实现或取舍**：为何选用当前写法（性能、兼容、与后端/第三方约定等）。
-- **外部契约**：与接口、设计稿、枚举或单位相关的字段含义、映射关系。
-- **临时方案与技术债**：`TODO` / `FIXME` 应写明预期收尾或关联工单（若有）。
-- **易踩坑点**：第三方库版本差异、必须满足的调用顺序、已知限制。
+- **Business or product rules**: permissions, display conditions, and the basis behind the verification logic (when related to requirements or domain agreements).
+- **Non-intuitive implementation or trade-offs**: Why choose the current writing method (performance, compatibility, agreement with backend/third party, etc.).
+- **External Contract**: Field meanings and mapping relationships related to interfaces, design drafts, enumerations or units.
+- **Interim Solutions and Technical Debt**: `TODO` / `FIXME` should indicate expected closure or associated work orders (if any).
+- **Easy pitfalls**: Third-party library version differences, the calling sequence that must be met, and known limitations.
 
-## 应避免的情况
+## Situations to avoid
 
-- 逐行翻译已能从代码直接看出的行为。
-- 注释与实现长期不一致；修改逻辑时同步更新或删除误导性注释。
-- 用大段注释代替应抽取的函数或应补全的类型。
+- Line-by-line translation of behavior that can be seen directly from the code.
+- Annotations are chronically inconsistent with the implementation; misleading annotations are updated or deleted synchronously when the logic is modified.
+- Use large comments to replace functions that should be extracted or types that should be completed.
 
-## 形式建议
+## Format Suggestions
 
-- 语言与仓库现有注释保持一致（中文或英文）。
-- 复杂模块或组件可在文件顶部用 **1～3 行** 说明职责与关键约束；跨包或对外导出的 API 宜用 **JSDoc** 说明参数、返回值与副作用。
-- 复杂条件分支或 `useEffect`：若依赖或触发条件不直观，用一行说明**触发条件**或**不变量**。
-- 临时规避、兼容旧系统或性能取舍必须说明原因和退出条件。
+- The language is consistent with the existing comments in the warehouse (Chinese or English).
+- Complex modules or components can use **1~3 lines** at the top of the file to describe responsibilities and key constraints; cross-package or externally exported APIs should use **JSDoc** to describe parameters, return values and side effects.
+- Complex conditional branches or `useEffect`: If the dependency or triggering condition is not intuitive, use one line to describe the **triggering condition** or **invariant**.
+- Temporary circumvention, compatibility with old systems or performance trade-offs must state reasons and exit conditions.
 
-## 文档同步
+## Document synchronization
 
-当修改公开命令、skill、agent、模板、报告命名或安装路径时，同步更新 README、runtime docs、项目结构文档和多语言说明。注释解释局部代码，公开文档解释团队如何使用能力，两者不要互相替代。
+When modifying public commands, skills, agents, templates, report naming or installation paths, synchronize updates to README, runtime docs, project structure documents and multi-language instructions. Comments explain local code, and public documentation explains how the team uses capabilities. The two should not replace each other.

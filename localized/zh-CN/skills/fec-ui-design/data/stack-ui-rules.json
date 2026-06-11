@@ -1,0 +1,146 @@
+[
+  {
+    "stack": "react",
+    "keywords": [
+      "react",
+      "vite",
+      "spa"
+    ],
+    "guidance": [
+      "保持视觉组件纯粹且由 props 驱动",
+      "拆分昂贵列表和图表",
+      "添加 UI primitives 前，先复用现有组件和 token 约定"
+    ]
+  },
+  {
+    "stack": "next",
+    "keywords": [
+      "next",
+      "nextjs",
+      "app router"
+    ],
+    "guidance": [
+      "明确 route shell 以及 loading/error 状态",
+      "静态内容和数据 shell 优先使用服务端组件",
+      "仅将交互密集 UI 放入客户端组件"
+    ]
+  },
+  {
+    "stack": "vue",
+    "keywords": [
+      "vue",
+      "vue3"
+    ],
+    "guidance": [
+      "使用 scoped 组件和 composables 承载视图逻辑",
+      "不要把纯本地 UI 状态放进 Pinia/全局状态",
+      "保留 SFC 样式边界"
+    ]
+  },
+  {
+    "stack": "nuxt",
+    "keywords": [
+      "nuxt"
+    ],
+    "guidance": [
+      "使用 layouts 承载持久 UI chrome",
+      "让 useFetch/useAsyncData 状态与 loading 和 error UI 对齐",
+      "保持 route middleware 与组件展示逻辑分离"
+    ]
+  },
+  {
+    "stack": "svelte",
+    "keywords": [
+      "svelte"
+    ],
+    "guidance": [
+      "使用组件本地响应式管理 UI 状态",
+      "保持转场有意义，并尊重 reduced-motion",
+      "避免为本地交互状态使用全局 store"
+    ]
+  },
+  {
+    "stack": "astro",
+    "keywords": [
+      "astro"
+    ],
+    "guidance": [
+      "仅在需要交互的位置使用 islands",
+      "营销内容保持快速且尽量静态",
+      "优先处理图像优化和内容层级"
+    ]
+  },
+  {
+    "stack": "angular",
+    "keywords": [
+      "angular"
+    ],
+    "guidance": [
+      "优先使用 standalone components",
+      "保持模板声明式",
+      "overlay 和焦点使用 CDK/a11y 模式"
+    ]
+  },
+  {
+    "stack": "react-native",
+    "keywords": [
+      "react native",
+      "rn",
+      "mobile"
+    ],
+    "guidance": [
+      "尊重 safe area 和平台手势",
+      "使用 44/48px 触摸目标",
+      "测试动态字号和屏幕阅读器标签"
+    ]
+  },
+  {
+    "stack": "flutter",
+    "keywords": [
+      "flutter"
+    ],
+    "guidance": [
+      "优先用小 widgets 组合",
+      "使用 theme tokens，而不是逐屏样式",
+      "尊重平台文本缩放和 safe area"
+    ]
+  },
+  {
+    "stack": "threejs",
+    "keywords": [
+      "three",
+      "threejs",
+      "webgl",
+      "3d"
+    ],
+    "guidance": [
+      "当 3D 场景是核心体验时，让主场景 full-bleed",
+      "提供 DOM 控件和可访问摘要",
+      "验证 canvas 非空且资源能干净释放"
+    ]
+  },
+  {
+    "stack": "shadcn",
+    "keywords": [
+      "shadcn",
+      "tailwind"
+    ],
+    "guidance": [
+      "将 shadcn 组件作为可访问 primitives 使用",
+      "自定义样式前先映射 theme variables",
+      "已有 token 时避免任意 utility 堆叠"
+    ]
+  },
+  {
+    "stack": "tailwind",
+    "keywords": [
+      "tailwind",
+      "html"
+    ],
+    "guidance": [
+      "保持 mobile-first utilities",
+      "将重复 class 模式抽取为组件",
+      "对主题关键颜色使用语义化 CSS 变量"
+    ]
+  }
+]

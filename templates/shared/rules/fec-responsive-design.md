@@ -1,50 +1,50 @@
-# 响应式设计规则
+# Responsive design rules
 
-凡是任务涉及移动端适配、响应式布局、多端兼容、触摸目标或视口行为时，都应用本文件。本文只保留项目常驻约束；布局模式、container query、响应式表格、媒体和验证细节交给 `fec-responsive-layout`。
+This document should be used whenever the task involves mobile adaptation, responsive layout, multi-device compatibility, touch targets or viewport behavior. This article only retains project-resident constraints; layout mode, container query, responsive tables, media and validation details are left to `fec-responsive-layout`.
 
-## 核心原则
+## Core Principles
 
-- **移动优先**：从小屏幕开始设计，逐步增强到大屏幕。
-- **内容优先**：小屏优先展示核心任务、关键操作和反馈，次要内容折叠、延后或进入详情层。
-- **触摸友好**：所有交互元素必须适配手指操作，关键功能不能只依赖 hover。
-- **性能优先**：移动端网络和设备性能较弱，首屏资源、图表、动效和大列表要克制。
-- **容器感知**：可复用组件优先适配所在容器，而不是假设整页断点。
-- **稳定尺寸**：工具栏、表格列、棋盘、卡片网格和计数器需要稳定约束，避免状态变化导致布局跳动。
+- **Mobile First**: Start designing for small screens and work your way up to large screens.
+- **Content Priority**: Small screens give priority to core tasks, key operations and feedback, and secondary content is folded, postponed or entered into the detail layer.
+- **Touch Friendly**: All interactive elements must adapt to finger operations, and key functions cannot rely solely on hover.
+- **Performance first**: The mobile network and device performance are weak, so first-screen resources, charts, animations, and large lists should be restrained.
+- **Container Aware**: Reusable components will first adapt to the container in which they are located, instead of assuming full page breakpoints.
+- **Stable size**: Toolbars, table columns, checkerboards, card grids and counters need stable constraints to avoid layout jumps caused by state changes.
 
-## 断点与容器策略
+## Breakpoints and container strategies
 
-- 默认验证 375px、768px、1024px、1440px，以及断点中间值。
-- 使用 mobile-first `min-width` 断点；不要先写桌面样式再用 `max-width` 补移动端。
-- Tailwind 前缀从小到大使用：默认 → `sm:` → `md:` → `lg:` → `xl:` → `2xl:`。
-- 页面级结构可以使用断点；会被放进侧栏、弹窗、卡片或主内容区的复用组件优先使用 container query。
-- grid/flex 子项包含长文本、图表、代码、媒体或表格时，必须考虑 `min-width: 0`、`minmax()`、`aspect-ratio` 和明确溢出策略。
+- Default validation for 375px, 768px, 1024px, 1440px, and breakpoint intermediate values.
+- Use mobile-first `min-width` breakpoint; do not write the desktop style first and then use `max-width` to supplement the mobile version.
+- Tailwind prefixes are used from smallest to largest: default → `sm:` → `md:` → `lg:` → `xl:` → `2xl:`.
+- Page-level structures can use breakpoints; reusable components that will be placed into sidebars, pop-ups, cards, or main content areas preferentially use container queries.
+- `min-width: 0`, `minmax()`, `aspect-ratio` and explicit overflow strategies must be taken into account when grid/flex children contain long text, charts, code, media or tables.
 
-## 触摸目标与移动端交互
+## Touch target to interact with mobile terminal
 
-- 空间允许时，按钮、链接、关闭按钮等交互目标至少 44x44px；紧凑工具界面最低也要保证可操作。
-- 输入框字号避免低于 16px，防止 iOS Safari 自动缩放。
-- 固定底部栏、操作条、抽屉和对话框必须考虑 safe area 与虚拟键盘。
-- hover-only 信息必须有点击、焦点或常驻可见替代方案。
-- 横竖屏切换后，主操作、焦点位置、滚动容器和错误提示仍应可达。
+- When space permits, interaction targets such as buttons, links, and close buttons must be at least 44x44px; compact tool interfaces must be at least operable.
+- Avoid input box font size below 16px to prevent iOS Safari from automatically scaling.
+- Fixed bottom bar, action bar, drawer and dialog box must consider safe area and virtual keyboard.
+- Hover-only messages must have click, focus, or permanent visible alternatives.
+- After switching between horizontal and vertical screens, the main operation, focus position, scroll container and error prompts should still be accessible.
 
-## 数据密集区域
+## Data intensive area
 
-- 表格、列表、看板、编辑器和画布可以局部横向滚动，但页面整体不应出现无意水平溢出。
-- 移动端数据密集视图需先定义列优先级：主标识、状态和主操作优先保留；低优先级字段进入详情、展开行或抽屉。
-- 小屏仍要保留排序、筛选、分页和选择能力。
-- 虚拟滚动只解决 DOM 数量问题，不能替代信息层级设计。
+- Tables, lists, boards, editors and canvases can be partially scrolled horizontally, but the page as a whole should not have unintentional horizontal overflow.
+- Data-intensive views on the mobile terminal need to define column priorities first: main identification, status and main operations are retained first; low-priority fields enter details, expand rows or drawers.
+- Small screens must still retain the ability to sort, filter, paging, and select.
+- Virtual scrolling only solves the problem of DOM quantity and cannot replace information hierarchy design.
 
-## 响应式媒体
+## Responsive media
 
-- 图片和视频要有稳定尺寸、`aspect-ratio` 或容器约束，避免加载后推挤布局。
-- 需要多尺寸资源时使用 `srcset`、`sizes`、`picture` 或框架图片组件，避免移动端下载桌面大图。
-- 媒体裁切必须保留主体信息，不为填满卡片裁掉产品、人物、图表或状态关键区域。
+- Images and videos must have stable size, `aspect-ratio` or container constraints to avoid pushing the layout after loading.
+- Use `srcset`, `sizes`, `picture` or frame picture components when multi-size resources are needed to avoid downloading large desktop images on mobile devices.
+- Media cropping must preserve the main information and do not crop out key areas of products, people, graphics or status to fill the card.
 
-## 检查清单
+## Checklist
 
-- [ ] 320-375px 页面级无水平溢出。
-- [ ] 断点切换后阅读顺序合理，主操作不被隐藏。
-- [ ] 触摸目标、输入字号、safe area、虚拟键盘和横竖屏行为已验证。
-- [ ] loading、empty、error、disabled、hover/focus、长翻译文本和大数字不会撑坏固定格式控件。
-- [ ] 数据密集区域有列优先级、局部滚动或移动端摘要策略。
-- [ ] 首屏媒体尺寸稳定，非首屏媒体不会拖慢移动端主路径。
+- [ ] 320-375px No horizontal overflow at page level.
+- [ ] The reading order is reasonable after breakpoint switching, and the main operation is not hidden.
+- [ ] Touch target, input font size, safe area, virtual keyboard and horizontal and vertical screen behaviors have been verified.
+- [ ] loading, empty, error, disabled, hover/focus, long translation text and large numbers will not break the fixed format control.
+- [ ] Column priority, partial scrolling, or mobile summary strategies for data-intensive areas.
+- [ ] The size of first-screen media is stable, and non-first-screen media will not slow down the main path of the mobile terminal.

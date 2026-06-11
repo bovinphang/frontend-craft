@@ -1,40 +1,40 @@
-# CI/CD 规则
+# CI/CD rules
 
-本文件约定持续集成与部署流水线的常驻结构与门禁。具体 GitHub Actions、GitLab CI、云平台或 monorepo pipeline 写法，应按项目现有 CI 模板实现，不在本规则中复制长 YAML。
+This document stipulates the resident structure and access control of the continuous integration and deployment pipeline. The specific writing method of GitHub Actions, GitLab CI, cloud platform or monorepo pipeline should be implemented according to the existing CI template of the project, and long YAML will not be copied in this rule.
 
-## 流水线阶段
+## Pipeline stage
 
-建议顺序：
+Suggested order:
 
-1. **安装依赖**：使用锁文件安装，例如 `npm ci` 或 `pnpm install --frozen-lockfile`。
-2. **Lint / Format 检查**：ESLint、Stylelint、Prettier check 或项目等价命令。
-3. **类型检查**：`tsc --noEmit` 或项目 typecheck 脚本。
-4. **单元 / 组件测试**：Jest、Vitest、Testing Library、Vue Test Utils 等。
-5. **构建**：项目生产构建命令。
-6. **专项质量门禁**：包体、Lighthouse、依赖安全、license、a11y、视觉回归、E2E，按风险启用。
-7. **部署**：仅在前序门禁通过后上传产物或触发部署。
+1. **Install dependencies**: Use lock file installation, such as `npm ci` or `pnpm install --frozen-lockfile`.
+2. **Lint / Format check**: ESLint, Stylelint, Prettier check or project equivalent command.
+3. **Type check**: `tsc --noEmit` or project typecheck script.
+4. **Unit/component testing**: Jest, Vitest, Testing Library, Vue Test Utils, etc.
+5. **Build**: Project production build command.
+6. **Special quality access control**: package body, lighthouse, dependency security, license, a11y, visual regression, E2E, enabled according to risk.
+7. **Deployment**: Only upload products or trigger deployment after the pre-order access control is passed.
 
-任一必需阶段失败都应中止后续步骤。
+Failure at any required stage should abort subsequent steps.
 
-## 环境变量与密钥
+## Environment variables and keys
 
-- 敏感信息使用 CI 平台 Secrets，不写入仓库、日志或构建产物。
-- 只允许公开前缀的环境变量进入客户端 bundle，例如 `VITE_*`、`NEXT_PUBLIC_*` 等；服务端密钥不得使用公开前缀。
-- E2E 的 baseURL、测试账号、第三方 token 等从 Secrets 或受控测试环境读取。
-- CI 日志要避免打印完整环境变量、请求 header、token 或私密配置。
+- Sensitive information uses CI platform Secrets and is not written to the warehouse, logs or build products.
+- Only environment variables with public prefixes are allowed to enter the client bundle, such as `VITE_*`, `NEXT_PUBLIC_*`, etc.; server keys must not use public prefixes.
+- E2E's baseURL, test account, third-party token, etc. are read from Secrets or controlled test environment.
+- CI logs should avoid printing complete environment variables, request headers, tokens or private configurations.
 
-## 产物与证据
+## Products and Evidence
 
-- 上传或保留测试报告、覆盖率、E2E trace、截图、构建产物、包体报告和性能预算结果。
-- CI 失败时保留足够日志定位根因，不只返回“命令失败”。
-- 发布前确认版本、变更说明、迁移事项、回滚路径和影响范围。
-- 依赖升级 PR 保留 lockfile diff、关键包版本、release notes 摘要和验证矩阵。
-- Monorepo affected 快速验证可以用于 PR 反馈，但 release 或主干合并前应保留全量验证入口。
+- Upload or save test reports, coverage, E2E traces, screenshots, build artifacts, package reports and performance budget results.
+- When CI fails, keep enough logs to locate the root cause and not just return "command failure".
+- Confirm version, change description, migration matters, rollback path and impact scope before release.
+- Dependency upgrade PR retains lockfile diff, key package version, release notes summary and verification matrix.
+- Monorepo affected quick verification can be used for PR feedback, but the full verification entry should be retained before release or trunk merging.
 
-## 强约束
+##Strong constraints
 
-- 使用并提交锁文件，禁止无锁安装。
-- 构建产物不提交到源码仓库，由 CI 生成并上传。
-- 部署前必须通过项目定义的 lint、typecheck、test、build。
-- 不跳过失败门禁直接部署，除非有明确风险接受、审批记录和回滚方案。
-- CI 配置应复用项目已有命令，不在流水线里发明与本地不同的替代命令。
+- Use and submit lock files to disable lockless installations.
+- The build products are not submitted to the source code repository, but are generated and uploaded by CI.
+- Project-defined lint, typecheck, test, and build must be passed before deployment.
+- Do not skip failed access control and deploy directly unless there are clear risk acceptance, approval records and rollback plans.
+- CI configuration should reuse existing commands in the project and do not invent alternative commands in the pipeline that are different from local ones.

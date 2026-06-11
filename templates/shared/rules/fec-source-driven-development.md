@@ -1,31 +1,31 @@
-# 来源驱动开发规则
+# Source-driven development rules
 
-当实现依赖框架、库、浏览器、运行时、构建工具或平台行为时，先确认事实来源，再写代码或评审结论。
+When an implementation relies on a framework, library, browser, runtime, build tool, or platform behavior, confirm the source of truth before writing code or reviewing conclusions.
 
-## 事实来源优先级
+## Fact source priority
 
-1. 项目内 README、配置、测试、模板和已有实现。
-2. 官方文档、源码、类型定义、release notes、migration guide。
-3. Web 标准、浏览器兼容数据和平台文档。
-4. Issue、讨论、博客和第三方文章仅作为线索。
+1. README, configuration, testing, templates and existing implementations within the project.
+2. Official documents, source code, type definitions, release notes, migration guide.
+3. Web standards, browser compatibility data, and platform documentation.
+4. Issues, discussions, blogs and third-party articles are only used as clues.
 
-## 使用场景
+## Usage scenarios
 
-- 框架新版本、路由、渲染模式、缓存、构建配置、浏览器 API。
-- 公共接口、组件 API、设计系统 token、CLI 命令和插件元数据。
-- 依赖升级、迁移、废弃 API 替换、跨运行时兼容。
-- 与安全、性能、可访问性相关的版本敏感判断。
+- New versions of frameworks, routing, rendering modes, caching, build configurations, browser APIs.
+- Public interfaces, component APIs, design system tokens, CLI commands, and plugin metadata.
+- Dependency upgrade, migration, obsolete API replacement, cross-runtime compatibility.
+- Version-sensitive judgments related to security, performance, and accessibility.
 
-## 输出要求
+## Output requirements
 
-- 写清来源、版本或项目事实、决策结论、影响范围和验证方式。
-- 若项目现状与官方推荐冲突，说明冲突原因和渐进迁移策略。
-- 不复制长篇外部文档；只保留必要结论、链接或项目内文件路径。
-- 无法验证时标注不确定性和需要用户/团队确认的事项。
+- Write down the source, version or project facts, decision conclusion, scope of influence and verification method.
+- If the current status of the project conflicts with official recommendations, explain the cause of the conflict and the gradual migration strategy.
+- Do not copy long external documents; only keep necessary conclusions, links or file paths within the project.
+- Mark uncertainties and matters requiring confirmation from the user/team when they cannot be verified.
 
-## 反模式
+## Anti-pattern
 
-- 凭记忆使用版本敏感 API。
-- 用过时教程替代官方文档。
-- 为追新推翻稳定项目约定。
-- 在组件里散落外部库行为假设，而不是集中到适配层。
+- Use version-sensitive APIs from memory.
+- Replace official documentation with outdated tutorials.
+- Overturn the stable project agreement in order to pursue new projects.
+- Scatter external library behavior assumptions throughout components instead of centralizing them in the adaptation layer.

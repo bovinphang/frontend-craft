@@ -20,19 +20,19 @@ const HOOK_SCRIPTS = [
  * @param {import('../types.js').InstallContext} ctx
  */
 export async function installQoder(ctx: InstallContext): Promise<void> {
-  const { pluginRoot, baseDir, dryRun, isGlobal } = ctx;
+  const { pluginRoot, contentRoot, baseDir, dryRun, isGlobal } = ctx;
   if (dryRun) {
     console.log(`[dry-run] qoder -> ${baseDir}`);
     return;
   }
 
   ensureDir(baseDir);
-  copyDir(path.join(pluginRoot, "skills"), path.join(baseDir, "skills"));
-  copyDir(path.join(pluginRoot, "commands"), path.join(baseDir, "commands"));
-  copyDir(path.join(pluginRoot, "agents"), path.join(baseDir, "agents"));
+  copyDir(path.join(contentRoot, "skills"), path.join(baseDir, "skills"));
+  copyDir(path.join(contentRoot, "commands"), path.join(baseDir, "commands"));
+  copyDir(path.join(contentRoot, "agents"), path.join(baseDir, "agents"));
   if (!isGlobal) {
     copyDir(
-      path.join(pluginRoot, "templates", "shared", "rules"),
+      path.join(contentRoot, "templates", "shared", "rules"),
       path.join(baseDir, "rules"),
     );
   }

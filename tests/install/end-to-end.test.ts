@@ -44,7 +44,7 @@ test("interactive install selects runtime and local location", () => {
     const out = execFileSync(process.execPath, [cli, "install", "--dry-run"], {
       cwd: dir,
       encoding: "utf8",
-      input: "1\n2\n",
+      input: "1\n1\n2\n",
       env: {
         ...isolatedRuntimeEnv(runtimeHome),
         FRONTEND_CRAFT_FORCE_INTERACTIVE: "1",
@@ -74,7 +74,7 @@ test("top-level command enters interactive dry-run installer", () => {
     const out = execFileSync(process.execPath, [cli, "--dry-run"], {
       cwd: dir,
       encoding: "utf8",
-      input: "1,6\n1\n",
+      input: "1,6\n1\n1\n",
       env: {
         ...isolatedRuntimeEnv(runtimeHome),
         FRONTEND_CRAFT_FORCE_INTERACTIVE: "1",
@@ -104,7 +104,7 @@ test("specified runtime prompts for install location", () => {
       {
         cwd: dir,
         encoding: "utf8",
-        input: "2\n",
+        input: "1\n2\n",
         env: {
           ...isolatedRuntimeEnv(runtimeHome),
           FRONTEND_CRAFT_FORCE_INTERACTIVE: "1",

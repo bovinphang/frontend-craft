@@ -1,101 +1,101 @@
-# 项目说明
+# Project description
 
-本工作区由前端团队维护（由 **frontend-craft** OpenClaw 插件模板初始化）。
+This workspace is maintained by the frontend team (initialized by the **frontend-craft** OpenClaw plugin template).
 
-核心要求：
+Core requirements:
 
-- 在调整架构前，先理解现有代码
-- 优先复用，而不是重复造轮子
-- 保持改动小、清晰、便于评审
-- 先遵循项目标准，再考虑通用模式
+- Understand the existing code before adjusting the architecture
+- Prioritize reuse rather than reinventing the wheel
+- Keep changes small, clear, and easy to review
+- Follow project standards first, then consider common patterns
 
-## 项目基础信息
+##Basic project information
 
-<!-- 请根据项目实际情况修改以下配置 -->
+<!-- Please modify the following configuration according to the actual situation of the project -->
 
-- 语言：TypeScript
-- 包管理器：pnpm
-- 构建工具：Vite
-- 测试工具: Vitest + Testing Library
-- UI 体系：优先复用现有组件库和设计 Token
-- 设计实现流程：如有条件，优先使用设计工具 MCP（Figma / MasterGo / Pixso / 墨刀 / Sketch）上下文
+- Language: TypeScript
+- Package manager: pnpm
+- Build tool: Vite
+- Testing tools: Vitest + Testing Library
+- UI system: Prioritize reusing existing component libraries and design tokens
+- Design implementation process: If possible, give priority to using the design tool MCP (Figma / MasterGo / Pixso / Mo Knife / Sketch) context
 
-## 常用命令
+## Common commands
 
-优先使用仓库现有命令，不要自行发明替代命令。
+Prioritize using existing commands in the warehouse instead of inventing replacement commands.
 
-<!-- 请根据项目实际情况修改 -->
+<!-- Please modify according to the actual situation of the project -->
 
-- 安装：`pnpm install`
-- 开发：`pnpm dev`
+- Installation: `pnpm install`
+- Development: `pnpm dev`
 - Lint：`pnpm lint`
-- 类型检查：`pnpm type-check`
-- 测试：`pnpm test`
-- 构建：`pnpm build`
+- Type check: `pnpm type-check`
+- Test: `pnpm test`
+- Build: `pnpm build`
 
-如果命令缺失，先检查 `package.json`。
+If the command is missing, check `package.json` first.
 
-## 通用工作原则
+## General working principles
 
-改代码前：
+Before changing the code:
 
-1. 阅读目标模块及其周边模块
-2. 搜索已有可复用组件或工具函数
-3. 理解当前样式和 Token 约定
-4. 如果仓库里已有一套模式，不要再引入第二套
+1. Read the target module and its surrounding modules
+2. Search for existing reusable components or tool functions
+3. Understand the current style and Token convention
+4. If there is already a set of patterns in the warehouse, do not introduce a second set
 
-实现时：
+When implemented:
 
-- 保持组件职责聚焦
-- 将重复逻辑提取到 hooks / composables / utils
-- 优先使用明确类型
-- 优先使用可推导状态，避免重复维护状态
-- 除非任务明确要求破坏性变更，否则保持向后兼容
+- Keep component responsibilities focused
+- Extract duplicate logic to hooks/composables/utils
+- Prefer explicit types
+- Prioritize the use of deducible state to avoid repeated maintenance of state
+- Maintain backwards compatibility unless the mission explicitly requires breaking changes
 
-完成后：
+After completion:
 
-- 执行 lint
-- 如有类型检查则执行 type check
-- 如有测试则执行测试
-- 总结改动文件、关键决策和剩余风险
+- execute lint
+- If there is a type check, execute type check
+- If there is a test, execute the test
+- Summarize change documents, key decisions and remaining risks
 
-## Git 规范
+## Git specification
 
-- 提交前必须通过 lint 和类型检查
-- 未经我确认不要直接 commit
-- 分支命名: feature/xxx, fix/xxx, refactor/xxx
-- Commit 格式: 遵循 Conventional Commits（详见本文件同目录 skills 下的 `git-conventions.md`）
+- Must pass lint and type checking before submission
+- Don’t commit directly without my confirmation
+- Branch naming: feature/xxx, fix/xxx, refactor/xxx
+- Commit format: Follow Conventional Commits (for details, see `git-conventions.md` under skills in the same directory as this file)
 
-## 设计稿实现工作流
+## Design draft implementation workflow
 
-当存在设计上下文时：
+When a design context exists:
 
-1. 先通过 MCP 读取设计上下文（Figma / MasterGo / Pixso / 墨刀 / Sketch，摹客则使用截图/标注）
-2. 检查项目现有组件体系
-3. 先产出简短实现计划
-4. 分步骤实现
-5. 执行校验命令
-6. 总结偏差和风险
+1. First read the design context through MCP (Figma / MasterGo / Pixso / Ink Knife / Sketch, Mock uses screenshots / annotations)
+2. Check the existing component system of the project
+3. First produce a short implementation plan
+4. Implement in steps
+5. Execute the verification command
+6. Summarize biases and risks
 
-## 安全要求
+## Security requirements
 
-不要主动暴露或打印任何密钥。
-除非任务明确要求且权限允许，不要读取或修改敏感文件。
-除非明确要求并获得批准，不要执行破坏性 shell 命令。
+Do not actively expose or print any keys.
+Do not read or modify sensitive files unless explicitly required by the task and permitted by permissions.
+Do not execute destructive shell commands unless explicitly requested and approved.
 
-## 规则与扩展技能
+## Rules and Extended Skills
 
-OpenClaw 会从本工作区的 `skills/` 加载 Markdown 技能。初始化后规则文件位于：
+OpenClaw will load Markdown skills from `skills/` in this workspace. After initialization the rules file is located at:
 
 `skills/frontend-craft-rules/`
 
-按需阅读并在对话中引用相关片段，例如：
+Read as needed and quote relevant passages in the conversation, for example:
 
-- `skills/frontend-craft-rules/fec-vue.md` / `fec-react.md` — 框架规范
-- `skills/frontend-craft-rules/fec-typescript.md` — TypeScript/JavaScript（与 `typescript-reviewer` 剧本联动）
-- `skills/frontend-craft-rules/fec-code-comments.md` — 代码注释（何时写、写什么）
-- `skills/frontend-craft-rules/fec-testing.md`、`fec-performance.md`、`fec-design-system.md` 等
-- `skills/frontend-craft-rules/fec-agent-workflow.md` — 子代理协作边界
-- `skills/frontend-craft-rules/fec-working-modes.md` — 调研、计划、开发、评审、收尾模式
+- `skills/frontend-craft-rules/fec-vue.md` / `fec-react.md` — Framework specification
+- `skills/frontend-craft-rules/fec-typescript.md` — TypeScript/JavaScript (linked with `typescript-reviewer` script)
+- `skills/frontend-craft-rules/fec-code-comments.md` — code comments (when to write, what to write)
+- `skills/frontend-craft-rules/fec-testing.md`, `fec-performance.md`, `fec-design-system.md`, etc.
+- `skills/frontend-craft-rules/fec-agent-workflow.md` — subagent collaboration boundary
+- `skills/frontend-craft-rules/fec-working-modes.md` — research, planning, development, review, finishing modes
 
-若项目不需要某项规则，可删除对应文件或在对话中说明忽略。
+If the project does not require a certain rule, you can delete the corresponding file or explain it in the dialog to ignore it.

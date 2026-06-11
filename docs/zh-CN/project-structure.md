@@ -47,6 +47,7 @@ frontend-craft/
 |   |-- fec-legacy-to-modern-migration/ # jQuery/MPA 迁移到 React/Vue 的策略和工作流
 |   |-- fec-testing-strategy/          # 测试分层选择和覆盖矩阵
 |   |-- fec-e2e-testing/                # Playwright/Cypress E2E 测试规范
+|   |-- fec-debug-framework/            # 统一 5 步诊断框架：构建/运行时/UI/API 失败
 |   |-- fec-nextjs-project-standard/    # Next.js 14+ App Router、SSR/SSG 规范
 |   |-- fec-nuxt-project-standard/      # Nuxt 3 SSR/SSG、composables 规范
 |   |-- fec-monorepo-project-standard/  # pnpm workspace、Turborepo、Nx 规范
@@ -69,6 +70,7 @@ frontend-craft/
 |   |-- fec-web-video-presentation/    # 可录屏的 16:9 步进网页视频演示
 |   |-- fec-motion-interaction/         # 场景化动效强度、页面转场、滚动动画、reduced motion
 |   |-- fec-vite-project-standard/      # Vite 配置、环境变量安全、HMR、代理、构建与 library mode
+|   |-- fec-alchemy/                    # 项目吸收工作流——抽取参考系统能力并原创化重写
 |
 |-- commands/         # 快速执行的斜杠命令
 |   |-- fec-init.md     # /fec-init - 初始化项目模板
@@ -98,7 +100,10 @@ frontend-craft/
 |-- templates/        # 运行时专用项目模板
 |   |-- claude/        # CLAUDE.md 和 settings.json
 |   |-- codex/         # AGENTS.md 和 config.toml
+|   |-- cursor/        # Cursor 运行时项目存根
+|   |-- gemini/        # Gemini CLI 运行时项目存根
 |   |-- openclaw/      # AGENTS.md 和 OPENCLAW-CONFIG.md
+|   |-- windsurf/      # Windsurf 运行时项目存根
 |   |-- shared/rules/  # 20 个规则文件：vue、react、rendering patterns、responsive design、testing、source-driven development 等
 |
 |-- .mcp.json         # MCP server 配置（Figma、Figma Desktop、Sketch、MasterGo、Pixso、墨刀）
@@ -119,5 +124,5 @@ frontend-craft/
 | `src/hooks/`    | 打包到 `dist/hooks/` 的运行时 hook 源码，供 Claude/Qoder 执行                      |
 | `src/install/`  | 安装器核心（CLI、交互向导、运行时转换器）                                          |
 | `src/openclaw/` | OpenClaw 运行时 TypeScript 源码                                                    |
-| `templates/`    | 运行时专用项目模板（Claude/Codex/OpenClaw 配置 + shared rules）                    |
+| `templates/`    | 运行时专用项目模板（Claude/Codex/Cursor/Gemini/OpenClaw/Windsurf 配置 + shared rules） |
 | `tests/`        | 测试套件（转换器测试、安装器测试）                                                 |

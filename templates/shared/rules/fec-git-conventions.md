@@ -1,8 +1,8 @@
-# Git 提交规范
+# Git commit specifications
 
-凡是创建 commit、编写 commit message 或准备提交代码时，都应用本文件。
+This file should be used whenever creating a commit, writing a commit message, or preparing to submit code.
 
-## Conventional Commits 格式
+## Conventional Commits Format
 
 ```
 <type>(<scope>): <subject>
@@ -12,62 +12,62 @@
 [footer]
 ```
 
-### type 取值
+### type value
 
-| type | 用途 |
+| type | purpose |
 |------|------|
-| `feat` | 新功能 |
-| `fix` | 修复 bug |
-| `refactor` | 重构（不改变行为） |
-| `style` | 代码格式调整（不影响逻辑） |
-| `docs` | 文档变更 |
-| `test` | 测试相关 |
-| `chore` | 构建、工具、依赖等杂项 |
-| `perf` | 性能优化 |
-| `ci` | CI/CD 配置变更 |
+| `feat` | New features |
+| `fix` | Fix bug |
+| `refactor` | Refactor (does not change behavior) |
+| `style` | Code format adjustment (does not affect logic) |
+| `docs` | Documentation changes |
+| `test` | Test related |
+| `chore` | Build, tools, dependencies and other miscellaneous items |
+| `perf` | Performance optimization |
+| `ci` | CI/CD configuration changes |
 
 ### scope
 
-可选，标明影响范围，如模块名、组件名或功能域：
+Optional, indicate the scope of influence, such as module name, component name or functional domain:
 
-- `feat(auth): 新增手机号登录`
-- `fix(table): 修复排序列未高亮`
-- `refactor(api): 统一请求错误处理`
+- `feat(auth): add new mobile phone number to log in`
+- `fix(table): Fix sorting column not highlighted`
+- `refactor(api): unified request error handling`
 
-### subject 规范
+### subject specification
 
-- 使用祈使句（"增加 xxx" 而非 "增加了 xxx"）
-- 不超过 72 个字符
-- 不以句号结尾
-- 如果影响范围较大，在 body 中详细说明
+- Use imperative sentences ("increased xxx" instead of "increased xxx")
+- No more than 72 characters
+- does not end with a period
+- If the scope of impact is large, describe it in detail in the body
 
-## 分支命名
+## Branch naming
 
-- `feature/xxx` — 新功能
-- `fix/xxx` — 修复
-- `refactor/xxx` — 重构
-- `hotfix/xxx` — 紧急修复
+- `feature/xxx` — new features
+- `fix/xxx` — fix
+- `refactor/xxx` — Refactor
+- `hotfix/xxx` — emergency fix
 
-## 提交前检查
+## Check before submission
 
-提交前必须通过：
+Must pass before submission:
 
 1. lint
 2. type-check
-3. 与变更相关的测试
+3. Testing related to changes
 
-未经用户确认不要直接执行 `git commit`。
+Do not execute `git commit` directly without user confirmation.
 
-## 提交粒度
+## Submission granularity
 
-- 一个提交只包含一个清晰目的：功能、修复、测试、文档或清理。
-- 大型计划应拆成可验证的小批次，每批都有说明和命令结果。
-- 清理、格式化和行为变更不要混在同一提交中。
-- 推送或发 PR 前先复查 diff，确认没有本地配置、密钥、临时报告或调试输出。
+- A commit only has one clear purpose: feature, fix, test, documentation or cleanup.
+- Large programs should be broken into verifiable smaller batches, each with instructions and command results.
+- Don't mix cleanup, formatting, and behavior changes in the same commit.
+- Review the diff before pushing or sending a PR to make sure there are no local configurations, keys, temporary reports or debug output.
 
-## 反模式
+## Anti-pattern
 
-- 一个 commit 混合不相关的改动
-- commit message 过于笼统（如 "update"、"fix bug"、"wip"）
-- 在 commit 中包含调试代码、console.log 或临时 hack
-- 未说明验证命令或已知剩余风险就提交高风险改动
+- A commit that mixes unrelated changes
+- The commit message is too general (such as "update", "fix bug", "wip")
+- Include debug code, console.log, or temporary hacks in commits
+- Commit high-risk changes without specifying verification commands or knowing the remaining risk

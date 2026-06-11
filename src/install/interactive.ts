@@ -2,6 +2,7 @@ import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
 import readline from "node:readline";
+import type { InstallLanguage } from "./language.js";
 import { ALL_RUNTIMES } from "./registry.js";
 import { getGlobalConfigDir, LOCAL_DIR } from "./runtime-homes.js";
 
@@ -116,6 +117,23 @@ function toLocationOptions(runtimes: string[]): SelectOption[] {
   ];
 }
 
+function toLanguageOptions(): SelectOption[] {
+  return [
+    {
+      value: "en",
+      label: "English",
+      description: "canonical default content",
+      selectedSuffix: "selected",
+    },
+    {
+      value: "zh-CN",
+      label: "简体中文",
+      description: "localized AI-facing content",
+      selectedSuffix: "已选择",
+    },
+  ];
+}
+
 export function createSelectablePromptState<T = string[]>({
   message,
   options,
@@ -214,6 +232,17 @@ export function createLocationPromptState(runtimes: string[], options: { pageSiz
   });
 }
 
+export function createLanguagePromptState(options: { pageSize?: number } = {}): SelectState<InstallLanguage> {
+  return createSelectablePromptState<InstallLanguage>({
+    message: "Which language should frontend-craft install?",
+    options: toLanguageOptions(),
+    selected: ["en"],
+    multiple: false,
+    pageSize: options.pageSize ?? 15,
+    transform: (values) => (values[0] === "zh-CN" ? "zh-CN" : "en"),
+  });
+}
+
 export function renderSelectablePrompt(state: SelectState<unknown>): string {
   const visible = state.visibleOptions();
   const selectedSet = new Set(state.selected);
@@ -290,6 +319,15 @@ export function buildLocationPromptText(runtimes: string[]): string {
 export function parseLocationInput(answer: unknown): boolean {
   const input = (answer == null ? "" : String(answer)).trim() || "1";
   return input !== "2";
+}
+
+export function buildLanguagePromptText(): string {
+  return renderSelectablePrompt(createLanguagePromptState());
+}
+
+export function parseLanguageInput(answer: unknown): InstallLanguage {
+  const input = (answer == null ? "" : String(answer)).trim() || "1";
+  return input === "2" || input === "zh-CN" ? "zh-CN" : "en";
 }
 
 let scriptedAnswers: string[] | undefined;
@@ -403,4 +441,14 @@ export async function promptLocation(runtimes: string[]): Promise<boolean> {
 
   console.log(`${buildLocationPromptText(runtimes)}\n`);
   return parseLocationInput(await ask("Choice [1]: "));
+}
+
+export async function promptLanguage(): Promise<InstallLanguage> {
+  if (process.stdin.isTTY) {
+    const selected = await promptWithKeys(createLanguagePromptState());
+    return selected === "zh-CN" ? "zh-CN" : "en";
+  }
+
+  console.log(`${buildLanguagePromptText()}\n`);
+  return parseLanguageInput(await ask("Choice [1]: "));
 }

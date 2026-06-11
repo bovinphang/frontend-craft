@@ -7,7 +7,7 @@ import { ensureDir, readUtf8, writeUtf8 } from "../shared/fs.js";
  * @param {import('../types.js').InstallContext} ctx
  */
 export async function installCopilot(ctx: InstallContext): Promise<void> {
-  const { pluginRoot, baseDir, dryRun, isGlobal } = ctx;
+  const { contentRoot, baseDir, dryRun, isGlobal } = ctx;
   if (dryRun) {
     console.log(`[dry-run] copilot -> ${baseDir}`);
     return;
@@ -19,7 +19,7 @@ export async function installCopilot(ctx: InstallContext): Promise<void> {
 
   if (!isGlobal) {
     ensureDir(instr);
-    const rulesSrc = path.join(pluginRoot, "templates", "shared", "rules");
+    const rulesSrc = path.join(contentRoot, "templates", "shared", "rules");
     /** @type {string[]} */
     const parts = ["# Frontend Craft - Copilot instructions\n"];
     if (fs.existsSync(rulesSrc)) {
@@ -31,7 +31,7 @@ export async function installCopilot(ctx: InstallContext): Promise<void> {
     writeUtf8(path.join(instr, "frontend-craft.instructions.md"), parts.join(""));
   }
 
-  const cmdDir = path.join(pluginRoot, "commands");
+  const cmdDir = path.join(contentRoot, "commands");
   for (const f of fs.readdirSync(cmdDir)) {
     if (!f.endsWith(".md")) continue;
     writeUtf8(path.join(prompts, f), readUtf8(path.join(cmdDir, f)));

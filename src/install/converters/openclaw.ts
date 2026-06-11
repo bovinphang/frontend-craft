@@ -7,12 +7,12 @@ import { copyDir, copyFile, ensureDir } from "../shared/fs.js";
  * @param {import('../types.js').InstallContext} ctx
  */
 export async function installOpenclaw(ctx: InstallContext): Promise<void> {
-  const { pluginRoot, baseDir, cwd, dryRun } = ctx;
+  const { contentRoot, baseDir, cwd, dryRun } = ctx;
   if (dryRun) return console.log(`[dry-run] openclaw -> ${baseDir}`);
   ensureDir(baseDir);
-  copyDir(path.join(pluginRoot, "skills"), path.join(baseDir, "skills"));
-  copyDir(path.join(pluginRoot, "commands"), path.join(baseDir, "commands"));
-  const tmpl = path.join(pluginRoot, "templates", "openclaw");
+  copyDir(path.join(contentRoot, "skills"), path.join(baseDir, "skills"));
+  copyDir(path.join(contentRoot, "commands"), path.join(baseDir, "commands"));
+  const tmpl = path.join(contentRoot, "templates", "openclaw");
   if (fs.existsSync(tmpl)) {
     for (const f of fs.readdirSync(tmpl)) {
       if (!f.endsWith(".md")) continue;

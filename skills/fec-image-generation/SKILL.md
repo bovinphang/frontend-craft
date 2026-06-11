@@ -1,56 +1,56 @@
 ---
 name: fec-image-generation
-description: Use when generating or editing diagrams, charts, visual assets, posters, UI mockups, product images, infographics, academic figures, comics, avatars, storyboards, brand boards, or image-edit workflows, especially when exported PNGs need visual QA and bounded self-repair. Prefer deterministic Mermaid/SVG/HTML/canvas sources for text-heavy diagrams; do not use for ordinary UI polish without generated imagery. Chinese triggers include 图片生成, 图像编辑, 图表生成, 架构图, ER 图, UML, 序列图, 海报, UI 样机, 产品图, 信息图, 学术图, 漫画, 头像, 分镜, 品牌板, PNG 自检, 自动修复.
+description: Use when generating or editing diagrams, charts, visual assets, posters, UI mockups, product images, infographics, academic figures, comics, avatars, storyboards, brand boards, or image-edit workflows, especially when exported PNGs need visual QA and bounded self-repair. Prefer deterministic Mermaid/SVG/HTML/canvas sources for text-heavy diagrams; do not use for ordinary UI polish without generated imagery. Chinese triggers include Picture generation, image editing, diagram generation, architecture diagram, ER diagram, UML, sequence diagram, poster, UI mockup, product diagram, information diagram, academic diagram, comics, avatar, storyboard, brand board, PNG self-inspection, automatic repair.
 ---
 
-# 图片生成与图表工作流
+# Image generation and chart workflow
 
 ## Purpose
 
-生成或编辑图表、视觉资产和图片工作流，并对导出的 PNG 做可复查的自检与修复迭代。
+Generate or edit diagrams, visual assets, and image workflows, and perform reviewable self-checks and repair iterations on exported PNGs.
 
 ## Procedure
 
-1. 判断产物类型
-   - 文本、结构和连线准确性优先时，用 Mermaid、SVG、HTML/CSS、canvas 或图表库生成可编辑源，再导出 PNG。
-   - 审美、质感、照片、插画、漫画、产品图或品牌氛围优先时，用图片生成或编辑工具，再把最终资产保存到项目或报告目录。
+1. Determine product type
+   - When accuracy of text, structure, and connections is a priority, use Mermaid, SVG, HTML/CSS, canvas, or a graphics library to generate editable sources and then export as PNG.
+   - When aesthetics, texture, photos, illustrations, comics, product images or brand atmosphere are priorities, use image generation or editing tools, and then save the final assets to the project or report directory.
 
-2. 明确输入与约束
-   - 收集受众、用途、尺寸、语言、必须出现的文本、品牌限制、可编辑源格式、导出格式和禁用元素。
-   - 对海报、UI 样机、品牌板和产品图，先写出一行视觉读取：目标用户、场景、可信感来源、主视觉锚点。
+2. Clarify inputs and constraints
+   - Collect audience, purpose, dimensions, language, required text, branding restrictions, editable source format, export format, and disabled elements.
+   - For posters, UI mockups, brand boards and product images, first write a line of visual reading: target users, scenarios, sources of credibility, and main visual anchors.
 
-3. 选择生成路线
-   - ER 图、UML 类图、序列图、技术架构图、ML/深度学习、流程图等，优先按 [diagram-workflows.md](references/diagram-workflows.md) 建立结构化源。
-   - 海报、UI 样机、产品图、信息图、学术图、漫画、头像、分镜、品牌板和图像编辑，按 [artifact-routing.md](references/artifact-routing.md) 选择生成、编辑或混合路线。
+3. Select Generate Route
+   - ER diagrams, UML class diagrams, sequence diagrams, technical architecture diagrams, ML/deep learning, flow charts, etc., give priority to creating structured sources according to [diagram-workflows.md](references/diagram-workflows.md).
+- Posters, UI mockups, product graphics, infographics, academic graphics, comics, avatars, storyboards, brand boards and image editing, press [artifact-routing.md](references/artifact-routing.md) to choose generate, edit or hybrid routing.
 
-4. 导出并自检 PNG
-   - 每次交付前都读取导出的 PNG，检查主体是否真实渲染、文字是否截断、连线是否堆叠、节点是否重叠。
-   - 有布局 manifest 时运行：
+4. Export and self-check PNG
+   - Read the exported PNG before each delivery to check whether the main body is truly rendered, whether the text is truncated, whether the connections are stacked, and whether the nodes overlap.
+   - Run when there is a layout manifest:
      ```bash
      node skills/fec-image-generation/scripts/png-qa.mjs --png output.png --manifest layout.json --format markdown
      ```
-   - 没有 manifest 时仍运行 PNG 基础检查：
+   - Still running PNG basic checks without manifest:
      ```bash
      node skills/fec-image-generation/scripts/png-qa.mjs --png output.png --format json
      ```
 
-5. 自动修复循环
-   - 默认最多 2 轮；用户明确要求时可提高到 5 轮软上限。
-   - 修复对象是源文件、prompt、布局参数或导出尺寸，不直接破坏性修改 PNG 像素。
-   - 按 [png-qa-autofix.md](references/png-qa-autofix.md) 把问题转成具体修复：增大画布、换行、移动节点、分层连线、调整 padding 或重导出。
+5. Automatic repair loop
+   - Default maximum of 2 rounds; can be increased to a soft cap of 5 rounds when explicitly requested by the user.
+   - The repair object is the source file, prompt, layout parameter or export size, and does not directly destructively modify PNG pixels.
+   - Click [png-qa-autofix.md](references/png-qa-autofix.md) to turn the problem into a specific fix: increase the canvas, wrap lines, move nodes, layer connections, adjust padding or re-export.
 
-6. 交付记录
-   - 说明最终源文件、PNG 路径、生成路线、QA 轮次、发现并修复的问题、仍需人工确认的文字或品牌风险。
+6. Delivery records
+   - Describe final source files, PNG paths, build routes, QA rounds, issues found and fixed, text or branding risks that still require manual confirmation.
 
 ## Constraints
 
-- 文本密集图不要只靠位图模型生成；必须保留可编辑结构化源。
-- 不把截图、假数据或占位图当成最终产品图，除非用户明确要求概念稿。
-- 不直接覆盖原图；编辑工作流默认输出新文件。
-- 不为追求美观牺牲可读标签、连线归属、图例、坐标轴和可访问替代说明。
-- PNG helper 只做检测和建议；修复必须回到源、prompt 或布局参数。
-- 自检结果不能替代人工确认专有名词、公式、论文图注、品牌规范和合规信息。
+- Text-intensive images should not be generated solely from bitmap models; editable structured sources must be retained.
+- Do not treat screenshots, fake data, or placeholder images as final product images unless the user explicitly requests a concept draft.
+- The original image is not directly overwritten; the editing workflow outputs a new file by default.
+- Readable labels, line attributions, legends, axes, and accessible alternative descriptions are not sacrificed for aesthetics.
+- PNG helper only does detection and suggestions; fixes must go back to source, prompt, or layout parameters.
+- Self-check results cannot replace manual confirmation of proper nouns, formulas, paper illustrations, brand specifications and compliance information.
 
 ## Expected Output
 
-产出可编辑源、最终 PNG 或编辑后图片，并附带生成路线与 QA 结果。图表应结构清晰、标签不截断、连线不混乱；视觉资产应匹配用途、尺寸、品牌语气和交付路径。
+Produce editable source, final PNG or edited image with generated routes and QA results. Diagrams should be clearly structured, with uncensored labels and uncluttered connections; visual assets should match purpose, size, brand tone, and delivery path.

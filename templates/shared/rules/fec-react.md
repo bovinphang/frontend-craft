@@ -1,82 +1,82 @@
-# React 规则
+# React rules
 
-当仓库或目标模块使用 React 时，应用本文件。
+This file applies when the repository or target module uses React.
 
-## 技术栈
+## Technology stack
 
-<!-- 请根据项目实际情况修改 -->
+<!-- Please modify according to the actual situation of the project -->
 
-- 框架: React + TypeScript
-- 样式: Tailwind CSS + CSS Modules
-- 状态管理: Zustand / Redux Toolkit / Jotai（按项目实际选择）
-- UI 组件库: 按项目实际选择（如 Ant Design、Material UI 或内部 Design System）
-- 版本与依赖：新建模块、补充 `package.json` 或更新本节前，优先采用彼此兼容的主流稳定版本（对齐官方文档、脚手架默认值或包管理器推荐），避免混用已停止维护或与仓库主线 major 不匹配的依赖。
+- Framework: React + TypeScript
+- Style: Tailwind CSS + CSS Modules
+- Status management: Zustand / Redux Toolkit / Jotai (select according to the actual project)
+- UI component library: actual selection by project (such as Ant Design, Material UI or internal Design System)
+- Versions and dependencies: Before creating a new module, supplementing `package.json` or updating this section, give priority to using mainstream stable versions that are compatible with each other (align with official documents, scaffolding defaults or package manager recommendations) to avoid mixing dependencies that have stopped maintaining or do not match the major of the mainline of the warehouse.
 
-## React 组件规范
+## React component specification
 
-- 使用**函数组件**、Hooks 与 TypeScript；**不要**新增类组件（含手写 Error Boundary，统一用 `react-error-boundary` 等库）
-- 保持组件小而可组合
-- 将可复用逻辑提取到 hooks
-- props 保持明确且类型清晰
-- 保持可访问性与键盘交互
-- 优先使用可推导状态，避免重复维护 state
-- 在创建新基础组件前，先复用现有设计系统
-- 禁止使用 any，优先使用 unknown
-- CSS 命名遵循 BEM（CSS Modules 场景）
+- Use **Function Components**, Hooks and TypeScript; **Do not** add new class components (including handwritten Error Boundary, use `react-error-boundary` and other libraries)
+- Keep components small and composable
+- Extract reusable logic into hooks
+- Keep props explicit and clearly typed
+- Maintain accessibility with keyboard interaction
+- Prioritize the use of deducible state to avoid repeated state maintenance
+- Reuse existing design systems before creating new base components
+- It is forbidden to use any, prefer unknown
+- CSS naming follows BEM (CSS Modules scenario)
 
-## 模式与最佳实践（React）
+## Patterns and Best Practices (React)
 
-- **组合**：用小组件 + `children`/props 拼装；避免宽布尔 props 与假「继承」。
-- **复合组件**：根组件用 Context 向子组件暴露状态；子组件在缺少 Context 时明确报错。
-- **Render Props**：仅在需要封装数据态并把渲染交给上层时考虑；多数场景优先自定义 Hook + 普通组件。
-- **Context + useReducer**：中等复杂度的多子树客户端状态；勿把高频变化大对象放在顶层 Context；服务端数据用 React Query / SWR。
-- **表单**：中大型表单优先 React Hook Form + Zod；避免单文件巨型受控 state。
-- **Error Boundary**：关键模块用 **`react-error-boundary`**（或团队统一的同类库）在模块边界兜底；业务组件一律函数式，不手写类组件 Error Boundary。
-- **性能**：`useMemo`/`useCallback`/`React.memo` 按需使用；长列表用虚拟列表（如 TanStack Virtual、react-window）；昂贵计算注意不可变派生（勿原地 `sort` 原数组）。
-- **动效**：Framer Motion 或 CSS transition；尊重 `prefers-reduced-motion`。
-- **无障碍**：复合控件补齐 `role`/`aria-*` 与键盘操作；弹窗管理焦点落入与关闭后恢复。
-- **Next.js**：App Router 与 Server Components 相关约定以项目 Next 规则为准。
+- **Composition**: Use widgets + `children`/props to assemble; avoid wide boolean props and fake "inheritance".
+- **Composite component**: The root component uses Context to expose state to sub-components; sub-components explicitly report an error when Context is missing.
+- **Render Props**: Only considered when it is necessary to encapsulate the data state and hand over the rendering to the upper layer; in most scenarios, custom Hook + ordinary components are given priority.
+- **Context + useReducer**: Medium complexity multi-subtree client state; do not put high-frequency changing large objects in the top-level Context; use React Query / SWR for server-side data.
+- **Form**: Prioritize medium and large forms with React Hook Form + Zod; avoid single-file giant controlled state.
+- **Error Boundary**: Key modules use **`react-error-boundary`** (or a similar library unified by the team) to cover the module boundaries; business components must be functional, and no handwritten class components Error Boundary.
+- **Performance**: Use `useMemo`/`useCallback`/`React.memo` on demand; use virtual lists for long lists (such as TanStack Virtual, react-window); pay attention to immutable derivation for expensive calculations (do not `sort` the original array in place).
+- **Motion**: Framer Motion or CSS transition; respect `prefers-reduced-motion`.
+- **Accessibility**: Compound controls complement `role`/`aria-*` and keyboard operations; pop-up window management focus is dropped and restored after closing.
+- **Next.js**: The relevant agreements between App Router and Server Components are subject to the project Next rules.
 
-## React 实现指导
+## React Implementation Guide
 
-创建新组件前：
+Before creating a new component:
 
-1. 先搜索是否已存在等价组件
-2. 判断逻辑是否应该放入自定义 hook
-3. 与项目当前样式方案保持一致
+1. First search whether equivalent components already exist
+2. Determine whether the logic should be put into a custom hook
+3. Be consistent with the current style scheme of the project
 
-编辑 React 组件时：
+When editing a React component:
 
-- 避免在同一个文件里混合数据请求、重业务逻辑和展示逻辑
-- 避免设计过宽或语义不清的 props API
-- 对局部问题避免滥用 context
-- 保持条件渲染可读，必要时提取重复分支
+- Avoid mixing data requests, heavy business logic and presentation logic in the same file
+- Avoid designing props APIs that are too broad or have unclear semantics
+- Avoid abusing context for local problems
+- Keep conditional rendering readable and extract duplicate branches if necessary
 
-## React 文件组织
+## React file organization
 
-优先遵循仓库已有约定。
-常见输出可能包括：
+Priority is given to following existing agreements in the warehouse.
+Common output may include:
 
 - `Component.tsx`
 - `Component.types.ts`
 - `hooks/useComponentLogic.ts`
-- `ComponentName.styles.css`（普通 CSS / CSS Modules；使用 styled-components 时为 `ComponentName.styles.ts`）
-- 如果仓库采用就近测试，则补充测试文件，如：`__tests__/Component.spec.tsx`
+- `ComponentName.styles.css` (plain CSS / CSS Modules; `ComponentName.styles.ts` when using styled-components)
+- If the warehouse uses nearby testing, add test files, such as: `__tests__/Component.spec.tsx`
 
-## 组件文件规模
+## Component file size
 
-- 单个组件文件保持**职责单一**、语义清晰、易于维护。
-- **行数参考**：优先将单文件控制在约 **300 行**以内；超过 **500 行**应视为**强烈拆分信号**。
-- **未到 500 行也应拆分**的情形：同时存在**复杂状态交织**、**过多副作用**、**JSX 嵌套过深**、**密集条件分支**、数据获取与 UI 长期混在同一文件等，使单文件难以一眼把握时，应拆为**子组件**、**自定义 Hooks**、**工具函数**、**常量**与**类型定义**等独立单元（目录与命名仍遵循上文「React 文件组织」）。
+- A single component file maintains a single responsibility, clear semantics, and is easy to maintain.
+- **Line number reference**: Prioritize the single file to be controlled within about **300 lines**; more than **500 lines** should be regarded as a **strong splitting signal**.
+- **Situations that should be split even if it is less than 500 lines**: There are **complex state interleaving**, **too many side effects**, **JSX too deep nesting**, **dense conditional branches**, data acquisition and UI are mixed in the same file for a long time, etc., making it difficult to grasp a single file at a glance. It should be split into independent units such as **subcomponents**, **custom Hooks**, **tool functions**, **constants** and **type definitions** (the directory and naming still follow the "React file organization" above).
 
-## React 反模式
+## React anti-patterns
 
-避免：
+Avoid:
 
-- 新建**类组件**或手写类式 Error Boundary（应使用函数组件 + `react-error-boundary` 等）
-- 对可推导值使用多余 state
-- 大段 JSX 不拆成子组件
-- 单文件堆叠过多职责与行数，**逾 500 行或复杂度已高**仍拒不拆分（参见上文「组件文件规模」）
-- 使用不稳定 key
-- 在 props 和 hooks 中无理由使用 `any`
-- 没有充分理由时引入第二套样式体系
+- Create a new **class component** or handwritten class Error Boundary (function component + `react-error-boundary`, etc. should be used)
+- Use redundant state for derivable values
+- Large sections of JSX are not broken into subcomponents
+- A single file is stacked with too many responsibilities and lines. It exceeds 500 lines or has high complexity and still refuses to be split (see "Component file size" above)
+- Use unstable keys
+- Use `any` in props and hooks without reason
+- Introduce a second style system when there is no good reason

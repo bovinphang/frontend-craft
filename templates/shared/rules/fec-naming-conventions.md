@@ -1,33 +1,33 @@
-# 命名规范
+# Naming convention
 
-## 文件与目录命名
+## File and directory naming
 
-| 类型 | 命名风格 | 示例 |
+| Type | Naming Style | Example |
 |------|----------|------|
-| 页面组件 | PascalCase + `Page` 后缀 | `UserDetailPage.tsx` / `UserDetailPage.vue` |
-| 布局组件 | PascalCase + `Layout` 后缀 | `MainLayout.tsx` / `MainLayout.vue` |
-| 通用组件 | PascalCase | `DataTable.tsx` / `AppButton.vue` |
-| Hooks / Composables | camelCase + `use` 前缀 | `useAuth.ts`、`useDebounce.ts` |
-| Store 文件 | camelCase + `Store` 后缀 | `authStore.ts`、`uiStore.ts` |
-| API 文件 | camelCase | `api.ts` 或按领域命名 `userApi.ts` |
-| 工具函数 | camelCase | `format.ts`、`validators.ts` |
-| 类型文件 | camelCase | `types.ts`、`models.ts` |
-| 常量文件 | camelCase | `constants.ts`、`config.ts` |
-| 测试文件 | 与源文件同名 + `.spec` / `.test` | `Button.spec.tsx`、`useAuth.spec.ts` |
-| 样式文件 | 组件名 + `.styles` + 扩展名 | `Button.styles.css`、`DataTable.styles.scss`；使用 styled-components 时为 `ComponentName.styles.ts` |
-| 语言包 | 语言代码（BCP 47） | `zh-CN.json`、`en-US.json` |
-| 目录名 | PascalCase（组件/页面）或 kebab-case（功能模块） | `UserDetail/`、`auth/`、`order/` |
+| Page component | PascalCase + `Page` suffix | `UserDetailPage.tsx` / `UserDetailPage.vue` |
+| Layout component | PascalCase + `Layout` suffix | `MainLayout.tsx` / `MainLayout.vue` |
+| Common components | PascalCase | `DataTable.tsx` / `AppButton.vue` |
+| Hooks / Composables | camelCase + `use` prefix | `useAuth.ts`, `useDebounce.ts` |
+| Store file | camelCase + `Store` suffix | `authStore.ts`, `uiStore.ts` |
+| API documentation | camelCase | `api.ts` or by domain `userApi.ts` |
+| Utility functions | camelCase | `format.ts`, `validators.ts` |
+| Type files | camelCase | `types.ts`, `models.ts` |
+| Constant files | camelCase | `constants.ts`, `config.ts` |
+| Test file | Same name as source file + `.spec` / `.test` | `Button.spec.tsx`, `useAuth.spec.ts` |
+| Style file | Component name + `.styles` + extension | `Button.styles.css`, `DataTable.styles.scss`; `ComponentName.styles.ts` when using styled-components |
+| Language pack | Language code (BCP 47) | `zh-CN.json`, `en-US.json` |
+| Directory name | PascalCase (component/page) or kebab-case (function module) | `UserDetail/`, `auth/`, `order/` |
 
-## 组件命名
+## Component naming
 
 ### React
 
 ```tsx
-// 文件名与组件名一致
+//The file name is consistent with the component name
 // src/components/DataTable/DataTable.tsx
 export function DataTable({ data, columns }: DataTableProps) { ... }
 
-// 页面组件加 Page 后缀
+//Add Page suffix to page component
 // src/pages/UserDetail/UserDetailPage.tsx
 export default function UserDetailPage() { ... }
 ```
@@ -35,86 +35,86 @@ export default function UserDetailPage() { ... }
 ### Vue
 
 ```vue
-<!-- 文件名与组件名一致 -->
+<!-- The file name is consistent with the component name -->
 <!-- src/components/AppButton/AppButton.vue -->
 <script setup lang="ts">
-// 无需 defineOptions，文件名即组件名
+// No need for defineOptions, the file name is the component name
 </script>
 ```
 
-- 多词组件名（避免与 HTML 原生标签冲突）
-- Vue 全局组件推荐使用 `App` 前缀（`AppButton`、`AppModal`）
-- 模板中使用 PascalCase 引用：`<AppButton>` 而非 `<app-button>`
+- Multi-word component names (to avoid conflicts with HTML native tags)
+- Vue global components are recommended to use the `App` prefix (`AppButton`, `AppModal`)
+- Use PascalCase reference in template: `<AppButton>` instead of `<app-button>`
 
-## 变量与函数命名
+## Variable and function naming
 
-| 类型 | 命名风格 | 示例 |
+| Type | Naming Style | Example |
 |------|----------|------|
-| 普通变量 | camelCase | `userName`、`isLoading`、`pageSize` |
-| 常量 | UPPER_SNAKE_CASE | `MAX_RETRY_COUNT`、`DEFAULT_PAGE_SIZE` |
-| 布尔值 | `is` / `has` / `should` / `can` 前缀 | `isVisible`、`hasPermission`、`canEdit` |
-| 事件处理（组件内） | `handle` 前缀 | `handleClick`、`handleSubmit` |
-| 回调 Props | `on` 前缀 | `onClick`、`onSubmit`、`onChange` |
-| 数组 | 复数名词 | `users`、`orderItems`、`selectedIds` |
-| Map / Record | `xxxMap` 或 `xxxByYyy` | `userMap`、`permissionsById` |
-| Ref (Vue) | 不加 `Ref` 后缀 | `count`（不用 `countRef`） |
-| 接口 | PascalCase，不加 `I` 前缀 | `UserProfile`（不用 `IUserProfile`） |
-| Props 接口 | 组件名 + `Props` | `DataTableProps`、`UserFormProps` |
-| Emits 接口 | 组件名 + `Emits` | `UserFormEmits` |
-| 枚举 | PascalCase，成员用 PascalCase | `OrderStatus.Pending` |
-| 泛型参数 | 单字母大写或语义化 | `T`、`TData`、`TItem` |
+| Ordinary variables | camelCase | `userName`, `isLoading`, `pageSize` |
+| Constants | UPPER_SNAKE_CASE | `MAX_RETRY_COUNT`, `DEFAULT_PAGE_SIZE` |
+| Boolean value | `is` / `has` / `should` / `can` prefix | `isVisible`, `hasPermission`, `canEdit` |
+| Event handling (inside component) | `handle` prefix | `handleClick`, `handleSubmit` |
+| Callback Props | `on` prefix | `onClick`, `onSubmit`, `onChange` |
+| Array | Plural noun | `users`, `orderItems`, `selectedIds` |
+| Map / Record | `xxxMap` or `xxxByYyy` | `userMap`, `permissionsById` |
+| Ref (Vue) | Without `Ref` suffix | `count` (without `countRef`) |
+| Interface | PascalCase, without `I` prefix | `UserProfile` (without `IUserProfile`) |
+| Props interface | component name + `Props` | `DataTableProps`, `UserFormProps` |
+| Emits interface | component name + `Emits` | `UserFormEmits` |
+| Enum | PascalCase, members use PascalCase | `OrderStatus.Pending` |
+| Generic parameters | Single letter capitalization or semantic | `T`, `TData`, `TItem` |
 
-## CSS 类命名
+## CSS class naming
 
-- 与项目约定保持一致（BEM / CSS Modules / Tailwind / Atomic CSS）
-- 如果使用 CSS Modules，类名用 camelCase：`.headerTitle`、`.cardBody`
-- 如果使用 BEM，遵循 `block__element--modifier` 格式
-- CSS 变量使用 kebab-case：`--color-primary`、`--spacing-md`
+- Aligned with project conventions (BEM/CSS Modules/Tailwind/Atomic CSS)
+- If using CSS Modules, use camelCase for class names: `.headerTitle`, `.cardBody`
+- If using BEM, follow the `block__element--modifier` format
+- CSS variables use kebab-case: `--color-primary`, `--spacing-md`
 
-## 路由命名
+## Route naming
 
-| 类型 | 命名风格 | 示例 |
+| Type | Naming Style | Example |
 |------|----------|------|
-| 路由路径 | kebab-case | `/user-detail`、`/order-list` |
-| 路由名称 | PascalCase | `UserDetail`、`OrderList` |
-| 路由参数 | camelCase | `:userId`、`:orderId` |
-| 查询参数 | camelCase | `?pageSize=10&sortBy=name` |
-| 路径常量 | UPPER_SNAKE_CASE | `ROUTE_USER_DETAIL = '/user-detail'` |
+| routing path | kebab-case | `/user-detail`, `/order-list` |
+| Route name | PascalCase | `UserDetail`, `OrderList` |
+| Routing parameters | camelCase | `:userId`, `:orderId` |
+| Query parameters | camelCase | `?pageSize=10&sortBy=name` |
+| Path constants | UPPER_SNAKE_CASE | `ROUTE_USER_DETAIL = '/user-detail'` |
 
-## API 命名
+## API naming
 
-| 类型 | 命名风格 | 示例 |
+| Type | Naming Style | Example |
 |------|----------|------|
-| GET 列表 | `getXxxList` | `getUserList(params)` |
-| GET 单条 | `getXxxDetail` / `getXxxById` | `getUserDetail(id)` |
-| POST 创建 | `createXxx` | `createOrder(data)` |
-| PUT 更新 | `updateXxx` | `updateUser(id, data)` |
-| DELETE 删除 | `deleteXxx` | `deleteOrder(id)` |
-| DTO 类型 | 动词 + 名词 + `DTO` | `CreateOrderDTO`、`UpdateUserDTO` |
-| 响应类型 | 名词 | `User`、`Order`、`PageResult<User>` |
+| GET list | `getXxxList` | `getUserList(params)` |
+| GET single item | `getXxxDetail` / `getXxxById` | `getUserDetail(id)` |
+| POST Create | `createXxx` | `createOrder(data)` |
+| PUT update | `updateXxx` | `updateUser(id, data)` |
+| DELETE delete | `deleteXxx` | `deleteOrder(id)` |
+| DTO type | Verb + Noun + `DTO` | `CreateOrderDTO`, `UpdateUserDTO` |
+| Response type | Noun | `User`, `Order`, `PageResult<User>` |
 
-## i18n Key 命名
+## i18n Key naming
 
-- 使用点分命名空间：`module.section.label`
-- 示例：`user.form.username`、`common.button.submit`、`error.network.timeout`
-- 不使用中文 / 拼音作为 key
+- Use dotted namespace: `module.section.label`
+- Examples: `user.form.username`, `common.button.submit`, `error.network.timeout`
+- Do not use Chinese/Pinyin as key
 
-## 反模式
+## Anti-pattern
 
-- 文件名和组件名不一致（`user-table.tsx` 导出 `DataGrid`）
-- 同一项目混用多种命名风格（有的 kebab-case 有的 PascalCase）
-- 使用缩写或不明确的名称（`btn`、`usr`、`tmp`、`handleA`）
-- 布尔值没有语义前缀（`visible` → 应为 `isVisible`）
-- 常量不用大写（`maxRetry` → 应为 `MAX_RETRY`）
-- CSS 变量硬编码在组件中而非使用统一变量
+- File name and component name are inconsistent (`user-table.tsx` exports `DataGrid`)
+- Mixing multiple naming styles (some kebab-case, some PascalCase) in the same project
+- Use abbreviated or ambiguous names (`btn`, `usr`, `tmp`, `handleA`)
+- Boolean values have no semantic prefix (`visible` → should be `isVisible`)
+- Constants do not need to be capitalized (`maxRetry` → should be `MAX_RETRY`)
+- CSS variables are hardcoded in components instead of using uniform variables
 
-## 检查清单
+## Checklist
 
-- [ ] 文件名与导出的组件/函数名一致
-- [ ] 页面组件有 `Page` 后缀，布局组件有 `Layout` 后缀
-- [ ] 布尔变量使用 `is` / `has` / `can` / `should` 前缀
-- [ ] 事件处理用 `handle` 前缀，回调 Props 用 `on` 前缀
-- [ ] 常量使用 UPPER_SNAKE_CASE
-- [ ] 路由路径使用 kebab-case，路由名使用 PascalCase
-- [ ] API 函数命名与 HTTP 方法语义一致
-- [ ] i18n key 使用点分命名空间，无硬编码文案
+- [ ] The file name is consistent with the exported component/function name
+- [ ] Page components have the `Page` suffix, and layout components have the `Layout` suffix.
+- [ ] Boolean variables use `is` / `has` / `can` / `should` prefixes
+- [ ] Event handling is prefixed with `handle`, callback Props are prefixed with `on`
+- [ ] constant using UPPER_SNAKE_CASE
+- [ ] Use kebab-case for the routing path and PascalCase for the routing name.
+- [ ] API function naming is consistent with HTTP method semantics
+- [ ] i18n key uses dotted namespace, no hardcoded copy

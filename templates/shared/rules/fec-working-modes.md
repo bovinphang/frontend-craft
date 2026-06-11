@@ -1,50 +1,50 @@
-# 工作模式规则
+# Working mode rules
 
-根据任务阶段选择合适的工作模式，避免一边探索一边大改代码。
+Choose the appropriate working mode according to the task stage to avoid making major changes to the code while exploring.
 
-## 调研模式
+## Research mode
 
-适用于需求不清、现状复杂、需要比较方案或定位风险时。
+It is suitable when the requirements are unclear, the current situation is complex, and it is necessary to compare plans or locate risks.
 
-- 先阅读 README、项目规则、相关源码和最近变更。
-- 用 `rg` 查找已有模式、组件、工具函数和测试。
-- 先列发现，再给建议。
-- 在证据不足时不要下确定结论。
-- 涉及版本敏感框架、库或平台行为时，先查项目内事实和官方来源。
+- Read the README, project rules, relevant source code and recent changes first.
+- Use `rg` to find existing patterns, components, utility functions and tests.
+- List findings first, then give suggestions.
+- Do not draw firm conclusions when there is insufficient evidence.
+- When version-sensitive frameworks, libraries, or platform behaviors are involved, check the facts within the project and official sources first.
 
-## 计划模式
+## Planning mode
 
-适用于复杂功能、架构调整、跨文件重构和高风险修复。
+Suitable for complex features, architecture adjustments, cross-file refactoring, and high-risk fixes.
 
-- 重述目标、成功标准和不做什么。
-- 标出影响范围、文件边界、依赖关系、风险和验证方式。
-- 计划应能分批执行，每批都有可验证结果。
-- 用户未确认前，不执行大范围实现。
+- Restate goals, success criteria, and what not to do.
+- Map out scope of impact, file boundaries, dependencies, risks and verification methods.
+- The plan should be able to be executed in batches, with verifiable results for each batch.
+- Large-scale implementation will not be performed before the user confirms.
 
-## 开发模式
+## Development mode
 
-适用于目标明确且已有计划或范围很小的实现。
+Suitable for implementations with clear goals and plans or a small scope.
 
-- 优先复用现有模式。
-- 行为变更优先使用 TDD：先失败测试，再最小实现，再重构。
-- 每次关键修改后运行最近的验证命令。
-- 完成时总结改动、命令和剩余风险。
-- 行为、接口或性能假设必须能被类型、测试、构建、浏览器观察或文档来源支撑。
+- Prioritize reuse of existing patterns.
+- Use TDD first for behavior changes: fail the test first, then implement the minimum, and then refactor.
+- Run the latest verification command after every critical modification.
+- Summarize changes, orders, and remaining risks upon completion.
+- Behavior, interface, or performance assumptions must be supported by types, tests, builds, browser observations, or documentation sources.
 
-## 评审模式
+## Review mode
 
-适用于 PR、最近变更、合并前检查和专项审查。
+Applies to PRs, recent changes, pre-merger checks, and ad hoc reviews.
 
-- 先通读上下文，再按严重程度列问题。
-- 优先报告会导致 bug、安全风险、回归或维护成本明显上升的问题。
-- 每个问题给出文件位置、影响、建议修复方式和置信度。
-- 无问题时明确说明剩余测试缺口。
+- Read through the context first, then list the issues in order of severity.
+- Prioritize reporting of issues that result in bugs, security risks, regressions, or significant increases in maintenance costs.
+- Each issue gives the file location, impact, recommended fix and confidence level.
+- Clear indication of remaining test gaps when no issues arise.
 
-## 收尾模式
+## Ending mode
 
-适用于提交前或交付前。
+Applies to pre-submission or delivery.
 
-- 运行 lint、type-check、test、build 中与改动相关的命令。
-- 检查是否有调试代码、临时文件、未同步文档或未说明的风险。
-- 不在未经确认时提交或推送。
-- 不用“应该可以”作为交付依据；交付前报告实际运行过的命令和结果。
+- Run commands related to changes in lint, type-check, test, and build.
+- Check for debug code, temporary files, unsynced documentation, or unaccounted for risks.
+- Don't commit or push without confirmation.
+- Do not use "should be able" as the basis for delivery; report the actual run commands and results before delivery.

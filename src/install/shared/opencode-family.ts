@@ -7,14 +7,14 @@ import { copyDir, ensureDir, readUtf8, writeUtf8 } from "../shared/fs.js";
  * @param {import('../types.js').InstallContext} ctx
  */
 export async function installOpencodeFamily(ctx: InstallContext): Promise<void> {
-  const { pluginRoot, baseDir, dryRun } = ctx;
+  const { contentRoot, baseDir, dryRun } = ctx;
   const cmdDest = path.join(baseDir, "command");
   if (dryRun) {
     console.log(`[dry-run] opencode/kilo commands -> ${cmdDest}`);
     return;
   }
   ensureDir(cmdDest);
-  const cmdDir = path.join(pluginRoot, "commands");
+  const cmdDir = path.join(contentRoot, "commands");
   for (const f of fs.readdirSync(cmdDir)) {
     if (!f.endsWith(".md")) continue;
     const raw = readUtf8(path.join(cmdDir, f));
@@ -23,7 +23,7 @@ export async function installOpencodeFamily(ctx: InstallContext): Promise<void> 
 
   const skillsDest = path.join(baseDir, "skills");
   ensureDir(skillsDest);
-  const skillsRoot = path.join(pluginRoot, "skills");
+  const skillsRoot = path.join(contentRoot, "skills");
   for (const name of fs.readdirSync(skillsRoot)) {
     const p = path.join(skillsRoot, name);
     if (!fs.statSync(p).isDirectory()) continue;

@@ -9,8 +9,8 @@ import { agentMdToToml } from "../codex-agents.js";
  * @param {import('../types.js').InstallContext} ctx
  */
 export async function installCodex(ctx: InstallContext): Promise<void> {
-  const { pluginRoot, baseDir, cwd, dryRun, isGlobal } = ctx;
-  const agentsSrc = path.join(pluginRoot, "agents");
+  const { contentRoot, baseDir, cwd, dryRun, isGlobal } = ctx;
+  const agentsSrc = path.join(contentRoot, "agents");
   const codexAgents = path.join(baseDir, "agents");
   const codexRules = path.join(baseDir, "rules");
   const agentsDestGlobal = isGlobal
@@ -32,13 +32,13 @@ export async function installCodex(ctx: InstallContext): Promise<void> {
     writeUtf8(path.join(codexAgents, f.replace(/\.md$/, ".toml")), tom);
   }
 
-  copyDir(path.join(pluginRoot, "skills"), agentsDestGlobal);
+  copyDir(path.join(contentRoot, "skills"), agentsDestGlobal);
 
-  const rulesShared = path.join(pluginRoot, "templates", "shared", "rules");
+  const rulesShared = path.join(contentRoot, "templates", "shared", "rules");
   if (!isGlobal && fs.existsSync(rulesShared)) copyDir(rulesShared, codexRules);
 
-  const tmplAgents = path.join(pluginRoot, "templates", "codex", "AGENTS.md");
-  const tmplCfg = path.join(pluginRoot, "templates", "codex", "config.toml");
+  const tmplAgents = path.join(contentRoot, "templates", "codex", "AGENTS.md");
+  const tmplCfg = path.join(contentRoot, "templates", "codex", "config.toml");
   if (!isGlobal && fs.existsSync(tmplAgents)) {
     const dest = path.join(cwd, "AGENTS.md");
     if (!fs.existsSync(dest)) copyFile(tmplAgents, dest);

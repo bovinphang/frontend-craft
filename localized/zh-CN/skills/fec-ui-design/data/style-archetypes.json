@@ -1,0 +1,373 @@
+[
+  {
+    "id": "minimal",
+    "keywords": [
+      "minimal",
+      "clean",
+      "enterprise",
+      "trust",
+      "calm"
+    ],
+    "description": "安静的界面表层、清晰的信息层级、克制的强调色，并支持快速扫读。",
+    "tokens": {
+      "radius": "4-8px",
+      "shadow": "低",
+      "density": "中高"
+    },
+    "bestFor": [
+      "企业级产品",
+      "金融",
+      "医疗健康",
+      "文档"
+    ],
+    "avoid": [
+      "没有信息优先级的空白区域",
+      "低对比度灰色文本"
+    ]
+  },
+  {
+    "id": "editorial",
+    "keywords": [
+      "editorial",
+      "magazine",
+      "portfolio",
+      "brand",
+      "luxury"
+    ],
+    "description": "表现力强的排版、明确的媒体主导、受控的不对称布局和叙事节奏。",
+    "tokens": {
+      "radius": "0-8px",
+      "shadow": "取决于内容",
+      "density": "中等"
+    },
+    "bestFor": [
+      "创意项目",
+      "电商",
+      "作品集",
+      "发布页"
+    ],
+    "avoid": [
+      "影响阅读的装饰性文字",
+      "遮挡真实产品的媒体素材"
+    ]
+  },
+  {
+    "id": "glass",
+    "keywords": [
+      "glass",
+      "modern",
+      "ai",
+      "overlay",
+      "depth"
+    ],
+    "description": "谨慎使用分层半透明表层，用于建立层级和聚焦。",
+    "tokens": {
+      "radius": "12-20px",
+      "shadow": "柔和深度",
+      "density": "中等"
+    },
+    "bestFor": [
+      "现代 SaaS",
+      "AI 工具",
+      "可视化"
+    ],
+    "avoid": [
+      "模糊且低对比度的文本",
+      "把 blur 当作纯装饰"
+    ]
+  },
+  {
+    "id": "brutalist",
+    "keywords": [
+      "brutalist",
+      "raw",
+      "bold",
+      "youth",
+      "experimental"
+    ],
+    "description": "硬边界、强对比、可见结构，以及刻意直接的构图。",
+    "tokens": {
+      "radius": "0-4px",
+      "shadow": "硬阴影或无阴影",
+      "density": "可变"
+    },
+    "bestFor": [
+      "创意活动",
+      "年轻品牌",
+      "实验性作品集"
+    ],
+    "avoid": [
+      "严肃的受监管工作流",
+      "不可访问的对比度或混乱导航"
+    ]
+  },
+  {
+    "id": "bento",
+    "keywords": [
+      "bento",
+      "cards",
+      "modular",
+      "features",
+      "education"
+    ],
+    "description": "模块化信息区块，尺度有变化，分组清晰。",
+    "tokens": {
+      "radius": "8px 或更小，除非设计系统不同",
+      "shadow": "轻微",
+      "density": "中等"
+    },
+    "bestFor": [
+      "功能概览",
+      "学习路径",
+      "产品摘要"
+    ],
+    "avoid": [
+      "card 内嵌 card 的布局",
+      "权重相同而掩盖优先级的模块"
+    ]
+  },
+  {
+    "id": "data-dense",
+    "keywords": [
+      "dashboard",
+      "analytics",
+      "table",
+      "monitoring",
+      "dense"
+    ],
+    "description": "面向运营的高信息密度，表格与图表对齐，语义化用色，控件稳定。",
+    "tokens": {
+      "radius": "4-8px",
+      "shadow": "极少",
+      "density": "高"
+    },
+    "bestFor": [
+      "仪表盘",
+      "管理后台",
+      "监控",
+      "分析"
+    ],
+    "avoid": [
+      "营销式 hero 首屏",
+      "大型装饰性 card"
+    ]
+  },
+  {
+    "id": "immersive",
+    "keywords": [
+      "immersive",
+      "game",
+      "3d",
+      "canvas",
+      "story",
+      "visualization"
+    ],
+    "description": "全出血视觉空间，同时保持控件可预测、可阅读。",
+    "tokens": {
+      "radius": "取决于上下文",
+      "shadow": "由场景驱动",
+      "density": "低到中等"
+    },
+    "bestFor": [
+      "游戏",
+      "3D 预览",
+      "交互式可视化"
+    ],
+    "avoid": [
+      "把主场景放进装饰性 card 中",
+      "被氛围遮住的控件"
+    ]
+  },
+  {
+    "id": "mobile-native",
+    "keywords": [
+      "mobile",
+      "app",
+      "native",
+      "touch",
+      "safe-area"
+    ],
+    "description": "触控优先布局，具备平台安全间距、清晰反馈和稳健的文本缩放。",
+    "tokens": {
+      "radius": "与平台一致",
+      "shadow": "原生层级阴影",
+      "density": "适合触控"
+    },
+    "bestFor": [
+      "移动应用",
+      "响应式工具",
+      "现场作业流程"
+    ],
+    "avoid": [
+      "仅 hover 可用的行为",
+      "被 safe area 遮挡的内容"
+    ]
+  },
+  {
+    "id": "soft",
+    "keywords": [
+      "soft",
+      "wellness",
+      "beauty",
+      "calm",
+      "organic"
+    ],
+    "description": "温暖表层、柔和对比、触感化间距，以及平静的交互节奏。",
+    "tokens": {
+      "radius": "8-16px",
+      "shadow": "柔和",
+      "density": "低到中等"
+    },
+    "bestFor": [
+      "身心健康",
+      "美妆",
+      "生活方式",
+      "照护服务"
+    ],
+    "avoid": [
+      "粉彩配色导致的对比度失败",
+      "用模糊氛围图替代真实服务"
+    ]
+  },
+  {
+    "id": "editorial-premium",
+    "keywords": [
+      "premium",
+      "luxury",
+      "fashion",
+      "magazine",
+      "launch",
+      "campaign"
+    ],
+    "description": "以图片驱动构图，文案克制，排版高对比，并有意保留负空间。",
+    "tokens": {
+      "radius": "0-8px",
+      "shadow": "极少",
+      "density": "低到中等"
+    },
+    "bestFor": [
+      "品牌发布",
+      "高端电商",
+      "编辑式落地页",
+      "作品集专题"
+    ],
+    "avoid": [
+      "没有品牌依据的米色奢华默认风格",
+      "削弱可读性的衬线装饰",
+      "把 CTA 推到首屏下方的 hero 文案"
+    ]
+  },
+  {
+    "id": "industrial-brutalist",
+    "keywords": [
+      "industrial",
+      "brutalist",
+      "mechanical",
+      "terminal",
+      "tactical",
+      "blueprint"
+    ],
+    "description": "可见网格、硬边界、强烈字号层级对比，以及有明确目的的实用型元数据。",
+    "tokens": {
+      "radius": "0-2px",
+      "shadow": "无",
+      "density": "中高"
+    },
+    "bestFor": [
+      "技术作品集",
+      "开发者工具",
+      "编辑式实验",
+      "遥测界面"
+    ],
+    "avoid": [
+      "受监管的消费流程",
+      "过小的全大写正文",
+      "没有真实信息的装饰性终端外壳"
+    ]
+  },
+  {
+    "id": "minimal-utilitarian",
+    "keywords": [
+      "utilitarian",
+      "document",
+      "linear",
+      "notion",
+      "workspace",
+      "minimalist"
+    ],
+    "description": "安静的文档式表层、精确结构、低装饰，并主要依靠排版建立层级。",
+    "tokens": {
+      "radius": "4-8px",
+      "shadow": "无到低",
+      "density": "中等"
+    },
+    "bestFor": [
+      "SaaS 设置页",
+      "文档",
+      "团队工作区",
+      "生产力工具"
+    ],
+    "avoid": [
+      "没有任务优先级的大片空白",
+      "灰底灰字的低对比",
+      "所有 section 都使用相同扁平 card"
+    ]
+  },
+  {
+    "id": "image-led-landing",
+    "keywords": [
+      "landing",
+      "website",
+      "hero",
+      "visual",
+      "image-led",
+      "marketing"
+    ],
+    "description": "由真实或生成媒体承载清晰转化路径，section 结构有变化，并提供可检查的视觉资产。",
+    "tokens": {
+      "radius": "取决于上下文",
+      "shadow": "取决于媒体",
+      "density": "低到中等"
+    },
+    "bestFor": [
+      "营销网站",
+      "产品页",
+      "活动页",
+      "代理商网站"
+    ],
+    "avoid": [
+      "只有文字加渐变的 hero",
+      "伪造截图",
+      "重复的左文右图 section",
+      "桌面端会换行的 CTA 标签"
+    ]
+  },
+  {
+    "id": "brand-system-board",
+    "keywords": [
+      "brand",
+      "brandkit",
+      "identity",
+      "logo",
+      "guidelines",
+      "visual system"
+    ],
+    "description": "以 presentation grid 呈现 identity board，连贯展示 logo 逻辑、色板、字体、应用场景和视觉世界。",
+    "tokens": {
+      "radius": "由系统定义",
+      "shadow": "取决于展示方式",
+      "density": "中等"
+    },
+    "bestFor": [
+      "品牌探索",
+      "识别系统",
+      "设计方向交接",
+      "视觉语言提案"
+    ],
+    "avoid": [
+      "随机 moodboard",
+      "通用 logo",
+      "无法解释品牌理念的面板"
+    ]
+  }
+]

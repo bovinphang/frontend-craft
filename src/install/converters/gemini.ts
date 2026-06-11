@@ -7,7 +7,7 @@ import { copyDir, ensureDir, readUtf8, writeUtf8 } from "../shared/fs.js";
  * @param {import('../types.js').InstallContext} ctx
  */
 export async function installGemini(ctx: InstallContext): Promise<void> {
-  const { pluginRoot, baseDir, cwd, dryRun, isGlobal } = ctx;
+  const { contentRoot, baseDir, cwd, dryRun, isGlobal } = ctx;
   if (dryRun) {
     console.log(`[dry-run] gemini -> ${baseDir}`);
     return;
@@ -15,9 +15,9 @@ export async function installGemini(ctx: InstallContext): Promise<void> {
   ensureDir(baseDir);
   const extDir = path.join(baseDir, "extensions", "frontend-craft");
   ensureDir(extDir);
-  copyDir(path.join(pluginRoot, "skills"), path.join(extDir, "skills"));
+  copyDir(path.join(contentRoot, "skills"), path.join(extDir, "skills"));
 
-  const claudeTmpl = path.join(pluginRoot, "templates", "claude", "CLAUDE.md");
+  const claudeTmpl = path.join(contentRoot, "templates", "claude", "CLAUDE.md");
   const geminiMd = path.join(cwd, "GEMINI.md");
   if (!isGlobal && !fs.existsSync(geminiMd) && fs.existsSync(claudeTmpl)) {
     let g = readUtf8(claudeTmpl).replaceAll(".claude/", ".gemini/").replaceAll("CLAUDE.md", "GEMINI.md");

@@ -19,6 +19,8 @@ test("npm pack publishes compiled runtime files without TypeScript sources", () 
   assert.ok(!files.some((file) => file.startsWith("dist/src/")), "npm package should not publish dist/src");
   assert.ok(!files.some((file) => file.startsWith("dist/scripts/")), "npm package should not publish dist/scripts");
   assert.ok(files.includes("skills/metadata.json"));
+  assert.ok(files.includes("localized/zh-CN/commands/fec-init.md"));
+  assert.ok(files.includes("localized/zh-CN/skills/fec-react-project-standard/SKILL.md"));
 
   const leakedSources = files.filter((file) => /^(bin|src|scripts)\/.*\.ts$/.test(file));
   assert.deepEqual(leakedSources, []);
