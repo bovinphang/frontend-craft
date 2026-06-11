@@ -86,6 +86,12 @@ for (const skillId of skillIds) {
         await minifyPackagedScript(sourceReference),
         "utf8",
       );
+    } else if (shouldMinifyPackagedJson(reference)) {
+      fs.writeFileSync(
+        destReference,
+        minifyPackagedJson(sourceReference),
+        "utf8",
+      );
     } else {
       fs.copyFileSync(sourceReference, destReference);
     }
@@ -203,6 +209,10 @@ function shouldMinifyPackagedScript(reference: string): boolean {
   );
 }
 
+function shouldMinifyPackagedJson(reference: string): boolean {
+  return reference.startsWith("data/") && path.extname(reference) === ".json";
+}
+
 async function minifyPackagedScript(sourcePath: string): Promise<string> {
   const source = fs.readFileSync(sourcePath, "utf8");
   const hashbang = source.match(/^#![^\r\n]*/)?.[0];
@@ -220,4 +230,12 @@ async function minifyPackagedScript(sourcePath: string): Promise<string> {
 
   if (!hashbang || code.startsWith(hashbang)) return code;
   return `${hashbang}\n${code.replace(/^#![^\r\n]*(?:\r?\n)?/, "")}`;
+}
+
+function minifyPackagedJson(sourcePath: string): string {
+  try {
+    return `${JSON.stringify(JSON.parse(fs.readFileSync(sourcePath, "utf8")))}\n`;
+  } catch (error) {
+    throw new Error(`Invalid packaged JSON: ${sourcePath}`, { cause: error });
+  }
 }

@@ -140,6 +140,34 @@ test("pack:skills creates one standalone publish package per skill", () => {
     "packaged UI design script should be minified",
   );
 
+  const sourceShapeIndex = path.join(
+    skillsDir,
+    "fec-drawio-studio",
+    "data",
+    "shape-index.json",
+  );
+  const packagedShapeIndex = path.join(
+    packageRoot,
+    "fec-drawio-studio",
+    "data",
+    "shape-index.json",
+  );
+  const sourceShapeIndexBody = fs.readFileSync(sourceShapeIndex, "utf8");
+  const packagedShapeIndexBody = fs.readFileSync(packagedShapeIndex, "utf8");
+  assert.ok(
+    /\n {2,}"/.test(sourceShapeIndexBody),
+    "source shape index should remain pretty-printed",
+  );
+  assert.ok(
+    fs.statSync(packagedShapeIndex).size < fs.statSync(sourceShapeIndex).size,
+    "packaged shape index should be minified",
+  );
+  assert.deepEqual(
+    JSON.parse(packagedShapeIndexBody),
+    JSON.parse(sourceShapeIndexBody),
+    "packaged shape index should preserve JSON semantics",
+  );
+
   const designScriptOutput = execFileSync(
     process.execPath,
     [packagedDesignScript, "saas dashboard", "--format", "json"],

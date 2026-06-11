@@ -51,7 +51,7 @@ description: Use when creating editable technical diagrams with draw.io / diagra
 
 ## Tool Resources
 
-工具脚本共享 [studio-core.mjs](scripts/studio-core.mjs)。离线查询使用 [shape-index.json.gz](data/shape-index.json.gz) 与 [brand-icons.json](data/brand-icons.json)，样式预设资源包括 [schema.json](styles/schema.json)、[default.json](styles/built-in/default.json)、[corporate.json](styles/built-in/corporate.json) 和 [handdrawn.json](styles/built-in/handdrawn.json)。
+工具脚本共享 [studio-core.mjs](scripts/studio-core.mjs)。离线查询使用 [shape-index.json](data/shape-index.json) 与 [brand-icons.json](data/brand-icons.json)，样式预设资源包括 [schema.json](styles/schema.json)、[default.json](styles/built-in/default.json)、[corporate.json](styles/built-in/corporate.json) 和 [handdrawn.json](styles/built-in/handdrawn.json)。
 
 ## Constraints
 
