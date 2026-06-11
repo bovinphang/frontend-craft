@@ -1,64 +1,64 @@
-# Vue 规则
+# Vue rules
 
-当仓库或目标模块使用 Vue 时，应用本文件。
+This file applies when the repository or target module uses Vue.
 
-## 技术栈
+## Technology stack
 
-<!-- 请根据项目实际情况修改 -->
+<!-- Please modify according to the actual situation of the project -->
 
-- 框架: Vue 3 + TypeScript
-- 状态管理: Pinia
-- UI 组件库: 按项目实际选择（如 Element Plus、Naive UI、Vant 或内部 Design System）
-- 版本与依赖：新建模块、补充 `package.json` 或更新本节前，优先采用彼此兼容的主流稳定版本（对齐官方文档、脚手架默认值或包管理器推荐），避免混用已停止维护或与仓库主线 major 不匹配的依赖。
+- Framework: Vue 3 + TypeScript
+- Status management: Pinia
+- UI component library: Actual selection by project (e.g. Element Plus, Naive UI, Vant or in-house Design System)
+- Versions and dependencies: Before creating a new module, supplementing `package.json` or updating this section, give priority to using mainstream stable versions that are compatible with each other (align with official documents, scaffolding defaults or package manager recommendations) to avoid mixing dependencies that have stopped maintaining or do not match the major of the mainline of the warehouse.
 
-## Vue 组件规范
+## Vue component specification
 
-- 使用 `<script setup lang="ts">`
-- 明确使用 `defineProps` 和 `defineEmits`
-- 保持模板逻辑简单、可读
-- 将可复用逻辑提取到 composables
-- 优先使用 computed，而不是大范围 watcher
-- 保持组件职责聚焦，避免上帝组件
-- props、emits、refs 和 expose 方法尽量使用强类型
+- Use `<script setup lang="ts">`
+- Explicit use of `defineProps` and `defineEmits`
+- Keep template logic simple and readable
+- Extract reusable logic into composables
+- Prefer computed over large-scale watchers
+- Keep component responsibilities focused and avoid god components
+- Try to use strong types for props, emits, refs and expose methods
 
-## Vue 实现指导
+## Vue Implementation Guide
 
-创建新组件前：
+Before creating a new component:
 
-1. 先搜索项目中是否已有可复用组件
-2. 判断逻辑是否适合提取到 composable
-3. 检查样式是否应沿用周边现有模式
+1. First search whether there are reusable components in the project
+2. Determine whether the logic is suitable for extraction into composable
+3. Check whether the style should inherit surrounding existing patterns
 
-编辑 Vue 组件时：
+When editing a Vue component:
 
-- 在可能的情况下，不要把 API 调用直接放进纯展示组件
-- 不要在组件文件中内联大段业务逻辑
-- 不要重复维护可从 props 或 store 推导出的状态
-- 事件 payload 要明确且有类型约束
+- Where possible, don’t put API calls directly into purely presentational components
+- Do not inline large sections of business logic in component files
+- Don't repeatedly maintain state that can be derived from props or stores
+- Event payload should be clear and type-constrained
 
-## Vue 文件组织
+## Vue file organization
 
-优先遵循项目已有约定。
-常见输出可能包括：
+Prioritize compliance with existing project agreements.
+Common output may include:
 
 - `ComponentName.vue`
 - `types.ts`
 - `useXxx.ts`
-- 只有在符合仓库模式时才新增本地样式文件
+- Add local style files only if they conform to the warehouse mode
 
-## 组件文件规模
+## Component file size
 
-- 单个 `.vue` 文件或同一组件模块保持**职责单一**、语义清晰、易于维护。
-- **行数参考**：优先控制在约 **300 行**以内；超过 **500 行**应视为**强烈拆分信号**。
-- **未到 500 行也应拆分**的情形：同时存在**复杂响应式状态**、**过多副作用 / watch**、**模板嵌套过深**、**`<script setup>` 内逻辑过长**、密集条件分支等，应拆为**子组件**、**Composables**、**工具模块**、**常量**与**类型定义**等（与上文「Vue 组件规范」「Vue 文件组织」一致）。
+- A single `.vue` file or the same component module maintains a single responsibility, clear semantics, and easy maintenance.
+- **Row number reference**: Prioritize control within about **300 lines**; more than **500 lines** should be regarded as a **strong split signal**.
+- **Situations that should be split even if it is less than 500 lines**: if there are **complex responsive states**, **too many side effects/watch**, **templates nested too deeply**, **`<script setup>` internal logic is too long**, dense conditional branches, etc., they should be split into **subcomponents**, **Composables**, **tool modules**, **constants** and **type definitions**, etc. (consistent with the "Vue component specification" and "Vue file organization" above).
 
-## Vue 反模式
+## Vue anti-patterns
 
-避免：
+Avoid:
 
-- 本该使用 computed 却使用大范围 watcher
-- 对 props、emits 或 refs 无理由使用 `any`
-- 模板分支层级过深却不提取
-- 在一个组件中混入无关职责
-- 单 `.vue` **逾 500 行或复杂度已高**仍拒不拆分（参见上文「组件文件规模」）
-- 用大范围全局样式覆盖去解决局部 UI 问题
+- Used wide range watcher instead of computed
+- Use `any` for props, emits or refs without reason
+- The template branch level is too deep but not extracted
+- Mixing unrelated responsibilities into a component
+- A single `.vue` **exceeds 500 lines or is too complex** and still refuses to be split (see "Component file size" above)
+- Use large-scale global style coverage to solve local UI problems

@@ -1,47 +1,47 @@
-# 重构项目规则
+# Refactor project rules
 
-当任务涉及从现有项目重构、迁移或重写前端代码时，应用本文件。
+This document applies when the task involves refactoring, migrating, or rewriting front-end code from an existing project.
 
-## 目标
+## Target
 
-- **视觉和交互**：与原项目一致，用户无感知差异
-- **代码质量**：更简洁、易维护，符合目标框架规范
-- **业务功能**：与原项目保持一致，**不得缺失功能**；重构前后行为等价
+- **Visual and interactive**: consistent with the original project, no perceived difference by users
+- **Code Quality**: more concise, easier to maintain, and in line with the target framework specifications
+- **Business functions**: consistent with the original project, **no missing functions**; behaviors before and after reconstruction are equivalent
 
-## 图片与图标
+## Pictures and Icons
 
-- 直接使用原项目的图片资源路径，不重新托管或替换
-- 可使用 SVG 图片（`<img src="*.svg" />` 或 CSS `background-image`），**禁止使用内联 SVG**（`<svg>...</svg>` 直接写在组件中）
-- **若原项目使用了 iconfont 或 IcoMoon 图标，重构时继续使用**，保持图标体系一致；不替换为其他图标方案
-- 图标优先使用原项目已有的图标文件（iconfont / IcoMoon / 已有 SVG），必要时可引入 SVG 文件作为独立资源
+- Directly use the image resource path of the original project without rehosting or replacing it.
+- SVG images (`<img src="*.svg" />` or CSS `background-image`) can be used, **inline SVG is prohibited** (`<svg>...</svg>` written directly in the component)
+- **If the original project uses iconfont or IcoMoon icons, continue to use them** during reconstruction to keep the icon system consistent; do not replace it with other icon schemes
+- For icons, priority is given to using existing icon files in the original project (iconfont / IcoMoon / existing SVG). If necessary, SVG files can be introduced as independent resources
 
-## 样式
+## Style
 
-- 布局样式对齐原项目视觉效果，但**只参考原项目效果，不照搬其 CSS**
-- 优先使用 **flex 弹性布局**，避免 `float`、复杂 `position`、冗余嵌套
-- 避免不合理写法：`!important` 滥用、过深选择器、重复定义
-- **组件中禁止使用内联样式**（`style={{ ... }}` / `style="..."`），样式统一放在 CSS Modules、Tailwind 类或样式文件中，便于维护
+- The layout style aligns with the visual effects of the original project, but **only refers to the original project effects and does not copy its CSS**
+- Prioritize the use of **flex elastic layout** to avoid `float`, complex `position`, and redundant nesting
+- Avoid unreasonable writing methods: `!important` abuse, excessively deep selectors, and repeated definitions
+- **Inline styles are prohibited in components** (`style={{ ... }}` / `style="..."`). Styles are unified in CSS Modules, Tailwind classes or style files for easy maintenance.
 
-## 强约束
+##Strong constraints
 
-- 业务功能与原项目完整等价，不得缺失
-- 图片使用原项目资源，无内联 SVG；若原项目用 iconfont/IcoMoon 则继续使用
-- 样式参考原项目效果但不照搬 CSS，优先 flex 布局，无内联样式
-- 对公共 API、路由、事件、埋点、权限、缓存和错误状态建立行为清单，重构前后逐项核对
-- 涉及页面、组件、路由、表单、弹窗、导航或关键用户流程的迁移，必须使用 Playwright 或同等真实浏览器验证方式对关键路径做对比验证
-- 对视觉敏感页面，应补充截图对比或人工截图验收；动态内容、动画、字体和环境差异需明确屏蔽、稳定化或说明
-- 对纯逻辑、类型、构建或无 UI 的迁移，不强制 Playwright，应选择更贴近风险的验证层：type-check、unit test、component test、build 或 lint
-- 验证目标不是像素级完全一致，而是确认业务功能无缺失、关键交互等价、主要视觉布局无非预期偏差，并且代码比旧实现更清晰、可维护
+- The business functions are completely equivalent to the original project and must not be missing.
+- Images use original project resources, no inline SVG; if the original project uses iconfont/IcoMoon, continue to use it
+- The style refers to the original project effect but does not copy CSS, giving priority to flex layout, no inline style
+- Establish a behavior list for public APIs, routing, events, hidden points, permissions, caches and error status, and check them one by one before and after reconstruction
+- For migrations involving pages, components, routes, forms, pop-ups, navigation or key user processes, Playwright or equivalent real browser verification methods must be used to compare and verify the critical paths.
+- For visually sensitive pages, screenshot comparison or manual screenshot acceptance should be supplemented; dynamic content, animation, fonts and environmental differences need to be clearly blocked, stabilized or explained
+- For pure logic, type, build or no UI migrations, Playwright is not mandatory and a validation layer closer to the risk should be chosen: type-check, unit test, component test, build or lint
+- The verification goal is not to be completely consistent at the pixel level, but to confirm that there are no missing business functions, key interactions are equivalent, there are no unexpected deviations in the main visual layout, and the code is clearer and maintainable than the old implementation.
 
-## 死代码清理
+## Dead code cleanup
 
-清理未使用代码、导出、样式或依赖时：
+When cleaning unused code, exports, styles or dependencies:
 
-- 先建立验证基线，再做清理。
-- 使用工具或搜索证据证明候选项无引用。
-- 将候选项分为 SAFE、CAUTION、DANGER。
-- 仅自动清理 SAFE 项；路由、配置、运行时模板、动态 import 和公开 API 默认视为高风险。
-- 每批清理后运行受影响验证命令。
-- 若验证失败，先回到最近一批候选项定位，不继续扩大清理范围。
+- Establish a verification baseline first, then clean it up.
+- Use tools or search for evidence that candidates have no citations.
+- Classify candidates into SAFE, CAUTION, and DANGER.
+- Only SAFE items are automatically sanitized; routing, configuration, runtime templates, dynamic imports, and public APIs are considered high risk by default.
+- Run affected verification command after each batch cleanup.
+- If the verification fails, return to the most recent batch of candidates and do not continue to expand the scope of cleaning.
 
-不要把死代码清理与功能重写、视觉调整或依赖升级混在同一个改动里。
+Don’t mix dead code cleanup with feature rewrites, visual tweaks, or dependency upgrades in the same change.

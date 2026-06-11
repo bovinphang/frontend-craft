@@ -1,64 +1,64 @@
-# 国际化 (i18n) 规则
+# Internationalization (i18n) rules
 
-凡是涉及用户可见文案、提示信息、表单标签、错误消息或 UI 文本时，都应用本文件。请根据项目实际 i18n 方案修改 locales 路径、库与 key 前缀。
+This document applies whenever it involves user-visible copy, tooltips, form labels, error messages, or UI text. Please modify the locales path, library and key prefix according to the actual i18n solution of the project.
 
-## 适用范围
+## Scope of application
 
-- **现代栈（React / Vue / Next / Nuxt 等）**：新增或修改的用户可见文案必须走项目 i18n 方案。
-- **遗留 HTML/JS、渐进迁移或新旧并存**：新代码路径仍须满足核心原则；遗留层遵守迁移约束，避免扩大硬编码和混乱 key。
+- **Modern stack (React/Vue/Next/Nuxt, etc.)**: New or modified user-visible copy must follow the project i18n solution.
+- **Legacy HTML/JS, progressive migration or coexistence of old and new**: The new code path must still meet the core principles; the legacy layer adheres to migration constraints to avoid expanding hard coding and confusing keys.
 
-下文用 `src/locales/` 指代项目实际文案资源目录，请按仓库约定替换。
+`src/locales/` is used below to refer to the actual copywriting resource directory of the project. Please replace it according to the warehouse convention.
 
-## 核心原则
+## Core Principles
 
-- 新应用代码中的用户可见文案须使用 i18n，禁止硬编码中文或英文字符串。
-- i18n key 按模块组织，使用点分命名，例如 `order.list.empty`。
-- 相同语义的文案复用同一个 key，避免重复定义。
-- 变量、复数、日期、数字和货币使用 i18n 能力格式化，不用字符串拼接。
-- 修改文案前先检索现有资源，优先复用准确 key。
+- User-visible copy in new application code must use i18n, and hardcoding Chinese or English strings is prohibited.
+- i18n keys are organized by modules and named with dots, such as `order.list.empty`.
+- Copies with the same semantics reuse the same key to avoid repeated definitions.
+- Variables, plurals, dates, numbers and currencies are formatted using i18n capabilities without string concatenation.
+- Search existing resources before modifying the copy, and give priority to reusing accurate keys.
 
-## 文案与资源规范
+## Copywriting and resource specifications
 
-- `common.*` 用于跨模块通用文案，例如确认、取消、提交、加载中。
-- `module.component.*` 用于模块级文案。
-- `validation.*` 用于表单校验提示。
-- `error.*` 用于错误信息。
-- 每种自然语言对应独立资源文件，禁止多种语言混写在同一文件或同一顶层多语言对象内。
-- 文案文件须以 UTF-8 保存；团队有约定时优先 UTF-8 无 BOM，避免中文、日文等非 ASCII 文案乱码。
-- 新增 key 时，同步更新当前功能应覆盖的主要语言文件；若某语言暂缺，必须显式记录缺口。
+- `common.*` is used for cross-module common copywriting, such as confirm, cancel, submit, and loading.
+- `module.component.*` is used for module-level copy.
+- `validation.*` is used for form validation prompts.
+- `error.*` for error messages.
+- Each natural language corresponds to an independent resource file, and multiple languages are prohibited from being mixed in the same file or the same top-level multi-language object.
+- Copywriting files must be saved in UTF-8; when the team has an agreement, priority will be given to UTF-8 without BOM to avoid garbled non-ASCII copywriting in Chinese, Japanese and other languages.
+- When adding a key, the main language files that should be covered by the current function are updated simultaneously; if a language is temporarily missing, the gap must be explicitly recorded.
 
-## 遗留代码与迁移场景
+## Legacy code and migration scenarios
 
-- 遗留 HTML 或 JS 中不新增用户可见硬编码，除非该段为纯静态展示且仓库尚无可接入 i18n 路径。
-- React / Vue 等新代码路径新增提示、错误、按钮、表单标签时，必须走 i18n。
-- 新增子应用或模块时，与现有语言文件结构、命名空间和懒加载策略一致。
-- key 按页面、模块和语义组织，避免继续沿用历史缩写或无意义分段。
-- 旧 key 若仅“能用但不准”，优先重命名 key 并重写译文，不长期保留并行兼容。
-- 仅当旧 key 已成为对外契约（后端、埋点、外部文档、第三方集成等固定引用）时，才引入映射层或别名过渡。
+- No new user-visible hardcoding is added in legacy HTML or JS, unless the segment is purely static and the repository does not yet have access to the i18n path.
+- When new code paths such as React/Vue add prompts, errors, buttons, and form labels, i18n must be used.
+- When adding new sub-applications or modules, they should be consistent with the existing language file structure, namespace and lazy loading strategy.
+- Keys are organized by page, module and semantics to avoid continuing to use historical abbreviations or meaningless segments.
+- If the old key is only "usable but inaccurate", priority will be given to renaming the key and rewriting the translation, and parallel compatibility will not be maintained for a long time.
+- Only introduce mapping layer or alias transition when the old key has become an external contract (fixed reference in backend, buried points, external documents, third-party integration, etc.).
 
-## 实现约束
+## Implement constraints
 
-- Vue、React、Next、Nuxt 的具体调用方式以项目现有 i18n 库为准，例如 `vue-i18n`、`react-intl`、`react-i18next` 或框架内置方案。
-- 组件中不要直接写用户可见硬编码；测试可通过 key 或最终文案断言，但应避免与翻译细节过度耦合。
-- 懒加载语言包时，loading、fallback 和缺失 key 行为要可预期。
-- 错误、表单和空状态文案要能表达用户下一步，不只翻译技术错误。
+- The specific calling methods of Vue, React, Next, and Nuxt are subject to the existing i18n library of the project, such as `vue-i18n`, `react-intl`, `react-i18next` or the framework's built-in solution.
+- Do not directly write user-visible hard coding in components; tests can assert through key or final copywriting, but should avoid over-coupling with translation details.
+- When lazily loading language packs, loading, fallback, and missing key behaviors must be predictable.
+- Error, form, and empty state copy should express the user’s next step, not just translate technical errors.
 
-## 检查清单
+## Checklist
 
-- [ ] 所有新增用户可见文案使用 i18n key。
-- [ ] 新增 key 已添加到所有应覆盖语言文件，且各语言分文件维护。
-- [ ] 语言资源文件为 UTF-8，打开无乱码。
-- [ ] key 命名符合模块、组件、用途约定，并复用已有语义。
-- [ ] 插值、复数、日期、数字、货币使用 i18n 格式化。
-- [ ] 迁移或混合栈中未扩大用户可见硬编码。
-- [ ] 新代码未破坏现有命名空间、加载方式和子应用边界。
+- [ ] All newly added user-visible copy uses i18n key.
+- [ ] The new key has been added to all language files that should be covered, and each language is maintained in separate files.
+- [ ] The language resource file is UTF-8, and there will be no garbled characters when opened.
+- [ ] key naming conforms to module, component, and usage conventions, and reuses existing semantics.
+- [ ] Interpolation, complex numbers, dates, numbers, currencies are formatted using i18n.
+- [ ] User-visible hardcoding not expanded in migration or hybrid stacks.
+- [ ] The new code does not break existing namespaces, loading methods, and sub-app boundaries.
 
-## 反模式
+## Anti-pattern
 
-- 在模板或 JSX 中直接写用户可见中文或英文字符串。
-- 使用字符串拼接代替 i18n 插值。
-- 在 JS/TS 逻辑中硬编码 toast、错误或确认文案。
-- 不同模块为相同含义创建不同 key。
-- 多语言混写导致 diff、评审和按需加载困难。
-- 用非 UTF-8 或错误编码保存文案文件。
-- 为迁就历史缩写或劣质命名长期保留多套并行 key。
+- Write user-visible Chinese or English strings directly in templates or JSX.
+- Use string concatenation instead of i18n interpolation.
+- Hardcode toast, error or confirmation text in JS/TS logic.
+- Different modules create different keys for the same meaning.
+- Mixing multiple languages makes diffing, reviewing and on-demand loading difficult.
+- Save copy files in non-UTF-8 or incorrect encoding.
+- Long-term retention of multiple sets of parallel keys to accommodate historical abbreviations or poor naming.

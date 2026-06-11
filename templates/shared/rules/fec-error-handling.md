@@ -1,56 +1,56 @@
-# 错误处理规范
+# Error handling specifications
 
-本文件约定前端错误处理的常驻边界。React/Vue 组件边界细节交给对应框架 skill，API 错误映射和鉴权刷新交给 `fec-api-integration`，安全敏感错误交给 `fec-security-review`。
+This document agrees on the resident boundaries of front-end error handling. React/Vue component boundary details are handed over to the corresponding framework skill, API error mapping and authentication refresh are handed over to `fec-api-integration`, and security-sensitive errors are handed over to `fec-security-review`.
 
-## 错误分层
+## Error layering
 
-| 层级 | 错误类型 | 默认处理 |
+| Hierarchy | Error type | Default handling |
 | ---- | -------- | -------- |
-| 全局 | 未捕获异常、Promise rejection | 捕获、上报、全局降级 UI |
-| 路由 / 页面 | 页面级渲染异常 | Error Boundary / 框架错误边界 + 页面级降级 |
-| 模块 | 功能模块运行时异常 | 模块级边界 + 局部降级 |
-| 组件 / 请求 | 数据请求失败、操作失败 | 用户可理解提示 + 可恢复动作 |
-| 表单 | 校验失败 | 字段级错误提示和修正入口 |
+| Global | Uncaught exceptions, Promise rejection | Capture, reporting, global downgrade UI |
+| Routing / Page | Page-level rendering exception | Error Boundary / Frame error boundary + Page-level degradation |
+| Module | Function module runtime exception | Module-level boundary + local degradation |
+| Component/Request | Data request failure, operation failure | User-understandable prompts + recoverable actions |
+| Form | Validation failure | Field-level error prompts and correction entry |
 
-## 全局与模块边界
+## Global and module boundaries
 
-- 应在应用入口注册未捕获异常和 Promise rejection 监听，并接入项目错误上报平台。
-- React 使用项目统一的 Error Boundary 方案；业务组件保持函数式，不新增手写类组件边界。
-- Vue 使用项目统一的 `app.config.errorHandler`、`onErrorCaptured` 或框架级错误边界。
-- 独立功能模块应有局部降级能力，模块崩溃不应导致整个页面白屏。
-- Error Boundary 处理渲染异常；普通 API 失败应落到 loading/error/empty/data 状态和可恢复操作。
+- Uncaught exception and Promise rejection monitoring should be registered at the application entrance and connected to the project error reporting platform.
+- React uses the project's unified Error Boundary solution; business components remain functional and no new handwritten class component boundaries are added.
+- Vue uses project-unified `app.config.errorHandler`, `onErrorCaptured` or framework-level error boundaries.
+- Independent functional modules should have local downgrade capabilities, and module crashes should not cause the entire page to go blank.
+- Error Boundary handles rendering exceptions; normal API failures should fall into the loading/error/empty/data state and recoverable operations.
 
-## API 错误处理
+## API error handling
 
-- 请求层统一归一错误形状，组件不直接解析后端异常、token refresh 或重试策略。
-- 每类错误都应对应明确下一步：重试、重新登录、修改输入、返回上级、刷新冲突数据、联系支持或稍后再试。
-- `401`、`403`、`404`、`409`、`422`、`429`、`5xx` 和网络错误应有可区分的用户提示和日志语义。
-- UI 可显示 request id / trace id 方便支持排查，但不得暴露内部堆栈、SQL、服务名、密钥或敏感字段。
+- The request layer uniformly normalizes error shapes, and components do not directly parse backend exceptions, token refresh or retry strategies.
+- Each type of error should have a clear next step: retry, log in again, modify input, return to the previous level, refresh conflicting data, contact support, or try again later.
+- `401`, `403`, `404`, `409`, `422`, `429`, `5xx` and network errors should have distinguishable user prompts and log semantics.
+- The UI can display request id / trace id to facilitate support troubleshooting, but must not expose internal stacks, SQL, service names, keys or sensitive fields.
 
-## 用户体验
+## User experience
 
-- 每个数据展示区域处理 Loading、Error、Empty、Success 四种状态。
-- 全局级错误页提供返回首页、刷新或重试路径；模块级降级只影响该模块；操作级错误给出下一步。
-- 重试策略要克制：用户手动重试优先，自动重试需有上限、退避和停止条件。
-- 错误提示应保留用户已输入内容，避免因失败丢失表单或上下文。
+- Each data display area handles four states: Loading, Error, Empty, and Success.
+- Global-level error pages provide paths to return to the home page, refresh or retry; module-level downgrades only affect this module; operation-level errors provide the next step.
+- The retry strategy must be restrained: users’ manual retries are given priority, and automatic retries must have upper limits, backoff and stop conditions.
+- Error prompts should retain what the user has entered to avoid losing the form or context due to failure.
 
-## 错误上报
+## Error reporting
 
-上报内容应包含错误堆栈、页面 URL、浏览器/设备信息、用户或会话标识、操作上下文、请求标识和版本信息。上报前清理 token、密码、个人敏感字段和大体积 payload。
+The reported content should include the error stack, page URL, browser/device information, user or session ID, operation context, request ID, and version information. Clean tokens, passwords, personal sensitive fields and large payloads before reporting.
 
-## 反模式
+## Anti-pattern
 
-- 空 `catch` 块吞掉错误。
-- 所有错误统一用 `alert()` 或一个模糊 toast。
-- 接口失败时 UI 无反馈，或把后端原始异常直接展示给用户。
-- Error Boundary 没有重试或返回路径。
-- 在组件中到处写重复 `try/catch`，而不是统一封装请求边界。
-- 用 Error Boundary 承接普通 API 错误，导致用户无法理解或恢复。
+- Empty `catch` blocks swallow errors.
+- All errors are reported with `alert()` or a vague toast.
+- When the interface fails, there is no feedback from the UI, or the original exception from the backend is directly displayed to the user.
+- Error Boundary has no retry or return path.
+- Write repeated `try/catch` everywhere in the component instead of uniformly encapsulating request boundaries.
+- Use Error Boundary to handle common API errors, making it impossible for users to understand or recover.
 
-## 检查清单
+## Checklist
 
-- [ ] 全局未捕获异常和 Promise rejection 已监听。
-- [ ] 关键页面或模块有框架错误边界和局部降级 UI。
-- [ ] API 请求有统一错误归一、分级处理和可恢复动作。
-- [ ] 数据区域覆盖 Loading / Error / Empty / Success。
-- [ ] 错误上报包含足够定位信息且不泄露敏感数据。
+- [ ] Global uncaught exceptions and Promise rejections are listened to.
+- [ ] Critical pages or modules have frame error boundaries and partially degraded UI.
+- [ ] API requests have unified error normalization, hierarchical processing and recoverable actions.
+- [ ] Data area override Loading / Error / Empty / Success.
+- [ ] Error reports contain sufficient location information and do not leak sensitive data.

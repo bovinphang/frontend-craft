@@ -1,35 +1,35 @@
-# API 层规范
+# API layer specification
 
-凡是涉及 HTTP 请求、接口调用、数据获取或错误处理时，都应用本文件。
+This document applies whenever HTTP requests, interface calls, data retrieval, or error handling are involved.
 
-## 核心原则
+## Core Principles
 
-- 请求和响应必须有类型定义
-- 统一错误处理，不在每个组件中重复 try-catch
-- API 层与 UI 层分离
-- 敏感操作（删除、支付）必须有二次确认
+- Requests and responses must have type definitions
+- Unify error handling without repeating try-catch in each component
+-Separation of API layer and UI layer
+- Sensitive operations (deletion, payment) must require a second confirmation
 
-## 目录结构
+## Directory structure
 
-<!-- 请根据项目实际情况调整 -->
+<!-- Please adjust according to the actual situation of the project -->
 
 ```
 src/
-├── api/                    # API 定义层
+├── api/ # API definition layer
 │   ├── modules/
-│   │   ├── user.ts         # 用户相关接口
-│   │   ├── order.ts        # 订单相关接口
+│ │ ├── user.ts # User related interface
+│ │ ├── order.ts # Order related interface
 │   │   └── ...
-│   ├── types/              # 请求/响应类型
+│ ├── types/ # Request/response type
 │   │   ├── user.types.ts
 │   │   └── order.types.ts
-│   └── request.ts          # 统一请求封装
+│ └── request.ts # Unified request encapsulation
 ```
 
-## 类型规范
+## Type specification
 
 ```typescript
-// 请求参数类型
+//Request parameter type
 interface GetUserListParams {
     page: number;
     pageSize: number;
@@ -37,7 +37,7 @@ interface GetUserListParams {
     status?: UserStatus;
 }
 
-// 响应数据类型
+//Response data type
 interface GetUserListResponse {
     list: User[];
     total: number;
@@ -45,55 +45,55 @@ interface GetUserListResponse {
     pageSize: number;
 }
 
-// API 函数签名
+// API function signature
 export function getUserList(params: GetUserListParams): Promise<GetUserListResponse>;
 ```
 
-要求：
+Requirements:
 
-- 禁止使用 `any` 作为请求参数或响应类型
-- 枚举值使用 TypeScript enum 或 union type
-- 分页参数和响应格式保持统一
+- Disallow the use of `any` as a request parameter or response type
+- Use TypeScript enum or union type for enumeration values
+- Pagination parameters and response format remain unified
 
-## 错误处理
+## Error handling
 
-### 统一拦截器
+### Unified Interceptor
 
-在请求封装层统一处理：
+Unified processing at the request encapsulation layer:
 
-- 401: 跳转登录或刷新 token
-- 403: 提示无权限
-- 500: 显示通用错误提示
-- 网络错误: 显示网络异常提示
+- 401: Jump to login or refresh token
+- 403: Prompt No Permission
+- 500: Display general error message
+- Network error: Display network exception prompts
 
-### 业务错误
+### Business error
 
-- 业务错误码与 HTTP 状态码分离
-- 业务错误信息使用 i18n key（如支持国际化）
-- 需要用户操作的错误（如表单校验失败）由调用方处理
+- Separate business error codes and HTTP status codes
+- Business error messages use i18n key (if internationalization is supported)
+- Errors that require user action (such as form validation failure) are handled by the caller
 
-## Loading / Error / Empty 状态
+## Loading / Error / Empty status
 
-每个数据请求场景都需要考虑：
+Each data request scenario needs to be considered:
 
-- **Loading**: 首次加载 skeleton/spinner，后续刷新不阻断 UI
-- **Error**: 显示错误信息 + 重试按钮
-- **Empty**: 显示空状态占位 + 引导操作
+- **Loading**: Load skeleton/spinner for the first time, subsequent refreshes will not block the UI
+- **Error**: display error message + retry button
+- **Empty**: Display empty status placeholder + boot operation
 
-## 检查清单
+## Checklist
 
-- [ ] 请求参数和响应有明确类型
-- [ ] 错误处理不依赖每个组件各自 try-catch
-- [ ] Loading / Error / Empty 三态均已处理
-- [ ] 敏感操作有二次确认
-- [ ] Token / 鉴权信息不在请求 URL 中明文传递
-- [ ] 大数据量使用分页或流式加载
+- [ ] Request parameters and responses have clear types
+- [ ] Error handling does not rely on each component's own try-catch
+- [ ] Loading / Error / Empty three states have been processed
+- [ ] Sensitive operations have secondary confirmation
+- [ ] Token/authentication information is not passed in clear text in the request URL
+- [ ] Use paging or streaming loading for large amounts of data
 
-## 反模式
+## Anti-pattern
 
-- 在组件中直接使用 `fetch` / `axios` 而不经过统一封装
-- 请求参数或响应使用 `any`
-- 忽略错误处理，只处理成功场景
-- 将 token 拼接在 URL 中
-- 在 GET 请求中传递敏感数据
-- 同一个接口在多个文件中重复定义
+- Use `fetch` / `axios` directly in components without unified encapsulation
+- Use `any` for request parameters or responses
+- Ignore error handling and only handle success scenarios
+- Splice token into URL
+- Pass sensitive data in GET requests
+- The same interface is repeatedly defined in multiple files

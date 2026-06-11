@@ -1,40 +1,40 @@
-# 渲染模式选型
+#Rendering mode selection
 
-当项目需要选择或评估 CSR / SSR / SSG / ISR / RSC 时，参考本文件。本文只保留跨框架决策约束；Next.js App Router 细节交给 `fec-nextjs-project-standard`，Nuxt 细节交给 `fec-nuxt-project-standard`，性能证据交给 `fec-performance-optimization`。
+Reference this document when a project needs to select or evaluate CSR/SSR/SSG/ISR/RSC. This article only retains cross-framework decision constraints; Next.js App Router details are left to `fec-nextjs-project-standard`, Nuxt details are left to `fec-nuxt-project-standard`, and performance evidence is left to `fec-performance-optimization`.
 
-## 渲染模式概览
+## Rendering mode overview
 
-| 模式 | 生成时机 | 典型适用 |
+| Mode | Generation timing | Typical application |
 | ---- | -------- | -------- |
-| CSR | 浏览器运行时 | 登录后后台、内部工具、高交互 SPA |
-| SSR | 请求时服务端 | SEO 关键且内容实时的公开页 |
-| SSG | 构建时 | 文档、博客、营销页、变化慢的公开内容 |
-| ISR | 构建时 + 按需再生成 | 页面数量多、内容更新频繁但允许延迟 |
-| RSC | 服务端组件渲染 | Next.js App Router 中需要减少客户端 JS 的场景 |
+| CSR | Browser runtime | Post-login backend, internal tools, high-interaction SPA |
+| SSR | Server-side on request | SEO-critical and real-time content public page |
+| SSG | Build-time | Documentation, blogs, marketing pages, slow-changing public content |
+| ISR | Build time + regenerate on demand | Large number of pages, frequent content updates but allow for delays |
+| RSC | Server-side component rendering | Scenarios where client-side JS needs to be reduced in Next.js App Router |
 
-## 选型原则
+## Selection principles
 
-- SEO 必须且内容实时：优先 SSR，并明确缓存、超时和错误降级。
-- SEO 必须且内容稳定：优先 SSG；页面数量巨大或更新频繁时考虑 ISR。
-- 登录后后台、强交互工作区、内部工具：优先 CSR，公开登录/注册页可单独 SSG/SSR。
-- 混合产品：公开页与私有页可以采用不同模式，不为统一架构牺牲体验或成本。
-- 页面数量、更新频率、服务器成本、部署平台、缓存策略和团队运维能力必须一起评估。
-- RSC 只在支持的框架和路由体系中使用；客户端交互、浏览器 API 和高频状态仍放在客户端叶子组件。
+- SEO is a must and content is live: Prioritize SSR and be clear about caching, timeouts and error degradation.
+- SEO is required and the content is stable: Prioritize SSG; consider ISR when the number of pages is huge or updates are frequent.
+- Backend after login, strong interaction workspace, internal tools: priority CSR, public login/registration page can be separate SSG/SSR.
+- Hybrid product: Public pages and private pages can adopt different models without sacrificing experience or cost for a unified architecture.
+- Number of pages, update frequency, server cost, deployment platform, caching strategy and team operation and maintenance capabilities must be evaluated together.
+- RSC is only used in supported frameworks and routing architectures; client interactions, browser APIs, and high-frequency states are still placed in client leaf components.
 
-## 实施约束
+## Implement constraints
 
-- SSR / RSC 路径不得直接依赖 `window`、`document`、localStorage 或浏览器专属库。
-- Hydration 前后的 HTML、时间、随机数、用户偏好和媒体查询结果要保持一致，避免水合不匹配。
-- 服务端数据获取必须有超时、错误降级和缓存策略。
-- SSG / ISR 需要明确未预渲染路径、revalidate / 失效策略和回滚方式。
-- 客户端大型动效库、图表、编辑器、地图、WebGL/Canvas 等应按需加载，不进入根布局同步 bundle。
-- 不在没有响应头、构建输出、trace、路由行为或线上指标证据时断言某路由“已缓存”或“必须动态”。
+- SSR/RSC paths must not directly depend on `window`, `document`, localStorage or browser-specific libraries.
+- HTML, time, random numbers, user preferences and media query results before and after hydration should be consistent to avoid hydration mismatch.
+- Server-side data retrieval must have timeout, error degradation and caching strategies.
+- SSG/ISR needs to clarify the non-prerendered path, revalidate/invalidation strategy and rollback method.
+- Client-side large animation libraries, charts, editors, maps, WebGL/Canvas, etc. should be loaded on demand without entering the root layout synchronization bundle.
+- No longer assert that a route is "cached" or "must be dynamic" without evidence of response headers, build output, traces, route behavior, or online metrics.
 
-## 检查清单
+## Checklist
 
-- [ ] 明确公开页与私有页、SEO 需求和实时性需求。
-- [ ] 明确每类页面使用 CSR / SSR / SSG / ISR / RSC 的理由。
-- [ ] 评估页面数量、构建时间、服务器成本和缓存失效策略。
-- [ ] 检查 SSR/RSC 代码没有浏览器 API 依赖和不可序列化 props。
-- [ ] 确认 loading、error、not-found、离线和权限状态不会因渲染模式丢失。
-- [ ] 用构建输出、响应头、trace 或路由行为验证最终模式。
+- [ ] Clarify public pages and private pages, SEO requirements and real-time requirements.
+- [ ] Clarify the reasons for using CSR / SSR / SSG / ISR / RSC for each type of page.
+- [ ] Evaluate page count, build times, server costs, and cache invalidation strategies.
+- [ ] Check that SSR/RSC code has no browser API dependencies and non-serializable props.
+- [ ] Confirm that loading, error, not-found, offline and permission states are not lost across render modes.
+- [ ] Verify the final schema with build output, response headers, traces, or routing behavior.

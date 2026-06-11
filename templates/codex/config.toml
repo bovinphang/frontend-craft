@@ -1,8 +1,8 @@
-# Frontend Craft - Codex 项目配置
-# 复制到 .codex/config.toml 并根据项目需要调整
+# Frontend Craft - Codex project configuration
+# Copy to .codex/config.toml and adjust according to project needs
 
-# MCP 设计工具集成（按需取消注释并配置环境变量）
-# 需要设置: FIGMA_API_KEY, SKETCH_API_KEY, MG_MCP_TOKEN, MODAO_TOKEN
+# MCP design tool integration (uncomment and configure environment variables as needed)
+# Required settings: FIGMA_API_KEY, SKETCH_API_KEY, MG_MCP_TOKEN, MODAO_TOKEN
 
 # [mcp_servers.figma]
 # command = "npx"

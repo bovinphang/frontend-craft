@@ -1,21 +1,21 @@
-# 前端性能规则
+# Front-end performance rules
 
-凡是新增页面、组件、资源加载或数据请求时，都应用本文件。
+This document will be used whenever new pages, components, resource loading or data requests are added.
 
-## 核心原则
+## Core Principles
 
-- 默认懒加载，按需加载
-- 减少首屏关键资源
-- 避免不必要的重渲染
-- 关注 Core Web Vitals
-- 前端构建必须同时验证开发体验和生产产物，不能只看 dev server 正常
-- 在上下文或任务边界不清时，不启动大规模性能重构；先定位瓶颈再改代码
-- 对长时间运行的命令保留可回看日志，必要时使用终端会话、CI artifact 或测试报告
-- 每项性能建议都要绑定证据、影响范围、验证方式和回退风险
+- Lazy loading by default, loading on demand
+- Reduce key resources on the first screen
+- Avoid unnecessary re-rendering
+- Follow Core Web Vitals
+- The front-end build must verify the development experience and production products at the same time. You cannot just check whether the dev server is normal.
+- Do not initiate large-scale performance refactoring when the context or task boundaries are unclear; locate bottlenecks first and then change the code
+- Keep reviewable logs of long-running commands, using terminal sessions, CI artifacts, or test reports when necessary
+- Each performance recommendation must be bound with evidence, scope of impact, verification methods and rollback risks
 
-## 代码分割与懒加载
+## Code splitting and lazy loading
 
-### 路由级分割
+### Routing level segmentation
 
 ```tsx
 // React
@@ -25,77 +25,77 @@ const Dashboard = lazy(() => import('./pages/Dashboard'));
 const Dashboard = () => import('./pages/Dashboard.vue');
 ```
 
-### 组件级分割
+### Component level segmentation
 
-仅在以下场景使用组件级懒加载：
+Only use component-level lazy loading in the following scenarios:
 
-- 重型第三方库（图表、编辑器、地图）
-- 条件渲染的大型模块（如设置面板、高级筛选）
-- 不在首屏可视区域的内容
+- Heavy-duty third-party libraries (charts, editors, maps)
+- Large modules for conditional rendering (such as settings panel, advanced filtering)
+- Content that is not in the visible area of the first screen
 
-## 渲染性能
+## Rendering performance
 
 ### React
 
-- 合理使用 `React.memo` 避免不必要的重渲染
-- `useMemo` / `useCallback` 仅在依赖稳定且子组件使用 memo 时才有意义
-- 列表渲染必须使用稳定的 `key`
-- 避免在渲染函数内创建新对象、数组或函数
+- Use `React.memo` wisely to avoid unnecessary re-rendering
+- `useMemo` / `useCallback` only makes sense if the dependency is stable and the subcomponent uses memo
+- List rendering must use a stable `key`
+- Avoid creating new objects, arrays or functions inside render functions
 
 ### Vue
 
-- 使用 `computed` 而非 `watch` + 手动赋值
-- 大列表使用虚拟滚动
-- 避免在 `v-for` 中使用 `v-if`
-- 使用 `shallowRef` / `shallowReactive` 优化大型对象
+- Use `computed` instead of `watch` + manual assignment
+- Use virtual scrolling for large lists
+- Avoid using `v-if` inside `v-for`
+- Use `shallowRef` / `shallowReactive` to optimize large objects
 
-## 资源优化
+## Resource optimization
 
-- 图片使用 WebP/AVIF 格式，提供适当尺寸
-- 图标优先使用 SVG sprite 或 icon font，避免大量独立图片请求
-- 字体按需加载，使用 `font-display: swap`
-- 第三方依赖按需导入（如 `import { Button } from 'antd'` 而非 `import antd from 'antd'`）
+- Images use WebP/AVIF format and provide appropriate sizes
+- For icons, use SVG sprite or icon font first to avoid a large number of independent image requests
+- Fonts are loaded on demand, use `font-display: swap`
+- Third-party dependencies are imported on demand (such as `import { Button } from 'antd'` instead of `import antd from 'antd'`)
 
-## Vite 构建与开发性能
+## Vite build and development performance
 
-使用 Vite 时额外遵守：
+Additional compliance when using Vite:
 
-- `vite build` 不做类型检查，CI 必须单独执行 `tsc --noEmit` 或接入 `vite-plugin-checker`
-- 慢启动先用 `vite --profile` 定位插件、解析或预构建瓶颈
-- 大项目可使用 `server.warmup.clientFiles` 预热核心入口
-- CJS/UMD 依赖互操作问题优先通过 `optimizeDeps.include` 处理
-- 手动分包优先使用稳定对象形式，不要把每个 `node_modules` 包拆成独立 chunk
-- 组件库模式必须 externalize peer dependencies，并单独产出类型声明
-- `vite preview` 只用于本地构建烟测，不是生产服务器
+- `vite build` does not do type checking, CI must execute `tsc --noEmit` separately or access `vite-plugin-checker`
+- Use `vite --profile` to locate plug-in, parsing or pre-built bottlenecks before slow start
+- Large projects can use `server.warmup.clientFiles` to warm up the core entrance
+- CJS/UMD dependency interoperability issues are first handled through `optimizeDeps.include`
+- For manual sub-packaging, use stable object form first, do not split each `node_modules` package into independent chunks
+- Component library mode must externalize peer dependencies and produce type declarations separately
+- `vite preview` is only used for local build smoke tests, not production servers
 
-## 数据请求
+## Data request
 
-- 避免瀑布式请求（串行依赖），尽可能并行
-- 合理使用缓存策略（SWR / React Query / VueQuery）
-- 分页加载或虚拟滚动处理大数据集
-- 防抖/节流处理高频触发的请求（搜索、滚动）
+- Avoid waterfall requests (serial dependencies), parallelize as much as possible
+- Proper use of caching strategies (SWR/React Query/VueQuery)
+- Paged loading or virtual scrolling for processing large data sets
+- Anti-shake/throttle processing of high-frequency triggered requests (search, scrolling)
 
-## 检查清单
+## Checklist
 
-- [ ] 是否记录核心路由、设备、网络和当前指标
-- [ ] 路由是否按需加载
-- [ ] 重型组件是否懒加载
-- [ ] 大列表是否使用虚拟滚动或分页
-- [ ] 图片是否使用现代格式和合理尺寸
-- [ ] 第三方库是否按需导入
-- [ ] 是否存在不必要的重渲染
-- [ ] Vite 项目是否单独执行 typecheck
-- [ ] Vite 构建产物是否经过 `vite build` 和本地预览烟测
-- [ ] 是否复查 loading、error、empty、disabled 和移动端状态没有被优化破坏
+- [ ] Whether to record core routing, device, network and current metrics
+- [ ] Whether the route is loaded on demand
+- [ ] Whether heavy components are lazy loaded
+- [ ] Whether to use virtual scrolling or paging for large lists
+- [ ] Whether the image uses a modern format and reasonable size
+- [ ] Whether third-party libraries are imported on demand
+- [ ] Whether there is unnecessary re-rendering
+- [ ] Whether the Vite project executes typecheck separately
+- [ ] Whether the Vite build product has passed the `vite build` and local preview smoke tests
+- [ ] Whether to review loading, error, empty, disabled and mobile status are not destroyed by optimization
 
-## 反模式
+## Anti-pattern
 
-- 将所有路由打包在一个 chunk 中
-- 在首屏加载整个图表库或编辑器
-- 在组件内重复创建相同的 API 请求
-- 大列表不做虚拟化直接渲染数千行 DOM
-- 频繁操作（如输入、滚动）不做防抖/节流
-- 认为 `vite build` 通过就代表 TypeScript 没有错误
-- 设置 `envPrefix: ""` 或把服务端密钥注入客户端 bundle
-- 未先复现卡顿、包体积或 Web Vitals 指标，就做大范围“性能优化”
-- 为追求实验室分数删除状态反馈、降低可访问性或牺牲主路径可维护性
+- Pack all routes in one chunk
+- Load the entire chart library or editor on the first screen
+- Create the same API request repeatedly within the component
+- Large lists directly render thousands of lines of DOM without virtualization
+- No anti-shake/throttling for frequent operations (such as input, scrolling)
+- It is considered that passing `vite build` means that TypeScript has no errors
+- Set `envPrefix: ""` or inject the server key into the client bundle
+- Doing extensive “performance optimization” without first reproducing lag, packet size or Web Vitals indicators
+- Remove status feedback, reduce accessibility, or sacrifice main path maintainability in pursuit of lab scores
