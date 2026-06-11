@@ -12,7 +12,7 @@
 
 **Language / 语言**
 
-[English](README.md) | [**简体中文**](README.zh-CN.md)
+[English](README.openclaw.md) | [**简体中文**](README.openclaw.zh-CN.md)
 
 </div>
 
@@ -136,41 +136,92 @@ frontend-craft/
 
 ### 技能
 
-| 技能                             | 用途                                                           |
-| -------------------------------- | -------------------------------------------------------------- |
-| `fec-code-review`                | 架构、类型安全、渲染、样式、可访问性、测试、安全评审           |
-| `fec-security-review`            | XSS、CSRF、敏感数据泄露、不安全输入处理                        |
-| `fec-accessibility-check`        | 面向 WCAG 的语义结构、键盘支持、焦点、标签检查                 |
-| `fec-react-project-standard`     | React + TypeScript 项目规范                                    |
-| `fec-vue3-project-standard`      | Vue 3 + TypeScript 项目规范                                    |
-| `fec-typescript-project-standard`     | TypeScript 配置、公开类型、声明文件、DTO 和泛型                |
-| `fec-implement-from-design`      | 基于 Figma、Sketch、MasterGo、Pixso、墨刀或截图实现 UI         |
-| `fec-validation-fix`             | 执行校验命令、分析失败并安全修复                               |
-| `fec-legacy-web-standard`        | JavaScript + jQuery + HTML/CSS 传统前端规范                    |
-| `fec-legacy-to-modern-migration` | 遗留前端现代化、目标栈识别与分阶段迁移策略                     |
-| `fec-testing-strategy`           | 测试层级选择、风险矩阵与覆盖规划                               |
-| `fec-e2e-testing`                | Playwright / Cypress E2E 结构、产物、CI 与不稳定用例治理       |
-| `fec-nextjs-project-standard`    | Next.js App Router、SSR/SSG、路由、元数据、中间件              |
-| `fec-nuxt-project-standard`      | Nuxt 3 SSR/SSG、组合式函数、路由、中间件                       |
-| `fec-monorepo-project-standard`  | pnpm workspace、Turborepo、Nx 结构与任务编排                   |
-| `fec-data-fetching`              | 服务端状态获取、缓存、失效、SSR 与无限加载                     |
-| `fec-state-management`           | 状态归属、store 选型、URL/服务端/表单/本地状态边界             |
-| `fec-form-handling`              | 跨框架表单选型、schema 校验、动态字段、上传、多步流程          |
-| `fec-tailwind-design-system`     | Tailwind token、主题扩展、组件变体、class 治理和暗色模式       |
-| `fec-responsive-layout`          | 移动优先布局、容器查询、数据密集型响应式界面                   |
-| `fec-browser-storage`            | localStorage/sessionStorage/IndexedDB/Cookies 选型与安全持久化 |
-| `fec-route-protection`           | React Router、Next.js、Vue Router、Nuxt 的权限路由保护         |
-| `fec-component-testing`          | RTL / Vue Test Utils 组件测试与回归用例                        |
-| `fec-storybook-component-doc`    | Storybook 组件文档、Addon、MDX、交互与视觉测试集成             |
-| `fec-list-virtualization`        | 按框架选型的大列表虚拟滚动、测量、网格和无限滚动               |
-| `fec-pwa-implementation`         | PWA manifest、Service Worker、离线缓存与安装提示               |
-| `fec-web-workers`                | Web Worker、Transferable、Comlink、Worker 池                   |
-| `fec-canvas-threejs`             | Canvas 2D、Three.js、React Three Fiber、WebGL 性能与可访问性   |
-| `fec-svg-animation`              | CSS、Framer Motion、GSAP SVG 动画与 reduced-motion 降级        |
-| `fec-ui-design`                  | UI 方向、视觉识别、界面打磨、状态与视觉 QA                     |
-| `fec-web-video-presentation`     | 将文章、口播稿、课程和 demo 转成可录屏的 16:9 步进网页演示     |
-| `fec-dependency-upgrade`         | 依赖升级、lockfile 评审、CVE 修复和迁移验证                    |
-| `fec-vite-project-standard`      | Vite 配置、环境变量安全、HMR、开发代理、构建优化与库模式       |
+OpenClaw 包包含 `skills/` 下全部 45 个公开工作流技能，按使用场景分组如下。
+
+**项目规范**
+
+| 技能                             | 用途                                                |
+| -------------------------------- | --------------------------------------------------- |
+| `fec-react-project-standard`     | React + TypeScript 项目规范                         |
+| `fec-vue3-project-standard`      | Vue 3 + TypeScript 项目规范                         |
+| `fec-nextjs-project-standard`    | Next.js App Router、SSR/SSG、路由、元数据、中间件   |
+| `fec-nuxt-project-standard`      | Nuxt 3 SSR/SSG、组合式函数、路由、中间件            |
+| `fec-vite-project-standard`      | Vite 配置、环境变量安全、HMR、开发代理、构建优化    |
+| `fec-monorepo-project-standard`  | pnpm workspace、Turborepo、Nx 结构与任务编排        |
+| `fec-typescript-project-standard` | TypeScript 配置、公开类型、声明文件、DTO 和泛型     |
+
+**实现能力**
+
+| 技能                      | 用途                                                           |
+| ------------------------- | -------------------------------------------------------------- |
+| `fec-data-fetching`       | 服务端状态获取、缓存、失效、SSR 与无限加载                     |
+| `fec-api-integration`     | 类型化 API 客户端、鉴权刷新、上传与实时通信                    |
+| `fec-state-management`    | 状态归属、store 选型、URL/服务端/表单/本地状态边界             |
+| `fec-form-handling`       | 跨框架表单选型、schema 校验、动态字段、上传、多步流程          |
+| `fec-browser-storage`     | localStorage/sessionStorage/IndexedDB/Cookies 选型与安全持久化 |
+| `fec-route-protection`    | React Router、Next.js、Vue Router、Nuxt 的权限路由保护         |
+| `fec-pwa-implementation`  | PWA manifest、Service Worker、离线缓存与安装提示               |
+| `fec-web-workers`         | Web Worker、Transferable、Comlink、Worker 池                   |
+| `fec-canvas-threejs`      | Canvas 2D、Three.js、React Three Fiber、WebGL 性能与可访问性   |
+| `fec-svg-animation`       | CSS、Framer Motion、GSAP SVG 动画与 reduced-motion 降级        |
+| `fec-list-virtualization` | 按框架选型的大列表虚拟滚动、测量、网格和无限滚动               |
+
+**测试**
+
+| 技能                    | 用途                                                     |
+| ----------------------- | -------------------------------------------------------- |
+| `fec-testing-strategy`  | 测试层级选择、风险矩阵与覆盖规划                         |
+| `fec-component-testing` | RTL / Vue Test Utils 组件测试与回归用例                  |
+| `fec-e2e-testing`       | Playwright / Cypress E2E 结构、产物、CI 与不稳定用例治理 |
+| `fec-tdd-workflow`      | 测试先行的 red-green-refactor 前端实现流程               |
+
+**评审与质量**
+
+| 技能                           | 用途                                                     |
+| ------------------------------ | -------------------------------------------------------- |
+| `fec-code-review`              | 架构、类型安全、渲染、样式、可访问性、测试、安全评审     |
+| `fec-debug-framework`          | 构建、运行时、UI 与 API/data 问题的系统化诊断            |
+| `fec-security-review`          | XSS、CSRF、敏感数据泄露、不安全输入处理                  |
+| `fec-accessibility-check`      | 面向 WCAG 的语义结构、键盘支持、焦点、标签检查           |
+| `fec-dependency-upgrade`       | 依赖升级、lockfile 评审、CVE 修复和迁移验证              |
+| `fec-validation-fix`           | 执行校验命令、分析失败并安全修复                         |
+| `fec-performance-optimization` | Core Web Vitals、bundle、渲染、内存、网络和预算评审      |
+| `fec-refactor-clean`           | 安全清理死代码、未用导出、样式、路由与依赖               |
+
+**设计 UI**
+
+| 技能                          | 用途                                                       |
+| ----------------------------- | ---------------------------------------------------------- |
+| `fec-ui-design`               | UI 方向、视觉识别、界面打磨、状态与视觉 QA                 |
+| `fec-image-generation`        | 图表、图片生成/编辑、视觉资产与 PNG QA 修复循环            |
+| `fec-drawio-studio`           | 可编辑 draw.io / diagrams.net 技术图、形状检索与代码结构图 |
+| `fec-web-video-presentation`  | 将文章、口播稿、课程和 demo 转成可录屏的 16:9 步进网页演示 |
+| `fec-tailwind-design-system`  | Tailwind token、主题扩展、组件变体、class 治理和暗色模式   |
+| `fec-responsive-layout`       | 移动优先布局、容器查询、数据密集型响应式界面               |
+| `fec-motion-interaction`      | 上下文感知动效、页面转场、滚动动画与 reduced motion        |
+| `fec-implement-from-design`   | 基于 Figma、Sketch、MasterGo、Pixso、墨刀或截图实现 UI     |
+| `fec-storybook-component-doc` | Storybook 组件文档、设计系统展示与隔离状态预览             |
+
+**遗留迁移**
+
+| 技能                             | 用途                                       |
+| -------------------------------- | ------------------------------------------ |
+| `fec-legacy-web-standard`        | JavaScript + jQuery + HTML/CSS 传统前端规范 |
+| `fec-legacy-to-modern-migration` | 遗留前端现代化、目标栈识别与分阶段迁移策略 |
+
+**项目演进**
+
+| 技能          | 用途                                             |
+| ------------- | ------------------------------------------------ |
+| `fec-alchemy` | 吸收参考系统想法，并重设计为原创、项目原生改进   |
+
+**维护与文档**
+
+| 技能                            | 用途                                                     |
+| ------------------------------- | -------------------------------------------------------- |
+| `fec-backend-requirements-handoff` | 面向后端交接 UI 数据需求、用户动作、状态、规则和问题   |
+| `fec-doc-sync`                  | 同步 README、配置、脚本、路由/API、环境变量与部署事实   |
+| `fec-source-driven-development` | 根据项目事实和官方来源校验版本敏感的前端决策             |
 
 ### 技能使用：场景与示例
 
@@ -219,13 +270,18 @@ frontend-craft/
 
 **斜杠命令（`commands/` 下的 Markdown）**
 
-作为**固定步骤**的命令说明加载。对话里用自然语言描述要做的事即可，代理可按对应命令文档执行，**无需**说出命令文件名。下表只列出常见 OpenClaw 示例；完整命令提示词见 [docs/zh-CN/example-prompts.md](docs/zh-CN/example-prompts.md#高级用户提示词)。
+作为**固定步骤**的命令说明加载。对话里用自然语言描述要做的事即可，代理可按对应命令文档执行，**无需**说出命令文件名。完整命令提示词见 [docs/zh-CN/example-prompts.md](docs/zh-CN/example-prompts.md#高级用户提示词)。
 
-| 命令文档          | 适用时机                                                                                 | 示例（自然语言）                                                                                                  |
-| ----------------- | ---------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------- |
-| `fec-init.md`     | 在**业务仓库**里初始化 **Claude 风格** 的 `.claude/` 模板（文档内路径针对 `.claude/`）。 | 「请在本仓库初始化 `.claude/`，按插件提供的模板与规则复制；若已有文件请先问我是否覆盖。」                         |
-| `fec-review.md`   | 引导式评审并保存 `reports/code-review-*.md`。                                            | 「请评审我上一次提交里改动的文件，并写一份结构化 Markdown 报告到 `reports/`。」                                   |
-| `fec-scaffold.md` | 页面 / 功能 / 组件目录脚手架。                                                           | 「请为 React 项目脚手架一个新页面 UserDetail：放在 `src/pages/...`，并带上空的 `components/` 与 `hooks/` 目录。」 |
+| 命令文档                 | 适用时机                                                                                 | 示例（自然语言）                                                                                                  |
+| ------------------------ | ---------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------- |
+| `fec-init.md`            | 在**业务仓库**里初始化 **Claude 风格** 的 `.claude/` 模板（文档内路径针对 `.claude/`）。 | 「请在本仓库初始化 `.claude/`，按插件提供的模板与规则复制；若已有文件请先问我是否覆盖。」                         |
+| `fec-review.md`          | 引导式评审并保存 `reports/code-review-*.md`。                                            | 「请评审我上一次提交里改动的文件，并写一份结构化 Markdown 报告到 `reports/`。」                                   |
+| `fec-scaffold.md`        | 页面 / 功能 / 组件目录脚手架。                                                           | 「请为 React 项目脚手架一个新页面 UserDetail：放在 `src/pages/...`，并带上空的 `components/` 与 `hooks/` 目录。」 |
+| `fec-plan.md`            | 实现前做架构方案或测试策略规划。                                                         | 「先规划 checkout 重写：组件边界、状态流、风险和测试覆盖。」                                                      |
+| `fec-tdd.md`             | 使用 red-green-refactor 的测试驱动实现流程。                                             | 「这个筛选组件请按 TDD 做：先写失败测试，再实现最小行为。」                                                       |
+| `fec-debug.md`           | 诊断构建、运行时、UI 或 API/data 失败。                                                  | 「登录后 dashboard 崩溃，请检查错误路径、定位根因，并写一份 debug 报告。」                                        |
+| `fec-refactor-clean.md`  | 分类并安全清理死代码、未用导出、样式和依赖。                                             | 「清理 `src/features/billing/` 里的未用导出和样式，保持行为不变并报告变更。」                                     |
+| `fec-doc-sync.md`        | 同步 README、文档、环境说明、脚本列表、API/路由说明和部署事实。                          | 「检查 README 命令列表是否还匹配 package scripts，并更新漂移的文档。」                                            |
 
 ### Hooks
 

@@ -389,6 +389,30 @@ test("README skill tree uses fec-prefixed public skill directories", () => {
   }
 });
 
+test("OpenClaw READMEs mention every bundled skill and command doc", () => {
+  const skillIds = fs
+    .readdirSync(path.join(root, "skills"), { withFileTypes: true })
+    .filter((entry) => entry.isDirectory())
+    .map((entry) => entry.name)
+    .sort();
+  const commandDocs = fs
+    .readdirSync(path.join(root, "commands"), { withFileTypes: true })
+    .filter((entry) => entry.isFile() && entry.name.endsWith(".md"))
+    .map((entry) => entry.name)
+    .sort();
+  const docs = ["README.openclaw.md", "README.openclaw.zh-CN.md"];
+
+  for (const doc of docs) {
+    const body = fs.readFileSync(path.join(root, doc), "utf8");
+    for (const skillId of skillIds) {
+      assert.match(body, new RegExp(`\`${escapeRegExp(skillId)}\``), `${doc} missing skill ${skillId}`);
+    }
+    for (const commandDoc of commandDocs) {
+      assert.match(body, new RegExp(`\`${escapeRegExp(commandDoc)}\``), `${doc} missing command ${commandDoc}`);
+    }
+  }
+});
+
 test("Claude docs describe one active plugin source instead of recommending dual installs", () => {
   const docs = [
     "README.md",

@@ -24,7 +24,7 @@ const mainPkg = JSON.parse(
 );
 
 const pkg = {
-  name: "@bovinphang/frontend-craft",
+  name: "frontend-craft",
   version: mainPkg.version,
   description:
     "OpenClaw native plugin build for Frontend Craft (skills, hooks, workspace init).",
@@ -80,8 +80,11 @@ cpSync(
   path.join(root, "openclaw.plugin.json"),
   path.join(packRoot, "openclaw.plugin.json"),
 );
-cpSync(path.join(root, "README.openclaw.md"), path.join(packRoot, "README.md"));
-cpSync(
+copyOpenClawReadme(
+  path.join(root, "README.openclaw.md"),
+  path.join(packRoot, "README.md"),
+);
+copyOpenClawReadme(
   path.join(root, "README.openclaw.zh-CN.md"),
   path.join(packRoot, "README.zh-CN.md"),
 );
@@ -99,3 +102,10 @@ execSync(`npm pack --pack-destination "${packRoot}"`, {
 });
 
 console.log("Packed frontend-craft from", packRoot, "to", packRoot);
+
+function copyOpenClawReadme(source: string, dest: string): void {
+  const body = readFileSync(source, "utf8")
+    .replaceAll("README.openclaw.md", "README.md")
+    .replaceAll("README.openclaw.zh-CN.md", "README.zh-CN.md");
+  writeFileSync(dest, body, "utf8");
+}

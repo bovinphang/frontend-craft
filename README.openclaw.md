@@ -12,7 +12,7 @@
 
 **Language / 语言**
 
-[**English**](README.md) | [简体中文](README.zh-CN.md)
+[**English**](README.openclaw.md) | [简体中文](README.openclaw.zh-CN.md)
 
 </div>
 
@@ -136,41 +136,92 @@ frontend-craft/
 
 ### Skills
 
-| Skill                            | Purpose                                                                              |
-| -------------------------------- | ------------------------------------------------------------------------------------ |
-| `fec-code-review`                | Architecture, type safety, rendering, styles, accessibility, tests, security         |
-| `fec-security-review`            | XSS, CSRF, sensitive data leakage, unsafe input handling                             |
-| `fec-accessibility-check`        | WCAG-oriented semantic structure, keyboard support, focus, labels                    |
-| `fec-react-project-standard`     | React + TypeScript project standards                                                 |
-| `fec-vue3-project-standard`      | Vue 3 + TypeScript project standards                                                 |
-| `fec-typescript-project-standard`     | TypeScript config, public API types, declarations, DTOs, and generics                |
-| `fec-implement-from-design`      | Implement UI from Figma, Sketch, MasterGo, Pixso, Modao, or screenshots              |
-| `fec-validation-fix`             | Run validation commands, diagnose failures, and fix safely                           |
-| `fec-legacy-web-standard`        | JavaScript + jQuery + HTML/CSS legacy frontend standards                             |
-| `fec-legacy-to-modern-migration` | Legacy frontend modernization, target-stack selection, and phased migration          |
-| `fec-testing-strategy`           | Testing layer selection, risk matrix, and coverage planning                          |
-| `fec-e2e-testing`                | Playwright / Cypress E2E structure, artifacts, CI, and flaky test handling           |
-| `fec-nextjs-project-standard`    | Next.js App Router, SSR/SSG, routing, metadata, middleware                           |
-| `fec-nuxt-project-standard`      | Nuxt 3 SSR/SSG, composables, routing, middleware                                     |
-| `fec-monorepo-project-standard`  | pnpm workspace, Turborepo, Nx structure and task orchestration                       |
-| `fec-data-fetching`              | Server-state fetching, caching, invalidation, SSR, and infinite loading              |
-| `fec-state-management`           | State ownership, store selection, URL/server/form/local state boundaries             |
-| `fec-form-handling`              | Framework-aware forms, schema validation, dynamic fields, uploads, multi-step flows  |
-| `fec-tailwind-design-system`     | Tailwind tokens, theme extension, variants, class governance, dark mode              |
-| `fec-responsive-layout`          | Mobile-first layouts, container queries, data-dense responsive UI                    |
-| `fec-browser-storage`            | localStorage/sessionStorage/IndexedDB/Cookies selection and safe client persistence  |
-| `fec-route-protection`           | Authenticated and permissioned routes for React Router, Next.js, Vue Router, Nuxt    |
-| `fec-component-testing`          | React Testing Library / Vue Test Utils component tests and regression scenarios      |
-| `fec-storybook-component-doc`    | Storybook component docs, addons, MDX, interaction and visual test integration       |
-| `fec-list-virtualization`        | Framework-aware virtualization, item measurement, grids, and infinite scrolling      |
-| `fec-pwa-implementation`         | Manifest, service worker, offline cache, install prompts, update handling            |
-| `fec-web-workers`                | Web Worker integration, transferable objects, Comlink, worker pools                  |
-| `fec-canvas-threejs`             | Canvas 2D, Three.js, React Three Fiber, WebGL performance and accessibility          |
-| `fec-svg-animation`              | SVG animation with CSS, Framer Motion, GSAP, reduced-motion fallbacks                |
-| `fec-ui-design`                  | UI direction, visual identity, polish, states, visual QA                             |
-| `fec-web-video-presentation`     | Recordable 16:9 step-driven web presentations from articles, scripts, lessons, demos |
-| `fec-dependency-upgrade`         | Dependency upgrades, lockfile review, CVE remediation, migration verification        |
-| `fec-vite-project-standard`      | Vite config, env safety, HMR, dev proxy, build optimization, library mode            |
+The OpenClaw package includes all 45 public workflow skills from `skills/`, grouped here by use case.
+
+**Project standards**
+
+| Skill                            | Purpose                                                               |
+| -------------------------------- | --------------------------------------------------------------------- |
+| `fec-react-project-standard`     | React + TypeScript project standards                                  |
+| `fec-vue3-project-standard`      | Vue 3 + TypeScript project standards                                  |
+| `fec-nextjs-project-standard`    | Next.js App Router, SSR/SSG, routing, metadata, middleware            |
+| `fec-nuxt-project-standard`      | Nuxt 3 SSR/SSG, composables, routing, middleware                      |
+| `fec-vite-project-standard`      | Vite config, env safety, HMR, dev proxy, build optimization           |
+| `fec-monorepo-project-standard`  | pnpm workspace, Turborepo, Nx structure and task orchestration        |
+| `fec-typescript-project-standard` | TypeScript config, public API types, declarations, DTOs, and generics |
+
+**Implementation capabilities**
+
+| Skill                     | Purpose                                                                            |
+| ------------------------- | ---------------------------------------------------------------------------------- |
+| `fec-data-fetching`       | Server-state fetching, caching, invalidation, SSR, and infinite loading            |
+| `fec-api-integration`     | Typed API clients, auth refresh, uploads, and realtime integration                 |
+| `fec-state-management`    | State ownership, store selection, URL/server/form/local state boundaries           |
+| `fec-form-handling`       | Framework-aware forms, schema validation, dynamic fields, uploads, multi-step flows |
+| `fec-browser-storage`     | localStorage/sessionStorage/IndexedDB/Cookies selection and safe persistence       |
+| `fec-route-protection`    | Authenticated and permissioned routes for React Router, Next.js, Vue Router, Nuxt  |
+| `fec-pwa-implementation`  | Manifest, service worker, offline cache, install prompts, update handling          |
+| `fec-web-workers`         | Web Worker integration, transferable objects, Comlink, worker pools                |
+| `fec-canvas-threejs`      | Canvas 2D, Three.js, React Three Fiber, WebGL performance and accessibility        |
+| `fec-svg-animation`       | SVG animation with CSS, Framer Motion, GSAP, reduced-motion fallbacks              |
+| `fec-list-virtualization` | Framework-aware virtualization, item measurement, grids, and infinite scrolling    |
+
+**Testing**
+
+| Skill                   | Purpose                                                                    |
+| ----------------------- | -------------------------------------------------------------------------- |
+| `fec-testing-strategy`  | Testing layer selection, risk matrix, and coverage planning                |
+| `fec-component-testing` | React Testing Library / Vue Test Utils component tests and regression      |
+| `fec-e2e-testing`       | Playwright / Cypress E2E structure, artifacts, CI, and flaky test handling |
+| `fec-tdd-workflow`      | Test-first frontend implementation with red-green-refactor                 |
+
+**Review and quality**
+
+| Skill                          | Purpose                                                                         |
+| ------------------------------ | ------------------------------------------------------------------------------- |
+| `fec-code-review`              | Architecture, type safety, rendering, styles, accessibility, tests, security    |
+| `fec-debug-framework`          | Systematic diagnostics for build, runtime, UI, and API/data failures            |
+| `fec-security-review`          | XSS, CSRF, sensitive data leakage, unsafe input handling                        |
+| `fec-accessibility-check`      | WCAG-oriented semantic structure, keyboard support, focus, labels               |
+| `fec-dependency-upgrade`       | Dependency upgrades, lockfile review, CVE remediation, migration verification   |
+| `fec-validation-fix`           | Run validation commands, diagnose failures, and fix safely                      |
+| `fec-performance-optimization` | Core Web Vitals, bundle, rendering, memory, network, and budget reviews         |
+| `fec-refactor-clean`           | Safe dead-code, unused export, style, route, and dependency cleanup             |
+
+**Design UI**
+
+| Skill                         | Purpose                                                                              |
+| ----------------------------- | ------------------------------------------------------------------------------------ |
+| `fec-ui-design`               | UI direction, visual identity, polish, states, visual QA                             |
+| `fec-image-generation`        | Diagrams, image generation/editing, visual assets, and PNG QA repair loops           |
+| `fec-drawio-studio`           | Editable draw.io / diagrams.net technical diagrams, shape lookup, and code maps      |
+| `fec-web-video-presentation`  | Recordable 16:9 step-driven web presentations from articles, scripts, lessons, demos |
+| `fec-tailwind-design-system`  | Tailwind tokens, theme extension, variants, class governance, dark mode              |
+| `fec-responsive-layout`       | Mobile-first layouts, container queries, data-dense responsive UI                    |
+| `fec-motion-interaction`      | Context-aware motion, page transitions, scroll animation, reduced motion             |
+| `fec-implement-from-design`   | Implement UI from Figma, Sketch, MasterGo, Pixso, Modao, or screenshots              |
+| `fec-storybook-component-doc` | Storybook component docs, design-system presentation, isolated state previews        |
+
+**Legacy migration**
+
+| Skill                            | Purpose                                                                     |
+| -------------------------------- | --------------------------------------------------------------------------- |
+| `fec-legacy-web-standard`        | JavaScript + jQuery + HTML/CSS legacy frontend standards                    |
+| `fec-legacy-to-modern-migration` | Legacy frontend modernization, target-stack selection, and phased migration |
+
+**Project evolution**
+
+| Skill         | Purpose                                                                  |
+| ------------- | ------------------------------------------------------------------------ |
+| `fec-alchemy` | Absorb reference system ideas through original, project-native redesign  |
+
+**Maintenance docs**
+
+| Skill                           | Purpose                                                                            |
+| ------------------------------- | ---------------------------------------------------------------------------------- |
+| `fec-backend-requirements-handoff` | Frontend-to-backend handoff for UI data needs, actions, states, rules, questions |
+| `fec-doc-sync`                  | Keep frontend docs in sync with code, config, scripts, routes, APIs, and env facts |
+| `fec-source-driven-development` | Verify version-sensitive frontend decisions against project facts and sources      |
 
 ### Using skills (scenarios & examples)
 
@@ -219,13 +270,18 @@ This section is a quick OpenClaw-oriented sample, not the full prompt catalog. F
 
 **Slash commands (markdown under `commands/`)**
 
-These are loaded as command specs; use them when you want a **fixed checklist** instead of free-form matching. In chat, describe what you want—the agent can follow the matching command doc without you naming it. The table below lists common OpenClaw examples; the complete command prompt set is in [docs/example-prompts.md](docs/example-prompts.md#power-user-prompts).
+These are loaded as command specs; use them when you want a **fixed checklist** instead of free-form matching. In chat, describe what you want—the agent can follow the matching command doc without you naming it. The complete command prompt set is in [docs/example-prompts.md](docs/example-prompts.md#power-user-prompts).
 
-| Command doc       | When to use                                                                                                 | Example (plain language)                                                                                                     |
-| ----------------- | ----------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------- |
-| `fec-init.md`     | Bootstrap **Claude-style** `.claude/` templates in a **project repo** (paths in the doc target `.claude/`). | “Initialize this repo’s `.claude/` with the frontend-craft templates and rules from the plugin; ask before overwriting.”     |
-| `fec-review.md`   | Guided review + save `reports/code-review-*.md`.                                                            | “Review the files changed in my last commit and write a structured markdown report under `reports/`.”                        |
-| `fec-scaffold.md` | Page / feature / component folder layout.                                                                   | “Scaffold a new React page `UserDetail` with the usual `src/pages/...` layout and empty `components/` and `hooks/` folders.” |
+| Command doc              | When to use                                                                                                 | Example (plain language)                                                                                                     |
+| ------------------------ | ----------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------- |
+| `fec-init.md`            | Bootstrap **Claude-style** `.claude/` templates in a **project repo** (paths in the doc target `.claude/`). | “Initialize this repo’s `.claude/` with the frontend-craft templates and rules from the plugin; ask before overwriting.”     |
+| `fec-review.md`          | Guided review + save `reports/code-review-*.md`.                                                            | “Review the files changed in my last commit and write a structured markdown report under `reports/`.”                        |
+| `fec-scaffold.md`        | Page / feature / component folder layout.                                                                   | “Scaffold a new React page `UserDetail` with the usual `src/pages/...` layout and empty `components/` and `hooks/` folders.” |
+| `fec-plan.md`            | Architecture or test planning before implementation.                                                        | “Plan the checkout rewrite first: component boundaries, state flow, risks, and test coverage.”                               |
+| `fec-tdd.md`             | Red-green-refactor implementation workflow.                                                                 | “Use a TDD loop for this filter component: write the failing test first, then implement the minimum behavior.”                |
+| `fec-debug.md`           | Diagnose build, runtime, UI, or API/data failures.                                                          | “The dashboard crashes after login; inspect the error path, isolate the cause, and write a debug report.”                    |
+| `fec-refactor-clean.md`  | Classify and safely remove dead code, unused exports, styles, and dependencies.                              | “Clean up unused exports and styles in `src/features/billing/`, preserving behavior and reporting what changed.”             |
+| `fec-doc-sync.md`        | Sync README, docs, env notes, script lists, API/route notes, and deploy facts.                               | “Check whether the README command list still matches package scripts and update the docs that drifted.”                      |
 
 ### Hooks
 
