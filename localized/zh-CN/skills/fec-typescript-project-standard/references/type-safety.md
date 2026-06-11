@@ -1,10 +1,10 @@
 # TypeScript 类型安全
 
-## Purpose
+## 用途
 
 为前端和 TypeScript 工程建立可演进的类型契约，减少 `any`、断言和运行时形状漂移。
 
-## Procedure
+## 流程
 
 ### 1. 先确定类型边界
 
@@ -135,7 +135,7 @@ type UserStatus = UserViewModel["status"];
 type _UserStatusTest = Expect<Equal<UserStatus, "active" | "disabled">>;
 ```
 
-## Constraints
+## 约束
 
 - 避免 `any`、无守卫的非空断言和不相关类型之间的强制 `as`。
 - 不把大型匿名类型堆在函数参数或 JSX props 上；提取具名类型表达业务含义。
@@ -143,6 +143,6 @@ type _UserStatusTest = Expect<Equal<UserStatus, "active" | "disabled">>;
 - 公共 API 的输入输出必须显式标注，局部变量可依赖推断。
 - 类型建模不能替代运行时校验；外部数据仍需 schema 或 type guard。
 
-## Expected Output
+## 预期输出
 
 产出清晰的类型边界、可收窄的数据模型、必要的类型测试和验证命令。评审时应列出类型风险、运行时影响、推荐建模方式和是否需要专项修复。

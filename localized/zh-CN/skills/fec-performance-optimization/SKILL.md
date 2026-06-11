@@ -1,15 +1,15 @@
 ---
 name: fec-performance-optimization
-description: Use when diagnosing or improving frontend performance, Core Web Vitals, bundle size, runtime rendering cost, network waterfalls, memory leaks, long tasks, Lighthouse findings, or performance budgets; Chinese triggers include 性能优化, 页面卡顿, 首屏慢, 包体积, Web Vitals.
+description: 用于诊断或改进前端性能、Core Web Vitals、包体积、运行时渲染成本、网络瀑布、内存泄漏、长任务、Lighthouse 问题或性能预算；中文触发词包括 性能优化、页面卡顿、首屏慢、包体积、Web Vitals。
 ---
 
 # 前端性能优化
 
-## Purpose
+## 用途
 
 用可度量的方式定位前端性能瓶颈，并把优化建议收敛到用户主路径、构建产物和运行时证据。
 
-## Procedure
+## 流程
 
 1. 锁定体验目标
    - 明确问题属于首屏加载、交互延迟、滚动卡顿、内存上涨、网络瀑布、包体积，还是视觉稳定性。
@@ -42,17 +42,17 @@ description: Use when diagnosing or improving frontend performance, Core Web Vit
    - 对比优化前后指标或产物体积。
    - 确认 loading、empty、error、offline、reduced-motion 和移动端状态未被优化破坏。
 
-## Budgets
+## 预算
 
-| Area | Default Target | Notes |
-| ---- | -------------- | ----- |
+| 范围 | 默认目标 | 说明 |
+| ---- | -------- | ---- |
 | LCP | 约 2.5s 内 | 以核心页面、目标地区网络和真实设备为准 |
 | CLS | 低于 0.1 | 媒体、广告、异步内容需要预留空间 |
 | INP | 约 200ms 内 | 优先拆分长任务和降低交互路径重渲染 |
-| Initial JS | 遵循项目预算 | 没有预算时先报告当前 gzip / brotli 体积 |
-| Main thread | 避免连续长任务 | 大计算考虑分片、缓存或 Worker |
+| 初始 JS | 遵循项目预算 | 没有预算时先报告当前 gzip / brotli 体积 |
+| 主线程 | 避免连续长任务 | 大计算考虑分片、缓存或 Worker |
 
-## Checks
+## 检查项
 
 - 首屏资源是否包含非首屏组件、图表、编辑器、地图或全量图标库。
 - 图片是否有明确尺寸、合适格式、懒加载和首屏优先级。
@@ -61,7 +61,7 @@ description: Use when diagnosing or improving frontend performance, Core Web Vit
 - 请求是否可并行、可缓存、可取消、可复用。
 - 监听、订阅、定时器、AbortController、Object URL、Canvas/WebGL 资源是否对称清理。
 
-## Constraints
+## 约束
 
 - 不做没有目标和证据的过早优化。
 - 不靠关闭功能、删除状态反馈或降低可访问性来换性能分数。
@@ -75,6 +75,6 @@ description: Use when diagnosing or improving frontend performance, Core Web Vit
 撰写性能分析报告时，加载 [references/report-template.md](references/report-template.md)。
 需要按 React、Vue、Next.js 或 Nuxt 分类定位框架专项性能风险时，加载 [references/framework-performance-patterns.md](references/framework-performance-patterns.md)。
 
-## Expected Output
+## 预期输出
 
 输出有证据链的性能分析报告，说明基线、候选门禁、瓶颈、优化建议、验证方式和剩余风险。报告保存为 `reports/performance-review-YYYY-MM-DD-HHmmss.md`。

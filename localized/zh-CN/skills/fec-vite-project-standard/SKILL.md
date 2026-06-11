@@ -1,17 +1,17 @@
 ---
 name: fec-vite-project-standard
-description: Use when creating, configuring, reviewing, or debugging Vite-based frontend projects, vite.config.ts, env variables, dev server proxy, HMR, plugin ordering, library mode, dependency pre-bundling, bundle splitting, or Vite build performance. Use framework-specific skills for React/Vue component architecture; Chinese triggers include Vite 配置, vite.config, Vite 构建, Vite 性能.
+description: 用于创建、配置、审查或调试基于 Vite 的前端项目、vite.config.ts、环境变量、dev server proxy、HMR、插件顺序、library mode、依赖预打包、bundle splitting 或 Vite 构建性能。React/Vue 组件架构请使用框架专项 skill；中文触发词包括 Vite 配置、vite.config、Vite 构建、Vite 性能。
 ---
 
 # Vite 项目规范
 
 适用于 Vite 应用、组件库、开发服务器和构建配置的设计与审查。
 
-## Purpose
+## 用途
 
 规范 Vite 配置、安全边界和构建性能，避免开发环境与生产构建的常见陷阱。
 
-## Procedure
+## 流程
 
 1. 识别项目类型
    - 应用项目优先检查 `root`、`base`、`server.proxy`、`envPrefix`、`build` 和框架插件。
@@ -40,7 +40,7 @@ description: Use when creating, configuring, reviewing, or debugging Vite-based 
    - 动效、3D、图表、编辑器、地图和音视频处理库优先通过动态导入或路由级拆包隔离。
    - 检查静态资源是否进入正确目录、是否被 hash/cache、是否存在占位 URL 或过大的未压缩媒体。
 
-## Minimal Config
+## 最小配置
 
 ```ts
 import { defineConfig, loadEnv } from "vite";
@@ -67,7 +67,7 @@ export default defineConfig(({ mode }) => {
 });
 ```
 
-## Constraints
+## 约束
 
 - `vite build` 只转译和打包，不等于类型检查；CI 必须另跑 typecheck。
 - `VITE_` 不是安全边界；任何 `VITE_` 变量都会进入客户端包。
@@ -78,6 +78,6 @@ export default defineConfig(({ mode }) => {
 - 不把服务端密钥通过 `define`、`import.meta.env` 或空前缀 `loadEnv` 注入客户端。
 - 不把 GSAP、Three.js、Lottie、Monaco、地图 SDK 等重型库放进所有页面共享入口；先评估 async chunk 和首屏影响。
 
-## Expected Output
+## 预期输出
 
 输出应包含项目类型判断、关键配置变更、环境变量安全说明、构建/开发性能验证方式。完成后 Vite 配置应可类型检查、可构建、密钥不泄露，并能解释 dev 与 build 的差异。

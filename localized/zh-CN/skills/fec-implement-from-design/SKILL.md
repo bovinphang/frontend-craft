@@ -1,11 +1,11 @@
 ---
 name: fec-implement-from-design
-description: Use when implementing UI from Figma, Sketch, MasterGo, Pixso, Modao, MockingBot, screenshots, design selections, design tokens, or design-to-code tasks for production frontend components/pages; Chinese triggers include 设计稿, 按设计实现.
+description: 用于根据 Figma、Sketch、MasterGo、Pixso、墨刀、摹客、截图、设计选区、设计 Token 或设计转代码任务实现生产级前端组件/页面；中文触发词包括 设计稿、按设计实现。
 ---
 
 # 按设计稿实现
 
-## Purpose
+## 用途
 
 基于设计工具（Figma、Sketch、MasterGo、Pixso、墨刀、摹客）的设计上下文，高保真实现页面或组件，强调组件复用、设计 Token 映射、可访问性和面向生产的前端实现。
 
@@ -28,7 +28,7 @@ description: Use when implementing UI from Figma, Sketch, MasterGo, Pixso, Modao
 - 保持实现结果可维护、类型明确、可测试且具备可访问性
 - 避免引入重复的基础组件或并行设计系统
 
-## Procedure
+## 流程
 
 ### 1. 识别设计来源
 
@@ -60,11 +60,11 @@ description: Use when implementing UI from Figma, Sketch, MasterGo, Pixso, Modao
 
 在创建新组件前先搜索代码库中的可复用组件，重点检查：
 
-- Button
-- Input / Select / Checkbox / Radio / Switch
-- Modal / Drawer / Dialog
-- Table / List / Card
-- Tabs / Breadcrumb / Pagination
+- 按钮（Button）
+- 输入框 / 选择器 / 复选框 / 单选框 / 开关（Input / Select / Checkbox / Radio / Switch）
+- 模态框 / 抽屉 / 对话框（Modal / Drawer / Dialog）
+- 表格 / 列表 / 卡片（Table / List / Card）
+- 标签页 / 面包屑 / 分页（Tabs / Breadcrumb / Pagination）
 - 页面容器 / 区块容器 / 空状态 / Loading 状态
 
 ### 4. 产出实现计划
@@ -111,7 +111,7 @@ description: Use when implementing UI from Figma, Sketch, MasterGo, Pixso, Modao
 
 撰写实现计划报告时，加载 [references/design-plan-template.md](references/design-plan-template.md)。
 
-## Constraints
+## 约束
 
 - 如果已有设计上下文（MCP 或截图），不要靠猜来实现 UI
 - 如果项目已有 UI 体系，不要再引入一套新的 UI Kit
@@ -121,7 +121,7 @@ description: Use when implementing UI from Figma, Sketch, MasterGo, Pixso, Modao
 - 不把生成图像当作可直接复制的代码规范；它只提供视觉证据，最终实现必须服从当前项目组件、token、可访问性和性能边界
 - 不用一张不可读整页图替代分区分析；关键区块、CTA、表单、导航和状态必须可检查
 
-## Expected Output
+## 预期输出
 
 - 设计实现计划报告保存为 `reports/design-plan-YYYY-MM-DD-HHmmss.md`，包含实现概要、组件拆分方案、状态/数据流、变更文件清单
 - 代码实现高保真还原设计稿，组件复用率最大化

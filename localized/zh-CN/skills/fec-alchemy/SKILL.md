@@ -1,17 +1,17 @@
 ---
 name: fec-alchemy
-description: Use when absorbing ideas, capabilities, workflows, architecture, quality systems, ecosystem extensions, or engineering practices from any reference system into the current project through original, project-native redesign rather than copying.
+description: 用于从参考系统中吸收想法、能力、工作流、架构、质量体系、生态扩展或工程实践，并通过原创的项目内重设计转化为当前项目能力，而不是复制原实现。
 ---
 
 # 项目吸收与原创化融合
 
-## Purpose
+## 用途
 
 将一个或多个参考系统中的优秀思想、能力和工程实践，转化为当前项目中原创、可维护、符合目标项目风格的改进。
 
 适用于吸收、借鉴、对标、迁移或融合另一个代码库、产品、框架、库、服务、CLI、插件、文档体系、AI/Agent 工具链、架构或工程工作流。普通 Bug 修复、单独 API 使用问题或直接文件格式转换不应使用本 Skill，除非用户明确要求项目级吸收或适配。
 
-## Procedure
+## 流程
 
 1. 明确目标和参考系统：
    - 将当前仓库视为目标系统，它的架构、命名、测试、发布模型和维护边界是事实来源。
@@ -40,7 +40,7 @@ description: Use when absorbing ideas, capabilities, workflows, architecture, qu
    - 如果无法验证，明确说明阻塞原因、风险范围和需要用户确认的信息。
    - 必要时使用 [assets/review-checklist.md](assets/review-checklist.md) 做人工复核。
 
-## Constraints
+## 约束
 
 - 不把吸收任务变成机械化 diff 合并。
 - 不整体照搬参考项目的命名体系、文件结构或实现细节。
@@ -49,7 +49,7 @@ description: Use when absorbing ideas, capabilities, workflows, architecture, qu
 - 不声称原创化，除非输出能解释目标设计为何不同、为何适配目标项目、如何验证。
 - 不把长篇参考材料塞进主说明；大型任务读取 [references/methodology.md](references/methodology.md)，许可证和原创风险读取 [references/originality-and-licensing.md](references/originality-and-licensing.md)。
 
-## Expected Output
+## 预期输出
 
 分析类任务输出：
 

@@ -1,4 +1,4 @@
-# React runtime patterns
+# React 运行时模式
 
 ## 常用 UI 与状态模式
 

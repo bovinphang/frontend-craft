@@ -1,4 +1,4 @@
-# React project structure and component boundaries
+# React 项目结构与组件边界
 
 ## 项目结构（推荐参考）
 

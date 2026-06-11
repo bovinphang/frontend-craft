@@ -1,37 +1,37 @@
-# Chapter Craft
+# 章节编排
 
-## Stage Rules
+## 阶段规则
 
-- Use a fixed 16:9 stage, normally 1920 by 1080, scaled to the viewport.
-- A chapter is a pure function of the current step.
-- One step should focus on one visual idea.
-- Lists reveal one meaningful item at a time.
-- Use hidden or low-emphasis controls so the recording surface stays clean.
-- Keep large text readable when screen-recorded and compressed.
+- 使用固定 16:9 舞台，通常为 1920 x 1080，并按视口缩放。
+- 章节是当前 step 的纯函数。
+- 一个 step 只聚焦一个视觉想法。
+- 列表每次只揭示一个有意义的条目。
+- 使用隐藏或低强调控件，让录制画面保持干净。
+- 大号文字在录屏和压缩后仍需保持可读。
 
-## Visual Decisions
+## 视觉决策
 
-Before implementing a chapter, answer:
+实现章节前，先回答：
 
-- What is the relationship between this step and the previous step: contrast, reveal, zoom, sequence, proof, consequence, or recap?
-- What should the viewer remember after this step?
-- Which source detail makes the screen more specific than a generic slide?
-- Is this a diagram, object, quote, metric, timeline, interface state, or spatial metaphor?
-- What can move because the content itself changes, rather than because everything needs an entrance animation?
+- 当前 step 与上一个 step 的关系是什么：对比、揭示、缩放、序列、证明、结果，还是回顾？
+- 观众在这个 step 后应该记住什么？
+- 哪个源材料细节让画面比通用幻灯片更具体？
+- 这是图表、对象、引用、指标、时间线、界面状态，还是空间隐喻？
+- 哪些内容可以因为自身变化而运动，而不是因为所有元素都需要入场动画？
 
-## Anti-Patterns
+## 反模式
 
-- Synchronized stagger of many bullets when the narration discusses them one by one.
-- Purple gradient backgrounds, floating decoration, or generic cards that do not explain the content.
-- Fake dashboards, fake screenshots, fake citations, or invented metrics.
-- Tiny body text that looks fine in a browser but fails in recorded video.
-- Persistent chrome, large page numbers, or visible instructions in the recording frame.
+- 旁白逐条讲解时，却让大量 bullet 同步 stagger。
+- 无法解释内容的紫色渐变背景、漂浮装饰或通用卡片。
+- 伪造仪表盘、伪造截图、伪造引用或编造指标。
+- 浏览器中看似正常、但录制视频中不可读的小号正文。
+- 录制画面中持续可见的 chrome、大页码或操作说明。
 
-## Completion Check
+## 完成检查
 
-- Every step renders a complete screen.
-- Text fits at the target stage size.
-- The chapter still makes sense if the recording pauses on any step.
-- Visual state follows narration order.
-- Any media used is local, real, generated for the task, or clearly marked as a placeholder.
-- Keyboard and click navigation still work after the chapter is registered.
+- 每个 step 都渲染完整画面。
+- 文本适配目标舞台尺寸。
+- 录制在任意 step 暂停时，章节仍然说得通。
+- 视觉状态遵循旁白顺序。
+- 使用的任何媒体都是本地、真实、为任务生成，或明确标记为占位。
+- 章节注册后，键盘和点击导航仍可正常工作。

@@ -1,15 +1,15 @@
 ---
 name: fec-drawio-studio
-description: Use when creating editable technical diagrams with draw.io / diagrams.net sources, including architecture diagrams, ERD, UML, sequence diagrams, flowcharts, ML model diagrams, official shape lookup, brand symbols, Graphviz auto-layout, codebase structure maps, .drawio validation, or draw.io CLI export fallback. Do not use for ordinary raster image generation, freehand sketches, interactive canvas/Three.js scenes, or decorative SVG animation. Chinese triggers include draw.io, diagrams.net, 可编辑架构图, .drawio, ER 图, UML, 序列图, 自动布局, 形状检索, 代码结构图.
+description: 用于创建带 draw.io / diagrams.net 源文件的可编辑技术图，包括架构图、ERD、UML、序列图、流程图、ML 模型图、官方形状检索、品牌符号、Graphviz 自动布局、代码结构图、.drawio 校验或 draw.io CLI 导出兜底。不要用于普通位图生成、手绘草图、交互式 Canvas/Three.js 场景或装饰性 SVG 动画；中文触发词包括 draw.io、diagrams.net、可编辑架构图、.drawio、ER 图、UML、序列图、自动布局、形状检索、代码结构图。
 ---
 
 # 可编辑技术图表工作流
 
-## Purpose
+## 用途
 
 生成、校验和导出可继续编辑的 draw.io / diagrams.net 技术图表。
 
-## Procedure
+## 流程
 
 1. 判断图表路线
    - 需要长期维护在 Markdown 中的简单图，优先 Mermaid。
@@ -49,11 +49,11 @@ description: Use when creating editable technical diagrams with draw.io / diagra
      ```
    - 报告源文件、导出文件、校验结果和无法自动验证的外部依赖。
 
-## Tool Resources
+## 工具资源
 
 工具脚本共享 [studio-core.mjs](scripts/studio-core.mjs)。离线查询使用 [shape-index.json](data/shape-index.json) 与 [brand-icons.json](data/brand-icons.json)，样式预设资源包括 [schema.json](styles/schema.json)、[default.json](styles/built-in/default.json)、[corporate.json](styles/built-in/corporate.json) 和 [handdrawn.json](styles/built-in/handdrawn.json)。
 
-## Constraints
+## 约束
 
 - 不把 draw.io 用作普通图片模型；文本密集或结构化图必须保留可编辑源。
 - 不猜测复杂 `shape=mxgraph.*` 样式；优先用形状查询工具获取官方样式。
@@ -64,6 +64,6 @@ description: Use when creating editable technical diagrams with draw.io / diagra
 - 品牌图标和第三方形状索引遵循 [THIRD_PARTY_NOTICES.md](data/THIRD_PARTY_NOTICES.md) 中的来源与许可说明。
 - 参考外部 draw.io MCP 生态时，只吸收路线、约束和互操作经验，不复制其服务实现或长篇提示词。
 
-## Expected Output
+## 预期输出
 
 交付可编辑 `.drawio` 源和所需导出格式，并给出结构校验结果。图表应节点完整、连线可追踪、标签不截断、布局不重叠，外部工具缺失时提供可打开的 diagrams.net fallback。

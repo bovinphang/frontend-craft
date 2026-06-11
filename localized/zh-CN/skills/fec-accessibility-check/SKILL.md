@@ -1,15 +1,15 @@
 ---
 name: fec-accessibility-check
-description: Use when reviewing or improving frontend accessibility, semantic structure, keyboard support, focus management, ARIA labels, screen reader behavior, WCAG 2.2 issues, touch accessibility, or assistive-technology regressions; Chinese triggers include 无障碍, accessibility, a11y, WCAG, 屏幕阅读器.
+description: 用于审查或改进前端无障碍、语义结构、键盘支持、焦点管理、ARIA 标签、屏幕阅读器行为、WCAG 2.2 问题、触控无障碍或辅助技术回归；中文触发词包括 无障碍、accessibility、a11y、WCAG、屏幕阅读器。
 ---
 
 # 无障碍实现规范（WCAG 2.2 AA）
 
-## Purpose
+## 用途
 
 确保前端 UI 对残障用户可访问，满足 WCAG 2.2 AA 的核心要求，并能被键盘、屏幕阅读器、触控和缩放用户稳定使用。
 
-## Procedure
+## 流程
 
 1. 检查语义结构：landmark、标题层级、表单 label、按钮/链接可访问名称、表格语义和图片 alt。
 2. 检查键盘路径：Tab 顺序、Enter/Space/Esc 行为、焦点可见、关闭后焦点恢复。
@@ -24,7 +24,7 @@ description: Use when reviewing or improving frontend accessibility, semantic st
 
 撰写无障碍审查报告时，加载 [references/report-template.md](references/report-template.md)。需要验证屏幕阅读器公告、焦点读法和动态区域时，加载 [references/screen-reader-testing.md](references/screen-reader-testing.md)。
 
-## Constraints
+## 约束
 
 - 优先使用语义化 HTML，而不是 ARIA。
 - `role` 不应覆盖原生语义。
@@ -34,6 +34,6 @@ description: Use when reviewing or improving frontend accessibility, semantic st
 - 不用 ARIA 弥补可以用原生 HTML 解决的问题。
 - 不把浏览器自动可访问树当作最终结论；关键路径需要用键盘和至少一种辅助技术或等价检查验证。
 
-## Expected Output
+## 预期输出
 
 交互元素可键盘访问，语义和 ARIA 使用正确，焦点管理稳定；无障碍检查报告保存为 `reports/accessibility-review-YYYY-MM-DD-HHmmss.md`。

@@ -1,4 +1,4 @@
-# Vue 3 project structure and component standards
+# Vue 3 项目结构与组件规范
 
 ## 项目结构
 
@@ -174,4 +174,3 @@ const emit = defineEmits<Emits>();
 - Props 和 Emits 使用 TypeScript interface 定义
 - 使用 `withDefaults` 设置默认值
 - `defineExpose` 暴露的方法需有类型约束
-

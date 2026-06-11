@@ -1,15 +1,15 @@
 ---
 name: fec-security-review
-description: Use when reviewing frontend security risks such as XSS, CSRF, sensitive data exposure, unsafe DOM APIs, untrusted user input, authentication/token handling, payment flows, file upload, CSP, dependency risk, or third-party scripts; Chinese triggers include 安全审查, 安全检查.
+description: 用于审查前端安全风险，如 XSS、CSRF、敏感数据暴露、不安全 DOM API、不可信用户输入、认证/token 处理、支付流程、文件上传、CSP、依赖风险或第三方脚本；中文触发词包括 安全审查、安全检查。
 ---
 
 # 前端安全审查
 
-## Purpose
+## 用途
 
 识别前端代码中的客户端安全风险，并给出可执行修复建议。
 
-## Procedure
+## 流程
 
 1. 先确认审查面：用户输入、动态 HTML、URL 跳转、认证态、RBAC、文件上传、支付/删除等敏感操作、第三方脚本和依赖。
 2. 搜索高危模式：`dangerouslySetInnerHTML`、`v-html`、`innerHTML`、`document.write`、动态 script、未校验 redirect、明文 token。
@@ -23,7 +23,7 @@ description: Use when reviewing frontend security risks such as XSS, CSRF, sensi
 - 需要 XSS、CSP、敏感数据、CSRF、依赖和输入校验细节时，加载 [references/security-checklist.md](references/security-checklist.md)。
 - 撰写安全审查报告时，加载 [references/report-template.md](references/report-template.md)。
 
-## Constraints
+## 约束
 
 - 不要为了方便开发而绕过安全机制。
 - 不要依赖前端校验作为唯一安全防线。
@@ -33,6 +33,6 @@ description: Use when reviewing frontend security risks such as XSS, CSRF, sensi
 - 不把依赖审计结果机械等同为可利用漏洞；需要结合运行路径、暴露面和修复成本判断。
 - 不把隐藏按钮、前端路由守卫或本地角色字段当作授权边界；API、SSR loader、server action 和敏感操作必须有服务端裁决。
 
-## Expected Output
+## 预期输出
 
 输出 CRITICAL/HIGH/MEDIUM/LOW 分级安全审查报告，每个问题关联具体文件和行号，给出修复建议；报告保存为 `reports/security-review-YYYY-MM-DD-HHmmss.md`。

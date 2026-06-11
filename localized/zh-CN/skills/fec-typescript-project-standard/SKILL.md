@@ -1,15 +1,15 @@
 ---
 name: fec-typescript-project-standard
-description: Use when creating, configuring, reviewing, or debugging TypeScript project standards across frontend apps, libraries, SDKs, CLIs, monorepo packages, tsconfig, strictness, module/moduleResolution, path aliases, project references, declaration files, package exports, public API types, DTOs, advanced generics, discriminated unions, type guards, type narrowing, or type-level regressions. Prefer framework project skills for React/Vue/Next/Nuxt component architecture; Chinese triggers include TypeScript 项目规范, TS 项目规范, TypeScript 类型安全, 类型建模, 泛型, 判别联合, 类型收窄, tsconfig, 声明文件.
+description: 用于创建、配置、审查或调试前端应用、库、SDK、CLI、monorepo 包中的 TypeScript 项目规范，包括 tsconfig、strictness、module/moduleResolution、路径别名、project references、声明文件、package exports、公共 API 类型、DTO、高级泛型、判别联合、类型守卫、类型收窄或类型级回归。React/Vue/Next/Nuxt 组件架构优先使用框架项目 skill；中文触发词包括 TypeScript 项目规范、TS 项目规范、TypeScript 类型安全、类型建模、泛型、判别联合、类型收窄、tsconfig、声明文件。
 ---
 
 # TypeScript 项目规范
 
-## Purpose
+## 用途
 
 统一 TypeScript 层的工程配置、类型边界和发布产物规则。适用于前端应用、组件库、SDK、CLI、monorepo package 和纯 TypeScript 工具库，但不接管 React、Vue、Next.js、Nuxt 或 Vite 的框架架构职责。
 
-## Procedure
+## 流程
 
 1. 识别 TypeScript 上下文
    - 应用项目：优先检查 `tsconfig` 分层、strictness、路径别名、类型检查脚本和框架生成类型。
@@ -41,7 +41,7 @@ description: Use when creating, configuring, reviewing, or debugging TypeScript 
    - Vite、Next、Nuxt 等构建不等于完整类型检查；CI 必须有独立 typecheck 或等效验证。
    - 类型改动影响 public API 时补类型测试、编译期断言或消费方 fixture。
 
-## Constraints
+## 约束
 
 - 不用 `skipLibCheck`、`any`、无守卫非空断言或宽泛 `as` 掩盖真实边界问题。
 - 不在应用代码中依赖发布包私有深层路径。
@@ -49,6 +49,6 @@ description: Use when creating, configuring, reviewing, or debugging TypeScript 
 - 不让生成类型、测试类型或 Node-only 类型污染浏览器运行代码。
 - 不发布只能在源码仓库内解析的路径别名、ambient 声明或隐式全局类型。
 
-## Expected Output
+## 预期输出
 
 输出应包含 TypeScript 上下文判断、关键 `tsconfig`/package 类型入口建议、类型边界方案、声明文件或 public API 风险、验证命令。完成后项目应能独立 typecheck，公开类型可被消费方解析，类型安全问题有明确收窄或建模方案。

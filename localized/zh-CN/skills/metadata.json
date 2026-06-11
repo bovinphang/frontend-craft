@@ -9,7 +9,7 @@
       "accessibility",
       "audit"
     ],
-    "summary": "Frontend Craft skill for 无障碍检查.",
+    "summary": "用于审查或改进前端无障碍、语义结构、键盘支持、焦点管理、ARIA 标签、屏幕阅读器行为、WCAG 2.2 问题、触控无障碍或辅助技术回归。",
     "version": "2.7.0",
     "license": "MIT",
     "homepage": "https://github.com/bovinphang/frontend-craft",
@@ -34,7 +34,7 @@
   },
   {
     "id": "fec-alchemy",
-    "name": "项目吸收与原创化融合",
+    "name": "项目吸收与原创化整合",
     "category": "project-evolution",
     "tags": [
       "alchemy",
@@ -43,7 +43,7 @@
       "reference-analysis",
       "workflow"
     ],
-    "summary": "Project absorption workflow for extracting useful ideas from reference systems and redesigning them into original, project-native improvements.",
+    "summary": "用于从参考系统中吸收想法、能力、工作流、架构、质量体系、生态扩展或工程实践，并通过原创的项目内重设计转化为当前项目能力，而不是复制原实现。",
     "version": "2.7.0",
     "license": "MIT",
     "homepage": "https://github.com/bovinphang/frontend-craft",
@@ -78,7 +78,7 @@
       "upload",
       "realtime"
     ],
-    "summary": "Frontend API integration boundaries, typed clients, error mapping, auth refresh, uploads, and realtime choices.",
+    "summary": "用于设计、实现或审查前后端 API 集成、类型化 API client、REST/tRPC/OpenAPI 客户端选型、认证刷新、API 错误映射、上传流程、SSE/WebSocket/轮询选择、CORS 相关前端行为或跨边界 loading/error 状态。不要用于纯后端服务架构或仅 TanStack Query 缓存策略。",
     "version": "2.7.0",
     "license": "MIT",
     "homepage": "https://github.com/bovinphang/frontend-craft",
@@ -113,7 +113,7 @@
       "data-needs",
       "frontend-backend"
     ],
-    "summary": "Frontend-to-backend requirements handoff for describing UI data needs, user actions, states, permissions, business rules, uncertainties, and backend discussion points without dictating implementation.",
+    "summary": "用于前端工作需要向后端团队说明数据、动作、状态、权限、校验或业务规则需求，但不指定端点设计、字段名、数据库形态或实现细节。",
     "version": "2.7.0",
     "license": "MIT",
     "homepage": "https://github.com/bovinphang/frontend-craft",
@@ -148,7 +148,7 @@
       "cookie",
       "client-persistence"
     ],
-    "summary": "Frontend Craft skill for 浏览器存储.",
+    "summary": "用于选择、实现或审查 localStorage、sessionStorage、IndexedDB、cookie、客户端持久化、离线数据、安全存储或清理策略等浏览器存储方案。",
     "version": "2.7.0",
     "license": "MIT",
     "homepage": "https://github.com/bovinphang/frontend-craft",
@@ -184,7 +184,7 @@
       "visualization",
       "r3f"
     ],
-    "summary": "Frontend Craft skill for Canvas 与 Three.js.",
+    "summary": "用于构建或审查 Canvas 2D、Three.js/WebGL、React Three Fiber、GLSL shader、ShaderToy 到 WebGL 适配、2D/3D 可视化、游戏渲染、动画循环、GPU 资源清理或渲染性能。不要用于标准 DOM UI、已有图表库覆盖的图表或非图形类性能工作。",
     "version": "2.7.0",
     "license": "MIT",
     "homepage": "https://github.com/bovinphang/frontend-craft",
@@ -211,7 +211,7 @@
   },
   {
     "id": "fec-code-review",
-    "name": "前端代码审查",
+    "name": "前端代码评审",
     "category": "review-quality",
     "tags": [
       "code-review",
@@ -219,7 +219,7 @@
       "quality",
       "best-practices"
     ],
-    "summary": "Frontend Craft skill for 前端代码审查.",
+    "summary": "用于用户要求通用前端代码评审、PR 评审、合并就绪评估、架构可维护性、类型安全、渲染/状态风险、样式一致性、可测性缺口或横向评审总结时。深度安全、无障碍、E2E 或性能问题应委托对应专项 skill。",
     "version": "2.7.0",
     "license": "MIT",
     "homepage": "https://github.com/bovinphang/frontend-craft",
@@ -253,7 +253,7 @@
       "user-event",
       "regression"
     ],
-    "summary": "Frontend Craft skill for 组件测试.",
+    "summary": "用于编写或审查靠近 UI 代码的前端单元、组件或轻量集成测试，包括 React Testing Library、Vue Test Utils、hooks/composables、props/emits、回调、可访问查询、user-event 交互、mock、loading/error/empty 状态和回归覆盖。若是测试分层规划、真实浏览器旅程或现有验证失败，优先选择对应测试或验证工作流。",
     "version": "2.7.0",
     "license": "MIT",
     "homepage": "https://github.com/bovinphang/frontend-craft",
@@ -279,7 +279,7 @@
   },
   {
     "id": "fec-data-fetching",
-    "name": "TanStack Query 数据获取",
+    "name": "Server State 数据获取",
     "category": "implementation-capability",
     "tags": [
       "react-query",
@@ -288,7 +288,7 @@
       "optimistic-update",
       "server-state"
     ],
-    "summary": "Frontend Craft skill for TanStack Query 数据获取.",
+    "summary": "用于实现或审查前端服务端状态流程：类型化查询、请求缓存、失效、mutation、乐观更新、无限查询、预取、SSR hydration 或 API 层整合。不要用于本地 UI 状态或 Service Worker 缓存。",
     "version": "2.7.0",
     "license": "MIT",
     "homepage": "https://github.com/bovinphang/frontend-craft",
@@ -314,7 +314,7 @@
   },
   {
     "id": "fec-debug-framework",
-    "name": "前端诊断框架",
+    "name": "前端调试框架",
     "category": "review-quality",
     "tags": [
       "debug",
@@ -323,7 +323,7 @@
       "runtime-error",
       "troubleshooting"
     ],
-    "summary": "Unified 5-step diagnostic methodology for frontend issues: build failures, runtime errors, UI anomalies, and API/data problems.",
+    "summary": "用于诊断前端构建失败、运行时错误、UI 异常、API/数据问题、白屏、请求失败或难以解释的线上异常。",
     "version": "2.7.0",
     "license": "MIT",
     "homepage": "https://github.com/bovinphang/frontend-craft",
@@ -358,7 +358,7 @@
       "migration",
       "peer-dependency"
     ],
-    "summary": "Frontend dependency upgrade planning, lockfile risk review, major-version migration, CVE remediation, peer dependency handling, and CI verification.",
+    "summary": "用于规划、实现或审查前端依赖升级、包迁移、lockfile 变更、框架大版本升级、CVE 修复、peer dependency 冲突、ESM/CJS 切换、构建工具兼容性或 CI 验证矩阵。",
     "version": "2.7.0",
     "license": "MIT",
     "homepage": "https://github.com/bovinphang/frontend-craft",
@@ -384,7 +384,7 @@
   },
   {
     "id": "fec-drawio-studio",
-    "name": "可编辑技术图表工作流",
+    "name": "draw.io 图表工作室",
     "category": "design-ui",
     "tags": [
       "drawio",
@@ -396,7 +396,7 @@
       "autolayout",
       "shape-search"
     ],
-    "summary": "Editable draw.io / diagrams.net workflow for technical diagrams, official shape lookup, brand symbols, Graphviz layout, code structure maps, validation, and export fallback.",
+    "summary": "用于创建带 draw.io / diagrams.net 源文件的可编辑技术图，包括架构图、ERD、UML、序列图、流程图、ML 模型图、官方形状检索、品牌符号、Graphviz 自动布局、代码结构图、.drawio 校验或 draw.io CLI 导出兜底。不要用于普通位图生成、手绘草图、交互式 Canvas/Three.js 场景或装饰性 SVG 动画。",
     "version": "2.7.0",
     "license": "MIT",
     "homepage": "https://github.com/bovinphang/frontend-craft",
@@ -439,7 +439,7 @@
       "sync",
       "deploy-docs"
     ],
-    "summary": "Sync frontend project docs with code, config, routes, APIs, env examples, scripts, tests, and deployment facts.",
+    "summary": "用于根据 package.json、lockfile、配置、env 示例、路由、API client 或 server routes、schema、组件、测试、CI、构建/部署配置、ADR、changelog 或迁移说明等事实源同步前端项目文档。不要用于单纯润色普通文案。",
     "version": "2.7.0",
     "license": "MIT",
     "homepage": "https://github.com/bovinphang/frontend-craft",
@@ -466,7 +466,7 @@
   },
   {
     "id": "fec-e2e-testing",
-    "name": "E2E 测试规范",
+    "name": "端到端测试",
     "category": "testing",
     "tags": [
       "playwright",
@@ -476,7 +476,7 @@
       "ci",
       "pom"
     ],
-    "summary": "Frontend Craft skill for E2E 测试规范.",
+    "summary": "用于创建、维护、调试或审查真实浏览器端到端测试，包括 Playwright/Cypress、Page Object、CI 产物、trace、不稳定用例、跨页面视觉回归以及登录、支付、权限或 CRUD 等关键用户旅程。若是测试层规划或靠近 UI 组件的测试，先选择对应测试工作流。",
     "version": "2.7.0",
     "license": "MIT",
     "homepage": "https://github.com/bovinphang/frontend-craft",
@@ -512,7 +512,7 @@
       "dynamic-forms",
       "file-upload"
     ],
-    "summary": "Frontend Craft skill for 表单处理.",
+    "summary": "用于构建或审查较复杂表单，包括 React Hook Form、Zod schema、类型化校验、动态字段、受控第三方输入、文件上传、多步骤流程、依赖校验或表单性能。不要用于没有校验的 1-3 个字段小表单。",
     "version": "2.7.0",
     "license": "MIT",
     "homepage": "https://github.com/bovinphang/frontend-craft",
@@ -538,7 +538,7 @@
   },
   {
     "id": "fec-image-generation",
-    "name": "图片生成与图表工作流",
+    "name": "图像生成",
     "category": "design-ui",
     "tags": [
       "image-generation",
@@ -550,7 +550,7 @@
       "mockup",
       "autofix"
     ],
-    "summary": "Image and diagram generation workflow for deterministic diagrams, raster visual assets, image edits, and bounded PNG QA repair loops.",
+    "summary": "用于生成或编辑图表、图形资产、海报、UI 样机、产品图、信息图、学术图、漫画、头像、分镜、品牌板或图像编辑工作流，尤其是导出 PNG 需要视觉质检和有限自动修复时。文字密集图表优先使用确定性的 Mermaid/SVG/HTML/canvas 源；不要用于不涉及生成图像的普通 UI 打磨。中文触发词包括 图片生成、图像编辑、图表生成、架构图、ER 图、UML、序列图、海报、UI 样机、产品图、信息图、学术图、漫画、头像、分镜、品牌板、PNG 自检、自动修复。",
     "version": "2.7.0",
     "license": "MIT",
     "homepage": "https://github.com/bovinphang/frontend-craft",
@@ -586,7 +586,7 @@
   },
   {
     "id": "fec-implement-from-design",
-    "name": "设计稿实现",
+    "name": "按设计实现",
     "category": "design-ui",
     "tags": [
       "figma",
@@ -598,7 +598,7 @@
       "visual-reference",
       "mcp"
     ],
-    "summary": "Production design-to-code workflow for design tools, screenshots, and section-level visual references with token mapping and accessibility safeguards.",
+    "summary": "用于根据 Figma、Sketch、MasterGo、Pixso、墨刀、摹客、截图、设计选区、设计 Token 或设计转代码任务实现生产级前端组件/页面。",
     "version": "2.7.0",
     "license": "MIT",
     "homepage": "https://github.com/bovinphang/frontend-craft",
@@ -627,7 +627,7 @@
   },
   {
     "id": "fec-legacy-to-modern-migration",
-    "name": "遗留系统迁移",
+    "name": "遗留项目现代化迁移",
     "category": "legacy-migration",
     "tags": [
       "migration",
@@ -637,7 +637,7 @@
       "vue",
       "modernization"
     ],
-    "summary": "Frontend Craft skill for 遗留系统迁移.",
+    "summary": "用于规划或实施从 JavaScript、jQuery、HTML/CSS、服务端渲染模板、MPA 遗留前端代码或旧框架代码迁移到现代前端技术栈，同时保持行为一致。不要用于仍留在旧技术栈内的日常遗留 bug 修复。",
     "version": "2.7.0",
     "license": "MIT",
     "homepage": "https://github.com/bovinphang/frontend-craft",
@@ -672,7 +672,7 @@
       "legacy",
       "vanilla-js"
     ],
-    "summary": "Frontend Craft skill for 传统前端规范.",
+    "summary": "用于维护或安全修改既有非框架前端代码：原生 JavaScript、jQuery、HTML/CSS、MPA 页面、服务端渲染模板、遗留插件或需要长期保持当前技术栈的代码。若是规划迁移到 React/Vue/TypeScript，请使用迁移 skill。",
     "version": "2.7.0",
     "license": "MIT",
     "homepage": "https://github.com/bovinphang/frontend-craft",
@@ -697,7 +697,7 @@
   },
   {
     "id": "fec-list-virtualization",
-    "name": "列表虚拟化优化",
+    "name": "列表虚拟化",
     "category": "implementation-capability",
     "tags": [
       "virtualization",
@@ -706,7 +706,7 @@
       "tanstack-virtual",
       "performance"
     ],
-    "summary": "Frontend Craft skill for 列表虚拟化优化.",
+    "summary": "用于优化或审查大列表、虚拟滚动、windowing、react-window、TanStack Virtual、可变高度行、动态测量、无限滚动、网格虚拟化或滚动性能。",
     "version": "2.7.0",
     "license": "MIT",
     "homepage": "https://github.com/bovinphang/frontend-craft",
@@ -741,7 +741,7 @@
       "nx",
       "workspace"
     ],
-    "summary": "Frontend Craft skill for Monorepo 项目规范.",
+    "summary": "用于创建、审查或重构前端 monorepo，包括 pnpm workspace、Turborepo、Nx、多包依赖边界、任务编排、包命名或包发布。",
     "version": "2.7.0",
     "license": "MIT",
     "homepage": "https://github.com/bovinphang/frontend-craft",
@@ -777,7 +777,7 @@
       "lottie",
       "reduced-motion"
     ],
-    "summary": "Context-aware frontend motion strategy, intensity selection, tool choice, performance budgets, and accessible reduced-motion behavior.",
+    "summary": "用于设计、实现或审查前端交互动效、页面转场、滚动动画、Framer Motion、GSAP、Lottie、CSS 动画、动效强度、动画性能、减少动效行为或兼具表现力与可访问性的 UI 动效。不要用于仅 SVG 路径绘制、Canvas/WebGL 渲染或普通 hover 状态。",
     "version": "2.7.0",
     "license": "MIT",
     "homepage": "https://github.com/bovinphang/frontend-craft",
@@ -813,7 +813,7 @@
       "rsc",
       "react"
     ],
-    "summary": "Frontend Craft skill for Next.js 项目规范.",
+    "summary": "用于创建或审查 Next.js 14+ App Router 项目、文件路由、layout、服务端/客户端组件边界、SSR/SSG/ISR、streaming、metadata、middleware、server actions 或 Next 特定数据获取。通用客户端 React 组件架构另按项目 React 约定处理。",
     "version": "2.7.0",
     "license": "MIT",
     "homepage": "https://github.com/bovinphang/frontend-craft",
@@ -839,7 +839,7 @@
   },
   {
     "id": "fec-nuxt-project-standard",
-    "name": "Nuxt 项目规范",
+    "name": "Nuxt 3 项目规范",
     "category": "project-standard",
     "tags": [
       "nuxt",
@@ -848,7 +848,7 @@
       "ssg",
       "data-fetching"
     ],
-    "summary": "Frontend Craft skill for Nuxt 项目规范.",
+    "summary": "用于创建或审查 Nuxt 3 项目、文件路由、pages、layouts、SSR/SSG/SPA 行为、Nuxt 数据获取、route middleware、plugins、modules、server routes 或 Nuxt 特定 Vue 3 约定。通用 Vue 组件架构另按项目 Vue 约定处理。",
     "version": "2.7.0",
     "license": "MIT",
     "homepage": "https://github.com/bovinphang/frontend-craft",
@@ -874,7 +874,7 @@
   },
   {
     "id": "fec-performance-optimization",
-    "name": "前端性能优化",
+    "name": "性能优化",
     "category": "review-quality",
     "tags": [
       "performance",
@@ -883,7 +883,7 @@
       "runtime",
       "lighthouse"
     ],
-    "summary": "Frontend performance workflow for Core Web Vitals, bundle size, rendering cost, memory leaks, network waterfalls, budgets, and evidence-based optimization.",
+    "summary": "用于诊断或改进前端性能、Core Web Vitals、包体积、运行时渲染成本、网络瀑布、内存泄漏、长任务、Lighthouse 问题或性能预算。",
     "version": "2.7.0",
     "license": "MIT",
     "homepage": "https://github.com/bovinphang/frontend-craft",
@@ -918,7 +918,7 @@
       "workbox",
       "installable"
     ],
-    "summary": "Frontend Craft skill for PWA 实现.",
+    "summary": "用于添加或审查 Progressive Web App 能力，如可安装性、manifest 元数据、Service Worker 注册、Workbox 缓存、离线兜底、应用更新提示、maskable icons 或 iOS PWA 兼容性。不要用于普通 API 缓存或不可安装的性能调优。",
     "version": "2.7.0",
     "license": "MIT",
     "homepage": "https://github.com/bovinphang/frontend-craft",
@@ -953,7 +953,7 @@
       "components",
       "architecture"
     ],
-    "summary": "Frontend Craft skill for React 项目规范.",
+    "summary": "用于设计或审查 React + TypeScript 项目结构、feature/module 边界、组件架构、hooks 组织、路由组合、状态/API/错误/样式默认约定或仓库级 React 规范。表单、数据获取、测试、无障碍、虚拟列表、动画或安全深挖优先使用更窄的 skill。",
     "version": "2.7.0",
     "license": "MIT",
     "homepage": "https://github.com/bovinphang/frontend-craft",
@@ -988,7 +988,7 @@
       "unused-exports",
       "dependencies"
     ],
-    "summary": "Frontend Craft skill for 重构清理.",
+    "summary": "用于安全移除前端死代码、未使用导出、陈旧组件、废弃路由、未使用依赖，或由 knip、depcheck、ts-prune、TypeScript、ESLint、人工审查发现的清理目标。不要用于会改变行为的功能重写。",
     "version": "2.7.0",
     "license": "MIT",
     "homepage": "https://github.com/bovinphang/frontend-craft",
@@ -1023,7 +1023,7 @@
       "mobile-first",
       "touch-target"
     ],
-    "summary": "Responsive frontend layout strategy for mobile-first breakpoints, container queries, fluid grids, data-dense screens, touch targets, and cross-device verification.",
+    "summary": "用于设计、实现或审查响应式前端布局、移动优先断点、容器查询、流式网格、数据密集表格、触摸目标、安全区域、横竖屏变化、视口溢出或跨设备 UI 行为。",
     "version": "2.7.0",
     "license": "MIT",
     "homepage": "https://github.com/bovinphang/frontend-craft",
@@ -1059,7 +1059,7 @@
       "react-router",
       "vue-router"
     ],
-    "summary": "Frontend Craft skill for 路由保护.",
+    "summary": "用于实现或审查前端路由保护、auth guard、RBAC、权限路由、登录态处理、重定向、middleware、React Router、Next.js、Vue Router 或 Nuxt route middleware。",
     "version": "2.7.0",
     "license": "MIT",
     "homepage": "https://github.com/bovinphang/frontend-craft",
@@ -1086,7 +1086,7 @@
   },
   {
     "id": "fec-security-review",
-    "name": "前端安全审查",
+    "name": "安全审查",
     "category": "review-quality",
     "tags": [
       "xss",
@@ -1096,7 +1096,7 @@
       "owasp",
       "dompurify"
     ],
-    "summary": "Frontend Craft skill for 前端安全审查.",
+    "summary": "用于审查前端安全风险，如 XSS、CSRF、敏感数据暴露、不安全 DOM API、不可信用户输入、认证/token 处理、支付流程、文件上传、CSP、依赖风险或第三方脚本。",
     "version": "2.7.0",
     "license": "MIT",
     "homepage": "https://github.com/bovinphang/frontend-craft",
@@ -1123,7 +1123,7 @@
   },
   {
     "id": "fec-source-driven-development",
-    "name": "来源驱动开发",
+    "name": "事实源驱动开发",
     "category": "maintenance-docs",
     "tags": [
       "source-driven",
@@ -1132,7 +1132,7 @@
       "framework-docs",
       "decision-record"
     ],
-    "summary": "Source-driven frontend workflow for checking project facts, official documentation, version-sensitive APIs, migration assumptions, and decision evidence.",
+    "summary": "用于前端决策依赖可能变化的框架、库、浏览器、运行时、包、API 或平台行为时，包括官方文档核验、版本敏感模式、迁移选择或公共接口假设。",
     "version": "2.7.0",
     "license": "MIT",
     "homepage": "https://github.com/bovinphang/frontend-craft",
@@ -1158,7 +1158,7 @@
   },
   {
     "id": "fec-state-management",
-    "name": "前端状态管理",
+    "name": "状态管理",
     "category": "implementation-capability",
     "tags": [
       "state-management",
@@ -1167,7 +1167,7 @@
       "url-state",
       "store"
     ],
-    "summary": "Frontend state ownership, store selection, URL/server/form/local state boundaries, persistence handoff, and safe state refactoring.",
+    "summary": "用于选择、实现、审查或重构 React、Vue、Next.js、Nuxt、URL 状态、服务端状态、表单状态、浏览器持久化或全局 store 的前端状态归属。TanStack Query 缓存细节、浏览器存储持久化或表单校验内部问题优先使用更窄的 skill。",
     "version": "2.7.0",
     "license": "MIT",
     "homepage": "https://github.com/bovinphang/frontend-craft",
@@ -1193,7 +1193,7 @@
   },
   {
     "id": "fec-storybook-component-doc",
-    "name": "Storybook 组件文档化",
+    "name": "Storybook 组件文档",
     "category": "design-ui",
     "tags": [
       "storybook",
@@ -1202,7 +1202,7 @@
       "visual-testing",
       "mdx"
     ],
-    "summary": "Storybook component documentation, design-system presentation, isolated state previews, and Storybook-scoped visual baselines.",
+    "summary": "用于设置或审查 Storybook 组件文档、设计系统展示、隔离组件状态预览、stories、addons、decorators、MDX 文档、组件状态交互检查、视觉基线或 Chromatic。真实浏览器跨页面旅程或更广覆盖规划优先选择对应测试工作流。",
     "version": "2.7.0",
     "license": "MIT",
     "homepage": "https://github.com/bovinphang/frontend-craft",
@@ -1237,7 +1237,7 @@
       "gsap",
       "micro-interaction"
     ],
-    "summary": "Frontend Craft skill for SVG 动画.",
+    "summary": "用于实现或审查 SVG 动画、路径绘制、图标动效、Logo 动画、插画动效、微交互、CSS/SMIL/Framer Motion/GSAP 选型、动效无障碍或降级行为。",
     "version": "2.7.0",
     "license": "MIT",
     "homepage": "https://github.com/bovinphang/frontend-craft",
@@ -1272,7 +1272,7 @@
       "variants",
       "dark-mode"
     ],
-    "summary": "Tailwind CSS design-system workflow for token mapping, theme extension, component variants, class governance, responsive utilities, and dark mode.",
+    "summary": "用于设计、实现或审查 Tailwind CSS 设计系统、Token 映射、主题扩展、工具类治理、组件变体、暗色模式、响应式工具、safelist 或可维护的 class 组合。",
     "version": "2.7.0",
     "license": "MIT",
     "homepage": "https://github.com/bovinphang/frontend-craft",
@@ -1307,7 +1307,7 @@
       "regression",
       "frontend-tests"
     ],
-    "summary": "Frontend Craft skill for TDD 工作流.",
+    "summary": "用于实现新前端行为、修复 bug 或重构可先由测试描述预期行为的逻辑。适用于组件、hooks/composables、工具函数、API clients、路由守卫或用户工作流。",
     "version": "2.7.0",
     "license": "MIT",
     "homepage": "https://github.com/bovinphang/frontend-craft",
@@ -1341,7 +1341,7 @@
       "risk",
       "quality-gate"
     ],
-    "summary": "Frontend Craft skill for 测试策略.",
+    "summary": "用于规划或审查前端测试策略，按风险选择正确测试层级，将覆盖映射到静态检查、单元测试、组件测试、集成测试、E2E、Storybook/视觉回归、a11y、安全、性能或 CI gates。不要用于编写单个组件/E2E 测试或只是运行现有验证命令。",
     "version": "2.7.0",
     "license": "MIT",
     "homepage": "https://github.com/bovinphang/frontend-craft",
@@ -1376,7 +1376,7 @@
       "tsconfig",
       "declarations"
     ],
-    "summary": "Universal TypeScript project standards for tsconfig, strictness, module resolution, declarations, package exports, public API types, DTOs, generics, and type narrowing.",
+    "summary": "用于创建、配置、审查或调试前端应用、库、SDK、CLI、monorepo 包中的 TypeScript 项目规范，包括 tsconfig、strictness、module/moduleResolution、路径别名、project references、声明文件、package exports、公共 API 类型、DTO、高级泛型、判别联合、类型守卫、类型收窄或类型级回归。React/Vue/Next/Nuxt 组件架构优先使用框架项目 skill。",
     "version": "2.7.0",
     "license": "MIT",
     "homepage": "https://github.com/bovinphang/frontend-craft",
@@ -1418,7 +1418,7 @@
       "industry-ui",
       "chart-ux"
     ],
-    "summary": "Product-context UI direction with anti-generic design dials, distinctive visual identity, media strategy, interaction states, and visual QA.",
+    "summary": "用于构建、审查或改进需要产品专属设计方向的前端 UI，包括设计系统生成、Master/Page 覆盖、独特视觉识别、反通用界面选择、首屏层级、UI 打磨、图表 UX、交互状态、响应式行为或视觉 QA。外部设计文件为权威时，应从该来源实现，而不是自行发明方向。",
     "version": "2.7.0",
     "license": "MIT",
     "homepage": "https://github.com/bovinphang/frontend-craft",
@@ -1453,7 +1453,7 @@
   },
   {
     "id": "fec-validation-fix",
-    "name": "验证与修复",
+    "name": "验证修复",
     "category": "review-quality",
     "tags": [
       "validation",
@@ -1463,7 +1463,7 @@
       "build",
       "fix"
     ],
-    "summary": "Frontend Craft skill for 验证与修复.",
+    "summary": "用于运行现有项目验证命令并修复代码变更后的失败，包括 lint、type-check、单元/集成测试、build、CI 或本地脚本失败。不要用于设计或编写新的组件/E2E 测试。",
     "version": "2.7.0",
     "license": "MIT",
     "homepage": "https://github.com/bovinphang/frontend-craft",
@@ -1500,7 +1500,7 @@
       "bundle",
       "dev-server"
     ],
-    "summary": "Frontend Craft skill for Vite 项目规范.",
+    "summary": "用于创建、配置、审查或调试基于 Vite 的前端项目、vite.config.ts、环境变量、dev server proxy、HMR、插件顺序、library mode、依赖预打包、bundle splitting 或 Vite 构建性能。React/Vue 组件架构请使用框架专项 skill。",
     "version": "2.7.0",
     "license": "MIT",
     "homepage": "https://github.com/bovinphang/frontend-craft",
@@ -1536,7 +1536,7 @@
       "pinia",
       "components"
     ],
-    "summary": "Frontend Craft skill for Vue 3 项目规范.",
+    "summary": "用于设计或审查 Vue 3 + TypeScript 项目结构、SFC/组件边界、composables 组织、路由组合、Pinia 归属、API/错误/样式默认约定、directives 或仓库级 Vue 规范。表单、数据获取、测试、无障碍、虚拟列表、动画或安全深挖优先使用更窄的 skill。",
     "version": "2.7.0",
     "license": "MIT",
     "homepage": "https://github.com/bovinphang/frontend-craft",
@@ -1572,7 +1572,7 @@
       "react",
       "vite"
     ],
-    "summary": "Turn articles, scripts, lessons, and product demos into recordable 16:9 step-driven web presentations with theme tokens and recording guidance.",
+    "summary": "用于将文章、演讲稿、课程、产品演示或口播解释转成可录制的 16:9 网页演示，包含步骤驱动场景、可选口播对齐、主题 Token 与录屏指导。",
     "version": "2.7.0",
     "license": "MIT",
     "homepage": "https://github.com/bovinphang/frontend-craft",
@@ -1608,7 +1608,7 @@
       "transferable",
       "performance"
     ],
-    "summary": "Frontend Craft skill for Web Workers.",
+    "summary": "用于将昂贵的浏览器工作移出主线程，涉及 Web Workers、SharedWorker、worker 池、Comlink、transferable objects、Vite/Webpack worker 集成或 UI 响应性修复。不要用于轻量同步工作或 DOM 操作。",
     "version": "2.7.0",
     "license": "MIT",
     "homepage": "https://github.com/bovinphang/frontend-craft",

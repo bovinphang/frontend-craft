@@ -1,4 +1,4 @@
-# Vue 3 state, API, and quality patterns
+# Vue 3 状态、API 与质量模式
 
 ## 状态管理（Pinia）
 

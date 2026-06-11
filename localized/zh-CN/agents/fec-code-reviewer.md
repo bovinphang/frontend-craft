@@ -111,7 +111,7 @@ Fix: …
 ### 文末摘要表
 
 ```markdown
-## Review Summary
+## 评审摘要
 
 | Severity | Count | Status |
 |----------|-------|--------|

@@ -1,15 +1,15 @@
 ---
 name: fec-source-driven-development
-description: Use when frontend decisions depend on framework, library, browser, runtime, package, API, or platform behavior that may have changed, including official documentation checks, version-sensitive patterns, migration choices, or public interface assumptions; Chinese triggers include 查官方文档, 以源码为准, source-driven, 版本差异.
+description: 用于前端决策依赖可能变化的框架、库、浏览器、运行时、包、API 或平台行为时，包括官方文档核验、版本敏感模式、迁移选择或公共接口假设；中文触发词包括 查官方文档、以源码为准、source-driven、版本差异。
 ---
 
 # 来源驱动开发
 
-## Purpose
+## 用途
 
 在前端实现、评审和架构决策中优先依据项目内事实、官方文档和当前版本行为，避免沿用过时经验或未经验证的假设。
 
-## Procedure
+## 流程
 
 1. 判断是否需要查源
    - 涉及框架新版本、路由、渲染模式、缓存、构建工具、浏览器 API、包发布格式、鉴权协议或公共接口时必须查源。
@@ -39,7 +39,7 @@ description: Use when frontend decisions depend on framework, library, browser, 
 6. 留下轻量决策记录
    - 当结论会影响公共接口、依赖版本、目录规范或团队工作流时，补充 ADR/变更记录或交给文档同步流程。
 
-## Local Knowledge Retrieval
+## 本地知识检索
 
 当用户指定本地知识库路径，或默认 `knowledge/` 目录存在时，可用本流程回答资料库问题、抽取证据或辅助决策。
 
@@ -64,16 +64,16 @@ description: Use when frontend decisions depend on framework, library, browser, 
    - 证据不足时说明查过哪些路径、缺什么信息，以及用户如何缩小范围。
    - 不把知识库外的网络信息混入答案，除非用户另行要求查外部来源。
 
-## Source Priority
+## 事实源优先级
 
-| Priority | Source | Use |
-| -------- | ------ | --- |
+| 优先级 | 来源 | 用途 |
+| ------ | ---- | ---- |
 | 1 | 项目内配置、测试、已有实现 | 判断本仓库真实约定 |
 | 2 | 官方文档、源码、类型定义 | 判断当前推荐行为 |
 | 3 | 标准规范、浏览器兼容数据 | 判断平台能力和兼容边界 |
 | 4 | Issue、讨论、第三方文章 | 辅助排查，不能单独定案 |
 
-## Constraints
+## 约束
 
 - 不凭记忆给版本敏感结论。
 - 不把过时教程当作当前最佳实践。
@@ -82,6 +82,6 @@ description: Use when frontend decisions depend on framework, library, browser, 
 - 不在交付中复制长篇外部文档；只保留必要结论和链接或文件路径。
 - 不把“查过文档”停留在口头；版本敏感决策需要能追溯到具体版本、路径或官方页面。
 
-## Expected Output
+## 预期输出
 
 输出来源清单、版本或项目事实、决策结论、实现影响、验证命令和未决风险。若修改代码，关键行为应有测试或构建验证支撑。

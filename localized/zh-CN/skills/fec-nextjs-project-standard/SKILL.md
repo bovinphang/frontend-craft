@@ -1,17 +1,17 @@
 ---
 name: fec-nextjs-project-standard
-description: Use when creating or reviewing Next.js 14+ App Router projects, file routes, layouts, server/client component boundaries, SSR/SSG/ISR, streaming, metadata, middleware, server actions, or Next-specific data fetching. For generic client React component architecture, apply the project's React conventions separately; Chinese triggers include Next.js, App Router.
+description: 用于创建或审查 Next.js 14+ App Router 项目、文件路由、layout、服务端/客户端组件边界、SSR/SSG/ISR、streaming、metadata、middleware、server actions 或 Next 特定数据获取。通用客户端 React 组件架构另按项目 React 约定处理；中文触发词包括 Next.js、App Router。
 ---
 
 # Next.js 项目规范
 
 适用于使用 Next.js 14+ 与 App Router 的仓库。
 
-## Purpose
+## 用途
 
 规范 Next.js 14+ 项目中 App Router、SSR/SSG/ISR 渲染模式、数据获取、路由布局、中间件和 SEO 元数据的工程实践，确保服务端优先、性能优化和可维护性。
 
-## Procedure
+## 流程
 
 1. 先识别目标属于 App Router、布局、服务端数据、middleware、metadata 还是客户端交互。
 2. 默认服务端组件优先；只有需要浏览器 API、交互状态或事件处理时才使用 `'use client'`。
@@ -96,7 +96,7 @@ src/
 - 支持 `title`、`description`、`openGraph`、`twitter` 等
 - 动态路由用 `generateMetadata(params)` 生成
 
-## Constraints
+## 约束
 
 - 服务端组件默认，仅在需要客户端交互时加 `'use client'`
 - 不在服务端组件中直接使用 `useState`、`useEffect`、浏览器 API
@@ -114,7 +114,7 @@ src/
 - **`'use client'` 组件**：组合与复合组件、表单、客户端状态、列表虚拟化、动效与键盘/焦点等，与纯 React 项目一致，遵循项目中的 React 规则（如 `.claude/rules/fec-react.md`）。
 - **权限与客户端数据**：鉴权、RBAC、redirect、客户端 server state 和缓存失效应按对应专项 workflow 处理；Next 服务端 fetch/cache 仍以本 skill 为准。
 
-## Expected Output
+## 预期输出
 
 - 页面组件按 App Router 约定组织（`app/` 目录、`page.tsx`、`layout.tsx`、`loading.tsx`、`error.tsx`）
 - 渲染模式选择正确（SSR/SSG/ISR/CSR），数据获取路径清晰

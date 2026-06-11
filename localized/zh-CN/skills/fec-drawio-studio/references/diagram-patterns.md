@@ -1,41 +1,41 @@
-# Diagram Patterns
+# 图表模式
 
-Use these conventions when a user asks for a named technical diagram.
+当用户要求某类具名技术图时，使用这些约定。
 
-## Architecture
+## 架构图
 
-- Group nodes by tier: client, edge, service, data, external.
-- Use swimlanes or grouped containers when boundaries matter.
-- Put bus or event-stream nodes near the center of publisher/subscriber rows.
-- Use cylinders for databases, rounded rectangles for services, dashed outlines for external systems.
+- 按层级分组节点：client、edge、service、data、external。
+- 边界重要时，使用泳道或分组容器。
+- 将 bus 或 event-stream 节点放在 publisher/subscriber 行的中心附近。
+- 数据库使用圆柱，服务使用圆角矩形，外部系统使用虚线外框。
 
 ## ERD
 
-- Model tables as containers with rows for columns.
-- Mark primary keys and foreign keys in labels.
-- Use dashed relationship edges when cardinality is not fully known.
-- Prefer top-to-bottom layout for schemas with multiple relation clusters.
+- 将表建模为容器，列以行展示。
+- 在标签中标记主键和外键。
+- 基数关系不完全明确时，使用虚线关系边。
+- 包含多个关系簇的 schema 优先使用自上而下布局。
 
-## UML Class
+## UML 类图
 
-- Use a class box split into name, fields and methods.
-- Use hollow triangle arrows for inheritance, dashed hollow triangle for interface implementation.
-- Keep interfaces or abstract bases above concrete classes.
+- 使用拆分为名称、字段和方法的类框。
+- 继承使用空心三角箭头，接口实现使用虚线空心三角箭头。
+- 接口或抽象基类放在具体类上方。
 
-## Sequence
+## 序列图
 
-- Lay participants left-to-right and time top-to-bottom.
-- Keep request, response and async message styles visually distinct.
-- Add activation boxes only when they clarify nested work.
+- 参与者从左到右排列，时间从上到下推进。
+- 请求、响应和异步消息的样式保持可视化区分。
+- 只有能澄清嵌套工作时才添加 activation box。
 
-## ML / Deep Learning
+## 机器学习 / 深度学习
 
-- Show tensor shape on a second line when it matters.
-- Group encoder, decoder, embedding, attention and output stages.
-- Route skip connections around the primary flow.
+- tensor shape 重要时，在第二行展示。
+- 对 encoder、decoder、embedding、attention 和 output 阶段分组。
+- skip connection 绕开主流程布线。
 
-## Flowchart
+## 流程图
 
-- Use ovals for start/end, rectangles for process, diamonds for decisions.
-- Label decision branches.
-- Merge branches back to a central path when possible.
+- 开始/结束使用椭圆，过程使用矩形，决策使用菱形。
+- 为决策分支添加标签。
+- 尽可能将分支合并回中心路径。

@@ -1,38 +1,38 @@
-# Content Plan
+# 内容计划
 
-## Script
+## 脚本
 
-Use the same language as the source material unless the user asks otherwise. Convert written text into spoken wording, but keep the author's claims, order, names, and important numbers intact.
+除非用户另有要求，否则使用与源材料相同的语言。将书面文字改成适合口播的表达，但保留作者的主张、顺序、名称和重要数字。
 
-For every script:
+每份脚本都应：
 
-- Keep one idea per beat.
-- Remove footnote-like detours unless they are central to the story.
-- Mark uncertain facts instead of smoothing them into confident claims.
-- Keep technical names exact.
-- Prefer short sentences that can be spoken without rereading.
+- 每个节拍只保留一个观点。
+- 移除脚注式支线，除非它们是叙事核心。
+- 标记不确定事实，不要把它们润色成确定断言。
+- 技术名称保持准确。
+- 优先使用无需回读即可口播的短句。
 
-## Outline
+## 大纲
 
-The outline is the implementation contract for the web presentation.
+大纲是网页演示的实现契约。
 
-Include:
+包含：
 
-- Title and intended audience.
-- Total target duration.
-- Chapters with stable ids.
-- Step count per chapter.
-- One screen task per step.
-- Content pool per chapter: facts, numbers, quotes, examples, media, diagrams, or UI states available for visuals.
-- Asset list with owner, path, missing status, and replacement strategy.
+- 标题和目标受众。
+- 总目标时长。
+- 带稳定 id 的章节。
+- 每章步骤数。
+- 每步一个屏幕任务。
+- 每章内容池：可用于视觉呈现的事实、数字、引用、示例、媒体、图表或 UI 状态。
+- 资产清单，包含负责人、路径、缺失状态和替代策略。
 
-Avoid:
+避免：
 
-- Naming concrete animations too early.
-- Specifying CSS implementation details.
-- Stuffing several list items into one step when they need separate attention.
-- Adding unsupported claims just to make a scene feel full.
+- 过早指定具体动画。
+- 指定 CSS 实现细节。
+- 将需要分别关注的多个列表项塞进同一个 step。
+- 为了让场景显得充实而加入无依据的主张。
 
-## Acceptance
+## 验收标准
 
-A content plan is ready when another implementer can build the presentation without deciding what each chapter says, what each step reveals, or which source facts are available for visuals.
+当另一位实现者无需再决定每章讲什么、每个 step 揭示什么、哪些源事实可用于视觉呈现，就能构建演示时，内容计划才算就绪。

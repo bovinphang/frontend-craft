@@ -8,7 +8,7 @@
       "按钮只有图标，帮我补可访问名称",
       "检查 table 语义和屏幕阅读器体验",
       "抽屉关闭后焦点应该回到哪里",
-      "a11y review for this React component"
+      "给这个 React 组件做 a11y 审查"
     ],
     "should_not_trigger": [
       "给这个 PR 做整体代码评审",
@@ -30,7 +30,7 @@
       "研究相似产品的实现方式，并给当前仓库制定吸收计划",
       "将参考项目里的优秀工程实践迁移成我们自己的方案",
       "做一次项目吸收分析，区分可借鉴能力和不该引入的部分",
-      "originally absorb ideas from a reference repo into this project",
+      "把参考仓库的想法原创化吸收到这个项目",
       "参考后端项目的鉴权和可观测性设计，提炼适合当前服务的吸收方案",
       "把另一个 CLI 工具的配置和错误输出体验原创化改造成我们的方案",
       "对比这个库项目的公开 API 和版本策略，判断哪些能力适合吸收"
@@ -55,7 +55,7 @@
       "SSE 和 WebSocket 应该选哪个",
       "组件里到处 fetch 想收敛成 API 层",
       "API 422 字段错误怎么展示到表单",
-      "frontend API integration with auth refresh"
+      "带认证刷新的前端 API 集成"
     ],
     "should_not_trigger": [
       "TanStack Query queryKey 怎么设计",
@@ -76,8 +76,8 @@
       "不要设计接口，只描述 UI 需要展示什么和能做什么",
       "前后端联调前先梳理用户动作、空态和错误态",
       "把订单详情页的权限和业务规则问题整理成后端问题清单",
-      "frontend-to-backend requirements handoff for this feature",
-      "document backend data needs for the checkout UI",
+      "为这个功能做前后端需求交接",
+      "整理结账 UI 的后端数据需求",
       "我需要向后端说明这个列表页的筛选、分页和状态需求"
     ],
     "should_not_trigger": [
@@ -100,7 +100,7 @@
       "封装带命名空间的客户端持久化",
       "审查 token 是否不该放 localStorage",
       "大数据量本地缓存用什么方案",
-      "client persistence strategy for a web app"
+      "为 Web 应用制定客户端持久化策略"
     ],
     "should_not_trigger": [
       "配置 Service Worker 离线 fallback",
@@ -122,7 +122,7 @@
       "签名板 Canvas 适配高清屏",
       "游戏渲染循环怎么写",
       "3D 场景 dispose 有哪些必须做",
-      "build a canvas data visualization"
+      "构建 Canvas 数据可视化"
     ],
     "should_not_trigger": [
       "普通 DOM 表单怎么实现",
@@ -144,7 +144,7 @@
       "输出 frontend code review 报告",
       "审查样式一致性和测试缺口",
       "评估这个 UI 实现能不能合并",
-      "general frontend PR review"
+      "做一次通用前端 PR 评审"
     ],
     "should_not_trigger": [
       "只检查 XSS 和 CSP",
@@ -187,10 +187,10 @@
       "React Query mutation 成功后如何失效缓存",
       "实现乐观更新失败回滚",
       "无限滚动数据用 useInfiniteQuery",
-      "SSR hydration with React Query",
+      "处理 React Query 的 SSR hydration",
       "封装 typed API hooks",
       "替换 useEffect loading state 获取数据",
-      "server state caching strategy"
+      "制定服务端状态缓存策略"
     ],
     "should_not_trigger": [
       "Service Worker 缓存静态资源",
@@ -233,7 +233,7 @@
       "React 大版本升级前需要迁移计划",
       "peer dependency 冲突怎么处理",
       "这个包从 CJS 切到 ESM 会影响构建吗",
-      "frontend dependency upgrade verification plan",
+      "制定前端依赖升级验证计划",
       "升级 Storybook 后 CI build 失败需要分析"
     ],
     "should_not_trigger": [
@@ -258,7 +258,7 @@
       "draw.io 自动布局一个超过 20 个节点的服务拓扑",
       "用 Graphviz 布局后生成 diagrams.net 编辑链接",
       "制作可编辑序列图并检查 .drawio 是否有断边",
-      "create an editable drawio architecture diagram with official cloud shapes"
+      "用官方云形状创建可编辑 draw.io 架构图"
     ],
     "should_not_trigger": [
       "生成一张产品宣传海报图片",
@@ -278,7 +278,7 @@
       "同步 README 中的 skill 和 agent 数量",
       "新增命令后更新多语言文档",
       "根据 package.json 生成命令清单",
-      "docs sync for runtime documentation",
+      "同步 runtime 文档",
       "更新 marketplace 描述里的能力数量",
       "检查 README 和 skills metadata 是否一致",
       "把报告输出表同步到文档",
@@ -304,7 +304,7 @@
       "Page Object 怎么组织",
       "写移动端和桌面端 E2E",
       "视觉回归测试怎么接入",
-      "debug a failing Playwright test"
+      "调试失败的 Playwright 测试"
     ],
     "should_not_trigger": [
       "给 Button 写组件单测",
@@ -326,7 +326,7 @@
       "多步表单 schema 怎么拆",
       "表单输入很卡怎么优化",
       "密码确认联动校验",
-      "build a typed validation form"
+      "构建类型化校验表单"
     ],
     "should_not_trigger": [
       "React 项目目录怎么规划",
@@ -349,8 +349,8 @@
       "制作 ML 模型结构图，标清 tensor shape 并避免连线堆叠",
       "生成信息图和学术图，导出后自动修复标签截断",
       "为这个故事生成漫画分镜和头像资产",
-      "run PNG QA on this generated architecture diagram",
-      "image generation workflow for posters, product shots, and mockups"
+      "对生成的架构图运行 PNG 质检",
+      "为海报、产品图和样机制定图像生成工作流"
     ],
     "should_not_trigger": [
       "只打磨现有 dashboard 的间距和 hover 状态",
@@ -373,7 +373,7 @@
       "实现设计稿里的弹窗和表格",
       "检查设计稿和实现的视觉差异",
       "用现有组件库还原 Pixso 页面",
-      "design-to-code implementation"
+      "设计稿转代码实现"
     ],
     "should_not_trigger": [
       "创建 PWA Service Worker",
@@ -417,7 +417,7 @@
       "整理 legacy CSS 和 jQuery 插件初始化",
       "MPA 页面 Ajax loading 怎么处理",
       "不引入框架地改旧页面",
-      "vanilla JS legacy maintenance"
+      "维护原生 JS 遗留代码"
     ],
     "should_not_trigger": [
       "把 jQuery 迁移到 React",
@@ -438,8 +438,8 @@
       "虚拟滚动和无限加载结合",
       "表格行太多导致 DOM 爆炸",
       "网格 virtualization 怎么做",
-      "variable row height measurement",
-      "large list windowing performance"
+      "测量可变行高",
+      "优化大列表 windowing 性能"
     ],
     "should_not_trigger": [
       "React Query 无限分页数据源",
@@ -461,7 +461,7 @@
       "检查 monorepo 循环依赖",
       "多 package 发布规范",
       "共享 UI 包和 app 边界",
-      "frontend monorepo restructuring"
+      "重构前端 monorepo"
     ],
     "should_not_trigger": [
       "单个 React 组件架构",
@@ -470,7 +470,7 @@
       "配置 Playwright E2E",
       "审查 XSS 风险",
       "优化虚拟列表",
-      "PWA manifest",
+      "配置 PWA manifest",
       "维护 jQuery 页面"
     ]
   },
@@ -483,7 +483,7 @@
       "Lottie 图标动画怎么按需加载",
       "设计 reduced-motion 下的动画兜底",
       "页面入场 stagger 和布局过渡怎么规划",
-      "frontend interaction motion strategy"
+      "制定前端交互动效策略"
     ],
     "should_not_trigger": [
       "SVG 路径描边动画怎么写",
@@ -505,7 +505,7 @@
       "middleware 里做重定向",
       "loading.tsx error.tsx 怎么组织",
       "Next.js fetch cache 策略",
-      "Next 14 route layout design"
+      "设计 Next 14 路由 layout"
     ],
     "should_not_trigger": [
       "普通 React 组件拆分",
@@ -513,8 +513,8 @@
       "TanStack Query 客户端缓存",
       "Vue 3 composable 设计",
       "Nuxt 页面路由",
-      "Playwright E2E",
-      "PWA Service Worker",
+      "编写 Playwright E2E",
+      "配置 PWA Service Worker",
       "jQuery 迁移"
     ]
   },
@@ -527,14 +527,14 @@
       "plugins .client .server 怎么写",
       "server/api 路由设计",
       "Nuxt layouts 和 pages",
-      "Nuxt module setup"
+      "设置 Nuxt module"
     ],
     "should_not_trigger": [
       "普通 Vue 3 组件边界",
-      "Next.js App Router",
+      "处理 Next.js App Router",
       "React Query 缓存",
       "写组件单测",
-      "PWA manifest",
+      "配置 PWA manifest",
       "jQuery 维护",
       "Canvas 渲染",
       "Web Worker 性能"
@@ -549,7 +549,7 @@
       "Lighthouse performance 分数下降",
       "滚动卡顿和主线程阻塞排查",
       "检查内存泄漏和未清理事件监听",
-      "frontend performance optimization with web vitals"
+      "基于 Web Vitals 做前端性能优化"
     ],
     "should_not_trigger": [
       "给 Button 写组件单元测试",
@@ -571,13 +571,13 @@
       "PWA 更新提示和 skipWaiting",
       "maskable icon 怎么配置",
       "iOS PWA 有哪些兼容问题",
-      "make this web app installable"
+      "让这个 Web 应用可安装"
     ],
     "should_not_trigger": [
       "React Query API 缓存",
       "localStorage 持久化偏好",
       "普通页面性能优化",
-      "Next.js metadata",
+      "配置 Next.js metadata",
       "写 Playwright E2E",
       "Web Worker 后台计算",
       "审查 XSS 风险",
@@ -593,16 +593,16 @@
       "React 页面重构成 features",
       "设计复合组件 API",
       "梳理 React 错误边界和状态层",
-      "React component architecture review"
+      "审查 React 组件架构"
     ],
     "should_not_trigger": [
       "写 React Hook Form 动态表单",
       "TanStack Query mutation 回滚",
       "RTL 组件单测",
       "只检查 a11y 焦点",
-      "Next.js App Router fetch cache",
+      "处理 Next.js App Router fetch cache",
       "虚拟列表滚动性能",
-      "PWA Service Worker",
+      "配置 PWA Service Worker",
       "XSS 安全审查"
     ]
   },
@@ -612,7 +612,7 @@
       "用 knip 检查死代码并安全删除",
       "删除没有引用的工具函数",
       "检查未使用的 npm 依赖",
-      "refactor clean unused exports",
+      "重构清理未使用导出",
       "清理过期路由前先做风险分类",
       "找出无用 CSS 文件但不要误删动态 class",
       "生成 dead code cleanup 报告"
@@ -636,7 +636,7 @@
       "dashboard 在平板和桌面断点之间跳变",
       "检查触摸目标和安全区域适配",
       "横竖屏切换后底部操作栏挡住内容",
-      "responsive layout review for this web app",
+      "审查这个 Web 应用的响应式布局",
       "设计移动优先的多列筛选页面"
     ],
     "should_not_trigger": [
@@ -659,7 +659,7 @@
       "Vue Router beforeEach 权限判断",
       "Nuxt route middleware 登录态",
       "防止 open redirect",
-      "route guard with roles"
+      "实现带角色的路由守卫"
     ],
     "should_not_trigger": [
       "审查 token 是否安全存储",
@@ -681,15 +681,15 @@
       "第三方脚本和 CSP 审查",
       "检查 CSRF 防护",
       "开放重定向风险",
-      "frontend security review"
+      "前端安全审查"
     ],
     "should_not_trigger": [
       "普通前端 PR 综合评审",
       "WCAG 键盘焦点审查",
       "React 组件架构设计",
-      "Playwright E2E",
+      "编写 Playwright E2E",
       "修复 TypeScript 错误",
-      "PWA install prompt",
+      "实现 PWA 安装提示",
       "Storybook 组件文档",
       "虚拟列表性能"
     ]
@@ -699,7 +699,7 @@
       "这个 Next.js 新版本 API 先查官方文档再决定",
       "帮我确认 Vite 配置项当前版本是否还推荐",
       "这个浏览器 API 兼容性要以规范和 MDN 为准",
-      "source-driven decision for a frontend library migration",
+      "为前端库迁移做事实源驱动决策",
       "React Router 版本差异需要查文档",
       "这个包的 ESM/CJS 行为不要凭记忆判断",
       "按项目源码和官方 docs 设计公共接口",
@@ -725,7 +725,7 @@
       "把重复的派生 state 清理掉",
       "服务端状态和客户端 store 边界怎么划分",
       "设计筛选条件、分页和排序的状态归属",
-      "frontend state ownership and store selection"
+      "确定前端状态归属和 store 选型"
     ],
     "should_not_trigger": [
       "TanStack Query queryKey 细节怎么设计",
@@ -746,8 +746,8 @@
       "Storybook decorators 怎么处理 Provider",
       "组件状态枚举文档",
       "Chromatic 视觉回归接入",
-      "Storybook interaction test",
-      "document components in Storybook"
+      "编写 Storybook 交互测试",
+      "在 Storybook 中编写组件文档"
     ],
     "should_not_trigger": [
       "RTL 组件单元测试",
@@ -756,7 +756,7 @@
       "按 Figma 直接实现页面",
       "安全审查",
       "PWA 配置",
-      "Web Worker",
+      "使用 Web Worker",
       "jQuery 迁移"
     ]
   },
@@ -769,7 +769,7 @@
       "微交互 SVG 动画",
       "prefers-reduced-motion 兜底",
       "SMIL 和 CSS animation 选择",
-      "animate an SVG illustration"
+      "为 SVG 插画添加动画"
     ],
     "should_not_trigger": [
       "Three.js 3D 场景",
@@ -790,7 +790,7 @@
       "检查动态 class 是否会被 purge 掉",
       "用 CVA 设计 Button 的 size 和 tone",
       "Tailwind safelist 应该怎么治理",
-      "build a Tailwind design system for this app",
+      "为这个应用构建 Tailwind 设计系统",
       "把硬编码颜色迁移到 Tailwind 语义 token"
     ],
     "should_not_trigger": [
@@ -810,7 +810,7 @@
       "先写失败测试再修这个 bug",
       "为新组件走红绿重构流程",
       "补一个回归测试再改逻辑",
-      "test driven development for this frontend feature",
+      "用测试驱动开发这个前端功能",
       "这个工具函数先写单测再实现",
       "修复表单校验 bug 前先复现测试",
       "用测试驱动方式重构状态逻辑"
@@ -835,7 +835,7 @@
       "规划静态检查、组件测试和 E2E 的质量门禁",
       "评估这个里程碑的测试债治理优先级",
       "测试分层怎么设计",
-      "create a frontend testing strategy for this feature"
+      "为这个功能创建前端测试策略"
     ],
     "should_not_trigger": [
       "给 Button 写 RTL 单测",
@@ -886,7 +886,7 @@
       "根据行业和产品类型给 dashboard 做 UI 方向",
       "写一个 design-system Master 和 dashboard page override",
       "检查这个图表页面的 chart UX 和视觉 QA",
-      "product-specific distinctive UI design and visual QA"
+      "做产品专属的差异化 UI 设计与视觉 QA"
     ],
     "should_not_trigger": [
       "按 Figma 像素还原组件",
@@ -905,11 +905,11 @@
       "运行项目测试并修复失败",
       "npm run build 报错帮我修",
       "typecheck 失败怎么处理",
-      "lint failure after changes",
+      "修复变更后的 lint 失败",
       "跑验证命令并分析失败日志",
       "修复单元测试失败",
-      "CI build failed locally",
-      "test and fix this frontend repo"
+      "修复本地 CI 构建失败",
+      "测试并修复这个前端仓库"
     ],
     "should_not_trigger": [
       "给 Button 写组件单元测试",
@@ -917,7 +917,7 @@
       "写新的 Playwright 测试计划",
       "做代码 review 报告",
       "设计 React 架构",
-      "PWA manifest",
+      "配置 PWA manifest",
       "Web Worker 实现",
       "迁移 jQuery"
     ]
@@ -931,13 +931,13 @@
       "Vite library mode 怎么 external peer deps",
       "vite-plugin-checker 该怎么接入",
       "配置 optimizeDeps 解决 CJS 依赖问题",
-      "review a Vite production build config"
+      "审查 Vite 生产构建配置"
     ],
     "should_not_trigger": [
       "React 组件边界怎么拆",
       "Vue Router 页面组织",
-      "Next.js App Router metadata",
-      "Nuxt useFetch SSR",
+      "处理 Next.js App Router metadata",
+      "处理 Nuxt useFetch SSR",
       "写 Playwright E2E",
       "PWA Service Worker 离线缓存",
       "按钮视觉 polish",
@@ -953,7 +953,7 @@
       "Provide Inject 适合这个场景吗",
       "Vue 3 API 层和错误处理约定",
       "Vue 组件架构 review",
-      "Composition API project conventions"
+      "制定 Composition API 项目约定"
     ],
     "should_not_trigger": [
       "Nuxt useFetch 和 SSR",
@@ -961,7 +961,7 @@
       "写 Vue Test Utils 单测",
       "只做 WCAG 审查",
       "TanStack Query 乐观更新",
-      "PWA Service Worker",
+      "配置 PWA Service Worker",
       "jQuery 迁移",
       "XSS 安全审查"
     ]
@@ -975,7 +975,7 @@
       "生成网页视频脚手架，支持主题 token 和录屏",
       "把技术分享拆成 script、outline 和可录制章节",
       "做一个每次按空格推进一个口播节拍的 16:9 演示",
-      "create a recordable web video presentation from this talk script"
+      "把这份演讲稿做成可录屏的网页视频演示"
     ],
     "should_not_trigger": [
       "普通 landing page 视觉打磨",
@@ -997,7 +997,7 @@
       "Worker pool 处理大量任务",
       "SharedWorker 跨 Tab 通信",
       "Vite worker import 怎么写",
-      "move heavy browser computation off main thread"
+      "把繁重浏览器计算移出主线程"
     ],
     "should_not_trigger": [
       "虚拟列表减少 DOM 节点",

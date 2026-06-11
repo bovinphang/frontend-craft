@@ -1,15 +1,15 @@
 ---
 name: fec-tdd-workflow
-description: Use when implementing new frontend behavior, fixing bugs, or refactoring logic where tests can describe the expected behavior first. Apply to components, hooks/composables, utilities, API clients, route guards, or user workflows; Chinese triggers include TDD, 测试驱动, 先写测试, 红绿重构, 回归测试.
+description: 用于实现新前端行为、修复 bug 或重构可先由测试描述预期行为的逻辑。适用于组件、hooks/composables、工具函数、API clients、路由守卫或用户工作流；中文触发词包括 TDD、测试驱动、先写测试、红绿重构、回归测试。
 ---
 
 # 前端 TDD 工作流
 
-## Purpose
+## 用途
 
 用“先写失败测试，再实现最小代码，再重构”的节奏交付前端功能，避免只在实现后补覆盖率。
 
-## Procedure
+## 流程
 
 1. 识别可观察行为：用户能看到的 UI、组件契约、hook/composable 返回值、路由守卫结果、API client 输出或错误状态。
 2. 先写一个最小失败测试：
@@ -23,11 +23,11 @@ description: Use when implementing new frontend behavior, fixing bugs, or refact
 7. 对 bug 修复，保留能复现问题的回归测试。
 8. 每轮只扩大一个可观察行为；新需求、新边界和新异常路径各自进入下一轮。
 
-## Prove-It Pattern
+## 证明式测试模式
 
 修复缺陷时先让测试失败，再让它通过。若无法先失败，说明测试没有覆盖原始问题，需要收窄输入、断言或测试层级。
 
-## Frontend Test Selection
+## 前端测试选择
 
 | Risk | Preferred Test |
 | ---- | -------------- |
@@ -37,7 +37,7 @@ description: Use when implementing new frontend behavior, fixing bugs, or refact
 | Router、Provider、Store 协作 | 轻量集成测试 |
 | 登录、支付、权限、关键 CRUD | E2E 测试 |
 
-## Constraints
+## 约束
 
 - 不为了 TDD 引入项目没有使用且收益不清晰的新测试框架。
 - 不测试实现细节、私有状态或脆弱 DOM 结构。
@@ -45,7 +45,7 @@ description: Use when implementing new frontend behavior, fixing bugs, or refact
 - 如果现有仓库没有测试基础设施，先输出最小测试落地建议，再请求用户确认是否引入。
 - 不在红灯阶段同时重构；先证明问题，再最小修复，再整理结构。
 
-## Expected Output
+## 预期输出
 
 - 至少一个先失败后通过的测试覆盖新增或修复行为。
 - 实现保持最小范围，重构只在测试通过后进行。

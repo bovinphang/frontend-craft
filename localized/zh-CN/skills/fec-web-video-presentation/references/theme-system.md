@@ -1,10 +1,10 @@
-# Theme System
+# 主题系统
 
-Themes are starting points, not templates. A theme defines the visual climate of the recording surface while leaving chapters free to create content-specific layouts.
+主题是起点，不是模板。主题定义录制画布的视觉气候，同时让各章节可以自由创建贴合内容的布局。
 
-## Token Roles
+## Token 角色
 
-Use semantic CSS variables:
+使用语义化 CSS 变量：
 
 - `--stage-bg`
 - `--stage-fg`
@@ -19,18 +19,18 @@ Use semantic CSS variables:
 - `--radius`
 - `--step-duration`
 
-## Starter Theme Policy
+## 起始主题策略
 
-The bundled starter themes are intentionally few:
+内置起始主题刻意保持少量：
 
-- Use them to create a runnable skeleton.
-- Replace colors and type choices when a real brand or product context exists.
-- Do not let all chapters become identical; keep typography and color coherent while varying layout and visual devices per chapter.
+- 用它们创建可运行骨架。
+- 当存在真实品牌或产品语境时，替换颜色和字体选择。
+- 不要让所有章节变得一模一样；保持字体和颜色一致，同时让每章的布局与视觉手法有所变化。
 
-## Custom Theme Checklist
+## 自定义主题检查清单
 
-- Contrast passes for recorded text.
-- Accent colors have different semantic jobs.
-- Background supports compression without muddy gradients.
-- Typography remains readable at 1080p and in lower-resolution reuploads.
-- Motion can be reduced without destroying meaning.
+- 录制文本的对比度达标。
+- 强调色有清晰且不同的语义职责。
+- 背景在视频压缩后不会出现浑浊渐变。
+- 字体在 1080p 和较低分辨率二次上传中仍可读。
+- 动效可以降低强度且不破坏含义。

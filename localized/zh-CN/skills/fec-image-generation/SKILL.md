@@ -1,15 +1,15 @@
 ---
 name: fec-image-generation
-description: Use when generating or editing diagrams, charts, visual assets, posters, UI mockups, product images, infographics, academic figures, comics, avatars, storyboards, brand boards, or image-edit workflows, especially when exported PNGs need visual QA and bounded self-repair. Prefer deterministic Mermaid/SVG/HTML/canvas sources for text-heavy diagrams; do not use for ordinary UI polish without generated imagery. Chinese triggers include 图片生成, 图像编辑, 图表生成, 架构图, ER 图, UML, 序列图, 海报, UI 样机, 产品图, 信息图, 学术图, 漫画, 头像, 分镜, 品牌板, PNG 自检, 自动修复.
+description: 用于生成或编辑图表、图形资产、海报、UI 样机、产品图、信息图、学术图、漫画、头像、分镜、品牌板或图像编辑工作流，尤其是导出 PNG 需要视觉质检和有限自动修复时。文字密集图表优先使用确定性的 Mermaid/SVG/HTML/canvas 源；不要用于不涉及生成图像的普通 UI 打磨。中文触发词包括 图片生成、图像编辑、图表生成、架构图、ER 图、UML、序列图、海报、UI 样机、产品图、信息图、学术图、漫画、头像、分镜、品牌板、PNG 自检、自动修复。
 ---
 
 # 图片生成与图表工作流
 
-## Purpose
+## 用途
 
 生成或编辑图表、视觉资产和图片工作流，并对导出的 PNG 做可复查的自检与修复迭代。
 
-## Procedure
+## 流程
 
 1. 判断产物类型
    - 文本、结构和连线准确性优先时，用 Mermaid、SVG、HTML/CSS、canvas 或图表库生成可编辑源，再导出 PNG。
@@ -42,7 +42,7 @@ description: Use when generating or editing diagrams, charts, visual assets, pos
 6. 交付记录
    - 说明最终源文件、PNG 路径、生成路线、QA 轮次、发现并修复的问题、仍需人工确认的文字或品牌风险。
 
-## Constraints
+## 约束
 
 - 文本密集图不要只靠位图模型生成；必须保留可编辑结构化源。
 - 不把截图、假数据或占位图当成最终产品图，除非用户明确要求概念稿。
@@ -51,6 +51,6 @@ description: Use when generating or editing diagrams, charts, visual assets, pos
 - PNG helper 只做检测和建议；修复必须回到源、prompt 或布局参数。
 - 自检结果不能替代人工确认专有名词、公式、论文图注、品牌规范和合规信息。
 
-## Expected Output
+## 预期输出
 
 产出可编辑源、最终 PNG 或编辑后图片，并附带生成路线与 QA 结果。图表应结构清晰、标签不截断、连线不混乱；视觉资产应匹配用途、尺寸、品牌语气和交付路径。

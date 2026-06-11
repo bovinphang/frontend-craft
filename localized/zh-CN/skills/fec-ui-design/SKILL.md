@@ -1,6 +1,6 @@
 ---
 name: fec-ui-design
-description: Use when building, reviewing, or improving frontend UI that needs product-specific design direction, design-system generation, Master/Page overrides, distinctive visual identity, anti-generic interface choices, first-screen hierarchy, UI polish, chart UX, interaction states, responsive behavior, or visual QA. When an external design file is authoritative, implement from that source instead of inventing direction; Chinese triggers include UI 设计, 设计系统, 视觉风格, 不要模板化, 高级感, 界面打磨, 交互状态.
+description: 用于构建、审查或改进需要产品专属设计方向的前端 UI，包括设计系统生成、Master/Page 覆盖、独特视觉识别、反通用界面选择、首屏层级、UI 打磨、图表 UX、交互状态、响应式行为或视觉 QA。外部设计文件为权威时，应从该来源实现，而不是自行发明方向；中文触发词包括 UI 设计、设计系统、视觉风格、不要模板化、高级感、界面打磨、交互状态。
 ---
 
 # UI 设计
@@ -9,11 +9,11 @@ description: Use when building, reviewing, or improving frontend UI that needs p
 
 可执行设计系统生成器位于 [design-system.mjs](scripts/design-system.mjs)，其原创知识包包括 [product-rules.json](data/product-rules.json)、[style-archetypes.json](data/style-archetypes.json)、[ux-quality-rules.json](data/ux-quality-rules.json) 和 [stack-ui-rules.json](data/stack-ui-rules.json)。
 
-## Purpose
+## 用途
 
 为页面、组件、仪表盘和工具界面建立设计方向，并完成可落地的视觉与交互 polish。
 
-## Procedure
+## 流程
 
 1. 明确界面的工作
    - 先说清它帮助用户完成什么任务，而不是先选颜色或布局。
@@ -87,7 +87,7 @@ description: Use when building, reviewing, or improving frontend UI that needs p
    - 对营销页、作品集和品牌页检查首屏是否适配常见小笔记本高度，导航是否单行，CTA 是否对比合格且不换行。
    - 复核是否存在连续三段以上相同 section 结构、重复 zigzag、重复三卡片、卡片套卡片、假截图或没有主体信息的视觉资产。
 
-## Constraints
+## 约束
 
 - 不把工具型应用做成营销落地页；首屏应是可用工作区。
 - 不用通用紫色渐变、装饰光斑、堆叠卡片或空泛 hero 作为默认方案。
@@ -103,6 +103,6 @@ description: Use when building, reviewing, or improving frontend UI that needs p
 - 不把 Tailwind、组件库或 Storybook 文档等实现载体当成设计方向本身；它们应承接已经明确的产品语境和 token 边界。
 - 不因参考系统偏好而强制某个框架、图标库、动效库或 CSS 工具；始终优先遵循当前项目依赖和设计系统。
 
-## Expected Output
+## 预期输出
 
 输出应包含明确的设计方向、首屏记忆点、视觉语言策略、组件/布局边界、状态覆盖、响应式策略和验证结果。复核时界面应符合业务语境、视觉层级支持快速扫描、交互状态完整，并避免泛化模板感。

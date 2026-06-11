@@ -1,22 +1,22 @@
 ---
 name: fec-route-protection
-description: Use when implementing or reviewing frontend route protection, auth guards, RBAC, permission routes, login state handling, redirects, middleware, React Router, Next.js, Vue Router, or Nuxt route middleware; Chinese triggers include 路由保护, 权限路由, 登录态.
+description: 用于实现或审查前端路由保护、auth guard、RBAC、权限路由、登录态处理、重定向、middleware、React Router、Next.js、Vue Router 或 Nuxt route middleware；中文触发词包括 路由保护、权限路由、登录态。
 ---
 
 # 路由保护
 
-## Purpose
+## 用途
 
 为前端应用建立清晰的认证、授权和重定向边界，避免越权访问与闪烁渲染。
 
-## When to Use
+## 适用场景
 
 - 页面需要登录后访问，或不同角色看到不同路由。
 - 需要实现 React Router、Next.js、Nuxt 或 Vue Router 的路由守卫。
 - 登录过期、权限不足、组织/租户切换需要统一处理。
 - 不用于替代服务端授权；前端路由保护只能改善体验，不能作为唯一安全边界。
 
-## Procedure
+## 流程
 
 ### 1. 定义认证与授权状态
 
@@ -121,7 +121,7 @@ router.beforeEach(async (to) => {
 - RBAC：权限矩阵来自可信会话或后端返回；前端只用于路由体验和 UI 裁剪，不能替代接口授权。
 - 会话刷新：401 刷新失败后统一清理状态；避免多个并发请求各自触发跳转或刷新风暴。
 
-## Constraints
+## 约束
 
 - 前端路由保护不是安全边界；API、SSR loader、server action 必须重复做授权校验。
 - 不要在组件渲染后用 `useEffect` 才跳转私有页面，否则会出现敏感内容闪烁。
@@ -130,6 +130,6 @@ router.beforeEach(async (to) => {
 - 多租户应用必须把 tenant/org 上下文纳入权限判断。
 - 不把菜单隐藏视为授权完成；用户直接访问 URL、刷新页面、篡改 localStorage 和替换 tenant 都必须验证。
 
-## Expected Output
+## 预期输出
 
 产出一套路由守卫实现，覆盖 loading、未登录、权限不足、登录后回跳和会话过期。验证时直接访问私有 URL、刷新页面、切换角色、篡改 redirect 参数，确认行为稳定且 API 仍有服务端授权。

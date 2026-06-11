@@ -41,7 +41,7 @@ const queryClient = new QueryClient({
 });
 ```
 
-## Query Key
+## Query Key 设计
 
 - 推荐：`["users", "list", { page, status }]`
 - 详情：`["users", "detail", userId]`
@@ -71,7 +71,7 @@ const mutation = useMutation({
 });
 ```
 
-## Infinite Query
+## 无限查询
 
 ```tsx
 const feed = useInfiniteQuery({

@@ -1,15 +1,15 @@
 ---
 name: fec-debug-framework
-description: Use when diagnosing frontend build failures, runtime errors, UI anomalies, API/data problems, white screens, request failures, or unexplained production exceptions; Chinese triggers include 调试, debug, 排查, 定位, 报错, 异常, 白屏, 请求失败.
+description: 用于诊断前端构建失败、运行时错误、UI 异常、API/数据问题、白屏、请求失败或难以解释的线上异常；中文触发词包括 调试、debug、排查、定位、报错、异常、白屏、请求失败。
 ---
 
 # 前端诊断框架
 
-## Purpose
+## 用途
 
 用证据驱动的分类、收集、假设、验证和修复流程定位前端故障，避免凭直觉扩大改动范围。
 
-## Procedure
+## 流程
 
 所有前端问题诊断遵循统一流程：
 
@@ -142,7 +142,7 @@ description: Use when diagnosing frontend build failures, runtime errors, UI ano
 
 撰写诊断报告时，加载 [references/report-template.md](references/report-template.md)。
 
-## Constraints
+## 约束
 
 - 不在缺少证据时猜测根因
 - 不通过关闭规则、删除测试或降低类型安全来「修复」
@@ -150,7 +150,7 @@ description: Use when diagnosing frontend build failures, runtime errors, UI ano
 - 不在验证前扩大改动范围
 - 同一假设连续 3 次验证失败，停止并报告阻塞
 
-## Expected Output
+## 预期输出
 
 - 诊断报告保存为 `reports/debug-YYYY-MM-DD-HHmmss.md`
 - 报告包含问题类型、关键证据、假设验证记录、根因、修复内容、验证结果和剩余风险

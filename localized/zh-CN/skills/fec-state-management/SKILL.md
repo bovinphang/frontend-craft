@@ -1,15 +1,15 @@
 ---
 name: fec-state-management
-description: Use when choosing, implementing, reviewing, or refactoring frontend state ownership across React, Vue, Next.js, Nuxt, URL state, server state, form state, browser persistence, or global stores. Prefer narrower skills for TanStack Query cache details, browser storage persistence, or form validation internals; Chinese triggers include 状态管理, 状态归属, store 选型.
+description: 用于选择、实现、审查或重构 React、Vue、Next.js、Nuxt、URL 状态、服务端状态、表单状态、浏览器持久化或全局 store 的前端状态归属。TanStack Query 缓存细节、浏览器存储持久化或表单校验内部问题优先使用更窄的 skill；中文触发词包括 状态管理、状态归属、store 选型。
 ---
 
 # 前端状态管理
 
-## Purpose
+## 用途
 
 为前端状态确定清晰归属，避免全局 store 膨胀、重复缓存和派生状态同步错误。
 
-## Procedure
+## 流程
 
 ### 1. 先分类状态来源
 
@@ -127,7 +127,7 @@ const migrationPlan: StateMigrationItem[] = [
 
 需要 Store 形状示例、选择器模式、URL 状态同步、持久化适配器、SSR 边界或审查清单时，加载 [references/state-patterns.md](references/state-patterns.md)。
 
-## Constraints
+## 约束
 
 - 不把服务端响应复制到全局 store；缓存、失效和重试归数据获取层。
 - 不把表单每个字段提升到全局 store；跨步骤共享也优先由表单上下文或提交草稿适配器处理。
@@ -135,6 +135,6 @@ const migrationPlan: StateMigrationItem[] = [
 - 持久化状态必须明确字段白名单、版本号、过期策略和敏感数据排除。
 - SSR 场景不要在模块顶层创建带用户数据的单例 store。
 
-## Expected Output
+## 预期输出
 
 产出状态归属清单、选型理由、store/API 边界和验证步骤。实现时应保留 loading/error/empty、刷新、回退、跨路由和权限变化等关键行为。

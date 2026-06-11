@@ -1,17 +1,17 @@
 ---
 name: fec-motion-interaction
-description: Use when designing, implementing, or reviewing frontend interaction motion, page transitions, scroll animation, Framer Motion, GSAP, Lottie, CSS animation, motion intensity, animation performance, reduced-motion behavior, or cinematic but accessible UI motion. Do not use for SVG-only path drawing, Canvas/WebGL rendering, or ordinary hover states; Chinese triggers include 动效设计, 交互动效, 页面转场, 滚动动画, Framer Motion, GSAP.
+description: 用于设计、实现或审查前端交互动效、页面转场、滚动动画、Framer Motion、GSAP、Lottie、CSS 动画、动效强度、动画性能、减少动效行为或兼具表现力与可访问性的 UI 动效。不要用于仅 SVG 路径绘制、Canvas/WebGL 渲染或普通 hover 状态；中文触发词包括 动效设计、交互动效、页面转场、滚动动画、Framer Motion、GSAP。
 ---
 
 # 交互动效
 
 适用于需要把页面转场、滚动叙事、组件入场、微交互和反馈节奏设计成可维护、可降级、可验证的前端动效任务。需要具体实现模式时加载 [motion-patterns.md](references/motion-patterns.md)。
 
-## Purpose
+## 用途
 
 为前端界面选择合适动效工具、强度和质量门禁。
 
-## Procedure
+## 流程
 
 1. 判断动效职责
    - 先写清动效服务的用户意图：定位、反馈、层级变化、状态确认、叙事引导或品牌记忆。
@@ -57,7 +57,7 @@ description: Use when designing, implementing, or reviewing frontend interaction
    - 检查动效强度是否匹配页面类型：工作台不应出现营销式滚动剧场，作品集也不应只有默认 hover 淡入。
    - 对滚动触发序列确认用户可以快速到达内容，不因 pinned 区块、过长时间轴或不可中断过渡丢失上下文。
 
-## Constraints
+## 约束
 
 - 不在同一个组件内混用 Framer Motion 和 GSAP 控制同一元素。
 - 不用动效掩盖 loading、empty、error、disabled 等状态缺失。
@@ -68,6 +68,6 @@ description: Use when designing, implementing, or reviewing frontend interaction
 - 不让动画改变阅读顺序、焦点顺序或键盘可达性。
 - 不用 skeleton 长时间占位掩盖真实加载失败；超过预期时应转入可理解的 loading、retry 或 error 状态。
 
-## Expected Output
+## 预期输出
 
 输出应包含动效目的、技术选型、强度等级、降级策略、性能边界和验证结果。完成后交互动效应帮助用户理解状态和层级，在 reduced-motion 与低端设备上仍可用，并且不显著拖慢首屏或滚动体验。

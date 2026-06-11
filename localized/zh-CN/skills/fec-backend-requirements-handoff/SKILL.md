@@ -1,15 +1,15 @@
 ---
 name: fec-backend-requirements-handoff
-description: Use when frontend work needs to communicate data, action, state, permission, validation, or business-rule needs to backend teams without dictating endpoint design, field names, database shape, or implementation details; Chinese triggers include 前后端需求交接, 后端需求, API 需求澄清, 数据需求说明.
+description: 用于前端工作需要向后端团队说明数据、动作、状态、权限、校验或业务规则需求，但不指定端点设计、字段名、数据库形态或实现细节；中文触发词包括 前后端需求交接、后端需求、API 需求澄清、数据需求说明。
 ---
 
 # 前后端需求交接
 
-## Purpose
+## 用途
 
 把前端页面和交互所需的数据、动作、状态和疑问整理成后端可讨论的需求说明。
 
-## Procedure
+## 流程
 
 1. 明确功能上下文
    - 说明页面、流程或组件是什么，面向哪类用户，以及用户完成任务的成功状态。
@@ -32,7 +32,7 @@ description: Use when frontend work needs to communicate data, action, state, pe
    - 文档包含 Context、Screens/Components、Data Needs、User Actions、UI States、Business Rules、Uncertainties、Questions for Backend 和 Decision Log。
    - 若用户只需要聊天回复，可以直接输出同样结构的 Markdown，不创建文件。
 
-## Constraints
+## 约束
 
 - 不替后端规定 URL、HTTP 方法、字段名、数据库 schema、缓存实现或服务拆分。
 - 不把前端猜测写成事实；不确定的业务规则必须进入 Uncertainties 或 Questions。
@@ -40,6 +40,6 @@ description: Use when frontend work needs to communicate data, action, state, pe
 - 不把内部错误栈、数据库字段或敏感实现细节要求暴露给 UI。
 - 不与 API 集成流程重复：本 skill 描述需求，客户端边界、类型来源和错误映射实现应在后续实现阶段处理。
 
-## Expected Output
+## 预期输出
 
 产出一份前端视角的后端需求交接说明，清楚描述 UI 需要什么数据和行为、哪些规则仍需确认，以及后续前后端需要共同决定的问题。

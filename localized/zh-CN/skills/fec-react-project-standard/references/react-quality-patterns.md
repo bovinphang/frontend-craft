@@ -1,4 +1,4 @@
-# React quality patterns
+# React 质量模式
 
 ## 样式接入
 

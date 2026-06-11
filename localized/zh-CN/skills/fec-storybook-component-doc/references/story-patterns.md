@@ -26,7 +26,7 @@ const config: StorybookConfig = {
 export default config;
 ```
 
-## Story
+## Story 示例
 
 ```tsx
 import type { Meta, StoryObj } from "@storybook/react";
@@ -50,7 +50,7 @@ export const Primary: Story = {
 };
 ```
 
-## Decorators
+## 装饰器
 
 ```tsx
 import type { Preview } from "@storybook/react";
@@ -67,7 +67,7 @@ const preview: Preview = {
 export default preview;
 ```
 
-## MDX
+## MDX 文档
 
 ```mdx
 import { Meta, Canvas, Controls, Source } from "@storybook/blocks";
@@ -95,7 +95,7 @@ import * as InputStories from "./Input.stories";
 <Source of={InputStories.Default} />
 ```
 
-## Interaction Test
+## 交互测试
 
 ```tsx
 import { expect, userEvent, within } from "@storybook/test";
@@ -110,7 +110,7 @@ export const FormSubmission: Story = {
 };
 ```
 
-## Visual Regression
+## 视觉回归
 
 ```bash
 npx chromatic --project-token=<token>

@@ -1,17 +1,17 @@
 ---
 name: fec-monorepo-project-standard
-description: Use when creating, reviewing, or restructuring frontend monorepos with pnpm workspace, Turborepo, Nx, multi-package dependency boundaries, task orchestration, package naming, or package publishing; Chinese triggers include monorepo, workspace, 多包.
+description: 用于创建、审查或重构前端 monorepo，包括 pnpm workspace、Turborepo、Nx、多包依赖边界、任务编排、包命名或包发布；中文触发词包括 monorepo、workspace、多包。
 ---
 
 # Monorepo 项目规范
 
 适用于使用 pnpm workspace、Turborepo 或 Nx 的多包前端仓库。
 
-## Purpose
+## 用途
 
 规范 Monorepo 项目的目录结构、依赖管理、任务编排和包发布流程，确保多包协作的构建效率和版本一致性。
 
-## Procedure
+## 流程
 
 1. 先确认仓库是否已使用 pnpm workspace、Turborepo 或 Nx，并沿用现有包命名与任务约定。
 2. 将应用放在 `apps/`，共享库、配置和工具放在 `packages/` 或既有等价目录。
@@ -123,7 +123,7 @@ packages:
 - 内部包：`@org/package-name` 或 `@repo/package-name`
 - 发布到 npm：遵循 `@scope/name` 规范
 
-## Constraints
+## 约束
 
 - 子包之间通过 `workspace:*` 引用，不发布到 npm 再安装
 - 共享配置（ESLint、TS）放在 `packages/config-*`，子包 extends
@@ -133,7 +133,7 @@ packages:
 - CI cache 只缓存依赖安装目录和任务产物，不缓存未验证的构建状态
 - affected 构建不能替代发布前全量验证；主干或 release 分支仍需完整质量门禁
 
-## Expected Output
+## 预期输出
 
 - Monorepo 目录结构清晰（`apps/` 应用、`packages/` 共享包、`tooling/` 工具）
 - `pnpm-workspace.yaml` 和 `turbo.json` / `nx.json` 配置正确

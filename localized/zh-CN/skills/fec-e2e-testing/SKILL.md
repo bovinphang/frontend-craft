@@ -1,15 +1,15 @@
 ---
 name: fec-e2e-testing
-description: Use when creating, maintaining, debugging, or reviewing real-browser end-to-end tests with Playwright or Cypress, including Page Object models, CI artifacts, traces, flaky tests, cross-page visual regression, and critical user journeys such as login, payment, permissions, or CRUD. For layer planning or tests close to UI components, choose the matching testing workflow first; Chinese triggers include E2E, 端到端测试, Playwright, Cypress.
+description: 用于创建、维护、调试或审查真实浏览器端到端测试，包括 Playwright/Cypress、Page Object、CI 产物、trace、不稳定用例、跨页面视觉回归以及登录、支付、权限或 CRUD 等关键用户旅程。若是测试层规划或靠近 UI 组件的测试，先选择对应测试工作流；中文触发词包括 E2E、端到端测试、Playwright、Cypress。
 ---
 
 # E2E 测试规范
 
-## Purpose
+## 用途
 
 用真实浏览器验证关键用户旅程，发现单元测试无法覆盖的集成风险。
 
-## Procedure
+## 流程
 
 1. 明确关键旅程：登录、购买、创建、搜索、权限、支付等跨页面流程优先；若只是选择测试层级，先做测试分层规划。
 2. 新项目优先 Playwright；已有 Cypress 项目沿用 Cypress，不为迁移而迁移。
@@ -27,7 +27,7 @@ description: Use when creating, maintaining, debugging, or reviewing real-browse
 - 需要 Web3/钱包流程或高风险金融流程时，加载 [references/e2e-special-scenarios.md](references/e2e-special-scenarios.md)。
 - 需要跨页面截图或视觉回归配置时，加载 [references/e2e-visual-regression.md](references/e2e-visual-regression.md)。
 
-## Constraints
+## 约束
 
 - 禁止依赖 `sleep` / 固定 `setTimeout` 作为主要同步手段。
 - 不在生产环境跑真实 E2E。
@@ -37,6 +37,6 @@ description: Use when creating, maintaining, debugging, or reviewing real-browse
 - 不把不稳定等待、随机数据或依赖测试顺序带入 CI。
 - 不把重试次数当作 flaky 治理；重试只能保留证据，根因仍需定位。
 
-## Expected Output
+## 预期输出
 
 关键用户旅程有稳定 E2E 覆盖，失败产物可定位问题，CI 中报告和 trace 可下载；flaky 用例有复现命令、隔离策略和后续 issue。

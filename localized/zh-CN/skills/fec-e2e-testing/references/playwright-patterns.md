@@ -15,7 +15,7 @@ tests/
 playwright.config.ts
 ```
 
-## Page Object
+## Page Object 模式
 
 ```ts
 import { type Locator, type Page } from "@playwright/test";
@@ -40,7 +40,7 @@ export class ItemsPage {
 }
 ```
 
-## Spec
+## Spec 示例
 
 ```ts
 import { expect, test } from "@playwright/test";
@@ -56,7 +56,7 @@ test.describe("商品搜索", () => {
 });
 ```
 
-## Config
+## 配置
 
 ```ts
 import { defineConfig, devices } from "@playwright/test";

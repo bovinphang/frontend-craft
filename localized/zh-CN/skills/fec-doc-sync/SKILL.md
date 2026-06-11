@@ -1,15 +1,15 @@
 ---
 name: fec-doc-sync
-description: Use when synchronizing frontend project documentation with source-of-truth files such as package.json, lockfiles, config, env examples, routes, API clients or server routes, schemas, components, tests, CI, build/deploy config, ADRs, changelogs, or migration notes. Do not use for general prose polishing only; Chinese triggers include 文档同步, 更新 README, docs sync, 环境变量文档, 命令清单, API 文档同步.
+description: 用于根据 package.json、lockfile、配置、env 示例、路由、API client 或 server routes、schema、组件、测试、CI、构建/部署配置、ADR、changelog 或迁移说明等事实源同步前端项目文档。不要用于单纯润色普通文案；中文触发词包括 文档同步、更新 README、docs sync、环境变量文档、命令清单、API 文档同步。
 ---
 
 # 文档同步
 
-## Purpose
+## 用途
 
 从代码、配置、测试、类型、脚本和运行时模板同步前端项目文档，避免 README、docs、环境变量说明、API/路由说明、架构决策和迁移说明与实际项目行为漂移。
 
-## Procedure
+## 流程
 
 1. 识别项目栈、文档入口和本次需要同步的范围；README 同步必须扫描根目录 `README*`、`docs/*/README*`、包、应用、部署或运行时相关 README，并排除 `node_modules`、构建产物和第三方依赖目录。
 2. 收集事实来源：`package.json`、lockfile、框架和构建配置、`.env.example`、路由、API clients 或 server routes、types/schemas、组件、测试、CI、build/deploy config。
@@ -20,7 +20,7 @@ description: Use when synchronizing frontend project documentation with source-o
 7. 当项目暴露插件、SDK、CLI、组件库、模板或集成能力时，同步对应的功能清单、集成说明、命令/脚本说明、公开 metadata、示例提示词或示例用法。
 8. 运行相关文档一致性、旧口径搜索、报告格式一致性、类型检查、测试、构建或打包检查。
 
-## Constraints
+## 约束
 
 - 不把 README 变成完整实现细节；公开文档保留高信号摘要。
 - 不引入与事实来源不一致的命令、路径、环境变量、API 行为或能力名称。
@@ -30,7 +30,7 @@ description: Use when synchronizing frontend project documentation with source-o
 - 不把国际化 README 同步简化成只改主 README；公共事实、功能清单、报告清单、命令/脚本说明和示例用法必须检查所有语言入口。
 - 不把 ADR 当作长篇复盘；只记录背景、决策、取舍、影响范围、验证和回滚线索。
 
-## Expected Output
+## 预期输出
 
 - 列出已同步的 README/docs/ADR/changelog/env/setup/deploy 文档。
 - 列出已检查的 README/docs 入口，并说明哪些语言文件已同步、哪些无需同步、哪些需要人工确认。

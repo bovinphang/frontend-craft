@@ -1,80 +1,80 @@
-# Artifact Routing
+# 产物路由
 
-## Mode selection
+## 模式选择
 
-Choose the execution mode before writing a prompt:
+编写提示词前先选择执行模式：
 
-| Mode | Use when | Behavior |
+| 模式 | 适用场景 | 行为 |
 | ---- | -------- | -------- |
-| Deterministic source | Text, labels, charts, connectors, or exact geometry must be correct | Build Mermaid, SVG, HTML/CSS, canvas, plotting, or design-tool source first, then export PNG. |
-| Host-native image tool | The task needs raster aesthetics, illustration, product mood, photo-like output, or image editing and the current environment has an image tool | Write a structured prompt and call the host image tool. Save or report the prompt when future edits are likely. |
-| Prompt-only advisor | No image tool is available or the user only wants a prompt | Produce the final prompt, usage notes, and verification checklist. Do not imply an image was generated. |
-| Hybrid | Exact text or UI structure plus generated imagery are both needed | Generate supporting imagery, then compose final text/layout in SVG, HTML, canvas, or a design tool. |
+| 确定性源文件 | 文本、标签、图表、连接线或精确几何必须正确 | 先构建 Mermaid、SVG、HTML/CSS、canvas、绘图或设计工具源文件，再导出 PNG。 |
+| 宿主原生图像工具 | 任务需要位图审美、插画、产品氛围、照片感输出或图像编辑，且当前环境有图像工具 | 编写结构化提示词并调用宿主图像工具。若后续可能编辑，保存或报告提示词。 |
+| 仅提示词建议 | 没有可用图像工具，或用户只想要提示词 | 输出最终提示词、使用说明和校验清单。不要暗示已经生成图片。 |
+| 混合路线 | 同时需要精确文本或 UI 结构，以及生成图像 | 先生成辅助图像，再用 SVG、HTML、canvas 或设计工具组合最终文本/布局。 |
 
-Do not introduce local image API scripts, provider-specific environment variables, or OpenAI-compatible gateway assumptions as part of this workflow. If a project already owns such a pipeline, treat it as a host tool and keep prompts provider-neutral.
+不要把本地图像 API 脚本、供应商专属环境变量或 OpenAI-compatible 网关假设引入该工作流。如果项目已有这类管线，把它视为宿主工具，并保持提示词供应商中立。
 
-## Route by output
+## 按输出路由
 
-| Output | Preferred route | Notes |
+| 输出 | 首选路线 | 说明 |
 | ------ | --------------- | ----- |
-| Poster / ad creative | Image generation, then optional layout polish in HTML/SVG or design tool | Lock exact copy before generation; recompose text outside the bitmap when accuracy matters. |
-| UI mockup | HTML/CSS or design-tool mockup first; raster generation only for mood or hero references | Keep controls readable and avoid fake product states in final handoff. |
-| Product image | Image generation or edit with reference constraints | Preserve brand, perspective, material, and lighting; do not overwrite original assets. |
-| Infographic | Structured SVG/HTML/canvas for text and charts; generated illustrations only as supporting media | Export PNG after layout QA. |
-| Academic figure | Deterministic plotting, SVG, Mermaid, LaTeX, or canvas | Accuracy beats style; keep source reproducible. |
-| Comic / storyboard | Image generation with panel manifest | Track panel count, exact captions, characters, scene continuity, and reading order. |
-| Avatar | Image generation or edit | Ask only when identity, style, or usage rights are ambiguous. |
-| Brand board | Mixed route: generated imagery, palette/type/layout board in HTML/SVG | Record palette roles, typography mood, imagery rules, and avoid-list. |
-| Image edit | Edit target plus explicit invariants | Preserve requested identity, composition, text, object, lighting, or background constraints. |
+| 海报 / 广告创意 | 图像生成，然后可选用 HTML/SVG 或设计工具打磨布局 | 生成前锁定准确文案；文本准确性重要时，在位图外重新排版。 |
+| UI 样机 | 优先 HTML/CSS 或设计工具样机；位图生成仅用于氛围或 hero 参考 | 保持控件可读，最终交接避免伪造产品状态。 |
+| 产品图 | 带参考约束的图像生成或编辑 | 保留品牌、透视、材质和光照；不要覆盖原始资产。 |
+| 信息图 | 文本和图表使用结构化 SVG/HTML/canvas；生成插画只作辅助媒体 | 布局 QA 后导出 PNG。 |
+| 学术图 | 确定性绘图、SVG、Mermaid、LaTeX 或 canvas | 准确性优先于风格；保持源文件可复现。 |
+| 漫画 / 分镜 | 带分镜清单的图像生成 | 跟踪分镜数量、准确字幕、角色、场景连续性和阅读顺序。 |
+| 头像 | 图像生成或编辑 | 仅在身份、风格或使用权不明确时提问。 |
+| 品牌板 | 混合路线：生成图像，并用 HTML/SVG 制作色板/字体/布局板 | 记录色彩角色、字体气质、图像规则和避免清单。 |
+| 图像编辑 | 编辑目标加明确不变量 | 保留用户要求的身份、构图、文本、对象、光照或背景约束。 |
 
-## Visual asset categories
+## 视觉资产类别
 
-Use these categories to pick prompt detail and verification focus:
+使用这些类别选择提示词细节和校验重点：
 
-- Product and commerce: product image, packaging, lifestyle scene, marketplace board.
-- UI and interface: app mockup, chat scene, dashboard view, landing hero, social post.
-- Technical and academic: architecture, sequence, state, ER, method figure, graphical abstract.
-- Narrative and brand: poster, campaign key visual, storyboard, comic, avatar, mascot, brand board.
-- Information design: infographic, map, comparison, step-by-step guide, KPI board.
-- Editing: background replacement, object removal, local replacement, retouching, portrait edit.
+- 产品与商业：产品图、包装、生活方式场景、市场展示板。
+- UI 与界面：应用样机、聊天场景、仪表盘视图、落地页 hero、社交帖子。
+- 技术与学术：架构、序列、状态、ER、方法图、图形摘要。
+- 叙事与品牌：海报、活动主视觉、分镜、漫画、头像、吉祥物、品牌板。
+- 信息设计：信息图、地图、对比、分步指南、KPI 看板。
+- 编辑：背景替换、对象移除、局部替换、修饰、人像编辑。
 
-If the category is text-heavy or diagram-heavy, prefer a deterministic source or hybrid route.
+如果类别偏文本或图表密集，优先使用确定性源文件或混合路线。
 
-## Prompt contract
+## 提示词契约
 
-Use this compact structure when calling an image tool:
-
-```text
-Asset type:
-Use:
-Canvas / aspect ratio:
-Audience:
-Required text:
-Subject:
-Composition:
-Style / brand tone:
-Reference assets:
-Must preserve:
-Avoid:
-Output:
-```
-
-For exact text, prefer adding text in SVG/HTML/design source after image generation. If text must be inside generated imagery, keep it short and verify manually.
-
-For image edits, add:
+调用图像工具时使用这个紧凑结构：
 
 ```text
-Source image:
-Edit region:
-Invariants:
-Replacement:
-Lighting / perspective:
+资产类型：
+用途：
+画布 / 宽高比：
+受众：
+必需文本：
+主体：
+构图：
+风格 / 品牌调性：
+参考资产：
+必须保留：
+避免：
+输出：
 ```
 
-## Handoff checklist
+精确文本优先在图像生成后通过 SVG/HTML/设计源文件添加。如果文本必须出现在生成图像内，保持简短并人工核验。
 
-- Final image path is inside the workspace when the asset is project-bound.
-- Source or prompt is saved when future edits are likely.
-- Exact text, diagram labels, chart values, citations, and brand marks are manually checked.
-- Generated variants that were rejected are not referenced by code or docs.
-- If no image was generated, the final answer clearly states prompt-only mode.
+图像编辑时补充：
+
+```text
+源图像：
+编辑区域：
+不变量：
+替换内容：
+光照 / 透视：
+```
+
+## 交接检查清单
+
+- 项目绑定资产的最终图片路径位于 workspace 内。
+- 未来可能编辑时，保存源文件或提示词。
+- 手动检查精确文本、图表标签、图表数值、引用和品牌标识。
+- 被拒绝的生成变体不应被代码或文档引用。
+- 如果没有生成图片，最终答复应明确说明是仅提示词模式。

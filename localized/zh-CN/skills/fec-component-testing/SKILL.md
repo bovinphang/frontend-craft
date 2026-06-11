@@ -1,15 +1,15 @@
 ---
 name: fec-component-testing
-description: Use when authoring or reviewing frontend unit, component, or light integration tests close to UI code, including React Testing Library, Vue Test Utils, hooks/composables, props/emits, callbacks, accessible queries, user-event interactions, mocks, loading/error/empty states, and regression coverage. For layer planning, real-browser journeys, or existing validation failures, choose the matching testing or validation workflow first; Chinese triggers include 组件测试, 组件单测, 单元测试, 轻量集成测试.
+description: 用于编写或审查靠近 UI 代码的前端单元、组件或轻量集成测试，包括 React Testing Library、Vue Test Utils、hooks/composables、props/emits、回调、可访问查询、user-event 交互、mock、loading/error/empty 状态和回归覆盖。若是测试分层规划、真实浏览器旅程或现有验证失败，优先选择对应测试或验证工作流；中文触发词包括 组件测试、组件单测、单元测试、轻量集成测试。
 ---
 
 # 组件测试
 
-## Purpose
+## 用途
 
 用贴近代码和用户行为的测试验证纯逻辑、组件契约与轻量模块协作，减少重构和 UI 交互回归。
 
-## Procedure
+## 流程
 
 ### 1. 先确定测试层级
 
@@ -104,7 +104,7 @@ function setup() {
 - 失败原因应指向用户行为或公开契约，而不是导入错误、测试环境或等待方式。
 - 修复后保留回归测试，避免把验证只留在手工步骤里。
 
-## Constraints
+## 约束
 
 - 避免测试实现细节，例如内部 state 名称、私有函数调用、DOM 层级快照。
 - 不把 snapshot 作为交互组件的主要断言；它只能辅助检查稳定静态输出。
@@ -114,6 +114,6 @@ function setup() {
 - 不在测试里复制组件实现逻辑；否则测试会和错误实现一起通过。
 - 不在测试间共享可变 fixture、全局 store 或 fake timer 状态；每个用例独立 setup 和 cleanup。
 
-## Expected Output
+## 预期输出
 
 产出与组件同目录或项目约定目录下的测试文件，覆盖核心交互、状态和回归场景。验证时运行项目现有 test 命令，确认失败信息能定位到用户行为或组件契约。

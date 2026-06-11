@@ -1,22 +1,22 @@
 ---
 name: fec-svg-animation
-description: Use when implementing or reviewing SVG animation, path drawing, icon motion, logo animation, illustration motion, micro-interactions, CSS/SMIL/Framer Motion/GSAP choices, motion accessibility, or fallback behavior; Chinese triggers include SVG 动画, 路径描边, 动效.
+description: 用于实现或审查 SVG 动画、路径绘制、图标动效、Logo 动画、插画动效、微交互、CSS/SMIL/Framer Motion/GSAP 选型、动效无障碍或降级行为；中文触发词包括 SVG 动画、路径描边、动效。
 ---
 
 # SVG 动画实现
 
-## Purpose
+## 用途
 
 为 SVG 图标、插画和数据可视化提供可维护、可访问、性能可控的动画方案。
 
-## When to Use
+## 适用场景
 
 - 需要实现 SVG 图标、Logo、插画或路径描边动画。
 - 需要在 React/Vue 组件中接入 Framer Motion、GSAP 或 CSS 动画。
 - 需要根据 `prefers-reduced-motion` 提供动效降级。
 - 不用于复杂 3D/WebGL 场景；此类场景优先使用 Canvas / Three.js workflow。
 
-## Procedure
+## 流程
 
 ### 1. 选择动画方式
 
@@ -133,7 +133,7 @@ export function LogoReveal() {
 - 循环动画只在可见区域运行，页面隐藏或组件卸载时停止。
 - 移动端减少滤镜、mask、clipPath 和大量渐变叠加。
 
-## Constraints
+## 约束
 
 - 优先动画 `transform`、`opacity` 和 SVG 路径属性；避免高频修改 layout 相关属性。
 - 交互控件必须保留可见 focus 状态，动画不能替代状态表达。
@@ -143,6 +143,6 @@ export function LogoReveal() {
 - 不用动画改变可点击区域、阅读顺序或焦点位置。
 - 不让 SVG 滤镜、模糊、mask 或 clipPath 成为移动端掉帧主因；复杂效果需要设备降级。
 
-## Expected Output
+## 预期输出
 
 产出一个可复用的 SVG 动画组件或样式方案，包含选型理由、动效降级和可访问性处理。验证时检查动画流畅、无布局抖动、键盘与 reduced-motion 场景可用。

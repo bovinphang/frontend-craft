@@ -1,33 +1,33 @@
-# Recording And Audio
+# 录制与音频
 
-## Recording Modes
+## 录制模式
 
-Manual mode:
+手动模式：
 
-- Click, Space, ArrowRight, or PageDown advances one step.
-- ArrowLeft or PageUp goes back.
-- Best when a human narrator is recording live.
+- Click、Space、ArrowRight 或 PageDown 前进一个 step。
+- ArrowLeft 或 PageUp 返回。
+- 适合真人旁白现场录制。
 
-Auto mode:
+自动模式：
 
-- Uses per-step durations from the project data.
-- Best when narration audio is already aligned or when making a clean screen capture.
+- 使用项目数据中的每步时长。
+- 适合旁白音频已对齐，或需要干净录屏的场景。
 
-## Recording Checklist
+## 录制检查清单
 
-- Browser console has no errors.
-- Stage is centered and scaled without distortion.
-- No horizontal or vertical scrollbars appear inside the capture frame.
-- Controls are hidden unless hovered or focused.
-- Current step persists only when helpful; reset it after changing chapter order or step count.
-- Record a 10 second sample before doing the full take.
+- 浏览器控制台无错误。
+- 舞台居中且缩放无变形。
+- 捕获画面中没有水平或垂直滚动条。
+- 控件仅在 hover 或 focus 时显示。
+- 仅在有帮助时持久化当前 step；章节顺序或 step 数变化后重置。
+- 完整录制前先录制 10 秒样片。
 
-## Audio Policy
+## 音频策略
 
-Audio is optional. A project may use:
+音频是可选项。项目可以使用：
 
-- Existing narration files from the user.
-- Host-native TTS or voiceover tools.
-- A project-owned TTS pipeline.
+- 用户提供的现有旁白文件。
+- 宿主原生 TTS 或配音工具。
+- 项目自有 TTS 管线。
 
-Keep audio alignment provider-neutral. Store segment text and file paths in project data, but do not encode a vendor-specific API contract into the skill.
+音频对齐保持供应商中立。将片段文本和文件路径存入项目数据，但不要把供应商专属 API 契约写进 skill。

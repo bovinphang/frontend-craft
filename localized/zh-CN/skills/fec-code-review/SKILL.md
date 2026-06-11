@@ -1,15 +1,15 @@
 ---
 name: fec-code-review
-description: Use when the user asks for general frontend code review, PR review, merge-readiness assessment, architecture maintainability, type-safety, rendering/state risks, style consistency, testability gaps, or a cross-cutting review summary. Delegate deep security, accessibility, E2E, or performance investigations to their specialized skills; Chinese triggers include 代码审查, 代码评审, review.
+description: 用于用户要求通用前端代码评审、PR 评审、合并就绪评估、架构可维护性、类型安全、渲染/状态风险、样式一致性、可测性缺口或横向评审总结时。深度安全、无障碍、E2E 或性能问题应委托对应专项 skill；中文触发词包括 代码审查、代码评审、review。
 ---
 
 # 前端代码评审
 
-## Purpose
+## 用途
 
 从架构、类型安全、可访问性、样式一致性、性能和可测试性等 8 个维度审查前端代码质量，输出分级评审报告。
 
-## Procedure
+## 流程
 
 1. 先读项目事实：package scripts、框架、目录约定、最近 diff、现有测试和相关规则。
 2. 按风险找问题，而不是按个人偏好挑风格；每个发现都要能指向具体文件、行号和用户影响。
@@ -125,7 +125,7 @@ description: Use when the user asks for general frontend code review, PR review,
 
 撰写代码评审报告时，加载 [references/report-template.md](references/report-template.md)。发现必须具体且可操作；不要写"优化性能"等空泛建议而不指出具体代码模式。
 
-## Constraints
+## 约束
 
 - 不把个人风格偏好写成阻塞问题；阻塞项必须有明确用户影响、运行时风险、安全风险或维护成本证据。
 - 不在缺少 diff、文件位置或复现线索时给确定结论。
@@ -133,7 +133,7 @@ description: Use when the user asks for general frontend code review, PR review,
 - 同一根因不要重复报多条；合并为一条代表性发现并列出影响范围。
 - 自动化工具稳定覆盖的格式问题交给 lint/format，不作为人工评审主发现。
 
-## Expected Output
+## 预期输出
 
 - 分级评审报告（CRITICAL / HIGH / MEDIUM / LOW）
 - 每个问题关联具体文件和行号，附修复建议

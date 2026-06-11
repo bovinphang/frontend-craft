@@ -1,29 +1,29 @@
-# Troubleshooting
+# 故障排查
 
-## draw.io CLI Missing
+## 缺少 draw.io CLI
 
-Generate the `.drawio` file and use `diagram-url.mjs --edit` to open diagrams.net in the browser.
+生成 `.drawio` 文件，并使用 `diagram-url.mjs --edit` 在浏览器中打开 diagrams.net。
 
-## Graphviz Missing
+## 缺少 Graphviz
 
-`layout-graph.mjs` exits with a clear Graphviz message. Keep the graph JSON and either install Graphviz or hand-place a smaller diagram.
+`layout-graph.mjs` 会输出清晰的 Graphviz 提示并退出。保留 graph JSON，然后安装 Graphviz，或手动摆放较小的图表。
 
-## Blank Vendor Shape
+## 供应商图形为空
 
-Run `shape-query.mjs` and use the returned style string. A guessed `shape=mxgraph.*` often renders as a generic box.
+运行 `shape-query.mjs` 并使用返回的 style 字符串。猜测的 `shape=mxgraph.*` 经常会渲染成通用方框。
 
-## Brand Icon Does Not Render
+## 品牌图标未渲染
 
-CDN-referenced symbols require network access during render. Use `brand-symbols.mjs --embed` for a self-contained data URI when portability matters.
+引用 CDN 的符号在渲染时需要网络访问。需要可移植性时，使用 `brand-symbols.mjs --embed` 生成自包含 data URI。
 
-## Embedded PNG Looks Corrupt
+## 嵌入 PNG 看起来损坏
 
-Run `png-embed-fix.mjs` after final `drawio -e` PNG export. The command is idempotent.
+最终执行 `drawio -e` 导出 PNG 后，运行 `png-embed-fix.mjs`。该命令是幂等的。
 
-## Browser URL Opens Blank On Windows
+## Windows 上浏览器 URL 打开为空白
 
-Use `diagram-url.mjs --json` and open the emitted `windowsShortcut` content as a `.url` file, or run `diagram-url.mjs --shortcut`. This preserves the `#R` or `#create=` fragment that carries the compressed diagram.
+使用 `diagram-url.mjs --json`，并将输出的 `windowsShortcut` 内容作为 `.url` 文件打开；或运行 `diagram-url.mjs --shortcut`。这样可以保留携带压缩图表的 `#R` 或 `#create=` fragment。
 
-## Mermaid Or CSV URL Fails
+## Mermaid 或 CSV URL 失败
 
-Mermaid and CSV must use `diagram-url.mjs --create --type mermaid|csv`. The older viewer/editor `#R` mode is XML-only.
+Mermaid 和 CSV 必须使用 `diagram-url.mjs --create --type mermaid|csv`。旧的 viewer/editor `#R` 模式仅适用于 XML。

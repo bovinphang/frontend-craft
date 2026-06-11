@@ -8,9 +8,9 @@
       "fec-testing-strategy"
     ],
     "boundaryWorkflows": [
-      "Use source-driven development when reference behavior depends on official docs, version-sensitive APIs, or project facts.",
-      "Use documentation sync when absorbed capabilities change public docs, runtime docs, metadata, or published capability tables.",
-      "Use refactor clean when the absorption work first requires removing proven dead code, duplicate modules, or unused dependencies."
+      "当参考行为依赖官方文档、版本敏感 API 或项目事实时，使用事实源驱动开发。",
+      "当吸收后的能力会改变公开文档、runtime 文档、metadata 或已发布能力表时，使用文档同步。",
+      "当吸收工作需要先移除已确认的死代码、重复模块或未使用依赖时，使用重构清理。"
     ],
     "capabilityTags": [
       "project-absorption",
@@ -29,9 +29,9 @@
       "fec-source-driven-development"
     ],
     "boundaryWorkflows": [
-      "Use a data-fetching workflow for TanStack Query cache policy, query keys, optimistic updates, and server-state hooks.",
-      "Use a security review workflow for token storage, XSS, CSRF, file upload trust boundaries, and secret leakage risks.",
-      "Use a route protection workflow for page-level auth redirects, RBAC route guards, and middleware behavior."
+      "涉及 TanStack Query 缓存策略、query key、乐观更新和服务端状态 hooks 时，使用数据获取工作流。",
+      "涉及 token 存储、XSS、CSRF、文件上传信任边界和密钥泄露风险时，使用安全审查工作流。",
+      "涉及页面级认证重定向、RBAC 路由守卫和 middleware 行为时，使用路由保护工作流。"
     ],
     "capabilityTags": [
       "api",
@@ -50,9 +50,9 @@
       "fec-route-protection"
     ],
     "boundaryWorkflows": [
-      "Use API integration when the contract shape, typed client, auth refresh, error mapping, upload, or realtime implementation is being designed.",
-      "Use documentation sync when backend decisions change public docs, API notes, route docs, or env/config documentation.",
-      "Use route protection when the handoff centers on auth redirects, RBAC, permission routes, or middleware behavior."
+      "当正在设计契约形态、类型化 client、认证刷新、错误映射、上传或实时实现时，使用 API 集成。",
+      "当后端决策会改变公开文档、API 说明、路由文档或 env/config 文档时，使用文档同步。",
+      "当交接重点是认证重定向、RBAC、权限路由或 middleware 行为时，使用路由保护。"
     ],
     "capabilityTags": [
       "backend-requirements",
@@ -69,9 +69,9 @@
       "fec-data-fetching"
     ],
     "boundaryWorkflows": [
-      "Use a security review workflow for token, private data, and XSS read risks.",
-      "Use a PWA workflow for Service Worker offline caches and installability.",
-      "Use a data-fetching workflow for server state and API cache behavior."
+      "涉及 token、私有数据和 XSS 读取风险时，使用安全审查工作流。",
+      "涉及 Service Worker 离线缓存和可安装性时，使用 PWA 工作流。",
+      "涉及服务端状态和 API 缓存行为时，使用数据获取工作流。"
     ],
     "capabilityTags": [
       "storage",
@@ -87,9 +87,9 @@
       "fec-motion-interaction"
     ],
     "boundaryWorkflows": [
-      "Use a worker workflow when expensive graphics computation blocks the main thread.",
-      "Use an SVG animation workflow for small vector icons, path strokes, and UI micro-interactions.",
-      "Use an accessibility workflow for non-text alternatives and keyboard fallbacks."
+      "当昂贵图形计算阻塞主线程时，使用 Worker工作流。",
+      "涉及小型矢量图标、路径描边和 UI 微交互时，使用 SVG 动画工作流。",
+      "涉及非文本替代内容和键盘降级路径时，使用无障碍工作流。"
     ],
     "capabilityTags": [
       "canvas",
@@ -112,9 +112,9 @@
       "fec-responsive-layout"
     ],
     "boundaryWorkflows": [
-      "Use a security review workflow for XSS, CSRF, token, upload, third-party script, and CSP risks.",
-      "Use an accessibility workflow for WCAG, keyboard, focus, semantic, and ARIA risks.",
-      "Use an E2E workflow for critical paths, flaky tests, traces, and CI artifacts."
+      "涉及 XSS、CSRF、token、上传、第三方脚本和 CSP 风险时，使用安全审查工作流。",
+      "涉及 WCAG、键盘、焦点、语义和 ARIA 风险时，使用无障碍工作流。",
+      "涉及关键路径、不稳定测试、trace 和 CI 产物时，使用 E2E 工作流。"
     ],
     "capabilityTags": [
       "code-review",
@@ -131,9 +131,9 @@
       "fec-validation-fix"
     ],
     "boundaryWorkflows": [
-      "Use a testing strategy workflow before choosing between static, unit, component, integration, E2E, visual, or specialty quality layers.",
-      "Use an E2E workflow for real-browser cross-page journeys, login state, and CI artifacts.",
-      "Use a validation workflow when the task is to run or repair existing lint, typecheck, test, or build failures."
+      "在静态检查、单元、组件、集成、E2E、视觉或专项质量层之间做选择前，先使用测试策略工作流。",
+      "涉及真实浏览器跨页面旅程、登录态和 CI 产物时，使用 E2E 工作流。",
+      "当任务是运行或修复现有 lint、typecheck、test 或 build 失败时，使用验证修复工作流。"
     ],
     "capabilityTags": [
       "testing",
@@ -149,9 +149,9 @@
       "fec-list-virtualization"
     ],
     "boundaryWorkflows": [
-      "Use a form workflow for form state, validation, and submit UI.",
-      "Use a PWA workflow for Service Worker and offline cache policy.",
-      "Use a virtualization workflow for DOM rendering performance in infinite lists."
+      "涉及表单状态、校验和提交 UI 时，使用表单工作流。",
+      "涉及 Service Worker 和离线缓存策略时，使用 PWA 工作流。",
+      "涉及无限列表中的 DOM 渲染性能时，使用虚拟列表工作流。"
     ],
     "capabilityTags": [
       "data-fetching",
@@ -164,8 +164,8 @@
       "fec-dependency-upgrade"
     ],
     "boundaryWorkflows": [
-      "Use a dependency upgrade workflow when the task goal is dependency migration, CVE remediation, lockfile risk review, or major version planning.",
-      "Keep ordinary build failures in the debug workflow first; collect evidence before deciding that dependency versions or package migration are the root cause."
+      "当任务目标是依赖迁移、CVE 修复、lockfile 风险审查或大版本规划时，使用依赖升级工作流。",
+      "将ordinary build failures保留在the debug workflow first中；collect evidence before deciding that dependency versions or package migration are the root cause。"
     ],
     "capabilityTags": [
       "debug",
@@ -183,9 +183,9 @@
       "fec-monorepo-project-standard"
     ],
     "boundaryWorkflows": [
-      "Use source-driven development for official release notes, migration guides, version-sensitive behavior, and project facts before deciding an upgrade path.",
-      "Use validation fix when the task is to repair concrete lint, typecheck, test, build, or CI failures after an upgrade.",
-      "Use refactor clean for proven unused dependency removal; keep version migration and lockfile risk in the dependency upgrade workflow."
+      "决定升级路径前，先用事实源驱动开发核验官方 release notes、迁移指南、版本敏感行为和项目事实。",
+      "当任务是在升级后修复具体的 lint、typecheck、test、build 或 CI 失败时，使用验证修复 fix。",
+      "已确认的未使用依赖移除使用重构清理；版本迁移和 lockfile 风险保留在依赖升级工作流中。"
     ],
     "capabilityTags": [
       "dependency-upgrade",
@@ -203,9 +203,9 @@
       "fec-source-driven-development"
     ],
     "boundaryWorkflows": [
-      "Use image generation for raster-first posters, visual concepts, product images, and PNG QA beyond editable technical diagrams.",
-      "Use Canvas/Three.js when the diagram becomes an interactive runtime visualization, simulation, game scene, shader, or 3D renderer.",
-      "Use SVG animation for motion-specific vector micro-interactions; use drawio studio for static or editable technical SVG exports."
+      "涉及位图优先的海报、视觉概念、产品图，以及超出可编辑技术图的 PNG QA 时，使用图像生成工作流。",
+      "当图表变成运行时交互可视化、仿真、游戏场景、shader 或 3D 渲染器时，使用Canvas/Three.js。",
+      "动效专项的矢量微交互使用 SVG 动画；静态或可编辑技术 SVG 导出使用 draw.io 图表工作室。"
     ],
     "capabilityTags": [
       "drawio",
@@ -223,9 +223,9 @@
       "fec-validation-fix"
     ],
     "boundaryWorkflows": [
-      "Use a testing strategy workflow before deciding the coverage layer.",
-      "Use a component testing workflow for unit, component, and light integration tests close to UI code.",
-      "Use a validation workflow when existing project checks are failing."
+      "决定覆盖层级前，先使用测试策略工作流。",
+      "涉及靠近 UI 代码的单元、组件和轻量集成测试时，使用组件测试工作流。",
+      "当现有项目检查失败时，使用验证修复工作流。"
     ],
     "capabilityTags": [
       "testing",
@@ -241,9 +241,9 @@
       "fec-accessibility-check"
     ],
     "boundaryWorkflows": [
-      "Use a component testing workflow for form interactions, validation errors, and submit callbacks.",
-      "Use a data-fetching workflow for mutation, cache invalidation, and optimistic updates after submit.",
-      "Use an accessibility workflow for labels, error messages, and focus order in complex forms."
+      "涉及表单交互、校验错误和提交回调时，使用组件测试工作流。",
+      "涉及提交后的 mutation、缓存失效和乐观更新时，使用数据获取工作流。",
+      "涉及复杂表单中的 label、错误消息和焦点顺序时，使用无障碍工作流。"
     ],
     "capabilityTags": [
       "forms",
@@ -262,9 +262,9 @@
       "fec-web-video-presentation"
     ],
     "boundaryWorkflows": [
-      "Use UI design for product-specific visual direction, brand tone, hierarchy, and visual QA of generated assets.",
-      "Use implementation-from-design when a Figma, Sketch, MasterGo, Pixso, screenshot, or other external design source is authoritative.",
-      "Use Canvas/Three.js or SVG animation workflows when the generated visual becomes an interactive renderer, shader, or motion asset rather than a static image."
+      "涉及产品专属视觉方向、品牌调性、层级和生成资产视觉 QA 时，使用 UI 设计工作流。",
+      "当Figma、Sketch、MasterGo、Pixso、截图或其他外部设计源是权威来源时，使用按设计实现。",
+      "当生成视觉资产变成交互式渲染器、shader 或动效资产，而不是静态图片时，使用Canvas/Three.js or SVG 动画 workflows。"
     ],
     "capabilityTags": [
       "image-generation",
@@ -282,9 +282,9 @@
       "fec-vue3-project-standard"
     ],
     "boundaryWorkflows": [
-      "Use a legacy workflow to understand the source jQuery or MPA code model before migration.",
-      "Use the target framework project workflow for React or Vue directory and component structure.",
-      "Use architecture planning for large migrations with high boundary and rollout risk."
+      "迁移前需要理解原始 jQuery 或 MPA 代码模型时，使用传统前端工作流。",
+      "涉及 React 或 Vue 目录与组件结构时，使用目标框架项目工作流。",
+      "涉及边界和发布风险较高的大型迁移时，使用架构规划。"
     ],
     "capabilityTags": [
       "legacy",
@@ -299,9 +299,9 @@
       "fec-validation-fix"
     ],
     "boundaryWorkflows": [
-      "Use a migration workflow for inventory, strategy, and staged migration to React, Vue, or TypeScript.",
-      "Use a security review workflow for XSS, CSRF, open redirect, and third-party script risks in legacy projects.",
-      "Use a validation workflow for existing lint, test, build, or manual verification scripts."
+      "涉及盘点、策略以及分阶段迁移到 React、Vue 或 TypeScript 时，使用迁移工作流。",
+      "涉及遗留项目中的 XSS、CSRF、开放重定向和第三方脚本风险时，使用安全审查工作流。",
+      "涉及现有 lint、test、build 或人工验证脚本时，使用验证工作流。"
     ],
     "capabilityTags": [
       "legacy",
@@ -316,9 +316,9 @@
       "fec-accessibility-check"
     ],
     "boundaryWorkflows": [
-      "Use a data-fetching workflow for pagination and cache behavior in infinite lists.",
-      "Use a worker workflow when expensive item computation blocks scrolling.",
-      "Use an accessibility workflow for keyboard and screen reader behavior in virtualized lists."
+      "涉及无限列表中的分页和缓存行为时，使用数据获取工作流。",
+      "当expensive item computation blocks scrolling时，使用 Worker工作流。",
+      "涉及虚拟列表中的键盘和屏幕阅读器行为时，使用无障碍工作流。"
     ],
     "capabilityTags": [
       "performance",
@@ -334,9 +334,9 @@
       "fec-accessibility-check"
     ],
     "boundaryWorkflows": [
-      "Use a UI design workflow to decide visual direction, page hierarchy, and whether motion is appropriate for the product context.",
-      "Use an SVG animation workflow for SVG-only path drawing, icon motion, and illustration motion details.",
-      "Use a Canvas/Three.js workflow for WebGL, shader, 3D, particle, and canvas-rendered animation."
+      "需要决定视觉方向、页面层级以及动效是否适合产品语境时，使用 UI 设计工作流。",
+      "仅涉及 SVG 路径绘制、图标动效和插画动效细节时，使用 SVG 动画工作流。",
+      "涉及 WebGL、shader、3D、粒子和 canvas 渲染动画时，使用 Canvas/Three.js 工作流。"
     ],
     "capabilityTags": [
       "motion",
@@ -354,9 +354,9 @@
       "fec-motion-interaction"
     ],
     "boundaryWorkflows": [
-      "Use a React project workflow for generic client component architecture and hooks organization.",
-      "Use a route protection workflow for auth, RBAC, redirects, and middleware security boundaries.",
-      "Use a data-fetching workflow for client-side server state; keep Next server fetch and cache policy in the Next workflow."
+      "涉及通用客户端组件架构和 hooks 组织时，使用 React 项目工作流。",
+      "涉及认证、RBAC、重定向和 middleware 安全边界时，使用路由保护工作流。",
+      "客户端服务端状态使用数据获取工作流；Next 服务端 fetch 和缓存策略保留在 Next 工作流中。"
     ],
     "capabilityTags": [
       "nextjs",
@@ -371,9 +371,9 @@
       "fec-data-fetching"
     ],
     "boundaryWorkflows": [
-      "Use a Vue project workflow for generic Vue component, composable, and Pinia boundaries.",
-      "Use a route protection workflow for login state, protected routes, redirects, and middleware risks.",
-      "Use a data-fetching workflow for client server state or cache patterns; keep Nuxt useFetch and useAsyncData policy in the Nuxt workflow."
+      "涉及通用 Vue 组件、composable 和 Pinia 边界时，使用 Vue 项目工作流。",
+      "涉及登录态、受保护路由、重定向和 middleware 风险时，使用路由保护工作流。",
+      "客户端服务端状态或缓存模式使用数据获取工作流；Nuxt useFetch 和 useAsyncData 策略保留在 Nuxt 工作流中。"
     ],
     "capabilityTags": [
       "nuxt",
@@ -391,9 +391,9 @@
       "fec-responsive-layout"
     ],
     "boundaryWorkflows": [
-      "Use a validation workflow to run build, typecheck, tests, and performance-related scripts after optimization changes.",
-      "Use a code review workflow when performance findings overlap architecture, rendering correctness, or maintainability.",
-      "Use list virtualization or worker workflows only for their specific DOM or main-thread bottlenecks."
+      "性能优化变更后需要运行 build、typecheck、测试和性能相关脚本时，使用验证工作流。",
+      "当performance findings overlap architecture, rendering correctness, or maintainability时，使用code review工作流。",
+      "仅在对应 DOM 或主线程瓶颈明确时，才使用列表虚拟化或 worker 工作流。"
     ],
     "capabilityTags": [
       "performance",
@@ -409,9 +409,9 @@
       "fec-validation-fix"
     ],
     "boundaryWorkflows": [
-      "Use a data-fetching workflow for API server state, cache invalidation, and optimistic updates.",
-      "Use a browser storage workflow for IndexedDB, localStorage, and client persistence choices.",
-      "Use a validation workflow for build, Lighthouse, and end-to-end verification after PWA changes."
+      "涉及 API 服务端状态、缓存失效和乐观更新时，使用数据获取工作流。",
+      "涉及 IndexedDB、localStorage 和客户端持久化选择时，使用浏览器存储工作流。",
+      "PWA 变更后需要 build、Lighthouse 和端到端验证时，使用验证工作流。"
     ],
     "capabilityTags": [
       "pwa",
@@ -438,8 +438,8 @@
       "fec-motion-interaction"
     ],
     "boundaryWorkflows": [
-      "Use specialty workflows for complex forms, state ownership, TypeScript contracts, server state, tests, accessibility, security, large lists, animation, or graphics.",
-      "Keep generic React component architecture and hooks organization in the React project workflow."
+      "复杂表单、状态归属、TypeScript 契约、服务端状态、测试、无障碍、安全、大列表、动画或图形问题使用对应专项工作流。",
+      "通用 React 组件架构和 hooks 组织保留在 React 项目工作流中。"
     ],
     "capabilityTags": [
       "react",
@@ -455,9 +455,9 @@
       "fec-tailwind-design-system"
     ],
     "boundaryWorkflows": [
-      "Use UI design when the task is visual direction, product identity, hierarchy, or polish beyond layout behavior.",
-      "Use accessibility check for keyboard, focus, semantics, screen reader behavior, and contrast concerns.",
-      "Use performance optimization when responsive behavior exposes rendering, image, bundle, or main-thread bottlenecks."
+      "当the task is visual direction, product identity, hierarchy, or polish beyond layout behavior时，使用UI 设计。",
+      "涉及键盘、焦点、语义、屏幕阅读器行为和对比度问题时，使用无障碍检查。",
+      "当responsive behavior exposes rendering, image, bundle, or main-thread bottlenecks时，使用per表单处理ance optimization。"
     ],
     "capabilityTags": [
       "responsive",
@@ -475,9 +475,9 @@
       "fec-route-protection"
     ],
     "boundaryWorkflows": [
-      "Use a general code review workflow for architecture, maintainability, and broad quality review.",
-      "Use an accessibility workflow for accessibility-only concerns.",
-      "Use a browser storage workflow for storage strategy; keep sensitive data leakage risks in the security workflow."
+      "涉及架构、可维护性和广义质量评审时，使用通用代码评审工作流。",
+      "仅涉及无障碍问题时，使用无障碍工作流。",
+      "存储策略使用浏览器存储工作流；敏感数据泄露风险保留在安全工作流中。"
     ],
     "capabilityTags": [
       "security",
@@ -495,9 +495,9 @@
       "fec-nuxt-project-standard"
     ],
     "boundaryWorkflows": [
-      "Use documentation sync when source-verified decisions change public docs, runtime docs, or metadata.",
-      "Use API integration when source checking leads to frontend-backend contract or error-shape changes.",
-      "Use framework project workflows when the source-verified behavior is specific to Vite, Next.js, Nuxt, React, or Vue."
+      "当source-verified decisions change public docs, runtime docs, or metadata时，使用文档同步。",
+      "当source checking leads to frontend-backend contract or error-shape changes时，使用 API 集成。",
+      "当the source-verified behavior is specific to Vite, Next.js, Nuxt, React, or Vue时，使用framework project workflows。"
     ],
     "capabilityTags": [
       "source-driven",
@@ -515,9 +515,9 @@
       "fec-vue3-project-standard"
     ],
     "boundaryWorkflows": [
-      "Use a data-fetching workflow for query keys, cache lifetime, invalidation, optimistic updates, and server-state hooks.",
-      "Use a form workflow for field registration, validation, submit flows, and form-specific dirty/error state.",
-      "Use a browser storage workflow when state must persist across reloads, sessions, offline mode, or cookie boundaries."
+      "涉及 query key、缓存生命周期、失效、乐观更新和服务端状态 hooks 时，使用数据获取工作流。",
+      "涉及字段注册、校验、提交流程和表单特有 dirty/error 状态时，使用表单工作流。",
+      "当state must persist across reloads, sessions, offline mode, or cookie boundaries时，使用browser storage工作流。"
     ],
     "capabilityTags": [
       "state-management",
@@ -536,9 +536,9 @@
       "fec-responsive-layout"
     ],
     "boundaryWorkflows": [
-      "Use a testing strategy workflow to decide whether a risk belongs in Storybook, component tests, E2E, or specialty review.",
-      "Use a component testing workflow for unit, component, and light integration tests close to UI code.",
-      "Use an E2E workflow for real-browser cross-page journeys and page-level visual regression."
+      "需要判断风险应落在 Storybook、组件测试、E2E 还是专项评审时，使用测试策略工作流。",
+      "涉及靠近 UI 代码的单元、组件和轻量集成测试时，使用组件测试工作流。",
+      "涉及真实浏览器跨页面旅程和页面级视觉回归时，使用 E2E 工作流。"
     ],
     "capabilityTags": [
       "storybook",
@@ -565,9 +565,9 @@
       "fec-vue3-project-standard"
     ],
     "boundaryWorkflows": [
-      "Use UI design for product-specific visual direction, hierarchy, and design-system intent before encoding Tailwind tokens.",
-      "Use responsive layout for cross-device behavior, container queries, data-dense layouts, and viewport verification.",
-      "Use Storybook component documentation to present component variants, states, and design-system examples."
+      "编码 Tailwind tokens 前，需要先用 UI 设计明确产品专属视觉方向、层级和设计系统意图。",
+      "涉及跨设备行为、容器查询、数据密集布局和视口验证时，使用响应式布局工作流。",
+      "展示组件变体、状态和设计系统示例时，使用 Storybook 组件文档。"
     ],
     "capabilityTags": [
       "tailwind",
@@ -585,9 +585,9 @@
       "fec-validation-fix"
     ],
     "boundaryWorkflows": [
-      "Use a component testing workflow for component, hook, composable, and light integration tests.",
-      "Use an E2E workflow for real-browser critical paths.",
-      "Use a validation workflow after existing checks fail."
+      "涉及组件、hook、composable 和轻量集成测试时，使用组件测试工作流。",
+      "涉及真实浏览器关键路径时，使用 E2E 工作流。",
+      "现有检查失败后，使用验证工作流。"
     ],
     "capabilityTags": [
       "tdd",
@@ -606,8 +606,8 @@
       "fec-code-review"
     ],
     "boundaryWorkflows": [
-      "Use specialty testing workflows after the layer and risk placement are decided.",
-      "Use accessibility, security, or code review workflows for deep specialty quality reviews."
+      "测试层级和风险归属确定后，再使用专项测试工作流。",
+      "深度专项质量评审使用无障碍、安全或代码评审工作流。"
     ],
     "capabilityTags": [
       "testing",
@@ -626,9 +626,9 @@
       "fec-validation-fix"
     ],
     "boundaryWorkflows": [
-      "Use framework project workflows for component architecture, routing, state ownership, and framework-specific module boundaries.",
-      "Use API integration when runtime API clients, auth refresh, uploads, realtime behavior, or error mapping go beyond TypeScript type contracts.",
-      "Use validation fix when the task is to repair concrete lint, typecheck, test, build, or CI failures after TypeScript changes."
+      "涉及组件架构、路由、状态归属和框架专项模块边界时，使用框架项目工作流。",
+      "当runtime API clients, auth refresh, uploads, realtime behavior, or error mapping go beyond TypeScript type contracts时，使用 API 集成。",
+      "当the task is to repair concrete lint, typecheck, test, build, or CI failures after TypeScript changes时，使用验证修复 fix。"
     ],
     "capabilityTags": [
       "typescript",
@@ -650,10 +650,10 @@
       "fec-web-video-presentation"
     ],
     "boundaryWorkflows": [
-      "Use an implementation-from-design workflow when an external design file is the source of truth.",
-      "Use an accessibility workflow for keyboard, focus, ARIA, semantic structure, and contrast checks.",
-      "Use a code review workflow when UI issues cross architecture, types, rendering performance, and maintainability.",
-      "Use generated design-system recommendations as direction only; external design files, project tokens, and shipped component APIs remain authoritative."
+      "当an external design file is the source of truth时，使用按设计实现工作流。",
+      "涉及键盘、焦点、ARIA、语义结构和对比度检查时，使用无障碍工作流。",
+      "当UI issues cross architecture, types, rendering performance, and maintainability时，使用code review工作流。",
+      "生成的设计系统建议只作为方向；外部设计文件、项目 tokens 和已发布组件 API 仍是权威来源。"
     ],
     "capabilityTags": [
       "ui-design",
@@ -678,9 +678,9 @@
       "fec-motion-interaction"
     ],
     "boundaryWorkflows": [
-      "Use framework project workflows for component architecture, state, and directory structure.",
-      "Use a monorepo workflow for workspace boundaries and task orchestration.",
-      "Use a security review workflow for client secrets, CSP, supply chain, and XSS risks."
+      "涉及组件架构、状态和目录结构时，使用框架项目工作流。",
+      "涉及 workspace 边界和任务编排时，使用 monorepo 工作流。",
+      "涉及客户端密钥、CSP、供应链和 XSS 风险时，使用安全审查工作流。"
     ],
     "capabilityTags": [
       "vite",
@@ -705,8 +705,8 @@
       "fec-canvas-threejs"
     ],
     "boundaryWorkflows": [
-      "Use specialty workflows for complex forms, state ownership, TypeScript contracts, server state, tests, accessibility, security, large lists, animation, or graphics.",
-      "Keep generic Vue component architecture, composables, and Pinia boundaries in the Vue project workflow."
+      "复杂表单、状态归属、TypeScript 契约、服务端状态、测试、无障碍、安全、大列表、动画或图形问题使用对应专项工作流。",
+      "通用 Vue 组件架构、composables 和 Pinia 边界保留在 Vue 项目工作流中。"
     ],
     "capabilityTags": [
       "vue",
@@ -723,9 +723,9 @@
       "fec-accessibility-check"
     ],
     "boundaryWorkflows": [
-      "Use a UI design workflow for product-specific visual direction, asset strategy, anti-generic design, and visual QA of scenes.",
-      "Use image generation when the presentation needs custom raster assets, diagrams, storyboard frames, or generated visual references.",
-      "Use motion and responsive layout workflows when scene transitions, reduced-motion behavior, viewport scaling, or recording stability need deeper treatment."
+      "涉及产品专属视觉方向、资产策略、反通用设计和场景视觉 QA 时，使用 UI 设计工作流。",
+      "当the presentation needs custom raster assets, diagrams, storyboard frames, or generated visual references时，使用图像生成。",
+      "当scene transitions, reduced-motion behavior, viewport scaling, or recording stability need deeper treatment时，使用动效 and 响应式布局 workflows。"
     ],
     "capabilityTags": [
       "web-video",
@@ -742,9 +742,9 @@
       "fec-validation-fix"
     ],
     "boundaryWorkflows": [
-      "Use a graphics workflow for rendering and animation loops; use workers only when complex computation blocks rendering.",
-      "Use a virtualization workflow for large-list DOM rendering; do not use workers as a replacement for virtual scrolling.",
-      "Use a validation workflow after worker changes for build, typecheck, and key interaction verification."
+      "复杂计算阻塞渲染时，渲染与动画循环使用图形工作流；只有计算卸载才使用 Workers。",
+      "大列表 DOM 渲染使用虚拟列表工作流；不要用 worker 替代虚拟滚动。",
+      "worker 变更后需要 build、typecheck 和关键交互验证时，使用验证工作流。"
     ],
     "capabilityTags": [
       "web-workers",

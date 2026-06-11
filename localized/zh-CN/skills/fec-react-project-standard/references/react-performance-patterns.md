@@ -1,6 +1,6 @@
-# React performance patterns
+# React 性能模式
 
-This file keeps lightweight React project-standard performance guidance. Use the frontend performance workflow when the task needs metrics, traces, profiles, bundle analysis, network evidence, or a formal performance report.
+本文件保留轻量级 React 项目规范性能指导。当任务需要指标、trace、profile、包体分析、网络证据或正式性能报告时，使用前端性能工作流。
 
 ### 性能（与「性能优化」一节配合）
 

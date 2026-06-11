@@ -1,14 +1,14 @@
-# Layout And Export
+# 布局与导出
 
-## Auto Layout
+## 自动布局
 
-Use `layout-graph.mjs` for dependency graphs, code structure maps and diagrams with more than about 15 nodes.
+依赖图、代码结构图和超过约 15 个节点的图表使用 `layout-graph.mjs`。
 
 ```bash
 node skills/fec-drawio-studio/scripts/layout-graph.mjs graph.json --output diagram.drawio --manifest layout.json
 ```
 
-Input graph:
+输入 graph：
 
 ```json
 {
@@ -23,30 +23,30 @@ Input graph:
 }
 ```
 
-Graphviz `dot` is optional. If it is missing, hand-place the diagram or deliver XML plus a diagrams.net URL.
+Graphviz `dot` 是可选项。若缺失，可手动摆放图表，或交付 XML 加 diagrams.net URL。
 
-## Export
+## 导出
 
-Preview:
+预览：
 
 ```bash
 drawio -x -f png --width 2000 -o diagram.png diagram.drawio
 ```
 
-Final editable PNG:
+最终可编辑 PNG：
 
 ```bash
 drawio -x -f png -e -s 2 -o diagram.drawio.png diagram.drawio
 node skills/fec-drawio-studio/scripts/png-embed-fix.mjs diagram.drawio.png
 ```
 
-Fallback URL:
+兜底 URL：
 
 ```bash
 node skills/fec-drawio-studio/scripts/diagram-url.mjs diagram.drawio --edit
 ```
 
-Create/import URL for XML, Mermaid or CSV:
+为 XML、Mermaid 或 CSV 创建/导入 URL：
 
 ```bash
 node skills/fec-drawio-studio/scripts/diagram-url.mjs diagram.drawio --create --type xml --json
@@ -54,4 +54,4 @@ node skills/fec-drawio-studio/scripts/diagram-url.mjs flow.mmd --create --type m
 node skills/fec-drawio-studio/scripts/diagram-url.mjs org.csv --create --type csv --lightbox
 ```
 
-Use `--base-url` for a self-hosted diagrams.net endpoint. Use `--shortcut` or the JSON `windowsShortcut` field when opening the URL through Windows shell tooling.
+自托管 diagrams.net 端点使用 `--base-url`。通过 Windows shell 工具打开 URL 时，使用 `--shortcut` 或 JSON `windowsShortcut` 字段。

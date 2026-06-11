@@ -1,15 +1,15 @@
 ---
 name: fec-web-video-presentation
-description: Use when turning an article, talk script, lesson, product demo, or narrated explanation into a recordable 16:9 web presentation with step-driven scenes, optional narration alignment, theme tokens, and screen-recording guidance; Chinese triggers include 网页视频, 动态演示, 口播稿转视频, 可录屏演示, 16:9 演示.
+description: 用于将文章、演讲稿、课程、产品演示或口播解释转成可录制的 16:9 网页演示，包含步骤驱动场景、可选口播对齐、主题 Token 与录屏指导；中文触发词包括 网页视频、动态演示、口播稿转视频、可录屏演示、16:9 演示。
 ---
 
 # 网页视频演示
 
-## Purpose
+## 用途
 
 把文章、口播稿、课程、产品讲解或技术分享转成可录屏的 16:9 网页演示。产物应像一个可点击推进的视频舞台：每一步承载一个口播节拍，视觉设计服务内容节奏，并能用浏览器稳定录制。
 
-## Procedure
+## 流程
 
 1. 判断输入形态
    - 用户给文章或长文时，先拆成口播稿和 outline。
@@ -47,7 +47,7 @@ description: Use when turning an article, talk script, lesson, product demo, or 
    - 浏览器打开演示，检查 16:9 缩放、键盘/点击推进、step 数、文本溢出、隐藏控件、控制台错误和录屏路径。
    - 若章节数量、顺序或 step 数变化，重置本地持久化 key 或清理旧进度，避免恢复到不存在的 step。
 
-## Constraints
+## 约束
 
 - 不把网页视频做成普通营销落地页、静态 PPT 或长滚动文章。
 - 不复制参考项目的主题、模板章节、长提示词或脚手架实现；按当前项目生成原创骨架。
@@ -56,6 +56,6 @@ description: Use when turning an article, talk script, lesson, product demo, or 
 - 不让控件、页码、说明文字或调试面板污染录屏画面；必要控件默认隐藏或弱化。
 - 不为音频合成引入项目外供应商约定；TTS 属于可选适配层。
 
-## Expected Output
+## 预期输出
 
 输出 script、outline、可运行的 16:9 网页演示骨架或章节实现，并说明主题、章节/step 数、录屏方式、可选音频路径和验证结果。最终演示应可通过点击或键盘稳定推进，视觉节奏贴合口播内容，且适合浏览器录屏。

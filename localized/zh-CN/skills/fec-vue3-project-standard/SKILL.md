@@ -1,17 +1,17 @@
 ---
 name: fec-vue3-project-standard
-description: Use when designing or reviewing Vue 3 + TypeScript project structure, SFC/component boundaries, composables organization, route composition, Pinia ownership, API/error/styling defaults, directives, or repository-wide Vue conventions. Prefer narrower skills for forms, data fetching, tests, accessibility, virtualization, animation, or security deep dives; Chinese triggers include Vue 3 项目规范, Vue 组件架构.
+description: 用于设计或审查 Vue 3 + TypeScript 项目结构、SFC/组件边界、composables 组织、路由组合、Pinia 归属、API/错误/样式默认约定、directives 或仓库级 Vue 规范。表单、数据获取、测试、无障碍、虚拟列表、动画或安全深挖优先使用更窄的 skill；中文触发词包括 Vue 3 项目规范、Vue 组件架构。
 ---
 
 # Vue 3 项目规范
 
 适用于使用 Vue 3 + TypeScript 的仓库。
 
-## Purpose
+## 用途
 
 为 Vue 3 + TypeScript 项目提供工程结构、组件边界、Composables 和默认实现约定，确保约定式开发和类型安全。
 
-## Procedure
+## 流程
 
 1. 识别仓库已有 Vue 约定：目录、路由、Pinia、请求层、样式体系、组件库和测试框架。
 2. 划分页面、业务组件、通用组件、composables、stores、services 和 utils 的边界。
@@ -31,7 +31,7 @@ description: Use when designing or reviewing Vue 3 + TypeScript project structur
 - Pinia、API 层、错误处理、指令、样式、测试、反模式和输出检查清单：加载 [references/vue3-state-api-quality.md](references/vue3-state-api-quality.md)。
 - Vue 项目规范层面的轻量性能约定：加载 [references/vue3-performance-patterns.md](references/vue3-performance-patterns.md)。
 
-## Constraints
+## 约束
 
 - 使用 `<script setup lang="ts">`，禁止使用 Options API 新增组件
 - 组件文件规模宜约 **300 行**内；逾 **500 行**或复杂度过高须拆子组件与 Composables
@@ -45,7 +45,7 @@ description: Use when designing or reviewing Vue 3 + TypeScript project structur
 - 不把函数型参数误当 getter 自动调用；composable 参数若可能是回调，应避免使用 getter 型输入约定。
 - 不依赖快照作为 Vue 组件唯一断言；异步组件、Teleport 和 Pinia 场景要有用户可见行为断言。
 
-## Expected Output
+## 预期输出
 
 - 组件使用 `<script setup lang="ts">`，Props / Emits 类型完整
 - 可复用逻辑已提取到 composable，返回 `readonly` 引用

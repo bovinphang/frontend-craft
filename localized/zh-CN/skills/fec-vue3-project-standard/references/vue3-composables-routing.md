@@ -1,4 +1,4 @@
-# Vue 3 composables and routing patterns
+# Vue 3 composables 与路由模式
 
 ## Composables 规范
 
@@ -160,4 +160,3 @@ router.beforeEach((to) => {
   }
 });
 ```
-

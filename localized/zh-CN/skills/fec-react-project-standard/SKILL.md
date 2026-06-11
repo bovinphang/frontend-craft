@@ -1,17 +1,17 @@
 ---
 name: fec-react-project-standard
-description: Use when designing or reviewing React + TypeScript project structure, feature/module boundaries, component architecture, hooks organization, routing composition, state/API/error/styling defaults, or repository-wide React conventions. Prefer narrower skills for forms, data fetching, tests, accessibility, virtualization, animation, or security deep dives; Chinese triggers include React 项目规范, React 组件架构.
+description: 用于设计或审查 React + TypeScript 项目结构、feature/module 边界、组件架构、hooks 组织、路由组合、状态/API/错误/样式默认约定或仓库级 React 规范。表单、数据获取、测试、无障碍、虚拟列表、动画或安全深挖优先使用更窄的 skill；中文触发词包括 React 项目规范、React 组件架构。
 ---
 
 # React 项目规范
 
 适用于 React + TypeScript 仓库中的中大型模块建设、页面重构和工程结构设计。
 
-## Purpose
+## 用途
 
 为 React + TypeScript 项目提供工程结构、模块边界和默认实现约定，确保架构清晰、代码可维护。
 
-## Procedure
+## 流程
 
 本 skill 主要解决 React 工程任务“如何设计和落地”的问题，不重复声明基础编码底线。处理 React 工程化任务时，按以下顺序执行：
 
@@ -60,7 +60,7 @@ description: Use when designing or reviewing React + TypeScript project structur
 - 样式、注释、TypeScript、测试、反模式和输出检查清单：加载 [references/react-quality-patterns.md](references/react-quality-patterns.md)。
 - React 项目规范层面的轻量性能约定：加载 [references/react-performance-patterns.md](references/react-performance-patterns.md)。
 
-## Constraints
+## 约束
 
 - 默认遵守仓库现有全局规则和 React rule
 - 若仓库已有明确目录结构、样式体系、状态管理或请求封装，优先沿用仓库约定
@@ -74,7 +74,7 @@ description: Use when designing or reviewing React + TypeScript project structur
 - 不用 Error Boundary 处理普通 API 失败；请求错误应优先落到 loading/error/empty/data 状态和可恢复操作。
 - 不把 React 性能建议写成无证据的全局 memo 化；先定位请求瀑布、bundle 边界、重复渲染或 effect 误用。
 
-## Expected Output
+## 预期输出
 
 - 组件边界清晰，pages/features/components 分层明确
 - Props 类型完整且明确；复杂公共类型或外部数据收窄已分流到 TypeScript 项目规范流程

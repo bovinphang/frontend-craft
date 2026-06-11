@@ -1,110 +1,231 @@
 [
   {
     "id": "saas",
-    "keywords": ["saas", "b2b", "subscription", "crm", "admin", "console"],
-    "pattern": "Work-first dashboard with concise onboarding and persistent primary action",
-    "style": "data-dense",
-    "colorMood": "trustworthy neutrals with a clear action accent",
-    "typographyMood": "professional, compact, readable",
-    "motion": "quiet transitions for filters, drawers, and state changes",
-    "chart": "stat cards plus line/bar charts for trends and comparisons",
-    "risks": ["marketing hero replacing the workspace", "low-density cards hiding operational detail"],
-    "antiPatterns": ["decorative gradients as primary structure", "unlabeled icon-only tools"]
+    "keywords": [
+      "saas",
+      "b2b",
+      "subscription",
+      "crm",
+      "admin",
+      "console"
+    ],
+    "pattern": "以工作流为先的仪表盘，提供简洁上手引导和持续可见的主操作",
+    "style": "数据密集",
+    "colorMood": "可信赖的中性色，配合明确的操作强调色",
+    "typographyMood": "专业、紧凑、易读",
+    "motion": "用于筛选、抽屉和状态变化的安静转场",
+    "chart": "统计卡片加折线/柱状图，用于趋势和对比",
+    "risks": [
+      "营销 hero 取代工作区",
+      "低密度卡片隐藏运营细节"
+    ],
+    "antiPatterns": [
+      "用装饰性渐变充当主要结构",
+      "无标签的纯图标工具"
+    ]
   },
   {
     "id": "fintech",
-    "keywords": ["fintech", "bank", "finance", "crypto", "wallet", "invoice", "billing"],
-    "pattern": "Trust-first dashboard with balances, risk states, audit trail, and clear next actions",
-    "style": "minimal",
-    "colorMood": "stable blue/green neutrals with strict danger states",
-    "typographyMood": "precise, numeric, high contrast",
-    "motion": "subtle confirmation and risk feedback only",
-    "chart": "time-series, comparison bars, and tabular details with export paths",
-    "risks": ["playful visual language reducing trust", "color-only profit/loss communication"],
-    "antiPatterns": ["neon cyber styling for serious finance", "ambiguous destructive actions"]
+    "keywords": [
+      "fintech",
+      "bank",
+      "finance",
+      "crypto",
+      "wallet",
+      "invoice",
+      "billing"
+    ],
+    "pattern": "信任优先的仪表盘，突出余额、风险状态、审计轨迹和清晰下一步",
+    "style": "极简",
+    "colorMood": "稳定的蓝/绿色中性色，配合严格的危险状态",
+    "typographyMood": "精确、数字友好、高对比",
+    "motion": "仅使用细微确认反馈和风险反馈",
+    "chart": "时间序列、对比柱状图和带导出路径的表格详情",
+    "risks": [
+      "过于 playful 的视觉语言削弱信任",
+      "仅用颜色表达盈亏"
+    ],
+    "antiPatterns": [
+      "严肃金融产品使用霓虹 cyber 风",
+      "危险操作含糊不清"
+    ]
   },
   {
     "id": "healthcare",
-    "keywords": ["health", "medical", "clinic", "dental", "pharmacy", "patient", "therapy"],
-    "pattern": "Guided task flow with calm hierarchy, strong labels, and clear recovery paths",
-    "style": "minimal",
-    "colorMood": "calm accessible tones with clear warning and error roles",
-    "typographyMood": "human, readable, low fatigue",
-    "motion": "reassuring transitions, no surprise movement",
-    "chart": "progress trends and summaries with plain-language explanations",
-    "risks": ["low contrast calming palettes", "hidden labels in critical forms"],
-    "antiPatterns": ["decorative medical imagery over task clarity", "tiny touch targets"]
+    "keywords": [
+      "health",
+      "medical",
+      "clinic",
+      "dental",
+      "pharmacy",
+      "patient",
+      "therapy"
+    ],
+    "pattern": "带平静层级、强标签和清晰恢复路径的引导式任务流",
+    "style": "极简",
+    "colorMood": "平静且可访问的色调，警告和错误角色清晰",
+    "typographyMood": "有人情味、易读、低疲劳",
+    "motion": "让人安心的转场，不出现意外运动",
+    "chart": "进度趋势和摘要，并配合白话解释",
+    "risks": [
+      "平静配色导致低对比",
+      "关键表单隐藏标签"
+    ],
+    "antiPatterns": [
+      "装饰性医疗图片压过任务清晰度",
+      "触摸目标过小"
+    ]
   },
   {
     "id": "ecommerce",
-    "keywords": ["shop", "store", "ecommerce", "marketplace", "cart", "checkout", "product"],
-    "pattern": "Product-led browsing with strong media, filters, comparison, and checkout confidence",
-    "style": "editorial",
-    "colorMood": "brand-forward accents with neutral product surfaces",
-    "typographyMood": "clear commerce hierarchy with readable prices",
-    "motion": "fast hover/tap feedback and cart confirmation",
-    "chart": "only for seller dashboards or comparison analytics",
-    "risks": ["visual effects competing with product inspection", "unclear price/availability states"],
-    "antiPatterns": ["cropped product media", "hidden shipping or error feedback"]
+    "keywords": [
+      "shop",
+      "store",
+      "ecommerce",
+      "marketplace",
+      "cart",
+      "checkout",
+      "product"
+    ],
+    "pattern": "产品主导的浏览体验，强化媒体、筛选、对比和结账信心",
+    "style": "编辑感",
+    "colorMood": "品牌前置的强调色，搭配中性的产品展示表面",
+    "typographyMood": "清晰的商业层级和可读价格",
+    "motion": "快速 hover/tap 反馈和购物车确认",
+    "chart": "仅用于卖家仪表盘或对比分析",
+    "risks": [
+      "视觉效果干扰产品查看",
+      "价格/库存状态不清晰"
+    ],
+    "antiPatterns": [
+      "裁切产品媒体",
+      "隐藏配送或错误反馈"
+    ]
   },
   {
     "id": "creative",
-    "keywords": ["portfolio", "agency", "studio", "creator", "photography", "editorial"],
-    "pattern": "Portfolio-led narrative with memorable first viewport and selective case-study depth",
-    "style": "editorial",
-    "colorMood": "high-contrast neutrals with one expressive accent",
-    "typographyMood": "distinctive display with restrained body",
-    "motion": "purposeful reveals tied to content rhythm",
-    "chart": "rare; use visual timelines or case metrics when needed",
-    "risks": ["style overpowering work samples", "scroll theatrics blocking access"],
-    "antiPatterns": ["generic split hero", "decorative mockups without real work"]
+    "keywords": [
+      "portfolio",
+      "agency",
+      "studio",
+      "creator",
+      "photography",
+      "editorial"
+    ],
+    "pattern": "作品集主导的叙事，首屏有记忆点，案例深度有选择",
+    "style": "编辑感",
+    "colorMood": "高对比中性色，配合一个表达性强调色",
+    "typographyMood": "有辨识度的展示字体，正文克制",
+    "motion": "与内容节奏绑定的目的性揭示",
+    "chart": "少用；必要时使用视觉时间线或案例指标",
+    "risks": [
+      "风格压过作品样本",
+      "滚动 theatrics 阻碍访问"
+    ],
+    "antiPatterns": [
+      "通用 split hero",
+      "没有真实作品的装饰性 mockup"
+    ]
   },
   {
     "id": "wellness",
-    "keywords": ["spa", "beauty", "wellness", "meditation", "fitness", "booking", "lifestyle"],
-    "pattern": "Emotion-led service page with service clarity, trust proof, and low-friction booking",
-    "style": "soft",
-    "colorMood": "warm natural tones with a premium accent",
-    "typographyMood": "calm, elegant, approachable",
-    "motion": "gentle, short transitions with reduced-motion fallback",
-    "chart": "habit streaks or progress charts only when product-led",
-    "risks": ["pastel contrast failures", "luxury styling hiding booking details"],
-    "antiPatterns": ["overly bright wellness gradients", "placeholder stock atmosphere"]
+    "keywords": [
+      "spa",
+      "beauty",
+      "wellness",
+      "meditation",
+      "fitness",
+      "booking",
+      "lifestyle"
+    ],
+    "pattern": "情绪主导的服务页面，服务清晰、信任证明充分、预约阻力低",
+    "style": "柔和",
+    "colorMood": "温暖自然色调，配合高级感强调色",
+    "typographyMood": "平静、优雅、亲近",
+    "motion": "轻柔短转场，并提供减少动效兜底",
+    "chart": "仅在产品主导场景使用习惯连续记录或进度图表",
+    "risks": [
+      "粉彩配色对比度失败",
+      "奢华样式隐藏预约细节"
+    ],
+    "antiPatterns": [
+      "过亮的 wellness 渐变",
+      "占位式 stock 氛围图"
+    ]
   },
   {
     "id": "education",
-    "keywords": ["education", "learning", "course", "student", "school", "flashcard"],
-    "pattern": "Learning path with progress, next task, feedback loops, and approachable empty states",
+    "keywords": [
+      "education",
+      "learning",
+      "course",
+      "student",
+      "school",
+      "flashcard"
+    ],
+    "pattern": "学习路径突出进度、下一任务、反馈循环和友好的空状态",
     "style": "bento",
-    "colorMood": "encouraging accents with quiet surfaces",
-    "typographyMood": "friendly, readable, structured",
-    "motion": "reward moments and progress feedback, never distracting from reading",
-    "chart": "progress, mastery, and completion summaries",
-    "risks": ["gamification clutter", "unclear next lesson state"],
-    "antiPatterns": ["dense dashboards for beginners", "reward animation blocking tasks"]
+    "colorMood": "鼓励性的强调色，搭配安静表面",
+    "typographyMood": "友好、易读、有结构",
+    "motion": "奖励时刻和进度反馈，但不干扰阅读",
+    "chart": "进度、掌握度和完成度摘要",
+    "risks": [
+      "游戏化杂乱",
+      "下一课状态不清晰"
+    ],
+    "antiPatterns": [
+      "给初学者使用密集仪表盘",
+      "奖励动画阻塞任务"
+    ]
   },
   {
     "id": "gaming",
-    "keywords": ["game", "gaming", "esports", "arcade", "quest", "leaderboard"],
-    "pattern": "Immersive status-first interface with strong feedback and readable controls",
-    "style": "immersive",
-    "colorMood": "high-energy palette balanced by readable surfaces",
-    "typographyMood": "expressive headings with legible UI text",
-    "motion": "high feedback, strict performance budget",
-    "chart": "leaderboards, comparisons, progression, and match history",
-    "risks": ["motion overload", "stylized text reducing readability"],
-    "antiPatterns": ["all-caps tiny labels", "animations that delay input"]
+    "keywords": [
+      "game",
+      "gaming",
+      "esports",
+      "arcade",
+      "quest",
+      "leaderboard"
+    ],
+    "pattern": "沉浸式状态优先界面，反馈强且控件可读",
+    "style": "沉浸式",
+    "colorMood": "高能量配色，并用可读表面保持平衡",
+    "typographyMood": "有表现力的标题和清晰 UI 文本",
+    "motion": "高反馈，但严格控制性能预算",
+    "chart": "排行榜、对比、成长进度和比赛历史",
+    "risks": [
+      "动效过载",
+      "风格化文本降低可读性"
+    ],
+    "antiPatterns": [
+      "全大写小标签",
+      "延迟输入的动画"
+    ]
   },
   {
     "id": "data-dashboard",
-    "keywords": ["dashboard", "analytics", "metrics", "kpi", "monitoring", "reporting"],
-    "pattern": "Scan-first analytical workspace with filters, summaries, charts, and drill-down paths",
-    "style": "data-dense",
-    "colorMood": "semantic chart palette with restrained UI chrome",
-    "typographyMood": "compact, tabular, legible",
-    "motion": "state transitions only; no decorative chart animation by default",
-    "chart": "match chart to question: trend, compare, composition, distribution, funnel, timeline",
-    "risks": ["chart decoration hiding insight", "too many equal-weight cards"],
-    "antiPatterns": ["pie charts for many categories", "color-only series distinction"]
+    "keywords": [
+      "dashboard",
+      "analytics",
+      "metrics",
+      "kpi",
+      "monitoring",
+      "reporting"
+    ],
+    "pattern": "扫描优先的分析工作区，包含筛选、摘要、图表和下钻路径",
+    "style": "数据密集",
+    "colorMood": "语义化图表色板，UI chrome 保持克制",
+    "typographyMood": "紧凑、表格友好、清晰",
+    "motion": "仅用于状态转场；默认不使用装饰性图表动画",
+    "chart": "按问题匹配图表：趋势、对比、组成、分布、漏斗、时间线",
+    "risks": [
+      "图表装饰隐藏洞察",
+      "过多等权重卡片"
+    ],
+    "antiPatterns": [
+      "多类别使用饼图",
+      "仅用颜色区分系列"
+    ]
   }
 ]

@@ -14,19 +14,19 @@ skills/fec-[主题]/
   assets/       # 可选：输出会用到的模板或资源
 ```
 
-## Frontmatter
+## Frontmatter 配置
 
 ```yaml
 ---
 name: fec-[主题]
-description: Use when ...
+description: 用于 ...
 ---
 ```
 
 - `name` 必须等于父目录名。
 - `description` 是主要触发依据，必须写清"做什么"和"什么时候用"。
 - 不要在 frontmatter 中加入 `version`、`metadata` 或触发说明以外的字段。
-- 使用 `Use when ...` 开头，并包含必要的英文/中文关键词。
+- 使用中文描述适用场景、边界和触发词，并保留必要的技术关键词。
 
 ---
 
@@ -35,11 +35,11 @@ description: Use when ...
 ```markdown
 # Skill: [Skill 名称]
 
-## Purpose
+## 用途
 
 一句话说明这个 Skill 解决什么问题，面向什么场景。
 
-## Procedure
+## 流程
 
 分步骤实现指南，每步包含代码示例。
 
@@ -53,13 +53,13 @@ description: Use when ...
 
 ...
 
-## Constraints
+## 约束
 
 - 边界条件 / 注意事项 1
 - 反模式 / 陷阱 1
 - 性能 / 安全约束 1
 
-## Expected Output
+## 预期输出
 
 明确产出物是什么，如何验证。
 
@@ -69,19 +69,19 @@ description: Use when ...
 
 ## 编写规范
 
-### Purpose
+### 用途
 
 - 一句话，不超过 30 字
 - 说明解决什么问题，而非如何解决
 - 示例: "管理表单状态、校验和提交，避免受控组件的性能问题"
 
-### Trigger and Boundary
+### 触发条件与边界
 
 - 触发条件主要写在 frontmatter `description`，正文不要再重复长篇 `When to Use`。
 - `description` 必须包含 should-trigger 场景和近邻 should-not-trigger 边界。
-- 示例: `Use when building substantial forms with React Hook Form and Zod. Do not use for trivial 1-3 field forms without validation.`
+- 示例：`用于构建较复杂表单，包括 React Hook Form 与 Zod 校验。不要用于没有校验的 1-3 个字段小表单。`
 
-### Capability Relations
+### 能力关系
 
 - `SKILL.md` 必须自包含，不能依赖另一个 skill 或 agent 才能理解或执行。
 - 不要在 skill 正文添加 `Related Agent`。
@@ -89,7 +89,7 @@ description: Use when ...
 - 相关 skill、边界 workflow 和能力标签统一维护在 `skills/relations.json`。
 - Agent 可以在自己的 frontmatter `skills:` 字段中引用 skills；skill 不反向引用 agent。
 
-### Procedure
+### 流程
 
 - 按实施顺序分步骤，每步有编号和标题
 - 每个步骤包含：
@@ -102,7 +102,7 @@ description: Use when ...
 - `SKILL.md` 只保留每次使用都需要的核心流程；接近 **180-220 行**时优先拆到 `references/`。
 - 长代码、框架变体、进阶配置、评估清单放入一层 `references/` 文件，并从 `SKILL.md` 明确说明何时加载。
 
-### Constraints
+### 约束
 
 - 列出 3-6 条关键约束
 - 包括：性能陷阱、安全注意、反模式、兼容性限制
@@ -110,7 +110,7 @@ description: Use when ...
 - 示例:
   - 虚拟列表中的项目不在 DOM 中直到滚动到，搜索引擎可能无法索引
 
-### Expected Output
+### 预期输出
 
 - 明确说明产出物是什么
 - 如何验证产出是否正确
@@ -128,7 +128,7 @@ description: Use when ...
 
 ---
 
-## Progressive Disclosure
+## 渐进式披露
 
 - `SKILL.md`：触发后每次都需要的操作顺序、约束、边界和最小示例。
 - `references/`：按需加载的详细示例、框架变体、配置模板和长检查清单。

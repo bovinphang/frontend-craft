@@ -1,17 +1,17 @@
 ---
 name: fec-api-integration
-description: Use when designing, implementing, or reviewing frontend-to-backend API integration, typed API clients, REST/tRPC/OpenAPI client choices, auth refresh, API error mapping, upload flows, SSE/WebSocket/polling choices, CORS-facing frontend behavior, or cross-boundary loading/error states. Do not use for backend-only service architecture or TanStack Query cache policy alone; Chinese triggers include API 集成, 前后端联调, typed API client, 接口错误处理, SSE, WebSocket.
+description: 用于设计、实现或审查前后端 API 集成、类型化 API client、REST/tRPC/OpenAPI 客户端选型、认证刷新、API 错误映射、上传流程、SSE/WebSocket/轮询选择、CORS 相关前端行为或跨边界 loading/error 状态。不要用于纯后端服务架构或仅 TanStack Query 缓存策略；中文触发词包括 API 集成、前后端联调、typed API client、接口错误处理、SSE、WebSocket。
 ---
 
 # API 集成
 
 适用于前端与后端边界的类型、错误、鉴权、上传、实时通信和用户状态设计。需要具体代码模式时加载 [integration-patterns.md](references/integration-patterns.md)。
 
-## Purpose
+## 用途
 
 规范前端 API 集成边界，让请求、错误、鉴权和实时数据可维护。
 
-## Procedure
+## 流程
 
 1. 明确接口所有权
    - 同团队 TypeScript 全栈可考虑 tRPC 或共享 schema。
@@ -63,7 +63,7 @@ description: Use when designing, implementing, or reviewing frontend-to-backend 
    - 对关键 API client 行为补最小测试，证明超时、取消、错误映射和刷新队列可预期。
    - 验证错误边界与请求层协作：渲染异常进 Error Boundary，请求失败进可恢复 UI，不互相吞掉。
 
-## Constraints
+## 约束
 
 - 不在页面组件中直接管理 token refresh、错误格式解析或重试策略。
 - 不对 4xx 业务错误做盲目自动重试。
@@ -73,6 +73,6 @@ description: Use when designing, implementing, or reviewing frontend-to-backend 
 - 不让上传经过 API 服务器转发大文件，除非有明确合规或扫描需求。
 - 不在公共接口里直接暴露临时字段、数据库字段名或后端内部错误结构。
 
-## Expected Output
+## 预期输出
 
 输出应包含 API client 边界、接口类型来源、错误映射、鉴权刷新策略、上传/实时方案和验证结果。完成后组件不散落请求细节，用户状态完整，失败场景可恢复，客户端不会泄露服务端密钥。

@@ -2,90 +2,202 @@
   {
     "category": "accessibility",
     "priority": "critical",
-    "checks": ["Text contrast meets WCAG AA", "Focus rings are visible", "Icon-only controls have names", "Keyboard order follows visual order"],
-    "avoid": ["Removing outlines globally", "Color-only error or success states"]
+    "checks": [
+      "文本对比度满足 WCAG AA",
+      "焦点环可见",
+      "纯图标控件有可访问名称",
+      "键盘顺序遵循视觉顺序"
+    ],
+    "avoid": [
+      "全局移除 outline",
+      "仅用颜色表达错误或成功状态"
+    ]
   },
   {
     "category": "interaction",
     "priority": "critical",
-    "checks": ["Primary controls respond within 100ms", "Touch targets are at least 44x44px", "Disabled states are semantic and visible"],
-    "avoid": ["Hover-only primary actions", "Tap targets packed without spacing"]
+    "checks": [
+      "主控件在 100ms 内响应",
+      "触摸目标至少 44x44px",
+      "禁用状态具备语义且可见"
+    ],
+    "avoid": [
+      "主要操作只能 hover 触发",
+      "点击目标过密且缺少间距"
+    ]
   },
   {
     "category": "performance",
     "priority": "high",
-    "checks": ["Images reserve dimensions", "Large lists are virtualized", "Animations use transform/opacity", "Heavy visual work is deferred or moved off main thread"],
-    "avoid": ["Animating layout properties", "Unbounded chart or table rendering"]
+    "checks": [
+      "图片预留尺寸",
+      "大列表已虚拟化",
+      "动画使用 transform/opacity",
+      "重型视觉工作延后执行或移出主线程"
+    ],
+    "avoid": [
+      "动画驱动 layout 属性",
+      "无限制渲染图表或表格"
+    ]
   },
   {
     "category": "layout",
     "priority": "high",
-    "checks": ["375/768/1024/1440px layouts are checked", "No horizontal overflow", "Fixed headers/footers reserve content space"],
-    "avoid": ["Desktop-first max-width fixes", "Nested scroll regions without reason"]
+    "checks": [
+      "已检查 375/768/1024/1440px 布局",
+      "无水平溢出",
+      "固定 header/footer 为内容预留空间"
+    ],
+    "avoid": [
+      "desktop-first 的 max-width 补丁",
+      "无理由嵌套滚动区域"
+    ]
   },
   {
     "category": "typography",
     "priority": "medium",
-    "checks": ["Body text stays readable", "Line length is controlled", "Numbers use tabular figures where alignment matters"],
-    "avoid": ["Tiny low-contrast labels", "Negative tracking on body text"]
+    "checks": [
+      "正文保持可读",
+      "行长受控",
+      "需要对齐时数字使用 tabular figures"
+    ],
+    "avoid": [
+      "低对比小标签",
+      "正文使用负字距"
+    ]
   },
   {
     "category": "animation",
     "priority": "medium",
-    "checks": ["Micro-interactions are 150-300ms", "Exit is faster than enter", "Reduced motion is respected"],
-    "avoid": ["Decorative motion without cause", "Blocking input during transitions"]
+    "checks": [
+      "微交互时长为 150-300ms",
+      "退出动画快于进入动画",
+      "尊重 reduced motion"
+    ],
+    "avoid": [
+      "无原因的装饰性动效",
+      "转场期间阻塞输入"
+    ]
   },
   {
     "category": "forms",
     "priority": "medium",
-    "checks": ["Labels are persistent", "Errors appear near fields", "Submit has loading/success/error feedback", "First invalid field receives focus"],
-    "avoid": ["Placeholder-only labels", "Error summary without field recovery"]
+    "checks": [
+      "标签持久可见",
+      "错误显示在字段附近",
+      "提交包含 loading/success/error 反馈",
+      "首个无效字段获得焦点"
+    ],
+    "avoid": [
+      "仅使用 placeholder 作为标签",
+      "错误摘要无法引导字段恢复"
+    ]
   },
   {
     "category": "navigation",
     "priority": "high",
-    "checks": ["Current location is visible", "Back behavior preserves state", "Primary navigation remains reachable"],
-    "avoid": ["Mixing multiple primary nav systems", "Using modals for primary navigation"]
+    "checks": [
+      "当前位置可见",
+      "返回行为保留状态",
+      "主导航保持可达"
+    ],
+    "avoid": [
+      "混用多个主导航系统",
+      "用 modal 承载主导航"
+    ]
   },
   {
     "category": "charts",
     "priority": "medium",
-    "checks": ["Chart type matches data question", "Units and legends are visible", "Data has text/table fallback", "Color is supplemented by shape or labels"],
-    "avoid": ["Pie charts for many categories", "Color-only series distinction"]
+    "checks": [
+      "图表类型匹配数据问题",
+      "单位和图例可见",
+      "数据有文本/表格兜底",
+      "颜色由形状或标签补充"
+    ],
+    "avoid": [
+      "多类别使用饼图",
+      "仅用颜色区分系列"
+    ]
   },
   {
     "category": "first-viewport",
     "label": "First viewport",
     "priority": "high",
-    "checks": ["Hero or workspace fits common laptop heights", "Primary CTA or task entry is visible without scrolling", "Desktop navigation stays on one line", "The next section leaves a readable cue when the page is promotional"],
-    "avoid": ["Oversized top padding", "Hero copy pushing actions below the fold", "Two-line desktop nav"]
+    "checks": [
+      "Hero 或工作区适配常见笔记本高度",
+      "主 CTA 或任务入口无需滚动即可看到",
+      "桌面导航保持单行",
+      "促销页面中下一屏内容留下可读提示"
+    ],
+    "avoid": [
+      "顶部 padding 过大",
+      "Hero 文案把操作推到首屏以下",
+      "桌面导航变成两行"
+    ]
   },
   {
     "category": "cta-quality",
     "label": "CTA quality",
     "priority": "high",
-    "checks": ["CTA text contrast meets WCAG AA", "Primary CTA label stays on one line at desktop", "Each CTA intent uses one consistent label", "Ghost buttons remain visible over media backgrounds"],
-    "avoid": ["White text on light buttons", "Multiple contact labels for the same action", "Transparent buttons over busy imagery"]
+    "checks": [
+      "CTA 文本对比度满足 WCAG AA",
+      "桌面端主 CTA 标签保持单行",
+      "每种 CTA 意图使用一致标签",
+      "媒体背景上的 ghost button 仍可见"
+    ],
+    "avoid": [
+      "浅色按钮上使用白字",
+      "同一操作使用多个联系类标签",
+      "繁忙图像上叠透明按钮"
+    ]
   },
   {
     "category": "section-variety",
     "label": "Section variety",
     "priority": "medium",
-    "checks": ["Adjacent sections use distinct layout jobs", "Bento cell count matches real content", "Feature grids have clear visual priority", "Small uppercase eyebrow labels are used sparingly"],
-    "avoid": ["Three equal cards as the default rhythm", "Three or more zigzag sections in a row", "Empty bento cells for decoration"]
+    "checks": [
+      "相邻 section 承担不同布局职责",
+      "Bento 单元数量匹配真实内容",
+      "Feature grid 有清晰视觉优先级",
+      "少量使用小号大写 eyebrow 标签"
+    ],
+    "avoid": [
+      "默认节奏总是三个等权卡片",
+      "连续三个或更多 zigzag section",
+      "为空装饰而放置 bento 单元"
+    ]
   },
   {
     "category": "media-authenticity",
     "label": "Media authenticity",
     "priority": "high",
-    "checks": ["Visual pages use real or generated assets with a clear role", "Product pages show inspectable product or state", "Screenshots represent real UI or are labeled as concepts", "Images reserve aspect ratio and have meaningful alt text when informative"],
-    "avoid": ["Text-only promotional pages", "Fake dashboard rectangles", "Blurred stock atmosphere as the main subject"]
+    "checks": [
+      "视觉页面使用有明确职责的真实或生成资产",
+      "产品页面展示可检查的产品或状态",
+      "截图代表真实 UI，或标记为概念稿",
+      "图片预留 aspect ratio，信息性图片有有意义 alt 文本"
+    ],
+    "avoid": [
+      "纯文本促销页",
+      "伪造 dashboard 矩形",
+      "用模糊 stock 氛围图作为主体"
+    ]
   },
   {
     "category": "state-completeness",
     "label": "State completeness",
     "priority": "critical",
-    "checks": ["Loading shape matches final layout", "Empty states include a useful next action", "Errors are recoverable and close to the source", "Selected, invalid, disabled, hover, focus, and reduced-motion states are covered"],
-    "avoid": ["Generic spinners everywhere", "Empty states that only say no data", "Disabled controls communicated only by opacity"]
+    "checks": [
+      "Loading 形态匹配最终布局",
+      "空状态包含有用下一步",
+      "错误可恢复且靠近来源",
+      "覆盖 selected、invalid、disabled、hover、focus 和 reduced-motion 状态"
+    ],
+    "avoid": [
+      "到处使用通用 spinner",
+      "空状态只写 no data",
+      "禁用控件只靠透明度表达"
+    ]
   }
 ]

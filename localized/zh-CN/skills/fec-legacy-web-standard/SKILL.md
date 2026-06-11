@@ -1,15 +1,15 @@
 ---
 name: fec-legacy-web-standard
-description: Use when maintaining or safely modifying existing non-framework frontend code: vanilla JavaScript, jQuery, HTML/CSS, MPA pages, server-rendered templates, legacy plugins, or long-lived code that should stay in its current stack. Use migration skill when planning a move to React/Vue/TypeScript; Chinese triggers include 传统前端, 原生 JS, jQuery.
+description: 用于维护或安全修改既有非框架前端代码：原生 JavaScript、jQuery、HTML/CSS、MPA 页面、服务端渲染模板、遗留插件或需要长期保持当前技术栈的代码。若是规划迁移到 React/Vue/TypeScript，请使用迁移 skill；中文触发词包括 传统前端、原生 JS、jQuery。
 ---
 
 # 传统前端项目规范（JS + jQuery + HTML）
 
-## Purpose
+## 用途
 
 在不重写技术栈的前提下安全维护 vanilla JS、jQuery、HTML/CSS 和服务端模板项目。
 
-## Procedure
+## 流程
 
 1. 先确认本次改动是维护旧栈还是迁移；迁移到 React/Vue/TypeScript 时切换到现代化迁移 workflow。
 2. 沿用现有架构和代码风格，优先修复问题，不在一次改动中引入多项现代化。
@@ -22,7 +22,7 @@ description: Use when maintaining or safely modifying existing non-framework fro
 
 涉及 jQuery 命名空间、事件绑定、Ajax、XSS 转义、文件组织和维护清单示例时，加载 [references/legacy-patterns.md](references/legacy-patterns.md)。
 
-## Constraints
+## 约束
 
 - 在现有架构内改进，不要引入与项目格格不入的现代框架。
 - 渐进增强优于推倒重来。
@@ -30,6 +30,6 @@ description: Use when maintaining or safely modifying existing non-framework fro
 - 避免全局变量污染。
 - 每次聚焦一个维护点，避免顺手重构整个模块。
 
-## Expected Output
+## 预期输出
 
 改动与旧项目风格一致，无全局变量泄漏，事件和 DOM 操作可维护，Ajax 状态完整，用户输入已转义，渐进改进不破坏现有功能。

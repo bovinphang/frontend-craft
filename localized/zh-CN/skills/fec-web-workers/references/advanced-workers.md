@@ -1,6 +1,6 @@
 # 高级 Worker 模式
 
-## Transferable Objects
+## 可转移对象
 
 ```ts
 const buffer = new ArrayBuffer(10 * 1024 * 1024);
@@ -35,7 +35,7 @@ const mathApi = wrap<MathApi>(new MathWorker());
 const result = await mathApi.batchProcess([1, 2, 3]);
 ```
 
-## Worker Pool
+## Worker 池
 
 - 适合大量独立任务，不适合强顺序依赖任务。
 - 默认 pool size 不要超过 `navigator.hardwareConcurrency`。

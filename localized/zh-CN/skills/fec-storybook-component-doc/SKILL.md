@@ -1,15 +1,15 @@
 ---
 name: fec-storybook-component-doc
-description: Use when setting up or reviewing Storybook component documentation, design-system presentation, isolated component state previews, stories, addons, decorators, MDX docs, component-state interaction checks, visual baselines, or Chromatic. For real-browser cross-page journeys or broader coverage planning, choose the matching testing workflow first; Chinese triggers include Storybook, 组件文档, Design System, 视觉回归.
+description: 用于设置或审查 Storybook 组件文档、设计系统展示、隔离组件状态预览、stories、addons、decorators、MDX 文档、组件状态交互检查、视觉基线或 Chromatic。真实浏览器跨页面旅程或更广覆盖规划优先选择对应测试工作流；中文触发词包括 Storybook、组件文档、Design System、视觉回归。
 ---
 
 # Storybook 组件文档化
 
-## Purpose
+## 用途
 
 为 UI 组件建立文档化、设计系统展示和隔离状态预览环境；交互与视觉测试只覆盖 Storybook 场景内的组件状态。
 
-## Procedure
+## 流程
 
 1. 初始化或识别现有 Storybook 配置，沿用项目框架适配器、stories glob、主题和构建命令。
 2. 每个组件的 Story 覆盖默认态、主要变体、尺寸、语义 tone、disabled、loading、error、empty、selected、invalid 和关键边缘状态。
@@ -22,7 +22,7 @@ description: Use when setting up or reviewing Storybook component documentation,
 
 - 需要 `main.ts`、`preview.ts`、stories、decorators、MDX、交互测试和视觉回归示例时，加载 [references/story-patterns.md](references/story-patterns.md)。
 
-## Constraints
+## 约束
 
 - Story 需随组件 prop 变更同步更新。
 - Provider 依赖必须通过 decorator 补齐。
@@ -32,6 +32,6 @@ description: Use when setting up or reviewing Storybook component documentation,
 - 大型组件库需控制 stories glob 和 addon 开销。
 - 不用 Storybook 隐藏组件 API 问题；若变体组合爆炸，应先收敛组件职责或拆分组件。
 
-## Expected Output
+## 预期输出
 
 可交互的组件文档和设计系统展示站点，每个组件状态都有隔离预览，Props 表格可生成，关键 Storybook 场景有可选 play 测试或视觉回归基线。

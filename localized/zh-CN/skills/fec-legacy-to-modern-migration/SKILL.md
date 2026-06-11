@@ -1,17 +1,17 @@
 ---
 name: fec-legacy-to-modern-migration
-description: Use when planning or implementing an intentional migration from JavaScript, jQuery, HTML/CSS, server-rendered templates, MPA legacy frontend code, or older framework code toward a modern frontend stack while preserving behavior. Do not use for routine legacy bug fixes that stay in the old stack; Chinese triggers include 遗留项目, 技术栈升级, jQuery 迁移.
+description: 用于规划或实施从 JavaScript、jQuery、HTML/CSS、服务端渲染模板、MPA 遗留前端代码或旧框架代码迁移到现代前端技术栈，同时保持行为一致。不要用于仍留在旧技术栈内的日常遗留 bug 修复；中文触发词包括 遗留项目、技术栈升级、jQuery 迁移。
 ---
 
 # 传统前端到现代框架迁移
 
 适用于将 JavaScript + jQuery + HTML/CSS 多页面应用（MPA）、服务端模板渲染项目或旧框架代码，渐进迁移到 React、Vue、Next.js、Nuxt、TypeScript，或保留 MPA 形态但现代化模块、构建、类型和测试的场景。
 
-## Purpose
+## 用途
 
 指导传统前端项目渐进迁移到目标现代栈，提供迁移策略、概念映射、分阶段步骤和实施约束，确保功能等价和风险可控。
 
-## Procedure
+## 流程
 
 1. 先识别目标栈、迁移边界和是否保留 MPA/服务端模板形态。
 2. 加载 [references/migration-strategy-and-mapping.md](references/migration-strategy-and-mapping.md)，选择渐进式或一次性重写策略，并明确遗留模式到目标栈的映射。
@@ -20,7 +20,7 @@ description: Use when planning or implementing an intentional migration from Jav
 5. 按准备、基础层、模块/页面迁移、收尾的顺序推进，每次迁移一个可验证单元。
 6. 每个迁移单元验证功能等价、视觉一致、类型安全、可访问性、i18n、资源和样式边界。
 
-## Constraints
+## 约束
 
 - 迁移前必须先输出迁移分析报告，明确策略、优先级和风险。
 - 不要在一次迁移中同时改架构、改 UI、改接口。
@@ -36,7 +36,7 @@ description: Use when planning or implementing an intentional migration from Jav
 - 对纯逻辑、类型、构建或无 UI 的迁移，不强制 Playwright，应选择更贴近风险的验证层：type-check、unit test、component test、build 或 lint。
 - 验证目标不是像素级完全一致，而是确认业务功能无缺失、关键交互等价、主要视觉布局无非预期偏差，并且代码比旧实现更清晰、可维护。
 
-## Expected Output
+## 预期输出
 
 - 迁移分析报告保存为 `reports/migration-plan-YYYY-MM-DD-HHmmss.md`，包含策略选择、存量盘点、依赖关系、分阶段步骤、风险与回滚方案。
 - 迁移后的业务功能与原项目完全等价，无功能缺失。
