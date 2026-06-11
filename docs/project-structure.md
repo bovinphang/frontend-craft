@@ -29,6 +29,9 @@ frontend-craft/
 |   |-- fec-code-review/    # Architecture, types, rendering, styles, a11y
 |   |-- fec-security-review/     # XSS, CSRF, sensitive data, input validation
 |   |-- fec-accessibility-check/     # WCAG 2.2 accessibility, keyboard, focus, screen readers
+|   |-- fec-code-review/    # Architecture, types, rendering, styles, a11y
+|   |-- fec-security-review/     # XSS, CSRF, sensitive data, input validation
+|   |-- fec-accessibility-check/     # WCAG 2.2 accessibility, keyboard, focus, screen readers
 |   |-- fec-react-project-standard/  # React + TypeScript project standards
 |   |-- fec-vue3-project-standard/   # Vue 3 + TypeScript project standards
 |   |-- fec-implement-from-design/   # Implement UI from design tools, screenshots, and visual references
@@ -47,15 +50,17 @@ frontend-craft/
 |   |-- fec-legacy-to-modern-migration/ # jQuery/MPA migration to React/Vue strategy and workflow
 |   |-- fec-testing-strategy/          # Testing layer selection and coverage matrix
 |   |-- fec-e2e-testing/                # Playwright/Cypress E2E testing standards
+|   |-- fec-component-testing/          # RTL / Vue Test Utils component tests
+|   |-- fec-debug-framework/            # Unified 5-step diagnostic framework for build/runtime/UI/API failures
 |   |-- fec-nextjs-project-standard/    # Next.js 14+ App Router, SSR/SSG standards
 |   |-- fec-nuxt-project-standard/      # Nuxt 3 SSR/SSG, composables standards
 |   |-- fec-monorepo-project-standard/  # pnpm workspace, Turborepo, Nx standards
+|   |-- fec-vite-project-standard/      # Vite config, env safety, HMR, proxy, build and library mode
 |   |-- fec-data-fetching/              # TanStack Query and server-state workflows
 |   |-- fec-api-integration/            # Typed API clients, auth refresh, uploads, realtime integration
 |   |-- fec-backend-requirements-handoff/ # Frontend-to-backend UI data and state needs
 |   |-- fec-form-handling/              # React Hook Form + Zod form workflows
 |   |-- fec-route-protection/           # Authenticated and permissioned routes
-|   |-- fec-component-testing/          # RTL / Vue Test Utils component tests
 |   |-- fec-pwa-implementation/         # PWA manifest, service worker, offline
 |   |-- fec-web-workers/                # Worker integration and background compute
 |   |-- fec-canvas-threejs/             # Canvas, Three.js, React Three Fiber
@@ -65,10 +70,10 @@ frontend-craft/
 |   |-- fec-storybook-component-doc/    # Storybook component docs, addons, MDX, interaction and visual test integration
 |   |-- fec-ui-design/                  # Product-context UI direction, design dials, media strategy, visual QA
 |   |-- fec-image-generation/           # Diagram/image generation, editing workflows, PNG QA and repair loops
-|   |-- fec-drawio-studio/             # Editable draw.io diagrams, shape lookup, auto-layout, code structure maps
-|   |-- fec-web-video-presentation/    # Recordable 16:9 step-driven web video presentations
+|   |-- fec-drawio-studio/              # Editable draw.io diagrams, shape lookup, auto-layout, code structure maps
+|   |-- fec-web-video-presentation/     # Recordable 16:9 step-driven web video presentations
 |   |-- fec-motion-interaction/         # Context-aware motion intensity, transitions, scroll animation, reduced motion
-|   |-- fec-vite-project-standard/      # Vite config, env safety, HMR, proxy, build and library mode
+|   |-- fec-alchemy/                    # Project absorption workflow — extract reference ideas and redesign natively
 |
 |-- commands/         # Slash commands for quick execution
 |   |-- fec-init.md     # /fec-init - Initialize project templates
@@ -98,7 +103,10 @@ frontend-craft/
 |-- templates/        # Runtime-specific project templates
 |   |-- claude/        # CLAUDE.md and settings.json
 |   |-- codex/         # AGENTS.md and config.toml
+|   |-- cursor/        # Cursor runtime project stubs
+|   |-- gemini/        # Gemini CLI runtime project stubs
 |   |-- openclaw/      # AGENTS.md and OPENCLAW-CONFIG.md
+|   |-- windsurf/      # Windsurf runtime project stubs
 |   |-- shared/rules/  # 20 rule files: vue, react, rendering patterns, responsive design, testing, source-driven development, etc.
 |
 |-- .mcp.json         # MCP server config (Figma, Figma Desktop, Sketch, MasterGo, Pixso, 墨刀)
@@ -119,5 +127,5 @@ frontend-craft/
 | `src/hooks/`    | Runtime hook source bundled into `dist/hooks/` for Claude/Qoder execution                                             |
 | `src/install/`  | Installer core (CLI, interactive wizard, runtime converters)                                                          |
 | `src/openclaw/` | OpenClaw runtime TypeScript source                                                                                    |
-| `templates/`    | Runtime-specific project templates (Claude/Codex/OpenClaw configs + shared rules)                                     |
+| `templates/`    | Runtime-specific project templates (Claude/Codex/Cursor/Gemini/OpenClaw/Windsurf configs + shared rules)             |
 | `tests/`        | Test suite (converter tests, installer tests)                                                                         |
