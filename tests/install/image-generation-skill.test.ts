@@ -143,6 +143,74 @@ test("tech-diagram-render creates workflow HTML and PNG QA manifest", () => {
   assert.equal(layout.connectors.length, 1);
 });
 
+test("tech-diagram-render creates architecture HTML, summary cards, legend, and PNG QA manifest", () => {
+  const tmp = fs.mkdtempSync(path.join(os.tmpdir(), "fec-tech-diagram-"));
+  const input = path.join(tmp, "architecture.json");
+  const output = path.join(tmp, "architecture.html");
+  const manifest = path.join(tmp, "architecture.layout.json");
+  fs.writeFileSync(
+    input,
+    JSON.stringify({
+      schema_version: 1,
+      diagram_type: "architecture",
+      meta: { title: "Checkout Architecture", subtitle: "Browser-ready system topology" },
+      groups: [
+        { id: "cloud", label: "Cloud boundary", type: "cloud", x: 160, y: 48, width: 650, height: 310 },
+        { id: "trust", label: "Private service zone", type: "security", x: 360, y: 92, width: 400, height: 220 },
+      ],
+      nodes: [
+        { id: "web", label: "Web Client", type: "frontend", x: 42, y: 174, sublabel: "React" },
+        { id: "gateway", label: "API Gateway", type: "cloud", x: 210, y: 174, group: "cloud" },
+        { id: "auth", label: "Auth Provider", type: "security", x: 210, y: 72, group: "cloud" },
+        { id: "service", label: "Checkout Service", type: "backend", x: 420, y: 174, width: 148, group: "trust" },
+        { id: "bus", label: "Event Bus", type: "messagebus", x: 430, y: 270, width: 128, height: 44, group: "trust" },
+        { id: "db", label: "Orders DB", type: "database", x: 640, y: 174, group: "trust" },
+      ],
+      connections: [
+        { from: "web", to: "gateway", label: "HTTPS", variant: "emphasis" },
+        { from: "gateway", to: "service", label: "REST" },
+        { from: "service", to: "db", label: "SQL" },
+        { from: "service", to: "bus", label: "events", variant: "dashed", waypoints: [[494, 244]] },
+        { from: "auth", to: "gateway", label: "JWT", variant: "security" },
+      ],
+      legend: [
+        { label: "Client", type: "frontend" },
+        { label: "Service", type: "backend" },
+        { label: "Data", type: "database" },
+        { label: "Security", type: "security" },
+      ],
+      summary: [
+        { title: "Runtime", type: "backend", items: ["Gateway routes checkout traffic", "Service writes orders and emits events"] },
+        { title: "Trust", type: "security", items: ["Auth flow is separate from order data", "Private service zone is grouped"] },
+      ],
+    }),
+    "utf8",
+  );
+
+  const result = spawnSync(process.execPath, [renderScript, "--input", input, "--output", output, "--type", "architecture", "--manifest", manifest, "--format", "json"], {
+    cwd: root,
+    encoding: "utf8",
+  });
+
+  assert.equal(result.status, 0, result.stderr);
+  const report = JSON.parse(result.stdout) as { ok: boolean; nodes: number; connectors: number };
+  assert.equal(report.ok, true);
+  assert.equal(report.nodes, 8);
+  assert.equal(report.connectors, 5);
+  const html = fs.readFileSync(output, "utf8");
+  assert.match(html, /Checkout Architecture/);
+  assert.match(html, /<svg class="tech-diagram"/);
+  assert.match(html, /Cloud boundary/);
+  assert.match(html, /Web Client/);
+  assert.match(html, /Event Bus/);
+  assert.match(html, /Legend/);
+  assert.match(html, /summary-grid/);
+  assert.match(html, /Gateway routes checkout traffic/);
+  const layout = JSON.parse(fs.readFileSync(manifest, "utf8")) as { boxes: unknown[]; connectors: unknown[] };
+  assert.equal(layout.boxes.length, 8);
+  assert.equal(layout.connectors.length, 5);
+});
+
 test("tech-diagram-render supports sequence, dataflow, and lifecycle diagrams", () => {
   const tmp = fs.mkdtempSync(path.join(os.tmpdir(), "fec-tech-diagram-"));
   const cases = [
@@ -258,6 +326,78 @@ test("tech-diagram-render reports type mismatches, duplicate ids, and unknown en
   assert.match(duplicateResult.stderr, /Duplicate id "same"/);
   assert.equal(unknownResult.status, 1);
   assert.match(unknownResult.stderr, /Unknown endpoint "missing"/);
+});
+
+test("tech-diagram-render reports architecture validation errors", () => {
+  const tmp = fs.mkdtempSync(path.join(os.tmpdir(), "fec-tech-diagram-"));
+  const output = path.join(tmp, "out.html");
+  const cases = [
+    {
+      name: "mismatch",
+      model: { schema_version: 1, diagram_type: "workflow", meta: { title: "Wrong" }, nodes: [], connections: [] },
+      args: ["--format", "json"],
+      expectedStdout: /diagram_type/,
+    },
+    {
+      name: "unknown-group",
+      model: {
+        schema_version: 1,
+        diagram_type: "architecture",
+        meta: { title: "Unknown Group" },
+        nodes: [{ id: "web", label: "Web", type: "frontend", x: 40, y: 40, group: "missing" }],
+        connections: [],
+      },
+      expectedStderr: /Unknown group "missing"/,
+    },
+    {
+      name: "unknown-endpoint",
+      model: {
+        schema_version: 1,
+        diagram_type: "architecture",
+        meta: { title: "Unknown Endpoint" },
+        nodes: [{ id: "web", label: "Web", type: "frontend", x: 40, y: 40 }],
+        connections: [{ from: "web", to: "api" }],
+      },
+      expectedStderr: /Unknown endpoint "api"/,
+    },
+    {
+      name: "duplicate-id",
+      model: {
+        schema_version: 1,
+        diagram_type: "architecture",
+        meta: { title: "Duplicate" },
+        nodes: [
+          { id: "web", label: "Web", type: "frontend", x: 40, y: 40 },
+          { id: "web", label: "Again", type: "frontend", x: 200, y: 40 },
+        ],
+        connections: [],
+      },
+      expectedStderr: /Duplicate id "web"/,
+    },
+    {
+      name: "bad-type",
+      model: {
+        schema_version: 1,
+        diagram_type: "architecture",
+        meta: { title: "Bad Type" },
+        nodes: [{ id: "web", label: "Web", type: "mystery", x: 40, y: 40 }],
+        connections: [],
+      },
+      expectedStderr: /Unsupported node type "mystery"/,
+    },
+  ];
+
+  for (const sample of cases) {
+    const input = path.join(tmp, `${sample.name}.json`);
+    fs.writeFileSync(input, JSON.stringify(sample.model), "utf8");
+    const result = spawnSync(process.execPath, [renderScript, "--input", input, "--output", output, "--type", "architecture", ...(sample.args ?? [])], {
+      cwd: root,
+      encoding: "utf8",
+    });
+    assert.equal(result.status, 1, sample.name);
+    if (sample.expectedStdout) assert.match(result.stdout, sample.expectedStdout);
+    if (sample.expectedStderr) assert.match(result.stderr, sample.expectedStderr);
+  }
 });
 
 type Rgba = [number, number, number, number];

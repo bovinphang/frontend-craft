@@ -7,7 +7,7 @@
 | ER 图 | Mermaid ER、DBML、Graphviz、SVG | 基数标签、表名、关键字段、交叉关系。 |
 | UML 类图 | Mermaid class、PlantUML、Graphviz | 继承方向、方法/属性换行、包分组。 |
 | 序列图 | Mermaid sequence、PlantUML | lifeline 顺序、activation 范围、异步/返回箭头、消息文本。 |
-| 技术架构 | Mermaid flowchart、C4/Structurizr、SVG/HTML | 分层分组、信任边界、数据流方向、图例。 |
+| 技术架构 | HTML `architecture` IR、Mermaid flowchart、C4/Structurizr、SVG/HTML、draw.io | 分层分组、信任边界、数据流方向、图例。 |
 | ML / 深度学习 | SVG/HTML/canvas | tensor shape、层顺序、分支汇合、重复块、注释。 |
 | 流程图 | Mermaid flowchart、SVG | 决策标签、终止状态、回环可读性、连接线间距。 |
 
@@ -37,6 +37,10 @@
 - **连接线堆叠：** 用不同 waypoints 分离平行边，或用带共享标签的 bus 汇总。
 - **边缘裁剪：** 增加外边距，或扩大导出 viewBox/canvas 尺寸。
 - **密集图不可读：** 拆成总览图加细节图，不要整体缩小。
+
+## 架构图
+
+用户需要浏览器可打开的单文件、显式系统拓扑、分组、信任边界、数据流和 PNG QA 时，优先使用 HTML `architecture` IR。需要官方厂商图形、diagrams.net 编辑或长期人工维护时，使用 draw.io。希望图主要留在 Markdown 或纯文本技术文档中时，使用 Mermaid/C4。
 
 ## 导出指引
 

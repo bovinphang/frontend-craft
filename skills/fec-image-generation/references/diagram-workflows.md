@@ -7,7 +7,7 @@
 | ER diagram | Mermaid ER, DBML, Graphviz, SVG | Cardinality labels, table names, key fields, crossing relations. |
 | UML class | Mermaid class, PlantUML, Graphviz | Inheritance direction, method/property wrapping, package grouping. |
 | Sequence | Mermaid sequence, PlantUML | Lifeline order, activation spans, async/return arrows, message text. |
-| Technical architecture | Mermaid flowchart, C4/Structurizr, SVG/HTML | Layer grouping, trust boundaries, data flow direction, legends. |
+| Technical architecture | HTML `architecture` IR, Mermaid flowchart, C4/Structurizr, SVG/HTML, draw.io | Layer grouping, trust boundaries, data flow direction, legends. |
 | ML / deep learning | SVG/HTML/canvas | Tensor shapes, layer order, branch joins, repeated blocks, annotations. |
 | Flowchart | Mermaid flowchart, SVG | Decision labels, terminal states, loop-back readability, connector spacing. |
 
@@ -37,6 +37,10 @@ Coordinates are PNG pixel coordinates after export. Boxes should cover visible l
 - **Connector stacking:** separate parallel edges with different waypoints or bundle them with a shared labeled bus.
 - **Edge clipping:** increase outer padding or export viewBox/canvas size.
 - **Unreadable dense graph:** split into overview plus detail diagrams instead of shrinking everything.
+
+## Architecture diagrams
+
+Use HTML `architecture` IR when the user wants a browser-ready single file with explicit system topology, groups, trust boundaries, data flows, and PNG QA. Use draw.io when the diagram must preserve official vendor shapes, diagrams.net editing, or long-term manual ownership. Use Mermaid/C4 when the diagram should live primarily in Markdown or text documentation.
 
 ## Export guidance
 
