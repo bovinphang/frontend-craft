@@ -1,6 +1,6 @@
 ---
 name: fec-image-generation
-description: Use when generating or editing diagrams, charts, visual assets, posters, UI mockups, product images, infographics, academic figures, comics, avatars, storyboards, brand boards, or image-edit workflows, especially when exported PNGs need visual QA and bounded self-repair. Prefer deterministic Mermaid/SVG/HTML/canvas sources for text-heavy diagrams; do not use for ordinary UI polish without generated imagery. Chinese triggers include Picture generation, image editing, diagram generation, architecture diagram, ER diagram, UML, sequence diagram, poster, UI mockup, product diagram, information diagram, academic diagram, comics, avatar, storyboard, brand board, PNG self-inspection, automatic repair.
+description: Use when generating or editing diagrams, charts, visual assets, posters, UI mockups, product images, infographics, academic figures, comics, avatars, storyboards, brand boards, or image-edit workflows, especially when exported PNGs need visual QA and bounded self-repair. Prefer deterministic Mermaid/SVG/HTML/canvas sources for text-heavy diagrams; use HTML technical diagrams for themed browser-ready architecture, workflow, sequence, data-flow, lifecycle, runbook, PII/data-lineage, and state-machine diagrams; do not use for ordinary UI polish without generated imagery. Chinese triggers include Picture generation, image editing, diagram generation, architecture diagram, workflow diagram, data flow, lifecycle diagram, state machine, ER diagram, UML, sequence diagram, poster, UI mockup, product diagram, information diagram, academic diagram, comics, avatar, storyboard, brand board, PNG self-inspection, automatic repair.
 ---
 
 # Image generation and chart workflow
@@ -13,6 +13,7 @@ Generate or edit diagrams, visual assets, and image workflows, and perform revie
 
 1. Determine product type
    - When accuracy of text, structure, and connections is a priority, use Mermaid, SVG, HTML/CSS, canvas, or a graphics library to generate editable sources and then export as PNG.
+   - Use HTML technical diagrams when the user needs a browser-ready single file with dark/light theme support for architecture, workflow, sequence, data-flow, lifecycle, runbook, state-machine, or PII/data-lineage diagrams.
    - When aesthetics, texture, photos, illustrations, comics, product images or brand atmosphere are priorities, use image generation or editing tools, and then save the final assets to the project or report directory.
 
 2. Clarify inputs and constraints
@@ -21,7 +22,12 @@ Generate or edit diagrams, visual assets, and image workflows, and perform revie
 
 3. Select Generate Route
    - ER diagrams, UML class diagrams, sequence diagrams, technical architecture diagrams, ML/deep learning, flow charts, etc., give priority to creating structured sources according to [diagram-workflows.md](references/diagram-workflows.md).
-- Posters, UI mockups, product graphics, infographics, academic graphics, comics, avatars, storyboards, brand boards and image editing, press [artifact-routing.md](references/artifact-routing.md) to choose generate, edit or hybrid routing.
+   - For themed browser-ready architecture, workflow, sequence, data-flow and lifecycle diagrams, read [html-technical-diagrams.md](references/html-technical-diagrams.md), then render JSON IR with [tech-diagram-render.mjs](scripts/tech-diagram-render.mjs):
+     ```bash
+     node skills/fec-image-generation/scripts/tech-diagram-render.mjs --input diagram.json --output diagram.html --type architecture --manifest diagram.layout.json
+     ```
+   - Use the draw.io studio workflow instead when the priority is editable `.drawio` source, official diagrams.net shapes, or long-term manual editing.
+   - Posters, UI mockups, product graphics, infographics, academic graphics, comics, avatars, storyboards, brand boards and image editing, press [artifact-routing.md](references/artifact-routing.md) to choose generate, edit or hybrid routing.
 
 4. Export and self-check PNG
    - Read the exported PNG before each delivery to check whether the main body is truly rendered, whether the text is truncated, whether the connections are stacked, and whether the nodes overlap.
@@ -45,6 +51,7 @@ Generate or edit diagrams, visual assets, and image workflows, and perform revie
 ## Constraints
 
 - Text-intensive images should not be generated solely from bitmap models; editable structured sources must be retained.
+- HTML technical diagrams must keep the JSON source and generated HTML; exported PNG/SVG files are delivery artifacts, not the source of truth. Use `.drawio` instead when official vendor icons or long-term manual editing are the priority.
 - Do not treat screenshots, fake data, or placeholder images as final product images unless the user explicitly requests a concept draft.
 - The original image is not directly overwritten; the editing workflow outputs a new file by default.
 - Readable labels, line attributions, legends, axes, and accessible alternative descriptions are not sacrificed for aesthetics.

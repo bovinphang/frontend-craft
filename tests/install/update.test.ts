@@ -82,6 +82,13 @@ test("install with Simplified Chinese writes localized content and manifest lang
       "fec-react-project-standard",
       "SKILL.md",
     );
+    const imageGenerationScriptsDir = path.join(
+      dir,
+      ".claude",
+      "skills",
+      "fec-image-generation",
+      "scripts",
+    );
     const manifestPath = path.join(
       dir,
       ".claude",
@@ -93,11 +100,35 @@ test("install with Simplified Chinese writes localized content and manifest lang
 
     assert.match(fs.readFileSync(commandPath, "utf8"), /检测 runtime/);
     assert.match(fs.readFileSync(skillPath, "utf8"), /React 项目规范/);
+    assert.ok(fs.existsSync(path.join(imageGenerationScriptsDir, "png-qa.mjs")));
+    assert.ok(
+      fs.existsSync(
+        path.join(imageGenerationScriptsDir, "tech-diagram-render.mjs"),
+      ),
+    );
     assert.equal(manifest.language, "zh-CN");
   } finally {
     fs.rmSync(dir, { recursive: true, force: true });
     fs.rmSync(claudeHome, { recursive: true, force: true });
   }
+});
+
+test("Simplified Chinese image generation scripts match English script filenames", () => {
+  const sourceScripts = listMjsFiles(
+    path.join(root, "skills", "fec-image-generation", "scripts"),
+  );
+  const localizedScripts = listMjsFiles(
+    path.join(
+      root,
+      "localized",
+      "zh-CN",
+      "skills",
+      "fec-image-generation",
+      "scripts",
+    ),
+  );
+
+  assert.deepEqual(localizedScripts, sourceScripts);
 });
 
 test("update reuses manifest language when --lang is omitted", () => {
@@ -709,4 +740,12 @@ function makeClaudeMarketplaceHome(currentVersion: string): string {
     "utf8",
   );
   return claudeHome;
+}
+
+function listMjsFiles(dir: string): string[] {
+  return fs
+    .readdirSync(dir, { withFileTypes: true })
+    .filter((entry) => entry.isFile() && entry.name.endsWith(".mjs"))
+    .map((entry) => entry.name)
+    .sort();
 }

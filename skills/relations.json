@@ -204,6 +204,7 @@
     ],
     "boundaryWorkflows": [
       "Use image generation for raster-first posters, visual concepts, product images, and PNG QA beyond editable technical diagrams.",
+      "Use image generation's HTML technical diagram route when the priority is a browser-ready themed single-file workflow, sequence, data-flow, or lifecycle diagram.",
       "Use Canvas/Three.js when the diagram becomes an interactive runtime visualization, simulation, game scene, shader, or 3D renderer.",
       "Use SVG animation for motion-specific vector micro-interactions; use drawio studio for static or editable technical SVG exports."
     ],
@@ -264,12 +265,15 @@
     "boundaryWorkflows": [
       "Use UI design for product-specific visual direction, brand tone, hierarchy, and visual QA of generated assets.",
       "Use implementation-from-design when a Figma, Sketch, MasterGo, Pixso, screenshot, or other external design source is authoritative.",
+      "Use the HTML technical diagram route for browser-ready themed workflow, sequence, data-flow, lifecycle, runbook, PII/data-lineage, and state-machine diagrams.",
+      "Use draw.io studio instead when the priority is editable .drawio source, official shape lookup, or manual diagrams.net editing.",
       "Use Canvas/Three.js or SVG animation workflows when the generated visual becomes an interactive renderer, shader, or motion asset rather than a static image."
     ],
     "capabilityTags": [
       "image-generation",
       "image-editing",
       "diagram-generation",
+      "html-diagram",
       "png-qa",
       "visual-assets",
       "autofix"

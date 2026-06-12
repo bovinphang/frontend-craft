@@ -232,7 +232,7 @@ npx @bovinphang/frontend-craft@latest list
 | 技能                          | 范围                                                     |
 | ----------------------------- | -------------------------------------------------------- |
 | `fec-ui-design`               | 产品语境 UI 方向、反模板设计拨盘、媒体策略、状态、视觉 QA |
-| `fec-image-generation`        | 图表、图片生成/编辑、视觉资产、PNG 自检和修复循环        |
+| `fec-image-generation`        | 图表、可切换主题的 HTML/SVG 技术图、图片生成/编辑、视觉资产、PNG 自检和修复循环 |
 | `fec-drawio-studio`         | 可编辑 draw.io / diagrams.net 技术图、XML/Mermaid/CSV URL 交付、形状检索、自动布局和代码结构图 |
 | `fec-web-video-presentation` | 将文章、口播稿、课程和 demo 转成可录屏的 16:9 步进网页演示 |
 | `fec-tailwind-design-system`  | Tailwind token、主题扩展、组件变体、class 治理和暗色模式 |
