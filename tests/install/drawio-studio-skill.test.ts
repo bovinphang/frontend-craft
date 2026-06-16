@@ -158,6 +158,30 @@ test("diagram-lint reports layout and label quality warnings", () => {
   });
 });
 
+test("diagram-lint reports flowchart readability warnings", () => {
+  withTempDir((dir) => {
+    const file = path.join(dir, "flowchart-quality.drawio");
+    fs.writeFileSync(
+      file,
+      `<mxfile><diagram><mxGraphModel dx="400" dy="300" pageWidth="1000" pageHeight="1200"><root><mxCell id="0"/><mxCell id="1" parent="0"/><mxCell id="stage" value="Stage" vertex="1" parent="1" style="swimlane;whiteSpace=wrap;html=1;fontSize=13;rounded=1;"><mxGeometry x="20" y="40" width="920" height="180" as="geometry"/></mxCell><mxCell id="a" value="Start" vertex="1" parent="stage" style="rounded=1;whiteSpace=wrap;html=1;fontSize=12;align=left;"><mxGeometry x="20" y="50" width="160" height="70" as="geometry"/></mxCell><mxCell id="b" value="Done" vertex="1" parent="stage" style="rounded=1;whiteSpace=wrap;html=1;fontSize=12;align=center;"><mxGeometry x="240" y="50" width="160" height="70" as="geometry"/></mxCell><mxCell id="e" edge="1" parent="stage" source="a" target="b" style="strokeWidth=2;"><mxGeometry relative="1" as="geometry"/></mxCell></root></mxGraphModel></diagram></mxfile>`,
+    );
+
+    const report = JSON.parse(run("diagram-lint.mjs", [file, "--format", "json"])) as {
+      warnings: string[];
+    };
+
+    assert.ok(report.warnings.some((message) => /pageWidth 1000/.test(message)));
+    assert.ok(report.warnings.some((message) => /dx 400/.test(message)));
+    assert.ok(report.warnings.some((message) => /dy 300/.test(message)));
+    assert.ok(report.warnings.some((message) => /connectable="0"/.test(message)));
+    assert.ok(report.warnings.some((message) => /collapsible=0/.test(message)));
+    assert.ok(report.warnings.some((message) => /rounded=0/.test(message)));
+    assert.ok(report.warnings.some((message) => /title fontSize 13/.test(message)));
+    assert.ok(report.warnings.some((message) => /align=center/.test(message)));
+    assert.ok(report.warnings.some((message) => /orthogonalEdgeStyle/.test(message)));
+  });
+});
+
 test("diagram-lint strict mode fails on overlap warnings", () => {
   withTempDir((dir) => {
     const file = path.join(dir, "overlap.drawio");

@@ -45,6 +45,7 @@ Use these conventions when a user asks for a named technical diagram.
 - Label decision branches.
 - Merge branches back to a central path when possible.
 - Keep the primary path vertical. Route alternate or error branches sideways and back to the main path with orthogonal edges.
+- For editable draw.io flowcharts, follow [flowchart-quality.md](flowchart-quality.md) before final delivery.
 
 ## Mindmap
 

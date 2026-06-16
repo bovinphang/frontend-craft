@@ -22,6 +22,7 @@ Generate, verify and export draw.io / diagrams.net technical diagrams that can b
 2. Create chart specifications
    - Clarify diagram type, audience, output format, node list, relationships, hierarchical grouping and save location.
    - Read [diagram-patterns.md](references/diagram-patterns.md) when the user specifies Flowchart, Architecture, Sequence, UML Class, ERD, Mindmap, Network Topology or ML/DL diagrams.
+   - For process, workflow, approval, release or incident-response flowcharts that must open cleanly in diagrams.net, also read [flowchart-quality.md](references/flowchart-quality.md).
    - To select XML, Mermaid, CSV, container, layer, tag, metadata or dark mode policy, read [xml-and-mermaid.md](references/xml-and-mermaid.md).
    - When you need a specific vendor/cloud/network/flowchart shape, run [shape-query.mjs](scripts/shape-query.mjs); when you need AI, database or infrastructure brand symbols, run [brand-symbols.mjs](scripts/brand-symbols.mjs).
 
@@ -29,6 +30,7 @@ Generate, verify and export draw.io / diagrams.net technical diagrams that can b
    - Draw.io XML can be manually generated for small drawings when exact node coordinates, sizes and connections are easier to reason about directly.
    - When there are more than about 15 nodes, dependency graphs or code structure graphs, first generate graph JSON and then use [layout-graph.mjs](scripts/layout-graph.mjs) for automatic layout.
    - For manually placed XML, align coordinates to a 10px grid, keep generous gaps between sibling nodes, use `whiteSpace=wrap;html=1`, prefer `fontSize=14`, encode forced line breaks as `&#xa;`, and size containers to their content instead of leaving one-sided blank areas.
+   - For manually authored flowcharts, keep `pageWidth` in the readable 600-800 range unless a wide cross-functional table is intentional; use swimlane containers for real stages and route loop or rollback edges around the margin with explicit waypoints.
    - Code structure diagram can be used first [scan-js-modules.mjs](scripts/scan-js-modules.mjs), [scan-ts-modules.mjs](scripts/scan-ts-modules.mjs), [scan-python-modules.mjs](scripts/scan-python-modules.mjs), [scan-go-packages.mjs](scripts/scan-go-packages.mjs), [scan-rust-modules.mjs](scripts/scan-rust-modules.mjs) or [scan-python-classes.mjs](scripts/scan-python-classes.mjs) to generate graph JSON.
 
 4. Checksum preview

@@ -18,6 +18,7 @@ Use this reference to choose the lightest editable diagram source that still mee
 - Every edge must contain `<mxGeometry relative="1" as="geometry"/>`; do not use self-closing edge cells.
 - Use `&#xa;` for forced line breaks in `value` attributes. Literal `\n` renders as text in draw.io and should be treated as a quality issue.
 - Keep manually placed vertices on a 10px grid, within `pageWidth` / `pageHeight`, and with stable dimensions so hover, labels and exports do not shift the layout.
+- For manually authored flowcharts, keep `pageWidth` at or below 800 unless the diagram is deliberately a wide matrix or cross-functional table.
 
 ## Containers And Process Layout
 

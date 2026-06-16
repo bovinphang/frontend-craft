@@ -18,6 +18,7 @@
 - 每条边都必须包含 `<mxGeometry relative="1" as="geometry"/>`；不要使用自闭合边单元。
 - 在 `value` 属性中强制换行时使用 `&#xa;`。literal `\n` 会在 draw.io 中渲染成文本，应视为质量问题。
 - 手工摆放的顶点保持 10px 网格对齐，位于 `pageWidth` / `pageHeight` 内，并使用稳定尺寸，避免 hover、标签和导出造成布局位移。
+- 手工流程图的 `pageWidth` 保持不超过 800，除非图表明确是宽矩阵或跨职能表。
 
 ## 容器与流程布局
 
