@@ -8,6 +8,18 @@ export function lintDrawio(xml) {
   if (!/<mx(Cell|file|GraphModel)\b/.test(xml)) warnings.push("No draw.io graph markers found");
   if (/<mxCell\b[^>]*\bedge="1"[^>]*\/>/.test(xml)) errors.push("edge mxCell must not be self-closing; add mxGeometry relative=\"1\"");
 
+  const graphModel = attrsOf(xml.match(/<mxGraphModel\b([^>]*)>/)?.[1] ?? "");
+  const pageWidth = Number(graphModel.pageWidth);
+  const pageHeight = Number(graphModel.pageHeight);
+  const viewportWidth = Number(graphModel.dx);
+  const viewportHeight = Number(graphModel.dy);
+  if (Number.isFinite(pageWidth) && pageWidth > 800) warnings.push(`pageWidth ${pageWidth} is above the readable manual-flowchart maximum of 800`);
+  if (Number.isFinite(pageWidth) && Number.isFinite(viewportWidth) && viewportWidth < pageWidth * 0.75) {
+    warnings.push(`dx ${viewportWidth} is much smaller than pageWidth ${pageWidth}; diagrams.net may initially zoom labels too small`);
+  }
+  if (Number.isFinite(pageHeight) && Number.isFinite(viewportHeight) && viewportHeight < pageHeight * 0.5) {
+    warnings.push(`dy ${viewportHeight} is much smaller than pageHeight ${pageHeight}; diagrams.net may initially zoom labels too small`);
+  }
   const cellRe = /<mxCell\b([^>]*?)(?:\/>|>([\s\S]*?)<\/mxCell>)/g;
   const objectByCellIndex = objectsByCellIndex(xml);
   const cells = [];
@@ -28,6 +40,7 @@ export function lintDrawio(xml) {
     for (const [name, value] of rawAttrsOf(match[1])) {
       if (hasUnescapedAmpersand(value)) errors.push(`cell ${id} attribute ${name} contains an unescaped ampersand`);
       if (/[<>]/.test(value)) errors.push(`cell ${id} attribute ${name} contains an unescaped angle bracket`);
+      if (name === "value" && /\\n/.test(value)) warnings.push(`cell ${id} value contains literal \\n; use &#xa; for draw.io line breaks`);
     }
     const geom = body.match(/<mxGeometry\b([^>]*?)(?:\/>|>)/)?.[1];
     cells.push({ id, attrs, body, geom: geom ? attrsOf(geom) : null });
@@ -49,14 +62,33 @@ export function lintDrawio(xml) {
     }
     if (attrs.edge === "1" && !geom) errors.push(`edge ${id} is missing mxGeometry`);
     if (attrs.edge === "1" && (!attrs.source || !attrs.target)) warnings.push(`edge ${id} has no source or target`);
+    if (attrs.edge === "1" && attrs.style && !styleHas(attrs.style, "edgeStyle", "orthogonalEdgeStyle")) {
+      warnings.push(`edge ${id} should use orthogonalEdgeStyle for readable technical diagram routing`);
+    }
     if (attrs.vertex === "1") {
       if (looksLikeHtml(attrs.value) && !styleHas(attrs.style, "html", "1")) warnings.push(`cell ${id} label contains HTML but style does not include html=1`);
+      if (!styleHas(attrs.style, "whiteSpace", "wrap")) warnings.push(`cell ${id} style should include whiteSpace=wrap for label wrapping`);
+      if (!styleHas(attrs.style, "html", "1")) warnings.push(`cell ${id} style should include html=1 for predictable label rendering`);
+      const fontSize = styleNumber(attrs.style, "fontSize");
+      if (Number.isFinite(fontSize) && fontSize < 12) warnings.push(`cell ${id} fontSize ${fontSize} is below the readable minimum of 12`);
+      if (isSwimlane(attrs.style)) {
+        if (attrs.connectable !== "0") warnings.push(`swimlane ${id} should set connectable="0" so connectors target intentional nodes`);
+        if (styleValue(attrs.style, "collapsible") !== "0") warnings.push(`swimlane ${id} should set collapsible=0 to avoid collapse controls in deliverables`);
+        if (styleValue(attrs.style, "rounded") !== "0") warnings.push(`swimlane ${id} should use rounded=0 for clear structural stage boundaries`);
+        if (Number.isFinite(fontSize) && fontSize < 14) warnings.push(`swimlane ${id} title fontSize ${fontSize} is below the recommended flowchart stage range of 14-16`);
+      } else if (isLikelyProcessNode(attrs.style)) {
+        const align = styleValue(attrs.style, "align");
+        if (align && align !== "center") warnings.push(`process node ${id} should use align=center for flowchart readability`);
+      }
       if (!geom) errors.push(`vertex ${id} is missing mxGeometry`);
       else {
         const rect = rectOf(geom);
         if (!Number.isFinite(rect.w) || !Number.isFinite(rect.h)) errors.push(`vertex ${id} has invalid size`);
         else if (rect.w <= 0 || rect.h <= 0) warnings.push(`vertex ${id} has non-positive size`);
         if (rect.x < 0 || rect.y < 0) warnings.push(`vertex ${id} has negative position`);
+        if (!onGrid(rect.x) || !onGrid(rect.y)) warnings.push(`vertex ${id} position should align to the 10px grid`);
+        if (Number.isFinite(pageWidth) && rect.x + rect.w > pageWidth) warnings.push(`vertex ${id} extends beyond pageWidth ${pageWidth}`);
+        if (Number.isFinite(pageHeight) && rect.y + rect.h > pageHeight) warnings.push(`vertex ${id} extends beyond pageHeight ${pageHeight}`);
       }
     }
   }
@@ -119,6 +151,32 @@ function styleHas(style = "", key, expected) {
   });
 }
 
+function styleNumber(style = "", key) {
+  for (const part of style.split(";")) {
+    const [partKey, value] = part.split("=", 2);
+    if (partKey === key) return Number(value);
+  }
+  return NaN;
+}
+
+function styleValue(style = "", key) {
+  for (const part of style.split(";")) {
+    const [partKey, value] = part.split("=", 2);
+    if (partKey === key) return value ?? "";
+  }
+  return undefined;
+}
+
+function isSwimlane(style = "") {
+  return style.split(";").some((part) => part === "swimlane" || part === "shape=swimlane");
+}
+
+function isLikelyProcessNode(style = "") {
+  const shape = styleValue(style, "shape");
+  if (shape) return ["process", "rectangle", "rhombus", "terminator"].includes(shape);
+  return style.includes("rounded=1") || style.includes("whiteSpace=wrap");
+}
+
 function rectOf(geom) {
   return {
     x: Number(geom.x ?? 0),
@@ -126,6 +184,10 @@ function rectOf(geom) {
     w: Number(geom.width),
     h: Number(geom.height),
   };
+}
+
+function onGrid(value, grid = 10) {
+  return Number.isFinite(value) && Math.abs(value / grid - Math.round(value / grid)) < 1e-9;
 }
 
 function overlaps(a, b) {

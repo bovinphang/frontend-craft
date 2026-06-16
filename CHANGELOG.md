@@ -9,6 +9,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 Project-facing release notes are maintained in English from 2.0.0 onward. Historical entries may preserve their original language.
 
+## [Unreleased]
+
+### Changed
+
+- **`fec-drawio-studio` quality workflow:** strengthened manual draw.io XML guidance for grid alignment, wrapping labels, `&#xa;` line breaks, readable font sizes, balanced containers, and named diagram patterns such as flowcharts, architecture, sequence, class, ERD, mindmap, and network topology.
+- **`diagram-lint` draw.io warnings:** now reports literal `\n` labels, missing wrapping/html styles, tiny fonts, off-grid vertices, page overflow, and overlap warnings so final delivery can use `--strict` as a stronger quality gate.
+
+### Added
+
+- **`drawio-export.mjs`:** new cross-platform draw.io desktop export helper with PATH/default-location detection, PNG/SVG/PDF options, dry-run JSON output, and install guidance when draw.io is missing.
+
 ## [2.7.0] - 2026-06-10
 
 ### Added

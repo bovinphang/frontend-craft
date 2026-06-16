@@ -8,6 +8,17 @@
 
 自 **2.0.0** 起，面向发布的说明以英文 `CHANGELOG.md` 为权威来源；历史条目可能保留最初撰写语言。
 
+## [Unreleased]
+
+### 变更
+
+- **`fec-drawio-studio` 质量工作流**：强化手写 draw.io XML 指南，覆盖网格对齐、标签换行、`&#xa;` 换行、可读字号、容器留白平衡，以及 flowchart、architecture、sequence、class、ERD、mindmap、network topology 等图表模式。
+- **`diagram-lint` draw.io warning**：新增 literal `\n` 标签、缺少 wrapping/html 样式、字号过小、顶点未对齐网格、页面越界与重叠 warning，最终交付可用 `--strict` 作为更强质量门。
+
+### 新增
+
+- **`drawio-export.mjs`**：新增跨平台 draw.io desktop 导出 helper，支持 PATH / 默认安装位置探测、PNG/SVG/PDF 参数、dry-run JSON 输出，并在缺少 draw.io 时给出安装建议。
+
 ## [2.7.0] - 2026-06-10
 
 ### 新增

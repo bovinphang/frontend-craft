@@ -10,6 +10,23 @@
 | Technical architecture | HTML `architecture` IR, Mermaid flowchart, C4/Structurizr, SVG/HTML, draw.io | Layer grouping, trust boundaries, data flow direction, legends. |
 | ML / deep learning | SVG/HTML/canvas | Tensor shapes, layer order, branch joins, repeated blocks, annotations. |
 | Flowchart | Mermaid flowchart, SVG | Decision labels, terminal states, loop-back readability, connector spacing. |
+| Live session sketch | Interactive local browser server | Incremental reveal, session isolation, readable labels after manual dragging, export handoff. |
+
+## Interactive live diagrams
+
+Use the live route when the diagram is part of the conversation and the user benefits from seeing structure appear as it is generated. It is best for flow sketches, architecture drafts, short mind-map-like decompositions, and quick walkthroughs that may be dragged or relabeled before export.
+
+Run the local server with:
+
+```bash
+node skills/fec-image-generation/scripts/interactive-diagram-server.mjs --port 6100
+```
+
+Open `http://127.0.0.1:6100/?s=meaningful-session-id`, then send commands to `/cmd?s=meaningful-session-id`. Always use a unique session id for each diagram. Start with `init`, add nodes before edges, and keep each command small enough that the browser can update incrementally.
+
+Supported commands are `init`, `node`, `edge`, `container`, `remove`, `clear`, `layout`, `title`, and `export`. Supported node types are `terminal`, `terminal-end`, `process`, `decision`, `service`, `database`, `success`, `error`, and `container`.
+
+Use `/export?s=session-id&format=json`, `svg`, or `drawio` for server-side source handoff. Use the browser toolbar for PNG export. If the local server cannot start, use Mermaid, SVG, or HTML technical diagrams instead of blocking the user.
 
 ## Minimum source manifest
 
