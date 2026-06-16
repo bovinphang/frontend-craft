@@ -10,6 +10,23 @@
 | 技术架构 | HTML `architecture` IR、Mermaid flowchart、C4/Structurizr、SVG/HTML、draw.io | 分层分组、信任边界、数据流方向、图例。 |
 | ML / 深度学习 | SVG/HTML/canvas | tensor shape、层顺序、分支汇合、重复块、注释。 |
 | 流程图 | Mermaid flowchart、SVG | 决策标签、终止状态、回环可读性、连接线间距。 |
+| 会话实时草图 | 本地交互式浏览器服务 | 增量呈现、session 隔离、拖拽后的标签可读性、导出交接。 |
+
+## 交互式实时图表
+
+当图表本身是对话的一部分，并且用户能从“边生成边看见结构出现”中受益时，使用实时路线。它适合流程草图、架构初稿、简短思维导图式拆解，以及需要先拖拽或改标签再导出的快速讲解图。
+
+启动本地服务：
+
+```bash
+node skills/fec-image-generation/scripts/interactive-diagram-server.mjs --port 6100
+```
+
+打开 `http://127.0.0.1:6100/?s=meaningful-session-id`，再向 `/cmd?s=meaningful-session-id` 发送命令。每张图都必须使用唯一 session id。先发送 `init`，再添加节点，最后添加连线；每条命令尽量小，让浏览器能持续增量更新。
+
+支持的命令包括 `init`、`node`、`edge`、`container`、`remove`、`clear`、`layout`、`title` 和 `export`。支持的节点类型包括 `terminal`、`terminal-end`、`process`、`decision`、`service`、`database`、`success`、`error` 和 `container`。
+
+服务端导出可用 `/export?s=session-id&format=json`、`svg` 或 `drawio`。PNG 导出使用浏览器工具栏。如果本地服务无法启动，不要阻塞用户，改用 Mermaid、SVG 或 HTML technical diagrams。
 
 ## 最小源清单
 

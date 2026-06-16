@@ -1,7 +1,8 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { spawnSync } from "node:child_process";
+import { spawn, spawnSync, type ChildProcess } from "node:child_process";
 import fs from "node:fs";
+import http from "node:http";
 import os from "node:os";
 import path from "node:path";
 import zlib from "node:zlib";
@@ -10,6 +11,59 @@ import { resolvePluginRoot } from "../../src/install/shared/resolve-plugin-root.
 const root = resolvePluginRoot(import.meta.url);
 const script = path.join(root, "skills", "fec-image-generation", "scripts", "png-qa.mjs");
 const renderScript = path.join(root, "skills", "fec-image-generation", "scripts", "tech-diagram-render.mjs");
+const interactiveScript = path.join(root, "skills", "fec-image-generation", "scripts", "interactive-diagram-server.mjs");
+
+test("interactive-diagram-server starts, serves HTML, isolates sessions, and exports JSON", async () => {
+  const server = await startInteractiveServer();
+  try {
+    const html = await httpRequest(server.port, "GET", "/?s=server-test");
+    assert.equal(html.status, 200);
+    assert.match(html.body, /frontend-craft Interactive Diagram/);
+    assert.match(html.body, /EventSource\(`\/events\?s=/);
+
+    const sessionA = `a-${Date.now()}`;
+    const sessionB = `b-${Date.now()}`;
+
+    assert.equal((await postCommand(server.port, sessionA, { cmd: "init", title: "A", direction: "TB" })).status, 200);
+    assert.equal((await postCommand(server.port, sessionA, { cmd: "node", id: "start", label: "Start", type: "terminal" })).status, 200);
+    assert.equal((await postCommand(server.port, sessionA, { cmd: "node", id: "done", label: "Done", type: "success" })).status, 200);
+    assert.equal((await postCommand(server.port, sessionA, { cmd: "edge", from: "start", to: "done", label: "next" })).status, 200);
+    assert.equal((await postCommand(server.port, sessionB, { cmd: "init", title: "B", direction: "LR" })).status, 200);
+    assert.equal((await postCommand(server.port, sessionB, { cmd: "node", id: "solo", label: "Solo", type: "process" })).status, 200);
+
+    const stateA = JSON.parse((await httpRequest(server.port, "GET", `/state?s=${sessionA}`)).body) as Array<{ cmd: string }>;
+    const stateB = JSON.parse((await httpRequest(server.port, "GET", `/state?s=${sessionB}`)).body) as Array<{ cmd: string }>;
+    assert.equal(stateA.length, 4);
+    assert.equal(stateB.length, 2);
+
+    const exported = JSON.parse((await httpRequest(server.port, "GET", `/export?s=${sessionA}&format=json`)).body) as {
+      ok: boolean;
+      graph: { title: string; nodes: Array<{ id: string }>; edges: Array<{ from: string; to: string }> };
+    };
+    assert.equal(exported.ok, true);
+    assert.equal(exported.graph.title, "A");
+    assert.deepEqual(exported.graph.nodes.map((node) => node.id).sort(), ["done", "start"]);
+    assert.deepEqual(exported.graph.edges.map((edge) => `${edge.from}->${edge.to}`), ["start->done"]);
+
+    const cleared = await httpRequest(server.port, "POST", `/clear?s=${sessionA}`, "");
+    assert.equal(cleared.status, 200);
+    const emptyA = JSON.parse((await httpRequest(server.port, "GET", `/state?s=${sessionA}`)).body) as unknown[];
+    assert.deepEqual(emptyA, []);
+  } finally {
+    server.child.kill();
+  }
+});
+
+test("interactive-diagram-server rejects malformed command JSON", async () => {
+  const server = await startInteractiveServer();
+  try {
+    const result = await httpRequest(server.port, "POST", "/cmd?s=bad-json", "{not-json");
+    assert.equal(result.status, 400);
+    assert.match(result.body, /valid JSON/);
+  } finally {
+    server.child.kill();
+  }
+});
 
 test("png-qa reports parseable json for a normal PNG", () => {
   const tmp = fs.mkdtempSync(path.join(os.tmpdir(), "fec-image-generation-"));
@@ -399,6 +453,77 @@ test("tech-diagram-render reports architecture validation errors", () => {
     if (sample.expectedStderr) assert.match(result.stderr, sample.expectedStderr);
   }
 });
+
+async function startInteractiveServer(): Promise<{ child: ChildProcess; port: number }> {
+  const child = spawn(process.execPath, [interactiveScript, "--port", "0"], {
+    cwd: root,
+    stdio: ["ignore", "pipe", "pipe"],
+  });
+
+  const port = await new Promise<number>((resolve, reject) => {
+    let stdout = "";
+    let stderr = "";
+    const timeout = setTimeout(() => {
+      reject(new Error(`interactive server did not start. stdout=${stdout} stderr=${stderr}`));
+    }, 5000);
+
+    child.stdout.on("data", (chunk: Buffer) => {
+      stdout += chunk.toString("utf8");
+      const line = stdout.split(/\r?\n/).find((candidate) => candidate.trim().startsWith("{"));
+      if (!line) return;
+      try {
+        const status = JSON.parse(line) as { port: number };
+        clearTimeout(timeout);
+        resolve(status.port);
+      } catch {
+        // Wait for a complete JSON line.
+      }
+    });
+    child.stderr.on("data", (chunk: Buffer) => {
+      stderr += chunk.toString("utf8");
+    });
+    child.on("error", (error) => {
+      clearTimeout(timeout);
+      reject(error);
+    });
+    child.on("exit", (code) => {
+      if (code !== null && code !== 0) {
+        clearTimeout(timeout);
+        reject(new Error(`interactive server exited with ${code}. stdout=${stdout} stderr=${stderr}`));
+      }
+    });
+  });
+
+  return { child, port };
+}
+
+function postCommand(port: number, session: string, command: Record<string, unknown>): Promise<{ status: number; body: string }> {
+  return httpRequest(port, "POST", `/cmd?s=${encodeURIComponent(session)}`, JSON.stringify(command));
+}
+
+function httpRequest(port: number, method: string, requestPath: string, body?: string): Promise<{ status: number; body: string }> {
+  return new Promise((resolve, reject) => {
+    const request = http.request(
+      {
+        host: "127.0.0.1",
+        port,
+        path: requestPath,
+        method,
+        headers: body === undefined ? undefined : { "Content-Type": "application/json", "Content-Length": Buffer.byteLength(body) },
+      },
+      (response) => {
+        const chunks: Buffer[] = [];
+        response.on("data", (chunk: Buffer) => chunks.push(chunk));
+        response.on("end", () => {
+          resolve({ status: response.statusCode ?? 0, body: Buffer.concat(chunks).toString("utf8") });
+        });
+      },
+    );
+    request.on("error", reject);
+    if (body !== undefined) request.write(body);
+    request.end();
+  });
+}
 
 type Rgba = [number, number, number, number];
 

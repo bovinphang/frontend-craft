@@ -14,6 +14,7 @@ Generate or edit diagrams, visual assets, and image workflows, and perform revie
 1. Determine product type
    - When accuracy of text, structure, and connections is a priority, use Mermaid, SVG, HTML/CSS, canvas, or a graphics library to generate editable sources and then export as PNG.
    - Use HTML technical diagrams when the user needs a browser-ready single file with dark/light theme support for architecture, workflow, sequence, data-flow, lifecycle, runbook, state-machine, or PII/data-lineage diagrams.
+   - Use the interactive live diagram route when the user benefits from watching nodes and edges appear incrementally in a local browser, or when they want to drag, relabel, remove, zoom, and export a quick diagram during the session.
    - When aesthetics, texture, photos, illustrations, comics, product images or brand atmosphere are priorities, use image generation or editing tools, and then save the final assets to the project or report directory.
 
 2. Clarify inputs and constraints
@@ -25,6 +26,12 @@ Generate or edit diagrams, visual assets, and image workflows, and perform revie
    - For themed browser-ready architecture, workflow, sequence, data-flow and lifecycle diagrams, read [html-technical-diagrams.md](references/html-technical-diagrams.md), then render JSON IR with [tech-diagram-render.mjs](scripts/tech-diagram-render.mjs):
      ```bash
      node skills/fec-image-generation/scripts/tech-diagram-render.mjs --input diagram.json --output diagram.html --type architecture --manifest diagram.layout.json
+     ```
+   - For live interactive sketches, start [interactive-diagram-server.mjs](scripts/interactive-diagram-server.mjs), open the served [interactive-diagram.html](assets/interactive-diagram.html) page with a unique `?s=session-id`, then POST small JSON commands to `/cmd?s=session-id`:
+     ```bash
+     node skills/fec-image-generation/scripts/interactive-diagram-server.mjs --port 6100
+     curl -s "http://127.0.0.1:6100/cmd?s=checkout-flow" -d '{"cmd":"init","title":"Checkout Flow","direction":"TB"}'
+     curl -s "http://127.0.0.1:6100/cmd?s=checkout-flow" -d '{"cmd":"node","id":"cart","label":"Review cart","type":"process"}'
      ```
    - Use the draw.io studio workflow instead when the priority is editable `.drawio` source, official diagrams.net shapes, or long-term manual editing.
    - Posters, UI mockups, product graphics, infographics, academic graphics, comics, avatars, storyboards, brand boards and image editing, press [artifact-routing.md](references/artifact-routing.md) to choose generate, edit or hybrid routing.
@@ -52,6 +59,7 @@ Generate or edit diagrams, visual assets, and image workflows, and perform revie
 
 - Text-intensive images should not be generated solely from bitmap models; editable structured sources must be retained.
 - HTML technical diagrams must keep the JSON source and generated HTML; exported PNG/SVG files are delivery artifacts, not the source of truth. Use `.drawio` instead when official vendor icons or long-term manual editing are the priority.
+- Interactive live diagrams are session-time previews. Save JSON/SVG/PNG exports when the diagram becomes a deliverable, and switch to HTML technical diagrams or `.drawio` when long-term source ownership matters.
 - Do not treat screenshots, fake data, or placeholder images as final product images unless the user explicitly requests a concept draft.
 - The original image is not directly overwritten; the editing workflow outputs a new file by default.
 - Readable labels, line attributions, legends, axes, and accessible alternative descriptions are not sacrificed for aesthetics.
