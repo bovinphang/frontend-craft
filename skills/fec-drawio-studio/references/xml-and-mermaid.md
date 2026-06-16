@@ -16,6 +16,8 @@ Use this reference to choose the lightest editable diagram source that still mee
 - Put child nodes inside their visual container by setting `parent` to the container id and using coordinates relative to that container.
 - Put edges that cross container boundaries at `parent="1"` so they are not clipped by a lane or group.
 - Every edge must contain `<mxGeometry relative="1" as="geometry"/>`; do not use self-closing edge cells.
+- Use `&#xa;` for forced line breaks in `value` attributes. Literal `\n` renders as text in draw.io and should be treated as a quality issue.
+- Keep manually placed vertices on a 10px grid, within `pageWidth` / `pageHeight`, and with stable dimensions so hover, labels and exports do not shift the layout.
 
 ## Containers And Process Layout
 
@@ -35,6 +37,7 @@ Use this reference to choose the lightest editable diagram source that still mee
 
 - Match diagram label language to the user's language.
 - Add `html=1` whenever labels contain HTML markup or escaped `<br>` formatting.
+- Include `whiteSpace=wrap;html=1` on normal shape labels so long text wraps consistently.
 - Escape XML attribute values: `&`, `<`, `>`, and `"` must be entities.
 - Prefer adaptive colors and simple palettes; specify dark-mode overrides only when automatic inversion makes labels or shapes unclear.
 
@@ -51,4 +54,4 @@ Use this reference to choose the lightest editable diagram source that still mee
 - Do not leave raw ampersands or angle brackets inside attribute values.
 - Do not use duplicate ids.
 - Do not leave edges pointing to missing source or target cells.
-- Run `diagram-lint.mjs` before final handoff.
+- Run `diagram-lint.mjs` before final handoff. Use `--strict` when the exported artifact is a final deliverable so warnings such as overlaps, literal line breaks, missing wrapping styles, tiny fonts, grid drift and page overflow block the handoff.

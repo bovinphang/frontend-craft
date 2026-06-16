@@ -132,6 +132,129 @@ test("diagram-lint reports xml comments, missing roots, unescaped entities, and 
   });
 });
 
+test("diagram-lint reports layout and label quality warnings", () => {
+  withTempDir((dir) => {
+    const file = path.join(dir, "quality.drawio");
+    fs.writeFileSync(
+      file,
+      `<mxfile><diagram><mxGraphModel pageWidth="120" pageHeight="80"><root><mxCell id="0"/><mxCell id="1" parent="0"/><mxCell id="a" value="Line\\nBreak" vertex="1" parent="1" style="rounded=1;fontSize=10;"><mxGeometry x="13" y="20" width="120" height="70" as="geometry"/></mxCell></root></mxGraphModel></diagram></mxfile>`,
+    );
+
+    const report = JSON.parse(run("diagram-lint.mjs", [file, "--format", "json"])) as {
+      ok: boolean;
+      errors: string[];
+      warnings: string[];
+    };
+
+    assert.equal(report.ok, true);
+    assert.deepEqual(report.errors, []);
+    assert.ok(report.warnings.some((message) => /literal \\n/.test(message)));
+    assert.ok(report.warnings.some((message) => /whiteSpace=wrap/.test(message)));
+    assert.ok(report.warnings.some((message) => /html=1/.test(message)));
+    assert.ok(report.warnings.some((message) => /fontSize 10/.test(message)));
+    assert.ok(report.warnings.some((message) => /10px grid/.test(message)));
+    assert.ok(report.warnings.some((message) => /pageWidth 120/.test(message)));
+    assert.ok(report.warnings.some((message) => /pageHeight 80/.test(message)));
+  });
+});
+
+test("diagram-lint strict mode fails on overlap warnings", () => {
+  withTempDir((dir) => {
+    const file = path.join(dir, "overlap.drawio");
+    fs.writeFileSync(
+      file,
+      `<mxfile><diagram><mxGraphModel pageWidth="400" pageHeight="300"><root><mxCell id="0"/><mxCell id="1" parent="0"/><mxCell id="a" vertex="1" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fontSize=14;"><mxGeometry x="40" y="40" width="120" height="60" as="geometry"/></mxCell><mxCell id="b" vertex="1" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fontSize=14;"><mxGeometry x="100" y="60" width="120" height="60" as="geometry"/></mxCell></root></mxGraphModel></diagram></mxfile>`,
+    );
+
+    const result = spawnSync(process.execPath, [path.join(scriptsDir, "diagram-lint.mjs"), file, "--format", "json", "--strict"], {
+      encoding: "utf8",
+    });
+    assert.equal(result.status, 1);
+    const report = JSON.parse(result.stdout) as { ok: boolean; warnings: string[] };
+    assert.equal(report.ok, true);
+    assert.ok(report.warnings.some((message) => /overlap/.test(message)));
+  });
+});
+
+test("drawio-export dry-run returns command with export options", () => {
+  withTempDir((dir) => {
+    const input = path.join(dir, "diagram.drawio");
+    const output = path.join(dir, "diagram.png");
+    const fakeDrawio = path.join(dir, process.platform === "win32" ? "drawio.exe" : "drawio");
+    fs.writeFileSync(input, `<mxfile><diagram><mxGraphModel><root><mxCell id="0"/><mxCell id="1" parent="0"/></root></mxGraphModel></diagram></mxfile>`);
+    fs.writeFileSync(fakeDrawio, "");
+
+    const report = JSON.parse(
+      run("drawio-export.mjs", [
+        input,
+        "--drawio",
+        fakeDrawio,
+        "--format",
+        "png",
+        "--output",
+        output,
+        "--scale",
+        "2",
+        "--width",
+        "2000",
+        "--border",
+        "20",
+        "--dry-run",
+        "--json",
+      ]),
+    ) as { ok: boolean; command: string[]; output: string; format: string; dryRun: boolean };
+
+    assert.equal(report.ok, true);
+    assert.equal(report.command[0], path.resolve(fakeDrawio));
+    assert.deepEqual(report.command.slice(1), ["-x", "-f", "png", "-s", "2", "--width", "2000", "--border", "20", "-o", output, input]);
+    assert.equal(report.output, output);
+    assert.equal(report.format, "png");
+    assert.equal(report.dryRun, true);
+  });
+});
+
+test("drawio-export dry-run can discover drawio from PATH", () => {
+  withTempDir((dir) => {
+    const input = path.join(dir, "diagram.drawio");
+    const fakeDrawio = path.join(dir, process.platform === "win32" ? "drawio.exe" : "drawio");
+    fs.writeFileSync(input, `<mxfile><diagram><mxGraphModel><root><mxCell id="0"/><mxCell id="1" parent="0"/></root></mxGraphModel></diagram></mxfile>`);
+    fs.writeFileSync(fakeDrawio, "");
+
+    const report = JSON.parse(
+      run("drawio-export.mjs", [input, "--dry-run", "--json"], {
+        env: {
+          ...process.env,
+          PATH: dir,
+          Path: dir,
+          PATHEXT: ".EXE",
+          ProgramFiles: path.join(dir, "missing"),
+          LOCALAPPDATA: path.join(dir, "missing"),
+        },
+      }),
+    ) as { ok: boolean; command: string[] };
+
+    assert.equal(report.ok, true);
+    assert.equal(normalizeExecutablePath(report.command[0]), normalizeExecutablePath(path.resolve(fakeDrawio)));
+  });
+});
+
+test("drawio-export reports install guidance when CLI is missing", () => {
+  withTempDir((dir) => {
+    const input = path.join(dir, "diagram.drawio");
+    const missing = path.join(dir, "missing-drawio");
+    fs.writeFileSync(input, `<mxfile><diagram><mxGraphModel><root><mxCell id="0"/><mxCell id="1" parent="0"/></root></mxGraphModel></diagram></mxfile>`);
+
+    const result = spawnSync(process.execPath, [path.join(scriptsDir, "drawio-export.mjs"), input, "--drawio", missing, "--dry-run", "--json"], {
+      encoding: "utf8",
+    });
+
+    assert.equal(result.status, 1);
+    assert.equal(result.stdout, "");
+    assert.match(result.stderr, /draw\.io desktop CLI was not found/);
+    assert.match(result.stderr, /winget install JGraph\.Draw/);
+  });
+});
+
 function readCreatePayload(url: string): { type: string; compressed: boolean; data: string } {
   const encoded = url.split("#create=")[1];
   assert.ok(encoded);
@@ -141,6 +264,10 @@ function readCreatePayload(url: string): { type: string; compressed: boolean; da
 function inflateCreatePayload(url: string): string {
   const payload = readCreatePayload(url);
   return decodeURIComponent(zlib.inflateRawSync(Buffer.from(payload.data, "base64")).toString("utf8"));
+}
+
+function normalizeExecutablePath(value: string): string {
+  return process.platform === "win32" ? value.toLowerCase() : value;
 }
 
 test("png-embed-fix appends missing IEND tail and is idempotent", () => {
