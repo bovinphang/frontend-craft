@@ -1,6 +1,6 @@
 ---
 name: fec-image-generation
-description: Use when generating or editing diagrams, charts, visual assets, posters, UI mockups, product images, infographics, academic figures, comics, avatars, storyboards, brand boards, or image-edit workflows, especially when exported PNGs need visual QA and bounded self-repair. Prefer deterministic Mermaid/SVG/HTML/canvas sources for text-heavy diagrams; use HTML technical diagrams for themed browser-ready architecture, workflow, sequence, data-flow, lifecycle, runbook, PII/data-lineage, and state-machine diagrams; do not use for ordinary UI polish without generated imagery. Chinese triggers include Picture generation, image editing, diagram generation, architecture diagram, workflow diagram, data flow, lifecycle diagram, state machine, ER diagram, UML, sequence diagram, poster, UI mockup, product diagram, information diagram, academic diagram, comics, avatar, storyboard, brand board, PNG self-inspection, automatic repair.
+description: Use when generating or editing diagrams, charts, visual assets, posters, UI mockups, product images, infographics, academic figures, comics, avatars, storyboards, brand boards, or image-edit workflows, especially when exported PNGs need visual QA and bounded self-repair. Prefer deterministic Mermaid/SVG/HTML/canvas sources for text-heavy diagrams; use HTML technical diagrams for browser-ready system blueprints, architecture, deployment topology, agent runtime, memory flow, before-after architecture, workflow, sequence, data-flow, lifecycle, runbook, PII/data-lineage, and state-machine diagrams. Do not use for ordinary UI polish without generated imagery.
 ---
 
 # Image generation and chart workflow
@@ -13,7 +13,7 @@ Generate or edit diagrams, visual assets, and image workflows, and perform revie
 
 1. Determine product type
    - When accuracy of text, structure, and connections is a priority, use Mermaid, SVG, HTML/CSS, canvas, or a graphics library to generate editable sources and then export as PNG.
-   - Use HTML technical diagrams when the user needs a browser-ready single file with dark/light theme support for architecture, workflow, sequence, data-flow, lifecycle, runbook, state-machine, or PII/data-lineage diagrams.
+   - Use HTML technical diagrams when the user needs a browser-ready single file with dark/light theme support for system blueprints, architecture, deployment topology, agent runtime, memory flow, before-after architecture, workflow, sequence, data-flow, lifecycle, runbook, state-machine, or PII/data-lineage diagrams.
    - Use the HTML `workflow` route for process maps, approvals, automation runs, exception paths, and cyclical operating flows that need readable start/end, decision, actor, numbered-step, and summary treatment without requiring diagrams.net.
    - Use the interactive live diagram route when the user benefits from watching nodes and edges appear incrementally in a local browser, or when they want to drag, relabel, remove, zoom, and export a quick diagram during the session.
    - When aesthetics, texture, photos, illustrations, comics, product images or brand atmosphere are priorities, use image generation or editing tools, and then save the final assets to the project or report directory.
@@ -24,9 +24,14 @@ Generate or edit diagrams, visual assets, and image workflows, and perform revie
 
 3. Select Generate Route
    - ER diagrams, UML class diagrams, sequence diagrams, technical architecture diagrams, ML/deep learning, flow charts, etc., give priority to creating structured sources according to [diagram-workflows.md](references/diagram-workflows.md).
-   - For themed browser-ready architecture, workflow, sequence, data-flow and lifecycle diagrams, read [html-technical-diagrams.md](references/html-technical-diagrams.md), then render JSON IR with [tech-diagram-render.mjs](scripts/tech-diagram-render.mjs). For process workflows, model participants as `lanes`, ordered actions as `nodes`, and exception or loop paths as `edges` with optional `waypoints`:
+   - For themed browser-ready system blueprints, architecture, workflow, sequence, data-flow and lifecycle diagrams, read [html-technical-diagrams.md](references/html-technical-diagrams.md), then render JSON IR with [tech-diagram-render.mjs](scripts/tech-diagram-render.mjs). For process workflows, model participants as `lanes`, ordered actions as `nodes`, and exception or loop paths as `edges` with optional `waypoints`:
      ```bash
      node skills/fec-image-generation/scripts/tech-diagram-render.mjs --input diagram.json --output diagram.html --type architecture --manifest diagram.layout.json
+     ```
+   - When README-friendly SVG, PNG, JPG, or JPEG artifacts are needed from generated HTML/SVG sources, export with [export-diagram.mjs](scripts/export-diagram.mjs):
+     ```bash
+     node skills/fec-image-generation/scripts/export-diagram.mjs --input diagram.html --format svg
+     node skills/fec-image-generation/scripts/export-diagram.mjs --input diagram.html --format png --output diagram.png --scale 2
      ```
    - For live interactive sketches, start [interactive-diagram-server.mjs](scripts/interactive-diagram-server.mjs), open the served [interactive-diagram.html](assets/interactive-diagram.html) page with a unique `?s=session-id`, then POST small JSON commands to `/cmd?s=session-id`:
      ```bash
@@ -59,7 +64,7 @@ Generate or edit diagrams, visual assets, and image workflows, and perform revie
 ## Constraints
 
 - Text-intensive images should not be generated solely from bitmap models; editable structured sources must be retained.
-- HTML technical diagrams must keep the JSON source and generated HTML; exported PNG/SVG files are delivery artifacts, not the source of truth. Use `.drawio` instead when official vendor icons or long-term manual editing are the priority.
+- HTML technical diagrams must keep the JSON source and generated HTML; exported PNG/SVG/JPG files are delivery artifacts, not the source of truth. Use `.drawio` instead when official vendor icons or long-term manual editing are the priority.
 - Interactive live diagrams are session-time previews. Save JSON/SVG/PNG exports when the diagram becomes a deliverable, and switch to HTML technical diagrams or `.drawio` when long-term source ownership matters.
 - Do not treat screenshots, fake data, or placeholder images as final product images unless the user explicitly requests a concept draft.
 - The original image is not directly overwritten; the editing workflow outputs a new file by default.

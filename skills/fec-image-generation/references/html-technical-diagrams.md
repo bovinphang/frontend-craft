@@ -13,13 +13,41 @@ This route complements, but does not replace, other diagram sources:
 
 ## Supported Diagram Intents
 
-- `architecture`: system topology, cloud regions, trust boundaries, clients, gateways, services, data stores, event buses, auth flows, and infrastructure overview diagrams.
+- `architecture`: system topology, system blueprints, deployment topology, cloud regions, trust boundaries, clients, gateways, services, data stores, event buses, auth flows, agent runtime maps, memory or recall overview diagrams, before/after architecture comparisons, and infrastructure overview diagrams.
 - `workflow`: ownership lanes, process maps, approval gates, automation runs, exception paths, cyclical loops, runbooks, CI/CD, incident response, tool calls, and request lifecycles.
 - `sequence`: participants over time, API call chains, cache fallback, auth checks, async traces, and return messages.
 - `dataflow`: sources, ingest, processing, storage, consumers, PII boundaries, governance, analytics, and lineage.
 - `lifecycle`: object states, terminal states, retries, waits, cancellation, timeout, deployment or order status transitions.
 
 Use the `architecture` mode for browser-ready overview diagrams with explicit coordinates. Use `fec-drawio-studio` instead when the priority is `.drawio` source, official vendor icons, diagrams.net manual editing, or complex auto-layout.
+
+## System Blueprint Workflow
+
+Use the architecture route for presentation-ready system blueprints, deployment topology, integration maps, agent runtime views, memory or recall maps, and before/after architecture comparisons. First extract a compact system model, then draw:
+
+- Entry surfaces: browsers, mobile clients, CLIs, webhooks, schedulers, or agent/session entry points.
+- Application layer: gateways, frontend apps, backend services, workers, orchestration, runtime hosts, and tool adapters.
+- Data layer: databases, object stores, caches, vector stores, queues, event buses, logs, and analytics stores.
+- External dependencies: identity providers, AI models, payment/email services, SaaS APIs, cloud services, design tools, or runtime connectors.
+- Identity and trust boundaries: auth, permissions, PII zones, tenant boundaries, private networks, secret stores, and policy checks.
+- Key flows: request/control flow, data flow, event flow, deployment flow, recall/memory flow, or before/after migration flow.
+
+Keep the first blueprint readable:
+
+- Show 4-10 primary nodes and collapse low-value files, classes, or endpoints into grouped nodes.
+- Use 1-3 group boundaries for layers, trust zones, runtime environments, or ownership domains.
+- Include a short title and subtitle that work when the file is shared outside the original conversation.
+- Use a legend or up to three summary cards for runtime, data, trust, risks, inputs, or outcomes.
+- Prefer semantic color roles over decorative styling, and split into multiple diagrams when connectors or labels become dense.
+
+For README or stakeholder handoff, keep the JSON IR and HTML as the editable source, then export SVG/PNG/JPG artifacts:
+
+```bash
+node skills/fec-image-generation/scripts/export-diagram.mjs --input docs/architecture/system-blueprint.html --format svg
+node skills/fec-image-generation/scripts/export-diagram.mjs --input docs/architecture/system-blueprint.html --format png --scale 2
+```
+
+Raster export uses an existing Chromium-family browser when available. If the environment cannot rasterize SVG, deliver the generated HTML/SVG and state that PNG/JPG export needs a local browser.
 
 ## JSON IR
 
@@ -180,4 +208,4 @@ Repair the source JSON or rendering dimensions rather than editing pixels:
 
 ## Delivery Notes
 
-Deliver the `.html` source together with any exported PNG/SVG requested by the user. Report the route used, source file, exported file, QA result, and any naming or domain assumptions that still need human confirmation.
+Deliver the `.html` source together with any exported SVG/PNG/JPG requested by the user. Report the route used, source file, exported file, QA result, and any naming or domain assumptions that still need human confirmation.

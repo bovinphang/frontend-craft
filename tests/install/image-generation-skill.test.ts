@@ -12,6 +12,7 @@ const root = resolvePluginRoot(import.meta.url);
 const script = path.join(root, "skills", "fec-image-generation", "scripts", "png-qa.mjs");
 const renderScript = path.join(root, "skills", "fec-image-generation", "scripts", "tech-diagram-render.mjs");
 const interactiveScript = path.join(root, "skills", "fec-image-generation", "scripts", "interactive-diagram-server.mjs");
+const exportScript = path.join(root, "skills", "fec-image-generation", "scripts", "export-diagram.mjs");
 
 test("interactive-diagram-server starts, serves HTML, isolates sessions, and exports JSON", async () => {
   const server = await startInteractiveServer();
@@ -516,6 +517,79 @@ test("tech-diagram-render reports architecture validation errors", () => {
     assert.equal(result.status, 1, sample.name);
     if (sample.expectedStdout) assert.match(result.stdout, sample.expectedStdout);
     if (sample.expectedStderr) assert.match(result.stderr, sample.expectedStderr);
+  }
+});
+
+test("export-diagram extracts inline SVG from HTML and uses default output path", () => {
+  const tmp = fs.mkdtempSync(path.join(os.tmpdir(), "fec-diagram-export-"));
+  const html = path.join(tmp, "blueprint.html");
+  const output = path.join(tmp, "blueprint.svg");
+  fs.writeFileSync(
+    html,
+    `<!doctype html><html><body><main><svg width="120" height="80" viewBox="0 0 120 80"><rect width="120" height="80" fill="#0f172a"/><text x="16" y="42">Blueprint</text></svg></main></body></html>`,
+    "utf8",
+  );
+
+  const result = spawnSync(process.execPath, [exportScript, "--input", html, "--format", "svg"], {
+    cwd: root,
+    encoding: "utf8",
+  });
+
+  assert.equal(result.status, 0, result.stderr);
+  assert.ok(fs.existsSync(output));
+  const svg = fs.readFileSync(output, "utf8");
+  assert.match(svg, /^<svg /);
+  assert.match(svg, /Blueprint/);
+});
+
+test("export-diagram accepts SVG input and explicit output path", () => {
+  const tmp = fs.mkdtempSync(path.join(os.tmpdir(), "fec-diagram-export-"));
+  const input = path.join(tmp, "source.svg");
+  const output = path.join(tmp, "readme-diagram.svg");
+  fs.writeFileSync(input, `<svg width="64" height="64"><circle cx="32" cy="32" r="20"/></svg>`, "utf8");
+
+  const result = spawnSync(process.execPath, [exportScript, "--input", input, "--format", "svg", "--output", output], {
+    cwd: root,
+    encoding: "utf8",
+  });
+
+  assert.equal(result.status, 0, result.stderr);
+  assert.equal(fs.readFileSync(output, "utf8").trim(), `<svg width="64" height="64"><circle cx="32" cy="32" r="20"/></svg>`);
+});
+
+test("export-diagram fails clearly when HTML has no inline SVG", () => {
+  const tmp = fs.mkdtempSync(path.join(os.tmpdir(), "fec-diagram-export-"));
+  const html = path.join(tmp, "empty.html");
+  fs.writeFileSync(html, `<!doctype html><html><body>No diagram</body></html>`, "utf8");
+
+  const result = spawnSync(process.execPath, [exportScript, "--input", html, "--format", "svg"], {
+    cwd: root,
+    encoding: "utf8",
+  });
+
+  assert.equal(result.status, 1);
+  assert.match(result.stderr, /does not contain an inline <svg>/);
+});
+
+test("export-diagram covers PNG and JPG raster paths with browser fallback errors", () => {
+  const tmp = fs.mkdtempSync(path.join(os.tmpdir(), "fec-diagram-export-"));
+  const input = path.join(tmp, "source.svg");
+  const png = path.join(tmp, "diagram.png");
+  const jpg = path.join(tmp, "diagram.jpg");
+  fs.writeFileSync(input, `<svg width="96" height="72" viewBox="0 0 96 72"><rect width="96" height="72" fill="#ffffff"/><circle cx="48" cy="36" r="18" fill="#3157d5"/></svg>`, "utf8");
+
+  for (const [format, output] of [["png", png], ["jpg", jpg]] as const) {
+    const result = spawnSync(process.execPath, [exportScript, "--input", input, "--format", format, "--output", output, "--scale", "1", "--background", "#ffffff"], {
+      cwd: root,
+      encoding: "utf8",
+    });
+
+    if (result.status === 0) {
+      assert.ok(fs.statSync(output).size > 0, `${format} export should create a non-empty file`);
+    } else {
+      assert.match(result.stderr, /requires a local Chromium browser|Browser raster export failed|JPG\/JPEG export needs a local image converter/);
+      assert.equal(fs.existsSync(output), false);
+    }
   }
 });
 
