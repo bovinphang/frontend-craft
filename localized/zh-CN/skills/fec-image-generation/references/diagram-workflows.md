@@ -9,7 +9,7 @@
 | 序列图 | Mermaid sequence、PlantUML | lifeline 顺序、activation 范围、异步/返回箭头、消息文本。 |
 | 技术架构 | HTML `architecture` IR、Mermaid flowchart、C4/Structurizr、SVG/HTML、draw.io | 分层分组、信任边界、数据流方向、图例。 |
 | ML / 深度学习 | SVG/HTML/canvas | tensor shape、层顺序、分支汇合、重复块、注释。 |
-| 流程图 | Mermaid flowchart、SVG | 决策标签、终止状态、回环可读性、连接线间距。 |
+| 流程图 / 流程工作流 | HTML `workflow` IR、Mermaid flowchart、SVG、draw.io | 决策标签、终止状态、回环可读性、连接线间距、异常路径清晰度。 |
 | 会话实时草图 | 本地交互式浏览器服务 | 增量呈现、session 隔离、拖拽后的标签可读性、导出交接。 |
 
 ## 交互式实时图表
@@ -58,6 +58,10 @@ node skills/fec-image-generation/scripts/interactive-diagram-server.mjs --port 6
 ## 架构图
 
 用户需要浏览器可打开的单文件、显式系统拓扑、分组、信任边界、数据流和 PNG QA 时，优先使用 HTML `architecture` IR。需要官方厂商图形、diagrams.net 编辑或长期人工维护时，使用 draw.io。希望图主要留在 Markdown 或纯文本技术文档中时，使用 Mermaid/C4。
+
+## 流程工作流
+
+用户需要浏览器可打开的流程地图、审批流、自动化 runbook、事故流程或循环运营流程，并且需要泳道、步骤编号、参与者、决策、异常路径和摘要卡片时，优先使用 HTML `workflow` IR。流程必须作为 `.drawio` 文件长期维护、需要 diagrams.net 编辑、官方形状库、手工泳道维护或交付后由利益相关方继续修改时，改用 `fec-drawio-studio`。
 
 ## 导出指引
 

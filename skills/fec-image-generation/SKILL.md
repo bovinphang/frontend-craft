@@ -14,6 +14,7 @@ Generate or edit diagrams, visual assets, and image workflows, and perform revie
 1. Determine product type
    - When accuracy of text, structure, and connections is a priority, use Mermaid, SVG, HTML/CSS, canvas, or a graphics library to generate editable sources and then export as PNG.
    - Use HTML technical diagrams when the user needs a browser-ready single file with dark/light theme support for architecture, workflow, sequence, data-flow, lifecycle, runbook, state-machine, or PII/data-lineage diagrams.
+   - Use the HTML `workflow` route for process maps, approvals, automation runs, exception paths, and cyclical operating flows that need readable start/end, decision, actor, numbered-step, and summary treatment without requiring diagrams.net.
    - Use the interactive live diagram route when the user benefits from watching nodes and edges appear incrementally in a local browser, or when they want to drag, relabel, remove, zoom, and export a quick diagram during the session.
    - When aesthetics, texture, photos, illustrations, comics, product images or brand atmosphere are priorities, use image generation or editing tools, and then save the final assets to the project or report directory.
 
@@ -23,7 +24,7 @@ Generate or edit diagrams, visual assets, and image workflows, and perform revie
 
 3. Select Generate Route
    - ER diagrams, UML class diagrams, sequence diagrams, technical architecture diagrams, ML/deep learning, flow charts, etc., give priority to creating structured sources according to [diagram-workflows.md](references/diagram-workflows.md).
-   - For themed browser-ready architecture, workflow, sequence, data-flow and lifecycle diagrams, read [html-technical-diagrams.md](references/html-technical-diagrams.md), then render JSON IR with [tech-diagram-render.mjs](scripts/tech-diagram-render.mjs):
+   - For themed browser-ready architecture, workflow, sequence, data-flow and lifecycle diagrams, read [html-technical-diagrams.md](references/html-technical-diagrams.md), then render JSON IR with [tech-diagram-render.mjs](scripts/tech-diagram-render.mjs). For process workflows, model participants as `lanes`, ordered actions as `nodes`, and exception or loop paths as `edges` with optional `waypoints`:
      ```bash
      node skills/fec-image-generation/scripts/tech-diagram-render.mjs --input diagram.json --output diagram.html --type architecture --manifest diagram.layout.json
      ```

@@ -14,7 +14,7 @@
 ## 支持的图表意图
 
 - `architecture`：系统拓扑、云区域、信任边界、客户端、网关、服务、数据存储、事件总线、认证流和基础设施总览。
-- `workflow`：职责泳道、审批门禁、runbook、CI/CD、事故响应、工具调用和请求生命周期。
+- `workflow`：职责泳道、流程地图、审批门禁、自动化运行、异常路径、循环流程、runbook、CI/CD、事故响应、工具调用和请求生命周期。
 - `sequence`：参与者随时间交互、API 调用链、缓存回退、鉴权检查、异步链路和返回消息。
 - `dataflow`：来源、采集、处理、存储、消费者、PII 边界、治理、分析和血缘。
 - `lifecycle`：对象状态、终止状态、重试、等待、取消、超时、部署或订单状态流转。
@@ -39,12 +39,63 @@
 各模式最小字段：
 
 - `architecture`：`nodes`、`connections`；可选 `groups`、`legend`、`summary`。
-- `workflow`：`lanes`、`nodes`、`edges`。
+- `workflow`：`lanes`、`nodes`、`edges`；可选 `summary`。
 - `sequence`：`participants`、`messages`。
 - `dataflow`：`stages`、`nodes`、`flows`。
 - `lifecycle`：`lanes`、`states`、`transitions`。
 
 ID 必须以字母开头，只使用字母、数字、`_` 和 `-`。节点标签保持短小；较长说明放到图外文字或摘要卡片。
+
+## 流程工作流 IR
+
+`workflow` 模式适合有明确顺序的流程：它更关注职责、决策、分支和回环，而不是精确的基础设施拓扑。用 `lanes` 表示参与者或系统，用 `nodes` 表示步骤，用 `edges` 表示流转结果。节点仍使用显式 `col` 控制阅读顺序，不依赖隐藏的自动布局引擎。
+
+```json
+{
+  "schema_version": 1,
+  "diagram_type": "workflow",
+  "meta": {
+    "title": "Procurement Approval",
+    "subtitle": "Request to payment"
+  },
+  "lanes": [
+    { "id": "requester", "label": "Requester" },
+    { "id": "system", "label": "System" },
+    { "id": "manager", "label": "Manager" }
+  ],
+  "nodes": [
+    { "id": "start", "lane": "requester", "col": 0, "type": "start", "label": "Submit Request", "actor": "Employee" },
+    { "id": "classify", "lane": "system", "col": 1, "type": "active", "label": "Classify Spend", "actor": "Policy Engine", "sublabel": "auto rules" },
+    { "id": "review", "lane": "manager", "col": 2, "type": "decision", "label": "Approved?", "step": "A" },
+    { "id": "pay", "lane": "system", "col": 3, "type": "success", "label": "Issue Payment" },
+    { "id": "reject", "lane": "requester", "col": 3, "type": "failure", "label": "Return Request" }
+  ],
+  "edges": [
+    { "from": "start", "to": "classify", "label": "intake", "variant": "emphasis" },
+    { "from": "classify", "to": "review", "label": "policy result" },
+    { "from": "review", "to": "pay", "label": "yes", "variant": "emphasis" },
+    { "from": "review", "to": "reject", "label": "no", "variant": "return", "waypoints": [[650, 396], [520, 396]] }
+  ],
+  "summary": [
+    { "title": "Inputs", "type": "active", "items": ["Purchase request", "Policy threshold"] },
+    { "title": "Outcomes", "type": "success", "items": ["Payment issued", "Requester notified"] }
+  ]
+}
+```
+
+Workflow 节点字段：
+
+- `type`：流程语义使用 `start`、`active`、`waiting`、`decision`、`success`、`failure` 或 `external`。
+- `actor`：可选，显示在节点上方的简短负责人或系统标签。
+- `step`：可选，显示的步骤标记。未提供时，workflow 节点会自动获得顺序编号。
+- `sublabel`、`width`、`height` 和 `yOffset`：可选，用于提升密集泳道中的可读性。
+
+Workflow 连线字段：
+
+- `variant`：主路径使用 `emphasis`，回环和返工使用 `return` 或 `dashed`，只有信任或策略检查才使用 `security`。
+- `waypoints`：可选 `[x, y]` 点，用于异常路径、跨行连接或需要避开标签和节点的回环。
+
+`summary` 用于简短记录前置条件、输入/输出或工具等流程元信息。长说明放在 SVG 外，避免节点标签不可读。
 
 ## Architecture IR
 

@@ -197,6 +197,71 @@ test("tech-diagram-render creates workflow HTML and PNG QA manifest", () => {
   assert.equal(layout.connectors.length, 1);
 });
 
+test("tech-diagram-render creates process workflow nodes, summaries, waypoints, and offline HTML", () => {
+  const tmp = fs.mkdtempSync(path.join(os.tmpdir(), "fec-process-workflow-"));
+  const input = path.join(tmp, "process.json");
+  const output = path.join(tmp, "process.html");
+  const manifest = path.join(tmp, "process.layout.json");
+  fs.writeFileSync(
+    input,
+    JSON.stringify({
+      schema_version: 1,
+      diagram_type: "workflow",
+      meta: { title: "Procurement Approval", subtitle: "Request to payment" },
+      lanes: [
+        { id: "requester", label: "Requester" },
+        { id: "system", label: "System" },
+        { id: "manager", label: "Manager" },
+      ],
+      nodes: [
+        { id: "start", lane: "requester", col: 0, type: "start", label: "Submit Request", actor: "Employee" },
+        { id: "classify", lane: "system", col: 1, type: "active", label: "Classify Spend", actor: "Policy Engine", sublabel: "auto rules" },
+        { id: "review", lane: "manager", col: 2, type: "decision", label: "Approved?", step: "A" },
+        { id: "pay", lane: "system", col: 3, type: "success", label: "Issue Payment" },
+        { id: "reject", lane: "requester", col: 3, type: "failure", label: "Return Request" },
+      ],
+      edges: [
+        { from: "start", to: "classify", label: "intake", variant: "emphasis" },
+        { from: "classify", to: "review", label: "policy result" },
+        { from: "review", to: "pay", label: "yes", variant: "emphasis" },
+        { from: "review", to: "reject", label: "no", variant: "return", waypoints: [[650, 396], [520, 396]] },
+      ],
+      summary: [
+        { title: "Inputs", type: "active", items: ["Purchase request", "Policy threshold"] },
+        { title: "Outcomes", type: "success", items: ["Payment issued", "Requester notified"] },
+      ],
+    }),
+    "utf8",
+  );
+
+  const result = spawnSync(process.execPath, [renderScript, "--input", input, "--output", output, "--type", "workflow", "--manifest", manifest, "--format", "json"], {
+    cwd: root,
+    encoding: "utf8",
+  });
+
+  assert.equal(result.status, 0, result.stderr);
+  const report = JSON.parse(result.stdout) as { ok: boolean; nodes: number; connectors: number };
+  assert.equal(report.ok, true);
+  assert.equal(report.nodes, 5);
+  assert.equal(report.connectors, 4);
+  const html = fs.readFileSync(output, "utf8");
+  assert.match(html, /Procurement Approval/);
+  assert.match(html, /node-decision/);
+  assert.match(html, /class="step-badge"/);
+  assert.match(html, /Employee/);
+  assert.match(html, /Policy Engine/);
+  assert.match(html, /summary-grid/);
+  assert.match(html, /Purchase request/);
+  assert.doesNotMatch(html, /html2canvas/i);
+  assert.doesNotMatch(html, /jspdf/i);
+  assert.doesNotMatch(html, /cdn\.jsdelivr/i);
+  const layout = JSON.parse(fs.readFileSync(manifest, "utf8")) as { boxes: Array<{ id: string }>; connectors: Array<{ id: string; points: Array<[number, number]> }> };
+  assert.deepEqual(layout.boxes.map((box) => box.id).sort(), ["classify", "pay", "reject", "review", "start"]);
+  const rejection = layout.connectors.find((connector) => connector.id.startsWith("review-reject"));
+  assert.ok(rejection);
+  assert.deepEqual(rejection.points.slice(1, -1), [[650, 396], [520, 396]]);
+});
+
 test("tech-diagram-render creates architecture HTML, summary cards, legend, and PNG QA manifest", () => {
   const tmp = fs.mkdtempSync(path.join(os.tmpdir(), "fec-tech-diagram-"));
   const input = path.join(tmp, "architecture.json");

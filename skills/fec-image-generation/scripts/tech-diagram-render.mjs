@@ -221,6 +221,7 @@ function renderLaneDiagram(diagram, itemKey, edgeKey) {
   const lanes = requireObjectArray(diagram.lanes, "/lanes");
   const items = requireObjectArray(diagram[itemKey], `/${itemKey}`);
   const edges = requireObjectArray(diagram[edgeKey], `/${edgeKey}`);
+  const isWorkflow = itemKey === "nodes";
   const laneIds = new Set();
   for (const [index, lane] of lanes.entries()) {
     assertObject(lane, `/lanes/${index}`);
@@ -253,15 +254,20 @@ function renderLaneDiagram(diagram, itemKey, edgeKey) {
     const sublabel = typeof item.sublabel === "string" ? item.sublabel : "";
     const col = requireNumber(item, "col", `/${itemKey}/${index}/col`);
     const yOffset = typeof item.yOffset === "number" ? item.yOffset : 0;
+    const width = typeof item.width === "number" ? item.width : defaultWorkflowWidth(type, isWorkflow);
+    const height = typeof item.height === "number" ? item.height : defaultWorkflowHeight(type, isWorkflow);
     const box = {
       id,
       x: left + col * colGap,
       y: top + Number(laneIndex.get(lane)) * laneHeight + 38 + yOffset,
-      width: typeof item.width === "number" ? item.width : 132,
-      height: typeof item.height === "number" ? item.height : 58,
+      width,
+      height,
       label,
       sublabel,
       type,
+      actor: isWorkflow && typeof item.actor === "string" ? item.actor : "",
+      step: isWorkflow ? normalizeStep(item.step, index + 1, `/${itemKey}/${index}/step`) : "",
+      shape: isWorkflow ? shapeForWorkflowType(type) : "box",
     };
     boxes.set(id, box);
   }
@@ -277,7 +283,7 @@ function renderLaneDiagram(diagram, itemKey, edgeKey) {
     if (!fromBox) throw usageError(`/${edgeKey}/${index}/from`, `Unknown endpoint "${from}".`);
     if (!toBox) throw usageError(`/${edgeKey}/${index}/to`, `Unknown endpoint "${to}".`);
     const variant = normalizeVariant(edge.variant, `/${edgeKey}/${index}/variant`);
-    const points = routeBoxes(fromBox, toBox);
+    const points = edge.waypoints === undefined ? routeBoxes(fromBox, toBox) : routeWithWaypoints(fromBox, toBox, edge.waypoints, `/${edgeKey}/${index}/waypoints`);
     const connectorId = `${from}-${to}-${index}`;
     connectors.push({ id: connectorId, from, to, points });
     return renderConnector(points, variant, typeof edge.label === "string" ? edge.label : "");
@@ -290,7 +296,11 @@ function renderLaneDiagram(diagram, itemKey, edgeKey) {
   const boxSvg = [...boxes.values()].map(renderBox).join("\n");
   const svg = wrapSvg(width, height, `${laneSvg}\n${edgeSvg}\n${boxSvg}`);
 
-  return { svg, manifest: manifestFrom(width, height, [...boxes.values()], connectors) };
+  return {
+    svg,
+    manifest: manifestFrom(width, height, [...boxes.values()], connectors),
+    summary: isWorkflow ? normalizeSummary(diagram.summary) : [],
+  };
 }
 
 /**
@@ -445,9 +455,16 @@ function countStageBefore(nodes, endIndex, stage) {
  */
 function renderBox(box) {
   const labelLines = wrapLabel(box.label, 18).slice(0, 2);
-  const labelSvg = labelLines.map((line, index) => `<text x="${centerX(box)}" y="${box.y + 23 + index * 13}" class="label" text-anchor="middle">${escapeHtml(line)}</text>`).join("\n");
+  const shape = box.shape ?? "box";
+  const labelStartY = shape === "diamond" ? centerY(box) - (labelLines.length > 1 ? 5 : -3) : box.y + 23;
+  const labelSvg = labelLines.map((line, index) => `<text x="${centerX(box)}" y="${labelStartY + index * 13}" class="label" text-anchor="middle">${escapeHtml(line)}</text>`).join("\n");
   const sublabel = box.sublabel ? `<text x="${centerX(box)}" y="${box.y + box.height - 13}" class="sublabel" text-anchor="middle">${escapeHtml(box.sublabel)}</text>` : "";
-  return `<g class="node node-${box.type}"><rect x="${box.x}" y="${box.y}" width="${box.width}" height="${box.height}" rx="10"/>\n${labelSvg}\n${sublabel}</g>`;
+  const actor = box.actor ? `<text x="${centerX(box)}" y="${box.y - 8}" class="actor" text-anchor="middle">${escapeHtml(box.actor)}</text>` : "";
+  const step = box.step ? `<g class="step-badge"><circle cx="${box.x + 13}" cy="${box.y + 13}" r="10"/><text x="${box.x + 13}" y="${box.y + 17}" text-anchor="middle">${escapeHtml(box.step)}</text></g>` : "";
+  const shapeSvg = shape === "diamond"
+    ? `<polygon points="${centerX(box)},${box.y} ${box.x + box.width},${centerY(box)} ${centerX(box)},${box.y + box.height} ${box.x},${centerY(box)}"/>`
+    : `<rect x="${box.x}" y="${box.y}" width="${box.width}" height="${box.height}" rx="${shape === "terminal" ? Math.round(box.height / 2) : 10}"/>`;
+  return `<g class="node node-${box.type}">${actor}\n${shapeSvg}\n${step}\n${labelSvg}\n${sublabel}</g>`;
 }
 
 /**
@@ -560,16 +577,19 @@ button {
 .group-external, .group-neutral, .group-success { color: var(--external); }
 .surface { fill: var(--surface); stroke: color-mix(in srgb, var(--muted), transparent 70%); }
 .lane rect, .stage rect { fill: color-mix(in srgb, var(--surface), transparent 25%); stroke: color-mix(in srgb, var(--muted), transparent 72%); }
-.node rect { fill: color-mix(in srgb, currentColor, transparent 86%); stroke: currentColor; stroke-width: 1.6; }
+.node rect, .node polygon { fill: color-mix(in srgb, currentColor, transparent 86%); stroke: currentColor; stroke-width: 1.6; }
 .node-frontend { color: var(--frontend); }
-.node-backend, .node-active, .node-start { color: var(--backend); }
+.node-backend, .node-active, .node-start, .node-success { color: var(--backend); }
 .node-database { color: var(--database); }
 .node-cloud, .node-decision { color: var(--cloud); }
 .node-security, .node-failure, .node-waiting { color: var(--security); }
 .node-messagebus { color: var(--messagebus); }
-.node-external, .node-neutral, .node-success { color: var(--external); }
+.node-external, .node-neutral { color: var(--external); }
 .label { fill: var(--text); font-weight: 650; font-size: 12px; }
-.sublabel, .muted { fill: var(--muted); font-size: 10px; }
+.sublabel, .muted, .actor { fill: var(--muted); font-size: 10px; }
+.actor { font-weight: 650; }
+.step-badge circle { fill: var(--panel); stroke: currentColor; stroke-width: 1.3; }
+.step-badge text { fill: var(--text); font-size: 9px; font-weight: 750; }
 .edge path { fill: none; stroke: var(--line); stroke-width: 1.6; }
 .edge-emphasis path { stroke: var(--frontend); stroke-width: 2; }
 .edge-security path { stroke: var(--security); stroke-dasharray: 5 4; }
@@ -683,6 +703,17 @@ function maxBoxExtent(boxes, axis) {
  * @returns {Array<[number, number]>}
  */
 function architectureRoute(from, to, waypoints, pointer) {
+  return routeWithWaypoints(from, to, waypoints, pointer);
+}
+
+/**
+ * @param {Box} from
+ * @param {Box} to
+ * @param {unknown} waypoints
+ * @param {string} pointer
+ * @returns {Array<[number, number]>}
+ */
+function routeWithWaypoints(from, to, waypoints, pointer) {
   if (waypoints === undefined) return routeBoxes(from, to);
   if (!Array.isArray(waypoints)) throw usageError(pointer, "Expected array of [x, y] waypoints.");
   /** @type {Array<[number, number]>} */
@@ -695,6 +726,50 @@ function architectureRoute(from, to, waypoints, pointer) {
   const firstTarget = parsed[0] ?? [centerX(to), centerY(to)];
   const lastTarget = parsed[parsed.length - 1] ?? [centerX(from), centerY(from)];
   return [edgePointToward(from, firstTarget), ...parsed, edgePointToward(to, lastTarget)];
+}
+
+/**
+ * @param {string} type
+ * @param {boolean} isWorkflow
+ */
+function defaultWorkflowWidth(type, isWorkflow) {
+  if (!isWorkflow) return 132;
+  if (type === "decision") return 92;
+  if (type === "start" || type === "success" || type === "failure") return 128;
+  return 132;
+}
+
+/**
+ * @param {string} type
+ * @param {boolean} isWorkflow
+ */
+function defaultWorkflowHeight(type, isWorkflow) {
+  if (!isWorkflow) return 58;
+  if (type === "decision") return 92;
+  if (type === "start" || type === "success" || type === "failure") return 46;
+  return 58;
+}
+
+/**
+ * @param {string} type
+ * @returns {"box" | "diamond" | "terminal"}
+ */
+function shapeForWorkflowType(type) {
+  if (type === "decision") return "diamond";
+  if (type === "start" || type === "success" || type === "failure") return "terminal";
+  return "box";
+}
+
+/**
+ * @param {unknown} value
+ * @param {number} fallback
+ * @param {string} pointer
+ */
+function normalizeStep(value, fallback, pointer) {
+  if (value === undefined) return String(fallback);
+  if (typeof value === "number" && Number.isFinite(value)) return String(value);
+  if (typeof value === "string" && value.length > 0) return value;
+  throw usageError(pointer, "Expected non-empty string or finite number.");
 }
 
 /**
@@ -986,6 +1061,9 @@ function printReport(report, format) {
  *   label: string;
  *   sublabel: string;
  *   type: string;
+ *   actor?: string;
+ *   step?: string;
+ *   shape?: "box" | "diamond" | "terminal";
  * }} Box
  *
  * @typedef {{
@@ -1002,6 +1080,7 @@ function printReport(report, format) {
  *   edges?: Array<Record<string, unknown>>;
  *   states?: Array<Record<string, unknown>>;
  *   transitions?: Array<Record<string, unknown>>;
+ *   summary?: Array<Record<string, unknown>>;
  * }} LaneDiagram
  *
  * @typedef {{

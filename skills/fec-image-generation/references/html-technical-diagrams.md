@@ -14,7 +14,7 @@ This route complements, but does not replace, other diagram sources:
 ## Supported Diagram Intents
 
 - `architecture`: system topology, cloud regions, trust boundaries, clients, gateways, services, data stores, event buses, auth flows, and infrastructure overview diagrams.
-- `workflow`: ownership lanes, approval gates, runbooks, CI/CD, incident response, tool calls, and request lifecycles.
+- `workflow`: ownership lanes, process maps, approval gates, automation runs, exception paths, cyclical loops, runbooks, CI/CD, incident response, tool calls, and request lifecycles.
 - `sequence`: participants over time, API call chains, cache fallback, auth checks, async traces, and return messages.
 - `dataflow`: sources, ingest, processing, storage, consumers, PII boundaries, governance, analytics, and lineage.
 - `lifecycle`: object states, terminal states, retries, waits, cancellation, timeout, deployment or order status transitions.
@@ -39,12 +39,63 @@ All modes require:
 Mode-specific minimum fields:
 
 - `architecture`: `nodes`, `connections`; optional `groups`, `legend`, and `summary`.
-- `workflow`: `lanes`, `nodes`, `edges`.
+- `workflow`: `lanes`, `nodes`, `edges`; optional `summary`.
 - `sequence`: `participants`, `messages`.
 - `dataflow`: `stages`, `nodes`, `flows`.
 - `lifecycle`: `lanes`, `states`, `transitions`.
 
 IDs must start with a letter and use only letters, numbers, `_`, and `-`. Keep labels short enough to read inside nodes; put long explanation in surrounding prose instead of the diagram.
+
+## Process Workflow IR
+
+Workflow mode is for ordered processes where ownership, decisions, branches, and loop-backs matter more than exact infrastructure topology. Use lanes for actors or systems, nodes for steps, and edges for outcomes. Nodes still support explicit `col` placement so authors can control reading order without relying on a hidden auto-layout engine.
+
+```json
+{
+  "schema_version": 1,
+  "diagram_type": "workflow",
+  "meta": {
+    "title": "Procurement Approval",
+    "subtitle": "Request to payment"
+  },
+  "lanes": [
+    { "id": "requester", "label": "Requester" },
+    { "id": "system", "label": "System" },
+    { "id": "manager", "label": "Manager" }
+  ],
+  "nodes": [
+    { "id": "start", "lane": "requester", "col": 0, "type": "start", "label": "Submit Request", "actor": "Employee" },
+    { "id": "classify", "lane": "system", "col": 1, "type": "active", "label": "Classify Spend", "actor": "Policy Engine", "sublabel": "auto rules" },
+    { "id": "review", "lane": "manager", "col": 2, "type": "decision", "label": "Approved?", "step": "A" },
+    { "id": "pay", "lane": "system", "col": 3, "type": "success", "label": "Issue Payment" },
+    { "id": "reject", "lane": "requester", "col": 3, "type": "failure", "label": "Return Request" }
+  ],
+  "edges": [
+    { "from": "start", "to": "classify", "label": "intake", "variant": "emphasis" },
+    { "from": "classify", "to": "review", "label": "policy result" },
+    { "from": "review", "to": "pay", "label": "yes", "variant": "emphasis" },
+    { "from": "review", "to": "reject", "label": "no", "variant": "return", "waypoints": [[650, 396], [520, 396]] }
+  ],
+  "summary": [
+    { "title": "Inputs", "type": "active", "items": ["Purchase request", "Policy threshold"] },
+    { "title": "Outcomes", "type": "success", "items": ["Payment issued", "Requester notified"] }
+  ]
+}
+```
+
+Workflow node fields:
+
+- `type`: use `start`, `active`, `waiting`, `decision`, `success`, `failure`, or `external` for process semantics.
+- `actor`: optional short owner or system label above the node.
+- `step`: optional displayed step marker. If omitted, workflow nodes receive sequential markers automatically.
+- `sublabel`, `width`, `height`, and `yOffset`: optional readability adjustments for dense lanes.
+
+Workflow edge fields:
+
+- `variant`: use `emphasis` for happy paths, `return` or `dashed` for loop-backs and rework, and `security` only for trust or policy checks.
+- `waypoints`: optional `[x, y]` points for exception paths, cross-row links, or loops that should avoid labels and nodes.
+
+Use `summary` for compact process metadata such as prerequisites, inputs/outputs, or tools. Keep long explanations outside the SVG so labels remain readable.
 
 ## Architecture IR
 

@@ -9,7 +9,7 @@
 | Sequence | Mermaid sequence, PlantUML | Lifeline order, activation spans, async/return arrows, message text. |
 | Technical architecture | HTML `architecture` IR, Mermaid flowchart, C4/Structurizr, SVG/HTML, draw.io | Layer grouping, trust boundaries, data flow direction, legends. |
 | ML / deep learning | SVG/HTML/canvas | Tensor shapes, layer order, branch joins, repeated blocks, annotations. |
-| Flowchart | Mermaid flowchart, SVG | Decision labels, terminal states, loop-back readability, connector spacing. |
+| Flowchart / process workflow | HTML `workflow` IR, Mermaid flowchart, SVG, draw.io | Decision labels, terminal states, loop-back readability, connector spacing, exception path clarity. |
 | Live session sketch | Interactive local browser server | Incremental reveal, session isolation, readable labels after manual dragging, export handoff. |
 
 ## Interactive live diagrams
@@ -58,6 +58,10 @@ Coordinates are PNG pixel coordinates after export. Boxes should cover visible l
 ## Architecture diagrams
 
 Use HTML `architecture` IR when the user wants a browser-ready single file with explicit system topology, groups, trust boundaries, data flows, and PNG QA. Use draw.io when the diagram must preserve official vendor shapes, diagrams.net editing, or long-term manual ownership. Use Mermaid/C4 when the diagram should live primarily in Markdown or text documentation.
+
+## Process workflows
+
+Use HTML `workflow` IR when the user wants a browser-ready process map, approval flow, automation runbook, incident workflow, or cyclical operating loop with lanes, numbered steps, actors, decisions, exception paths, and summary cards. Use `fec-drawio-studio` instead when the workflow must remain a `.drawio` file for diagrams.net editing, official shape libraries, manual swimlane maintenance, or stakeholder edits after handoff.
 
 ## Export guidance
 
