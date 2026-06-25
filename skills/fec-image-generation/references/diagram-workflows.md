@@ -8,6 +8,7 @@
 | UML class | Mermaid class, PlantUML, Graphviz | Inheritance direction, method/property wrapping, package grouping. |
 | Sequence | Mermaid sequence, PlantUML | Lifeline order, activation spans, async/return arrows, message text. |
 | Technical architecture | HTML `architecture` IR, Mermaid flowchart, C4/Structurizr, SVG/HTML, draw.io | Layer grouping, trust boundaries, data flow direction, legends. |
+| Agent / memory architecture | HTML `architecture` IR with semantic node types and flow arrows, SVG/HTML, draw.io | Read/write path separation, tool-call loops, memory tiers, retrieval labels, flow legend. |
 | ML / deep learning | SVG/HTML/canvas | Tensor shapes, layer order, branch joins, repeated blocks, annotations. |
 | Flowchart / process workflow | HTML `workflow` IR, Mermaid flowchart, SVG, draw.io | Decision labels, terminal states, loop-back readability, connector spacing, exception path clarity. |
 | Live session sketch | Interactive local browser server | Incremental reveal, session isolation, readable labels after manual dragging, export handoff. |
@@ -54,10 +55,15 @@ Coordinates are PNG pixel coordinates after export. Boxes should cover visible l
 - **Connector stacking:** separate parallel edges with different waypoints or bundle them with a shared labeled bus.
 - **Edge clipping:** increase outer padding or export viewBox/canvas size.
 - **Unreadable dense graph:** split into overview plus detail diagrams instead of shrinking everything.
+- **Ambiguous arrow meaning:** add `flow` and a concise label rather than relying on color alone.
 
 ## Architecture diagrams
 
 Use HTML `architecture` IR when the user wants a browser-ready single file with explicit system topology, groups, trust boundaries, data flows, and PNG QA. Use draw.io when the diagram must preserve official vendor shapes, diagrams.net editing, or long-term manual ownership. Use Mermaid/C4 when the diagram should live primarily in Markdown or text documentation.
+
+For agent, memory, RAG, tool-call, or multi-agent diagrams, use semantic architecture node types (`agent`, `model`, `memory`, `vectorstore`, `graphdb`, `tool`, `document`, `queue`, `browser`, `user`, `gateway`) instead of generic boxes when the shape helps explain the system. Use `flow` values (`control`, `data`, `read`, `write`, `async`, `feedback`) so read paths, write paths, events, and reasoning loops are visually distinct. Add `visual.style` only after the structure is clear.
+
+For UML coverage, route class, ER, state-machine, activity, and sequence needs to deterministic sources first: Mermaid, PlantUML, HTML technical diagrams, SVG, or draw.io. Prefer draw.io when future manual editing or official notation libraries matter; prefer HTML/SVG when browser-ready handoff and PNG QA matter.
 
 ## Process workflows
 

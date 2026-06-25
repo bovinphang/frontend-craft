@@ -21,6 +21,28 @@ This route complements, but does not replace, other diagram sources:
 
 Use the `architecture` mode for browser-ready overview diagrams with explicit coordinates. Use `fec-drawio-studio` instead when the priority is `.drawio` source, official vendor icons, diagrams.net manual editing, or complex auto-layout.
 
+## Themed Semantic Diagrams
+
+Use `visual.style` when the same JSON source needs a clearer delivery tone without changing its model: `default`, `terminal`, `blueprint`, `minimal`, `glass`, `warm`, `openai`, or `editorial-dark`.
+
+For agent, memory, and AI workflow maps, prefer architecture nodes with semantic `type` values:
+
+- Actors and entry points: `user`, `browser`, `gateway`.
+- Intelligence and orchestration: `agent`, `model`, `tool`.
+- Memory and knowledge: `memory`, `vectorstore`, `graphdb`, `document`.
+- Runtime movement: `queue`, `messagebus`, `backend`, `external`.
+
+Use connection `flow` values when arrows need meaning beyond visual direction:
+
+- `control`: orchestration, policy, trigger, or command.
+- `data`: request payloads, documents, embeddings, facts, or responses.
+- `read`: retrieval from memory or stores.
+- `write`: persistence, indexing, notes, or memory updates.
+- `async`: evented or queued work.
+- `feedback`: loops, retries, refinement, or reasoning cycles.
+
+When two or more flow types are present, the renderer emits a flow legend automatically. Keep arrow labels short and use `waypoints` to route around dense groups, title labels, and node interiors.
+
 ## System Blueprint Workflow
 
 Use the architecture route for presentation-ready system blueprints, deployment topology, integration maps, agent runtime views, memory or recall maps, and before/after architecture comparisons. First extract a compact system model, then draw:
@@ -137,6 +159,9 @@ Architecture mode uses explicit coordinates because system diagrams often need i
     "title": "SaaS Architecture",
     "subtitle": "Browser-ready infrastructure overview"
   },
+  "visual": {
+    "style": "blueprint"
+  },
   "groups": [
     { "id": "cloud", "label": "Cloud region", "type": "cloud", "x": 170, "y": 50, "width": 620, "height": 280 }
   ],
@@ -157,7 +182,7 @@ Architecture mode uses explicit coordinates because system diagrams often need i
 }
 ```
 
-Supported node and group types are `frontend`, `backend`, `database`, `cloud`, `security`, `messagebus`, and `external`. Connections support the standard variants `default`, `emphasis`, `security`, `dashed`, and `return`. Add `waypoints` as `[[x, y], ...]` when a connection needs to route around boundaries or labels.
+Supported node and group types include `frontend`, `backend`, `database`, `cloud`, `security`, `messagebus`, `external`, `agent`, `model`, `memory`, `vectorstore`, `graphdb`, `tool`, `document`, `queue`, `browser`, `user`, and `gateway`. Connections support the standard variants `default`, `emphasis`, `security`, `dashed`, and `return`; architecture connections may also include `flow`. Add `waypoints` as `[[x, y], ...]` when a connection needs to route around boundaries or labels.
 
 Architecture output includes an automatic legend unless `legend` is set to `false`. A custom legend can be supplied as `{ "label": "...", "type": "..." }` items. `summary` renders up to three cards below the SVG and is not included in the layout manifest, so PNG QA focuses on the diagram itself.
 

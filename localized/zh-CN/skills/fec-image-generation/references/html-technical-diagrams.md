@@ -21,6 +21,28 @@
 
 浏览器可交付的架构总览优先用 `architecture` 模式。需要 `.drawio` 源、官方厂商图标、diagrams.net 手工编辑或复杂自动布局时，改用 `fec-drawio-studio`。
 
+## 主题化语义图
+
+同一份 JSON 源需要更明确的交付语气时，可以使用 `visual.style`：`default`、`terminal`、`blueprint`、`minimal`、`glass`、`warm`、`openai` 或 `editorial-dark`。
+
+Agent、memory 和 AI 工作流图优先在 architecture 节点上使用语义 `type`：
+
+- 参与者和入口：`user`、`browser`、`gateway`。
+- 智能与编排：`agent`、`model`、`tool`。
+- 记忆与知识：`memory`、`vectorstore`、`graphdb`、`document`。
+- 运行时流动：`queue`、`messagebus`、`backend`、`external`。
+
+连线不仅表达方向，还需要表达含义时使用 `flow`：
+
+- `control`：编排、策略、触发或命令。
+- `data`：请求载荷、文档、embedding、事实或响应。
+- `read`：从 memory 或存储中读取。
+- `write`：持久化、索引、笔记或 memory 更新。
+- `async`：事件或队列工作。
+- `feedback`：循环、重试、细化或推理回路。
+
+出现两种以上 flow 时，渲染器会自动输出 flow legend。连线标签保持简短，密集分组、标题标签和节点内部区域用 `waypoints` 绕开。
+
 ## 系统蓝图工作流
 
 生成展示级系统蓝图、部署拓扑、集成关系图、Agent runtime 视图、memory/recall 图或 before/after 架构对比时，使用 architecture 路线。先抽取紧凑的系统模型，再绘图：
@@ -137,6 +159,9 @@ Workflow 连线字段：
     "title": "SaaS Architecture",
     "subtitle": "Browser-ready infrastructure overview"
   },
+  "visual": {
+    "style": "blueprint"
+  },
   "groups": [
     { "id": "cloud", "label": "Cloud region", "type": "cloud", "x": 170, "y": 50, "width": 620, "height": 280 }
   ],
@@ -157,7 +182,7 @@ Workflow 连线字段：
 }
 ```
 
-节点和分组类型支持 `frontend`、`backend`、`database`、`cloud`、`security`、`messagebus` 和 `external`。连接支持 `default`、`emphasis`、`security`、`dashed` 和 `return`。当连线需要绕开边界或标签时，添加 `waypoints`，格式为 `[[x, y], ...]`。
+节点和分组类型支持 `frontend`、`backend`、`database`、`cloud`、`security`、`messagebus`、`external`、`agent`、`model`、`memory`、`vectorstore`、`graphdb`、`tool`、`document`、`queue`、`browser`、`user` 和 `gateway`。连接支持 `default`、`emphasis`、`security`、`dashed` 和 `return`；architecture 连接还可以添加 `flow`。当连线需要绕开边界或标签时，添加 `waypoints`，格式为 `[[x, y], ...]`。
 
 架构图默认根据节点类型生成图例；设置 `legend: false` 可关闭。自定义图例使用 `{ "label": "...", "type": "..." }`。`summary` 最多渲染 3 张图下摘要卡片，不进入 layout manifest，PNG QA 聚焦主图。
 
