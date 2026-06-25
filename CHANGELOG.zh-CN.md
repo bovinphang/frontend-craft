@@ -8,16 +8,39 @@
 
 自 **2.0.0** 起，面向发布的说明以英文 `CHANGELOG.md` 为权威来源；历史条目可能保留最初撰写语言。
 
-## [Unreleased]
-
-### 变更
-
-- **`fec-drawio-studio` 质量工作流**：强化手写 draw.io XML 指南，覆盖网格对齐、标签换行、`&#xa;` 换行、可读字号、容器留白平衡，以及 flowchart、architecture、sequence、class、ERD、mindmap、network topology 等图表模式。
-- **`diagram-lint` draw.io warning**：新增 literal `\n` 标签、缺少 wrapping/html 样式、字号过小、顶点未对齐网格、页面越界与重叠 warning，最终交付可用 `--strict` 作为更强质量门。
+## [2.8.0] - 2026-06-25
 
 ### 新增
 
+- **简体中文本地化内容包**：新增 `localized/zh-CN`，覆盖 agents、commands、skills、templates、metadata、relations、评测示例与随附 helper scripts，使安装时可选择本地化的 AI 面向内容，同时根目录继续保留权威英文内容。
+- **安装器语言选择**：`fec install` / `fec setup` 现在支持 `--lang en|zh-CN`；交互式安装可选择语言，不支持的语言值会清晰报错，安装 manifest 会记录 `language`，并且 `update` 在未传入 `--lang` 时复用上次 manifest 中的语言。
+- **`fec-image-generation` HTML 技术图**：新增浏览器可打开的单文件图表工作流，覆盖 architecture、process workflow、sequence、data-flow、lifecycle、state-machine、runbook、PII / data-lineage、agent runtime 与 memory diagrams，支持语义节点类型、按 flow 区分的箭头、主题样式、摘要卡片与 PNG QA 交付。
+- **图片生成图表脚本**：新增 `tech-diagram-render.mjs`、`interactive-diagram-server.mjs`、`export-diagram.mjs` 与 `assets/interactive-diagram.html`，用于渲染 HTML/SVG 技术图、本地 live diagram session，以及从 HTML 或 SVG 源导出 SVG/PNG/JPG 产物。
+- **交互式 live diagrams**：`fec-image-generation` 新增本地浏览器草图路线，支持按 session 隔离的增量 node / edge 命令、拖拽、重命名、删除、缩放、布局更新，以及 JSON / SVG / draw.io 导出交接。
 - **`drawio-export.mjs`**：新增跨平台 draw.io desktop 导出 helper，支持 PATH / 默认安装位置探测、PNG/SVG/PDF 参数、dry-run JSON 输出，并在缺少 draw.io 时给出安装建议。
+
+### 变更
+
+- **`localized` 包内容**：`package.json` 现在将 `localized` 纳入发布文件集，使语言包随 npm 包一起发布。
+- **根内容语言策略**：根目录下的 `agents`、`commands`、`skills` 与 `templates` 现在作为英文分发内容进行校验；简体中文 AI 面向内容集中在本地化内容包中。
+- **`fec-image-generation` 路由**：图表指南现在区分 Mermaid / SVG / HTML、draw.io、位图优先图片生成、live sketch、process workflow 与主题化语义系统图，帮助用户按交付需求选择正确的 source-of-truth 格式。
+- **`fec-drawio-studio` 质量工作流**：强化手写 draw.io XML 指南，覆盖网格对齐、标签换行、`&#xa;` 换行、可读字号、容器留白平衡，以及 flowchart、architecture、sequence、class、ERD、mindmap、network topology 等图表模式。
+- **`diagram-lint` draw.io warning**：新增 literal `\n` 标签、缺少 wrapping/html 样式、字号过小、顶点未对齐网格、页面越界与重叠 warning，最终交付可用 `--strict` 作为更强质量门。
+- **draw.io shape index 打包**：源 shape index 现在以格式化的 `shape-index.json` 保存，不再使用 gzip JSON；独立技能包在打包时会压缩 data JSON，从而保持发布产物体积紧凑。
+- **OpenClaw 包与文档**：OpenClaw README 现在按使用场景列出全部 45 个 bundled skills 和所有 command docs，语言链接指向 OpenClaw 专用 README 组合，并且 OpenClaw 打包产物命名为 `frontend-craft`。
+- **`typecheck:skill-scripts`**：现在覆盖新增的 `fec-image-generation` 图表渲染、交互服务器与导出脚本。
+
+### 修复
+
+- **OpenClaw README 语言链接**：修复 OpenClaw 文档链接，使英文与简体中文版本指向 `README.openclaw.md` 与 `README.openclaw.zh-CN.md`，不再跳到根 README。
+- **本地化更新行为**：当用户未传入新的 `--lang` 选项时，更新流程会从 `frontend-craft.manifest.json` 保留此前安装的内容语言。
+
+### Chore
+
+- **本地化回归覆盖**：新增 metadata consistency 校验，确保根内容保持英文、简体中文本地化内容是自然中文，并验证本地化 metadata / relations / eval prompts 含有翻译后的正文。
+- **安装器语言测试**：扩展 CLI 与 update 测试，覆盖 `--lang`、不支持语言报错、manifest language 记录、简体中文内容安装与 update 语言复用。
+- **图表工作流测试**：扩展 image-generation 与 draw.io 安装测试，覆盖 HTML 技术图渲染、语义图校验、live diagram server 命令、导出路径、draw.io export dry-run、更严格 lint warning，以及 strict mode 下的重叠失败。
+- **技能打包测试**：新增独立技能包 data JSON 压缩测试，确保打包后压缩 JSON，同时保持源 JSON 语义不变。
 
 ## [2.7.0] - 2026-06-10
 

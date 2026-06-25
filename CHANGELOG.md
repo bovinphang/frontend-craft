@@ -9,16 +9,39 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 Project-facing release notes are maintained in English from 2.0.0 onward. Historical entries may preserve their original language.
 
-## [Unreleased]
-
-### Changed
-
-- **`fec-drawio-studio` quality workflow:** strengthened manual draw.io XML guidance for grid alignment, wrapping labels, `&#xa;` line breaks, readable font sizes, balanced containers, and named diagram patterns such as flowcharts, architecture, sequence, class, ERD, mindmap, and network topology.
-- **`diagram-lint` draw.io warnings:** now reports literal `\n` labels, missing wrapping/html styles, tiny fonts, off-grid vertices, page overflow, and overlap warnings so final delivery can use `--strict` as a stronger quality gate.
+## [2.8.0] - 2026-06-25
 
 ### Added
 
+- **Localized Simplified Chinese content pack:** added `localized/zh-CN` coverage for agents, commands, skills, templates, metadata, relations, evaluation examples, and bundled helper scripts so installs can choose localized AI-facing content without changing the canonical English root content.
+- **Installer language selection:** `fec install` / `fec setup` now accepts `--lang en|zh-CN`; interactive installs can choose the language, unsupported language values fail clearly, install manifests record `language`, and `update` reuses the previous manifest language when `--lang` is omitted.
+- **`fec-image-generation` HTML technical diagrams:** added browser-ready single-file diagram workflows for architecture, process workflows, sequence, data-flow, lifecycle, state-machine, runbook, PII / data-lineage, agent runtime, and memory diagrams, with semantic node types, flow-aware arrows, theme styles, summaries, and PNG QA handoff.
+- **Image-generation diagram scripts:** added `tech-diagram-render.mjs`, `interactive-diagram-server.mjs`, `export-diagram.mjs`, and `assets/interactive-diagram.html` for rendering HTML/SVG technical diagrams, running local live diagram sessions, and exporting SVG/PNG/JPG artifacts from HTML or SVG sources.
+- **Interactive live diagrams:** `fec-image-generation` now includes a local browser sketch route with session-scoped incremental node / edge commands, drag, relabel, remove, zoom, layout updates, and JSON / SVG / draw.io export handoff.
 - **`drawio-export.mjs`:** new cross-platform draw.io desktop export helper with PATH/default-location detection, PNG/SVG/PDF options, dry-run JSON output, and install guidance when draw.io is missing.
+
+### Changed
+
+- **`localized` package contents:** `package.json` now includes `localized` in the published file set so language packs ship with the npm package.
+- **Root content language policy:** root `agents`, `commands`, `skills`, and `templates` are now validated as English-only distributable content; Simplified Chinese AI-facing content lives under the localized pack.
+- **`fec-image-generation` routing:** diagram guidance now distinguishes Mermaid / SVG / HTML, draw.io, raster-first image generation, live sketches, process workflows, and themed semantic system diagrams so users can choose the right source-of-truth format.
+- **`fec-drawio-studio` quality workflow:** strengthened manual draw.io XML guidance for grid alignment, wrapping labels, `&#xa;` line breaks, readable font sizes, balanced containers, and named diagram patterns such as flowcharts, architecture, sequence, class, ERD, mindmap, and network topology.
+- **`diagram-lint` draw.io warnings:** now reports literal `\n` labels, missing wrapping/html styles, tiny fonts, off-grid vertices, page overflow, and overlap warnings so final delivery can use `--strict` as a stronger quality gate.
+- **draw.io shape index packaging:** the source shape index is now stored as pretty-printed `shape-index.json` instead of a gzipped JSON file, while standalone skill packages minify data JSON during packaging to keep publish artifacts compact.
+- **OpenClaw package and docs:** OpenClaw README files now list all 45 bundled skills and every command doc by use case, language links point to the OpenClaw-specific README pair, and the packed OpenClaw package is named `frontend-craft`.
+- **`typecheck:skill-scripts`:** now covers the new `fec-image-generation` diagram render, interactive server, and export scripts.
+
+### Fixed
+
+- **OpenClaw README language links:** fixed OpenClaw documentation links so English and Simplified Chinese variants reference `README.openclaw.md` and `README.openclaw.zh-CN.md` instead of the root README pair.
+- **Localized update behavior:** updates preserve the previously installed content language from `frontend-craft.manifest.json` when the user does not pass a new `--lang` option.
+
+### Chore
+
+- **Localization regression coverage:** added metadata consistency checks that keep root content English-only, require natural Simplified Chinese localized content, and verify localized metadata / relations / evaluation prompts contain translated prose.
+- **Installer language tests:** expanded CLI and update tests for `--lang`, unsupported language errors, manifest language recording, Simplified Chinese content installation, and update language reuse.
+- **Diagram workflow tests:** expanded image-generation and draw.io install tests for HTML technical diagram rendering, semantic diagram validation, live diagram server commands, export paths, draw.io export dry-runs, stricter lint warnings, and strict-mode overlap failures.
+- **Skill packaging tests:** added coverage that standalone skill packages minify packaged data JSON while preserving source JSON semantics.
 
 ## [2.7.0] - 2026-06-10
 
