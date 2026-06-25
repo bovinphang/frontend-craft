@@ -232,7 +232,7 @@ Marketplace가 이미 설치된 경우, `--force`를 사용해도 CLI는 두 번
 | 스킬                          | 범위                                                                                                                     |
 | ----------------------------- | ------------------------------------------------------------------------------------------------------------------------ |
 | `fec-ui-design`               | 제품 맥락 UI 방향, 반템플릿 디자인 다이얼, 미디어 전략, 상태, visual QA                                                  |
-| `fec-image-generation`        | 다이어그램, 이미지 생성/편집, 비주얼 에셋, PNG QA 및 수정 루프                                                           |
+| `fec-image-generation`        | 시스템 블루프린트, 프로세스 워크플로, 인터랙티브 라이브 다이어그램, HTML/SVG/PNG 내보내기, 이미지 생성/편집, 비주얼 에셋, PNG QA |
 | `fec-drawio-studio`           | 편집 가능한 draw.io / diagrams.net 기술 다이어그램, XML/Mermaid/CSV URL 핸드오프, shape 검색, 자동 레이아웃, 코드 구조도 |
 | `fec-web-video-presentation`  | 글, 스크립트, 레슨, demo를 녹화 가능한 16:9 step-driven 웹 프레젠테이션으로 변환                                         |
 | `fec-tailwind-design-system`  | Tailwind token, 테마 확장, variants, class 관리, dark mode                                                               |

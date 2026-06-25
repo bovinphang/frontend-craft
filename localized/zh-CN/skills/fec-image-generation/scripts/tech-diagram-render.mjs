@@ -5,8 +5,13 @@ import fs from "node:fs";
 import path from "node:path";
 
 const ALLOWED_TYPES = new Set(["workflow", "sequence", "dataflow", "lifecycle", "architecture"]);
-const NODE_TYPES = new Set(["frontend", "backend", "database", "cloud", "security", "messagebus", "external", "active", "waiting", "decision", "success", "failure", "neutral", "start"]);
+const NODE_TYPES = new Set([
+  "frontend", "backend", "database", "cloud", "security", "messagebus", "external", "active", "waiting", "decision", "success", "failure", "neutral", "start",
+  "agent", "model", "memory", "vectorstore", "graphdb", "tool", "document", "queue", "browser", "user", "gateway",
+]);
 const EDGE_VARIANTS = new Set(["default", "emphasis", "security", "dashed", "return"]);
+const VISUAL_STYLES = new Set(["default", "terminal", "blueprint", "minimal", "glass", "warm", "openai", "editorial-dark"]);
+const FLOW_TYPES = new Set(["control", "data", "read", "write", "async", "feedback"]);
 
 const args = parseArgs(process.argv.slice(2));
 
@@ -28,7 +33,8 @@ try {
   const renderResult = renderDiagram(diagram, type);
   /** @type {SummaryCard[]} */
   const summary = "summary" in renderResult ? /** @type {SummaryCard[]} */ (renderResult.summary) : [];
-  const html = renderHtml(diagram.meta.title, diagram.meta.subtitle ?? "", renderResult.svg, type, summary);
+  const style = normalizeVisualStyle(diagram.visual, "/visual");
+  const html = renderHtml(diagram.meta.title, diagram.meta.subtitle ?? "", renderResult.svg, type, summary, style);
 
   fs.mkdirSync(path.dirname(path.resolve(outputPath)), { recursive: true });
   fs.writeFileSync(outputPath, html, "utf8");
@@ -117,6 +123,7 @@ function validateCommon(diagram, type) {
   }
   assertObject(model.meta, "/meta");
   requireString(/** @type {Record<string, unknown>} */ (model.meta), "title", "/meta/title");
+  normalizeVisualStyle(model.visual, "/visual");
 }
 
 /**
@@ -182,6 +189,7 @@ function renderArchitecture(diagram) {
 
   /** @type {Connector[]} */
   const connectors = [];
+  const flowSet = new Set();
   const connectionSvg = connections.map((connection, index) => {
     const from = requireId(connection, "from", `/connections/${index}/from`);
     const to = requireId(connection, "to", `/connections/${index}/to`);
@@ -190,20 +198,25 @@ function renderArchitecture(diagram) {
     if (!fromBox) throw usageError(`/connections/${index}/from`, `Unknown endpoint "${from}".`);
     if (!toBox) throw usageError(`/connections/${index}/to`, `Unknown endpoint "${to}".`);
     const variant = normalizeVariant(connection.variant, `/connections/${index}/variant`);
+    const flow = normalizeFlow(connection.flow, `/connections/${index}/flow`);
+    if (flow) flowSet.add(flow);
     const points = architectureRoute(fromBox, toBox, connection.waypoints, `/connections/${index}/waypoints`);
     connectors.push({ id: `${from}-${to}-${index}`, from, to, points });
-    return renderConnector(points, variant, typeof connection.label === "string" ? connection.label : "");
+    return renderConnector(points, variant, typeof connection.label === "string" ? connection.label : "", flow);
   }).join("\n");
 
   const allBoxes = [...groupBoxes, ...boxes.values()];
   const contentBottom = Math.max(360, maxBoxExtent(allBoxes, "y") + 64);
   const legend = normalizeLegend(diagram.legend, [...boxes.values()]);
-  const width = Math.max(860, maxBoxExtent(allBoxes, "x") + 64, 88 + legend.length * 118);
+  const flowLegend = normalizeFlowLegend(diagram.flowLegend, [...flowSet]);
+  const legendWidth = Math.max(88 + legend.length * 118, 88 + flowLegend.length * 128);
+  const width = Math.max(860, maxBoxExtent(allBoxes, "x") + 64, legendWidth);
   const legendSvg = renderArchitectureLegend(legend, 44, contentBottom - 4);
-  const height = contentBottom + (legend.length > 0 ? 54 : 0);
+  const flowLegendSvg = renderFlowLegend(flowLegend, 44, contentBottom + (legend.length > 0 ? 42 : 0));
+  const height = contentBottom + (legend.length > 0 ? 54 : 0) + (flowLegend.length > 0 ? 54 : 0);
   const groupSvg = groupBoxes.map(renderGroup).join("\n");
   const boxSvg = [...boxes.values()].map(renderBox).join("\n");
-  const svg = wrapSvg(width, height, `${groupSvg}\n${connectionSvg}\n${boxSvg}\n${legendSvg}`);
+  const svg = wrapSvg(width, height, `${groupSvg}\n${connectionSvg}\n${boxSvg}\n${legendSvg}\n${flowLegendSvg}`);
 
   return {
     svg,
@@ -221,6 +234,7 @@ function renderLaneDiagram(diagram, itemKey, edgeKey) {
   const lanes = requireObjectArray(diagram.lanes, "/lanes");
   const items = requireObjectArray(diagram[itemKey], `/${itemKey}`);
   const edges = requireObjectArray(diagram[edgeKey], `/${edgeKey}`);
+  const isWorkflow = itemKey === "nodes";
   const laneIds = new Set();
   for (const [index, lane] of lanes.entries()) {
     assertObject(lane, `/lanes/${index}`);
@@ -253,15 +267,20 @@ function renderLaneDiagram(diagram, itemKey, edgeKey) {
     const sublabel = typeof item.sublabel === "string" ? item.sublabel : "";
     const col = requireNumber(item, "col", `/${itemKey}/${index}/col`);
     const yOffset = typeof item.yOffset === "number" ? item.yOffset : 0;
+    const width = typeof item.width === "number" ? item.width : defaultWorkflowWidth(type, isWorkflow);
+    const height = typeof item.height === "number" ? item.height : defaultWorkflowHeight(type, isWorkflow);
     const box = {
       id,
       x: left + col * colGap,
       y: top + Number(laneIndex.get(lane)) * laneHeight + 38 + yOffset,
-      width: typeof item.width === "number" ? item.width : 132,
-      height: typeof item.height === "number" ? item.height : 58,
+      width,
+      height,
       label,
       sublabel,
       type,
+      actor: isWorkflow && typeof item.actor === "string" ? item.actor : "",
+      step: isWorkflow ? normalizeStep(item.step, index + 1, `/${itemKey}/${index}/step`) : "",
+      shape: isWorkflow ? shapeForWorkflowType(type) : "box",
     };
     boxes.set(id, box);
   }
@@ -277,7 +296,7 @@ function renderLaneDiagram(diagram, itemKey, edgeKey) {
     if (!fromBox) throw usageError(`/${edgeKey}/${index}/from`, `Unknown endpoint "${from}".`);
     if (!toBox) throw usageError(`/${edgeKey}/${index}/to`, `Unknown endpoint "${to}".`);
     const variant = normalizeVariant(edge.variant, `/${edgeKey}/${index}/variant`);
-    const points = routeBoxes(fromBox, toBox);
+    const points = edge.waypoints === undefined ? routeBoxes(fromBox, toBox) : routeWithWaypoints(fromBox, toBox, edge.waypoints, `/${edgeKey}/${index}/waypoints`);
     const connectorId = `${from}-${to}-${index}`;
     connectors.push({ id: connectorId, from, to, points });
     return renderConnector(points, variant, typeof edge.label === "string" ? edge.label : "");
@@ -290,7 +309,11 @@ function renderLaneDiagram(diagram, itemKey, edgeKey) {
   const boxSvg = [...boxes.values()].map(renderBox).join("\n");
   const svg = wrapSvg(width, height, `${laneSvg}\n${edgeSvg}\n${boxSvg}`);
 
-  return { svg, manifest: manifestFrom(width, height, [...boxes.values()], connectors) };
+  return {
+    svg,
+    manifest: manifestFrom(width, height, [...boxes.values()], connectors),
+    summary: isWorkflow ? normalizeSummary(diagram.summary) : [],
+  };
 }
 
 /**
@@ -445,9 +468,66 @@ function countStageBefore(nodes, endIndex, stage) {
  */
 function renderBox(box) {
   const labelLines = wrapLabel(box.label, 18).slice(0, 2);
-  const labelSvg = labelLines.map((line, index) => `<text x="${centerX(box)}" y="${box.y + 23 + index * 13}" class="label" text-anchor="middle">${escapeHtml(line)}</text>`).join("\n");
+  const shape = box.shape ?? "box";
+  const isSemantic = isSemanticNodeType(box.type);
+  const labelStartY = shape === "diamond" ? centerY(box) - (labelLines.length > 1 ? 5 : -3) : box.y + (isSemantic ? Math.max(30, box.height - 24) : 23);
+  const labelSvg = labelLines.map((line, index) => `<text x="${centerX(box)}" y="${labelStartY + index * 13}" class="label" text-anchor="middle">${escapeHtml(line)}</text>`).join("\n");
   const sublabel = box.sublabel ? `<text x="${centerX(box)}" y="${box.y + box.height - 13}" class="sublabel" text-anchor="middle">${escapeHtml(box.sublabel)}</text>` : "";
-  return `<g class="node node-${box.type}"><rect x="${box.x}" y="${box.y}" width="${box.width}" height="${box.height}" rx="10"/>\n${labelSvg}\n${sublabel}</g>`;
+  const actor = box.actor ? `<text x="${centerX(box)}" y="${box.y - 8}" class="actor" text-anchor="middle">${escapeHtml(box.actor)}</text>` : "";
+  const step = box.step ? `<g class="step-badge"><circle cx="${box.x + 13}" cy="${box.y + 13}" r="10"/><text x="${box.x + 13}" y="${box.y + 17}" text-anchor="middle">${escapeHtml(box.step)}</text></g>` : "";
+  const shapeSvg = renderSemanticShape(box) ?? (shape === "diamond"
+    ? `<polygon points="${centerX(box)},${box.y} ${box.x + box.width},${centerY(box)} ${centerX(box)},${box.y + box.height} ${box.x},${centerY(box)}"/>`
+    : `<rect x="${box.x}" y="${box.y}" width="${box.width}" height="${box.height}" rx="${shape === "terminal" ? Math.round(box.height / 2) : 10}"/>`);
+  return `<g class="node node-${box.type}">${actor}\n${shapeSvg}\n${step}\n${labelSvg}\n${sublabel}</g>`;
+}
+
+/**
+ * @param {Box} box
+ * @returns {string | null}
+ */
+function renderSemanticShape(box) {
+  const cx = centerX(box);
+  const cy = centerY(box);
+  if (box.type === "agent") {
+    const inset = Math.min(28, box.width * 0.18);
+    return `<polygon points="${box.x + inset},${box.y} ${box.x + box.width - inset},${box.y} ${box.x + box.width},${cy} ${box.x + box.width - inset},${box.y + box.height} ${box.x + inset},${box.y + box.height} ${box.x},${cy}"/><rect x="${box.x + 5}" y="${box.y + 5}" width="${box.width - 10}" height="${box.height - 10}" rx="10" fill="none" opacity="0.45"/>`;
+  }
+  if (box.type === "model") {
+    return `<rect x="${box.x}" y="${box.y}" width="${box.width}" height="${box.height}" rx="14"/><rect x="${box.x + 5}" y="${box.y + 5}" width="${box.width - 10}" height="${box.height - 10}" rx="10" fill="none" opacity="0.5"/><path d="M ${cx - 12} ${box.y + 20} L ${cx - 4} ${box.y + 20} L ${cx} ${box.y + 10} L ${cx + 4} ${box.y + 20} L ${cx + 12} ${box.y + 20} L ${cx + 6} ${box.y + 27} L ${cx + 9} ${box.y + 38} L ${cx} ${box.y + 31} L ${cx - 9} ${box.y + 38} L ${cx - 6} ${box.y + 27} Z" class="node-glyph"/>`;
+  }
+  if (box.type === "memory") {
+    return `<rect x="${box.x}" y="${box.y}" width="${box.width}" height="${box.height}" rx="12" stroke-dasharray="6 4"/>`;
+  }
+  if (box.type === "database" || box.type === "vectorstore") {
+    const ry = Math.min(14, box.height / 5);
+    const rings = box.type === "vectorstore" ? `<ellipse cx="${cx}" cy="${box.y + box.height * 0.45}" rx="${box.width / 2}" ry="${ry}" fill="none" opacity="0.45"/><ellipse cx="${cx}" cy="${box.y + box.height * 0.66}" rx="${box.width / 2}" ry="${ry}" fill="none" opacity="0.32"/>` : "";
+    return `<ellipse cx="${cx}" cy="${box.y + ry}" rx="${box.width / 2}" ry="${ry}"/><rect x="${box.x}" y="${box.y + ry}" width="${box.width}" height="${box.height - ry * 2}" stroke="none"/><line x1="${box.x}" y1="${box.y + ry}" x2="${box.x}" y2="${box.y + box.height - ry}"/><line x1="${box.x + box.width}" y1="${box.y + ry}" x2="${box.x + box.width}" y2="${box.y + box.height - ry}"/>${rings}<ellipse cx="${cx}" cy="${box.y + box.height - ry}" rx="${box.width / 2}" ry="${ry}"/>`;
+  }
+  if (box.type === "graphdb") {
+    return `<rect x="${box.x}" y="${box.y}" width="${box.width}" height="${box.height}" rx="14"/><circle cx="${cx - 18}" cy="${cy - 2}" r="12" class="node-glyph-outline"/><circle cx="${cx + 8}" cy="${cy - 14}" r="10" class="node-glyph-outline"/><circle cx="${cx + 22}" cy="${cy + 10}" r="11" class="node-glyph-outline"/><line x1="${cx - 7}" y1="${cy - 7}" x2="${cx}" y2="${cy - 12}" class="node-glyph-line"/><line x1="${cx + 16}" y1="${cy - 5}" x2="${cx + 20}" y2="${cy}" class="node-glyph-line"/>`;
+  }
+  if (box.type === "tool") {
+    return `<rect x="${box.x}" y="${box.y}" width="${box.width}" height="${box.height}" rx="10"/><circle cx="${cx}" cy="${box.y + 24}" r="9" class="node-glyph-outline"/><line x1="${cx}" y1="${box.y + 11}" x2="${cx}" y2="${box.y + 16}" class="node-glyph-line"/><line x1="${cx}" y1="${box.y + 32}" x2="${cx}" y2="${box.y + 37}" class="node-glyph-line"/><line x1="${cx - 13}" y1="${box.y + 24}" x2="${cx - 8}" y2="${box.y + 24}" class="node-glyph-line"/><line x1="${cx + 8}" y1="${box.y + 24}" x2="${cx + 13}" y2="${box.y + 24}" class="node-glyph-line"/>`;
+  }
+  if (box.type === "document") {
+    const fold = Math.min(16, box.width * 0.16);
+    return `<path d="M ${box.x} ${box.y} L ${box.x + box.width - fold} ${box.y} L ${box.x + box.width} ${box.y + fold} L ${box.x + box.width} ${box.y + box.height} L ${box.x} ${box.y + box.height} Z"/><path d="M ${box.x + box.width - fold} ${box.y} L ${box.x + box.width - fold} ${box.y + fold} L ${box.x + box.width} ${box.y + fold}" fill="none"/>`;
+  }
+  if (box.type === "queue") {
+    const ry = Math.min(18, box.height / 3);
+    return `<ellipse cx="${box.x + ry}" cy="${cy}" rx="${ry * 0.58}" ry="${ry}"/><rect x="${box.x + ry}" y="${cy - ry}" width="${box.width - ry * 2}" height="${ry * 2}" stroke="none"/><line x1="${box.x + ry}" y1="${cy - ry}" x2="${box.x + box.width - ry}" y2="${cy - ry}"/><line x1="${box.x + ry}" y1="${cy + ry}" x2="${box.x + box.width - ry}" y2="${cy + ry}"/><ellipse cx="${box.x + box.width - ry}" cy="${cy}" rx="${ry * 0.58}" ry="${ry}"/>`;
+  }
+  if (box.type === "browser") {
+    return `<rect x="${box.x}" y="${box.y}" width="${box.width}" height="${box.height}" rx="10"/><rect x="${box.x}" y="${box.y}" width="${box.width}" height="20" rx="10" class="node-chrome"/><circle cx="${box.x + 14}" cy="${box.y + 10}" r="3" class="node-dot"/><circle cx="${box.x + 26}" cy="${box.y + 10}" r="3" class="node-dot"/><circle cx="${box.x + 38}" cy="${box.y + 10}" r="3" class="node-dot"/>`;
+  }
+  if (box.type === "user") {
+    return `<rect x="${box.x}" y="${box.y}" width="${box.width}" height="${box.height}" rx="12"/><circle cx="${cx}" cy="${box.y + 22}" r="9" class="node-glyph-outline"/><path d="M ${cx - 16} ${box.y + 43} Q ${cx} ${box.y + 28} ${cx + 16} ${box.y + 43}" class="node-glyph-line"/>`;
+  }
+  if (box.type === "gateway") {
+    const inset = Math.min(22, box.width * 0.18);
+    return `<polygon points="${box.x + inset},${box.y} ${box.x + box.width - inset},${box.y} ${box.x + box.width},${cy} ${box.x + box.width - inset},${box.y + box.height} ${box.x + inset},${box.y + box.height} ${box.x},${cy}"/>`;
+  }
+  return null;
 }
 
 /**
@@ -462,11 +542,12 @@ function renderGroup(box) {
  * @param {string} variant
  * @param {string} label
  */
-function renderConnector(points, variant, label) {
+function renderConnector(points, variant, label, flow = "") {
   const pathData = points.map(([x, y], index) => `${index === 0 ? "M" : "L"} ${x} ${y}`).join(" ");
   const midpoint = points[Math.floor((points.length - 1) / 2)];
   const labelSvg = label ? `<text x="${midpoint[0]}" y="${midpoint[1] - 8}" class="edge-label" text-anchor="middle">${escapeHtml(label)}</text>` : "";
-  return `<g class="edge edge-${variant}"><path d="${pathData}" marker-end="url(#arrow-${variant === "return" ? "default" : variant})"/>\n${labelSvg}</g>`;
+  const marker = flow ? `flow-${flow}` : (variant === "return" ? "default" : variant);
+  return `<g class="edge edge-${variant}${flow ? ` flow-${flow}` : ""}"><path d="${pathData}" marker-end="url(#arrow-${marker})"/>\n${labelSvg}</g>`;
 }
 
 /**
@@ -481,6 +562,12 @@ function wrapSvg(width, height, body) {
     <marker id="arrow-emphasis" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z"/></marker>
     <marker id="arrow-security" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z"/></marker>
     <marker id="arrow-dashed" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z"/></marker>
+    <marker id="arrow-flow-control" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z"/></marker>
+    <marker id="arrow-flow-data" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z"/></marker>
+    <marker id="arrow-flow-read" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z"/></marker>
+    <marker id="arrow-flow-write" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z"/></marker>
+    <marker id="arrow-flow-async" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z"/></marker>
+    <marker id="arrow-flow-feedback" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z"/></marker>
   </defs>
   <rect x="16" y="18" width="${width - 32}" height="${height - 36}" rx="18" class="surface"/>
   ${body}
@@ -494,10 +581,10 @@ function wrapSvg(width, height, body) {
  * @param {string} type
  * @param {SummaryCard[]} [summary]
  */
-function renderHtml(title, subtitle, svg, type, summary = []) {
+function renderHtml(title, subtitle, svg, type, summary = [], style = "default") {
   const summaryHtml = renderSummaryCards(summary);
   return `<!doctype html>
-<html lang="en" data-theme="auto">
+<html lang="en" data-theme="auto" data-visual-style="${escapeHtml(style)}">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -518,6 +605,23 @@ function renderHtml(title, subtitle, svg, type, summary = []) {
   --security: #fb7185;
   --messagebus: #fb923c;
   --external: #cbd5e1;
+  --agent: #22d3ee;
+  --model: #c084fc;
+  --memory: #34d399;
+  --vectorstore: #60a5fa;
+  --graphdb: #f472b6;
+  --tool: #f59e0b;
+  --document: #cbd5e1;
+  --queue: #fb923c;
+  --browser: #38bdf8;
+  --user: #fda4af;
+  --gateway: #fbbf24;
+  --flow-control: #f59e0b;
+  --flow-data: #38bdf8;
+  --flow-read: #34d399;
+  --flow-write: #22c55e;
+  --flow-async: #94a3b8;
+  --flow-feedback: #c084fc;
 }
 [data-theme="light"] {
   --bg: #f8fafc;
@@ -526,6 +630,79 @@ function renderHtml(title, subtitle, svg, type, summary = []) {
   --text: #0f172a;
   --muted: #64748b;
   --line: #475569;
+}
+[data-visual-style="terminal"] {
+  --bg: #0b1020;
+  --panel: #0f172a;
+  --surface: #111827;
+  --text: #e2e8f0;
+  --muted: #94a3b8;
+  --frontend: #38bdf8;
+  --backend: #22c55e;
+  --security: #f472b6;
+}
+[data-visual-style="blueprint"] {
+  --bg: #082f49;
+  --panel: #0b3b5e;
+  --surface: #0c4a6e;
+  --text: #e0f2fe;
+  --muted: #7dd3fc;
+  --line: #67e8f9;
+  --frontend: #38bdf8;
+  --backend: #67e8f9;
+  --database: #fde047;
+  --cloud: #bae6fd;
+}
+[data-visual-style="minimal"] {
+  --bg: #f8fafc;
+  --panel: #ffffff;
+  --surface: #f1f5f9;
+  --text: #111827;
+  --muted: #64748b;
+  --line: #94a3b8;
+}
+[data-visual-style="glass"] {
+  --bg: #111827;
+  --panel: color-mix(in srgb, #1f2937, transparent 18%);
+  --surface: color-mix(in srgb, #334155, transparent 18%);
+  --text: #f8fafc;
+  --muted: #cbd5e1;
+}
+[data-visual-style="warm"] {
+  --bg: #f8f6f3;
+  --panel: #fffcf7;
+  --surface: #f1ede6;
+  --text: #141413;
+  --muted: #7c756c;
+  --line: #8b7355;
+  --frontend: #d97757;
+  --backend: #7b8b5c;
+  --database: #8c6f5a;
+  --cloud: #b45309;
+}
+[data-visual-style="openai"] {
+  --bg: #ffffff;
+  --panel: #ffffff;
+  --surface: #f8fafc;
+  --text: #0f172a;
+  --muted: #64748b;
+  --line: #10a37f;
+  --frontend: #10a37f;
+  --backend: #0f766e;
+  --database: #0891b2;
+}
+[data-visual-style="editorial-dark"] {
+  --bg: #0a0a0a;
+  --panel: #111111;
+  --surface: #181818;
+  --text: #f5f0e8;
+  --muted: #b8a88f;
+  --line: #d4a574;
+  --frontend: #38bdf8;
+  --backend: #34d399;
+  --database: #a78bfa;
+  --cloud: #d4a574;
+  --security: #fb7185;
 }
 * { box-sizing: border-box; }
 body {
@@ -560,20 +737,44 @@ button {
 .group-external, .group-neutral, .group-success { color: var(--external); }
 .surface { fill: var(--surface); stroke: color-mix(in srgb, var(--muted), transparent 70%); }
 .lane rect, .stage rect { fill: color-mix(in srgb, var(--surface), transparent 25%); stroke: color-mix(in srgb, var(--muted), transparent 72%); }
-.node rect { fill: color-mix(in srgb, currentColor, transparent 86%); stroke: currentColor; stroke-width: 1.6; }
+.node rect, .node polygon, .node path, .node ellipse, .node line, .node circle { fill: color-mix(in srgb, currentColor, transparent 86%); stroke: currentColor; stroke-width: 1.6; }
 .node-frontend { color: var(--frontend); }
-.node-backend, .node-active, .node-start { color: var(--backend); }
+.node-backend, .node-active, .node-start, .node-success { color: var(--backend); }
 .node-database { color: var(--database); }
 .node-cloud, .node-decision { color: var(--cloud); }
 .node-security, .node-failure, .node-waiting { color: var(--security); }
 .node-messagebus { color: var(--messagebus); }
-.node-external, .node-neutral, .node-success { color: var(--external); }
+.node-external, .node-neutral { color: var(--external); }
+.node-agent { color: var(--agent); }
+.node-model { color: var(--model); }
+.node-memory { color: var(--memory); }
+.node-vectorstore { color: var(--vectorstore); }
+.node-graphdb { color: var(--graphdb); }
+.node-tool { color: var(--tool); }
+.node-document { color: var(--document); }
+.node-queue { color: var(--queue); }
+.node-browser { color: var(--browser); }
+.node-user { color: var(--user); }
+.node-gateway { color: var(--gateway); }
+.node-glyph { fill: currentColor; stroke: none; }
+.node-glyph-outline, .node-glyph-line { fill: none; stroke: currentColor; }
+.node-chrome { fill: currentColor; opacity: 0.25; stroke: none; }
+.node-dot { fill: currentColor; stroke: none; opacity: 0.65; }
 .label { fill: var(--text); font-weight: 650; font-size: 12px; }
-.sublabel, .muted { fill: var(--muted); font-size: 10px; }
+.sublabel, .muted, .actor { fill: var(--muted); font-size: 10px; }
+.actor { font-weight: 650; }
+.step-badge circle { fill: var(--panel); stroke: currentColor; stroke-width: 1.3; }
+.step-badge text { fill: var(--text); font-size: 9px; font-weight: 750; }
 .edge path { fill: none; stroke: var(--line); stroke-width: 1.6; }
 .edge-emphasis path { stroke: var(--frontend); stroke-width: 2; }
 .edge-security path { stroke: var(--security); stroke-dasharray: 5 4; }
 .edge-dashed path, .edge-return path { stroke-dasharray: 5 4; }
+.flow-control path { stroke: var(--flow-control); }
+.flow-data path { stroke: var(--flow-data); stroke-width: 2; }
+.flow-read path { stroke: var(--flow-read); }
+.flow-write path { stroke: var(--flow-write); stroke-dasharray: 5 4; }
+.flow-async path { stroke: var(--flow-async); stroke-dasharray: 4 4; }
+.flow-feedback path { stroke: var(--flow-feedback); stroke-width: 2; }
 .edge-label { fill: var(--muted); font-size: 10px; paint-order: stroke; stroke: var(--surface); stroke-width: 5px; stroke-linejoin: round; }
 .lifeline { stroke: color-mix(in srgb, var(--muted), transparent 48%); stroke-dasharray: 4 5; }
 .summary-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 10px; margin-top: 12px; }
@@ -585,6 +786,12 @@ marker path { fill: var(--line); }
 #arrow-emphasis path { fill: var(--frontend); }
 #arrow-security path { fill: var(--security); }
 #arrow-dashed path { fill: var(--line); }
+#arrow-flow-control path { fill: var(--flow-control); }
+#arrow-flow-data path { fill: var(--flow-data); }
+#arrow-flow-read path { fill: var(--flow-read); }
+#arrow-flow-write path { fill: var(--flow-write); }
+#arrow-flow-async path { fill: var(--flow-async); }
+#arrow-flow-feedback path { fill: var(--flow-feedback); }
 footer { margin-top: 12px; color: var(--muted); font-size: 12px; }
 @media print {
   body { background: #fff; }
@@ -683,6 +890,17 @@ function maxBoxExtent(boxes, axis) {
  * @returns {Array<[number, number]>}
  */
 function architectureRoute(from, to, waypoints, pointer) {
+  return routeWithWaypoints(from, to, waypoints, pointer);
+}
+
+/**
+ * @param {Box} from
+ * @param {Box} to
+ * @param {unknown} waypoints
+ * @param {string} pointer
+ * @returns {Array<[number, number]>}
+ */
+function routeWithWaypoints(from, to, waypoints, pointer) {
   if (waypoints === undefined) return routeBoxes(from, to);
   if (!Array.isArray(waypoints)) throw usageError(pointer, "Expected array of [x, y] waypoints.");
   /** @type {Array<[number, number]>} */
@@ -695,6 +913,50 @@ function architectureRoute(from, to, waypoints, pointer) {
   const firstTarget = parsed[0] ?? [centerX(to), centerY(to)];
   const lastTarget = parsed[parsed.length - 1] ?? [centerX(from), centerY(from)];
   return [edgePointToward(from, firstTarget), ...parsed, edgePointToward(to, lastTarget)];
+}
+
+/**
+ * @param {string} type
+ * @param {boolean} isWorkflow
+ */
+function defaultWorkflowWidth(type, isWorkflow) {
+  if (!isWorkflow) return 132;
+  if (type === "decision") return 92;
+  if (type === "start" || type === "success" || type === "failure") return 128;
+  return 132;
+}
+
+/**
+ * @param {string} type
+ * @param {boolean} isWorkflow
+ */
+function defaultWorkflowHeight(type, isWorkflow) {
+  if (!isWorkflow) return 58;
+  if (type === "decision") return 92;
+  if (type === "start" || type === "success" || type === "failure") return 46;
+  return 58;
+}
+
+/**
+ * @param {string} type
+ * @returns {"box" | "diamond" | "terminal"}
+ */
+function shapeForWorkflowType(type) {
+  if (type === "decision") return "diamond";
+  if (type === "start" || type === "success" || type === "failure") return "terminal";
+  return "box";
+}
+
+/**
+ * @param {unknown} value
+ * @param {number} fallback
+ * @param {string} pointer
+ */
+function normalizeStep(value, fallback, pointer) {
+  if (value === undefined) return String(fallback);
+  if (typeof value === "number" && Number.isFinite(value)) return String(value);
+  if (typeof value === "string" && value.length > 0) return value;
+  throw usageError(pointer, "Expected non-empty string or finite number.");
 }
 
 /**
@@ -754,6 +1016,20 @@ function renderArchitectureLegend(items, x, y) {
 }
 
 /**
+ * @param {LegendItem[]} items
+ * @param {number} x
+ * @param {number} y
+ */
+function renderFlowLegend(items, x, y) {
+  if (items.length === 0) return "";
+  const itemSvg = items.map((item, index) => {
+    const itemX = x + index * 128;
+    return `<g class="edge flow-${item.type}"><path d="M ${itemX} ${y + 22} L ${itemX + 28} ${y + 22}" marker-end="url(#arrow-flow-${item.type})"/><text x="${itemX + 38}" y="${y + 26}" class="sublabel">${escapeHtml(item.label)}</text></g>`;
+  }).join("\n");
+  return `<g class="flow-legend"><text x="${x}" y="${y}" class="label">Flow Legend</text>\n${itemSvg}</g>`;
+}
+
+/**
  * @param {string} type
  */
 function labelForType(type) {
@@ -765,7 +1041,50 @@ function labelForType(type) {
     security: "Security",
     messagebus: "Message bus",
     external: "External",
+    agent: "Agent",
+    model: "Model",
+    memory: "Memory",
+    vectorstore: "Vector store",
+    graphdb: "Graph DB",
+    tool: "Tool",
+    document: "Document",
+    queue: "Queue",
+    browser: "Browser",
+    user: "User",
+    gateway: "Gateway",
   })[type] ?? type;
+}
+
+/**
+ * @param {string} flow
+ */
+function labelForFlow(flow) {
+  return ({
+    control: "Control",
+    data: "Data",
+    read: "Read",
+    write: "Write",
+    async: "Async",
+    feedback: "Feedback",
+  })[flow] ?? flow;
+}
+
+/**
+ * @param {unknown} legend
+ * @param {string[]} flows
+ * @returns {LegendItem[]}
+ */
+function normalizeFlowLegend(legend, flows) {
+  if (legend === false) return [];
+  if (legend !== undefined) {
+    const items = requireObjectArray(legend, "/flowLegend");
+    return items.map((item, index) => ({
+      label: requireString(item, "label", `/flowLegend/${index}/label`),
+      type: normalizeFlow(item.type, `/flowLegend/${index}/type`) ?? "control",
+    }));
+  }
+  if (flows.length < 2) return [];
+  return flows.map((flow) => ({ label: labelForFlow(flow), type: flow }));
 }
 
 /**
@@ -838,6 +1157,40 @@ function wrapLabel(value, size) {
   }
   if (line) lines.push(line);
   return lines.length > 0 ? lines : [value];
+}
+
+/**
+ * @param {string} type
+ */
+function isSemanticNodeType(type) {
+  return ["agent", "model", "memory", "vectorstore", "graphdb", "tool", "document", "queue", "browser", "user", "gateway"].includes(type);
+}
+
+/**
+ * @param {unknown} visual
+ * @param {string} pointer
+ */
+function normalizeVisualStyle(visual, pointer) {
+  if (visual === undefined) return "default";
+  assertObject(visual, pointer);
+  const style = /** @type {Record<string, unknown>} */ (visual).style;
+  if (style === undefined) return "default";
+  if (typeof style !== "string" || !VISUAL_STYLES.has(style)) {
+    throw usageError(`${pointer}/style`, `Unsupported visual style "${String(style)}".`);
+  }
+  return style;
+}
+
+/**
+ * @param {unknown} value
+ * @param {string} pointer
+ */
+function normalizeFlow(value, pointer) {
+  if (value === undefined) return "";
+  if (typeof value !== "string" || !FLOW_TYPES.has(value)) {
+    throw usageError(pointer, `Unsupported flow "${String(value)}".`);
+  }
+  return value;
 }
 
 /**
@@ -986,6 +1339,9 @@ function printReport(report, format) {
  *   label: string;
  *   sublabel: string;
  *   type: string;
+ *   actor?: string;
+ *   step?: string;
+ *   shape?: "box" | "diamond" | "terminal";
  * }} Box
  *
  * @typedef {{
@@ -1002,6 +1358,7 @@ function printReport(report, format) {
  *   edges?: Array<Record<string, unknown>>;
  *   states?: Array<Record<string, unknown>>;
  *   transitions?: Array<Record<string, unknown>>;
+ *   summary?: Array<Record<string, unknown>>;
  * }} LaneDiagram
  *
  * @typedef {{
@@ -1023,6 +1380,7 @@ function printReport(report, format) {
  *   nodes: Array<Record<string, unknown>>;
  *   connections: Array<Record<string, unknown>>;
  *   legend?: Array<Record<string, unknown>> | false;
+ *   flowLegend?: Array<Record<string, unknown>> | false;
  *   summary?: Array<Record<string, unknown>>;
  * }} ArchitectureDiagram
  *
