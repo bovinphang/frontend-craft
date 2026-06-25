@@ -15,10 +15,10 @@
             "source": {
                 "source": "npm",
                 "package": "@bovinphang/frontend-craft",
-                "version": "2.7.0"
+                "version": "2.8.0"
             },
             "description": "Enterprise frontend team Claude Code plugin — 13 agents, 45 skills, 8 commands, shared rule templates, and production-ready hooks for code review, TypeScript review, type-safety modeling, state management, Tailwind design systems, responsive layout, dependency upgrades, security review, testing strategy, E2E, component testing, route protection, API integration, backend requirements handoff, interaction motion, performance optimization, scaffolding, design-to-code (Figma/Sketch/MasterGo/Pixso/墨刀/摹客), UI design and polish, image generation, editable draw.io drawio studio, web video presentations, Vite standards, legacy-to-modern migration, React/Vue/Next.js/Nuxt/monorepo standards, PWA, Web Workers, Canvas/Three.js, SVG animation, CI/CD, architecture planning, project absorption, and UI debugging with multi-design-tool MCP integration. All reports auto-saved as Markdown files to reports/ directory.",
-            "version": "2.7.0",
+            "version": "2.8.0",
             "author": {
                 "name": "Bovin Phang",
                 "email": "pengbaowen@msn.com"
