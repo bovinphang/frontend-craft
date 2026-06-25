@@ -232,7 +232,7 @@ Marketplace が既にインストールされている場合、CLI は `--force`
 | スキル                        | 範囲                                                                                                             |
 | ----------------------------- | ---------------------------------------------------------------------------------------------------------------- |
 | `fec-ui-design`               | プロダクト文脈に沿った UI 方向性、反テンプレート設計ダイヤル、メディア戦略、状態、ビジュアル QA                  |
-| `fec-image-generation`        | 図表、画像生成/編集、ビジュアルアセット、PNG QA と修復ループ                                                     |
+| `fec-image-generation`        | システムブループリント、プロセスワークフロー、インタラクティブなライブ図、HTML/SVG/PNG エクスポート、画像生成/編集、ビジュアルアセット、PNG QA |
 | `fec-drawio-studio`           | 編集可能な draw.io / diagrams.net 技術図、XML/Mermaid/CSV URL 受け渡し、shape 検索、自動レイアウト、コード構造図 |
 | `fec-web-video-presentation`  | 記事、台本、レッスン、demo から録画可能な 16:9 step-driven Web プレゼンを作成                                    |
 | `fec-tailwind-design-system`  | Tailwind token、テーマ拡張、variants、class 管理、ダークモード                                                   |
