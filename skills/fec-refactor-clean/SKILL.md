@@ -49,3 +49,6 @@ When writing a cleanup report, load [references/report-template.md](references/r
 
 - Clean reports are saved as `reports/refactor-clean-YYYY-MM-DD-HHmmss.md`.
 - After the code is cleaned, the relevant verification commands pass, or the cause of the blocking is clearly stated.
+## Structural Refactoring Boundary
+
+This workflow owns proven dead/unused code. When code is live but structurally difficult—long functions, ownership problems, mutable/derived data, conditionals, API shape, or hierarchy design—route it to structural refactoring instead of deleting or rewriting it under cleanup.

@@ -19,3 +19,7 @@ Perform test-driven development as per `fec-tdd-workflow`.
 - Component and hook testing: `fec-component-testing`
 - Cross-page browser process: `fec-e2e-testing`
 - Test layering strategy: `fec-testing-strategy`
+
+## Boundary
+
+Use this command for new observable behavior and behavior-changing bug fixes. For pure behavior-preserving refactoring, do not invent a RED test: characterize the already-correct behavior and keep it GREEN → REFACTOR → GREEN.

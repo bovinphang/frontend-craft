@@ -8,6 +8,25 @@
 
 自 **2.0.0** 起，面向发布的说明以英文 `CHANGELOG.md` 为权威来源；历史条目可能保留最初撰写语言。
 
+## [2.9.0] - 2026-09-01
+
+### 新增
+
+- **保持行为的重构子系统**：新增 `fec-refactoring-expert`、`/fec-smell`、`/fec-refactor-plan`、`/fec-refactor`，以及 11 个重构技能，将坏味道诊断、只读规划、受控执行、行为验证、目录选择和 7 类重构手法拆分为清晰能力。
+- **完整重构知识覆盖**：以用户提供的《重构：改善既有代码的设计（第 2 版）》JavaScript 版材料为知识基线，归一化 24 种代码坏味道和第 6～12 章 61 个标准重构手法，建立稳定的 `SMELL-*` / `RF-*` 标识、选择指南、组合关系和渐进式 Reference。
+- **前端专项适配**：补充 TypeScript、React、Vue、hooks/composables、状态管理、路由、异步/生命周期、公开 API、SSR/hydration 与动态引用场景，同时避免把现代前端机械改写为 class hierarchy。
+- **简体中文重构镜像**：在 `localized/zh-CN` 和 `docs/refactoring` 中新增自然中文的 Agent、Command、Skill、目录、坏味道矩阵与导航文档。
+
+### 变更
+
+- **重构安全模型**：纯重构统一采用 `GREEN → REFACTOR → GREEN`，一次只做一个主要结构变换，每步验证；新增“先回滚再修复”、`SAFE/CAUTION/DANGER` 风险分级、差异预算，以及 `PASS/PARTIAL/NOT PROVEN` 行为保持证明等级。
+- **工作流边界**：新增行为和行为变化型缺陷仍由 TDD 负责；原因未知的失败仍由调试框架负责；已证明的死代码仍由 `fec-refactor-clean` 负责；一般 PR 合并就绪性仍由代码评审负责。
+- **公开能力数量**：README、OpenClaw 文档与 Marketplace 元数据同步为 14 个 Agent、56 个 Skill、11 个 Command。
+
+### Chore
+
+- **确定性重构验收**：新增安装级完整性检查，覆盖 24 种坏味道、61 个手法、7 个 family 数量、root/zh-CN 对齐、metadata/relations/eval 注册、命令模式、公开文档与版本同步。
+
 ## [2.8.0] - 2026-06-25
 
 ### 新增

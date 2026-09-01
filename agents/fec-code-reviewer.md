@@ -150,3 +150,6 @@ When reviewing model-assisted diffs, pay additional attention to:
 - Directory: project root directory `reports/` (create if it does not exist).
 - File name: `code-review-YYYY-MM-DD-HHmmss.md` (same as `fec-code-review` skill).
 - Inform the user of the absolute or relative path after writing.
+## Refactoring Handoff
+
+When review evidence points to a structural smell that needs deeper diagnosis, recommend `/fec-smell`. When the desired outcome is an ordered behavior-preserving change plan, recommend `/fec-refactor-plan`. Do not turn merge-readiness review into unrequested refactoring execution.

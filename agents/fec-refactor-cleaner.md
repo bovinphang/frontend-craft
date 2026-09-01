@@ -30,3 +30,6 @@ Save the report to `reports/refactor-clean-YYYY-MM-DD-HHmmss.md`, containing can
 
 - Do not remove public APIs, routes, configurations, or runtime templates that cannot be proven referenceless.
 - Do not mix schema rewrites, formatting, or feature changes into cleanup tasks.
+## Structural Refactoring Boundary
+
+If a candidate is live code whose problem is structure rather than proven unused status, stop cleanup and route it to structural refactoring. Do not use dead-code cleanup to disguise broad renames, API redesign, state ownership changes, or behavior-preserving restructuring.

@@ -32,7 +32,7 @@
 
 Per-runtime paths and caveats live in [`docs/runtimes/`](docs/runtimes/).
 
-It bundles **13 specialized agents**, **45 auto-activated skills**, **8 slash commands**, **5 event-driven hooks**, **MCP integrations** for 6 design-tool endpoints, and a complete **rules library** into a single installable package. Run one command, and every AI session on your team writes React, Vue, Next.js, or Nuxt the same way — typed, accessible, secure, and consistent.
+It bundles **14 specialized agents**, **56 auto-activated skills**, **11 slash commands**, **5 event-driven hooks**, **MCP integrations** for 6 design-tool endpoints, and a complete **rules library** into a single installable package. Run one command, and every AI session on your team writes React, Vue, Next.js, or Nuxt the same way — typed, accessible, secure, and consistent.
 
 ---
 
@@ -40,10 +40,10 @@ It bundles **13 specialized agents**, **45 auto-activated skills**, **8 slash co
 
 | Problem                                                              | What frontend-craft does                                                                       |
 | -------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------- |
-| AI assistants write inconsistent, untyped, or insecure frontend code | **45 skills** encode team standards — auto-activated when the assistant touches matching files |
+| AI assistants write inconsistent, untyped, or insecure frontend code | **56 skills** encode team standards — auto-activated when the assistant touches matching files |
 | Each AI tool has its own plugin format                               | **One CLI** installs the same rules, agents, and hooks into 15 runtimes                        |
 | Design-to-code handoff is lossy                                      | **MCP integrations** bring in richer context from Figma, Figma Desktop, Sketch, MasterGo, Pixso, and 墨刀 |
-| Reviews are ad-hoc and shallow                                       | **13 agents** produce graded reports: code, security, a11y, performance, TS, UI fidelity       |
+| Reviews are ad-hoc and shallow                                       | **14 agents** produce graded reports: code, security, a11y, performance, TS, UI fidelity       |
 | No one remembers to run lint/tests                                   | **Event-driven hooks** validate on save and session end — automatically                        |
 | New projects start from scratch every time                           | **`/fec-init`** scaffolds CLAUDE.md, rules, and settings in seconds                            |
 
@@ -134,6 +134,9 @@ You: "/fec-scaffold dashboard feature"
 
 You: "/fec-refactor-clean"
 → Classifies and safely removes dead code, unused exports, styles, and deps
+
+You: "/fec-refactor src/features/compose"
+→ Diagnoses structural smells, builds a small-step plan, refactors one behavior-preserving step at a time, and validates every step
 ```
 
 All slash commands below are shown for **Claude Code**; other runtimes expose the same capabilities through their own command systems (see [`docs/runtimes/`](docs/runtimes/)).
@@ -150,6 +153,9 @@ You: "Before coding, plan the account billing feature: route structure, componen
 You: "Build a multi-step registration form; choose the right form and schema validation approach for this project, with file upload, conditional fields, async validation, and accessible errors."
 You: "Implement the UI from Figma node 123:456. Use existing design tokens and components, match spacing and responsive states, and document assumptions."
 You: "`/fec-refactor-clean` Clean up dead code in this module."
+You: "`/fec-smell` Diagnose structural smells in this module without editing."
+You: "`/fec-refactor-plan` Build a behavior-preserving small-step refactoring plan."
+You: "`/fec-refactor` Refactor this module without changing observable behavior."
 ```
 
 ---
@@ -169,6 +175,9 @@ Slash commands are the primary entry points for structured workflows. Most produ
 | `/fec-tdd`            | Red → green → refactor loop for frontend TDD                           | —                                                |
 | `/fec-debug`          | Diagnose and fix frontend issues: build, runtime, UI, and API failures | `debug-*.md`                                     |
 | `/fec-refactor-clean` | Classify and safely remove dead code, unused exports, styles, and deps | `refactor-clean-*.md`                            |
+| `/fec-smell`          | Diagnose code smells with evidence; do not edit business code             | `refactoring/smell-*.md`                       |
+| `/fec-refactor-plan`  | Build an ordered behavior-preserving refactoring plan                      | `refactoring/plan-*.md`                        |
+| `/fec-refactor`       | Execute one validated behavior-preserving refactoring step at a time       | `refactoring/refactoring-*.md`                 |
 | `/fec-doc-sync`       | Sync READMEs, docs, env notes, scripts, API/route notes, and deploy docs | —                                                |
 
 ### Skills (auto-activated)
@@ -227,6 +236,22 @@ The skills below are grouped by use case so you can quickly find project standar
 | `fec-performance-optimization` | Core Web Vitals, bundle, rendering, memory, network, and budget reviews       |
 | `fec-refactor-clean`           | Safe dead-code, unused export, style, route, dependency cleanup               |
 
+**Refactoring** — activated for evidence-based, behavior-preserving structural improvement:
+
+| Skill | Purpose |
+| --- | --- |
+| `fec-refactoring` | Orchestrate classification, baseline, safety, small-step execution, rollback, and proof |
+| `fec-code-smells` | Diagnose the 24 canonical code smells with evidence and false-positive checks |
+| `fec-refactoring-catalog` | Select and compose techniques from the complete 61-item catalog |
+| `fec-refactoring-functions` | Function decomposition, naming, variable, parameter-object, and phase refactorings |
+| `fec-refactoring-encapsulation` | Record, collection, primitive, class, delegate, and algorithm encapsulation refactorings |
+| `fec-refactoring-move-features` | Move functions/fields/statements, split loops, pipelines, and dead-code routing |
+| `fec-refactoring-data` | Variable/field and reference/value data refactorings |
+| `fec-refactoring-control` | Conditional decomposition, guards, polymorphic dispatch, special cases, assertions |
+| `fec-refactoring-api` | Query/modifier, parameter, flag, factory, command, and API-shape refactorings |
+| `fec-refactoring-inheritance` | Inheritance/delegation refactorings with composition-first frontend adaptations |
+| `fec-refactoring-validation` | Behavior-preservation contracts, coverage levels, verification ladder, proof verdicts |
+
 **Design UI** — activated for design-to-code, design systems, and visual polish:
 
 | Skill                         | Scope                                                                         |
@@ -276,6 +301,7 @@ Agents are specialized sub-agents dispatched by the main assistant to handle a f
 | `fec-test-planner`          | Risk-to-layer matrix: static, unit, component, E2E, visual, a11y, security | `test-plan-*.md`             |
 | `fec-debugger`              | Complex frontend diagnostics for build, runtime, UI, and API failures      | `debug-*.md`                 |
 | `fec-refactor-cleaner`      | Classify and safely remove unused code, exports, styles, routes, deps      | `refactor-clean-*.md`        |
+| `fec-refactoring-expert`   | Evidence-based behavior-preserving refactoring orchestration              | `refactoring/refactoring-*.md` |
 | `fec-e2e-runner`            | E2E authoring and runs (Playwright/Cypress), flaky quarantine, traces      | `e2e-summary-*.md`           |
 | `fec-doc-updater`           | Sync README, runtime docs, structure, capability tables, metadata          | —                            |
 | `fec-ui-checker`            | Visual issue debugging and design fidelity evaluation                      | `ui-fidelity-review-*.md`    |
@@ -390,7 +416,7 @@ $env:MODAO_TOKEN = "your-modao-token"
 Every review, analysis, and evaluation writes a timestamped Markdown report to `reports/`. These serve as an audit trail and a handoff artifact for PRs.
 
 <details>
-<summary>Click to see all 16 report types</summary>
+<summary>Click to see all 19 report types</summary>
 
 | Report type            | Filename pattern                             | Produced by                                                         |
 | ---------------------- | -------------------------------------------- | ------------------------------------------------------------------- |
@@ -408,6 +434,9 @@ Every review, analysis, and evaluation writes a timestamped Markdown report to `
 | Test plan              | `test-plan-YYYY-MM-DD-HHmmss.md`             | `/fec-plan`, `fec-testing-strategy`, `fec-test-planner`             |
 | Validation fix         | `validation-fix-YYYY-MM-DD-HHmmss.md`        | `fec-validation-fix`                                                |
 | Refactor clean         | `refactor-clean-YYYY-MM-DD-HHmmss.md`        | `/fec-refactor-clean`, `fec-refactor-clean`, `fec-refactor-cleaner` |
+| Smell diagnosis       | `refactoring/smell-YYYY-MM-DD-HHmmss.md`     | `/fec-smell`, `fec-code-smells`                                  |
+| Refactoring plan      | `refactoring/plan-YYYY-MM-DD-HHmmss.md`      | `/fec-refactor-plan`, `fec-refactoring`                           |
+| Refactoring execution | `refactoring/refactoring-YYYY-MM-DD-HHmmss.md` | `/fec-refactor`, `fec-refactoring`, `fec-refactoring-expert`    |
 | E2E run summary        | `e2e-summary-YYYY-MM-DD-HHmmss.md`           | `fec-e2e-runner` (optional)                                         |
 | Migration plan         | `migration-plan-YYYY-MM-DD-HHmmss.md`        | `fec-legacy-to-modern-migration`                                    |
 

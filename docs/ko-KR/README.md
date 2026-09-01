@@ -32,7 +32,7 @@
 
 각 런타임의 경로와 주의사항은 [`docs/runtimes/`](../runtimes/)에 있습니다.
 
-**13개의 전문 에이전트**, **45개의 자동 활성화 스킬**, **8개의 슬래시 명령어**, **5개의 이벤트 기반 훅**, 6개 디자인 도구 엔드포인트를 위한 **MCP 통합**, 그리고 완전한 **규칙 라이브러리**를 하나의 설치 가능한 패키지로 묶었습니다. 명령어 하나만 실행하면, 팀의 모든 AI 세션이 React, Vue, Next.js, Nuxt를 같은 방식으로 작성합니다 — 타입 안전하고, 접근성 있고, 안전하며, 일관성 있게.
+**14개의 전문 에이전트**, **56개의 자동 활성화 스킬**, **11개의 슬래시 명령어**, **5개의 이벤트 기반 훅**, 6개 디자인 도구 엔드포인트를 위한 **MCP 통합**, 그리고 완전한 **규칙 라이브러리**를 하나의 설치 가능한 패키지로 묶었습니다. 명령어 하나만 실행하면, 팀의 모든 AI 세션이 React, Vue, Next.js, Nuxt를 같은 방식으로 작성합니다 — 타입 안전하고, 접근성 있고, 안전하며, 일관성 있게.
 
 ---
 
@@ -40,10 +40,10 @@
 
 | 문제점                                                                       | frontend-craft의 해결책                                                                                     |
 | ---------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------- |
-| AI 어시스턴트가 일관성 없고, 타입 없고, 안전하지 않은 프론트엔드 코드를 작성 | **45개 스킬**이 팀 표준을 인코딩 — 해당 파일을 건드릴 때 자동 활성화                                        |
+| AI 어시스턴트가 일관성 없고, 타입 없고, 안전하지 않은 프론트엔드 코드를 작성 | **56개 스킬**이 팀 표준을 인코딩 — 해당 파일을 건드릴 때 자동 활성화                                        |
 | AI 도구마다 플러그인 형식이 다름                                             | **하나의 CLI**로 동일한 규칙, 에이전트, 훅을 15개 런타임에 설치                                             |
 | 디자인에서 코드로의 전달 과정에서 정보 손실                                  | **MCP 통합**이 Figma, Figma Desktop, Sketch, MasterGo, Pixso, 墨刀에서 더 풍부한 디자인 컨텍스트를 가져오기 |
-| 리뷰가 즉흥적이고 얕음                                                       | **13개 에이전트**가 등급별 보고서 출력: 코드, 보안, 접근성, 성능, TS, UI 충실도                             |
+| 리뷰가 즉흥적이고 얕음                                                       | **14개 에이전트**가 등급별 보고서 출력: 코드, 보안, 접근성, 성능, TS, UI 충실도                             |
 | 아무도 lint와 테스트 실행을 기억하지 못함                                    | **이벤트 기반 훅**이 저장 시와 세션 종료 시 자동 검증                                                       |
 | 새 프로젝트가 매번 처음부터 시작                                             | **`/fec-init`**이 몇 초 만에 CLAUDE.md, 규칙, 설정을 스캐폴드                                               |
 
@@ -169,6 +169,9 @@ Marketplace가 이미 설치된 경우, `--force`를 사용해도 CLI는 두 번
 | `/fec-tdd`            | 빨강 → 초록 → 리팩토링 프론트엔드 TDD 루프                           | —                                                  |
 | `/fec-debug`          | 프론트엔드 문제 진단 및 수정: 빌드, 런타임, UI, API 장애             | `debug-*.md`                                       |
 | `/fec-refactor-clean` | 데드 코드, 미사용 export, 스타일, 의존성을 분류하고 안전하게 제거    | `refactor-clean-*.md`                              |
+| `/fec-smell` | Diagnose code smells without editing | `refactoring/smell-*.md` |
+| `/fec-refactor-plan` | Plan behavior-preserving refactoring | `refactoring/plan-*.md` |
+| `/fec-refactor` | Execute validated behavior-preserving refactoring | `refactoring/refactoring-*.md` |
 | `/fec-doc-sync`       | README, docs, 환경 변수, 스크립트, API/라우트 설명, 배포 문서 동기화 | —                                                  |
 
 ### 스킬 (자동 활성화)
@@ -227,6 +230,22 @@ Marketplace가 이미 설치된 경우, `--force`를 사용해도 CLI는 두 번
 | `fec-performance-optimization` | Core Web Vitals, 번들, 렌더링, 메모리, 네트워크, 성능 예산 리뷰 |
 | `fec-refactor-clean`           | 데드 코드, 미사용 export, 스타일, 라우트, 의존성의 안전한 정리  |
 
+**Refactoring**
+
+| Skill | Scope |
+| --- | --- |
+| `fec-refactoring` | Behavior-preserving refactoring capability |
+| `fec-code-smells` | Behavior-preserving refactoring capability |
+| `fec-refactoring-catalog` | Behavior-preserving refactoring capability |
+| `fec-refactoring-functions` | Behavior-preserving refactoring capability |
+| `fec-refactoring-encapsulation` | Behavior-preserving refactoring capability |
+| `fec-refactoring-move-features` | Behavior-preserving refactoring capability |
+| `fec-refactoring-data` | Behavior-preserving refactoring capability |
+| `fec-refactoring-control` | Behavior-preserving refactoring capability |
+| `fec-refactoring-api` | Behavior-preserving refactoring capability |
+| `fec-refactoring-inheritance` | Behavior-preserving refactoring capability |
+| `fec-refactoring-validation` | Behavior-preserving refactoring capability |
+
 **디자인 UI** — 디자인 구현, 디자인 시스템, 시각적 마무리에서 활성화:
 
 | 스킬                          | 범위                                                                                                                     |
@@ -276,6 +295,7 @@ Marketplace가 이미 설치된 경우, `--force`를 사용해도 CLI는 두 번
 | `fec-test-planner`          | 위험→계층 매트릭스: 정적, 단위, 컴포넌트, E2E, 시각, 접근성, 보안 | `test-plan-*.md`             |
 | `fec-debugger`              | 빌드, 런타임, UI, API 장애에 대한 복잡한 프론트엔드 진단          | `debug-*.md`                 |
 | `fec-refactor-cleaner`      | 미사용 코드, export, 스타일, 라우트, 의존성 분류 및 안전한 제거   | `refactor-clean-*.md`        |
+| `fec-refactoring-expert` | Behavior-preserving refactoring orchestration | `refactoring/refactoring-*.md` |
 | `fec-e2e-runner`            | E2E 작성 및 실행 (Playwright/Cypress), flaky 격리, 트레이스       | `e2e-summary-*.md`           |
 | `fec-doc-updater`           | README, 런타임 문서, 구조, 기능 표, 메타데이터 동기화             | —                            |
 | `fec-ui-checker`            | 시각적 문제 디버깅 및 디자인 충실도 평가                          | `ui-fidelity-review-*.md`    |

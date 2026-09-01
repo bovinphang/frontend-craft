@@ -1009,5 +1009,249 @@
       "Manipulate DOM and update UI",
       "Write component tests"
     ]
+  },
+  "fec-refactoring": {
+    "should_trigger": [
+      "Keep observable behavior unchanged while restructuring this frontend module.",
+      "Refactor this function in small verified steps without changing its output or side effects.",
+      "Improve the structure of this React feature but preserve behavior exactly.",
+      "Clean up the architecture of this Vue composable without adding features.",
+      "Use a diff budget and rollback boundary for this behavior-preserving refactor.",
+      "Restructure this TypeScript service with a green baseline before and after each step.",
+      "Refactor this code with SAFE CAUTION DANGER risk classification.",
+      "Plan and execute a behavior-preserving refactoring with verification after every step."
+    ],
+    "should_not_trigger": [
+      "Remove unused components and dependencies from this project.",
+      "Fix this duplicate-request bug and change behavior so only one request is sent.",
+      "Migrate this Redux store to Zustand.",
+      "Review this PR and tell me whether it is safe to merge.",
+      "Debug why this page renders a blank screen.",
+      "Implement a new payment workflow using TDD.",
+      "Upgrade Vite and update all breaking configuration changes.",
+      "Add a new responsive dashboard from this Figma design."
+    ]
+  },
+  "fec-code-smells": {
+    "should_trigger": [
+      "Diagnose code smells in Compose.tsx but do not edit the code.",
+      "Find structural smells in this Vue store and give evidence only.",
+      "Is this long function actually a Long Function smell? Analyze false positives first.",
+      "Identify duplicated code smells in these handlers without changing them.",
+      "Assess whether these repeated switches are a real smell or a valid dispatcher.",
+      "Find data clumps in these function signatures and report candidates.",
+      "Diagnose Feature Envy between this component and domain service.",
+      "Review this module for the 24 canonical code smells and rank findings by confidence."
+    ],
+    "should_not_trigger": [
+      "Remove unused components and dependencies from this project.",
+      "Fix this duplicate-request bug and change behavior so only one request is sent.",
+      "Migrate this Redux store to Zustand.",
+      "Review this PR and tell me whether it is safe to merge.",
+      "Debug why this page renders a blank screen.",
+      "Implement a new payment workflow using TDD.",
+      "Upgrade Vite and update all breaking configuration changes.",
+      "Add a new responsive dashboard from this Figma design."
+    ]
+  },
+  "fec-refactoring-catalog": {
+    "should_trigger": [
+      "Which refactoring should I choose for this diagnosed Long Function?",
+      "Compare Extract Function and Split Phase for this existing behavior.",
+      "Show a safe sequence of refactorings for this Shotgun Surgery smell.",
+      "Choose among candidates for Mutable Data without changing behavior.",
+      "What technique should follow Replace Temp with Query here?",
+      "Compare inverse refactorings Hide Delegate and Remove Middle Man.",
+      "Pick the smallest canonical refactoring that fits this evidence.",
+      "Compose a safe refactoring sequence from the 61-technique catalog."
+    ],
+    "should_not_trigger": [
+      "Remove unused components and dependencies from this project.",
+      "Fix this duplicate-request bug and change behavior so only one request is sent.",
+      "Migrate this Redux store to Zustand.",
+      "Review this PR and tell me whether it is safe to merge.",
+      "Debug why this page renders a blank screen.",
+      "Implement a new payment workflow using TDD.",
+      "Upgrade Vite and update all breaking configuration changes.",
+      "Add a new responsive dashboard from this Figma design."
+    ]
+  },
+  "fec-refactoring-functions": {
+    "should_trigger": [
+      "Keep behavior unchanged and split this function into named operations.",
+      "These ten parameters always travel together; how should I restructure them?",
+      "Rename this private function and migrate callers without changing behavior.",
+      "Extract a variable to explain this complex calculation while preserving evaluation order.",
+      "Inline this trivial helper if the name adds no value.",
+      "Encapsulate this shared module variable before changing its representation.",
+      "Group these related functions around one shared data context without forcing a class.",
+      "Split this parse normalize validate submit routine into phases."
+    ],
+    "should_not_trigger": [
+      "Remove unused components and dependencies from this project.",
+      "Fix this duplicate-request bug and change behavior so only one request is sent.",
+      "Migrate this Redux store to Zustand.",
+      "Review this PR and tell me whether it is safe to merge.",
+      "Debug why this page renders a blank screen.",
+      "Implement a new payment workflow using TDD.",
+      "Upgrade Vite and update all breaking configuration changes.",
+      "Add a new responsive dashboard from this Figma design."
+    ]
+  },
+  "fec-refactoring-encapsulation": {
+    "should_trigger": [
+      "Encapsulate this mutable collection so components cannot splice it directly.",
+      "Replace this repeated email string validation with a value abstraction.",
+      "Extract this responsibility from a large service into a cohesive owner.",
+      "Inline this class because it now only forwards one method.",
+      "Hide this deep delegate navigation from UI clients.",
+      "Remove this pass-through middle-man wrapper without changing behavior.",
+      "Replace this temporary derived value with a query so extraction is easier.",
+      "Substitute this algorithm but preserve ordering errors and output exactly."
+    ],
+    "should_not_trigger": [
+      "Remove unused components and dependencies from this project.",
+      "Fix this duplicate-request bug and change behavior so only one request is sent.",
+      "Migrate this Redux store to Zustand.",
+      "Review this PR and tell me whether it is safe to merge.",
+      "Debug why this page renders a blank screen.",
+      "Implement a new payment workflow using TDD.",
+      "Upgrade Vite and update all breaking configuration changes.",
+      "Add a new responsive dashboard from this Figma design."
+    ]
+  },
+  "fec-refactoring-move-features": {
+    "should_trigger": [
+      "Move this function to the module that owns the data it uses.",
+      "Move this field to its real owner while preserving serialization.",
+      "Move these repeated statements into the called function.",
+      "Move caller-specific policy out of this shared function.",
+      "Replace this equivalent inline check with the existing function call.",
+      "Slide these independent statements together before extraction.",
+      "Split this loop into two focused passes without changing results.",
+      "Replace this transformation loop with a clear pipeline; keep ordering the same."
+    ],
+    "should_not_trigger": [
+      "Remove unused components and dependencies from this project.",
+      "Fix this duplicate-request bug and change behavior so only one request is sent.",
+      "Migrate this Redux store to Zustand.",
+      "Review this PR and tell me whether it is safe to merge.",
+      "Debug why this page renders a blank screen.",
+      "Implement a new payment workflow using TDD.",
+      "Upgrade Vite and update all breaking configuration changes.",
+      "Add a new responsive dashboard from this Figma design."
+    ]
+  },
+  "fec-refactoring-data": {
+    "should_trigger": [
+      "Split this reused variable so each name has one meaning.",
+      "Rename this internal field while preserving the backend DTO key.",
+      "Replace stored derived state with a query and check memoization semantics.",
+      "Decide whether this shared mutable object should use value semantics.",
+      "Change these duplicate entity snapshots to canonical references.",
+      "Refactor this React state model without changing object-identity behavior.",
+      "Reorganize this Vue reactive data while preserving proxy identity semantics.",
+      "Assess reference versus value semantics for this TypeScript domain object."
+    ],
+    "should_not_trigger": [
+      "Remove unused components and dependencies from this project.",
+      "Fix this duplicate-request bug and change behavior so only one request is sent.",
+      "Migrate this Redux store to Zustand.",
+      "Review this PR and tell me whether it is safe to merge.",
+      "Debug why this page renders a blank screen.",
+      "Implement a new payment workflow using TDD.",
+      "Upgrade Vite and update all breaking configuration changes.",
+      "Add a new responsive dashboard from this Figma design."
+    ]
+  },
+  "fec-refactoring-control": {
+    "should_trigger": [
+      "Decompose this complex conditional without changing which branch runs.",
+      "Consolidate these conditions that all produce the same result.",
+      "Use guard clauses to flatten this nested logic while preserving finally cleanup.",
+      "Replace repeated variant conditionals with an appropriate strategy or typed dispatch.",
+      "Introduce a special case for repeated unknown-contact handling.",
+      "Introduce an assertion for this internal invariant, not user input validation.",
+      "Simplify this nested if else without changing outputs or side-effect order.",
+      "Choose between discriminated union dispatch and polymorphism for these repeated variants."
+    ],
+    "should_not_trigger": [
+      "Remove unused components and dependencies from this project.",
+      "Fix this duplicate-request bug and change behavior so only one request is sent.",
+      "Migrate this Redux store to Zustand.",
+      "Review this PR and tell me whether it is safe to merge.",
+      "Debug why this page renders a blank screen.",
+      "Implement a new payment workflow using TDD.",
+      "Upgrade Vite and update all breaking configuration changes.",
+      "Add a new responsive dashboard from this Figma design."
+    ]
+  },
+  "fec-refactoring-api": {
+    "should_trigger": [
+      "Separate this query from its state-changing side effect.",
+      "Parameterize these duplicate functions that differ only by one value.",
+      "Remove this behavior flag and expose explicit operations.",
+      "Preserve this whole object instead of passing six extracted fields.",
+      "Replace this parameter with a stable query and assess hidden dependency risk.",
+      "Replace this hidden global query with an explicit parameter for testability.",
+      "Remove this setter because the value should be immutable after creation.",
+      "Replace this constructor with a named factory function.",
+      "Replace this upload function with a command because it has retry progress and audit state.",
+      "Collapse this trivial command object back to a function."
+    ],
+    "should_not_trigger": [
+      "Remove unused components and dependencies from this project.",
+      "Fix this duplicate-request bug and change behavior so only one request is sent.",
+      "Migrate this Redux store to Zustand.",
+      "Review this PR and tell me whether it is safe to merge.",
+      "Debug why this page renders a blank screen.",
+      "Implement a new payment workflow using TDD.",
+      "Upgrade Vite and update all breaking configuration changes.",
+      "Add a new responsive dashboard from this Figma design."
+    ]
+  },
+  "fec-refactoring-inheritance": {
+    "should_trigger": [
+      "Pull this duplicated method up in a legacy TypeScript class hierarchy.",
+      "Push this field down because only one subtype owns it.",
+      "Move common constructor initialization to the superclass safely.",
+      "Replace this type-code hierarchy with an appropriate subtype or strategy model.",
+      "Remove this subclass because it has no meaningful behavior left.",
+      "Extract a superclass only if these legacy classes are genuinely substitutable.",
+      "Collapse this redundant inheritance level without changing instanceof-sensitive behavior.",
+      "Replace this inaccurate superclass relationship with delegation."
+    ],
+    "should_not_trigger": [
+      "Remove unused components and dependencies from this project.",
+      "Fix this duplicate-request bug and change behavior so only one request is sent.",
+      "Migrate this Redux store to Zustand.",
+      "Review this PR and tell me whether it is safe to merge.",
+      "Debug why this page renders a blank screen.",
+      "Implement a new payment workflow using TDD.",
+      "Upgrade Vite and update all breaking configuration changes.",
+      "Add a new responsive dashboard from this Figma design."
+    ]
+  },
+  "fec-refactoring-validation": {
+    "should_trigger": [
+      "Define the behavior-preservation contract before this refactor.",
+      "What safety net is enough for this CAUTION refactoring?",
+      "Build a validation ladder for this behavior-preserving change.",
+      "Decide PASS PARTIAL or NOT PROVEN for this refactoring evidence.",
+      "Create characterization tests for existing behavior before restructuring.",
+      "Define a diff budget and rollback boundary for this structural change.",
+      "Check UI state event network and lifecycle behavior before and after refactoring.",
+      "Validate this refactoring with green baseline and step-level rollback."
+    ],
+    "should_not_trigger": [
+      "Remove unused components and dependencies from this project.",
+      "Fix this duplicate-request bug and change behavior so only one request is sent.",
+      "Migrate this Redux store to Zustand.",
+      "Review this PR and tell me whether it is safe to merge.",
+      "Debug why this page renders a blank screen.",
+      "Implement a new payment workflow using TDD.",
+      "Upgrade Vite and update all breaking configuration changes.",
+      "Add a new responsive dashboard from this Figma design."
+    ]
   }
 }

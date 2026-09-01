@@ -19,3 +19,7 @@ description: 使用前端 TDD 工作流实现功能、修复 Bug 或重构逻辑
 - 组件和 hook 测试：`fec-component-testing`
 - 跨页浏览器流程：`fec-e2e-testing`
 - 测试分层策略：`fec-testing-strategy`
+
+## 边界
+
+本命令主要用于新增可观察行为和会改变行为的 Bug 修复。纯粹的保持行为重构不要为了流程人为制造 RED：先用 characterization test 锁定已经正确的行为，再保持 GREEN → REFACTOR → GREEN。

@@ -12,3 +12,4 @@ skill-packages/
 *.log
 *.tgz
 docs/superpowers/
+.worktrees/

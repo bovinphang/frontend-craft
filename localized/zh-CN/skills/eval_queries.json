@@ -1009,5 +1009,249 @@
       "操作 DOM 更新 UI",
       "写组件测试"
     ]
+  },
+  "fec-refactoring": {
+    "should_trigger": [
+      "保持行为不变，重构这个前端模块。",
+      "这个函数只做结构调整，每一步都验证，不改输出和副作用。",
+      "给这个 React 功能做保持行为重构，并设置差异预算。",
+      "这个 Vue composable 只优化结构，不增加新功能。",
+      "按 SAFE/CAUTION/DANGER 给这次重构分级并小步执行。",
+      "先建立绿色基线，再重构这个 TypeScript service，最后回到绿色。",
+      "为这次保持行为重构设置回滚边界。",
+      "按一次一个重构手法执行并给出最终证明。"
+    ],
+    "should_not_trigger": [
+      "删除没用的 React 组件和 npm 依赖。",
+      "修复这个会发两次请求的 bug。",
+      "把 Redux 迁移到 Zustand。",
+      "审查这个 PR 是否可以合并。",
+      "排查为什么这个页面白屏。",
+      "用 TDD 新增支付功能。",
+      "把 Vite 升级并处理 breaking changes。",
+      "按 Figma 新增一个响应式页面。"
+    ]
+  },
+  "fec-code-smells": {
+    "should_trigger": [
+      "帮我找 Compose.tsx 里的坏味道，先不要改代码。",
+      "只诊断这个 Vue store 的结构坏味道并给证据。",
+      "这个函数很长，但它真的属于过长函数吗？先检查误判。",
+      "分析这些 handler 是否存在重复代码坏味道，不要修改。",
+      "判断这些重复 switch 是坏味道还是合理的集中分派。",
+      "这 10 个参数总是一起出现，判断是否属于数据泥团。",
+      "分析这个 helper 是否依恋另一个 domain module。",
+      "按 24 种坏味道扫描这个模块并按置信度排序。"
+    ],
+    "should_not_trigger": [
+      "删除没用的 React 组件和 npm 依赖。",
+      "修复这个会发两次请求的 bug。",
+      "把 Redux 迁移到 Zustand。",
+      "审查这个 PR 是否可以合并。",
+      "排查为什么这个页面白屏。",
+      "用 TDD 新增支付功能。",
+      "把 Vite 升级并处理 breaking changes。",
+      "按 Figma 新增一个响应式页面。"
+    ]
+  },
+  "fec-refactoring-catalog": {
+    "should_trigger": [
+      "这个过长函数应该选哪种重构手法？",
+      "比较提炼函数和拆分阶段，哪个更适合当前证据？",
+      "给这个霰弹式修改选择一个安全的重构顺序。",
+      "可变数据有多个候选手法，帮我按前置条件选择。",
+      "以查询取代临时变量之后，什么情况下再提炼函数？",
+      "比较隐藏委托关系和移除中间人的适用边界。",
+      "从 61 种手法中选择最小安全变换。",
+      "根据现有证据组合一个可逐步验证的重构序列。"
+    ],
+    "should_not_trigger": [
+      "删除没用的 React 组件和 npm 依赖。",
+      "修复这个会发两次请求的 bug。",
+      "把 Redux 迁移到 Zustand。",
+      "审查这个 PR 是否可以合并。",
+      "排查为什么这个页面白屏。",
+      "用 TDD 新增支付功能。",
+      "把 Vite 升级并处理 breaking changes。",
+      "按 Figma 新增一个响应式页面。"
+    ]
+  },
+  "fec-refactoring-functions": {
+    "should_trigger": [
+      "保持行为不变，把这个同时处理校验、请求和状态更新的函数拆开。",
+      "这 10 个参数总是一起出现，怎么整理比较合适？",
+      "给这个私有函数改名并安全迁移调用者。",
+      "提炼变量解释这个复杂表达式，但保持求值顺序。",
+      "这个 helper 太薄了，判断是否适合内联函数。",
+      "先封装这个共享模块变量，再改变它的表示。",
+      "这些函数共享同一数据上下文，组合起来但不要强制 class。",
+      "把 parse、normalize、validate、submit 拆成明确阶段。"
+    ],
+    "should_not_trigger": [
+      "删除没用的 React 组件和 npm 依赖。",
+      "修复这个会发两次请求的 bug。",
+      "把 Redux 迁移到 Zustand。",
+      "审查这个 PR 是否可以合并。",
+      "排查为什么这个页面白屏。",
+      "用 TDD 新增支付功能。",
+      "把 Vite 升级并处理 breaking changes。",
+      "按 Figma 新增一个响应式页面。"
+    ]
+  },
+  "fec-refactoring-encapsulation": {
+    "should_trigger": [
+      "封装这个集合，别让组件直接 splice。",
+      "这个 email 字符串到处重复校验，考虑以对象取代基本类型。",
+      "从这个过大的 service 提炼一个独立职责。",
+      "这个 class 只剩转发了，判断是否适合内联类。",
+      "隐藏 UI 里这条很深的对象导航链。",
+      "这个 wrapper 几乎全是转发，考虑移除中间人。",
+      "把这个临时派生值替换为查询，为后续提炼做准备。",
+      "替换这个算法，但顺序、异常和结果必须完全一致。"
+    ],
+    "should_not_trigger": [
+      "删除没用的 React 组件和 npm 依赖。",
+      "修复这个会发两次请求的 bug。",
+      "把 Redux 迁移到 Zustand。",
+      "审查这个 PR 是否可以合并。",
+      "排查为什么这个页面白屏。",
+      "用 TDD 新增支付功能。",
+      "把 Vite 升级并处理 breaking changes。",
+      "按 Figma 新增一个响应式页面。"
+    ]
+  },
+  "fec-refactoring-move-features": {
+    "should_trigger": [
+      "把这个函数搬到真正拥有它所用数据的模块。",
+      "把这个字段搬到真正的数据所有者，同时保留序列化契约。",
+      "这些调用点总有相同前置语句，把它们搬进函数。",
+      "这段策略只对部分调用者成立，把语句移回调用端。",
+      "这段内联判断和已有函数完全等价，用函数调用取代。",
+      "先安全移动这些独立语句，让后续提炼更清晰。",
+      "这个循环同时做两件事，拆成两个循环并保持结果。",
+      "这个数组循环本质是过滤映射，考虑改为管道并保持顺序。"
+    ],
+    "should_not_trigger": [
+      "删除没用的 React 组件和 npm 依赖。",
+      "修复这个会发两次请求的 bug。",
+      "把 Redux 迁移到 Zustand。",
+      "审查这个 PR 是否可以合并。",
+      "排查为什么这个页面白屏。",
+      "用 TDD 新增支付功能。",
+      "把 Vite 升级并处理 breaking changes。",
+      "按 Figma 新增一个响应式页面。"
+    ]
+  },
+  "fec-refactoring-data": {
+    "should_trigger": [
+      "这个变量前后代表两种含义，拆成两个变量。",
+      "内部字段改名，但后端 DTO key 不能变。",
+      "不要重复存派生状态，改成查询并检查 memoization。",
+      "判断这个共享可变对象是否应该改为值语义。",
+      "这些实体副本代表同一用户，考虑改为规范引用。",
+      "重构这段 React 状态，但对象 identity 行为不能变。",
+      "重组 Vue reactive 数据，同时保持 proxy identity 和 watch 行为。",
+      "分析这个 TypeScript domain object 应该用 reference 还是 value。"
+    ],
+    "should_not_trigger": [
+      "删除没用的 React 组件和 npm 依赖。",
+      "修复这个会发两次请求的 bug。",
+      "把 Redux 迁移到 Zustand。",
+      "审查这个 PR 是否可以合并。",
+      "排查为什么这个页面白屏。",
+      "用 TDD 新增支付功能。",
+      "把 Vite 升级并处理 breaking changes。",
+      "按 Figma 新增一个响应式页面。"
+    ]
+  },
+  "fec-refactoring-control": {
+    "should_trigger": [
+      "在不改变输出的前提下简化这个嵌套 if/else。",
+      "这些条件都返回同一个结果，判断能否合并条件表达式。",
+      "用卫语句拉平这段逻辑，但不能跳过 finally 和 loading 清理。",
+      "重复的 variant 条件改成合适的 strategy 或类型安全分派。",
+      "这些 unknown contact 检查重复出现，考虑引入特例。",
+      "这个内部不变量适合引入断言，但不要代替用户输入校验。",
+      "分解这个复杂条件，并保持短路和副作用顺序。",
+      "比较 discriminated union、strategy map 和 class polymorphism。"
+    ],
+    "should_not_trigger": [
+      "删除没用的 React 组件和 npm 依赖。",
+      "修复这个会发两次请求的 bug。",
+      "把 Redux 迁移到 Zustand。",
+      "审查这个 PR 是否可以合并。",
+      "排查为什么这个页面白屏。",
+      "用 TDD 新增支付功能。",
+      "把 Vite 升级并处理 breaking changes。",
+      "按 Figma 新增一个响应式页面。"
+    ]
+  },
+  "fec-refactoring-api": {
+    "should_trigger": [
+      "把这个既查询又修改状态的函数拆开。",
+      "几个函数只差一个数值，考虑函数参数化。",
+      "这个 boolean 是行为 flag，改成意图明确的 API。",
+      "不要从同一个对象拆六个字段传参，考虑保持对象完整。",
+      "这个参数可以从稳定上下文查到，分析能否以查询取代参数。",
+      "把函数内部的全局查询改成显式参数，提高可测试性。",
+      "这个字段创建后不应再改，移除设值函数。",
+      "这个构造过程需要有名字的创建策略，改成工厂函数。",
+      "这个上传操作有 retry、progress、audit 状态，评估以命令取代函数。",
+      "这个 Command 已经没有状态和生命周期，考虑以函数取代命令。"
+    ],
+    "should_not_trigger": [
+      "删除没用的 React 组件和 npm 依赖。",
+      "修复这个会发两次请求的 bug。",
+      "把 Redux 迁移到 Zustand。",
+      "审查这个 PR 是否可以合并。",
+      "排查为什么这个页面白屏。",
+      "用 TDD 新增支付功能。",
+      "把 Vite 升级并处理 breaking changes。",
+      "按 Figma 新增一个响应式页面。"
+    ]
+  },
+  "fec-refactoring-inheritance": {
+    "should_trigger": [
+      "legacy TypeScript 继承树里两个子类有相同方法，评估函数上移。",
+      "这个字段只属于一个 subtype，考虑字段下移。",
+      "把重复构造初始化安全地上移到父类。",
+      "类型码驱动重复行为，比较子类和 strategy/discriminated union。",
+      "这个子类已经没有独立行为，判断能否移除。",
+      "只有存在真实替换关系时才提炼超类，帮我分析。",
+      "这个继承层级没有差异了，保持行为地折叠它。",
+      "这个 extends 只是为了复用实现，考虑以委托取代超类。"
+    ],
+    "should_not_trigger": [
+      "删除没用的 React 组件和 npm 依赖。",
+      "修复这个会发两次请求的 bug。",
+      "把 Redux 迁移到 Zustand。",
+      "审查这个 PR 是否可以合并。",
+      "排查为什么这个页面白屏。",
+      "用 TDD 新增支付功能。",
+      "把 Vite 升级并处理 breaking changes。",
+      "按 Figma 新增一个响应式页面。"
+    ]
+  },
+  "fec-refactoring-validation": {
+    "should_trigger": [
+      "为这次重构定义行为保持契约。",
+      "这个 CAUTION 重构需要什么安全网才够？",
+      "为保持行为变换设计从窄到宽的验证阶梯。",
+      "根据当前证据判断 PASS、PARTIAL 还是 NOT PROVEN。",
+      "给现有行为补 characterization test 再重构。",
+      "给这个结构变化定义差异预算和回滚边界。",
+      "重构前后检查 UI 状态、事件、网络和生命周期行为。",
+      "按绿色基线和逐步回滚规则验证这次重构。"
+    ],
+    "should_not_trigger": [
+      "删除没用的 React 组件和 npm 依赖。",
+      "修复这个会发两次请求的 bug。",
+      "把 Redux 迁移到 Zustand。",
+      "审查这个 PR 是否可以合并。",
+      "排查为什么这个页面白屏。",
+      "用 TDD 新增支付功能。",
+      "把 Vite 升级并处理 breaking changes。",
+      "按 Figma 新增一个响应式页面。"
+    ]
   }
 }

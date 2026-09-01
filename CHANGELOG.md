@@ -9,6 +9,25 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 Project-facing release notes are maintained in English from 2.0.0 onward. Historical entries may preserve their original language.
 
+## [2.9.0] - 2026-09-01
+
+### Added
+
+- **Behavior-preserving refactoring subsystem:** added `fec-refactoring-expert`, `/fec-smell`, `/fec-refactor-plan`, `/fec-refactor`, and 11 refactoring skills that separate diagnosis, planning, execution, validation, catalog selection, and seven technique families.
+- **Complete refactoring knowledge coverage:** normalized the supplied 24 code smells and 61 refactoring techniques from Chapters 6–12 into stable `SMELL-*` / `RF-*` identifiers, selection guidance, composition relationships, and progressive references.
+- **Frontend-specific refactoring adaptation:** added TypeScript, React, Vue, hooks/composables, state, routing, async/lifecycle, public API, SSR/hydration, and dynamic-reference guidance without forcing class-based patterns into modern frontend code.
+- **Simplified Chinese refactoring mirror:** added natural Chinese Agent, Command, Skill, catalog, smell matrix, and refactoring navigation content under `localized/zh-CN` and `docs/refactoring`.
+
+### Changed
+
+- **Refactoring safety model:** pure refactoring now uses `GREEN → REFACTOR → GREEN`, one primary transformation at a time, step-level verification, rollback-before-repair, `SAFE/CAUTION/DANGER` risk classification, diff budgets, and `PASS/PARTIAL/NOT PROVEN` proof verdicts.
+- **Workflow boundaries:** clarified that new behavior and behavior-changing defects remain in TDD, unexplained failures remain in debugging, proven dead code remains in `fec-refactor-clean`, and general merge-readiness remains in code review.
+- **Public capability counts:** documentation and Marketplace metadata now advertise 14 agents, 56 skills, and 11 commands.
+
+### Chore
+
+- **Deterministic refactoring coverage:** added install-time integrity checks for 24 smells, 61 techniques, family totals, root/zh-CN alignment, metadata/relations/eval registration, command modes, public docs, and version synchronization.
+
 ## [2.8.0] - 2026-06-25
 
 ### Added

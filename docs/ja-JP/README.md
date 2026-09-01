@@ -32,7 +32,7 @@
 
 各ランタイムのパスと注意事項は [`docs/runtimes/`](../runtimes/) にあります。
 
-**13 の専門エージェント**、**45 の自動起動スキル**、**8 のスラッシュコマンド**、**5 のイベント駆動フック**、6 つのデザインツールエンドポイント向け **MCP 統合**、そして完全な**ルールライブラリ**をひとつのパッケージにまとめています。コマンドひとつ実行するだけで、チームのすべての AI セッションが React、Vue、Next.js、Nuxt を同じように書きます——型安全で、アクセシブルで、セキュアで、一貫性を持って。
+**14 の専門エージェント**、**56 の自動起動スキル**、**11 のスラッシュコマンド**、**5 のイベント駆動フック**、6 つのデザインツールエンドポイント向け **MCP 統合**、そして完全な**ルールライブラリ**をひとつのパッケージにまとめています。コマンドひとつ実行するだけで、チームのすべての AI セッションが React、Vue、Next.js、Nuxt を同じように書きます——型安全で、アクセシブルで、セキュアで、一貫性を持って。
 
 ---
 
@@ -40,10 +40,10 @@
 
 | 課題                                                                          | frontend-craft の解決策                                                                                        |
 | ----------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------- |
-| AI アシスタントが一貫性のない、型なしの、安全でないフロントエンドコードを書く | **45 のスキル**がチーム標準をエンコード——該当ファイルに触れると自動起動                                        |
+| AI アシスタントが一貫性のない、型なしの、安全でないフロントエンドコードを書く | **56 のスキル**がチーム標準をエンコード——該当ファイルに触れると自動起動                                        |
 | AI ツールごとにプラグイン形式が異なる                                         | **ひとつの CLI** で同じルール、エージェント、フックを 15 のランタイムにインストール                            |
 | デザインからコードへの受け渡しで情報が失われる                                | **MCP 統合**が Figma、Figma Desktop、Sketch、MasterGo、Pixso、墨刀からより豊富なデザインコンテキストを取り込み |
-| レビューが場当たり的で浅い                                                    | **13 のエージェント**がグレード付きレポートを出力：コード、セキュリティ、a11y、パフォーマンス、TS、UI 忠実度   |
+| レビューが場当たり的で浅い                                                    | **14 のエージェント**がグレード付きレポートを出力：コード、セキュリティ、a11y、パフォーマンス、TS、UI 忠実度   |
 | 誰も lint やテストを実行するのを忘れる                                        | **イベント駆動フック**が保存時とセッション終了時に自動検証                                                     |
 | 新規プロジェクトが毎回ゼロから始まる                                          | **`/fec-init`** が CLAUDE.md、ルール、設定を数秒でスキャフォールド                                             |
 
@@ -169,6 +169,9 @@ Marketplace が既にインストールされている場合、CLI は `--force`
 | `/fec-tdd`            | 赤 → 緑 → リファクタリングのフロントエンド TDD ループ                  | —                                                    |
 | `/fec-debug`          | フロントエンド問題の診断と修復：ビルド、ランタイム、UI、API 障害       | `debug-*.md`                                         |
 | `/fec-refactor-clean` | デッドコード、未使用 export、スタイル、依存関係を分類して安全に削除    | `refactor-clean-*.md`                                |
+| `/fec-smell` | Diagnose code smells without editing | `refactoring/smell-*.md` |
+| `/fec-refactor-plan` | Plan behavior-preserving refactoring | `refactoring/plan-*.md` |
+| `/fec-refactor` | Execute validated behavior-preserving refactoring | `refactoring/refactoring-*.md` |
 | `/fec-doc-sync`       | README、docs、環境変数、スクリプト、API/ルート説明、デプロイ文書を同期 | —                                                    |
 
 ### スキル（自動起動）
@@ -227,6 +230,22 @@ Marketplace が既にインストールされている場合、CLI は `--force`
 | `fec-performance-optimization` | Core Web Vitals、バンドル、レンダリング、メモリ、ネットワーク、予算レビュー   |
 | `fec-refactor-clean`           | デッドコード、未使用 export、スタイル、ルート、依存関係の安全なクリーンアップ |
 
+**Refactoring**
+
+| Skill | Scope |
+| --- | --- |
+| `fec-refactoring` | Behavior-preserving refactoring capability |
+| `fec-code-smells` | Behavior-preserving refactoring capability |
+| `fec-refactoring-catalog` | Behavior-preserving refactoring capability |
+| `fec-refactoring-functions` | Behavior-preserving refactoring capability |
+| `fec-refactoring-encapsulation` | Behavior-preserving refactoring capability |
+| `fec-refactoring-move-features` | Behavior-preserving refactoring capability |
+| `fec-refactoring-data` | Behavior-preserving refactoring capability |
+| `fec-refactoring-control` | Behavior-preserving refactoring capability |
+| `fec-refactoring-api` | Behavior-preserving refactoring capability |
+| `fec-refactoring-inheritance` | Behavior-preserving refactoring capability |
+| `fec-refactoring-validation` | Behavior-preserving refactoring capability |
+
 **デザイン UI** — デザイン実装、デザインシステム、視覚仕上げで起動：
 
 | スキル                        | 範囲                                                                                                             |
@@ -276,6 +295,7 @@ Marketplace が既にインストールされている場合、CLI は `--force`
 | `fec-test-planner`          | リスク→階層マトリクス：静的、ユニット、コンポーネント、E2E、視覚、a11y、セキュリティ | `test-plan-*.md`             |
 | `fec-debugger`              | ビルド、ランタイム、UI、API 障害の複雑なフロントエンド診断                           | `debug-*.md`                 |
 | `fec-refactor-cleaner`      | 未使用コード、export、スタイル、ルート、依存関係の分類と安全な削除                   | `refactor-clean-*.md`        |
+| `fec-refactoring-expert` | Behavior-preserving refactoring orchestration | `refactoring/refactoring-*.md` |
 | `fec-e2e-runner`            | E2E 作成と実行（Playwright/Cypress）、flaky 隔離、トレース                           | `e2e-summary-*.md`           |
 | `fec-doc-updater`           | README、ランタイムドキュメント、構造、機能表、メタデータの同期                       | —                            |
 | `fec-ui-checker`            | 視覚的問題のデバッグとデザイン忠実度評価                                             | `ui-fidelity-review-*.md`    |

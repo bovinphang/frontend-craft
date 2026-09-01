@@ -105,6 +105,14 @@ Each example follows the same shape:
 | E2E smoke test      | "Add Playwright smoke tests for login and checkout. Use Page Objects, stable selectors, CI-friendly retries, and trace artifacts on failure."                 | skill: `fec-e2e-testing` · agent: `fec-e2e-runner` | E2E tests, runner guidance, and summary report. | Include test account or mock strategy.              |
 | Flaky E2E diagnosis | "The checkout E2E test is flaky in CI. Analyze likely timing, network, storage, and selector issues, then stabilize it without hiding failures."              | skill: `fec-e2e-testing` · agent: `fec-e2e-runner` | Root-cause analysis and targeted fix.           | Include CI logs or traces.                          |
 
+## Refactoring
+
+| Scenario | Prompt | Best for | Expected output | Notes |
+| --- | --- | --- | --- | --- |
+| Smell diagnosis only | "Use `/fec-smell` on `src/features/compose/`. Show evidence, confidence, false-positive checks, and candidate techniques; do not edit business code." | cmd: `/fec-smell` · skill: `fec-code-smells` | Prioritized smell report. | Use when you want diagnosis before committing to a change. |
+| Refactoring plan only | "Use `/fec-refactor-plan` to turn the current compose-module smells into ordered, small, behavior-preserving steps with risk, diff budget, validation, and rollback boundaries." | cmd: `/fec-refactor-plan` · skill: `fec-refactoring` | Refactoring plan. | Plan-only; no source edits. |
+| Behavior-preserving execution | "Use `/fec-refactor` on this validation/request/state function. Keep observable behavior unchanged, apply one main transformation at a time, verify each step, and revert before repairing a regression." | cmd: `/fec-refactor` · agent: `fec-refactoring-expert` | Validated refactoring plus report. | Pure refactoring uses GREEN → REFACTOR → GREEN. |
+
 ## Debugging
 
 | Scenario             | Prompt                                                                                                                                                                                              | Best for                              | Expected output                                                              | Notes                                                                       |

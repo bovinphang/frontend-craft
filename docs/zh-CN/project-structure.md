@@ -17,6 +17,7 @@ frontend-craft/
 |   |-- fec-test-planner.md # 测试策略、风险矩阵、覆盖规划
 |   |-- fec-debugger.md # 复杂构建/运行时/UI/API 问题诊断
 |   |-- fec-refactor-cleaner.md # 死代码和未使用依赖清理
+|   |-- fec-refactoring-expert.md # 保持行为的坏味道诊断、规划、执行与验证
 |   |-- fec-doc-updater.md # README/runtime 文档/能力表同步
 |   |-- fec-e2e-runner.md     # E2E 编写、执行、flaky 治理、产物、CI
 |   |-- fec-typescript-reviewer.md    # TS/JS 类型安全、异步、报告式评审
@@ -42,6 +43,17 @@ frontend-craft/
 |   |-- fec-dependency-upgrade/       # 依赖升级、lockfile 风险和 CVE 修复
 |   |-- fec-tdd-workflow/              # 测试先行的前端实现工作流
 |   |-- fec-refactor-clean/            # 安全清理死代码和未使用依赖
+|   |-- fec-refactoring/              # 保持行为的重构核心流程与安全门禁
+|   |-- fec-code-smells/               # 24 种坏味道的证据化诊断
+|   |-- fec-refactoring-catalog/       # 61 项手法的选择与组合目录
+|   |-- fec-refactoring-functions/     # 函数类重构
+|   |-- fec-refactoring-encapsulation/ # 封装类重构
+|   |-- fec-refactoring-move-features/ # 搬移特性类重构
+|   |-- fec-refactoring-data/          # 数据类重构
+|   |-- fec-refactoring-control/       # 条件/控制流重构
+|   |-- fec-refactoring-api/           # API 类重构
+|   |-- fec-refactoring-inheritance/   # 继承/委托类重构
+|   |-- fec-refactoring-validation/    # 行为保持验证与证明等级
 |   |-- fec-doc-sync/                  # 公开文档和 metadata 同步
 |   |-- fec-legacy-web-standard/     # JS + jQuery + HTML 遗留项目规范
 |   |-- fec-legacy-to-modern-migration/ # jQuery/MPA 迁移到 React/Vue 的策略和工作流
@@ -80,6 +92,9 @@ frontend-craft/
 |   |-- fec-tdd.md      # /fec-tdd - 测试驱动的前端实现
 |   |-- fec-debug.md    # /fec-debug - 诊断并修复前端问题
 |   |-- fec-refactor-clean.md # /fec-refactor-clean - 安全清理死代码
+|   |-- fec-smell.md          # /fec-smell - 只读代码坏味道诊断
+|   |-- fec-refactor-plan.md  # /fec-refactor-plan - 只读小步重构计划
+|   |-- fec-refactor.md       # /fec-refactor - 受控的保持行为重构执行
 |   |-- fec-doc-sync.md # /fec-doc-sync - 公开文档和 metadata 同步
 |
 |-- hooks/            # 事件驱动自动化

@@ -105,6 +105,14 @@
 | E2E 冒烟测试   | 「请为登录和 checkout 添加 Playwright 冒烟测试。使用 Page Object、稳定选择器、CI 友好的重试，并在失败时保留 trace。」 | skill: `fec-e2e-testing` · agent: `fec-e2e-runner` | E2E 测试、运行说明和摘要报告。 | 补充测试账号或 mock 策略。      |
 | flaky E2E 排查 | 「checkout E2E 在 CI 中不稳定。请分析 timing、网络、存储和选择器问题，然后稳定它，不要隐藏真实失败。」                | skill: `fec-e2e-testing` · agent: `fec-e2e-runner` | 根因分析和针对性修复。         | 提供 CI 日志或 trace。          |
 
+## 重构
+
+| 场景 | 提示词 | 适用能力 | 预期产物 | 补充说明 |
+| --- | --- | --- | --- | --- |
+| 只诊断坏味道 | 「对 `src/features/compose/` 使用 `/fec-smell`：给出证据、置信度、误判检查和候选手法，先不要修改业务代码。」 | cmd: `/fec-smell` · skill: `fec-code-smells` | 按优先级排序的坏味道报告。 | 适合先判断是否值得重构。 |
+| 只做重构计划 | 「使用 `/fec-refactor-plan`，把当前写信模块的坏味道整理成有顺序的小步计划，写明风险、差异预算、验证和回滚边界，保持行为不变。」 | cmd: `/fec-refactor-plan` · skill: `fec-refactoring` | 重构计划。 | 只规划，不改源码。 |
+| 保持行为执行 | 「使用 `/fec-refactor` 重构这个同时处理校验、请求和状态更新的函数。保持可观察行为不变，每次只做一个主要变换，每步验证；出现回归先回滚当前步骤。」 | cmd: `/fec-refactor` · agent: `fec-refactoring-expert` | 已验证的重构及报告。 | 纯重构遵循 GREEN → REFACTOR → GREEN。 |
+
 ## 调试
 
 | 场景               | 提示词                                                                                                                                      | 适用能力                              | 预期产物                                            | 补充说明                                          |

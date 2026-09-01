@@ -141,3 +141,6 @@ When writing a code review report, load [references/report-template.md](referenc
 - The review report is saved as `reports/code-review-YYYY-MM-DD-HHmmss.md`
 - Multi-dimensional reviews should consolidate duplicate findings and explain which special capabilities have been diverted to
 - Label uncertain items with required verification commands or supplementary context, and do not write guesses into facts
+## Refactoring Boundary
+
+A general review may flag maintainability evidence, but dedicated smell diagnosis or a behavior-preserving refactoring plan owns deeper structural analysis. Review should not silently execute structural changes; it can recommend diagnosis/planning when a finding needs systematic transformation.

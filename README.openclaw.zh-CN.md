@@ -22,6 +22,8 @@
 
 `frontend-craft` 是 [frontend-craft](https://github.com/bovinphang/frontend-craft) 的 OpenClaw 原生打包产物，包含工作流技能、Markdown 命令、OpenClaw 工作区模板、typed hooks、设计工具 MCP 参考配置，以及可选的 `frontend_craft_init_workspace` 初始化工具。
 
+该包提供 **14 个专业智能体（Agent）**、**56 个工作流技能**和 **11 个 Markdown 命令**。
+
 **环境要求：** Node.js **>= 22**，OpenClaw plugin API **>= 2026.4.20**。
 
 ---
@@ -136,7 +138,7 @@ frontend-craft/
 
 ### 技能
 
-OpenClaw 包包含 `skills/` 下全部 45 个公开工作流技能，按使用场景分组如下。
+OpenClaw 包包含 `skills/` 下全部 56 个公开工作流技能，按使用场景分组如下。
 
 **项目规范**
 
@@ -187,6 +189,22 @@ OpenClaw 包包含 `skills/` 下全部 45 个公开工作流技能，按使用�
 | `fec-validation-fix`           | 执行校验命令、分析失败并安全修复                         |
 | `fec-performance-optimization` | Core Web Vitals、bundle、渲染、内存、网络和预算评审      |
 | `fec-refactor-clean`           | 安全清理死代码、未用导出、样式、路由与依赖               |
+
+**重构**
+
+| 技能 | 用途 |
+| --- | --- |
+| `fec-refactoring` | 保持行为的重构编排与安全工作流 |
+| `fec-code-smells` | 基于证据诊断 24 种标准代码坏味道 |
+| `fec-refactoring-catalog` | 在 61 项标准手法中选择和组合 |
+| `fec-refactoring-functions` | 函数类重构 |
+| `fec-refactoring-encapsulation` | 封装类重构 |
+| `fec-refactoring-move-features` | 搬移特性类重构与清理路由 |
+| `fec-refactoring-data` | 数据重构 |
+| `fec-refactoring-control` | 条件/控制流重构 |
+| `fec-refactoring-api` | API 重构 |
+| `fec-refactoring-inheritance` | 继承/委托重构 |
+| `fec-refactoring-validation` | 行为保持验证与证明等级 |
 
 **设计 UI**
 
@@ -281,6 +299,9 @@ OpenClaw 包包含 `skills/` 下全部 45 个公开工作流技能，按使用�
 | `fec-tdd.md`             | 使用 red-green-refactor 的测试驱动实现流程。                                             | 「这个筛选组件请按 TDD 做：先写失败测试，再实现最小行为。」                                                       |
 | `fec-debug.md`           | 诊断构建、运行时、UI 或 API/data 失败。                                                  | 「登录后 dashboard 崩溃，请检查错误路径、定位根因，并写一份 debug 报告。」                                        |
 | `fec-refactor-clean.md`  | 分类并安全清理死代码、未用导出、样式和依赖。                                             | 「清理 `src/features/billing/` 里的未用导出和样式，保持行为不变并报告变更。」                                     |
+| `fec-smell.md`         | 诊断结构代码坏味道，不修改业务代码。                                                     | 「找出 `Compose.tsx` 的代码坏味道并给出证据，先不要改。」                                                       |
+| `fec-refactor-plan.md` | 生成有顺序、保持行为的小步重构计划。                                                     | 「先为这个大型写信模块设计安全重构计划，不改代码。」                                                         |
+| `fec-refactor.md`      | 一次执行一个经过验证的保持行为重构步骤。                                                 | 「保持可观察行为不变地重构这个模块，并逐步验证。」                                                           |
 | `fec-doc-sync.md`        | 同步 README、文档、环境说明、脚本列表、API/路由说明和部署事实。                          | 「检查 README 命令列表是否还匹配 package scripts，并更新漂移的文档。」                                            |
 
 ### Hooks

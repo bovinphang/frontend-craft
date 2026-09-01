@@ -17,6 +17,7 @@ frontend-craft/
 |   |-- fec-test-planner.md # Testing strategy, risk matrix, coverage planning
 |   |-- fec-debugger.md # Complex build/runtime/UI/API diagnostics
 |   |-- fec-refactor-cleaner.md # Dead-code and unused dependency cleanup
+|   |-- fec-refactoring-expert.md # Behavior-preserving smell diagnosis, planning, execution, validation
 |   |-- fec-doc-updater.md # README/runtime docs/capability table synchronization
 |   |-- fec-e2e-runner.md     # E2E authoring, execution, flaky handling, artifacts, CI
 |   |-- fec-typescript-reviewer.md    # TS/JS type safety, async, security, report-only review
@@ -45,6 +46,17 @@ frontend-craft/
 |   |-- fec-dependency-upgrade/       # Dependency upgrades, lockfile risk, CVE remediation
 |   |-- fec-tdd-workflow/              # Test-first frontend implementation workflow
 |   |-- fec-refactor-clean/            # Safe dead-code and unused dependency cleanup
+|   |-- fec-refactoring/              # Core behavior-preserving refactoring workflow and safety gates
+|   |-- fec-code-smells/               # 24-smell evidence-based diagnosis
+|   |-- fec-refactoring-catalog/       # 61-technique selection and composition catalog
+|   |-- fec-refactoring-functions/     # Function family refactorings
+|   |-- fec-refactoring-encapsulation/ # Encapsulation family refactorings
+|   |-- fec-refactoring-move-features/ # Moving-feature family refactorings
+|   |-- fec-refactoring-data/          # Data family refactorings
+|   |-- fec-refactoring-control/       # Conditional/control family refactorings
+|   |-- fec-refactoring-api/           # API family refactorings
+|   |-- fec-refactoring-inheritance/   # Inheritance/delegation family refactorings
+|   |-- fec-refactoring-validation/    # Behavior-preservation validation and proof levels
 |   |-- fec-doc-sync/                  # Public docs and metadata synchronization
 |   |-- fec-legacy-web-standard/     # JS + jQuery + HTML legacy project standards
 |   |-- fec-legacy-to-modern-migration/ # jQuery/MPA migration to React/Vue strategy and workflow
@@ -83,6 +95,9 @@ frontend-craft/
 |   |-- fec-tdd.md      # /fec-tdd - Test-driven frontend implementation
 |   |-- fec-debug.md    # /fec-debug - Diagnose and fix frontend failures
 |   |-- fec-refactor-clean.md # /fec-refactor-clean - Safe dead-code cleanup
+|   |-- fec-smell.md          # /fec-smell - Read-only code-smell diagnosis
+|   |-- fec-refactor-plan.md  # /fec-refactor-plan - Read-only small-step refactoring plan
+|   |-- fec-refactor.md       # /fec-refactor - Controlled behavior-preserving execution
 |   |-- fec-doc-sync.md # /fec-doc-sync - Public docs and metadata sync
 |
 |-- hooks/            # Event-driven automation

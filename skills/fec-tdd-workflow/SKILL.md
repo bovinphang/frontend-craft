@@ -1,6 +1,6 @@
 ---
 name: fec-tdd-workflow
-description: Use when implementing new frontend behavior, fixing bugs, or refactoring logic where tests can describe the expected behavior first. Apply to components, hooks/composables, utilities, API clients, route guards, or user workflows; Chinese triggers include TDD, test-driven, write tests first, red-green refactoring, regression testing.
+description: Use when implementing new observable frontend behavior or fixing a behavior-changing bug where a failing test can describe the missing or incorrect behavior first. Apply to components, hooks/composables, utilities, API clients, route guards, or user workflows; pure behavior-preserving refactoring uses an already-green contract instead.
 ---
 
 # Front-end TDD workflow
@@ -22,6 +22,10 @@ Use the rhythm of "write failing tests first, then implement the minimum code, a
 6. Refactor naming, boundaries and duplication logic while keeping tests passing.
 7. Fix bugs and retain regression tests that can reproduce the problem.
 8. Only one observable behavior is expanded in each round; new requirements, new boundaries and new abnormal paths enter the next round respectively.
+
+## Pure Refactoring Boundary
+
+Pure behavior-preserving refactoring does not manufacture a failing test. If existing behavior is already correct and the goal is structural only, establish or add characterization coverage that passes for the current behavior, then keep it green through each refactoring step. Use RED → GREEN → REFACTOR for new behavior or a behavior-changing defect fix; use GREEN → REFACTOR → GREEN for pure refactoring.
 
 ## Prove-It Pattern
 

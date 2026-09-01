@@ -751,5 +751,269 @@
       "performance",
       "main-thread"
     ]
+  },
+  "fec-refactoring": {
+    "relatedSkills": [
+      "fec-code-smells",
+      "fec-refactoring-catalog",
+      "fec-refactoring-validation",
+      "fec-refactor-clean",
+      "fec-code-review",
+      "fec-tdd-workflow",
+      "fec-debug-framework",
+      "fec-validation-fix",
+      "fec-testing-strategy"
+    ],
+    "boundaryWorkflows": [
+      "已证明未使用的代码、导出、样式、路由、fixture 或依赖使用死代码清理能力。",
+      "新增可观察行为或修复会改变行为的缺陷时使用 TDD。",
+      "故障原因未知时先使用调试流程。",
+      "重构前已经存在且原因明确的 lint、typecheck、test 或 build 失败使用验证修复。",
+      "判断 PR 是否可合并时使用代码审查，而不是直接执行结构修改。",
+      "依赖、框架、路由器、状态库或平台替换属于迁移/架构规划，不作为普通保持行为重构处理。"
+    ],
+    "capabilityTags": [
+      "refactoring",
+      "behavior-preservation",
+      "workflow",
+      "validation"
+    ]
+  },
+  "fec-code-smells": {
+    "relatedSkills": [
+      "fec-refactoring",
+      "fec-refactoring-catalog",
+      "fec-code-review"
+    ],
+    "boundaryWorkflows": [
+      "已证明未使用的代码、导出、样式、路由、fixture 或依赖使用死代码清理能力。",
+      "新增可观察行为或修复会改变行为的缺陷时使用 TDD。",
+      "故障原因未知时先使用调试流程。",
+      "重构前已经存在且原因明确的 lint、typecheck、test 或 build 失败使用验证修复。",
+      "判断 PR 是否可合并时使用代码审查，而不是直接执行结构修改。",
+      "依赖、框架、路由器、状态库或平台替换属于迁移/架构规划，不作为普通保持行为重构处理。"
+    ],
+    "capabilityTags": [
+      "code-smells",
+      "diagnosis",
+      "maintainability",
+      "evidence"
+    ]
+  },
+  "fec-refactoring-catalog": {
+    "relatedSkills": [
+      "fec-refactoring",
+      "fec-code-smells",
+      "fec-refactoring-functions",
+      "fec-refactoring-encapsulation",
+      "fec-refactoring-move-features",
+      "fec-refactoring-data",
+      "fec-refactoring-control",
+      "fec-refactoring-api",
+      "fec-refactoring-inheritance",
+      "fec-refactoring-validation"
+    ],
+    "boundaryWorkflows": [
+      "已证明未使用的代码、导出、样式、路由、fixture 或依赖使用死代码清理能力。",
+      "新增可观察行为或修复会改变行为的缺陷时使用 TDD。",
+      "故障原因未知时先使用调试流程。",
+      "重构前已经存在且原因明确的 lint、typecheck、test 或 build 失败使用验证修复。",
+      "判断 PR 是否可合并时使用代码审查，而不是直接执行结构修改。",
+      "依赖、框架、路由器、状态库或平台替换属于迁移/架构规划，不作为普通保持行为重构处理。"
+    ],
+    "capabilityTags": [
+      "refactoring",
+      "catalog",
+      "selection",
+      "composition"
+    ]
+  },
+  "fec-refactoring-functions": {
+    "relatedSkills": [
+      "fec-refactoring",
+      "fec-code-smells",
+      "fec-refactoring-catalog",
+      "fec-refactoring-validation",
+      "fec-typescript-project-standard"
+    ],
+    "boundaryWorkflows": [
+      "已证明未使用的代码、导出、样式、路由、fixture 或依赖使用死代码清理能力。",
+      "新增可观察行为或修复会改变行为的缺陷时使用 TDD。",
+      "故障原因未知时先使用调试流程。",
+      "重构前已经存在且原因明确的 lint、typecheck、test 或 build 失败使用验证修复。",
+      "判断 PR 是否可合并时使用代码审查，而不是直接执行结构修改。",
+      "依赖、框架、路由器、状态库或平台替换属于迁移/架构规划，不作为普通保持行为重构处理。"
+    ],
+    "capabilityTags": [
+      "refactoring",
+      "functions",
+      "parameters",
+      "decomposition"
+    ]
+  },
+  "fec-refactoring-encapsulation": {
+    "relatedSkills": [
+      "fec-refactoring",
+      "fec-code-smells",
+      "fec-refactoring-catalog",
+      "fec-refactoring-validation",
+      "fec-state-management"
+    ],
+    "boundaryWorkflows": [
+      "已证明未使用的代码、导出、样式、路由、fixture 或依赖使用死代码清理能力。",
+      "新增可观察行为或修复会改变行为的缺陷时使用 TDD。",
+      "故障原因未知时先使用调试流程。",
+      "重构前已经存在且原因明确的 lint、typecheck、test 或 build 失败使用验证修复。",
+      "判断 PR 是否可合并时使用代码审查，而不是直接执行结构修改。",
+      "依赖、框架、路由器、状态库或平台替换属于迁移/架构规划，不作为普通保持行为重构处理。"
+    ],
+    "capabilityTags": [
+      "refactoring",
+      "encapsulation",
+      "delegation",
+      "value-object"
+    ]
+  },
+  "fec-refactoring-move-features": {
+    "relatedSkills": [
+      "fec-refactoring",
+      "fec-code-smells",
+      "fec-refactoring-catalog",
+      "fec-refactoring-validation",
+      "fec-refactor-clean"
+    ],
+    "boundaryWorkflows": [
+      "已证明未使用的代码、导出、样式、路由、fixture 或依赖使用死代码清理能力。",
+      "新增可观察行为或修复会改变行为的缺陷时使用 TDD。",
+      "故障原因未知时先使用调试流程。",
+      "重构前已经存在且原因明确的 lint、typecheck、test 或 build 失败使用验证修复。",
+      "判断 PR 是否可合并时使用代码审查，而不是直接执行结构修改。",
+      "依赖、框架、路由器、状态库或平台替换属于迁移/架构规划，不作为普通保持行为重构处理。"
+    ],
+    "capabilityTags": [
+      "refactoring",
+      "move-function",
+      "ownership",
+      "loops"
+    ]
+  },
+  "fec-refactoring-data": {
+    "relatedSkills": [
+      "fec-refactoring",
+      "fec-code-smells",
+      "fec-refactoring-catalog",
+      "fec-refactoring-validation",
+      "fec-state-management",
+      "fec-typescript-project-standard"
+    ],
+    "boundaryWorkflows": [
+      "已证明未使用的代码、导出、样式、路由、fixture 或依赖使用死代码清理能力。",
+      "新增可观察行为或修复会改变行为的缺陷时使用 TDD。",
+      "故障原因未知时先使用调试流程。",
+      "重构前已经存在且原因明确的 lint、typecheck、test 或 build 失败使用验证修复。",
+      "判断 PR 是否可合并时使用代码审查，而不是直接执行结构修改。",
+      "依赖、框架、路由器、状态库或平台替换属于迁移/架构规划，不作为普通保持行为重构处理。"
+    ],
+    "capabilityTags": [
+      "refactoring",
+      "data",
+      "derived-state",
+      "identity"
+    ]
+  },
+  "fec-refactoring-control": {
+    "relatedSkills": [
+      "fec-refactoring",
+      "fec-code-smells",
+      "fec-refactoring-catalog",
+      "fec-refactoring-validation",
+      "fec-typescript-project-standard"
+    ],
+    "boundaryWorkflows": [
+      "已证明未使用的代码、导出、样式、路由、fixture 或依赖使用死代码清理能力。",
+      "新增可观察行为或修复会改变行为的缺陷时使用 TDD。",
+      "故障原因未知时先使用调试流程。",
+      "重构前已经存在且原因明确的 lint、typecheck、test 或 build 失败使用验证修复。",
+      "判断 PR 是否可合并时使用代码审查，而不是直接执行结构修改。",
+      "依赖、框架、路由器、状态库或平台替换属于迁移/架构规划，不作为普通保持行为重构处理。"
+    ],
+    "capabilityTags": [
+      "refactoring",
+      "conditionals",
+      "guard-clauses",
+      "polymorphism"
+    ]
+  },
+  "fec-refactoring-api": {
+    "relatedSkills": [
+      "fec-refactoring",
+      "fec-code-smells",
+      "fec-refactoring-catalog",
+      "fec-refactoring-validation",
+      "fec-api-integration",
+      "fec-typescript-project-standard"
+    ],
+    "boundaryWorkflows": [
+      "已证明未使用的代码、导出、样式、路由、fixture 或依赖使用死代码清理能力。",
+      "新增可观察行为或修复会改变行为的缺陷时使用 TDD。",
+      "故障原因未知时先使用调试流程。",
+      "重构前已经存在且原因明确的 lint、typecheck、test 或 build 失败使用验证修复。",
+      "判断 PR 是否可合并时使用代码审查，而不是直接执行结构修改。",
+      "依赖、框架、路由器、状态库或平台替换属于迁移/架构规划，不作为普通保持行为重构处理。"
+    ],
+    "capabilityTags": [
+      "refactoring",
+      "api",
+      "parameters",
+      "dependencies"
+    ]
+  },
+  "fec-refactoring-inheritance": {
+    "relatedSkills": [
+      "fec-refactoring",
+      "fec-code-smells",
+      "fec-refactoring-catalog",
+      "fec-refactoring-validation",
+      "fec-typescript-project-standard",
+      "fec-legacy-to-modern-migration"
+    ],
+    "boundaryWorkflows": [
+      "已证明未使用的代码、导出、样式、路由、fixture 或依赖使用死代码清理能力。",
+      "新增可观察行为或修复会改变行为的缺陷时使用 TDD。",
+      "故障原因未知时先使用调试流程。",
+      "重构前已经存在且原因明确的 lint、typecheck、test 或 build 失败使用验证修复。",
+      "判断 PR 是否可合并时使用代码审查，而不是直接执行结构修改。",
+      "依赖、框架、路由器、状态库或平台替换属于迁移/架构规划，不作为普通保持行为重构处理。"
+    ],
+    "capabilityTags": [
+      "refactoring",
+      "inheritance",
+      "delegation",
+      "composition"
+    ]
+  },
+  "fec-refactoring-validation": {
+    "relatedSkills": [
+      "fec-refactoring",
+      "fec-testing-strategy",
+      "fec-tdd-workflow",
+      "fec-validation-fix",
+      "fec-debug-framework",
+      "fec-code-review"
+    ],
+    "boundaryWorkflows": [
+      "已证明未使用的代码、导出、样式、路由、fixture 或依赖使用死代码清理能力。",
+      "新增可观察行为或修复会改变行为的缺陷时使用 TDD。",
+      "故障原因未知时先使用调试流程。",
+      "重构前已经存在且原因明确的 lint、typecheck、test 或 build 失败使用验证修复。",
+      "判断 PR 是否可合并时使用代码审查，而不是直接执行结构修改。",
+      "依赖、框架、路由器、状态库或平台替换属于迁移/架构规划，不作为普通保持行为重构处理。"
+    ],
+    "capabilityTags": [
+      "refactoring",
+      "validation",
+      "behavior-preservation",
+      "rollback"
+    ]
   }
 }

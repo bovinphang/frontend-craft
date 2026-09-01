@@ -150,3 +150,6 @@ Fix: …
 - 目录：项目根目录 `reports/`（不存在则创建）。
 - 文件名：`code-review-YYYY-MM-DD-HHmmss.md`（与 `fec-code-review` skill 一致）。
 - 写入后告知用户绝对或相对路径。
+## 重构分流
+
+Review 证据指向需要深入诊断的结构坏味道时，建议使用 `/fec-smell`；需要形成有序的保持行为重构计划时，建议使用 `/fec-refactor-plan`。不要把“是否可合并”的审查自动升级为未请求的代码重构。

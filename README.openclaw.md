@@ -22,6 +22,8 @@
 
 `frontend-craft` ships the OpenClaw-native package for [frontend-craft](https://github.com/bovinphang/frontend-craft): workflow skills, markdown commands, OpenClaw workspace templates, typed hooks, a design MCP reference, and the optional `frontend_craft_init_workspace` tool.
 
+The package exposes **14 specialized agents**, **56 workflow skills**, and **11 markdown commands** across the supported frontend workflows.
+
 **Requirements:** Node.js **>= 22**, OpenClaw plugin API **>= 2026.4.20**.
 
 ---
@@ -136,7 +138,7 @@ frontend-craft/
 
 ### Skills
 
-The OpenClaw package includes all 45 public workflow skills from `skills/`, grouped here by use case.
+The OpenClaw package includes all 56 public workflow skills from `skills/`, grouped here by use case.
 
 **Project standards**
 
@@ -187,6 +189,22 @@ The OpenClaw package includes all 45 public workflow skills from `skills/`, grou
 | `fec-validation-fix`           | Run validation commands, diagnose failures, and fix safely                      |
 | `fec-performance-optimization` | Core Web Vitals, bundle, rendering, memory, network, and budget reviews         |
 | `fec-refactor-clean`           | Safe dead-code, unused export, style, route, and dependency cleanup             |
+
+**Refactoring**
+
+| Skill | Purpose |
+| --- | --- |
+| `fec-refactoring` | Behavior-preserving refactoring orchestration and safety workflow |
+| `fec-code-smells` | Evidence-based diagnosis of 24 canonical code smells |
+| `fec-refactoring-catalog` | Selection and composition across 61 canonical techniques |
+| `fec-refactoring-functions` | Function-level refactorings |
+| `fec-refactoring-encapsulation` | Encapsulation refactorings |
+| `fec-refactoring-move-features` | Moving-feature refactorings and cleanup routing |
+| `fec-refactoring-data` | Data refactorings |
+| `fec-refactoring-control` | Conditional/control-flow refactorings |
+| `fec-refactoring-api` | API refactorings |
+| `fec-refactoring-inheritance` | Inheritance/delegation refactorings |
+| `fec-refactoring-validation` | Behavior-preservation verification and proof levels |
 
 **Design UI**
 
@@ -281,6 +299,9 @@ These are loaded as command specs; use them when you want a **fixed checklist** 
 | `fec-tdd.md`             | Red-green-refactor implementation workflow.                                                                 | “Use a TDD loop for this filter component: write the failing test first, then implement the minimum behavior.”                |
 | `fec-debug.md`           | Diagnose build, runtime, UI, or API/data failures.                                                          | “The dashboard crashes after login; inspect the error path, isolate the cause, and write a debug report.”                    |
 | `fec-refactor-clean.md`  | Classify and safely remove dead code, unused exports, styles, and dependencies.                              | “Clean up unused exports and styles in `src/features/billing/`, preserving behavior and reporting what changed.”             |
+| `fec-smell.md`         | Diagnose structural code smells without changing business code.                                         | “Find code smells in `Compose.tsx`, show evidence, but do not edit it.”                                                       |
+| `fec-refactor-plan.md` | Build an ordered behavior-preserving refactoring plan.                                                   | “Plan a safe refactor for this large compose module before editing.”                                                          |
+| `fec-refactor.md`      | Execute behavior-preserving refactoring one validated step at a time.                                   | “Refactor this module without changing observable behavior, validating every step.”                                           |
 | `fec-doc-sync.md`        | Sync README, docs, env notes, script lists, API/route notes, and deploy facts.                               | “Check whether the README command list still matches package scripts and update the docs that drifted.”                      |
 
 ### Hooks

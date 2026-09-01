@@ -32,7 +32,7 @@
 
 各執行時的路徑與注意事項詳見 [`docs/runtimes/`](../runtimes/)。
 
-它將 **13 個專業 agent**、**45 個自動啟用 skill**、**8 個斜線指令**、**5 個事件驅動 hook**、面向 6 個設計工具端點的 **MCP 整合**以及一整套**規則庫**打包為一個可安裝單元。執行一條指令，團隊裡的每一次 AI 會話都將以相同的方式編寫 React、Vue、Next.js 或 Nuxt——型別安全、可存取、安全、一致。
+它將 **14 個專業 agent**、**56 個自動啟用 skill**、**11 個斜線指令**、**5 個事件驅動 hook**、面向 6 個設計工具端點的 **MCP 整合**以及一整套**規則庫**打包為一個可安裝單元。執行一條指令，團隊裡的每一次 AI 會話都將以相同的方式編寫 React、Vue、Next.js 或 Nuxt——型別安全、可存取、安全、一致。
 
 ---
 
@@ -40,10 +40,10 @@
 
 | 痛點                                            | frontend-craft 的解法                                                                   |
 | ----------------------------------------------- | --------------------------------------------------------------------------------------- |
-| AI 助手寫出的前端程式碼風格不一、缺型別、不安全 | **45 個 skill** 將團隊規範編碼為可自動啟用的工作流                                      |
+| AI 助手寫出的前端程式碼風格不一、缺型別、不安全 | **56 個 skill** 將團隊規範編碼為可自動啟用的工作流                                      |
 | 每款 AI 工具都有自己的插件格式                  | **一條 CLI 指令** 把相同的規則、agent 和 hook 安裝到 15 個執行時                        |
 | 設計稿到程式碼的交接總有資訊損失                | **MCP 整合** 從 Figma、Figma Desktop、Sketch、MasterGo、Pixso、墨刀引入更完整設計上下文 |
-| 程式碼審查隨意、淺層                            | **13 個 agent** 輸出分級報告：程式碼、安全、無障礙、效能、TS、UI 還原度                 |
+| 程式碼審查隨意、淺層                            | **14 個 agent** 輸出分級報告：程式碼、安全、無障礙、效能、TS、UI 還原度                 |
 | 沒人記得跑 lint 和測試                          | **事件驅動 hook** 在儲存和會話結束時自動校驗                                            |
 | 新專案每次都從零開始                            | **`/fec-init`** 幾秒內腳手架化 CLAUDE.md、規則和 settings                               |
 
@@ -169,6 +169,9 @@ npx @bovinphang/frontend-craft@latest list
 | `/fec-tdd`            | 紅 → 綠 → 重構的前端 TDD 循環                               | —                                                |
 | `/fec-debug`          | 前端問題診斷與修復：建置失敗、執行時錯誤、UI 異常、介面問題 | `debug-*.md`                                     |
 | `/fec-refactor-clean` | 分類並安全清理死程式碼、未使用匯出、樣式和依賴              | `refactor-clean-*.md`                            |
+| `/fec-smell` | Diagnose code smells without editing | `refactoring/smell-*.md` |
+| `/fec-refactor-plan` | Plan behavior-preserving refactoring | `refactoring/plan-*.md` |
+| `/fec-refactor` | Execute validated behavior-preserving refactoring | `refactoring/refactoring-*.md` |
 | `/fec-doc-sync`       | 同步 README、docs、環境變數、腳本、API/路由說明和部署文件   | —                                                |
 
 ### 技能（Skills，自動啟用）
@@ -227,6 +230,22 @@ npx @bovinphang/frontend-craft@latest list
 | `fec-performance-optimization` | Core Web Vitals、包體、渲染、記憶體、網路與效能預算審查 |
 | `fec-refactor-clean`           | 安全清理死程式碼、未使用匯出、樣式、路由和依賴          |
 
+**Refactoring**
+
+| Skill | Scope |
+| --- | --- |
+| `fec-refactoring` | Behavior-preserving refactoring capability |
+| `fec-code-smells` | Behavior-preserving refactoring capability |
+| `fec-refactoring-catalog` | Behavior-preserving refactoring capability |
+| `fec-refactoring-functions` | Behavior-preserving refactoring capability |
+| `fec-refactoring-encapsulation` | Behavior-preserving refactoring capability |
+| `fec-refactoring-move-features` | Behavior-preserving refactoring capability |
+| `fec-refactoring-data` | Behavior-preserving refactoring capability |
+| `fec-refactoring-control` | Behavior-preserving refactoring capability |
+| `fec-refactoring-api` | Behavior-preserving refactoring capability |
+| `fec-refactoring-inheritance` | Behavior-preserving refactoring capability |
+| `fec-refactoring-validation` | Behavior-preserving refactoring capability |
+
 **設計 UI** — 設計實作、設計系統或視覺打磨時啟用：
 
 | 技能                          | 範圍                                                                                             |
@@ -276,6 +295,7 @@ npx @bovinphang/frontend-craft@latest list
 | `fec-test-planner`          | 風險-層級映射：靜態、單元、元件、E2E、視覺、無障礙、安全  | `test-plan-*.md`             |
 | `fec-debugger`              | 複雜前端診斷：建置、執行時、UI 和介面問題                 | `debug-*.md`                 |
 | `fec-refactor-cleaner`      | 分類並安全清理未使用程式碼、匯出、樣式、路由和依賴        | `refactor-clean-*.md`        |
+| `fec-refactoring-expert` | Behavior-preserving refactoring orchestration | `refactoring/refactoring-*.md` |
 | `fec-e2e-runner`            | E2E 撰寫與執行（Playwright/Cypress）、flaky 隔離、Trace   | `e2e-summary-*.md`           |
 | `fec-doc-updater`           | 同步 README、runtime 文件、結構、能力表和 metadata        | —                            |
 | `fec-ui-checker`            | 視覺問題排查與設計還原度評估                              | `ui-fidelity-review-*.md`    |

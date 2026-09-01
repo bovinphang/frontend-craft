@@ -32,7 +32,7 @@
 
 各运行时的路径与注意事项详见 [`docs/runtimes/`](docs/runtimes/)。
 
-它将 **13 个专业 agent**、**45 个自动激活 skill**、**8 个斜杠命令**、**5 个事件驱动 hook**、面向 6 个设计工具端点的 **MCP 集成**以及一整套**规则库**打包为一个可安装单元。运行一条命令，团队里的每一次 AI 会话都将以相同的方式编写 React、Vue、Next.js 或 Nuxt——类型安全、可访问、安全、一致。
+它将 **14 个专业 agent**、**56 个自动激活 skill**、**11 个斜杠命令**、**5 个事件驱动 hook**、面向 6 个设计工具端点的 **MCP 集成**以及一整套**规则库**打包为一个可安装单元。运行一条命令，团队里的每一次 AI 会话都将以相同的方式编写 React、Vue、Next.js 或 Nuxt——类型安全、可访问、安全、一致。
 
 ---
 
@@ -40,10 +40,10 @@
 
 | 痛点                                          | frontend-craft 的解法                                                 |
 | --------------------------------------------- | --------------------------------------------------------------------- |
-| AI 助手写出的前端代码风格不一、缺类型、不安全 | **45 个 skill** 将团队规范编码为可自动激活的工作流                    |
+| AI 助手写出的前端代码风格不一、缺类型、不安全 | **56 个 skill** 将团队规范编码为可自动激活的工作流                    |
 | 每款 AI 工具都有自己的插件格式                | **一条 CLI 命令** 把相同的规则、agent 和 hook 安装到 15 个运行时      |
 | 设计稿到代码的交接总有信息损失                | **MCP 集成** 从 Figma、Figma Desktop、Sketch、MasterGo、Pixso、墨刀引入更完整设计上下文 |
-| 代码评审随意、浅层                            | **13 个 agent** 输出分级报告：代码、安全、无障碍、性能、TS、UI 还原度 |
+| 代码评审随意、浅层                            | **14 个 agent** 输出分级报告：代码、安全、无障碍、性能、TS、UI 还原度 |
 | 没人记得跑 lint 和测试                        | **事件驱动 hook** 在保存和会话结束时自动校验                          |
 | 新项目每次都从零开始                          | **`/fec-init`** 几秒内脚手架化 CLAUDE.md、规则和 settings             |
 
@@ -134,6 +134,9 @@ npx @bovinphang/frontend-craft@latest list
 
 你："/fec-refactor-clean"
 → 分类并安全清理死代码、未使用导出、样式和依赖
+
+你："/fec-refactor src/features/compose"
+→ 诊断结构坏味道、生成小步计划，并以保持行为的方式一次执行一个重构且逐步验证
 ```
 
 下文斜杠命令以 **Claude Code** 为例；其他运行时通过各自的命令系统提供同等能力（详见 [`docs/runtimes/`](docs/runtimes/)）。
@@ -150,6 +153,9 @@ npx @bovinphang/frontend-craft@latest list
 你：「请构建多步注册表单：根据项目框架选择表单与 schema 校验方案，包含文件上传、条件字段、异步校验和可访问错误提示。」
 你：「请按 Figma 节点 123:456 实现 UI。复用现有 design token 和组件，匹配间距与响应式状态，并说明假设。」
 你：「`/fec-refactor-clean` 请清理这个模块里的死代码。」
+你：「`/fec-smell` 请诊断这个模块的结构坏味道，先不要改代码。」
+你：「`/fec-refactor-plan` 请生成保持行为的小步重构计划。」
+你：「`/fec-refactor` 请保持可观察行为不变地重构这个模块。」
 ```
 
 ---
@@ -169,6 +175,9 @@ npx @bovinphang/frontend-craft@latest list
 | `/fec-tdd`            | 红 → 绿 → 重构的前端 TDD 循环                               | —                                                |
 | `/fec-debug`          | 前端问题诊断与修复：构建失败、运行时错误、UI 异常、接口问题 | `debug-*.md`                                     |
 | `/fec-refactor-clean` | 分类并安全清理死代码、未使用导出、样式和依赖                | `refactor-clean-*.md`                            |
+| `/fec-smell`          | 基于证据诊断代码坏味道，不修改业务代码                            | `refactoring/smell-*.md`                       |
+| `/fec-refactor-plan`  | 生成有序、保持行为的小步重构计划                                  | `refactoring/plan-*.md`                        |
+| `/fec-refactor`       | 一次执行一个经过验证的保持行为重构步骤                            | `refactoring/refactoring-*.md`                 |
 | `/fec-doc-sync`       | 同步 README、docs、环境变量、脚本、API/路由说明和部署文档 | —                                                |
 
 ### 技能（Skills，自动激活）
@@ -227,6 +236,22 @@ npx @bovinphang/frontend-craft@latest list
 | `fec-performance-optimization` | Core Web Vitals、包体、渲染、内存、网络与性能预算审查 |
 | `fec-refactor-clean`           | 安全清理死代码、未使用导出、样式、路由和依赖          |
 
+**重构** — 在基于证据、保持既有行为的结构改进任务中激活：
+
+| Skill | 用途 |
+| --- | --- |
+| `fec-refactoring` | 编排请求分类、基线、安全网、小步执行、回滚和最终证明 |
+| `fec-code-smells` | 基于证据诊断 24 种标准代码坏味道并检查误判 |
+| `fec-refactoring-catalog` | 从完整 61 项目录中选择并组合合适手法 |
+| `fec-refactoring-functions` | 函数拆分、命名、变量、参数对象和阶段拆分 |
+| `fec-refactoring-encapsulation` | 记录、集合、基本类型、类、委托和算法封装 |
+| `fec-refactoring-move-features` | 搬移函数/字段/语句、拆分循环、管道与死代码路由 |
+| `fec-refactoring-data` | 变量/字段以及引用对象/值对象数据重构 |
+| `fec-refactoring-control` | 条件拆分、卫语句、多态分派、特例和断言 |
+| `fec-refactoring-api` | 查询/修改、参数、标记参数、工厂、命令和 API 形态重构 |
+| `fec-refactoring-inheritance` | 继承/委托重构及组合优先的前端适配 |
+| `fec-refactoring-validation` | 行为契约、覆盖等级、验证阶梯与证明结论 |
+
 **设计 UI** — 设计实现、设计系统或视觉打磨时激活：
 
 | 技能                          | 范围                                                     |
@@ -276,6 +301,7 @@ npx @bovinphang/frontend-craft@latest list
 | `fec-test-planner`          | 风险-层级映射：静态、单元、组件、E2E、视觉、无障碍、安全  | `test-plan-*.md`             |
 | `fec-debugger`              | 复杂前端诊断：构建、运行时、UI 和接口问题                 | `debug-*.md`                 |
 | `fec-refactor-cleaner`      | 分类并安全清理未使用代码、导出、样式、路由和依赖          | `refactor-clean-*.md`        |
+| `fec-refactoring-expert`   | 基于证据编排保持行为的结构重构                              | `refactoring/refactoring-*.md` |
 | `fec-e2e-runner`            | E2E 编写与运行（Playwright/Cypress）、flaky 隔离、Trace   | `e2e-summary-*.md`           |
 | `fec-doc-updater`           | 同步 README、runtime 文档、结构、能力表和 metadata        | —                            |
 | `fec-ui-checker`            | 视觉问题排查与设计还原度评估                              | `ui-fidelity-review-*.md`    |
@@ -408,6 +434,9 @@ $env:MODAO_TOKEN = "your-modao-token"
 | 测试计划       | `test-plan-YYYY-MM-DD-HHmmss.md`             | `/fec-plan`、`fec-testing-strategy`、`fec-test-planner`             |
 | 验证修复       | `validation-fix-YYYY-MM-DD-HHmmss.md`        | `fec-validation-fix`                                                |
 | 重构清理       | `refactor-clean-YYYY-MM-DD-HHmmss.md`        | `/fec-refactor-clean`、`fec-refactor-clean`、`fec-refactor-cleaner` |
+| 坏味道诊断     | `refactoring/smell-YYYY-MM-DD-HHmmss.md`     | `/fec-smell`、`fec-code-smells` |
+| 重构计划       | `refactoring/plan-YYYY-MM-DD-HHmmss.md`      | `/fec-refactor-plan`、`fec-refactoring` |
+| 重构执行       | `refactoring/refactoring-YYYY-MM-DD-HHmmss.md` | `/fec-refactor`、`fec-refactoring`、`fec-refactoring-expert` |
 | E2E 运行摘要   | `e2e-summary-YYYY-MM-DD-HHmmss.md`           | `fec-e2e-runner`（可选）                                            |
 | 迁移计划       | `migration-plan-YYYY-MM-DD-HHmmss.md`        | `fec-legacy-to-modern-migration`                                    |
 
