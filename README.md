@@ -22,6 +22,9 @@
 
 </div>
 
+
+[Runtime compatibility and upgrade notes](docs/runtimes/compatibility.md)
+
 ---
 
 `frontend-craft` is a **universal frontend plugin** that brings the same opinionated engineering standards to all **15 AI coding assistants** listed below:

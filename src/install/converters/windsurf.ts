@@ -1,7 +1,7 @@
 import path from "node:path";
 import fs from "node:fs";
 import type { InstallContext } from "../types.js";
-import { copyDir, ensureDir, readUtf8, writeUtf8 } from "../shared/fs.js";
+import { copyDir, ensureDir, readUtf8, writeUtf8, retireManagedFile } from "../shared/fs.js";
 
 /**
  * @param {import('../types.js').InstallContext} ctx
@@ -13,7 +13,7 @@ export async function installWindsurf(ctx: InstallContext): Promise<void> {
     return;
   }
   ensureDir(baseDir);
-  const wf = path.join(baseDir, "workflows");
+  const wf = path.join(baseDir, isGlobal ? "global_workflows" : "workflows");
   const rulesDest = path.join(baseDir, "rules");
   ensureDir(wf);
 
@@ -22,6 +22,7 @@ export async function installWindsurf(ctx: InstallContext): Promise<void> {
     if (!f.endsWith(".md")) continue;
     const raw = readUtf8(path.join(cmdDir, f));
     writeUtf8(path.join(wf, f), raw);
+    if (isGlobal) retireManagedFile(path.join(baseDir, "workflows", f));
   }
 
   const rulesSrc = path.join(contentRoot, "templates", "shared", "rules");

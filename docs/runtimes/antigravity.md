@@ -1,10 +1,16 @@
-# frontend-craft: antigravity
-
-See root README **Universal Install** and run:
+# frontend-craft: Antigravity
 
 ```bash
-npx @bovinphang/frontend-craft install antigravity
+fec setup antigravity
+fec setup antigravity --global
+fec doctor antigravity --local
+fec doctor antigravity --global
 ```
 
-> **Non-interactive:** append `--local` or `--global` to skip install-location prompts. See the repository README **Universal Install** for interactive vs. scripted behavior.
+Without a global CLI installation, use `npx @bovinphang/frontend-craft install antigravity --local` or `--global`.
 
+Project skills retain backward-compatible `.agent/skills`; the current IDE/2.0 user base is `~/.gemini/config`, so skills go in `~/.gemini/config/skills`. For Antigravity CLI set `ANTIGRAVITY_CONFIG_DIR` to `~/.gemini/antigravity-cli` before global installation. The override selects one product scope; this adapter does not install plugins or hooks. After upgrading an old default global install, run `fec setup antigravity --global`; the old `~/.gemini/antigravity` files are preserved.
+
+The capability matrix describes what frontend-craft installs, not every feature offered by the host. `doctor` checks installation artifacts; it does not launch the host or certify a release version.
+
+[Official reference](https://antigravity.google/docs/skills) · [Compatibility and upgrade notes](compatibility.md)

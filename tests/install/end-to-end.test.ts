@@ -154,7 +154,7 @@ test("install claude into temp dir creates hooks and skills", () => {
       encoding: "utf8",
       env: { ...process.env, CLAUDE_CONFIG_DIR: claudeHome },
     });
-    assert.ok(fs.existsSync(path.join(dir, ".claude", "hooks.json")));
+    assert.ok(fs.existsSync(path.join(dir, ".claude", "settings.json")));
     assert.ok(
       fs.existsSync(
         path.join(
@@ -239,7 +239,7 @@ test("global claude install does not write project sidecar files into cwd", () =
       env: { ...process.env, CLAUDE_CONFIG_DIR: claudeHome },
     });
 
-    assert.ok(fs.existsSync(path.join(claudeHome, "hooks.json")));
+    assert.ok(fs.existsSync(path.join(claudeHome, "settings.json")));
     assert.ok(
       fs.existsSync(
         path.join(
@@ -278,7 +278,7 @@ test("global installs do not write shared rules into runtime config dirs", () =>
       execFileSync(process.execPath, [cli, "install", runtime, "--global"], {
         cwd: dir,
         encoding: "utf8",
-        env: { ...process.env, [envName]: runtimeHome },
+        env: { ...process.env, HOME: runtimeHome, USERPROFILE: runtimeHome, [envName]: runtimeHome },
       });
 
       assert.ok(
@@ -398,9 +398,9 @@ test("runtime command installers keep fec command names", () => {
   const cases = [
     ["windsurf", ".windsurf", "workflows"],
     ["copilot", ".github", "prompts"],
-    ["opencode", ".opencode", "command"],
-    ["kilo", ".kilo", "command"],
-    ["openclaw", ".openclaw", "commands"],
+    ["opencode", ".opencode", "commands"],
+    ["kilo", ".kilo", "commands"],
+    ["openclaw", ".", "skills"],
     ["qoder", ".qoder", "commands"],
   ];
 
@@ -415,7 +415,7 @@ test("runtime command installers keep fec command names", () => {
 
       const commandsPath = path.join(dir, baseDir, commandDir);
       assert.ok(
-        fs.existsSync(path.join(commandsPath, "fec-init.md")),
+        fs.existsSync(path.join(commandsPath, runtime === "copilot" ? "fec-init.prompt.md" : runtime === "openclaw" ? "fec-init/SKILL.md" : "fec-init.md")),
         `${runtime} installs fec-init.md`,
       );
       assert.ok(
@@ -476,6 +476,10 @@ test("all runtime local installs match declared capabilities", () => {
       });
 
       const cap = RUNTIME_CAPABILITIES[runtime];
+      const report = execFileSync(process.execPath, [cli, "doctor", runtime, "--local"], {
+        cwd: dir, encoding: "utf8", env: { ...process.env, CLAUDE_CONFIG_DIR: claudeHome },
+      });
+      assert.doesNotMatch(report, /^(skills|agents|commands|hooks|rules|templates): missing/m, `${runtime} doctor agrees with the installed layout`);
       assert.ok(cap, `${runtime} has a capability declaration`);
       const baseDir = getInstallBaseDir({ runtime, isGlobal: false, cwd: dir });
 
@@ -483,8 +487,8 @@ test("all runtime local installs match declared capabilities", () => {
         const expectedSkillsRoot =
           runtime === "codex"
             ? path.join(dir, ".agents", "skills")
-            : runtime === "gemini"
-              ? path.join(baseDir, "extensions", "frontend-craft", "skills")
+            : runtime === "openclaw"
+              ? path.join(dir, "skills")
               : path.join(baseDir, "skills");
         assert.ok(
           fs.existsSync(
@@ -525,12 +529,12 @@ test("all runtime local installs match declared capabilities", () => {
           runtime === "windsurf"
             ? path.join(baseDir, "workflows")
             : runtime === "opencode" || runtime === "kilo"
-              ? path.join(baseDir, "command")
+              ? path.join(baseDir, "commands")
               : runtime === "copilot"
                 ? path.join(baseDir, "prompts")
-                : path.join(baseDir, "commands");
+                : runtime === "openclaw" ? path.join(dir, "skills") : path.join(baseDir, "commands");
         assert.ok(
-          fs.existsSync(path.join(commandDir, "fec-init.md")),
+          fs.existsSync(path.join(commandDir, runtime === "copilot" ? "fec-init.prompt.md" : runtime === "openclaw" ? "fec-init/SKILL.md" : "fec-init.md")),
           `${runtime} installs fec commands`,
         );
         assert.ok(
@@ -613,6 +617,24 @@ function escapeRegExp(value: string): string {
   return value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 }
 
+test("all runtime global installs are isolated and doctor recognizes their actual scope", () => {
+  for (const runtime of ALL_RUNTIMES) {
+    const dir = fs.mkdtempSync(path.join(os.tmpdir(), "fec-global-doctor-"));
+    const cwd = path.join(dir, "project");
+    const userHome = path.join(dir, "home");
+    fs.mkdirSync(cwd);
+    fs.mkdirSync(userHome);
+    const env = isolatedRuntimeEnv(userHome);
+    try {
+      execFileSync(process.execPath, [cli, "install", runtime, "--global"], { cwd, env, encoding: "utf8" });
+      const report = execFileSync(process.execPath, [cli, "doctor", runtime, "--global"], { cwd, env, encoding: "utf8" });
+      assert.doesNotMatch(report, /^(skills|agents|commands|hooks|rules|templates): missing/m, `${runtime} global doctor recognizes the installation`);
+      if (runtime === "codex") assert.ok(fs.existsSync(path.join(userHome, ".agents/skills/fec-react-project-standard/SKILL.md")));
+      assert.deepEqual(fs.readdirSync(cwd), [], `${runtime} global install leaves the project untouched`);
+    } finally { fs.rmSync(dir, { recursive: true, force: true }); }
+  }
+});
+
 function writeNativeInstallMetadata(claudeHome: string, version: string): void {
   const installPath = path.join(
     claudeHome,
@@ -649,6 +671,9 @@ function writeNativeInstallMetadata(claudeHome: string, version: string): void {
 function isolatedRuntimeEnv(runtimeHome: string): NodeJS.ProcessEnv {
   return {
     ...process.env,
+    HOME: runtimeHome,
+    USERPROFILE: runtimeHome,
+    OPENCLAW_STATE_DIR: path.join(runtimeHome, "openclaw"),
     CLAUDE_CONFIG_DIR: path.join(runtimeHome, "claude"),
     CURSOR_CONFIG_DIR: path.join(runtimeHome, "cursor"),
     GEMINI_CONFIG_DIR: path.join(runtimeHome, "gemini"),

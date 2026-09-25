@@ -1,5 +1,6 @@
 import fs from "node:fs";
 import path from "node:path";
+import os from "node:os";
 import readline from "node:readline";
 import { ALL_RUNTIMES, INSTALLERS } from "./registry.js";
 import { promptLanguage, promptLocation, promptRuntime } from "./interactive.js";
@@ -27,6 +28,7 @@ import {
 import {
   discoverManifestInstalls,
   uninstallManagedInstall,
+  copyInstallToNewBase,
 } from "./manifest-installs.js";
 import {
   cleanupClaudeFrontendCraftCache,
@@ -302,13 +304,17 @@ export async function main(argv: string[]): Promise<void> {
       console.log(renderNoInstallsFound("update", undefined, scopes));
       return;
     }
+    const updatedScopes = new Set<string>();
     for (const install of installs) {
+      const scopeKey = `${install.runtime}:${install.scope}`;
+      if (updatedScopes.has(scopeKey)) continue;
+      updatedScopes.add(scopeKey);
       const language = languageArg ?? install.manifest.language ?? DEFAULT_LANGUAGE;
       await runInstaller({
         rt: install.runtime,
         mode,
         isGlobal: install.scope === "global",
-        baseDir: install.baseDir,
+        baseDir: getInstallBaseDir({ runtime: install.runtime, isGlobal: install.scope === "global", cwd }),
         pluginRoot,
         cwd,
         dryRun,
@@ -420,6 +426,14 @@ async function runInstaller({
     isGlobal = resolved.redirect.isGlobal;
     baseDir = resolved.redirect.baseDir;
     mode = "update";
+  }
+  if (isGlobal && !fs.existsSync(getManifestPath(baseDir))) {
+    const legacy = discoverManifestInstalls({ cwd, runtimes: [rt], scopes: ["global"] })
+      .find(install => path.resolve(install.baseDir) !== path.resolve(baseDir));
+    if (legacy) {
+      copyInstallToNewBase(legacy, baseDir, dryRun);
+      mode = "update";
+    }
   }
   const ctx: InstallContext = {
     pluginRoot,
@@ -706,20 +720,20 @@ function renderDoctorReport({
     `tier: ${cap.tier}`,
   ];
   lines.push(
-    `skills: ${status(checkSkills(runtime, baseDir, cwd), cap.skills)}`,
+    `skills: ${status(checkSkills(runtime, baseDir, cwd, isGlobal), cap.skills)}`,
   );
   lines.push(
     `agents: ${status(fs.existsSync(path.join(baseDir, "agents")), cap.agents)}`,
   );
   lines.push(
-    `commands: ${status(checkCommands(runtime, baseDir), cap.commands)}`,
+    `commands: ${status(checkCommands(runtime, baseDir, cwd, isGlobal), cap.commands && !(runtime === "copilot" && isGlobal))}`,
   );
   lines.push(`hooks: ${status(checkHooks(runtime, baseDir), cap.hooks)}`);
   lines.push(
-    `rules: ${status(checkRules(runtime, baseDir), cap.rules && !isGlobal)}`,
+    `rules: ${status(checkRules(runtime, baseDir, isGlobal), cap.rules && (!isGlobal || ["copilot", "cline", "trae"].includes(runtime)))}`,
   );
   lines.push(
-    `templates: ${status(checkTemplates(runtime, baseDir, cwd), cap.templates)}`,
+    `templates: ${status(checkTemplates(runtime, baseDir, cwd, isGlobal), cap.templates && !(runtime === "openclaw" && isGlobal))}`,
   );
   if (runtime === "claude") {
     const currentVersion = readPkgVersion(pluginRoot);
@@ -749,40 +763,36 @@ function status(found: boolean, expected: boolean): string {
   return found ? "ok" : "missing";
 }
 
-function checkSkills(runtime: string, baseDir: string, cwd: string): boolean {
+function checkSkills(runtime: string, baseDir: string, cwd: string, isGlobal: boolean): boolean {
   if (runtime === "codex")
     return fs.existsSync(
-      path.join(cwd, ".agents", "skills", "fec-react-project-standard"),
+      path.join(isGlobal ? os.homedir() : cwd, ".agents", "skills", "fec-react-project-standard", "SKILL.md"),
     );
-  if (runtime === "gemini") {
-    return fs.existsSync(
-      path.join(
-        baseDir,
-        "extensions",
-        "frontend-craft",
-        "skills",
-        "fec-react-project-standard",
-      ),
-    );
-  }
   return fs.existsSync(
-    path.join(baseDir, "skills", "fec-react-project-standard"),
+    path.join(runtime === "openclaw" && !isGlobal ? cwd : baseDir, "skills", "fec-react-project-standard", "SKILL.md"),
   );
 }
 
-function checkCommands(runtime: string, baseDir: string): boolean {
+function checkCommands(runtime: string, baseDir: string, cwd: string, isGlobal: boolean): boolean {
+  if (runtime === "openclaw") return fs.existsSync(path.join(isGlobal ? baseDir : cwd, "skills", "fec-init", "SKILL.md"));
   const dir =
     runtime === "windsurf"
-      ? path.join(baseDir, "workflows")
+      ? path.join(baseDir, isGlobal ? "global_workflows" : "workflows")
       : runtime === "opencode" || runtime === "kilo"
-        ? path.join(baseDir, "command")
+        ? path.join(baseDir, "commands")
         : runtime === "copilot"
           ? path.join(baseDir, "prompts")
           : path.join(baseDir, "commands");
-  return fs.existsSync(path.join(dir, "fec-init.md"));
+  return fs.existsSync(path.join(dir, runtime === "copilot" ? "fec-init.prompt.md" : "fec-init.md"));
 }
 
 function checkHooks(runtime: string, baseDir: string): boolean {
+  if (runtime === "claude") {
+    try {
+      const settings = JSON.parse(fs.readFileSync(path.join(baseDir, "settings.json"), "utf8"));
+      return Array.isArray(settings.hooks?.Stop) && settings.hooks.Stop.some((entry: unknown) => JSON.stringify(entry).includes("fec-run-tests.js"));
+    } catch { return false; }
+  }
   if (runtime === "qoder") {
     return (
       fs.existsSync(path.join(baseDir, "settings.json")) &&
@@ -792,13 +802,14 @@ function checkHooks(runtime: string, baseDir: string): boolean {
   return fs.existsSync(path.join(baseDir, "hooks.json"));
 }
 
-function checkRules(runtime: string, baseDir: string): boolean {
+function checkRules(runtime: string, baseDir: string, isGlobal: boolean): boolean {
   if (runtime === "copilot")
     return fs.existsSync(
-      path.join(baseDir, "instructions", "frontend-craft.instructions.md"),
+      isGlobal ? path.join(baseDir, "copilot-instructions.md") : path.join(baseDir, "instructions", "frontend-craft.instructions.md"),
     );
   if (runtime === "cline")
-    return fs.existsSync(path.join(baseDir, ".clinerules"));
+    return fs.existsSync(path.join(baseDir, isGlobal ? "Rules" : ".clinerules", "frontend-craft.md"));
+  if (runtime === "trae" && isGlobal) return fs.existsSync(path.join(baseDir, "user_rules", "frontend-craft.md"));
   return fs.existsSync(path.join(baseDir, "rules"));
 }
 
@@ -806,15 +817,18 @@ function checkTemplates(
   runtime: string,
   baseDir: string,
   cwd: string,
+  isGlobal: boolean,
 ): boolean {
   if (runtime === "claude")
-    return fs.existsSync(path.join(cwd, ".claude-plugin", "plugin.json"));
+    return isGlobal
+      ? fs.existsSync(path.join(baseDir, "CLAUDE.md"))
+      : fs.existsSync(path.join(cwd, ".claude-plugin", "plugin.json"));
   if (runtime === "codex")
     return (
       fs.existsSync(path.join(cwd, "AGENTS.md")) ||
       fs.existsSync(path.join(baseDir, "config.toml"))
     );
-  if (runtime === "gemini") return fs.existsSync(path.join(cwd, "GEMINI.md"));
+  if (runtime === "gemini") return fs.existsSync(path.join(isGlobal ? baseDir : cwd, "GEMINI.md"));
   if (runtime === "openclaw") return fs.existsSync(path.join(cwd, "AGENTS.md"));
   if (runtime === "qoder")
     return fs.existsSync(path.join(baseDir, "settings.json"));

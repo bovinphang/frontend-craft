@@ -437,6 +437,9 @@ function escapeRegExp(value: string): string {
 function isolatedRuntimeEnv(runtimeHome: string): NodeJS.ProcessEnv {
   return {
     ...process.env,
+    HOME: runtimeHome,
+    USERPROFILE: runtimeHome,
+    OPENCLAW_STATE_DIR: path.join(runtimeHome, "openclaw"),
     CLAUDE_CONFIG_DIR: path.join(runtimeHome, "claude"),
     CURSOR_CONFIG_DIR: path.join(runtimeHome, "cursor"),
     GEMINI_CONFIG_DIR: path.join(runtimeHome, "gemini"),

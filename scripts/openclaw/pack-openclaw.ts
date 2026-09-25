@@ -11,6 +11,7 @@ import {
 import path from "node:path";
 import { execSync } from "node:child_process";
 import { resolvePluginRoot } from "../../src/install/shared/resolve-plugin-root.js";
+import { installCommandSkills } from "../../src/install/shared/command-skills.js";
 
 const root = resolvePluginRoot(import.meta.url);
 const packRoot = path.join(root, "npm-packages", "openclaw");
@@ -64,6 +65,7 @@ cpSync(path.join(root, "skills"), path.join(packRoot, "skills"), {
 cpSync(path.join(root, "commands"), path.join(packRoot, "commands"), {
   recursive: true,
 });
+installCommandSkills(path.join(root, "commands"), path.join(packRoot, "skills"));
 mkdirSync(path.join(packRoot, "templates"), { recursive: true });
 cpSync(
   path.join(root, "templates", "openclaw"),

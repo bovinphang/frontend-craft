@@ -22,7 +22,7 @@
 
 `frontend-craft` ships the OpenClaw-native package for [frontend-craft](https://github.com/bovinphang/frontend-craft): workflow skills, markdown commands, OpenClaw workspace templates, typed hooks, a design MCP reference, and the optional `frontend_craft_init_workspace` tool.
 
-The package exposes **14 specialized agents**, **56 workflow skills**, and **11 markdown commands** across the supported frontend workflows.
+The native package includes **56 workflow skills** and **11 commands exposed through skills (same-name workflows reuse the full skill)**. The 14 specialized agents belong to other runtime adapters and are not native OpenClaw agents.
 
 **Requirements:** Node.js **>= 22**, OpenClaw plugin API **>= 2026.4.20**.
 
@@ -124,7 +124,7 @@ Pixso uses the local MCP URL shown in `.mcp.json`. MockingBot has no MCP integra
 frontend-craft/
 |-- dist/                  # Bundled OpenClaw plugin entry
 |-- skills/                # Workflow skills
-|-- commands/              # Markdown command specs loaded as skills
+|-- commands/              # Source command specs; converted skills are under skills/
 |-- templates/openclaw/    # OpenClaw AGENTS.md and config notes
 |-- templates/shared/      # Shared frontend rules
 |-- .mcp.json              # Design MCP reference
@@ -243,7 +243,7 @@ The OpenClaw package includes all 56 public workflow skills from `skills/`, grou
 
 ### Using skills (scenarios & examples)
 
-Skills live under `skills/<id>/SKILL.md`. OpenClaw exposes them as plugin skill roots (`openclaw.plugin.json` lists `skills` and `commands`). The harness typically **auto-selects** a workflow when your plain-language request matches a skill’s frontmatter `description`; exact behavior depends on your OpenClaw / agent setup. You do **not** need to know internal skill ids—describe the outcome you want. (Power users may still mention an id if they know it.)
+Skills live under `skills/<id>/SKILL.md`. OpenClaw exposes them as plugin skill roots (`openclaw.plugin.json` lists `skills`; command workflows are converted during packaging). The harness typically **auto-selects** a workflow when your plain-language request matches a skill’s frontmatter `description`; exact behavior depends on your OpenClaw / agent setup. You do **not** need to know internal skill ids—describe the outcome you want. (Power users may still mention an id if they know it.)
 
 This section is a quick OpenClaw-oriented sample, not the full prompt catalog. For complete scenario-based prompts across skills, agents, commands, design workflows, testing, maintenance, and runtime setup, see [docs/example-prompts.md](docs/example-prompts.md).
 

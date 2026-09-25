@@ -54,6 +54,15 @@ export function initFrontendCraftWorkspace(
         copyFileSync(p, out);
         copied.push(out);
       }
+      const skillFile = join(destDir, "SKILL.md");
+      if (!existsSync(skillFile)) {
+        const references = readdirSync(destDir).filter(name => name.endsWith(".md") && name !== "SKILL.md");
+        writeFileSync(skillFile,
+          "---\nname: frontend-craft-rules\ndescription: Apply the workspace frontend engineering rules when implementing or reviewing frontend code.\n---\n\n" +
+          "Read the relevant rules before changing code:\n\n" +
+          references.map(name => `- [${name}](./${name})`).join("\n") + "\n", "utf8");
+        copied.push(skillFile);
+      }
     }
 
     return { ok: true, copied };

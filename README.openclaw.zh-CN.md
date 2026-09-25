@@ -22,7 +22,7 @@
 
 `frontend-craft` 是 [frontend-craft](https://github.com/bovinphang/frontend-craft) 的 OpenClaw 原生打包产物，包含工作流技能、Markdown 命令、OpenClaw 工作区模板、typed hooks、设计工具 MCP 参考配置，以及可选的 `frontend_craft_init_workspace` 初始化工具。
 
-该包提供 **14 个专业智能体（Agent）**、**56 个工作流技能**和 **11 个 Markdown 命令**。
+该原生包提供 **56 个工作流技能**，并将 **11 个命令工作流通过技能提供（同名工作流复用完整技能）**。14 个专业 Agent 属于其他运行时适配器，不是 OpenClaw 原生 Agent。
 
 **环境要求：** Node.js **>= 22**，OpenClaw plugin API **>= 2026.4.20**。
 
@@ -124,7 +124,7 @@ Pixso 使用 `.mcp.json` 中的本地 MCP URL。摹客暂无 MCP 集成，请使
 frontend-craft/
 |-- dist/                  # 打包后的 OpenClaw 插件入口
 |-- skills/                # 工作流技能
-|-- commands/              # 作为技能加载的 Markdown 命令说明
+|-- commands/              # 命令源文件；转换后的技能位于 skills/
 |-- templates/openclaw/    # OpenClaw AGENTS.md 与配置说明
 |-- templates/shared/      # 共享前端规则
 |-- .mcp.json              # 设计工具 MCP 参考配置
@@ -243,7 +243,7 @@ OpenClaw 包包含 `skills/` 下全部 56 个公开工作流技能，按使用�
 
 ### 技能使用：场景与示例
 
-技能定义在 `skills/<id>/SKILL.md`。本插件在 `openclaw.plugin.json` 中将 `skills` 与 `commands` 注册为技能根。运行时一般会按各技能前置元数据里的 **description** 与当前任务做 **自动匹配**；具体行为取决于你的 OpenClaw / Agent 配置。**普通用户不必知道内部技能 id**，用自然语言说明目标即可；熟悉仓库的人若知道 id 也可以显式写出。
+技能定义在 `skills/<id>/SKILL.md`。本插件在 `openclaw.plugin.json` 中将 `skills` 注册为技能根；命令工作流在打包时转换为技能。运行时一般会按各技能前置元数据里的 **description** 与当前任务做 **自动匹配**；具体行为取决于你的 OpenClaw / Agent 配置。**普通用户不必知道内部技能 id**，用自然语言说明目标即可；熟悉仓库的人若知道 id 也可以显式写出。
 
 本节是面向 OpenClaw 的快速示例，不是完整提示词清单。完整的按场景组织的提示词库覆盖 skills、agents、commands、设计工作流、测试、维护和 runtime 初始化，见 [docs/zh-CN/example-prompts.md](docs/zh-CN/example-prompts.md)。
 

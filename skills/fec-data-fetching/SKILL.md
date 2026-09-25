@@ -1,6 +1,6 @@
 ---
 name: fec-data-fetching
-description: Use when implementing or reviewing frontend server-state flows: typed queries, request caching, invalidation, mutations, optimistic updates, infinite queries, prefetch, SSR hydration, or API-layer integration. Do not use for local UI state or Service Worker caching; Chinese triggers include data fetch, cache, optimistic updates.
+description: "Use when implementing or reviewing frontend server-state flows: typed queries, request caching, invalidation, mutations, optimistic updates, infinite queries, prefetch, SSR hydration, or API-layer integration. Do not use for local UI state or Service Worker caching; Chinese triggers include data fetch, cache, optimistic updates."
 ---
 
 # Server State data acquisition

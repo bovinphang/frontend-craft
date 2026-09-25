@@ -1,10 +1,16 @@
-# frontend-craft: cline
-
-See root README **Universal Install** and run:
+# frontend-craft: Cline
 
 ```bash
-npx @bovinphang/frontend-craft install cline
+fec setup cline
+fec setup cline --global
+fec doctor cline --local
+fec doctor cline --global
 ```
 
-> **Non-interactive:** append `--local` or `--global` to skip install-location prompts. See the repository README **Universal Install** for interactive vs. scripted behavior.
+Without a global CLI installation, use `npx @bovinphang/frontend-craft install cline --local` or `--global`.
 
+Project rules: `.clinerules/frontend-craft.md`, preserving other files in the directory. An existing legacy `.clinerules` file is backed up as `.clinerules.frontend-craft-backup` and copied into `.clinerules/legacy.md` before installing the new bundle. An existing backup stops migration to avoid overwriting it. Global rules: `~/Documents/Cline/Rules/frontend-craft.md`. Set `CLINE_CONFIG_DIR` to the parent of your actual `Rules` directory when Documents is redirected or Cline uses a different location. Manifest-tracked old default `~/.cline` installs are copied to the new location on install/update; originals and user edits are preserved.
+
+The capability matrix describes what frontend-craft installs, not every feature offered by the host. `doctor` checks installation artifacts; it does not launch the host or certify a release version.
+
+[Official reference](https://docs.cline.bot/customization/cline-rules) 路 [Compatibility and upgrade notes](compatibility.md)

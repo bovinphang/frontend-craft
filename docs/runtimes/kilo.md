@@ -1,10 +1,16 @@
-# frontend-craft: kilo
-
-See root README **Universal Install** and run:
+# frontend-craft: Kilo CLI
 
 ```bash
-npx @bovinphang/frontend-craft install kilo
+fec setup kilo
+fec setup kilo --global
+fec doctor kilo --local
+fec doctor kilo --global
 ```
 
-> **Non-interactive:** append `--local` or `--global` to skip install-location prompts. See the repository README **Universal Install** for interactive vs. scripted behavior.
+Without a global CLI installation, use `npx @bovinphang/frontend-craft install kilo --local` or `--global`.
 
+This adapter targets the current Kilo CLI: project `.kilo`, user `$XDG_CONFIG_HOME/kilo` or `~/.config/kilo`, with `KILO_CONFIG_DIR` override. Skills use `skills/`, commands use canonical `commands/`. Official CLI source also discovers legacy singular directories and home `.kilo` / `.kilocode` roots. IDE-only installations can have different global discovery behavior; this is not a blanket IDE certification.
+
+The capability matrix describes what frontend-craft installs, not every feature offered by the host. `doctor` checks installation artifacts; it does not launch the host or certify a release version.
+
+[Official reference](https://github.com/Kilo-Org/kilocode/blob/main/packages/opencode/src/config/paths.ts) · [Compatibility and upgrade notes](compatibility.md)

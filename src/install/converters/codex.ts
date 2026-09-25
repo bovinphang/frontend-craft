@@ -43,5 +43,6 @@ export async function installCodex(ctx: InstallContext): Promise<void> {
     const dest = path.join(cwd, "AGENTS.md");
     if (!fs.existsSync(dest)) copyFile(tmplAgents, dest);
   }
-  if (fs.existsSync(tmplCfg)) copyFile(tmplCfg, path.join(baseDir, "config.toml"));
+  const configDest = path.join(baseDir, "config.toml");
+  if (fs.existsSync(tmplCfg) && !fs.existsSync(configDest)) copyFile(tmplCfg, configDest);
 }

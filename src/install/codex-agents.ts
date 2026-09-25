@@ -20,8 +20,6 @@ export function agentMdToToml(raw: string, filename: string): string {
   return (
     `name = "${name}"\n` +
     `description = "${esc(desc)}"\n\n` +
-    `model = "gpt-5.4"\n` +
-    `model_reasoning_effort = "high"\n\n` +
     `developer_instructions = """\n` +
     body +
     `\n"""\n`

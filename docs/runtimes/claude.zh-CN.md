@@ -173,3 +173,7 @@ npx @bovinphang/frontend-craft@latest update claude --local
 ---
 
 **English:** [claude.md](claude.md)
+
+## CLI 兼容性更新
+
+CLI 安装会将 hooks 合并到 `settings.json`，保留其他用户配置；无效 JSON 会阻止安装。原生 Marketplace 插件继续使用 `hooks/hooks.json`。参见[兼容性与升级说明](compatibility.md)。

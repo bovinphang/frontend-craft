@@ -9,12 +9,11 @@ import { ensureDir, readUtf8, writeUtf8 } from "../shared/fs.js";
 export async function installTrae(ctx: InstallContext): Promise<void> {
   const { contentRoot, baseDir, dryRun, isGlobal } = ctx;
   if (dryRun) return console.log(`[dry-run] trae -> ${baseDir}`);
-  if (isGlobal) return;
-  const rulesDir = path.join(baseDir, "rules");
+  const rulesDir = path.join(baseDir, isGlobal ? "user_rules" : "rules");
   ensureDir(rulesDir);
   const rulesSrc = path.join(contentRoot, "templates", "shared", "rules");
   /** @type {string[]} */
-  const parts = ["# Frontend Craft - Trae rules bundle\n"];
+  const parts = ["---\nalwaysApply: true\n---\n\n# Frontend Craft - Trae rules bundle\n"];
   if (fs.existsSync(rulesSrc)) {
     for (const name of fs.readdirSync(rulesSrc)) {
       if (!name.endsWith(".md")) continue;

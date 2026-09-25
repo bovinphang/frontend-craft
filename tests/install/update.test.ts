@@ -35,6 +35,7 @@ test("install writes a frontend-craft manifest for the runtime scope", () => {
       scope?: string;
       language?: string;
       files?: Array<{ path: string; hash: string }>;
+      settingsHooks?: Array<{ path: string }>;
     };
 
     assert.match(manifest.packageVersion ?? "", /^\d+\.\d+\.\d+/);
@@ -51,7 +52,7 @@ test("install writes a frontend-craft manifest for the runtime scope", () => {
         (file) => file.path === "agents/fec-code-reviewer.md",
       ),
     );
-    assert.ok(manifest.files?.some((file) => file.path === "hooks.json"));
+    assert.ok(manifest.settingsHooks?.some((file) => file.path === "settings.json"));
   } finally {
     fs.rmSync(dir, { recursive: true, force: true });
     fs.rmSync(claudeHome, { recursive: true, force: true });
@@ -687,6 +688,9 @@ test("codex local manifest tracks project-level agent skills for uninstall", () 
 function isolatedRuntimeEnv(runtimeHome: string): NodeJS.ProcessEnv {
   return {
     ...process.env,
+    HOME: runtimeHome,
+    USERPROFILE: runtimeHome,
+    OPENCLAW_STATE_DIR: path.join(runtimeHome, "openclaw"),
     CLAUDE_CONFIG_DIR: path.join(runtimeHome, "claude"),
     CURSOR_CONFIG_DIR: path.join(runtimeHome, "cursor"),
     GEMINI_CONFIG_DIR: path.join(runtimeHome, "gemini"),

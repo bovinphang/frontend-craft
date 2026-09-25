@@ -20,6 +20,7 @@ export type InstallManifest = {
   language?: InstallLanguage;
   installedAt: string;
   files: ManifestFile[];
+  settingsHooks?: Array<{ path: string; root?: ManifestRoot; hooks: Record<string, unknown[]> }>;
 };
 
 type ManifestSession = {
@@ -35,6 +36,7 @@ type ManifestSession = {
   previousFiles: Map<string, string>;
   writtenFiles: Map<string, string>;
   skippedFiles: Set<string>;
+  settingsHooks: NonNullable<InstallManifest["settingsHooks"]>;
 };
 
 let manifestSession: ManifestSession | undefined;
@@ -70,6 +72,7 @@ export function beginManifestSession({
     previousFiles: readManifestFiles(manifestPath),
     writtenFiles: new Map(),
     skippedFiles: new Set(),
+    settingsHooks: [],
   };
 }
 
@@ -79,7 +82,7 @@ export function endManifestSession(): void {
   if (!session) return;
 
   for (const [filePath, hash] of session.previousFiles) {
-    if (session.skippedFiles.has(filePath) && !session.writtenFiles.has(filePath)) {
+    if (!session.writtenFiles.has(filePath)) {
       session.writtenFiles.set(filePath, hash);
     }
   }
@@ -94,6 +97,7 @@ export function endManifestSession(): void {
     language: session.language,
     installedAt: new Date().toISOString(),
     files,
+    ...(session.settingsHooks.length ? { settingsHooks: session.settingsHooks } : {}),
   };
   ensureDir(path.dirname(session.manifestPath));
   fs.writeFileSync(session.manifestPath, `${JSON.stringify(manifest, null, 2)}\n`, "utf8");
@@ -249,6 +253,45 @@ export function writeUtf8(filePath: string, content: string): void {
   recordManagedWrite(filePath, content);
 }
 
+/** Shared user configuration must not be deleted by manifest-based uninstall. */
+export function writeSharedUtf8(filePath: string, content: string): void {
+  ensureDir(path.dirname(filePath));
+  fs.writeFileSync(filePath, content, "utf8");
+  forgetManagedFile(filePath);
+}
+
+export function forgetManagedFile(filePath: string): void {
+  const key = getSessionFileKey(filePath);
+  if (manifestSession && key) {
+    manifestSession.previousFiles.delete(key);
+    manifestSession.writtenFiles.delete(key);
+    manifestSession.skippedFiles.delete(key);
+  }
+}
+
+export function recordSettingsHooks(filePath: string, hooks: Record<string, unknown[]>): void {
+  const key = getSessionFileKey(filePath);
+  if (!manifestSession || !key) return;
+  const { path: relative, root } = parseManifestFileKey(key, "");
+  manifestSession.settingsHooks.push({ path: relative, ...(root ? { root } : {}), hooks });
+}
+
+/** Retire only unchanged files previously owned by this install, never user files. */
+export function retireManagedFile(filePath: string): void {
+  const key = getSessionFileKey(filePath);
+  const previous = key && manifestSession?.previousFiles.get(key);
+  if (!manifestSession || !key || !previous) return;
+  if (fs.existsSync(filePath)) {
+    if (!fs.statSync(filePath).isFile() || hashFile(filePath) !== previous) {
+      console.log(`Preserved modified legacy file: ${filePath}`);
+      return;
+    }
+    fs.unlinkSync(filePath);
+  }
+  manifestSession.previousFiles.delete(key);
+  manifestSession.writtenFiles.delete(key);
+}
+
 /**
  * @param {string} dir
  * @returns {string[]}
@@ -263,4 +306,9 @@ export function listFilesRecursive(dir: string): string[] {
     else out.push(p);
   }
   return out;
+}
+
+/** Remove obsolete generated files, preserving unknown and edited files. */
+export function retireManagedTree(dir: string): void {
+  for (const file of listFilesRecursive(dir)) retireManagedFile(file);
 }

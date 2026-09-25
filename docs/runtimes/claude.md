@@ -175,3 +175,7 @@ npx @bovinphang/frontend-craft@latest update claude --local
 ---
 
 **Other languages:** [简体中文](claude.zh-CN.md)
+
+## CLI compatibility update
+
+CLI hooks are merged into `settings.json`, preserving unrelated settings. Malformed JSON stops installation. Native Marketplace plugins continue to use `hooks/hooks.json`. See [compatibility and upgrade notes](compatibility.md).

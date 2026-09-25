@@ -47,8 +47,13 @@ test("skills metadata matches skill directories and frontmatter names", () => {
     const frontmatter = body.match(/^---\r?\n([\s\S]*?)\r?\n---/);
     assert.ok(frontmatter, `missing frontmatter: ${dir}`);
     assert.match(frontmatter[1], new RegExp(`^name:\\s*${escapeRegExp(dir)}$`, "m"));
-    assert.match(frontmatter[1], /^description:\s*Use when\b/m);
-    const description = frontmatter[1].match(/^description:\s*(.+)$/m)?.[1] ?? "";
+    const rawDescription = frontmatter[1].match(/^description:\s*(.+)$/m)?.[1] ?? "";
+    const description: string = rawDescription.startsWith('"')
+      ? JSON.parse(rawDescription)
+      : rawDescription.startsWith("'") && rawDescription.endsWith("'")
+        ? rawDescription.slice(1, -1).replaceAll("''", "'")
+        : rawDescription;
+    assert.match(description, /^Use when\b/);
     assert.ok(description.length > 0, `missing description: ${dir}`);
     assert.ok(description.length < 1024, `description should stay under 1024 characters: ${dir}`);
     const frontmatterKeys = [...frontmatter[1].matchAll(/^([A-Za-z0-9_-]+):/gm)].map((match) => match[1]).sort();

@@ -32,7 +32,7 @@ export function getGlobalConfigDir(runtime: string): string {
     case "antigravity":
       return env.ANTIGRAVITY_CONFIG_DIR
         ? expandTilde(env.ANTIGRAVITY_CONFIG_DIR)
-        : path.join(home, ".gemini", "antigravity");
+        : path.join(home, ".gemini", "config");
     case "windsurf":
       return env.WINDSURF_CONFIG_DIR
         ? expandTilde(env.WINDSURF_CONFIG_DIR)
@@ -44,7 +44,7 @@ export function getGlobalConfigDir(runtime: string): string {
     case "codebuddy":
       return env.CODEBUDDY_CONFIG_DIR ? expandTilde(env.CODEBUDDY_CONFIG_DIR) : path.join(home, ".codebuddy");
     case "cline":
-      return env.CLINE_CONFIG_DIR ? expandTilde(env.CLINE_CONFIG_DIR) : path.join(home, ".cline");
+      return env.CLINE_CONFIG_DIR ? expandTilde(env.CLINE_CONFIG_DIR) : path.join(home, "Documents", "Cline");
     case "opencode": {
       if (env.OPENCODE_CONFIG_DIR) return expandTilde(env.OPENCODE_CONFIG_DIR);
       if (env.XDG_CONFIG_HOME) return path.join(expandTilde(env.XDG_CONFIG_HOME), "opencode");
@@ -56,7 +56,9 @@ export function getGlobalConfigDir(runtime: string): string {
       return path.join(home, ".config", "kilo");
     }
     case "openclaw":
-      return env.OPENCLAW_CONFIG_DIR ? expandTilde(env.OPENCLAW_CONFIG_DIR) : path.join(home, ".openclaw");
+      return env.OPENCLAW_STATE_DIR
+        ? expandTilde(env.OPENCLAW_STATE_DIR)
+        : env.OPENCLAW_CONFIG_DIR ? expandTilde(env.OPENCLAW_CONFIG_DIR) : path.join(home, ".openclaw");
     case "qoder":
       return env.QODER_CONFIG_DIR ? expandTilde(env.QODER_CONFIG_DIR) : path.join(home, ".qoder");
     default:
@@ -99,4 +101,10 @@ export function getInstallBaseDir({
   if (runtime === "cline") return cwd;
   const sub = LOCAL_DIR[runtime] ?? ".claude";
   return path.join(cwd, sub);
+}
+
+export function getLegacyGlobalConfigDirs(runtime: string): string[] {
+  if (runtime === "antigravity" && !process.env.ANTIGRAVITY_CONFIG_DIR) return [path.join(os.homedir(), ".gemini", "antigravity")];
+  if (runtime === "cline" && !process.env.CLINE_CONFIG_DIR) return [path.join(os.homedir(), ".cline")];
+  return [];
 }

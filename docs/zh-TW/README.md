@@ -22,6 +22,9 @@
 
 </div>
 
+
+[執行環境相容性與升級說明](../runtimes/compatibility.md)
+
 ---
 
 `frontend-craft` 是一個**通用前端插件**，為以下 **15 款 AI 程式設計助手**注入統一的前端工程規範：

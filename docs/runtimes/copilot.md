@@ -1,10 +1,16 @@
-# frontend-craft: copilot
-
-See root README **Universal Install** and run:
+# frontend-craft: GitHub Copilot
 
 ```bash
-npx @bovinphang/frontend-craft install copilot
+fec setup copilot
+fec setup copilot --global
+fec doctor copilot --local
+fec doctor copilot --global
 ```
 
-> **Non-interactive:** append `--local` or `--global` to skip install-location prompts. See the repository README **Universal Install** for interactive vs. scripted behavior.
+Without a global CLI installation, use `npx @bovinphang/frontend-craft install copilot --local` or `--global`.
 
+Local installation targets repository customization: `.github/instructions/frontend-craft.instructions.md` with `applyTo: "**"` and `.github/prompts/fec-*.prompt.md`. Prompt files are supported by compatible IDE clients. Global installation targets Copilot CLI user instructions in `~/.copilot/copilot-instructions.md` (`COPILOT_CONFIG_DIR` override), preserving an existing file. Global IDE prompt installation is not provided; use `--local` for prompts.
+
+The capability matrix describes what frontend-craft installs, not every feature offered by the host. `doctor` checks installation artifacts; it does not launch the host or certify a release version.
+
+[Official reference](https://docs.github.com/en/copilot/reference/customization-cheat-sheet) · [Compatibility and upgrade notes](compatibility.md)

@@ -5,9 +5,8 @@ import {
   copyDir,
   copyFile,
   ensureDir,
-  readUtf8,
-  writeUtf8,
 } from "../shared/fs.js";
+import { mergeHooks, removeExactHooks, readSettings, writeSettings } from "../shared/settings.js";
 
 const HOOK_SCRIPTS = [
   "fec-security-check.js",
@@ -26,6 +25,8 @@ export async function installQoder(ctx: InstallContext): Promise<void> {
     return;
   }
 
+  readSettings(path.join(baseDir, "settings.json"));
+
   ensureDir(baseDir);
   copyDir(path.join(contentRoot, "skills"), path.join(baseDir, "skills"));
   copyDir(path.join(contentRoot, "commands"), path.join(baseDir, "commands"));
@@ -37,9 +38,12 @@ export async function installQoder(ctx: InstallContext): Promise<void> {
     );
   }
   copyHookScripts(pluginRoot, path.join(baseDir, "hooks"));
-  writeUtf8(
+  const ownedHooks = qoderHooks(baseDir, isGlobal);
+  const existing = readSettings(path.join(baseDir, "settings.json"));
+  writeSettings(
     path.join(baseDir, "settings.json"),
-    JSON.stringify(mergeQoderSettings(baseDir), null, 2) + "\n",
+    mergeHooks(isGlobal ? removeExactHooks(existing, qoderHooks(baseDir, false)) : existing, ownedHooks),
+    ownedHooks,
   );
 }
 
@@ -56,53 +60,36 @@ function copyHookScripts(pluginRoot: string, hooksDir: string): void {
   }
 }
 
-function mergeQoderSettings(baseDir: string): Record<string, unknown> {
-  const settingsPath = path.join(baseDir, "settings.json");
-  const existing = readExistingSettings(settingsPath);
+function qoderHooks(baseDir: string, isGlobal: boolean): Record<string, unknown> {
+  const hookPath = (name: string) => isGlobal
+    ? path.resolve(baseDir, "hooks", name).split(path.sep).join("/")
+    : `.qoder/hooks/${name}`;
   return {
-    ...existing,
-    hooks: {
-      ...asRecord(existing.hooks),
       PreToolUse: [
-        ...asArray(asRecord(existing.hooks).PreToolUse),
         qoderHook(
           "Bash|Shell",
-          ".qoder/hooks/fec-security-check.js",
+          hookPath("fec-security-check.js"),
           "Checking command safety...",
         ),
       ],
       PostToolUse: [
-        ...asArray(asRecord(existing.hooks).PostToolUse),
         qoderHook(
           "Write|Edit|MultiEdit",
-          ".qoder/hooks/fec-format-changed-file.js",
+          hookPath("fec-format-changed-file.js"),
           "Running formatter...",
         ),
       ],
       Stop: [
-        ...asArray(asRecord(existing.hooks).Stop),
         qoderHook(
           ".*",
-          ".qoder/hooks/fec-run-tests.js",
+          hookPath("fec-run-tests.js"),
           "Running final validation...",
         ),
       ],
       Notification: [
-        ...asArray(asRecord(existing.hooks).Notification),
-        qoderHook(".*", ".qoder/hooks/fec-notify.js"),
+        qoderHook(".*", hookPath("fec-notify.js")),
       ],
-    },
   };
-}
-
-function readExistingSettings(settingsPath: string): Record<string, unknown> {
-  if (!fs.existsSync(settingsPath)) return {};
-  try {
-    const parsed = JSON.parse(readUtf8(settingsPath));
-    return asRecord(parsed);
-  } catch {
-    return {};
-  }
 }
 
 function qoderHook(
@@ -120,14 +107,4 @@ function qoderHook(
       },
     ],
   };
-}
-
-function asRecord(value: unknown): Record<string, unknown> {
-  return value != null && typeof value === "object" && !Array.isArray(value)
-    ? (value as Record<string, unknown>)
-    : {};
-}
-
-function asArray(value: unknown): unknown[] {
-  return Array.isArray(value) ? value : [];
 }

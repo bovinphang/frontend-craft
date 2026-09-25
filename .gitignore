@@ -13,3 +13,4 @@ skill-packages/
 *.tgz
 docs/superpowers/
 .worktrees/
+reports/

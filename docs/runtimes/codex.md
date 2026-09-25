@@ -1,10 +1,16 @@
-# frontend-craft: codex
-
-See root README **Universal Install** and run:
+# frontend-craft: Codex
 
 ```bash
-npx @bovinphang/frontend-craft install codex
+fec setup codex
+fec setup codex --global
+fec doctor codex --local
+fec doctor codex --global
 ```
 
-> **Non-interactive:** append `--local` or `--global` to skip install-location prompts. See the repository README **Universal Install** for interactive vs. scripted behavior.
+Without a global CLI installation, use `npx @bovinphang/frontend-craft install codex --local` or `--global`.
 
+Project skills: `.agents/skills`; user skills: `~/.agents/skills`. Agents: `.codex/agents/*.toml` or `$CODEX_HOME/agents`. Existing `config.toml` is preserved. New agents inherit the session model and reasoning effort; edited agent files are preserved by `fec update`. Hooks and active MCP configuration are not installed by this adapter.
+
+The capability matrix describes what frontend-craft installs, not every feature offered by the host. `doctor` checks installation artifacts; it does not launch the host or certify a release version.
+
+[Official reference](https://learn.chatgpt.com/docs/agent-configuration/subagents) · [Compatibility and upgrade notes](compatibility.md)
