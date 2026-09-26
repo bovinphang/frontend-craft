@@ -22,6 +22,12 @@ export function findBrowser() {
 
 /** @typedef {{evaluate:(expression:string)=>Promise<unknown>,screenshot:(width:number,height:number,scale?:number)=>Promise<Buffer>}} DiagramSession */
 
+/**
+ * Export failures must stay within the wording callers match on, so CDP details are wrapped here.
+ * @param {string} detail @returns {Error}
+ */
+const exportFailure = (detail) => new Error(`Browser raster export failed: ${detail}`);
+
 /** @template T @param {string} html @param {{theme:'light'|'dark',timeoutMs:number}} options @param {(session:DiagramSession)=>Promise<T>} action @returns {Promise<T>} */
 export async function withDiagramPage(html, options, action) {
   const browser = findBrowser();
@@ -38,26 +44,34 @@ export async function withDiagramPage(html, options, action) {
   let timer;
   try {
     const work = async () => {
-    const deadline = Date.now() + Math.min(5000, options.timeoutMs);
+    const deadline = Date.now() + Math.min(15000, options.timeoutMs);
     const portFile = path.join(profile, "DevToolsActivePort");
     while (!fs.existsSync(portFile) && Date.now() < deadline && (child.exitCode === null || child.exitCode === 0) && !childError) await new Promise((resolve) => setTimeout(resolve, 50));
-    if (!fs.existsSync(portFile)) throw new Error(`Browser raster export failed: browser did not start a debugging session${childError ? ` (${childError})` : ""}.`);
+    if (!fs.existsSync(portFile)) throw exportFailure(`browser did not start a debugging session${childError ? ` (${childError})` : ""}.`);
     const port = Number(fs.readFileSync(portFile, "utf8").split("\n")[0]);
-    const pages = await (await fetch(`http://127.0.0.1:${port}/json/list`, { signal: AbortSignal.timeout(Math.min(5000, options.timeoutMs)) })).json();
-    const target = pages.find(/** @param {{type:string}} p */ (p) => p.type === "page");
-    if (!target?.webSocketDebuggerUrl) throw new Error("Browser did not create a diagram page.");
+    // A page target is about:blank until its document commits; evaluating during that window races
+    // the replacement ("Execution context was destroyed"). Wait for the file URL before attaching.
+    /** @type {{webSocketDebuggerUrl?:string}|undefined} */
+    let target;
+    while (Date.now() < deadline) {
+      const pages = await (await fetch(`http://127.0.0.1:${port}/json/list`, { signal: AbortSignal.timeout(Math.min(5000, options.timeoutMs)) })).json();
+      target = pages.find(/** @param {{type:string,url:string}} p */ (p) => p.type === "page" && p.url.startsWith("file:"));
+      if (target) break;
+      await new Promise((resolve) => setTimeout(resolve, 50));
+    }
+    if (!target?.webSocketDebuggerUrl) throw exportFailure("browser did not create a diagram page.");
     socket = new WebSocket(target.webSocketDebuggerUrl);
     await new Promise((resolve, reject) => { socket?.addEventListener("open", resolve, { once: true }); socket?.addEventListener("error", reject, { once: true }); });
     /** @type {Map<number,{resolve:(value:Record<string,unknown>)=>void,reject:(reason:Error)=>void}>} */
     const pending = new Map();
-    socket.addEventListener("close", () => { for (const entry of pending.values()) entry.reject(new Error("Browser session closed before export completed.")); pending.clear(); });
+    socket.addEventListener("close", () => { for (const entry of pending.values()) entry.reject(exportFailure("session closed before export completed.")); pending.clear(); });
     let serial = 0;
     socket.addEventListener("message", (event) => {
       const message = JSON.parse(String(event.data));
       const entry = pending.get(message.id);
       if (!entry) return;
       pending.delete(message.id);
-      if (message.error) entry.reject(new Error(message.error.message)); else entry.resolve(message.result ?? {});
+      if (message.error) entry.reject(exportFailure(message.error.message)); else entry.resolve(message.result ?? {});
     });
     /** @param {string} method @param {Record<string,unknown>} [params] @returns {Promise<Record<string,unknown>>} */
     const call = (method, params = {}) => new Promise((resolve, reject) => { const id = ++serial; pending.set(id, { resolve, reject }); socket?.send(JSON.stringify({ id, method, params })); });
@@ -76,7 +90,7 @@ export async function withDiagramPage(html, options, action) {
     await evaluate(`(async()=>{if(document.readyState!=="complete")await new Promise(r=>window.addEventListener("load",r,{once:true}));await document.fonts.ready;await new Promise(r=>requestAnimationFrame(()=>requestAnimationFrame(r)));})()`);
     return await action(session);
     };
-    return await Promise.race([work(), new Promise(/** @param {(reason:Error)=>void} reject */ (_, reject) => { timer = setTimeout(() => reject(new Error("Browser export timed out.")), options.timeoutMs); })]);
+    return await Promise.race([work(), new Promise(/** @param {(reason:Error)=>void} reject */ (_, reject) => { timer = setTimeout(() => reject(exportFailure("export timed out.")), options.timeoutMs); })]);
   } finally {
     if (timer) clearTimeout(timer);
     if (socket?.readyState === WebSocket.OPEN) socket.send(JSON.stringify({ id: 999999, method: "Browser.close" }));
