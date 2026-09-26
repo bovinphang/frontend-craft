@@ -119,6 +119,26 @@ test("pack:skills creates one standalone publish package per skill", () => {
     assert.deepEqual(copiedReferences, references);
   }
 
+  const catalog = fs.readFileSync(
+    path.join(
+      packageRoot,
+      "fec-refactoring-catalog",
+      "references",
+      "catalog-index.md",
+    ),
+    "utf8",
+  );
+  const detailLinks = [
+    ...catalog.matchAll(
+      /\]\((https:\/\/github\.com\/bovinphang\/frontend-craft\/blob\/[^)]+\.md)\)/g,
+    ),
+  ];
+  assert.equal(
+    detailLinks.length,
+    61,
+    "standalone catalog must provide reachable cross-skill links",
+  );
+
   const sourceDesignScript = path.join(
     skillsDir,
     "fec-ui-design",
@@ -136,7 +156,8 @@ test("pack:skills creates one standalone publish package per skill", () => {
     "missing packaged UI design script",
   );
   assert.ok(
-    fs.statSync(packagedDesignScript).size < fs.statSync(sourceDesignScript).size,
+    fs.statSync(packagedDesignScript).size <
+      fs.statSync(sourceDesignScript).size,
     "packaged UI design script should be minified",
   );
 

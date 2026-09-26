@@ -1,6 +1,6 @@
 ---
 name: fec-typescript-reviewer
-description: TypeScript/JavaScript special review: type safety, async correctness, Node/Web safety, idioms. Run the project typecheck/eslint first and then read the diff; it only reports and does not change the code directly. Suitable for .ts/.tsx/.js/.jsx changes or PR-level TS/JS reviews. Division of labor with fec-code-reviewer: This agent focuses on language and runtime semantics, while the other party focuses on front-end UI/component architecture.
+description: "TypeScript/JavaScript special review: type safety, async correctness, Node/Web safety, idioms. Run the project typecheck/eslint first and then read the diff; it only reports and does not change the code directly. Suitable for .ts/.tsx/.js/.jsx changes or PR-level TS/JS reviews. Division of labor with fec-code-reviewer: This agent focuses on language and runtime semantics, while the other party focuses on front-end UI/component architecture."
 tools: Read, Edit, Write, MultiEdit, Glob, Grep, LS, Bash
 model: sonnet
 permissionMode: default

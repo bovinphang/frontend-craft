@@ -1,6 +1,6 @@
 ---
 name: fec-refactor-cleaner
-description: Front-end Dead Code & Technical Debt Cleanup Subagent: Identifies unused components, exports, styles, routes, dependencies and test fixtures, categorizes them by risk, and cleans safe items only under validation protection.
+description: "Front-end Dead Code & Technical Debt Cleanup Subagent: Identifies unused components, exports, styles, routes, dependencies and test fixtures, categorizes them by risk, and cleans safe items only under validation protection."
 tools: Read, Edit, Write, MultiEdit, Glob, Grep, LS, Bash
 model: sonnet
 permissionMode: default

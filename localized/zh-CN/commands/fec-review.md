@@ -3,7 +3,7 @@ name: fec-review
 description: 对指定文件或最近变更的前端代码进行规范化评审，输出分级评审报告并保存为 Markdown 文件。
 ---
 
-对前端代码进行全面评审。先读项目现状和 diff，再输出有证据的发现；不把猜测写成阻塞项。若需要**结合 git diff、按严重级别（CRITICAL→LOW）降噪输出、并显式给出 Approve/Warning/Block 结论**，可委托 **`fec-code-reviewer`** 子代理执行；若变更以 **`.ts` / `.tsx` / `.js` / `.jsx`** 为主且需先跑 **typecheck/eslint**、PR 合并就绪检查与 TS/JS 惯用法专项结论，可委托 **`typescript-reviewer`**（报告为 `typescript-review-*.md`）。否则继续按本命令与 `fec-code-review` Skill 流程即可。
+对前端代码进行全面评审。先读项目现状和 diff，再输出有证据的发现；不把猜测写成阻塞项。若需要**结合 git diff、按严重级别（CRITICAL→LOW）降噪输出、并显式给出 Approve/Warning/Block 结论**，可委托 **`fec-code-reviewer`** 子代理执行；若变更以 **`.ts` / `.tsx` / `.js` / `.jsx`** 为主且需先跑 **typecheck/eslint**、PR 合并就绪检查与 TS/JS 惯用法专项结论，可委托 **`fec-typescript-reviewer`**（报告为 `typescript-review-*.md`）。否则继续按本命令与 `fec-code-review` Skill 流程即可。
 
 ## 执行步骤
 

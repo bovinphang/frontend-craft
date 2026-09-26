@@ -1,27 +1,28 @@
+import path from "node:path";
+import { parseAgentDocument } from "./shared/frontmatter.js";
+
 /**
  * Convert Claude-style agent markdown to Codex agent TOML.
  * @param {string} raw
  * @param {string} filename
  */
 export function agentMdToToml(raw: string, filename: string): string {
-  const m = raw.match(/^---\r?\n([\s\S]*?)\r?\n---\r?\n([\s\S]*)$/);
-  if (!m) throw new Error(`no frontmatter: ${filename}`);
-  const fm = m[1];
-  const body = m[2]
+  const parsed = parseAgentDocument(
+    raw,
+    filename,
+    path.basename(filename, ".md"),
+  );
+  const body = parsed.body
     .trim()
     .replace(/\.claude\/rules/g, ".codex/rules")
     .replace(/\bCLAUDE\.md\b/g, "AGENTS.md");
-  const nameM = fm.match(/^name:\s*(.+)$/m);
-  if (!nameM) throw new Error(`no name in frontmatter: ${filename}`);
-  const name = nameM[1].trim();
-  const dm = fm.match(/^description:\s*(.+)$/m);
-  const desc = dm ? dm[1].trim() : "";
-  const esc = (s: string): string => s.replace(/\\/g, "\\\\").replace(/"/g, '\\"');
+  const { name, description } = parsed.metadata;
+  // JSON string escapes also encode TOML basic strings; encode other control characters explicitly.
+  const encode = (value: string): string =>
+    JSON.stringify(value).replace(/[\u007f]/g, "\\u007f");
   return (
-    `name = "${name}"\n` +
-    `description = "${esc(desc)}"\n\n` +
-    `developer_instructions = """\n` +
-    body +
-    `\n"""\n`
+    `name = ${encode(name)}\n` +
+    `description = ${encode(description)}\n\n` +
+    `developer_instructions = ${encode(body)}\n`
   );
 }

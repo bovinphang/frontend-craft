@@ -320,8 +320,10 @@ npx @bovinphang/frontend-craft@latest list
 | `SessionStart`            | 清理 Claude 缓存，然后自动检测项目框架和包管理器 |
 | `PreToolUse(Bash)`        | 拦截危险命令（`rm -rf`、force push 等）      |
 | `PostToolUse(Write/Edit)` | 对修改的文件自动执行 Prettier                |
-| `Stop`                    | 会话结束时执行 lint、type-check、test、build |
+| `Stop`                    | 会话结束时去重运行可用的校验脚本并报告失败；仅在配置阻断模式时阻断 |
 | `Notification`            | 跨平台桌面通知（macOS / Linux / Windows）    |
+
+Stop 校验默认只报告失败，不阻断会话。设置 `FRONTEND_CRAFT_VALIDATION_MODE=blocking` 后，失败将返回非零状态。包管理器优先采用 `package.json` 的 `packageManager`；若未声明，则采用唯一的锁文件；多个锁文件冲突时默认使用 npm。
 
 ### MCP 集成
 

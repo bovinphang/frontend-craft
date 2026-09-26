@@ -17,8 +17,10 @@ Closes #
 
 ## Verification
 
-- [ ] `npm test`
-- [ ] `npm run typecheck:openclaw` (required when OpenClaw code or templates are affected)
+- [ ] `pnpm lint`
+- [ ] `pnpm format:check`
+- [ ] `pnpm test`
+- [ ] `pnpm run typecheck:openclaw` (required when OpenClaw code or templates are affected)
 - [ ] `npx @bovinphang/frontend-craft@latest install --all --dry-run --global` or equivalent local dry run, when installer behavior changes
 - [ ] Not applicable, documentation-only change
 

@@ -3,8 +3,17 @@ import assert from "node:assert/strict";
 import fs from "node:fs";
 import path from "node:path";
 import { resolvePluginRoot } from "../../src/install/shared/resolve-plugin-root.js";
+import {
+  parseAgentDocument,
+  parseSkillDocument,
+} from "../../src/install/shared/frontmatter.js";
+import { auditContent } from "../../src/install/shared/content-audit.js";
 
 const root = resolvePluginRoot(import.meta.url);
+
+test("source and localized frontmatter and capability references are valid", () => {
+  assert.deepEqual(auditContent(root), []);
+});
 
 type SkillMetadata = {
   id: string;
@@ -19,7 +28,10 @@ type SkillMetadata = {
   platforms: string[];
 };
 
-type EvalQueries = Record<string, { should_trigger: unknown[]; should_not_trigger: unknown[] }>;
+type EvalQueries = Record<
+  string,
+  { should_trigger: unknown[]; should_not_trigger: unknown[] }
+>;
 
 type SkillRelation = {
   relatedSkills?: string[];
@@ -31,7 +43,9 @@ type SkillRelations = Record<string, SkillRelation>;
 
 test("skills metadata matches skill directories and frontmatter names", () => {
   const skillsDir = path.join(root, "skills");
-  const metadata = JSON.parse(fs.readFileSync(path.join(skillsDir, "metadata.json"), "utf8")) as SkillMetadata[];
+  const metadata = JSON.parse(
+    fs.readFileSync(path.join(skillsDir, "metadata.json"), "utf8"),
+  ) as SkillMetadata[];
   const skillDirs = fs
     .readdirSync(skillsDir, { withFileTypes: true })
     .filter((entry) => entry.isDirectory())
@@ -43,35 +57,42 @@ test("skills metadata matches skill directories and frontmatter names", () => {
 
   for (const dir of skillDirs) {
     const body = fs.readFileSync(path.join(skillsDir, dir, "SKILL.md"), "utf8");
-    assert.notEqual(body.charCodeAt(0), 0xfeff, `skill must be UTF-8 without BOM: ${dir}`);
-    const frontmatter = body.match(/^---\r?\n([\s\S]*?)\r?\n---/);
-    assert.ok(frontmatter, `missing frontmatter: ${dir}`);
-    assert.match(frontmatter[1], new RegExp(`^name:\\s*${escapeRegExp(dir)}$`, "m"));
-    const rawDescription = frontmatter[1].match(/^description:\s*(.+)$/m)?.[1] ?? "";
-    const description: string = rawDescription.startsWith('"')
-      ? JSON.parse(rawDescription)
-      : rawDescription.startsWith("'") && rawDescription.endsWith("'")
-        ? rawDescription.slice(1, -1).replaceAll("''", "'")
-        : rawDescription;
+    assert.notEqual(
+      body.charCodeAt(0),
+      0xfeff,
+      `skill must be UTF-8 without BOM: ${dir}`,
+    );
+    const {
+      metadata: { description },
+    } = parseSkillDocument(body, `${dir}/SKILL.md`, dir);
     assert.match(description, /^Use when\b/);
     assert.ok(description.length > 0, `missing description: ${dir}`);
-    assert.ok(description.length < 1024, `description should stay under 1024 characters: ${dir}`);
-    const frontmatterKeys = [...frontmatter[1].matchAll(/^([A-Za-z0-9_-]+):/gm)].map((match) => match[1]).sort();
-    assert.deepEqual(frontmatterKeys, ["description", "name"]);
-    assert.ok(body.split(/\r?\n/).length <= 500, `skill body should stay under 500 lines: ${dir}`);
+    assert.ok(
+      description.length < 1024,
+      `description should stay under 1024 characters: ${dir}`,
+    );
+    assert.ok(
+      body.split(/\r?\n/).length <= 500,
+      `skill body should stay under 500 lines: ${dir}`,
+    );
     assertNoDuplicateHeadingPair(body, dir, "When to Use", "使用说明");
     assertNoDuplicateHeadingPair(body, dir, "Expected Output", "输出要求");
     assertNoDuplicateHeadingPair(body, dir, "输出格式", "Expected Output");
 
     for (const reference of body.matchAll(/\]\((references\/[^)]+)\)/g)) {
       const referencePath = path.join(skillsDir, dir, reference[1]);
-      assert.ok(fs.existsSync(referencePath), `missing referenced skill file: ${dir}/${reference[1]}`);
+      assert.ok(
+        fs.existsSync(referencePath),
+        `missing referenced skill file: ${dir}/${reference[1]}`,
+      );
     }
   }
 });
 
 test("skills metadata uses the public taxonomy categories", () => {
-  const metadata = JSON.parse(fs.readFileSync(path.join(root, "skills", "metadata.json"), "utf8")) as SkillMetadata[];
+  const metadata = JSON.parse(
+    fs.readFileSync(path.join(root, "skills", "metadata.json"), "utf8"),
+  ) as SkillMetadata[];
   const allowedCategories = new Set([
     "project-standard",
     "implementation-capability",
@@ -84,34 +105,57 @@ test("skills metadata uses the public taxonomy categories", () => {
   ]);
 
   for (const skill of metadata) {
-    assert.ok(allowedCategories.has(skill.category), `unexpected skill category for ${skill.id}: ${skill.category}`);
+    assert.ok(
+      allowedCategories.has(skill.category),
+      `unexpected skill category for ${skill.id}: ${skill.category}`,
+    );
   }
 });
 
 test("skill relations are structured and point only to existing skills", () => {
   const skillsDir = path.join(root, "skills");
-  const metadata = JSON.parse(fs.readFileSync(path.join(skillsDir, "metadata.json"), "utf8")) as SkillMetadata[];
-  const relations = JSON.parse(fs.readFileSync(path.join(skillsDir, "relations.json"), "utf8")) as SkillRelations;
+  const metadata = JSON.parse(
+    fs.readFileSync(path.join(skillsDir, "metadata.json"), "utf8"),
+  ) as SkillMetadata[];
+  const relations = JSON.parse(
+    fs.readFileSync(path.join(skillsDir, "relations.json"), "utf8"),
+  ) as SkillRelations;
   const skillIds = new Set(metadata.map((skill) => skill.id));
-  const allowedKeys = new Set(["relatedSkills", "boundaryWorkflows", "capabilityTags"]);
+  const allowedKeys = new Set([
+    "relatedSkills",
+    "boundaryWorkflows",
+    "capabilityTags",
+  ]);
 
   for (const [skillId, relation] of Object.entries(relations)) {
     assert.ok(skillIds.has(skillId), `unknown relation skill id: ${skillId}`);
-    assert.ok(!("relatedAgents" in relation), `relations must not include relatedAgents: ${skillId}`);
+    assert.ok(
+      !("relatedAgents" in relation),
+      `relations must not include relatedAgents: ${skillId}`,
+    );
 
     for (const key of Object.keys(relation)) {
-      assert.ok(allowedKeys.has(key), `unsupported relation field ${skillId}.${key}`);
+      assert.ok(
+        allowedKeys.has(key),
+        `unsupported relation field ${skillId}.${key}`,
+      );
     }
 
     if (relation.relatedSkills !== undefined) {
       assertStringArray(relation.relatedSkills, `${skillId}.relatedSkills`);
       for (const relatedSkill of relation.relatedSkills) {
-        assert.ok(skillIds.has(relatedSkill), `unknown related skill ${relatedSkill} in ${skillId}`);
+        assert.ok(
+          skillIds.has(relatedSkill),
+          `unknown related skill ${relatedSkill} in ${skillId}`,
+        );
       }
     }
 
     if (relation.boundaryWorkflows !== undefined) {
-      assertStringArray(relation.boundaryWorkflows, `${skillId}.boundaryWorkflows`);
+      assertStringArray(
+        relation.boundaryWorkflows,
+        `${skillId}.boundaryWorkflows`,
+      );
     }
 
     assertStringArray(relation.capabilityTags, `${skillId}.capabilityTags`);
@@ -120,7 +164,9 @@ test("skill relations are structured and point only to existing skills", () => {
 
 test("agent frontmatter skills point only to existing skills", () => {
   const skillsDir = path.join(root, "skills");
-  const metadata = JSON.parse(fs.readFileSync(path.join(skillsDir, "metadata.json"), "utf8")) as SkillMetadata[];
+  const metadata = JSON.parse(
+    fs.readFileSync(path.join(skillsDir, "metadata.json"), "utf8"),
+  ) as SkillMetadata[];
   const skillIds = new Set(metadata.map((skill) => skill.id));
   const agentFiles = fs
     .readdirSync(path.join(root, "agents"))
@@ -130,7 +176,10 @@ test("agent frontmatter skills point only to existing skills", () => {
   for (const agentFile of agentFiles) {
     const body = fs.readFileSync(path.join(root, "agents", agentFile), "utf8");
     for (const skillId of extractAgentSkills(body)) {
-      assert.ok(skillIds.has(skillId), `${agentFile} references unknown skill: ${skillId}`);
+      assert.ok(
+        skillIds.has(skillId),
+        `${agentFile} references unknown skill: ${skillId}`,
+      );
     }
   }
 });
@@ -145,15 +194,51 @@ test("skill bodies do not contain agent backlinks or package-external skill link
 
   for (const dir of skillDirs) {
     const body = fs.readFileSync(path.join(skillsDir, dir, "SKILL.md"), "utf8");
-    assert.doesNotMatch(body, /^## Related Skills \/ Boundary$/m, `${dir} contains Related Skills / Boundary`);
-    assert.doesNotMatch(body, /^## 相关技能$/m, `${dir} contains related skills section`);
-    assert.doesNotMatch(body, /^## 与子代理的配合$/m, `${dir} contains subagent coordination section`);
-    assert.doesNotMatch(body, /^## Related Agent$/m, `${dir} contains Related Agent`);
-    assert.doesNotMatch(body, /\]\(\.\.\/\.\.\/agents\//, `${dir} links to ../../agents`);
-    assert.doesNotMatch(body, /\]\(\.\.\/agents\//, `${dir} links to ../agents`);
-    assert.doesNotMatch(body, /\]\(\.\.\/\.\.\/skills\//, `${dir} links to ../../skills`);
-    assert.doesNotMatch(body, /\]\(\.\.\/skills\//, `${dir} links to ../skills`);
-    assert.doesNotMatch(body, /`fec-[a-z0-9-]+`/, `${dir} contains inline skill or agent id navigation`);
+    assert.doesNotMatch(
+      body,
+      /^## Related Skills \/ Boundary$/m,
+      `${dir} contains Related Skills / Boundary`,
+    );
+    assert.doesNotMatch(
+      body,
+      /^## 相关技能$/m,
+      `${dir} contains related skills section`,
+    );
+    assert.doesNotMatch(
+      body,
+      /^## 与子代理的配合$/m,
+      `${dir} contains subagent coordination section`,
+    );
+    assert.doesNotMatch(
+      body,
+      /^## Related Agent$/m,
+      `${dir} contains Related Agent`,
+    );
+    assert.doesNotMatch(
+      body,
+      /\]\(\.\.\/\.\.\/agents\//,
+      `${dir} links to ../../agents`,
+    );
+    assert.doesNotMatch(
+      body,
+      /\]\(\.\.\/agents\//,
+      `${dir} links to ../agents`,
+    );
+    assert.doesNotMatch(
+      body,
+      /\]\(\.\.\/\.\.\/skills\//,
+      `${dir} links to ../../skills`,
+    );
+    assert.doesNotMatch(
+      body,
+      /\]\(\.\.\/skills\//,
+      `${dir} links to ../skills`,
+    );
+    assert.doesNotMatch(
+      body,
+      /`fec-[a-z0-9-]+`/,
+      `${dir} contains inline skill or agent id navigation`,
+    );
     assert.doesNotMatch(
       body,
       /[「『“"]fec-[a-z0-9-]+[」』”"]\s*(?:skill|技能)/,
@@ -163,46 +248,113 @@ test("skill bodies do not contain agent backlinks or package-external skill link
 });
 
 test("skills metadata includes standalone publish fields", () => {
-  const pkg = JSON.parse(fs.readFileSync(path.join(root, "package.json"), "utf8")) as {
+  const pkg = JSON.parse(
+    fs.readFileSync(path.join(root, "package.json"), "utf8"),
+  ) as {
     version: string;
     license: string;
     homepage: string;
     repository: { url: string };
   };
-  const metadata = JSON.parse(fs.readFileSync(path.join(root, "skills", "metadata.json"), "utf8")) as SkillMetadata[];
-  const expectedPlatforms = ["skills-cli", "skillreg", "claude-code", "codex", "cursor", "opencode", "openclaw", "generic-skill-runtime"];
+  const metadata = JSON.parse(
+    fs.readFileSync(path.join(root, "skills", "metadata.json"), "utf8"),
+  ) as SkillMetadata[];
+  const expectedPlatforms = [
+    "skills-cli",
+    "skillreg",
+    "claude-code",
+    "codex",
+    "cursor",
+    "opencode",
+    "openclaw",
+    "generic-skill-runtime",
+  ];
 
   for (const skill of metadata) {
-    assert.equal(skill.version, pkg.version, `version should follow package.json: ${skill.id}`);
-    assert.equal(skill.license, pkg.license, `license should follow package.json: ${skill.id}`);
-    assert.equal(skill.homepage, pkg.homepage, `homepage should follow package.json: ${skill.id}`);
-    assert.equal(skill.repository, pkg.repository.url, `repository should follow package.json: ${skill.id}`);
-    assert.equal(typeof skill.summary, "string", `missing summary: ${skill.id}`);
+    assert.equal(
+      skill.version,
+      pkg.version,
+      `version should follow package.json: ${skill.id}`,
+    );
+    assert.equal(
+      skill.license,
+      pkg.license,
+      `license should follow package.json: ${skill.id}`,
+    );
+    assert.equal(
+      skill.homepage,
+      pkg.homepage,
+      `homepage should follow package.json: ${skill.id}`,
+    );
+    assert.equal(
+      skill.repository,
+      pkg.repository.url,
+      `repository should follow package.json: ${skill.id}`,
+    );
+    assert.equal(
+      typeof skill.summary,
+      "string",
+      `missing summary: ${skill.id}`,
+    );
     assert.ok(skill.summary.length > 0, `empty summary: ${skill.id}`);
+    assert.doesNotMatch(
+      skill.summary,
+      /^Frontend Craft skill for /,
+      `generic summary: ${skill.id}`,
+    );
     assert.ok(Array.isArray(skill.tags), `missing tags: ${skill.id}`);
     assert.ok(skill.tags.length > 0, `empty tags: ${skill.id}`);
     assert.ok(Array.isArray(skill.keywords), `missing keywords: ${skill.id}`);
-    assert.ok(skill.keywords.includes(skill.category), `keywords should include category: ${skill.id}`);
+    assert.ok(
+      skill.keywords.includes(skill.category),
+      `keywords should include category: ${skill.id}`,
+    );
     for (const tag of skill.tags) {
-      assert.ok(skill.keywords.includes(tag), `keywords should include tag ${tag}: ${skill.id}`);
+      assert.ok(
+        skill.keywords.includes(tag),
+        `keywords should include tag ${tag}: ${skill.id}`,
+      );
     }
-    assert.deepEqual(skill.platforms, expectedPlatforms, `platforms mismatch: ${skill.id}`);
+    assert.deepEqual(
+      skill.platforms,
+      expectedPlatforms,
+      `platforms mismatch: ${skill.id}`,
+    );
   }
 });
 
 test("skill trigger eval queries cover every skill with positive and negative examples", () => {
   const skillsDir = path.join(root, "skills");
-  const metadata = JSON.parse(fs.readFileSync(path.join(skillsDir, "metadata.json"), "utf8")) as SkillMetadata[];
-  const evalQueries = JSON.parse(fs.readFileSync(path.join(skillsDir, "eval_queries.json"), "utf8")) as EvalQueries;
+  const metadata = JSON.parse(
+    fs.readFileSync(path.join(skillsDir, "metadata.json"), "utf8"),
+  ) as SkillMetadata[];
+  const evalQueries = JSON.parse(
+    fs.readFileSync(path.join(skillsDir, "eval_queries.json"), "utf8"),
+  ) as EvalQueries;
 
-  assert.deepEqual(Object.keys(evalQueries).sort(), metadata.map((skill) => skill.id).sort());
+  assert.deepEqual(
+    Object.keys(evalQueries).sort(),
+    metadata.map((skill) => skill.id).sort(),
+  );
 
   for (const skill of metadata) {
     const queries = evalQueries[skill.id];
-    assert.ok(Array.isArray(queries.should_trigger), `missing should_trigger: ${skill.id}`);
-    assert.ok(Array.isArray(queries.should_not_trigger), `missing should_not_trigger: ${skill.id}`);
-    assert.ok(queries.should_trigger.length >= 8, `not enough positive eval queries: ${skill.id}`);
-    assert.ok(queries.should_not_trigger.length >= 8, `not enough negative eval queries: ${skill.id}`);
+    assert.ok(
+      Array.isArray(queries.should_trigger),
+      `missing should_trigger: ${skill.id}`,
+    );
+    assert.ok(
+      Array.isArray(queries.should_not_trigger),
+      `missing should_not_trigger: ${skill.id}`,
+    );
+    assert.ok(
+      queries.should_trigger.length >= 8,
+      `not enough positive eval queries: ${skill.id}`,
+    );
+    assert.ok(
+      queries.should_not_trigger.length >= 8,
+      `not enough negative eval queries: ${skill.id}`,
+    );
   }
 });
 
@@ -211,26 +363,38 @@ test("marketplace skill count matches skills directory count", () => {
     .readdirSync(path.join(root, "skills"), { withFileTypes: true })
     .filter((entry) => entry.isDirectory()).length;
   const marketplace = JSON.parse(
-    fs.readFileSync(path.join(root, ".claude-plugin", "marketplace.json"), "utf8"),
+    fs.readFileSync(
+      path.join(root, ".claude-plugin", "marketplace.json"),
+      "utf8",
+    ),
   ) as { plugins: Array<{ description: string }> };
   const description = marketplace.plugins[0].description;
   assert.match(description, new RegExp(`${skillCount} skills`));
 });
 
 test("public metadata versions follow package.json", () => {
-  const pkg = JSON.parse(fs.readFileSync(path.join(root, "package.json"), "utf8")) as { version: string };
-  const plugin = JSON.parse(fs.readFileSync(path.join(root, ".claude-plugin", "plugin.json"), "utf8")) as {
+  const pkg = JSON.parse(
+    fs.readFileSync(path.join(root, "package.json"), "utf8"),
+  ) as { version: string };
+  const plugin = JSON.parse(
+    fs.readFileSync(path.join(root, ".claude-plugin", "plugin.json"), "utf8"),
+  ) as {
     version: string;
   };
   const marketplace = JSON.parse(
-    fs.readFileSync(path.join(root, ".claude-plugin", "marketplace.json"), "utf8"),
+    fs.readFileSync(
+      path.join(root, ".claude-plugin", "marketplace.json"),
+      "utf8",
+    ),
   ) as {
     plugins: Array<{
       version: string;
       source?: { source?: string; package?: string; version?: string };
     }>;
   };
-  const openclaw = JSON.parse(fs.readFileSync(path.join(root, "openclaw.plugin.json"), "utf8")) as {
+  const openclaw = JSON.parse(
+    fs.readFileSync(path.join(root, "openclaw.plugin.json"), "utf8"),
+  ) as {
     version: string;
   };
 
@@ -243,14 +407,19 @@ test("public metadata versions follow package.json", () => {
   });
   assert.equal(openclaw.version, pkg.version);
 
-  const skills = JSON.parse(fs.readFileSync(path.join(root, "skills", "metadata.json"), "utf8")) as SkillMetadata[];
+  const skills = JSON.parse(
+    fs.readFileSync(path.join(root, "skills", "metadata.json"), "utf8"),
+  ) as SkillMetadata[];
   for (const skill of skills) {
     assert.equal(skill.version, pkg.version);
   }
 });
 
 test("tracked source and docs do not contain mojibake markers", () => {
-  const mojibakeMarkers = [`${String.fromCharCode(0x9225)}?`, String.fromCharCode(0xfffd)];
+  const mojibakeMarkers = [
+    `${String.fromCharCode(0x9225)}?`,
+    String.fromCharCode(0xfffd),
+  ];
   const files = collectFiles(root).filter((file) => {
     const rel = path.relative(root, file);
     return (
@@ -268,9 +437,16 @@ test("tracked source and docs do not contain mojibake markers", () => {
   for (const file of files) {
     const body = fs.readFileSync(file, "utf8");
     for (const marker of mojibakeMarkers) {
-      assert.ok(!body.includes(marker), `mojibake marker found in ${path.relative(root, file)}`);
+      assert.ok(
+        !body.includes(marker),
+        `mojibake marker found in ${path.relative(root, file)}`,
+      );
     }
-    assert.notEqual(body.charCodeAt(0), 0xfeff, `file must be UTF-8 without BOM: ${path.relative(root, file)}`);
+    assert.notEqual(
+      body.charCodeAt(0),
+      0xfeff,
+      `file must be UTF-8 without BOM: ${path.relative(root, file)}`,
+    );
   }
 });
 
@@ -278,12 +454,18 @@ test("root distributable content is English-only", () => {
   const hanPattern = /[\u3400-\u4dbf\u4e00-\u9fff\uf900-\ufaff]/;
   const contentRoots = ["agents", "commands", "skills", "templates"];
   const files = contentRoots.flatMap((contentRoot) =>
-    collectFiles(path.join(root, contentRoot)).filter((file) => /\.(md|json|toml)$/.test(file)),
+    collectFiles(path.join(root, contentRoot)).filter((file) =>
+      /\.(md|json|toml)$/.test(file),
+    ),
   );
 
   for (const file of files) {
     const body = fs.readFileSync(file, "utf8");
-    assert.doesNotMatch(body, hanPattern, `root content must be English-only: ${path.relative(root, file)}`);
+    assert.doesNotMatch(
+      body,
+      hanPattern,
+      `root content must be English-only: ${path.relative(root, file)}`,
+    );
   }
 });
 
@@ -295,23 +477,47 @@ test("zh-CN localized content keeps natural Chinese copy", () => {
       const relative = path.relative(localizedRoot, file);
       return (
         /\.(md|json|toml)$/.test(file) &&
-        relative !== path.join("skills", "fec-drawio-studio", "data", "shape-index.json") &&
-        relative !== path.join("skills", "fec-drawio-studio", "data", "brand-icons.json")
+        relative !==
+          path.join(
+            "skills",
+            "fec-drawio-studio",
+            "data",
+            "shape-index.json",
+          ) &&
+        relative !==
+          path.join("skills", "fec-drawio-studio", "data", "brand-icons.json")
       );
     }),
   );
   const hanPattern = /[\u3400-\u4dbf\u4e00-\u9fff\uf900-\ufaff]/;
-  const artificialMarkers = [/语言包：简体中文/, /^description:\s*Use when\b/m, /Chinese triggers include/];
-  const untranslatedSectionHeadings = [/^## Purpose$/m, /^## Procedure$/m, /^## Constraints$/m, /^## Expected Output$/m];
+  const artificialMarkers = [
+    /语言包：简体中文/,
+    /^description:\s*Use when\b/m,
+    /Chinese triggers include/,
+  ];
+  const untranslatedSectionHeadings = [
+    /^## Purpose$/m,
+    /^## Procedure$/m,
+    /^## Constraints$/m,
+    /^## Expected Output$/m,
+  ];
 
   for (const file of files) {
     const relative = path.relative(root, file);
     const body = fs.readFileSync(file, "utf8");
     for (const marker of artificialMarkers) {
-      assert.doesNotMatch(body, marker, `localized zh-CN content should not contain ${marker}: ${relative}`);
+      assert.doesNotMatch(
+        body,
+        marker,
+        `localized zh-CN content should not contain ${marker}: ${relative}`,
+      );
     }
     for (const heading of untranslatedSectionHeadings) {
-      assert.doesNotMatch(body, heading, `localized zh-CN section heading should be translated: ${relative}`);
+      assert.doesNotMatch(
+        body,
+        heading,
+        `localized zh-CN section heading should be translated: ${relative}`,
+      );
     }
     let inFence = false;
     for (const line of body.split(/\r?\n/)) {
@@ -328,18 +534,34 @@ test("zh-CN localized content keeps natural Chinese copy", () => {
   }
 
   const localizedSkillsDir = path.join(localizedRoot, "skills");
-  for (const dir of fs.readdirSync(localizedSkillsDir, { withFileTypes: true }).filter((entry) => entry.isDirectory())) {
+  for (const dir of fs
+    .readdirSync(localizedSkillsDir, { withFileTypes: true })
+    .filter((entry) => entry.isDirectory())) {
     const skillPath = path.join(localizedSkillsDir, dir.name, "SKILL.md");
     const body = fs.readFileSync(skillPath, "utf8");
     const description = body.match(/^description:\s*(.+)$/m)?.[1] ?? "";
-    assert.match(description, hanPattern, `localized skill description should contain Chinese: ${dir.name}`);
+    assert.match(
+      description,
+      hanPattern,
+      `localized skill description should contain Chinese: ${dir.name}`,
+    );
   }
 
-  const relations = JSON.parse(fs.readFileSync(path.join(localizedSkillsDir, "relations.json"), "utf8")) as SkillRelations;
+  const relations = JSON.parse(
+    fs.readFileSync(path.join(localizedSkillsDir, "relations.json"), "utf8"),
+  ) as SkillRelations;
   for (const [skillId, relation] of Object.entries(relations)) {
     for (const workflow of relation.boundaryWorkflows ?? []) {
-      assert.match(workflow, hanPattern, `localized boundary workflow should contain Chinese: ${skillId}`);
-      assert.doesNotMatch(workflow, /^Use\b/, `localized boundary workflow should not start with English routing prose: ${skillId}`);
+      assert.match(
+        workflow,
+        hanPattern,
+        `localized boundary workflow should contain Chinese: ${skillId}`,
+      );
+      assert.doesNotMatch(
+        workflow,
+        /^Use\b/,
+        `localized boundary workflow should not start with English routing prose: ${skillId}`,
+      );
     }
   }
 
@@ -354,7 +576,11 @@ test("zh-CN localized content keeps natural Chinese copy", () => {
 
   for (const [relative, expected] of anchors) {
     const body = fs.readFileSync(path.join(localizedRoot, relative), "utf8");
-    assert.match(body, expected, `localized zh-CN anchor text missing: ${relative}`);
+    assert.match(
+      body,
+      expected,
+      `localized zh-CN anchor text missing: ${relative}`,
+    );
   }
 });
 
@@ -389,7 +615,11 @@ test("README skill tree uses fec-prefixed public skill directories", () => {
   for (const doc of docs) {
     const body = fs.readFileSync(path.join(root, doc), "utf8");
     for (const legacyName of legacyNames) {
-      assert.doesNotMatch(body, new RegExp(`\\|--\\s+${escapeRegExp(legacyName)}`), `${doc} uses ${legacyName}`);
+      assert.doesNotMatch(
+        body,
+        new RegExp(`\\|--\\s+${escapeRegExp(legacyName)}`),
+        `${doc} uses ${legacyName}`,
+      );
     }
   }
 });
@@ -410,10 +640,18 @@ test("OpenClaw READMEs mention every bundled skill and command doc", () => {
   for (const doc of docs) {
     const body = fs.readFileSync(path.join(root, doc), "utf8");
     for (const skillId of skillIds) {
-      assert.match(body, new RegExp(`\`${escapeRegExp(skillId)}\``), `${doc} missing skill ${skillId}`);
+      assert.match(
+        body,
+        new RegExp(`\`${escapeRegExp(skillId)}\``),
+        `${doc} missing skill ${skillId}`,
+      );
     }
     for (const commandDoc of commandDocs) {
-      assert.match(body, new RegExp(`\`${escapeRegExp(commandDoc)}\``), `${doc} missing command ${commandDoc}`);
+      assert.match(
+        body,
+        new RegExp(`\`${escapeRegExp(commandDoc)}\``),
+        `${doc} missing command ${commandDoc}`,
+      );
     }
   }
 });
@@ -428,12 +666,26 @@ test("Claude docs describe one active plugin source instead of recommending dual
 
   for (const doc of docs) {
     const body = fs.readFileSync(path.join(root, doc), "utf8");
-    assert.doesNotMatch(body, /instead of \(or in addition to\) the CLI/, `${doc} recommends dual installs`);
-    assert.doesNotMatch(body, /可与 CLI 并存/, `${doc} recommends dual installs`);
+    assert.doesNotMatch(
+      body,
+      /instead of \(or in addition to\) the CLI/,
+      `${doc} recommends dual installs`,
+    );
+    assert.doesNotMatch(
+      body,
+      /可与 CLI 并存/,
+      `${doc} recommends dual installs`,
+    );
   }
 
-  const englishClaude = fs.readFileSync(path.join(root, "docs", "runtimes", "claude.md"), "utf8");
-  const chineseClaude = fs.readFileSync(path.join(root, "docs", "runtimes", "claude.zh-CN.md"), "utf8");
+  const englishClaude = fs.readFileSync(
+    path.join(root, "docs", "runtimes", "claude.md"),
+    "utf8",
+  );
+  const chineseClaude = fs.readFileSync(
+    path.join(root, "docs", "runtimes", "claude.zh-CN.md"),
+    "utf8",
+  );
   assert.match(englishClaude, /single plugin loader/);
   assert.match(englishClaude, /not a second plugin install/);
   assert.match(chineseClaude, /唯一加载来源/);
@@ -445,10 +697,16 @@ test("fec-init mentions every shared rule copied by the command", () => {
     .readdirSync(path.join(root, "templates", "shared", "rules"))
     .filter((name) => name.endsWith(".md"))
     .sort();
-  const command = fs.readFileSync(path.join(root, "commands", "fec-init.md"), "utf8");
+  const command = fs.readFileSync(
+    path.join(root, "commands", "fec-init.md"),
+    "utf8",
+  );
 
   for (const rule of rules) {
-    assert.match(command, new RegExp(`templates/shared/rules/${escapeRegExp(rule)}`));
+    assert.match(
+      command,
+      new RegExp(`templates/shared/rules/${escapeRegExp(rule)}`),
+    );
   }
 });
 
@@ -456,13 +714,24 @@ function escapeRegExp(value: string): string {
   return value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 }
 
-function assertNoDuplicateHeadingPair(body: string, dir: string, left: string, right: string): void {
+function assertNoDuplicateHeadingPair(
+  body: string,
+  dir: string,
+  left: string,
+  right: string,
+): void {
   const hasLeft = new RegExp(`^##\\s+${escapeRegExp(left)}$`, "m").test(body);
   const hasRight = new RegExp(`^##\\s+${escapeRegExp(right)}$`, "m").test(body);
-  assert.ok(!(hasLeft && hasRight), `duplicate skill sections should be merged in ${dir}: ${left} + ${right}`);
+  assert.ok(
+    !(hasLeft && hasRight),
+    `duplicate skill sections should be merged in ${dir}: ${left} + ${right}`,
+  );
 }
 
-function assertStringArray(value: unknown, label: string): asserts value is string[] {
+function assertStringArray(
+  value: unknown,
+  label: string,
+): asserts value is string[] {
   assert.ok(Array.isArray(value), `${label} must be an array`);
   assert.ok(value.length > 0, `${label} must not be empty`);
   for (const entry of value) {
@@ -472,13 +741,7 @@ function assertStringArray(value: unknown, label: string): asserts value is stri
 }
 
 function extractAgentSkills(body: string): string[] {
-  const frontmatter = body.match(/^---\r?\n([\s\S]*?)\r?\n---/);
-  if (!frontmatter) return [];
-
-  const skillsBlock = frontmatter[1].match(/^skills:\r?\n((?:\s+-\s+.+\r?\n?)+)/m)?.[1];
-  if (!skillsBlock) return [];
-
-  return [...skillsBlock.matchAll(/^\s+-\s+(.+)$/gm)].map((match) => match[1].trim()).filter(Boolean);
+  return parseAgentDocument(body, "agent frontmatter").metadata.skills ?? [];
 }
 
 function collectFiles(dir: string): string[] {
@@ -493,9 +756,15 @@ function collectFiles(dir: string): string[] {
 
 function containsLikelyEnglishInstruction(line: string): boolean {
   const trimmed = line.trim();
-  if (!trimmed || /[\u3400-\u4dbf\u4e00-\u9fff\uf900-\ufaff]/.test(trimmed)) return false;
+  if (!trimmed || /[\u3400-\u4dbf\u4e00-\u9fff\uf900-\ufaff]/.test(trimmed))
+    return false;
   if (/^```/.test(trimmed)) return false;
-  if (/^(name|description|tools|model|permissionMode|maxTurns|skills):\s*/.test(trimmed)) return false;
+  if (
+    /^(name|description|tools|model|permissionMode|maxTurns|skills):\s*/.test(
+      trimmed,
+    )
+  )
+    return false;
   if (/^-\s*fec-[a-z0-9-]+$/.test(trimmed)) return false;
   if (/^[-*+]*\s*`[^`]+`\s*$/.test(trimmed)) return false;
   if (/^"\w+":\s*\{.*#[0-9a-fA-F]{3,8}.*\},?$/.test(trimmed)) return false;
@@ -511,7 +780,9 @@ function containsLikelyEnglishInstruction(line: string): boolean {
   }
   if (
     /^[-*+]\s+[A-Z][A-Za-z]+ing\b\s+.+/.test(trimmed) ||
-    /^[-*+]\s+(Add|Adding|Name|Naming|Specify|Specifying|Remove|Removing|Stuff|Stuffing)\b/.test(trimmed)
+    /^[-*+]\s+(Add|Adding|Name|Naming|Specify|Specifying|Remove|Removing|Stuff|Stuffing)\b/.test(
+      trimmed,
+    )
   ) {
     return true;
   }
@@ -573,6 +844,8 @@ function containsLikelyEnglishInstruction(line: string): boolean {
     "host",
     "fallback",
   ]);
-  const proseWordCount = words.filter((word) => proseWords.has(word.toLowerCase())).length;
+  const proseWordCount = words.filter((word) =>
+    proseWords.has(word.toLowerCase()),
+  ).length;
   return proseWordCount >= 2;
 }

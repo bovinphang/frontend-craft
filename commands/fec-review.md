@@ -3,7 +3,7 @@ name: fec-review
 description: Conduct a standardized review of the specified file or recently changed front-end code, output a graded review report and save it as a Markdown file.
 ---
 
-Conduct a comprehensive review of the front-end code. Read the project status and diff first, and then output the findings with evidence; do not write guesses as blocking items. If you need to **combine git diff, reduce noise output by severity level (CRITICAL→LOW), and explicitly give Approve/Warning/Block conclusions**, you can entrust the **`fec-code-reviewer`** subagent to execute; if the changes are mainly **`.ts` / `.tsx` / `.js` / `.jsx`** and you need to run **typecheck/eslint**, PR merge readiness check and Special conclusions on TS/JS idioms can be delegated to **`typescript-reviewer`** (reported as `typescript-review-*.md`). Otherwise, continue to press this command and the `fec-code-review` Skill process.
+Conduct a comprehensive review of the front-end code. Read the project status and diff first, and then output the findings with evidence; do not write guesses as blocking items. If you need to **combine git diff, reduce noise output by severity level (CRITICAL→LOW), and explicitly give Approve/Warning/Block conclusions**, you can entrust the **`fec-code-reviewer`** subagent to execute; if the changes are mainly **`.ts` / `.tsx` / `.js` / `.jsx`** and you need to run **typecheck/eslint**, PR merge readiness check and Special conclusions on TS/JS idioms can be delegated to **`fec-typescript-reviewer`** (reported as `typescript-review-*.md`). Otherwise, continue to press this command and the `fec-code-review` Skill process.
 
 ## Execution steps
 

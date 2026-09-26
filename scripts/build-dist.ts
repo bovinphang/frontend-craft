@@ -8,7 +8,10 @@ const root = resolvePluginRoot(import.meta.url);
 const cliOutfile = path.join(root, "dist", "bin", "frontend-craft.js");
 
 const hookEntries = [
-  ["src/hooks/cleanup-claude-cache.ts", "dist/hooks/fec-cleanup-claude-cache.js"],
+  [
+    "src/hooks/cleanup-claude-cache.ts",
+    "dist/hooks/fec-cleanup-claude-cache.js",
+  ],
   ["src/hooks/format-changed-file.ts", "dist/hooks/fec-format-changed-file.js"],
   ["src/hooks/notify.ts", "dist/hooks/fec-notify.js"],
   ["src/hooks/run-tests.ts", "dist/hooks/fec-run-tests.js"],
@@ -33,7 +36,9 @@ for (const [entryPoint, outfile] of hookEntries) {
   await bundle({ entryPoint, outfile });
 }
 
-console.log(`[build-dist] bundled ${hookEntries.length + 1} JavaScript entry points`);
+console.log(
+  `[build-dist] bundled ${hookEntries.length + 1} JavaScript entry points`,
+);
 
 async function bundle({
   entryPoint,
@@ -52,7 +57,13 @@ async function bundle({
     logLevel: "silent",
     minify: true,
     outfile,
-    packages: "external",
+    packages: entryPoint === "bin/frontend-craft.ts" ? "bundle" : "external",
+    banner:
+      entryPoint === "bin/frontend-craft.ts"
+        ? {
+            js: 'import { createRequire as __fecCreateRequire } from "node:module"; const require = __fecCreateRequire(import.meta.url);',
+          }
+        : undefined,
     platform: "node",
     sourcemap: false,
     sourcesContent: false,

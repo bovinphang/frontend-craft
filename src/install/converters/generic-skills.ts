@@ -1,5 +1,4 @@
 import path from "node:path";
-import fs from "node:fs";
 import type { InstallContext } from "../types.js";
 import { copyDir, ensureDir } from "../shared/fs.js";
 

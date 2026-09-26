@@ -1,4 +1,5 @@
 import { existsSync, readFileSync } from "node:fs";
+import { choosePackageManager } from "./package-manager.js";
 
 process.stdin.resume();
 process.stdin.on("data", () => {});
@@ -6,8 +7,10 @@ process.stdin.on("data", () => {});
 if (!existsSync("package.json")) process.exit(0);
 
 let framework = "unknown";
+let declaredPackageManager: string | undefined;
 try {
   const pkg = JSON.parse(readFileSync("package.json", "utf-8"));
+  declaredPackageManager = pkg.packageManager;
   const deps = { ...pkg.dependencies, ...pkg.devDependencies };
   const fw: string[] = [];
   if (deps.vue || deps.nuxt) fw.push("Vue " + (deps.vue || deps.nuxt));
@@ -18,14 +21,11 @@ try {
   // ignore
 }
 
-let packageManager = "npm";
-if (existsSync("pnpm-lock.yaml")) packageManager = "pnpm";
-else if (existsSync("yarn.lock")) packageManager = "yarn";
-else if (existsSync("bun.lockb")) packageManager = "bun";
+const packageManager = choosePackageManager(declaredPackageManager);
 
 if (framework !== "unknown") {
   process.stdout.write(
-    `[frontend-craft] Framework: ${framework} | Package manager: ${packageManager}`
+    `[frontend-craft] Framework: ${framework} | Package manager: ${packageManager}`,
   );
 }
 

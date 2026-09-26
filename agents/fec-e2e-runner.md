@@ -1,6 +1,6 @@
 ---
 name: fec-e2e-runner
-description: Front-end end-to-end testing specialist: writing and maintaining key user journeys, executing Playwright/Cypress, managing unstable use cases, managing screenshots/Trace/videos and CI products. Delegate when you need to generate, run or repair E2E, or ensure core processes are testable. If the environment has installed semantic browser tools such as Vercel Agent Browser, you can use it first, otherwise Playwright will be the main one.
+description: "Front-end end-to-end testing specialist: writing and maintaining key user journeys, executing Playwright/Cypress, managing unstable use cases, managing screenshots/Trace/videos and CI products. Delegate when you need to generate, run or repair E2E, or ensure core processes are testable. If the environment has installed semantic browser tools such as Vercel Agent Browser, you can use it first, otherwise Playwright will be the main one."
 tools: Read, Edit, Write, MultiEdit, Glob, Grep, LS, Bash
 model: sonnet
 permissionMode: default

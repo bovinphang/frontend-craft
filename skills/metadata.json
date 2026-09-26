@@ -9,7 +9,7 @@
       "accessibility",
       "audit"
     ],
-    "summary": "Frontend Craft skill for accessibility check.",
+    "summary": "Audit WCAG, semantics, keyboard access, focus, and screen-reader behavior in existing interfaces.",
     "version": "2.9.0",
     "license": "MIT",
     "homepage": "https://github.com/bovinphang/frontend-craft",
@@ -148,7 +148,7 @@
       "cookie",
       "client-persistence"
     ],
-    "summary": "Frontend Craft skill for browser storage.",
+    "summary": "Choose and review browser persistence across cookies, localStorage, IndexedDB, and offline caches.",
     "version": "2.9.0",
     "license": "MIT",
     "homepage": "https://github.com/bovinphang/frontend-craft",
@@ -184,7 +184,7 @@
       "visualization",
       "r3f"
     ],
-    "summary": "Frontend Craft skill for Canvas with Three.js.",
+    "summary": "Build or review interactive Canvas, WebGL, Three.js, and React Three Fiber visuals.",
     "version": "2.9.0",
     "license": "MIT",
     "homepage": "https://github.com/bovinphang/frontend-craft",
@@ -219,7 +219,7 @@
       "quality",
       "best-practices"
     ],
-    "summary": "Frontend Craft skill for front-end code review.",
+    "summary": "Review frontend changes for correctness, maintainability, types, rendering, and verification gaps.",
     "version": "2.9.0",
     "license": "MIT",
     "homepage": "https://github.com/bovinphang/frontend-craft",
@@ -253,7 +253,7 @@
       "user-event",
       "regression"
     ],
-    "summary": "Frontend Craft skill for component testing.",
+    "summary": "Write and review UI unit and component tests with Testing Library or Vue Test Utils.",
     "version": "2.9.0",
     "license": "MIT",
     "homepage": "https://github.com/bovinphang/frontend-craft",
@@ -288,7 +288,7 @@
       "optimistic-update",
       "server-state"
     ],
-    "summary": "Frontend Craft skill for TanStack Query data acquisition.",
+    "summary": "Design server-state queries, caching, invalidation, mutations, and optimistic updates.",
     "version": "2.9.0",
     "license": "MIT",
     "homepage": "https://github.com/bovinphang/frontend-craft",
@@ -476,7 +476,7 @@
       "ci",
       "pom"
     ],
-    "summary": "Frontend Craft skill for E2E test specification.",
+    "summary": "Create and maintain real-browser journeys, selectors, traces, and CI artifacts with Playwright or Cypress.",
     "version": "2.9.0",
     "license": "MIT",
     "homepage": "https://github.com/bovinphang/frontend-craft",
@@ -512,7 +512,7 @@
       "dynamic-forms",
       "file-upload"
     ],
-    "summary": "Frontend Craft skill for form processing.",
+    "summary": "Implement typed forms, validation, dynamic fields, controlled inputs, and uploads.",
     "version": "2.9.0",
     "license": "MIT",
     "homepage": "https://github.com/bovinphang/frontend-craft",
@@ -643,7 +643,7 @@
       "vue",
       "modernization"
     ],
-    "summary": "Frontend Craft skill for legacy system migration.",
+    "summary": "Plan an intentional migration from jQuery, templates, or older frontend stacks to modern modules.",
     "version": "2.9.0",
     "license": "MIT",
     "homepage": "https://github.com/bovinphang/frontend-craft",
@@ -678,7 +678,7 @@
       "legacy",
       "vanilla-js"
     ],
-    "summary": "Frontend Craft skill for traditional front-end specifications.",
+    "summary": "Maintain and improve existing vanilla JavaScript, jQuery, or multipage frontend code safely.",
     "version": "2.9.0",
     "license": "MIT",
     "homepage": "https://github.com/bovinphang/frontend-craft",
@@ -712,7 +712,7 @@
       "tanstack-virtual",
       "performance"
     ],
-    "summary": "Frontend Craft skill for list virtualization optimization.",
+    "summary": "Optimize large scrolling lists with windowing, measurement, and stable loading behavior.",
     "version": "2.9.0",
     "license": "MIT",
     "homepage": "https://github.com/bovinphang/frontend-craft",
@@ -747,7 +747,7 @@
       "nx",
       "workspace"
     ],
-    "summary": "Frontend Craft skill for Monorepo project specifications.",
+    "summary": "Structure frontend packages, workspace boundaries, and tasks in pnpm, Turborepo, or Nx monorepos.",
     "version": "2.9.0",
     "license": "MIT",
     "homepage": "https://github.com/bovinphang/frontend-craft",
@@ -819,7 +819,7 @@
       "rsc",
       "react"
     ],
-    "summary": "Frontend Craft skill for Next.js project specification.",
+    "summary": "Design Next.js App Router routes, server/client boundaries, rendering, and project structure.",
     "version": "2.9.0",
     "license": "MIT",
     "homepage": "https://github.com/bovinphang/frontend-craft",
@@ -854,7 +854,7 @@
       "ssg",
       "data-fetching"
     ],
-    "summary": "Frontend Craft skill for Nuxt project specifications.",
+    "summary": "Design Nuxt routes, SSR/SSG behavior, data fetching, middleware, and project structure.",
     "version": "2.9.0",
     "license": "MIT",
     "homepage": "https://github.com/bovinphang/frontend-craft",
@@ -924,7 +924,7 @@
       "workbox",
       "installable"
     ],
-    "summary": "Frontend Craft skill for PWA implementation.",
+    "summary": "Add installability, service workers, offline caching, and update behavior to a web app.",
     "version": "2.9.0",
     "license": "MIT",
     "homepage": "https://github.com/bovinphang/frontend-craft",
@@ -959,7 +959,7 @@
       "components",
       "architecture"
     ],
-    "summary": "Frontend Craft skill for React project specification.",
+    "summary": "Organize React and TypeScript components, hooks, routes, state boundaries, and project structure.",
     "version": "2.9.0",
     "license": "MIT",
     "homepage": "https://github.com/bovinphang/frontend-craft",
@@ -994,7 +994,7 @@
       "unused-exports",
       "dependencies"
     ],
-    "summary": "Frontend Craft skill for refactoring cleanup.",
+    "summary": "Identify and remove proven dead frontend code, unused exports, styles, routes, and dependencies.",
     "version": "2.9.0",
     "license": "MIT",
     "homepage": "https://github.com/bovinphang/frontend-craft",
@@ -1065,7 +1065,7 @@
       "react-router",
       "vue-router"
     ],
-    "summary": "Frontend Craft skill for Route Protection.",
+    "summary": "Implement and review frontend auth guards, permission routes, redirects, and middleware.",
     "version": "2.9.0",
     "license": "MIT",
     "homepage": "https://github.com/bovinphang/frontend-craft",
@@ -1102,7 +1102,7 @@
       "owasp",
       "dompurify"
     ],
-    "summary": "Frontend Craft skill for frontend security review.",
+    "summary": "Review browser-side XSS, CSRF, token exposure, unsafe DOM usage, and third-party risks.",
     "version": "2.9.0",
     "license": "MIT",
     "homepage": "https://github.com/bovinphang/frontend-craft",
@@ -1243,7 +1243,7 @@
       "gsap",
       "micro-interaction"
     ],
-    "summary": "Frontend Craft skill for SVG animation.",
+    "summary": "Implement SVG path, icon, and illustration motion with appropriate reduced-motion behavior.",
     "version": "2.9.0",
     "license": "MIT",
     "homepage": "https://github.com/bovinphang/frontend-craft",
@@ -1313,7 +1313,7 @@
       "regression",
       "frontend-tests"
     ],
-    "summary": "Frontend Craft skill for TDD workflow.",
+    "summary": "Use failing behavior tests to guide frontend features and bug fixes through red, green, and refactor.",
     "version": "2.9.0",
     "license": "MIT",
     "homepage": "https://github.com/bovinphang/frontend-craft",
@@ -1347,7 +1347,7 @@
       "risk",
       "quality-gate"
     ],
-    "summary": "Frontend Craft skill for testing strategies.",
+    "summary": "Plan frontend test coverage by risk across static checks, unit, component, integration, and E2E layers.",
     "version": "2.9.0",
     "license": "MIT",
     "homepage": "https://github.com/bovinphang/frontend-craft",
@@ -1469,7 +1469,7 @@
       "build",
       "fix"
     ],
-    "summary": "Frontend Craft skill for verification and repair.",
+    "summary": "Diagnose and repair failures in existing lint, typecheck, test, and build commands.",
     "version": "2.9.0",
     "license": "MIT",
     "homepage": "https://github.com/bovinphang/frontend-craft",
@@ -1506,7 +1506,7 @@
       "bundle",
       "dev-server"
     ],
-    "summary": "Frontend Craft skill for Vite project specifications.",
+    "summary": "Configure and review Vite plugins, environment variables, dev server behavior, and builds.",
     "version": "2.9.0",
     "license": "MIT",
     "homepage": "https://github.com/bovinphang/frontend-craft",
@@ -1542,7 +1542,7 @@
       "pinia",
       "components"
     ],
-    "summary": "Frontend Craft skill for Vue 3 project specification.",
+    "summary": "Organize Vue 3 and TypeScript SFCs, composables, routes, Pinia, and project boundaries.",
     "version": "2.9.0",
     "license": "MIT",
     "homepage": "https://github.com/bovinphang/frontend-craft",
@@ -1614,7 +1614,7 @@
       "transferable",
       "performance"
     ],
-    "summary": "Frontend Craft skill for Web Workers.",
+    "summary": "Move expensive browser computation to workers with clear messaging and transferable data.",
     "version": "2.9.0",
     "license": "MIT",
     "homepage": "https://github.com/bovinphang/frontend-craft",

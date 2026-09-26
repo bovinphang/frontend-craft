@@ -8,20 +8,24 @@ Thanks for your interest in `frontend-craft`. Issues, pull requests, documentati
 
 - Node.js >= 22 for the universal installer and OpenClaw package build.
 - Git.
-- Run `npm install` before local development.
+- pnpm 12.4.1 (pinned in package.json); installing pnpm through npm requires Node.js >=22.13. The published plugin still supports Node.js >=22.0.0.
+- pnpm-lock.yaml is the sole dependency lockfile. pnpm-workspace.yaml permits esbuild build scripts and explicitly skips optional SDK/native setup not used by this project.
+- Run `pnpm install --frozen-lockfile` before local development.
 
 For documentation-only changes, focus on the language and documentation policy plus the pull request checklist. For skill or OpenClaw changes, use the focused sections below before opening a pull request.
 
 Quick checks (minimum recommended):
 
+`pnpm lint` checks source code and both content languages. `pnpm format:check` checks changed source/config files without modifying them. `pnpm test` recursively discovers `tests/**/*.test.ts`, so new tests need no script-list update.
+
 ```bash
-npm test                         # General validation
-npm run pack:skills              # Skill changes
-npm run check:skills-publish     # Skill changes
-npm run typecheck:openclaw       # OpenClaw changes
+pnpm test                         # General validation
+pnpm run pack:skills              # Skill changes
+pnpm run check:skills-publish     # Skill changes
+pnpm run typecheck:openclaw       # OpenClaw changes
 ```
 
-See the NPM Scripts section and Pull Request Checklist for complete scenario-specific checks.
+See the Development Scripts section and Pull Request Checklist for complete scenario-specific checks.
 
 ## Project Structure
 
@@ -48,10 +52,10 @@ See the NPM Scripts section and Pull Request Checklist for complete scenario-spe
 
 ```bash
 # 1. Install dependencies
-npm install
+pnpm install
 
 # 2. Build dist/bin and dist/hooks
-npm run build
+pnpm run build
 
 # 3. Install to a specific runtime (e.g., claude)
 node dist/bin/frontend-craft.js install claude --local --dry-run  # preview first
@@ -64,7 +68,7 @@ node dist/bin/frontend-craft.js install --all --dry-run
 node dist/bin/frontend-craft.js list
 ```
 
-`npm run build` runs `clean`, `typecheck`, and `scripts/build-dist.ts`. Run it before using `dist/bin/frontend-craft.js` or the bundled hook scripts locally.
+`pnpm run build` runs `clean`, `typecheck`, and `scripts/build-dist.ts`. Run it before using `dist/bin/frontend-craft.js` or the bundled hook scripts locally.
 
 ## Testing
 
@@ -72,7 +76,7 @@ Tests use Node.js built-in `node:test` with `assert/strict`.
 
 ```bash
 # Run all tests
-npm test
+pnpm test
 
 # Run a single test file
 node --import tsx --test tests/install/cli.test.ts
@@ -93,17 +97,17 @@ For testing the interactive installation wizard, set `FRONTEND_CRAFT_FORCE_INTER
 FRONTEND_CRAFT_FORCE_INTERACTIVE=1 node --import tsx --test tests/install/cli.test.ts
 ```
 
-`npm test` runs `npm run build` first, then executes the curated converter and installer test suite from `tests/`.
+`pnpm test` runs `pnpm run build` first, then executes the curated converter and installer test suite from `tests/`.
 
 ## OpenClaw Build
 
 The OpenClaw runtime has its own build pipeline:
 
 ```bash
-npm run build:openclaw          # Bundle TypeScript to dist/openclaw/ via esbuild
-npm run typecheck:openclaw      # TypeScript type checking
-npm run check:openclaw-dist     # Verify dist integrity
-npm run pack:openclaw           # Full build + verify + package
+pnpm run build:openclaw          # Bundle TypeScript to dist/openclaw/ via esbuild
+pnpm run typecheck:openclaw      # TypeScript type checking
+pnpm run check:openclaw-dist     # Verify dist integrity
+pnpm run pack:openclaw           # Full build + verify + package
 ```
 
 Source: `src/openclaw/` (TypeScript) → `dist/openclaw/index.js` (bundled ESM).
@@ -114,12 +118,12 @@ TypeScript config: `tsconfig.openclaw.json`.
 The canonical skill sources live under `skills/<skill-id>/`. Do not edit generated files under `skill-packages/` by hand.
 
 ```bash
-npm run pack:skills            # Build one standalone package per skill
-npm run check:skills-publish   # Verify package metadata, index, and copied references
-npm run pack:all               # Build + test + OpenClaw package + standalone skill packages
+pnpm run pack:skills            # Build one standalone package per skill
+pnpm run check:skills-publish   # Verify package metadata, index, and copied references
+pnpm run pack:all               # Build + test + OpenClaw package + standalone skill packages
 ```
 
-`npm run pack:skills` writes `skill-packages/<skill-id>/` with `SKILL.md`, only the referenced `references/` files, `metadata.json`, `package.json`, `README.md`, and `LICENSE`. It also writes `skill-packages/index.json` for platform crawlers and release automation.
+`pnpm run pack:skills` writes `skill-packages/<skill-id>/` with `SKILL.md`, only the referenced `references/` files, `metadata.json`, `package.json`, `README.md`, and `LICENSE`. It also writes `skill-packages/index.json` for platform crawlers and release automation.
 
 When changing a skill, keep these source files aligned:
 
@@ -128,34 +132,37 @@ When changing a skill, keep these source files aligned:
 - `skills/eval_queries.json` — positive and negative trigger examples used by routing quality checks.
 - `README.md` and localized README summaries when the public skill list or user-facing behavior changes.
 
-## NPM Scripts
+## Development Scripts
 
 Use `package.json` scripts as the public development entrypoints.
 
 | Script                         | Purpose                                                                          |
 | ------------------------------ | -------------------------------------------------------------------------------- |
-| `npm run clean`                | Remove `dist/`.                                                                  |
-| `npm run typecheck`            | Run main TypeScript checks plus checked skill support scripts.                   |
-| `npm run build`                | Run `clean`, `typecheck`, and bundle CLI/hooks via `scripts/build-dist.ts`.      |
-| `npm test`                     | Build, then run the curated `node:test` suite with `tsx`.                        |
-| `npm run build:openclaw`       | Build the main project, then bundle OpenClaw runtime output.                     |
-| `npm run audit:skills`         | Build, then report skill instruction size and description overlap signals.       |
-| `npm run typecheck:openclaw`   | Run TypeScript checking for OpenClaw with `tsconfig.openclaw.json`.              |
-| `npm run check:openclaw-dist`  | Verify the generated OpenClaw dist output.                                       |
-| `npm run pack:openclaw`        | Build, verify, and package the OpenClaw plugin.                                  |
-| `npm run pack:skills`          | Build first, then create standalone packages under `skill-packages/`.            |
-| `npm run check:skills-publish` | Build first, then verify standalone skill package metadata and copied files.     |
-| `npm run pack:all`             | Build, run tests, package OpenClaw, package skills, and verify skill output.     |
-| `npm run sync:version`         | Sync package version metadata across release manifests.                          |
-| `npm run version`              | Run `sync:version`, then stage versioned manifests for npm version workflows.    |
-| `npm run prepack`              | Build before `npm pack`.                                                         |
-| `npm run prepublishOnly`       | Sync versions and run tests before npm publish.                                  |
+| `pnpm run lint` | Check code and bilingual content declarations. |
+| `pnpm run format:check` | Check changed source formatting. |
+| `pnpm run check:content` | Validate YAML, names, references and localization structure. |
+| `pnpm run clean`                | Remove `dist/`.                                                                  |
+| `pnpm run typecheck`            | Run main TypeScript checks plus checked skill support scripts.                   |
+| `pnpm run build`                | Run `clean`, `typecheck`, and bundle CLI/hooks via `scripts/build-dist.ts`.      |
+| `pnpm test`                     | Build, then run the curated `node:test` suite with `tsx`.                        |
+| `pnpm run build:openclaw`       | Build the main project, then bundle OpenClaw runtime output.                     |
+| `pnpm run audit:skills`         | Build, then report skill instruction size and description overlap signals.       |
+| `pnpm run typecheck:openclaw`   | Run TypeScript checking for OpenClaw with `tsconfig.openclaw.json`.              |
+| `pnpm run check:openclaw-dist`  | Verify the generated OpenClaw dist output.                                       |
+| `pnpm run pack:openclaw`        | Build, verify, and package the OpenClaw plugin.                                  |
+| `pnpm run pack:skills`          | Build first, then create standalone packages under `skill-packages/`.            |
+| `pnpm run check:skills-publish` | Build first, then verify standalone skill package metadata and copied files.     |
+| `pnpm run pack:all`             | Build, run tests, package OpenClaw, package skills, and verify skill output.     |
+| `pnpm run sync:version`         | Sync package version metadata across release manifests.                          |
+| `pnpm run version`              | Sync versioned manifests without automatically staging files.    |
+| `pnpm run prepack`              | Build before `npm pack`.                                                         |
+| `pnpm run prepublishOnly`       | Sync versions and run tests before npm publish.                                  |
 
 For common change types:
 
-- Skill changes: run `npm test`, `npm run audit:skills`, `npm run pack:skills`, and `npm run check:skills-publish`.
-- OpenClaw changes: run `npm run typecheck:openclaw` and `npm run pack:openclaw`.
-- Release packaging: run `npm run pack:all`; `prepublishOnly` also runs version sync and tests before publish.
+- Skill changes: run `pnpm test`, `pnpm run audit:skills`, `pnpm run pack:skills`, and `pnpm run check:skills-publish`.
+- OpenClaw changes: run `pnpm run typecheck:openclaw` and `pnpm run pack:openclaw`.
+- Release packaging: CI runs `pnpm run pack:all`; `prepublishOnly` also runs version sync and tests before publish.
 
 ## Source Maintenance Files
 
@@ -181,11 +188,12 @@ Hook scripts live under `src/hooks/` and are bundled into `dist/hooks/` for publ
 
 | Source file                        | Bundled output                      | Purpose                |
 | ---------------------------------- | ----------------------------------- | ---------------------- |
-| `src/hooks/run-tests.ts`           | `dist/hooks/run-tests.js`           | Test runner helper     |
-| `src/hooks/format-changed-file.ts` | `dist/hooks/format-changed-file.js` | Format changed files   |
-| `src/hooks/security-check.ts`      | `dist/hooks/security-check.js`      | Security scanning      |
-| `src/hooks/notify.ts`              | `dist/hooks/notify.js`              | Notification script    |
-| `src/hooks/session-start.ts`       | `dist/hooks/session-start.js`       | Session initialization |
+| `src/hooks/cleanup-claude-cache.ts` | `dist/hooks/fec-cleanup-claude-cache.js` | Cache cleanup |
+| `src/hooks/run-tests.ts`           | `dist/hooks/fec-run-tests.js`           | Test runner helper     |
+| `src/hooks/format-changed-file.ts` | `dist/hooks/fec-format-changed-file.js` | Format changed files   |
+| `src/hooks/security-check.ts`      | `dist/hooks/fec-security-check.js`      | Security scanning      |
+| `src/hooks/notify.ts`              | `dist/hooks/fec-notify.js`              | Notification script    |
+| `src/hooks/session-start.ts`       | `dist/hooks/fec-session-start.js`       | Session initialization |
 
 ## Architecture Overview
 
@@ -281,7 +289,7 @@ description: Use when the user needs ...
 4. Add positive and negative trigger examples to `skills/eval_queries.json`.
 5. Add the skill to the Skills table in `README.md`.
 6. Update the repository tree in `README.md` and localized README files if the visible structure changes.
-7. Run `npm test`, `npm run pack:skills`, and `npm run check:skills-publish`.
+7. Run `pnpm test`, `pnpm run pack:skills`, and `pnpm run check:skills-publish`.
 
 ## Adding an Agent
 
@@ -328,7 +336,7 @@ skills:
 
 1. Update `hooks/hooks.json`.
 2. Put runtime hook scripts under `src/hooks/` and prefer cross-platform Node.js.
-3. Add each new hook entrypoint to `scripts/build-dist.ts` so `npm run build` bundles it into `dist/hooks/`.
+3. Add each new hook entrypoint to `scripts/build-dist.ts` so `pnpm run build` bundles it into `dist/hooks/`.
 4. In `hooks/hooks.json`, use **`${CLAUDE_PLUGIN_ROOT}/dist/hooks/<script>.js`** for bundled hook entrypoints (Claude Code substitutes the root at runtime; see the official [Plugins reference](https://code.claude.com/docs/en/plugins-reference)). The Claude installer in this repo also expands **`${CLAUDE_PLUGIN_ROOT}`** and legacy **`${FRONTEND_CRAFT_ROOT}`** to absolute paths when it writes `hooks.json` under `.claude/`.
 5. Keep repository maintenance scripts under `scripts/`; do not reference them directly from runtime hook configuration.
 6. Update the Hooks table in `README.md`.
@@ -338,13 +346,13 @@ skills:
 Before opening a pull request:
 
 - [ ] The change is scoped and described clearly.
-- [ ] `npm test` passes.
-- [ ] Skill changes pass `npm run audit:skills`, `npm run pack:skills`, and `npm run check:skills-publish`.
-- [ ] `npm run typecheck:openclaw` and `npm run pack:openclaw` pass when OpenClaw code or templates are affected.
+- [ ] `pnpm test` passes.
+- [ ] Skill changes pass `pnpm run audit:skills`, `pnpm run pack:skills`, and `pnpm run check:skills-publish`.
+- [ ] `pnpm run typecheck:openclaw` and `pnpm run pack:openclaw` pass when OpenClaw code or templates are affected.
 - [ ] `README.md` and `CHANGELOG.md` are updated when user-facing behavior changes (and `CHANGELOG.zh-CN.md` when you ship Chinese-facing release notes).
 - [ ] Localized README files are synced, or a follow-up translation issue is linked.
 - [ ] New runtime, agent, skill, command, hook, or template changes include relevant tests or dry-run coverage.
-- [ ] Release packaging changes pass `npm run pack:all` or are covered by the `prepublishOnly` publish gate.
+- [ ] Release packaging changes pass `pnpm run pack:all` or are covered by the `prepublishOnly` publish gate.
 - [ ] Security-sensitive changes have been reviewed against `SECURITY.md`.
 
 ## Code Style

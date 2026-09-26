@@ -1,6 +1,6 @@
 ---
 name: fec-figma-implementer
-description: Focus on implementing the proxy of UI components accurately according to the design draft, and save the implementation report as a Markdown file. Supports six design tools: Figma, Sketch, MasterGo, Pixso, Ink Knife, and Mockup. Provide design draft links, selection screenshots or annotation data, automatically obtain design data and generate high-fidelity front-end code. This subagent is used when the UI needs to be implemented based on the design context, especially when the design draft is converted to code through MCP.
+description: "Focus on implementing the proxy of UI components accurately according to the design draft, and save the implementation report as a Markdown file. Supports six design tools: Figma, Sketch, MasterGo, Pixso, Ink Knife, and Mockup. Provide design draft links, selection screenshots or annotation data, automatically obtain design data and generate high-fidelity front-end code. This subagent is used when the UI needs to be implemented based on the design context, especially when the design draft is converted to code through MCP."
 tools: Read, Edit, Write, MultiEdit, Glob, Grep, LS, WebFetch, mcp__figma__get_design_context, mcp__figma__get_variable_defs, mcp__sketch__get_selection_as_image, mcp__sketch__run_code, mcp__mastergo__*, mcp__pixso__*, mcp__modao__*
 model: sonnet
 permissionMode: acceptEdits

@@ -1,6 +1,6 @@
 ---
 name: fec-security-reviewer
-description: Focus on front-end and browser-side security reviews: XSS, client key leaks, dangerous DOM/API usage, third-party scripts, CSP, dependencies and supply chains, certified state storage, etc. Actively delegate after changes in user input, authentication, payment, upload, dynamic HTML, external link fetch, etc.; output grading conclusions and write them into reports. Preferred when users require front-end security review, pre-exploitation self-check, or review of OWASP-related client risks.
+description: "Focus on front-end and browser-side security reviews: XSS, client key leaks, dangerous DOM/API usage, third-party scripts, CSP, dependencies and supply chains, certified state storage, etc. Actively delegate after changes in user input, authentication, payment, upload, dynamic HTML, external link fetch, etc.; output grading conclusions and write them into reports. Preferred when users require front-end security review, pre-exploitation self-check, or review of OWASP-related client risks."
 tools: Read, Edit, Write, MultiEdit, Glob, Grep, LS, Bash
 model: sonnet
 permissionMode: default

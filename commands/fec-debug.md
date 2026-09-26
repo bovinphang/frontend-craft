@@ -1,6 +1,6 @@
 ---
 name: fec-debug
-description: Front-end problem diagnosis and repair: covering build failures, runtime errors, UI exceptions, and interface problems, using a unified diagnostic framework to classify problems by type.
+description: "Front-end problem diagnosis and repair: covering build failures, runtime errors, UI exceptions, and interface problems, using a unified diagnostic framework to classify problems by type."
 ---
 
 Press `fec-debug-framework` to perform front-end problem diagnosis and repair. First classify the problem type (build/runtime/ui/api), and then enter the corresponding diagnosis module to perform the 5-step method (classification → collection → hypothesis → verification → repair). Complex or cross-type issues can be delegated to the **`fec-debugger`** subagent.

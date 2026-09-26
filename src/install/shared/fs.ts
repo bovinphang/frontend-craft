@@ -20,7 +20,11 @@ export type InstallManifest = {
   language?: InstallLanguage;
   installedAt: string;
   files: ManifestFile[];
-  settingsHooks?: Array<{ path: string; root?: ManifestRoot; hooks: Record<string, unknown[]> }>;
+  settingsHooks?: Array<{
+    path: string;
+    root?: ManifestRoot;
+    hooks: Record<string, unknown[]>;
+  }>;
 };
 
 type ManifestSession = {
@@ -97,10 +101,16 @@ export function endManifestSession(): void {
     language: session.language,
     installedAt: new Date().toISOString(),
     files,
-    ...(session.settingsHooks.length ? { settingsHooks: session.settingsHooks } : {}),
+    ...(session.settingsHooks.length
+      ? { settingsHooks: session.settingsHooks }
+      : {}),
   };
   ensureDir(path.dirname(session.manifestPath));
-  fs.writeFileSync(session.manifestPath, `${JSON.stringify(manifest, null, 2)}\n`, "utf8");
+  fs.writeFileSync(
+    session.manifestPath,
+    `${JSON.stringify(manifest, null, 2)}\n`,
+    "utf8",
+  );
 }
 
 export function discardManifestSession(): void {
@@ -111,13 +121,35 @@ export function getManifestPath(baseDir: string): string {
   return path.join(baseDir, "frontend-craft.manifest.json");
 }
 
-export function readInstallManifest(manifestPath: string): InstallManifest | undefined {
+export function readInstallManifest(
+  manifestPath: string,
+): InstallManifest | undefined {
   if (!fs.existsSync(manifestPath)) return undefined;
   try {
-    const parsed = JSON.parse(fs.readFileSync(manifestPath, "utf8")) as InstallManifest;
+    const parsed = JSON.parse(
+      fs.readFileSync(manifestPath, "utf8"),
+    ) as InstallManifest;
+    if (
+      !parsed ||
+      !Array.isArray(parsed.files) ||
+      parsed.files.some(
+        (file) =>
+          !file ||
+          typeof file.path !== "string" ||
+          !file.path ||
+          typeof file.hash !== "string" ||
+          !file.hash ||
+          (file.root !== undefined &&
+            !["baseDir", "cwd", "home"].includes(file.root)),
+      )
+    )
+      return undefined;
     return {
       ...parsed,
-      files: (parsed.files ?? []).map((file) => ({ ...file, path: normalizeManifestPath(file.path) })),
+      files: (parsed.files ?? []).map((file) => ({
+        ...file,
+        path: normalizeManifestPath(file.path),
+      })),
     };
   } catch {
     return undefined;
@@ -126,8 +158,19 @@ export function readInstallManifest(manifestPath: string): InstallManifest | und
 
 function readManifestFiles(manifestPath: string): Map<string, string> {
   const manifest = readInstallManifest(manifestPath);
+  if (fs.existsSync(manifestPath) && !manifest) {
+    throw new Error(
+      `Cannot read ownership manifest: ${manifestPath}. Existing files were preserved; repair the manifest before installing or updating.`,
+    );
+  }
   return new Map(
-    (manifest?.files ?? []).map((file) => [getManifestFileKey(file.root ?? "baseDir", normalizeManifestPath(file.path)), file.hash]),
+    (manifest?.files ?? []).map((file) => [
+      getManifestFileKey(
+        file.root ?? "baseDir",
+        normalizeManifestPath(file.path),
+      ),
+      file.hash,
+    ]),
   );
 }
 
@@ -179,12 +222,15 @@ function parseManifestFileKey(fileKey: string, hash: string): ManifestFile {
 function shouldSkipManagedWrite(dest: string): boolean {
   const session = manifestSession;
   const fileKey = getSessionFileKey(dest);
-  if (!session || !fileKey || session.mode !== "update" || !fs.existsSync(dest)) return false;
+  if (!session || !fileKey || session.mode !== "update" || !fs.existsSync(dest))
+    return false;
   const previousHash = session.previousFiles.get(fileKey);
   if (!previousHash) return false;
   if (hashFile(dest) === previousHash) return false;
   session.skippedFiles.add(fileKey);
-  console.log(`Skipped modified file: ${parseManifestFileKey(fileKey, previousHash).path}`);
+  console.log(
+    `Skipped modified file: ${parseManifestFileKey(fileKey, previousHash).path}`,
+  );
   return true;
 }
 
@@ -220,7 +266,11 @@ export function copyFile(src: string, dest: string): void {
  * @param {string} destDir
  * @param {{ filter?: (rel: string) => boolean }} [opts]
  */
-export function copyDir(srcDir: string, destDir: string, opts: { filter?: (rel: string) => boolean } = {}): void {
+export function copyDir(
+  srcDir: string,
+  destDir: string,
+  opts: { filter?: (rel: string) => boolean } = {},
+): void {
   if (!fs.existsSync(srcDir)) return;
   ensureDir(destDir);
   for (const name of fs.readdirSync(srcDir)) {
@@ -269,11 +319,18 @@ export function forgetManagedFile(filePath: string): void {
   }
 }
 
-export function recordSettingsHooks(filePath: string, hooks: Record<string, unknown[]>): void {
+export function recordSettingsHooks(
+  filePath: string,
+  hooks: Record<string, unknown[]>,
+): void {
   const key = getSessionFileKey(filePath);
   if (!manifestSession || !key) return;
   const { path: relative, root } = parseManifestFileKey(key, "");
-  manifestSession.settingsHooks.push({ path: relative, ...(root ? { root } : {}), hooks });
+  manifestSession.settingsHooks.push({
+    path: relative,
+    ...(root ? { root } : {}),
+    hooks,
+  });
 }
 
 /** Retire only unchanged files previously owned by this install, never user files. */

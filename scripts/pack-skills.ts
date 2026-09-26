@@ -92,6 +92,19 @@ for (const skillId of skillIds) {
         minifyPackagedJson(sourceReference),
         "utf8",
       );
+    } else if (
+      skillId === "fec-refactoring-catalog" &&
+      reference === "references/catalog-index.md"
+    ) {
+      const catalog = fs.readFileSync(sourceReference, "utf8");
+      fs.writeFileSync(
+        destReference,
+        catalog.replaceAll(
+          /\]\(\.\.\/\.\.\/(fec-refactoring-[^)]+\.md)\)/g,
+          "](" + `${pkg.homepage}/blob/main/skills/$1` + ")",
+        ),
+        "utf8",
+      );
     } else {
       fs.copyFileSync(sourceReference, destReference);
     }

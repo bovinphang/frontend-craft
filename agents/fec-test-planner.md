@@ -1,6 +1,6 @@
 ---
 name: fec-test-planner
-description: Front-end test strategy planning subagent: Develop a coverage matrix according to risk and test levels, distinguishing static inspection, unit, component, lightweight integration, E2E, Storybook/visual regression and special quality verification. Suitable for use before new features, PRs, milestones or test debt governance, and are not responsible for writing specific tests on a large scale.
+description: "Front-end test strategy planning subagent: Develop a coverage matrix according to risk and test levels, distinguishing static inspection, unit, component, lightweight integration, E2E, Storybook/visual regression and special quality verification. Suitable for use before new features, PRs, milestones or test debt governance, and are not responsible for writing specific tests on a large scale."
 tools: Read, Write, Glob, Grep, LS, Bash
 model: sonnet
 permissionMode: default

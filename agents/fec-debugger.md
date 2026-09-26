@@ -1,6 +1,6 @@
 ---
 name: fec-debugger
-description: Front-end diagnostic and repair subagent: Handle build failures, runtime errors, UI exceptions, and interface issues using a unified 5-step diagnostic framework. Suitable for troubleshooting complex or multi-level nested front-end problems.
+description: "Front-end diagnostic and repair subagent: Handle build failures, runtime errors, UI exceptions, and interface issues using a unified 5-step diagnostic framework. Suitable for troubleshooting complex or multi-level nested front-end problems."
 tools: Read, Edit, Write, MultiEdit, Glob, Grep, LS, Bash
 model: sonnet
 permissionMode: default

@@ -5,6 +5,48 @@ import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import {
+  beginManifestSession,
+  discardManifestSession,
+} from "../../src/install/shared/fs.js";
+
+test("update refuses damaged ownership manifests before touching managed files", () => {
+  for (const body of [
+    "{broken",
+    JSON.stringify({ files: [{ path: "user.txt" }] }),
+    JSON.stringify({}),
+  ]) {
+    const dir = fs.mkdtempSync(path.join(os.tmpdir(), "fc-damaged-manifest-"));
+    try {
+      fs.writeFileSync(path.join(dir, "frontend-craft.manifest.json"), body);
+      fs.writeFileSync(path.join(dir, "user.txt"), "user changes");
+      assert.throws(
+        () =>
+          beginManifestSession({
+            baseDir: dir,
+            cwd: dir,
+            mode: "update",
+            packageVersion: "2.9.0",
+            runtime: "codex",
+            isGlobal: false,
+            language: "en",
+          }),
+        /manifest.*preserved/i,
+      );
+      assert.equal(
+        fs.readFileSync(path.join(dir, "user.txt"), "utf8"),
+        "user changes",
+      );
+      assert.equal(
+        fs.readFileSync(path.join(dir, "frontend-craft.manifest.json"), "utf8"),
+        body,
+      );
+    } finally {
+      discardManifestSession();
+      fs.rmSync(dir, { recursive: true, force: true });
+    }
+  }
+});
 
 const root = path.resolve(
   path.dirname(fileURLToPath(import.meta.url)),
@@ -52,7 +94,9 @@ test("install writes a frontend-craft manifest for the runtime scope", () => {
         (file) => file.path === "agents/fec-code-reviewer.md",
       ),
     );
-    assert.ok(manifest.settingsHooks?.some((file) => file.path === "settings.json"));
+    assert.ok(
+      manifest.settingsHooks?.some((file) => file.path === "settings.json"),
+    );
   } finally {
     fs.rmSync(dir, { recursive: true, force: true });
     fs.rmSync(claudeHome, { recursive: true, force: true });
@@ -101,7 +145,9 @@ test("install with Simplified Chinese writes localized content and manifest lang
 
     assert.match(fs.readFileSync(commandPath, "utf8"), /检测 runtime/);
     assert.match(fs.readFileSync(skillPath, "utf8"), /React 项目规范/);
-    assert.ok(fs.existsSync(path.join(imageGenerationScriptsDir, "png-qa.mjs")));
+    assert.ok(
+      fs.existsSync(path.join(imageGenerationScriptsDir, "png-qa.mjs")),
+    );
     assert.ok(
       fs.existsSync(
         path.join(imageGenerationScriptsDir, "tech-diagram-render.mjs"),

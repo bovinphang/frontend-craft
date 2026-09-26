@@ -1,6 +1,6 @@
 ---
 name: fec-tdd
-description: Use front-end TDD workflow to implement functions, fix bugs, or refactor logic: first write failing tests, then implement minimal code, and then refactor.
+description: "Use front-end TDD workflow to implement functions, fix bugs, or refactor logic: first write failing tests, then implement minimal code, and then refactor."
 ---
 
 Perform test-driven development as per `fec-tdd-workflow`.

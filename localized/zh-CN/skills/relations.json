@@ -204,7 +204,8 @@
     ],
     "boundaryWorkflows": [
       "涉及位图优先的海报、视觉概念、产品图，以及超出可编辑技术图的 PNG QA 时，使用图像生成工作流。",
-      "当图表变成运行时交互可视化、仿真、游戏场景、shader 或 3D 渲染器时，使用Canvas/Three.js。",
+      "当优先需要可在浏览器中直接使用、带主题的单文件工作流图、序列图、数据流图或生命周期图时，使用图像生成的 HTML 技术图路线。",
+      "当图表变成运行时交互可视化、仿真、游戏场景、shader 或 3D 渲染器时，使用 Canvas/Three.js。",
       "动效专项的矢量微交互使用 SVG 动画；静态或可编辑技术 SVG 导出使用 draw.io 图表工作室。"
     ],
     "capabilityTags": [
@@ -263,13 +264,16 @@
     ],
     "boundaryWorkflows": [
       "涉及产品专属视觉方向、品牌调性、层级和生成资产视觉 QA 时，使用 UI 设计工作流。",
-      "当Figma、Sketch、MasterGo、Pixso、截图或其他外部设计源是权威来源时，使用按设计实现。",
-      "当生成视觉资产变成交互式渲染器、shader 或动效资产，而不是静态图片时，使用Canvas/Three.js or SVG 动画 workflows。"
+      "当 Figma、Sketch、MasterGo、Pixso、截图或其他外部设计源是权威来源时，使用按设计实现工作流。",
+      "需要可在浏览器中直接使用、带主题的工作流图、序列图、数据流图、生命周期图、操作手册图、个人信息（PII）或数据血缘图，以及状态机图时，使用 HTML 技术图路线。",
+      "当优先需要可编辑的 .drawio 源文件、官方图形检索或在 diagrams.net 中手动编辑时，使用 draw.io 图表工作室。",
+      "当生成视觉资产变成交互式渲染器、shader 或动效资产，而不是静态图片时，使用 Canvas/Three.js 或 SVG 动画工作流。"
     ],
     "capabilityTags": [
       "image-generation",
       "image-editing",
       "diagram-generation",
+      "html-diagram",
       "png-qa",
       "visual-assets",
       "autofix"

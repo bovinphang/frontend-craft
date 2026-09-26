@@ -1,6 +1,6 @@
 ---
 name: fec-performance-optimizer
-description: Front-end performance analysis and optimization specialization: Core Web Vitals, packaging volume, runtime and rendering, network and cache, memory leak troubleshooting; can cooperate with Lighthouse, Bundle analysis and Profiler. Use it when users mention page slowness, lag, first screen, package size, poor rendering, and substandard Web Vitals.
+description: "Front-end performance analysis and optimization specialization: Core Web Vitals, packaging volume, runtime and rendering, network and cache, memory leak troubleshooting; can cooperate with Lighthouse, Bundle analysis and Profiler. Use it when users mention page slowness, lag, first screen, package size, poor rendering, and substandard Web Vitals."
 tools: Read, Edit, Write, MultiEdit, Glob, Grep, LS, Bash
 model: sonnet
 permissionMode: default

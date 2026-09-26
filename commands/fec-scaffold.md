@@ -1,6 +1,6 @@
 ---
 name: fec-scaffold
-description: Create a standard directory structure and template files for pages, features, or components according to project specifications. Usage: /fec-scaffold <type> <Name>, such as /fec-scaffold page UserDetail
+description: "Create a standard directory structure and template files for pages, features, or components according to project specifications. Usage: /fec-scaffold <type> <Name>, such as /fec-scaffold page UserDetail"
 ---
 
 Create new pages, features or components according to the directory structure agreed upon by the project.

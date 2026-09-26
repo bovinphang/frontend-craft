@@ -230,9 +230,9 @@ The skills below are grouped by use case so you can quickly find project standar
 
 | Skill                          | Scope                                                                         |
 | ------------------------------ | ----------------------------------------------------------------------------- |
-| `fec-code-review`              | Architecture, types, rendering, styles, a11y review                           |
+| `fec-code-review`              | Correctness, maintainability, types, rendering, and verification review        |
 | `fec-debug-framework`          | Systematic diagnostics for build, runtime, UI, and API/data failures          |
-| `fec-security-review`          | XSS, CSRF, sensitive data leakage, input validation                           |
+| `fec-security-review`          | Browser-side XSS, CSRF, token exposure, unsafe DOM, and third-party risks     |
 | `fec-accessibility-check`      | WCAG 2.2, keyboard, focus, touch, and screen-reader behavior                  |
 | `fec-dependency-upgrade`       | Dependency upgrades, lockfile review, CVE remediation, migration verification |
 | `fec-validation-fix`           | Run and repair lint, type-check, test, build in one pass                      |
@@ -320,8 +320,10 @@ Hooks run automatically on AI assistant events — no invocation needed.
 | `SessionStart`            | Clean Claude cache, then detect project framework and package manager |
 | `PreToolUse(Bash)`        | Block dangerous commands (`rm -rf`, force push, etc.)          |
 | `PostToolUse(Write/Edit)` | Auto-format modified files with Prettier                       |
-| `Stop`                    | Run lint, type-check, test, and build on session end           |
+| `Stop`                    | Run available validation scripts once, report failures, and block only when configured |
 | `Notification`            | Cross-platform desktop notifications (macOS / Linux / Windows) |
+
+Stop validation is advisory by default: failures are reported without blocking the session. Set `FRONTEND_CRAFT_VALIDATION_MODE=blocking` to return a failure status. The hook uses `packageManager` from `package.json` when present, otherwise a single lockfile; conflicting lockfiles default to npm.
 
 ### MCP integration
 

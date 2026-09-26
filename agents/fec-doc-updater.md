@@ -1,6 +1,6 @@
 ---
 name: fec-doc-updater
-description: Front-end warehouse document synchronization subagent: synchronizes README, runtime docs, project structure, capability tables, and report descriptions from fact sources such as package.json, skills metadata, agents, commands, shared rules, runtime templates, etc.
+description: "Front-end warehouse document synchronization subagent: synchronizes README, runtime docs, project structure, capability tables, and report descriptions from fact sources such as package.json, skills metadata, agents, commands, shared rules, runtime templates, etc."
 tools: Read, Edit, Write, MultiEdit, Glob, Grep, LS, Bash
 model: sonnet
 permissionMode: default

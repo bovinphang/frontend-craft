@@ -1,24 +1,24 @@
 ---
 name: fec-ui-checker
-description: Use this subagent to troubleshoot visual defects, layout confusion, CSS issues, responsive exceptions, and inconsistencies between interaction and design in the front-end UI, and save the report as a Markdown file. Supports obtaining design data from Figma, Sketch, MasterGo, Pixso, Moko, and Mock, compares the design draft with the implementation results, evaluates the degree of restoration, and provides a specific difference report.
+description: "Use this subagent to troubleshoot visual defects, layout confusion, CSS issues, responsive exceptions, and inconsistencies between interaction and design in the front-end UI, and save the report as a Markdown file. Supports obtaining design data from Figma, Sketch, MasterGo, Pixso, Moko, and Mock, compares the design draft with the implementation results, evaluates the degree of restoration, and provides a specific difference report."
 tools: Read, Edit, Write, MultiEdit, Glob, Grep, LS, Bash, WebFetch, mcp__figma__get_design_context, mcp__sketch__get_selection_as_image, mcp__mastergo__*, mcp__pixso__*, mcp__modao__*
 model: sonnet
-permissionMode:default
+permissionMode: default
 maxTurns: 10
 mcpServers:
   - figma
   - figma-desktop
-  -sketch
-  -mastergo
+  - sketch
+  - mastergo
   - pixso
-  -modao
+  - modao
 skills:
-  -fec-code-review
-  -fec-ui-design
-  -fec-tailwind-design-system
-  -fec-responsive-layout
-  -fec-accessibility-check
-  -fec-validation-fix
+  - fec-code-review
+  - fec-ui-design
+  - fec-tailwind-design-system
+  - fec-responsive-layout
+  - fec-accessibility-check
+  - fec-validation-fix
 ---
 
 # UI troubleshooting and design restoration evaluation
