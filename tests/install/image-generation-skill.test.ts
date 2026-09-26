@@ -68,658 +68,718 @@ test("interactive-diagram-server rejects malformed command JSON", async () => {
 
 test("png-qa reports parseable json for a normal PNG", () => {
   const tmp = fs.mkdtempSync(path.join(os.tmpdir(), "fec-image-generation-"));
-  const png = path.join(tmp, "normal.png");
-  writePng(png, 120, 80, (x, y) => (x >= 32 && x <= 88 && y >= 24 && y <= 56 ? black : white));
+  try {
+    const png = path.join(tmp, "normal.png");
+    writePng(png, 120, 80, (x, y) => (x >= 32 && x <= 88 && y >= 24 && y <= 56 ? black : white));
 
-  const result = spawnSync(process.execPath, [script, "--png", png, "--format", "json"], {
-    cwd: root,
-    encoding: "utf8",
-  });
+    const result = spawnSync(process.execPath, [script, "--png", png, "--format", "json"], {
+      cwd: root,
+      encoding: "utf8",
+    });
 
-  assert.equal(result.status, 0, result.stderr);
-  const report = JSON.parse(result.stdout) as { ok: boolean; image: { width: number; height: number }; issues: unknown[] };
-  assert.equal(report.ok, true);
-  assert.equal(report.image.width, 120);
-  assert.equal(report.image.height, 80);
-  assert.deepEqual(report.issues, []);
+    assert.equal(result.status, 0, result.stderr);
+    const report = JSON.parse(result.stdout) as { ok: boolean; image: { width: number; height: number }; issues: unknown[] };
+    assert.equal(report.ok, true);
+    assert.equal(report.image.width, 120);
+    assert.equal(report.image.height, 80);
+    assert.deepEqual(report.issues, []);
+  } finally {
+    fs.rmSync(tmp, { recursive: true, force: true });
+  }
 });
 
 test("png-qa detects blank images and edge clipping", () => {
   const tmp = fs.mkdtempSync(path.join(os.tmpdir(), "fec-image-generation-"));
-  const blank = path.join(tmp, "blank.png");
-  const clipped = path.join(tmp, "clipped.png");
-  writePng(blank, 80, 60, () => white);
-  writePng(clipped, 80, 60, (x, y) => (x <= 10 && y >= 20 && y <= 40 ? black : white));
+  try {
+    const blank = path.join(tmp, "blank.png");
+    const clipped = path.join(tmp, "clipped.png");
+    writePng(blank, 80, 60, () => white);
+    writePng(clipped, 80, 60, (x, y) => (x <= 10 && y >= 20 && y <= 40 ? black : white));
 
-  const blankResult = spawnSync(process.execPath, [script, "--png", blank, "--format", "json"], {
-    cwd: root,
-    encoding: "utf8",
-  });
-  const clippedResult = spawnSync(process.execPath, [script, "--png", clipped, "--format", "markdown"], {
-    cwd: root,
-    encoding: "utf8",
-  });
+    const blankResult = spawnSync(process.execPath, [script, "--png", blank, "--format", "json"], {
+      cwd: root,
+      encoding: "utf8",
+    });
+    const clippedResult = spawnSync(process.execPath, [script, "--png", clipped, "--format", "markdown"], {
+      cwd: root,
+      encoding: "utf8",
+    });
 
-  assert.equal(blankResult.status, 2, blankResult.stderr);
-  const blankReport = JSON.parse(blankResult.stdout) as { issues: Array<{ code: string }> };
-  assert.ok(blankReport.issues.some((issue) => issue.code === "blank-image"));
-  assert.equal(clippedResult.status, 2, clippedResult.stderr);
-  assert.match(clippedResult.stdout, /edge-clipping/);
-  assert.match(clippedResult.stdout, /Increase canvas\/viewBox padding/);
+    assert.equal(blankResult.status, 2, blankResult.stderr);
+    const blankReport = JSON.parse(blankResult.stdout) as { issues: Array<{ code: string }> };
+    assert.ok(blankReport.issues.some((issue) => issue.code === "blank-image"));
+    assert.equal(clippedResult.status, 2, clippedResult.stderr);
+    assert.match(clippedResult.stdout, /edge-clipping/);
+    assert.match(clippedResult.stdout, /Increase canvas\/viewBox padding/);
+  } finally {
+    fs.rmSync(tmp, { recursive: true, force: true });
+  }
 });
 
 test("png-qa detects manifest overlap, connector collisions, stacking, and label overflow", () => {
   const tmp = fs.mkdtempSync(path.join(os.tmpdir(), "fec-image-generation-"));
-  const png = path.join(tmp, "diagram.png");
-  const manifest = path.join(tmp, "layout.json");
-  writePng(png, 400, 240, (x, y) => (x >= 40 && x <= 360 && y >= 40 && y <= 200 ? black : white));
-  fs.writeFileSync(
-    manifest,
-    JSON.stringify(
-      {
-        canvas: { width: 400, height: 240 },
-        boxes: [
-          { id: "a", x: 40, y: 80, width: 90, height: 50, label: "API" },
-          { id: "b", x: 100, y: 96, width: 90, height: 50, label: "Extremely long label that cannot fit" },
-          { id: "c", x: 300, y: 80, width: 80, height: 50, label: "DB" },
-          { id: "outside", x: 360, y: 210, width: 70, height: 40, label: "Out" },
-        ],
-        connectors: [
-          { id: "a-c", from: "a", to: "c", points: [[130, 105], [300, 105]] },
-          { id: "stack-1", from: "a", to: "c", points: [[130, 180], [300, 180]] },
-          { id: "stack-2", from: "a", to: "c", points: [[130, 181], [300, 181]] },
-        ],
-      },
-      null,
-      2,
-    ),
-    "utf8",
-  );
+  try {
+    const png = path.join(tmp, "diagram.png");
+    const manifest = path.join(tmp, "layout.json");
+    writePng(png, 400, 240, (x, y) => (x >= 40 && x <= 360 && y >= 40 && y <= 200 ? black : white));
+    fs.writeFileSync(
+      manifest,
+      JSON.stringify(
+        {
+          canvas: { width: 400, height: 240 },
+          boxes: [
+            { id: "a", x: 40, y: 80, width: 90, height: 50, label: "API" },
+            { id: "b", x: 100, y: 96, width: 90, height: 50, label: "Extremely long label that cannot fit" },
+            { id: "c", x: 300, y: 80, width: 80, height: 50, label: "DB" },
+            { id: "outside", x: 360, y: 210, width: 70, height: 40, label: "Out" },
+          ],
+          connectors: [
+            { id: "a-c", from: "a", to: "c", points: [[130, 105], [300, 105]] },
+            { id: "stack-1", from: "a", to: "c", points: [[130, 180], [300, 180]] },
+            { id: "stack-2", from: "a", to: "c", points: [[130, 181], [300, 181]] },
+          ],
+        },
+        null,
+        2,
+      ),
+      "utf8",
+    );
 
-  const result = spawnSync(process.execPath, [script, "--png", png, "--manifest", manifest, "--format", "json"], {
-    cwd: root,
-    encoding: "utf8",
-  });
+    const result = spawnSync(process.execPath, [script, "--png", png, "--manifest", manifest, "--format", "json"], {
+      cwd: root,
+      encoding: "utf8",
+    });
 
-  assert.equal(result.status, 2, result.stderr);
-  const report = JSON.parse(result.stdout) as { issues: Array<{ code: string }>; nextActions: string[] };
-  const issueCodes = new Set(report.issues.map((issue) => issue.code));
-  assert.ok(issueCodes.has("box-overlap"));
-  assert.ok(issueCodes.has("box-out-of-bounds"));
-  assert.ok(issueCodes.has("label-overflow"));
-  assert.ok(issueCodes.has("connector-through-label"));
-  assert.ok(issueCodes.has("connector-stacking"));
-  assert.ok(report.nextActions.some((action) => /node spacing|split dense groups/i.test(action)));
+    assert.equal(result.status, 2, result.stderr);
+    const report = JSON.parse(result.stdout) as { issues: Array<{ code: string }>; nextActions: string[] };
+    const issueCodes = new Set(report.issues.map((issue) => issue.code));
+    assert.ok(issueCodes.has("box-overlap"));
+    assert.ok(issueCodes.has("box-out-of-bounds"));
+    assert.ok(issueCodes.has("label-overflow"));
+    assert.ok(issueCodes.has("connector-through-label"));
+    assert.ok(issueCodes.has("connector-stacking"));
+    assert.ok(report.nextActions.some((action) => /node spacing|split dense groups/i.test(action)));
+  } finally {
+    fs.rmSync(tmp, { recursive: true, force: true });
+  }
 });
 
 test("tech-diagram-render creates workflow HTML and PNG QA manifest", () => {
   const tmp = fs.mkdtempSync(path.join(os.tmpdir(), "fec-tech-diagram-"));
-  const input = path.join(tmp, "workflow.json");
-  const output = path.join(tmp, "workflow.html");
-  const manifest = path.join(tmp, "workflow.layout.json");
-  fs.writeFileSync(
-    input,
-    JSON.stringify({
-      schema_version: 1,
-      diagram_type: "workflow",
-      meta: { title: "Release Workflow", subtitle: "PR to production" },
-      lanes: [
-        { id: "dev", label: "Developer" },
-        { id: "ci", label: "CI" },
-      ],
-      nodes: [
-        { id: "pr", lane: "dev", col: 0, type: "frontend", label: "Open PR" },
-        { id: "test", lane: "ci", col: 1, type: "backend", label: "Run Tests" },
-      ],
-      edges: [{ from: "pr", to: "test", label: "trigger", variant: "emphasis" }],
-    }),
-    "utf8",
-  );
+  try {
+    const input = path.join(tmp, "workflow.json");
+    const output = path.join(tmp, "workflow.html");
+    const manifest = path.join(tmp, "workflow.layout.json");
+    fs.writeFileSync(
+      input,
+      JSON.stringify({
+        schema_version: 1,
+        diagram_type: "workflow",
+        meta: { title: "Release Workflow", subtitle: "PR to production" },
+        lanes: [
+          { id: "dev", label: "Developer" },
+          { id: "ci", label: "CI" },
+        ],
+        nodes: [
+          { id: "pr", lane: "dev", col: 0, type: "frontend", label: "Open PR" },
+          { id: "test", lane: "ci", col: 1, type: "backend", label: "Run Tests" },
+        ],
+        edges: [{ from: "pr", to: "test", label: "trigger", variant: "emphasis" }],
+      }),
+      "utf8",
+    );
 
-  const result = spawnSync(process.execPath, [renderScript, "--input", input, "--output", output, "--type", "workflow", "--manifest", manifest, "--format", "json"], {
-    cwd: root,
-    encoding: "utf8",
-  });
+    const result = spawnSync(process.execPath, [renderScript, "--input", input, "--output", output, "--type", "workflow", "--manifest", manifest, "--format", "json"], {
+      cwd: root,
+      encoding: "utf8",
+    });
 
-  assert.equal(result.status, 0, result.stderr);
-  const report = JSON.parse(result.stdout) as { ok: boolean; nodes: number; connectors: number };
-  assert.equal(report.ok, true);
-  assert.equal(report.nodes, 2);
-  assert.equal(report.connectors, 1);
-  const html = fs.readFileSync(output, "utf8");
-  assert.match(html, /Release Workflow/);
-  assert.match(html, /<svg class="tech-diagram"/);
-  assert.match(html, /--frontend:/);
-  assert.match(html, /Open PR/);
-  assert.match(html, /Toggle theme/);
-  const layout = JSON.parse(fs.readFileSync(manifest, "utf8")) as { canvas: { width: number }; boxes: unknown[]; connectors: unknown[] };
-  assert.ok(layout.canvas.width >= 780);
-  assert.equal(layout.boxes.length, 2);
-  assert.equal(layout.connectors.length, 1);
+    assert.equal(result.status, 0, result.stderr);
+    const report = JSON.parse(result.stdout) as { ok: boolean; nodes: number; connectors: number };
+    assert.equal(report.ok, true);
+    assert.equal(report.nodes, 2);
+    assert.equal(report.connectors, 1);
+    const html = fs.readFileSync(output, "utf8");
+    assert.match(html, /Release Workflow/);
+    assert.match(html, /<svg class="tech-diagram"/);
+    assert.match(html, /--frontend:/);
+    assert.match(html, /Open PR/);
+    assert.match(html, /Toggle theme/);
+    const layout = JSON.parse(fs.readFileSync(manifest, "utf8")) as { canvas: { width: number }; boxes: unknown[]; connectors: unknown[] };
+    assert.ok(layout.canvas.width >= 780);
+    assert.equal(layout.boxes.length, 2);
+    assert.equal(layout.connectors.length, 1);
+  } finally {
+    fs.rmSync(tmp, { recursive: true, force: true });
+  }
 });
 
 test("tech-diagram-render creates process workflow nodes, summaries, waypoints, and offline HTML", () => {
   const tmp = fs.mkdtempSync(path.join(os.tmpdir(), "fec-process-workflow-"));
-  const input = path.join(tmp, "process.json");
-  const output = path.join(tmp, "process.html");
-  const manifest = path.join(tmp, "process.layout.json");
-  fs.writeFileSync(
-    input,
-    JSON.stringify({
-      schema_version: 1,
-      diagram_type: "workflow",
-      meta: { title: "Procurement Approval", subtitle: "Request to payment" },
-      lanes: [
-        { id: "requester", label: "Requester" },
-        { id: "system", label: "System" },
-        { id: "manager", label: "Manager" },
-      ],
-      nodes: [
-        { id: "start", lane: "requester", col: 0, type: "start", label: "Submit Request", actor: "Employee" },
-        { id: "classify", lane: "system", col: 1, type: "active", label: "Classify Spend", actor: "Policy Engine", sublabel: "auto rules" },
-        { id: "review", lane: "manager", col: 2, type: "decision", label: "Approved?", step: "A" },
-        { id: "pay", lane: "system", col: 3, type: "success", label: "Issue Payment" },
-        { id: "reject", lane: "requester", col: 3, type: "failure", label: "Return Request" },
-      ],
-      edges: [
-        { from: "start", to: "classify", label: "intake", variant: "emphasis" },
-        { from: "classify", to: "review", label: "policy result" },
-        { from: "review", to: "pay", label: "yes", variant: "emphasis" },
-        { from: "review", to: "reject", label: "no", variant: "return", waypoints: [[650, 396], [520, 396]] },
-      ],
-      summary: [
-        { title: "Inputs", type: "active", items: ["Purchase request", "Policy threshold"] },
-        { title: "Outcomes", type: "success", items: ["Payment issued", "Requester notified"] },
-      ],
-    }),
-    "utf8",
-  );
+  try {
+    const input = path.join(tmp, "process.json");
+    const output = path.join(tmp, "process.html");
+    const manifest = path.join(tmp, "process.layout.json");
+    fs.writeFileSync(
+      input,
+      JSON.stringify({
+        schema_version: 1,
+        diagram_type: "workflow",
+        meta: { title: "Procurement Approval", subtitle: "Request to payment" },
+        lanes: [
+          { id: "requester", label: "Requester" },
+          { id: "system", label: "System" },
+          { id: "manager", label: "Manager" },
+        ],
+        nodes: [
+          { id: "start", lane: "requester", col: 0, type: "start", label: "Submit Request", actor: "Employee" },
+          { id: "classify", lane: "system", col: 1, type: "active", label: "Classify Spend", actor: "Policy Engine", sublabel: "auto rules" },
+          { id: "review", lane: "manager", col: 2, type: "decision", label: "Approved?", step: "A" },
+          { id: "pay", lane: "system", col: 3, type: "success", label: "Issue Payment" },
+          { id: "reject", lane: "requester", col: 3, type: "failure", label: "Return Request" },
+        ],
+        edges: [
+          { from: "start", to: "classify", label: "intake", variant: "emphasis" },
+          { from: "classify", to: "review", label: "policy result" },
+          { from: "review", to: "pay", label: "yes", variant: "emphasis" },
+          { from: "review", to: "reject", label: "no", variant: "return", waypoints: [[650, 396], [520, 396]] },
+        ],
+        summary: [
+          { title: "Inputs", type: "active", items: ["Purchase request", "Policy threshold"] },
+          { title: "Outcomes", type: "success", items: ["Payment issued", "Requester notified"] },
+        ],
+      }),
+      "utf8",
+    );
 
-  const result = spawnSync(process.execPath, [renderScript, "--input", input, "--output", output, "--type", "workflow", "--manifest", manifest, "--format", "json"], {
-    cwd: root,
-    encoding: "utf8",
-  });
+    const result = spawnSync(process.execPath, [renderScript, "--input", input, "--output", output, "--type", "workflow", "--manifest", manifest, "--format", "json"], {
+      cwd: root,
+      encoding: "utf8",
+    });
 
-  assert.equal(result.status, 0, result.stderr);
-  const report = JSON.parse(result.stdout) as { ok: boolean; nodes: number; connectors: number };
-  assert.equal(report.ok, true);
-  assert.equal(report.nodes, 5);
-  assert.equal(report.connectors, 4);
-  const html = fs.readFileSync(output, "utf8");
-  assert.match(html, /Procurement Approval/);
-  assert.match(html, /node-decision/);
-  assert.match(html, /class="step-badge"/);
-  assert.match(html, /Employee/);
-  assert.match(html, /Policy Engine/);
-  assert.match(html, /summary-grid/);
-  assert.match(html, /Purchase request/);
-  assert.doesNotMatch(html, /html2canvas/i);
-  assert.doesNotMatch(html, /jspdf/i);
-  assert.doesNotMatch(html, /cdn\.jsdelivr/i);
-  const layout = JSON.parse(fs.readFileSync(manifest, "utf8")) as { boxes: Array<{ id: string }>; connectors: Array<{ id: string; points: Array<[number, number]> }> };
-  assert.deepEqual(layout.boxes.map((box) => box.id).sort(), ["classify", "pay", "reject", "review", "start"]);
-  const rejection = layout.connectors.find((connector) => connector.id.startsWith("review-reject"));
-  assert.ok(rejection);
-  assert.deepEqual(rejection.points.slice(1, -1), [[650, 396], [520, 396]]);
+    assert.equal(result.status, 0, result.stderr);
+    const report = JSON.parse(result.stdout) as { ok: boolean; nodes: number; connectors: number };
+    assert.equal(report.ok, true);
+    assert.equal(report.nodes, 5);
+    assert.equal(report.connectors, 4);
+    const html = fs.readFileSync(output, "utf8");
+    assert.match(html, /Procurement Approval/);
+    assert.match(html, /node-decision/);
+    assert.match(html, /class="step-badge"/);
+    assert.match(html, /Employee/);
+    assert.match(html, /Policy Engine/);
+    assert.match(html, /summary-grid/);
+    assert.match(html, /Purchase request/);
+    assert.doesNotMatch(html, /html2canvas/i);
+    assert.doesNotMatch(html, /jspdf/i);
+    assert.doesNotMatch(html, /cdn\.jsdelivr/i);
+    const layout = JSON.parse(fs.readFileSync(manifest, "utf8")) as { boxes: Array<{ id: string }>; connectors: Array<{ id: string; points: Array<[number, number]> }> };
+    assert.deepEqual(layout.boxes.map((box) => box.id).sort(), ["classify", "pay", "reject", "review", "start"]);
+    const rejection = layout.connectors.find((connector) => connector.id.startsWith("review-reject"));
+    assert.ok(rejection);
+    assert.deepEqual(rejection.points.slice(1, -1), [[650, 396], [520, 396]]);
+  } finally {
+    fs.rmSync(tmp, { recursive: true, force: true });
+  }
 });
 
 test("tech-diagram-render creates architecture HTML, summary cards, legend, and PNG QA manifest", () => {
   const tmp = fs.mkdtempSync(path.join(os.tmpdir(), "fec-tech-diagram-"));
-  const input = path.join(tmp, "architecture.json");
-  const output = path.join(tmp, "architecture.html");
-  const manifest = path.join(tmp, "architecture.layout.json");
-  fs.writeFileSync(
-    input,
-    JSON.stringify({
-      schema_version: 1,
-      diagram_type: "architecture",
-      meta: { title: "Checkout Architecture", subtitle: "Browser-ready system topology" },
-      groups: [
-        { id: "cloud", label: "Cloud boundary", type: "cloud", x: 160, y: 48, width: 650, height: 310 },
-        { id: "trust", label: "Private service zone", type: "security", x: 360, y: 92, width: 400, height: 220 },
-      ],
-      nodes: [
-        { id: "web", label: "Web Client", type: "frontend", x: 42, y: 174, sublabel: "React" },
-        { id: "gateway", label: "API Gateway", type: "cloud", x: 210, y: 174, group: "cloud" },
-        { id: "auth", label: "Auth Provider", type: "security", x: 210, y: 72, group: "cloud" },
-        { id: "service", label: "Checkout Service", type: "backend", x: 420, y: 174, width: 148, group: "trust" },
-        { id: "bus", label: "Event Bus", type: "messagebus", x: 430, y: 270, width: 128, height: 44, group: "trust" },
-        { id: "db", label: "Orders DB", type: "database", x: 640, y: 174, group: "trust" },
-      ],
-      connections: [
-        { from: "web", to: "gateway", label: "HTTPS", variant: "emphasis" },
-        { from: "gateway", to: "service", label: "REST" },
-        { from: "service", to: "db", label: "SQL" },
-        { from: "service", to: "bus", label: "events", variant: "dashed", waypoints: [[494, 244]] },
-        { from: "auth", to: "gateway", label: "JWT", variant: "security" },
-      ],
-      legend: [
-        { label: "Client", type: "frontend" },
-        { label: "Service", type: "backend" },
-        { label: "Data", type: "database" },
-        { label: "Security", type: "security" },
-      ],
-      summary: [
-        { title: "Runtime", type: "backend", items: ["Gateway routes checkout traffic", "Service writes orders and emits events"] },
-        { title: "Trust", type: "security", items: ["Auth flow is separate from order data", "Private service zone is grouped"] },
-      ],
-    }),
-    "utf8",
-  );
+  try {
+    const input = path.join(tmp, "architecture.json");
+    const output = path.join(tmp, "architecture.html");
+    const manifest = path.join(tmp, "architecture.layout.json");
+    fs.writeFileSync(
+      input,
+      JSON.stringify({
+        schema_version: 1,
+        diagram_type: "architecture",
+        meta: { title: "Checkout Architecture", subtitle: "Browser-ready system topology" },
+        groups: [
+          { id: "cloud", label: "Cloud boundary", type: "cloud", x: 160, y: 48, width: 650, height: 310 },
+          { id: "trust", label: "Private service zone", type: "security", x: 360, y: 92, width: 400, height: 220 },
+        ],
+        nodes: [
+          { id: "web", label: "Web Client", type: "frontend", x: 42, y: 174, sublabel: "React" },
+          { id: "gateway", label: "API Gateway", type: "cloud", x: 210, y: 174, group: "cloud" },
+          { id: "auth", label: "Auth Provider", type: "security", x: 210, y: 72, group: "cloud" },
+          { id: "service", label: "Checkout Service", type: "backend", x: 420, y: 174, width: 148, group: "trust" },
+          { id: "bus", label: "Event Bus", type: "messagebus", x: 430, y: 270, width: 128, height: 44, group: "trust" },
+          { id: "db", label: "Orders DB", type: "database", x: 640, y: 174, group: "trust" },
+        ],
+        connections: [
+          { from: "web", to: "gateway", label: "HTTPS", variant: "emphasis" },
+          { from: "gateway", to: "service", label: "REST" },
+          { from: "service", to: "db", label: "SQL" },
+          { from: "service", to: "bus", label: "events", variant: "dashed", waypoints: [[494, 244]] },
+          { from: "auth", to: "gateway", label: "JWT", variant: "security" },
+        ],
+        legend: [
+          { label: "Client", type: "frontend" },
+          { label: "Service", type: "backend" },
+          { label: "Data", type: "database" },
+          { label: "Security", type: "security" },
+        ],
+        summary: [
+          { title: "Runtime", type: "backend", items: ["Gateway routes checkout traffic", "Service writes orders and emits events"] },
+          { title: "Trust", type: "security", items: ["Auth flow is separate from order data", "Private service zone is grouped"] },
+        ],
+      }),
+      "utf8",
+    );
 
-  const result = spawnSync(process.execPath, [renderScript, "--input", input, "--output", output, "--type", "architecture", "--manifest", manifest, "--format", "json"], {
-    cwd: root,
-    encoding: "utf8",
-  });
+    const result = spawnSync(process.execPath, [renderScript, "--input", input, "--output", output, "--type", "architecture", "--manifest", manifest, "--format", "json"], {
+      cwd: root,
+      encoding: "utf8",
+    });
 
-  assert.equal(result.status, 0, result.stderr);
-  const report = JSON.parse(result.stdout) as { ok: boolean; nodes: number; connectors: number };
-  assert.equal(report.ok, true);
-  assert.equal(report.nodes, 8);
-  assert.equal(report.connectors, 5);
-  const html = fs.readFileSync(output, "utf8");
-  assert.match(html, /Checkout Architecture/);
-  assert.match(html, /<svg class="tech-diagram"/);
-  assert.match(html, /Cloud boundary/);
-  assert.match(html, /Web Client/);
-  assert.match(html, /Event Bus/);
-  assert.match(html, /Legend/);
-  assert.match(html, /summary-grid/);
-  assert.match(html, /Gateway routes checkout traffic/);
-  const layout = JSON.parse(fs.readFileSync(manifest, "utf8")) as { boxes: unknown[]; connectors: unknown[] };
-  assert.equal(layout.boxes.length, 8);
-  assert.equal(layout.connectors.length, 5);
+    assert.equal(result.status, 0, result.stderr);
+    const report = JSON.parse(result.stdout) as { ok: boolean; nodes: number; connectors: number };
+    assert.equal(report.ok, true);
+    assert.equal(report.nodes, 8);
+    assert.equal(report.connectors, 5);
+    const html = fs.readFileSync(output, "utf8");
+    assert.match(html, /Checkout Architecture/);
+    assert.match(html, /<svg class="tech-diagram"/);
+    assert.match(html, /Cloud boundary/);
+    assert.match(html, /Web Client/);
+    assert.match(html, /Event Bus/);
+    assert.match(html, /Legend/);
+    assert.match(html, /summary-grid/);
+    assert.match(html, /Gateway routes checkout traffic/);
+    const layout = JSON.parse(fs.readFileSync(manifest, "utf8")) as { boxes: unknown[]; connectors: unknown[] };
+    assert.equal(layout.boxes.length, 8);
+    assert.equal(layout.connectors.length, 5);
+  } finally {
+    fs.rmSync(tmp, { recursive: true, force: true });
+  }
 });
 
 test("tech-diagram-render supports themed architecture diagrams with semantic nodes and flow legend", () => {
   const tmp = fs.mkdtempSync(path.join(os.tmpdir(), "fec-themed-architecture-"));
-  const input = path.join(tmp, "agent-runtime.json");
-  const output = path.join(tmp, "agent-runtime.html");
-  const manifest = path.join(tmp, "agent-runtime.layout.json");
-  fs.writeFileSync(
-    input,
-    JSON.stringify({
-      schema_version: 1,
-      diagram_type: "architecture",
-      visual: { style: "blueprint" },
-      meta: { title: "Agent Runtime", subtitle: "Semantic technical diagram" },
-      groups: [{ id: "runtime", label: "Runtime boundary", type: "cloud", x: 170, y: 60, width: 590, height: 270 }],
-      nodes: [
-        { id: "user", label: "User", type: "user", x: 44, y: 170 },
-        { id: "browser", label: "Browser", type: "browser", x: 190, y: 170, group: "runtime" },
-        { id: "gateway", label: "Gateway", type: "gateway", x: 350, y: 170, group: "runtime" },
-        { id: "agent", label: "Planner", type: "agent", x: 520, y: 170, group: "runtime" },
-        { id: "model", label: "Model", type: "model", x: 680, y: 170, group: "runtime" },
-      ],
-      connections: [
-        { from: "user", to: "browser", label: "intent", flow: "control" },
-        { from: "browser", to: "gateway", label: "request", flow: "data" },
-        { from: "gateway", to: "agent", label: "plan", flow: "control" },
-        { from: "agent", to: "model", label: "prompt", flow: "data" },
-      ],
-    }),
-    "utf8",
-  );
+  try {
+    const input = path.join(tmp, "agent-runtime.json");
+    const output = path.join(tmp, "agent-runtime.html");
+    const manifest = path.join(tmp, "agent-runtime.layout.json");
+    fs.writeFileSync(
+      input,
+      JSON.stringify({
+        schema_version: 1,
+        diagram_type: "architecture",
+        visual: { style: "blueprint" },
+        meta: { title: "Agent Runtime", subtitle: "Semantic technical diagram" },
+        groups: [{ id: "runtime", label: "Runtime boundary", type: "cloud", x: 170, y: 60, width: 590, height: 270 }],
+        nodes: [
+          { id: "user", label: "User", type: "user", x: 44, y: 170 },
+          { id: "browser", label: "Browser", type: "browser", x: 190, y: 170, group: "runtime" },
+          { id: "gateway", label: "Gateway", type: "gateway", x: 350, y: 170, group: "runtime" },
+          { id: "agent", label: "Planner", type: "agent", x: 520, y: 170, group: "runtime" },
+          { id: "model", label: "Model", type: "model", x: 680, y: 170, group: "runtime" },
+        ],
+        connections: [
+          { from: "user", to: "browser", label: "intent", flow: "control" },
+          { from: "browser", to: "gateway", label: "request", flow: "data" },
+          { from: "gateway", to: "agent", label: "plan", flow: "control" },
+          { from: "agent", to: "model", label: "prompt", flow: "data" },
+        ],
+      }),
+      "utf8",
+    );
 
-  const result = spawnSync(process.execPath, [renderScript, "--input", input, "--output", output, "--type", "architecture", "--manifest", manifest, "--format", "json"], {
-    cwd: root,
-    encoding: "utf8",
-  });
+    const result = spawnSync(process.execPath, [renderScript, "--input", input, "--output", output, "--type", "architecture", "--manifest", manifest, "--format", "json"], {
+      cwd: root,
+      encoding: "utf8",
+    });
 
-  assert.equal(result.status, 0, result.stderr);
-  const report = JSON.parse(result.stdout) as { ok: boolean; nodes: number; connectors: number };
-  assert.equal(report.ok, true);
-  assert.equal(report.nodes, 6);
-  assert.equal(report.connectors, 4);
-  const html = fs.readFileSync(output, "utf8");
-  assert.match(html, /data-visual-style="blueprint"/);
-  assert.match(html, /node-agent/);
-  assert.match(html, /node-model/);
-  assert.match(html, /node-browser/);
-  assert.match(html, /flow-control/);
-  assert.match(html, /flow-data/);
-  assert.match(html, /Flow Legend/);
-  assert.match(html, /--agent:/);
-  const layout = JSON.parse(fs.readFileSync(manifest, "utf8")) as { boxes: Array<{ id: string }>; connectors: unknown[] };
-  assert.deepEqual(layout.boxes.map((box) => box.id).sort(), ["agent", "browser", "gateway", "model", "runtime", "user"]);
-  assert.equal(layout.connectors.length, 4);
+    assert.equal(result.status, 0, result.stderr);
+    const report = JSON.parse(result.stdout) as { ok: boolean; nodes: number; connectors: number };
+    assert.equal(report.ok, true);
+    assert.equal(report.nodes, 6);
+    assert.equal(report.connectors, 4);
+    const html = fs.readFileSync(output, "utf8");
+    assert.match(html, /data-visual-style="blueprint"/);
+    assert.match(html, /node-agent/);
+    assert.match(html, /node-model/);
+    assert.match(html, /node-browser/);
+    assert.match(html, /flow-control/);
+    assert.match(html, /flow-data/);
+    assert.match(html, /Flow Legend/);
+    assert.match(html, /--agent:/);
+    const layout = JSON.parse(fs.readFileSync(manifest, "utf8")) as { boxes: Array<{ id: string }>; connectors: unknown[] };
+    assert.deepEqual(layout.boxes.map((box) => box.id).sort(), ["agent", "browser", "gateway", "model", "runtime", "user"]);
+    assert.equal(layout.connectors.length, 4);
+  } finally {
+    fs.rmSync(tmp, { recursive: true, force: true });
+  }
 });
 
 test("tech-diagram-render supports agent memory architecture flows", () => {
   const tmp = fs.mkdtempSync(path.join(os.tmpdir(), "fec-agent-memory-"));
-  const input = path.join(tmp, "memory.json");
-  const output = path.join(tmp, "memory.html");
-  fs.writeFileSync(
-    input,
-    JSON.stringify({
-      schema_version: 1,
-      diagram_type: "architecture",
-      visual: { style: "editorial-dark" },
-      meta: { title: "Memory Loop" },
-      nodes: [
-        { id: "agent", label: "Agent", type: "agent", x: 80, y: 120 },
-        { id: "model", label: "LLM", type: "model", x: 270, y: 120 },
-        { id: "memory", label: "Working Memory", type: "memory", x: 270, y: 250, width: 150 },
-        { id: "vectors", label: "Vector Store", type: "vectorstore", x: 480, y: 250, width: 150, height: 76 },
-        { id: "graph", label: "Graph DB", type: "graphdb", x: 670, y: 250 },
-        { id: "tool", label: "Search Tool", type: "tool", x: 480, y: 120 },
-        { id: "queue", label: "Event Queue", type: "queue", x: 670, y: 120 },
-        { id: "doc", label: "Source Doc", type: "document", x: 80, y: 250 },
-      ],
-      connections: [
-        { from: "agent", to: "model", label: "reason", flow: "feedback" },
-        { from: "agent", to: "tool", label: "call", flow: "control" },
-        { from: "tool", to: "queue", label: "event", flow: "async" },
-        { from: "agent", to: "memory", label: "write", flow: "write" },
-        { from: "memory", to: "vectors", label: "retrieve", flow: "read" },
-        { from: "vectors", to: "graph", label: "facts", flow: "data" },
-        { from: "doc", to: "memory", label: "notes", flow: "data" },
-      ],
-    }),
-    "utf8",
-  );
+  try {
+    const input = path.join(tmp, "memory.json");
+    const output = path.join(tmp, "memory.html");
+    fs.writeFileSync(
+      input,
+      JSON.stringify({
+        schema_version: 1,
+        diagram_type: "architecture",
+        visual: { style: "editorial-dark" },
+        meta: { title: "Memory Loop" },
+        nodes: [
+          { id: "agent", label: "Agent", type: "agent", x: 80, y: 120 },
+          { id: "model", label: "LLM", type: "model", x: 270, y: 120 },
+          { id: "memory", label: "Working Memory", type: "memory", x: 270, y: 250, width: 150 },
+          { id: "vectors", label: "Vector Store", type: "vectorstore", x: 480, y: 250, width: 150, height: 76 },
+          { id: "graph", label: "Graph DB", type: "graphdb", x: 670, y: 250 },
+          { id: "tool", label: "Search Tool", type: "tool", x: 480, y: 120 },
+          { id: "queue", label: "Event Queue", type: "queue", x: 670, y: 120 },
+          { id: "doc", label: "Source Doc", type: "document", x: 80, y: 250 },
+        ],
+        connections: [
+          { from: "agent", to: "model", label: "reason", flow: "feedback" },
+          { from: "agent", to: "tool", label: "call", flow: "control" },
+          { from: "tool", to: "queue", label: "event", flow: "async" },
+          { from: "agent", to: "memory", label: "write", flow: "write" },
+          { from: "memory", to: "vectors", label: "retrieve", flow: "read" },
+          { from: "vectors", to: "graph", label: "facts", flow: "data" },
+          { from: "doc", to: "memory", label: "notes", flow: "data" },
+        ],
+      }),
+      "utf8",
+    );
 
-  const result = spawnSync(process.execPath, [renderScript, "--input", input, "--output", output, "--type", "architecture", "--format", "json"], {
-    cwd: root,
-    encoding: "utf8",
-  });
+    const result = spawnSync(process.execPath, [renderScript, "--input", input, "--output", output, "--type", "architecture", "--format", "json"], {
+      cwd: root,
+      encoding: "utf8",
+    });
 
-  assert.equal(result.status, 0, result.stderr);
-  const html = fs.readFileSync(output, "utf8");
-  assert.match(html, /data-visual-style="editorial-dark"/);
-  for (const className of ["node-memory", "node-vectorstore", "node-graphdb", "node-tool", "node-document", "node-queue"]) {
-    assert.match(html, new RegExp(className));
-  }
-  for (const flow of ["flow-read", "flow-write", "flow-feedback", "flow-async"]) {
-    assert.match(html, new RegExp(flow));
+    assert.equal(result.status, 0, result.stderr);
+    const html = fs.readFileSync(output, "utf8");
+    assert.match(html, /data-visual-style="editorial-dark"/);
+    for (const className of ["node-memory", "node-vectorstore", "node-graphdb", "node-tool", "node-document", "node-queue"]) {
+      assert.match(html, new RegExp(className));
+    }
+    for (const flow of ["flow-read", "flow-write", "flow-feedback", "flow-async"]) {
+      assert.match(html, new RegExp(flow));
+    }
+  } finally {
+    fs.rmSync(tmp, { recursive: true, force: true });
   }
 });
 
 test("tech-diagram-render supports sequence, dataflow, and lifecycle diagrams", () => {
   const tmp = fs.mkdtempSync(path.join(os.tmpdir(), "fec-tech-diagram-"));
-  const cases = [
-    {
-      type: "sequence",
-      model: {
-        schema_version: 1,
-        diagram_type: "sequence",
-        meta: { title: "Cache Request" },
-        participants: [
-          { id: "web", type: "frontend", label: "Web App" },
-          { id: "api", type: "backend", label: "API" },
-        ],
-        messages: [{ from: "web", to: "api", label: "GET /items" }],
+  try {
+    const cases = [
+      {
+        type: "sequence",
+        model: {
+          schema_version: 1,
+          diagram_type: "sequence",
+          meta: { title: "Cache Request" },
+          participants: [
+            { id: "web", type: "frontend", label: "Web App" },
+            { id: "api", type: "backend", label: "API" },
+          ],
+          messages: [{ from: "web", to: "api", label: "GET /items" }],
+        },
       },
-    },
-    {
-      type: "dataflow",
-      model: {
-        schema_version: 1,
-        diagram_type: "dataflow",
-        meta: { title: "Analytics Flow" },
-        stages: [{ label: "Source" }, { label: "Store" }],
-        nodes: [
-          { id: "events", stage: 0, type: "frontend", label: "Events" },
-          { id: "warehouse", stage: 1, type: "database", label: "Warehouse" },
-        ],
-        flows: [{ from: "events", to: "warehouse", label: "facts" }],
+      {
+        type: "dataflow",
+        model: {
+          schema_version: 1,
+          diagram_type: "dataflow",
+          meta: { title: "Analytics Flow" },
+          stages: [{ label: "Source" }, { label: "Store" }],
+          nodes: [
+            { id: "events", stage: 0, type: "frontend", label: "Events" },
+            { id: "warehouse", stage: 1, type: "database", label: "Warehouse" },
+          ],
+          flows: [{ from: "events", to: "warehouse", label: "facts" }],
+        },
       },
-    },
-    {
-      type: "lifecycle",
-      model: {
-        schema_version: 1,
-        diagram_type: "lifecycle",
-        meta: { title: "Run Lifecycle" },
-        lanes: [{ id: "main", label: "Main" }],
-        states: [
-          { id: "queued", lane: "main", col: 0, type: "start", label: "Queued" },
-          { id: "done", lane: "main", col: 1, type: "success", label: "Done" },
-        ],
-        transitions: [{ from: "queued", to: "done", label: "finish" }],
+      {
+        type: "lifecycle",
+        model: {
+          schema_version: 1,
+          diagram_type: "lifecycle",
+          meta: { title: "Run Lifecycle" },
+          lanes: [{ id: "main", label: "Main" }],
+          states: [
+            { id: "queued", lane: "main", col: 0, type: "start", label: "Queued" },
+            { id: "done", lane: "main", col: 1, type: "success", label: "Done" },
+          ],
+          transitions: [{ from: "queued", to: "done", label: "finish" }],
+        },
       },
-    },
-  ];
+    ];
 
-  for (const sample of cases) {
-    const input = path.join(tmp, `${sample.type}.json`);
-    const output = path.join(tmp, `${sample.type}.html`);
-    fs.writeFileSync(input, JSON.stringify(sample.model), "utf8");
-    const result = spawnSync(process.execPath, [renderScript, "--input", input, "--output", output, "--type", sample.type, "--format", "json"], {
-      cwd: root,
-      encoding: "utf8",
-    });
-    assert.equal(result.status, 0, `${sample.type}: ${result.stderr}`);
-    const html = fs.readFileSync(output, "utf8");
-    assert.match(html, new RegExp(sample.model.meta.title));
-    assert.match(html, /Download SVG/);
+    for (const sample of cases) {
+      const input = path.join(tmp, `${sample.type}.json`);
+      const output = path.join(tmp, `${sample.type}.html`);
+      fs.writeFileSync(input, JSON.stringify(sample.model), "utf8");
+      const result = spawnSync(process.execPath, [renderScript, "--input", input, "--output", output, "--type", sample.type, "--format", "json"], {
+        cwd: root,
+        encoding: "utf8",
+      });
+      assert.equal(result.status, 0, `${sample.type}: ${result.stderr}`);
+      const html = fs.readFileSync(output, "utf8");
+      assert.match(html, new RegExp(sample.model.meta.title));
+      assert.match(html, /Download SVG/);
+    }
+  } finally {
+    fs.rmSync(tmp, { recursive: true, force: true });
   }
 });
 
 test("tech-diagram-render reports type mismatches, duplicate ids, and unknown endpoints", () => {
   const tmp = fs.mkdtempSync(path.join(os.tmpdir(), "fec-tech-diagram-"));
-  const mismatch = path.join(tmp, "mismatch.json");
-  const duplicate = path.join(tmp, "duplicate.json");
-  const unknown = path.join(tmp, "unknown.json");
-  const output = path.join(tmp, "out.html");
-  fs.writeFileSync(mismatch, JSON.stringify({ schema_version: 1, diagram_type: "sequence", meta: { title: "Wrong" }, participants: [], messages: [] }), "utf8");
-  fs.writeFileSync(
-    duplicate,
-    JSON.stringify({
-      schema_version: 1,
-      diagram_type: "workflow",
-      meta: { title: "Duplicate" },
-      lanes: [{ id: "lane", label: "Lane" }],
-      nodes: [
-        { id: "same", lane: "lane", col: 0, label: "A" },
-        { id: "same", lane: "lane", col: 1, label: "B" },
-      ],
-      edges: [],
-    }),
-    "utf8",
-  );
-  fs.writeFileSync(
-    unknown,
-    JSON.stringify({
-      schema_version: 1,
-      diagram_type: "workflow",
-      meta: { title: "Unknown" },
-      lanes: [{ id: "lane", label: "Lane" }],
-      nodes: [{ id: "a", lane: "lane", col: 0, label: "A" }],
-      edges: [{ from: "a", to: "missing" }],
-    }),
-    "utf8",
-  );
+  try {
+    const mismatch = path.join(tmp, "mismatch.json");
+    const duplicate = path.join(tmp, "duplicate.json");
+    const unknown = path.join(tmp, "unknown.json");
+    const output = path.join(tmp, "out.html");
+    fs.writeFileSync(mismatch, JSON.stringify({ schema_version: 1, diagram_type: "sequence", meta: { title: "Wrong" }, participants: [], messages: [] }), "utf8");
+    fs.writeFileSync(
+      duplicate,
+      JSON.stringify({
+        schema_version: 1,
+        diagram_type: "workflow",
+        meta: { title: "Duplicate" },
+        lanes: [{ id: "lane", label: "Lane" }],
+        nodes: [
+          { id: "same", lane: "lane", col: 0, label: "A" },
+          { id: "same", lane: "lane", col: 1, label: "B" },
+        ],
+        edges: [],
+      }),
+      "utf8",
+    );
+    fs.writeFileSync(
+      unknown,
+      JSON.stringify({
+        schema_version: 1,
+        diagram_type: "workflow",
+        meta: { title: "Unknown" },
+        lanes: [{ id: "lane", label: "Lane" }],
+        nodes: [{ id: "a", lane: "lane", col: 0, label: "A" }],
+        edges: [{ from: "a", to: "missing" }],
+      }),
+      "utf8",
+    );
 
-  const mismatchResult = spawnSync(process.execPath, [renderScript, "--input", mismatch, "--output", output, "--type", "workflow", "--format", "json"], {
-    cwd: root,
-    encoding: "utf8",
-  });
-  const duplicateResult = spawnSync(process.execPath, [renderScript, "--input", duplicate, "--output", output, "--type", "workflow"], {
-    cwd: root,
-    encoding: "utf8",
-  });
-  const unknownResult = spawnSync(process.execPath, [renderScript, "--input", unknown, "--output", output, "--type", "workflow"], {
-    cwd: root,
-    encoding: "utf8",
-  });
+    const mismatchResult = spawnSync(process.execPath, [renderScript, "--input", mismatch, "--output", output, "--type", "workflow", "--format", "json"], {
+      cwd: root,
+      encoding: "utf8",
+    });
+    const duplicateResult = spawnSync(process.execPath, [renderScript, "--input", duplicate, "--output", output, "--type", "workflow"], {
+      cwd: root,
+      encoding: "utf8",
+    });
+    const unknownResult = spawnSync(process.execPath, [renderScript, "--input", unknown, "--output", output, "--type", "workflow"], {
+      cwd: root,
+      encoding: "utf8",
+    });
 
-  assert.equal(mismatchResult.status, 1);
-  assert.match(mismatchResult.stdout, /diagram_type/);
-  assert.equal(duplicateResult.status, 1);
-  assert.match(duplicateResult.stderr, /Duplicate id "same"/);
-  assert.equal(unknownResult.status, 1);
-  assert.match(unknownResult.stderr, /Unknown endpoint "missing"/);
+    assert.equal(mismatchResult.status, 1);
+    assert.match(mismatchResult.stdout, /diagram_type/);
+    assert.equal(duplicateResult.status, 1);
+    assert.match(duplicateResult.stderr, /Duplicate id "same"/);
+    assert.equal(unknownResult.status, 1);
+    assert.match(unknownResult.stderr, /Unknown endpoint "missing"/);
+  } finally {
+    fs.rmSync(tmp, { recursive: true, force: true });
+  }
 });
 
 test("tech-diagram-render reports architecture validation errors", () => {
   const tmp = fs.mkdtempSync(path.join(os.tmpdir(), "fec-tech-diagram-"));
-  const output = path.join(tmp, "out.html");
-  const cases = [
-    {
-      name: "mismatch",
-      model: { schema_version: 1, diagram_type: "workflow", meta: { title: "Wrong" }, nodes: [], connections: [] },
-      args: ["--format", "json"],
-      expectedStdout: /diagram_type/,
-    },
-    {
-      name: "unknown-group",
-      model: {
-        schema_version: 1,
-        diagram_type: "architecture",
-        meta: { title: "Unknown Group" },
-        nodes: [{ id: "web", label: "Web", type: "frontend", x: 40, y: 40, group: "missing" }],
-        connections: [],
+  try {
+    const output = path.join(tmp, "out.html");
+    const cases = [
+      {
+        name: "mismatch",
+        model: { schema_version: 1, diagram_type: "workflow", meta: { title: "Wrong" }, nodes: [], connections: [] },
+        args: ["--format", "json"],
+        expectedStdout: /diagram_type/,
       },
-      expectedStderr: /Unknown group "missing"/,
-    },
-    {
-      name: "unknown-endpoint",
-      model: {
-        schema_version: 1,
-        diagram_type: "architecture",
-        meta: { title: "Unknown Endpoint" },
-        nodes: [{ id: "web", label: "Web", type: "frontend", x: 40, y: 40 }],
-        connections: [{ from: "web", to: "api" }],
+      {
+        name: "unknown-group",
+        model: {
+          schema_version: 1,
+          diagram_type: "architecture",
+          meta: { title: "Unknown Group" },
+          nodes: [{ id: "web", label: "Web", type: "frontend", x: 40, y: 40, group: "missing" }],
+          connections: [],
+        },
+        expectedStderr: /Unknown group "missing"/,
       },
-      expectedStderr: /Unknown endpoint "api"/,
-    },
-    {
-      name: "duplicate-id",
-      model: {
-        schema_version: 1,
-        diagram_type: "architecture",
-        meta: { title: "Duplicate" },
-        nodes: [
-          { id: "web", label: "Web", type: "frontend", x: 40, y: 40 },
-          { id: "web", label: "Again", type: "frontend", x: 200, y: 40 },
-        ],
-        connections: [],
+      {
+        name: "unknown-endpoint",
+        model: {
+          schema_version: 1,
+          diagram_type: "architecture",
+          meta: { title: "Unknown Endpoint" },
+          nodes: [{ id: "web", label: "Web", type: "frontend", x: 40, y: 40 }],
+          connections: [{ from: "web", to: "api" }],
+        },
+        expectedStderr: /Unknown endpoint "api"/,
       },
-      expectedStderr: /Duplicate id "web"/,
-    },
-    {
-      name: "bad-type",
-      model: {
-        schema_version: 1,
-        diagram_type: "architecture",
-        meta: { title: "Bad Type" },
-        nodes: [{ id: "web", label: "Web", type: "mystery", x: 40, y: 40 }],
-        connections: [],
+      {
+        name: "duplicate-id",
+        model: {
+          schema_version: 1,
+          diagram_type: "architecture",
+          meta: { title: "Duplicate" },
+          nodes: [
+            { id: "web", label: "Web", type: "frontend", x: 40, y: 40 },
+            { id: "web", label: "Again", type: "frontend", x: 200, y: 40 },
+          ],
+          connections: [],
+        },
+        expectedStderr: /Duplicate id "web"/,
       },
-      expectedStderr: /Unsupported node type "mystery"/,
-    },
-    {
-      name: "bad-style",
-      model: {
-        schema_version: 1,
-        diagram_type: "architecture",
-        visual: { style: "copied-style" },
-        meta: { title: "Bad Style" },
-        nodes: [],
-        connections: [],
+      {
+        name: "bad-type",
+        model: {
+          schema_version: 1,
+          diagram_type: "architecture",
+          meta: { title: "Bad Type" },
+          nodes: [{ id: "web", label: "Web", type: "mystery", x: 40, y: 40 }],
+          connections: [],
+        },
+        expectedStderr: /Unsupported node type "mystery"/,
       },
-      expectedStderr: /Unsupported visual style "copied-style"/,
-    },
-    {
-      name: "bad-flow",
-      model: {
-        schema_version: 1,
-        diagram_type: "architecture",
-        meta: { title: "Bad Flow" },
-        nodes: [
-          { id: "a", label: "A", type: "agent", x: 40, y: 40 },
-          { id: "b", label: "B", type: "model", x: 220, y: 40 },
-        ],
-        connections: [{ from: "a", to: "b", flow: "teleport" }],
+      {
+        name: "bad-style",
+        model: {
+          schema_version: 1,
+          diagram_type: "architecture",
+          visual: { style: "copied-style" },
+          meta: { title: "Bad Style" },
+          nodes: [],
+          connections: [],
+        },
+        expectedStderr: /Unsupported visual style "copied-style"/,
       },
-      expectedStderr: /Unsupported flow "teleport"/,
-    },
-  ];
+      {
+        name: "bad-flow",
+        model: {
+          schema_version: 1,
+          diagram_type: "architecture",
+          meta: { title: "Bad Flow" },
+          nodes: [
+            { id: "a", label: "A", type: "agent", x: 40, y: 40 },
+            { id: "b", label: "B", type: "model", x: 220, y: 40 },
+          ],
+          connections: [{ from: "a", to: "b", flow: "teleport" }],
+        },
+        expectedStderr: /Unsupported flow "teleport"/,
+      },
+    ];
 
-  for (const sample of cases) {
-    const input = path.join(tmp, `${sample.name}.json`);
-    fs.writeFileSync(input, JSON.stringify(sample.model), "utf8");
-    const result = spawnSync(process.execPath, [renderScript, "--input", input, "--output", output, "--type", "architecture", ...(sample.args ?? [])], {
-      cwd: root,
-      encoding: "utf8",
-    });
-    assert.equal(result.status, 1, sample.name);
-    if (sample.expectedStdout) assert.match(result.stdout, sample.expectedStdout);
-    if (sample.expectedStderr) assert.match(result.stderr, sample.expectedStderr);
+    for (const sample of cases) {
+      const input = path.join(tmp, `${sample.name}.json`);
+      fs.writeFileSync(input, JSON.stringify(sample.model), "utf8");
+      const result = spawnSync(process.execPath, [renderScript, "--input", input, "--output", output, "--type", "architecture", ...(sample.args ?? [])], {
+        cwd: root,
+        encoding: "utf8",
+      });
+      assert.equal(result.status, 1, sample.name);
+      if (sample.expectedStdout) assert.match(result.stdout, sample.expectedStdout);
+      if (sample.expectedStderr) assert.match(result.stderr, sample.expectedStderr);
+    }
+  } finally {
+    fs.rmSync(tmp, { recursive: true, force: true });
   }
 });
 
 test("export-diagram extracts inline SVG from HTML and uses default output path", () => {
   const tmp = fs.mkdtempSync(path.join(os.tmpdir(), "fec-diagram-export-"));
-  const html = path.join(tmp, "blueprint.html");
-  const output = path.join(tmp, "blueprint.svg");
-  fs.writeFileSync(
-    html,
-    `<!doctype html><html><body><main><svg width="120" height="80" viewBox="0 0 120 80"><rect width="120" height="80" fill="#0f172a"/><text x="16" y="42">Blueprint</text></svg></main></body></html>`,
-    "utf8",
-  );
+  try {
+    const html = path.join(tmp, "blueprint.html");
+    const output = path.join(tmp, "blueprint.svg");
+    fs.writeFileSync(
+      html,
+      `<!doctype html><html><body><main><svg width="120" height="80" viewBox="0 0 120 80"><rect width="120" height="80" fill="#0f172a"/><text x="16" y="42">Blueprint</text></svg></main></body></html>`,
+      "utf8",
+    );
 
-  const result = spawnSync(process.execPath, [exportScript, "--input", html, "--format", "svg"], {
-    cwd: root,
-    encoding: "utf8",
-  });
-
-  assert.equal(result.status, 0, result.stderr);
-  assert.ok(fs.existsSync(output));
-  const svg = fs.readFileSync(output, "utf8");
-  assert.match(svg, /^<svg /);
-  assert.match(svg, /Blueprint/);
-});
-
-test("export-diagram accepts SVG input and explicit output path", () => {
-  const tmp = fs.mkdtempSync(path.join(os.tmpdir(), "fec-diagram-export-"));
-  const input = path.join(tmp, "source.svg");
-  const output = path.join(tmp, "readme-diagram.svg");
-  fs.writeFileSync(input, `<svg width="64" height="64"><circle cx="32" cy="32" r="20"/></svg>`, "utf8");
-
-  const result = spawnSync(process.execPath, [exportScript, "--input", input, "--format", "svg", "--output", output], {
-    cwd: root,
-    encoding: "utf8",
-  });
-
-  assert.equal(result.status, 0, result.stderr);
-  assert.equal(fs.readFileSync(output, "utf8").trim(), `<svg width="64" height="64"><circle cx="32" cy="32" r="20"/></svg>`);
-});
-
-test("export-diagram fails clearly when HTML has no inline SVG", () => {
-  const tmp = fs.mkdtempSync(path.join(os.tmpdir(), "fec-diagram-export-"));
-  const html = path.join(tmp, "empty.html");
-  fs.writeFileSync(html, `<!doctype html><html><body>No diagram</body></html>`, "utf8");
-
-  const result = spawnSync(process.execPath, [exportScript, "--input", html, "--format", "svg"], {
-    cwd: root,
-    encoding: "utf8",
-  });
-
-  assert.equal(result.status, 1);
-  assert.match(result.stderr, /does not contain an inline <svg>/);
-});
-
-test("export-diagram covers PNG and JPG raster paths with browser fallback errors", () => {
-  const tmp = fs.mkdtempSync(path.join(os.tmpdir(), "fec-diagram-export-"));
-  const input = path.join(tmp, "source.svg");
-  const png = path.join(tmp, "diagram.png");
-  const jpg = path.join(tmp, "diagram.jpg");
-  fs.writeFileSync(input, `<svg width="96" height="72" viewBox="0 0 96 72"><rect width="96" height="72" fill="#ffffff"/><circle cx="48" cy="36" r="18" fill="#3157d5"/></svg>`, "utf8");
-
-  for (const [format, output] of [["png", png], ["jpg", jpg]] as const) {
-    const result = spawnSync(process.execPath, [exportScript, "--input", input, "--format", format, "--output", output, "--scale", "1", "--background", "#ffffff"], {
+    const result = spawnSync(process.execPath, [exportScript, "--input", html, "--format", "svg"], {
       cwd: root,
       encoding: "utf8",
     });
 
-    if (result.status === 0) {
-      assert.ok(fs.statSync(output).size > 0, `${format} export should create a non-empty file`);
-    } else {
-      assert.match(result.stderr, /requires a local Chromium browser|Browser raster export failed|JPG\/JPEG export needs a local image converter/);
-      assert.equal(fs.existsSync(output), false);
+    assert.equal(result.status, 0, result.stderr);
+    assert.ok(fs.existsSync(output));
+    const svg = fs.readFileSync(output, "utf8");
+    assert.match(svg, /^<svg /);
+    assert.match(svg, /Blueprint/);
+  } finally {
+    fs.rmSync(tmp, { recursive: true, force: true });
+  }
+});
+
+test("export-diagram accepts SVG input and explicit output path", () => {
+  const tmp = fs.mkdtempSync(path.join(os.tmpdir(), "fec-diagram-export-"));
+  try {
+    const input = path.join(tmp, "source.svg");
+    const output = path.join(tmp, "readme-diagram.svg");
+    fs.writeFileSync(input, `<svg width="64" height="64"><circle cx="32" cy="32" r="20"/></svg>`, "utf8");
+
+    const result = spawnSync(process.execPath, [exportScript, "--input", input, "--format", "svg", "--output", output], {
+      cwd: root,
+      encoding: "utf8",
+    });
+
+    assert.equal(result.status, 0, result.stderr);
+    assert.equal(fs.readFileSync(output, "utf8").trim(), `<svg width="64" height="64"><circle cx="32" cy="32" r="20"/></svg>`);
+  } finally {
+    fs.rmSync(tmp, { recursive: true, force: true });
+  }
+});
+
+test("export-diagram fails clearly when HTML has no inline SVG", () => {
+  const tmp = fs.mkdtempSync(path.join(os.tmpdir(), "fec-diagram-export-"));
+  try {
+    const html = path.join(tmp, "empty.html");
+    fs.writeFileSync(html, `<!doctype html><html><body>No diagram</body></html>`, "utf8");
+
+    const result = spawnSync(process.execPath, [exportScript, "--input", html, "--format", "svg"], {
+      cwd: root,
+      encoding: "utf8",
+    });
+
+    assert.equal(result.status, 1);
+    assert.match(result.stderr, /does not contain an inline <svg>/);
+  } finally {
+    fs.rmSync(tmp, { recursive: true, force: true });
+  }
+});
+
+test("export-diagram covers PNG and JPG raster paths with browser fallback errors", () => {
+  const tmp = fs.mkdtempSync(path.join(os.tmpdir(), "fec-diagram-export-"));
+  try {
+    const input = path.join(tmp, "source.svg");
+    const png = path.join(tmp, "diagram.png");
+    const jpg = path.join(tmp, "diagram.jpg");
+    fs.writeFileSync(input, `<svg width="96" height="72" viewBox="0 0 96 72"><rect width="96" height="72" fill="#ffffff"/><circle cx="48" cy="36" r="18" fill="#3157d5"/></svg>`, "utf8");
+
+    for (const [format, output] of [["png", png], ["jpg", jpg]] as const) {
+      const result = spawnSync(process.execPath, [exportScript, "--input", input, "--format", format, "--output", output, "--scale", "1", "--background", "#ffffff"], {
+        cwd: root,
+        encoding: "utf8",
+      });
+
+      if (result.status === 0) {
+        assert.ok(fs.statSync(output).size > 0, `${format} export should create a non-empty file`);
+      } else {
+        assert.match(result.stderr, /requires a local Chromium browser|Browser raster export failed|JPG\/JPEG export needs a local image converter/);
+        assert.equal(fs.existsSync(output), false);
+      }
     }
+  } finally {
+    fs.rmSync(tmp, { recursive: true, force: true });
   }
 });
 

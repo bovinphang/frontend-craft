@@ -28,6 +28,21 @@ export function findBrowser() {
  */
 const exportFailure = (detail) => new Error(`Browser raster export failed: ${detail}`);
 
+/**
+ * Chromium keeps profile files locked until its whole process tree is gone, so cleanup waits for
+ * the process instead of sleeping a fixed amount. @param {ReturnType<typeof spawn>} child @param {number} ms @returns {Promise<void>}
+ */
+const waitForExit = async (child, ms) => {
+  if (child.exitCode !== null) return;
+  /** @type {ReturnType<typeof setTimeout> | undefined} */
+  let timer;
+  await new Promise((resolve) => {
+    const finish = () => { if (timer) clearTimeout(timer); child.off("exit", finish); resolve(undefined); };
+    timer = setTimeout(finish, ms);
+    child.once("exit", finish);
+  });
+};
+
 /** @template T @param {string} html @param {{theme:'light'|'dark',timeoutMs:number}} options @param {(session:DiagramSession)=>Promise<T>} action @returns {Promise<T>} */
 export async function withDiagramPage(html, options, action) {
   const browser = findBrowser();
@@ -94,11 +109,12 @@ export async function withDiagramPage(html, options, action) {
   } finally {
     if (timer) clearTimeout(timer);
     if (socket?.readyState === WebSocket.OPEN) socket.send(JSON.stringify({ id: 999999, method: "Browser.close" }));
-    await new Promise((resolve) => setTimeout(resolve, 120));
+    // Browser.close is graceful, so wait for the process rather than guessing with a fixed sleep:
+    // Chromium's child processes keep profile files locked until the tree is gone.
+    await waitForExit(child, 2000);
     socket?.close();
-    child.kill();
+    if (child.exitCode === null) child.kill();
     // The Chromium profile is owned by this invocation only. Windows may release locks after exit.
-    await new Promise((resolve) => setTimeout(resolve, 120));
-    try { fs.rmSync(dir, { recursive: true, force: true, maxRetries: 5, retryDelay: 100 }); } catch { /* A locked temporary profile can be removed by OS cleanup. */ }
+    try { fs.rmSync(dir, { recursive: true, force: true, maxRetries: 10, retryDelay: 200 }); } catch { /* A locked temporary profile can be removed by OS cleanup. */ }
   }
 }
