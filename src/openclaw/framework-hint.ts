@@ -15,7 +15,8 @@ export function buildFrameworkHint(workspaceDir: string): string {
     const deps = { ...pkg.dependencies, ...pkg.devDependencies };
     const fw: string[] = [];
     if (deps.vue || deps.nuxt) fw.push(`Vue ${deps.vue ?? deps.nuxt ?? ""}`);
-    if (deps.react || deps.next) fw.push(`React ${deps.react ?? deps.next ?? ""}`);
+    if (deps.react || deps.next)
+      fw.push(`React ${deps.react ?? deps.next ?? ""}`);
     if (deps["@angular/core"]) fw.push(`Angular ${deps["@angular/core"]}`);
     framework = fw.join(", ") || "unknown";
   } catch {

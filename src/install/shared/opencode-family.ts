@@ -1,12 +1,20 @@
 import path from "node:path";
 import fs from "node:fs";
 import type { InstallContext } from "../types.js";
-import { copyDir, ensureDir, readUtf8, writeUtf8, retireManagedFile } from "../shared/fs.js";
+import {
+  copyDir,
+  ensureDir,
+  readUtf8,
+  writeUtf8,
+  retireManagedFile,
+} from "../shared/fs.js";
 
 /**
  * @param {import('../types.js').InstallContext} ctx
  */
-export async function installOpencodeFamily(ctx: InstallContext): Promise<void> {
+export async function installOpencodeFamily(
+  ctx: InstallContext,
+): Promise<void> {
   const { contentRoot, baseDir, dryRun } = ctx;
   const cmdDest = path.join(baseDir, "commands");
   if (dryRun) {
@@ -36,7 +44,10 @@ export async function installOpencodeFamily(ctx: InstallContext): Promise<void> 
   }
 
   const jsoncPath = path.join(baseDir, "opencode.jsonc");
-  if (ctx.runtime === "opencode" && (!fs.existsSync(jsoncPath) || isLegacyTemplate(jsoncPath))) {
+  if (
+    ctx.runtime === "opencode" &&
+    (!fs.existsSync(jsoncPath) || isLegacyTemplate(jsoncPath))
+  ) {
     writeUtf8(
       jsoncPath,
       `{
@@ -51,8 +62,12 @@ export async function installOpencodeFamily(ctx: InstallContext): Promise<void> 
 function isLegacyTemplate(file: string): boolean {
   try {
     const value = JSON.parse(readUtf8(file));
-    return value.$schema === "https://opencode.ai/config.json" &&
+    return (
+      value.$schema === "https://opencode.ai/config.json" &&
       Object.keys(value).length === 2 &&
-      JSON.stringify(value.permissions) === '{"bash":"allow"}';
-  } catch { return false; }
+      JSON.stringify(value.permissions) === '{"bash":"allow"}'
+    );
+  } catch {
+    return false;
+  }
 }

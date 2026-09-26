@@ -76,9 +76,17 @@ function clamp(value: number, min: number, max: number): number {
   return Math.max(min, Math.min(max, value));
 }
 
-function normalizeInputChar(key: { sequence?: string; name?: string; ctrl?: boolean; meta?: boolean } | undefined): string {
+function normalizeInputChar(
+  key:
+    | { sequence?: string; name?: string; ctrl?: boolean; meta?: boolean }
+    | undefined,
+): string {
   if (!key || key.ctrl || key.meta) return "";
-  if (typeof key.sequence === "string" && key.sequence.length === 1 && key.sequence >= " ") {
+  if (
+    typeof key.sequence === "string" &&
+    key.sequence.length === 1 &&
+    key.sequence >= " "
+  ) {
     return key.sequence;
   }
   if (typeof key.name === "string" && key.name.length === 1) return key.name;
@@ -98,8 +106,12 @@ function toRuntimeOptions(): SelectOption[] {
 }
 
 function toLocationOptions(runtimes: string[]): SelectOption[] {
-  const globalExamples = unique(runtimes.map((runtime) => formatHome(getGlobalConfigDir(runtime)))).join(", ");
-  const localExamples = unique(runtimes.map((runtime) => getLocalDisplay(runtime))).join(", ");
+  const globalExamples = unique(
+    runtimes.map((runtime) => formatHome(getGlobalConfigDir(runtime))),
+  ).join(", ");
+  const localExamples = unique(
+    runtimes.map((runtime) => getLocalDisplay(runtime)),
+  ).join(", ");
 
   return [
     {
@@ -141,7 +153,7 @@ export function createSelectablePromptState<T = string[]>({
   multiple = true,
   pageSize = 15,
   validate = (values) => values.length > 0,
-  transform = ((values: string[]) => values as T),
+  transform = (values: string[]) => values as T,
 }: {
   message: string;
   options: SelectOption[];
@@ -154,7 +166,9 @@ export function createSelectablePromptState<T = string[]>({
   const state: SelectState<T> = {
     message,
     options,
-    selected: selected.filter((value, index) => selected.indexOf(value) === index),
+    selected: selected.filter(
+      (value, index) => selected.indexOf(value) === index,
+    ),
     multiple,
     pageSize,
     search: "",
@@ -164,12 +178,19 @@ export function createSelectablePromptState<T = string[]>({
       const term = this.search.trim().toLowerCase();
       if (!term) return this.options;
       return this.options.filter((option) => {
-        return option.label.toLowerCase().includes(term) || option.value.toLowerCase().includes(term);
+        return (
+          option.label.toLowerCase().includes(term) ||
+          option.value.toLowerCase().includes(term)
+        );
       });
     },
     move(delta) {
       const visible = this.visibleOptions();
-      this.cursor = clamp(this.cursor + delta, 0, Math.max(0, visible.length - 1));
+      this.cursor = clamp(
+        this.cursor + delta,
+        0,
+        Math.max(0, visible.length - 1),
+      );
       this.error = "";
     },
     toggle() {
@@ -201,7 +222,8 @@ export function createSelectablePromptState<T = string[]>({
     confirm() {
       const result = validate(this.selected);
       if (result !== true) {
-        this.error = typeof result === "string" ? result : "Select at least one option";
+        this.error =
+          typeof result === "string" ? result : "Select at least one option";
         return undefined;
       }
       return transform(this.selected);
@@ -210,7 +232,9 @@ export function createSelectablePromptState<T = string[]>({
   return state;
 }
 
-export function createRuntimePromptState(options: { pageSize?: number } = {}): SelectState<string[]> {
+export function createRuntimePromptState(
+  options: { pageSize?: number } = {},
+): SelectState<string[]> {
   return createSelectablePromptState({
     message: `Which runtime(s) would you like to install for? (${RUNTIME_OPTIONS.length} available)`,
     options: toRuntimeOptions(),
@@ -221,7 +245,10 @@ export function createRuntimePromptState(options: { pageSize?: number } = {}): S
   });
 }
 
-export function createLocationPromptState(runtimes: string[], options: { pageSize?: number } = {}): SelectState<boolean> {
+export function createLocationPromptState(
+  runtimes: string[],
+  options: { pageSize?: number } = {},
+): SelectState<boolean> {
   return createSelectablePromptState<boolean>({
     message: "Where would you like to install?",
     options: toLocationOptions(runtimes),
@@ -232,7 +259,9 @@ export function createLocationPromptState(runtimes: string[], options: { pageSiz
   });
 }
 
-export function createLanguagePromptState(options: { pageSize?: number } = {}): SelectState<InstallLanguage> {
+export function createLanguagePromptState(
+  options: { pageSize?: number } = {},
+): SelectState<InstallLanguage> {
   return createSelectablePromptState<InstallLanguage>({
     message: "Which language should frontend-craft install?",
     options: toLanguageOptions(),
@@ -246,9 +275,13 @@ export function createLanguagePromptState(options: { pageSize?: number } = {}): 
 export function renderSelectablePrompt(state: SelectState<unknown>): string {
   const visible = state.visibleOptions();
   const selectedSet = new Set(state.selected);
-  const optionByValue = new Map(state.options.map((option) => [option.value, option]));
+  const optionByValue = new Map(
+    state.options.map((option) => [option.value, option]),
+  );
   const selectedSummary = state.selected.length
-    ? state.selected.map((value) => optionByValue.get(value)?.label ?? value).join(", ")
+    ? state.selected
+        .map((value) => optionByValue.get(value)?.label ?? value)
+        .join(", ")
     : "(none selected)";
 
   const lines = [
@@ -261,7 +294,13 @@ export function renderSelectablePrompt(state: SelectState<unknown>): string {
   if (visible.length === 0) {
     lines.push("  No matches");
   } else {
-    const startIndex = Math.max(0, Math.min(state.cursor - Math.floor(state.pageSize / 2), visible.length - state.pageSize));
+    const startIndex = Math.max(
+      0,
+      Math.min(
+        state.cursor - Math.floor(state.pageSize / 2),
+        visible.length - state.pageSize,
+      ),
+    );
     const endIndex = Math.min(startIndex + state.pageSize, visible.length);
     const visiblePage = visible.slice(startIndex, endIndex);
 
@@ -273,7 +312,9 @@ export function renderSelectablePrompt(state: SelectState<unknown>): string {
       const pointer = active ? ">" : " ";
       const icon = selected ? "[x]" : "[ ]";
       const description = option.description ? ` (${option.description})` : "";
-      const suffix = selected ? ` (${option.selectedSuffix ?? "selected"})` : description;
+      const suffix = selected
+        ? ` (${option.selectedSuffix ?? "selected"})`
+        : description;
       lines.push(`  ${pointer} ${icon} ${option.label}${suffix}`);
     }
 
@@ -301,7 +342,9 @@ export function parseRuntimeInput(answer: unknown): string[] {
 
   const selected: string[] = [];
   const seen = new Set<string>();
-  const byChoice = new Map(RUNTIME_OPTIONS.map((option) => [option.choice, option.runtime]));
+  const byChoice = new Map(
+    RUNTIME_OPTIONS.map((option) => [option.choice, option.runtime]),
+  );
   for (const choice of choices) {
     const runtime = byChoice.get(choice);
     if (!runtime || seen.has(runtime)) continue;
@@ -341,7 +384,10 @@ function readScriptedAnswer(question: string): string {
 }
 
 function ask(question: string): Promise<string> {
-  if (process.env.FRONTEND_CRAFT_FORCE_INTERACTIVE === "1" && !process.stdin.isTTY) {
+  if (
+    process.env.FRONTEND_CRAFT_FORCE_INTERACTIVE === "1" &&
+    !process.stdin.isTTY
+  ) {
     return Promise.resolve(readScriptedAnswer(question));
   }
 
@@ -358,8 +404,13 @@ function ask(question: string): Promise<string> {
   });
 }
 
-async function promptWithKeys<T>(state: SelectState<T>): Promise<T | string | undefined> {
-  if (process.env.FRONTEND_CRAFT_FORCE_INTERACTIVE === "1" && !process.stdin.isTTY) {
+async function promptWithKeys<T>(
+  state: SelectState<T>,
+): Promise<T | string | undefined> {
+  if (
+    process.env.FRONTEND_CRAFT_FORCE_INTERACTIVE === "1" &&
+    !process.stdin.isTTY
+  ) {
     const answer = readScriptedAnswer(`${renderSelectablePrompt(state)}\n`);
     return answer;
   }
@@ -387,7 +438,10 @@ async function promptWithKeys<T>(state: SelectState<T>): Promise<T | string | un
       input.pause();
     }
 
-    function onKeypress(_str: string, key: { name?: string; ctrl?: boolean; sequence?: string; meta?: boolean }) {
+    function onKeypress(
+      _str: string,
+      key: { name?: string; ctrl?: boolean; sequence?: string; meta?: boolean },
+    ) {
       if (key?.ctrl && key.name === "c") {
         cleanup();
         output.write("\n");

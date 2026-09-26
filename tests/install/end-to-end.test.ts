@@ -278,7 +278,12 @@ test("global installs do not write shared rules into runtime config dirs", () =>
       execFileSync(process.execPath, [cli, "install", runtime, "--global"], {
         cwd: dir,
         encoding: "utf8",
-        env: { ...process.env, HOME: runtimeHome, USERPROFILE: runtimeHome, [envName]: runtimeHome },
+        env: {
+          ...process.env,
+          HOME: runtimeHome,
+          USERPROFILE: runtimeHome,
+          [envName]: runtimeHome,
+        },
       });
 
       assert.ok(
@@ -415,7 +420,16 @@ test("runtime command installers keep fec command names", () => {
 
       const commandsPath = path.join(dir, baseDir, commandDir);
       assert.ok(
-        fs.existsSync(path.join(commandsPath, runtime === "copilot" ? "fec-init.prompt.md" : runtime === "openclaw" ? "fec-init/SKILL.md" : "fec-init.md")),
+        fs.existsSync(
+          path.join(
+            commandsPath,
+            runtime === "copilot"
+              ? "fec-init.prompt.md"
+              : runtime === "openclaw"
+                ? "fec-init/SKILL.md"
+                : "fec-init.md",
+          ),
+        ),
         `${runtime} installs fec-init.md`,
       );
       assert.ok(
@@ -476,10 +490,20 @@ test("all runtime local installs match declared capabilities", () => {
       });
 
       const cap = RUNTIME_CAPABILITIES[runtime];
-      const report = execFileSync(process.execPath, [cli, "doctor", runtime, "--local"], {
-        cwd: dir, encoding: "utf8", env: { ...process.env, CLAUDE_CONFIG_DIR: claudeHome },
-      });
-      assert.doesNotMatch(report, /^(skills|agents|commands|hooks|rules|templates): missing/m, `${runtime} doctor agrees with the installed layout`);
+      const report = execFileSync(
+        process.execPath,
+        [cli, "doctor", runtime, "--local"],
+        {
+          cwd: dir,
+          encoding: "utf8",
+          env: { ...process.env, CLAUDE_CONFIG_DIR: claudeHome },
+        },
+      );
+      assert.doesNotMatch(
+        report,
+        /^(skills|agents|commands|hooks|rules|templates): missing/m,
+        `${runtime} doctor agrees with the installed layout`,
+      );
       assert.ok(cap, `${runtime} has a capability declaration`);
       const baseDir = getInstallBaseDir({ runtime, isGlobal: false, cwd: dir });
 
@@ -532,9 +556,20 @@ test("all runtime local installs match declared capabilities", () => {
               ? path.join(baseDir, "commands")
               : runtime === "copilot"
                 ? path.join(baseDir, "prompts")
-                : runtime === "openclaw" ? path.join(dir, "skills") : path.join(baseDir, "commands");
+                : runtime === "openclaw"
+                  ? path.join(dir, "skills")
+                  : path.join(baseDir, "commands");
         assert.ok(
-          fs.existsSync(path.join(commandDir, runtime === "copilot" ? "fec-init.prompt.md" : runtime === "openclaw" ? "fec-init/SKILL.md" : "fec-init.md")),
+          fs.existsSync(
+            path.join(
+              commandDir,
+              runtime === "copilot"
+                ? "fec-init.prompt.md"
+                : runtime === "openclaw"
+                  ? "fec-init/SKILL.md"
+                  : "fec-init.md",
+            ),
+          ),
           `${runtime} installs fec commands`,
         );
         assert.ok(
@@ -626,12 +661,38 @@ test("all runtime global installs are isolated and doctor recognizes their actua
     fs.mkdirSync(userHome);
     const env = isolatedRuntimeEnv(userHome);
     try {
-      execFileSync(process.execPath, [cli, "install", runtime, "--global"], { cwd, env, encoding: "utf8" });
-      const report = execFileSync(process.execPath, [cli, "doctor", runtime, "--global"], { cwd, env, encoding: "utf8" });
-      assert.doesNotMatch(report, /^(skills|agents|commands|hooks|rules|templates): missing/m, `${runtime} global doctor recognizes the installation`);
-      if (runtime === "codex") assert.ok(fs.existsSync(path.join(userHome, ".agents/skills/fec-react-project-standard/SKILL.md")));
-      assert.deepEqual(fs.readdirSync(cwd), [], `${runtime} global install leaves the project untouched`);
-    } finally { fs.rmSync(dir, { recursive: true, force: true }); }
+      execFileSync(process.execPath, [cli, "install", runtime, "--global"], {
+        cwd,
+        env,
+        encoding: "utf8",
+      });
+      const report = execFileSync(
+        process.execPath,
+        [cli, "doctor", runtime, "--global"],
+        { cwd, env, encoding: "utf8" },
+      );
+      assert.doesNotMatch(
+        report,
+        /^(skills|agents|commands|hooks|rules|templates): missing/m,
+        `${runtime} global doctor recognizes the installation`,
+      );
+      if (runtime === "codex")
+        assert.ok(
+          fs.existsSync(
+            path.join(
+              userHome,
+              ".agents/skills/fec-react-project-standard/SKILL.md",
+            ),
+          ),
+        );
+      assert.deepEqual(
+        fs.readdirSync(cwd),
+        [],
+        `${runtime} global install leaves the project untouched`,
+      );
+    } finally {
+      fs.rmSync(dir, { recursive: true, force: true });
+    }
   }
 });
 

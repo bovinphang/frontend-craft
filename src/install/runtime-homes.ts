@@ -6,7 +6,8 @@ import path from "node:path";
  */
 function expandTilde(p: string): string {
   if (!p) return p;
-  if (p.startsWith("~/") || p === "~") return path.join(os.homedir(), p.slice(1));
+  if (p.startsWith("~/") || p === "~")
+    return path.join(os.homedir(), p.slice(1));
   return p;
 }
 
@@ -20,15 +21,25 @@ export function getGlobalConfigDir(runtime: string): string {
 
   switch (runtime) {
     case "claude":
-      return env.CLAUDE_CONFIG_DIR ? expandTilde(env.CLAUDE_CONFIG_DIR) : path.join(home, ".claude");
+      return env.CLAUDE_CONFIG_DIR
+        ? expandTilde(env.CLAUDE_CONFIG_DIR)
+        : path.join(home, ".claude");
     case "cursor":
-      return env.CURSOR_CONFIG_DIR ? expandTilde(env.CURSOR_CONFIG_DIR) : path.join(home, ".cursor");
+      return env.CURSOR_CONFIG_DIR
+        ? expandTilde(env.CURSOR_CONFIG_DIR)
+        : path.join(home, ".cursor");
     case "gemini":
-      return env.GEMINI_CONFIG_DIR ? expandTilde(env.GEMINI_CONFIG_DIR) : path.join(home, ".gemini");
+      return env.GEMINI_CONFIG_DIR
+        ? expandTilde(env.GEMINI_CONFIG_DIR)
+        : path.join(home, ".gemini");
     case "codex":
-      return env.CODEX_HOME ? expandTilde(env.CODEX_HOME) : path.join(home, ".codex");
+      return env.CODEX_HOME
+        ? expandTilde(env.CODEX_HOME)
+        : path.join(home, ".codex");
     case "copilot":
-      return env.COPILOT_CONFIG_DIR ? expandTilde(env.COPILOT_CONFIG_DIR) : path.join(home, ".copilot");
+      return env.COPILOT_CONFIG_DIR
+        ? expandTilde(env.COPILOT_CONFIG_DIR)
+        : path.join(home, ".copilot");
     case "antigravity":
       return env.ANTIGRAVITY_CONFIG_DIR
         ? expandTilde(env.ANTIGRAVITY_CONFIG_DIR)
@@ -38,31 +49,47 @@ export function getGlobalConfigDir(runtime: string): string {
         ? expandTilde(env.WINDSURF_CONFIG_DIR)
         : path.join(home, ".codeium", "windsurf");
     case "augment":
-      return env.AUGMENT_CONFIG_DIR ? expandTilde(env.AUGMENT_CONFIG_DIR) : path.join(home, ".augment");
+      return env.AUGMENT_CONFIG_DIR
+        ? expandTilde(env.AUGMENT_CONFIG_DIR)
+        : path.join(home, ".augment");
     case "trae":
-      return env.TRAE_CONFIG_DIR ? expandTilde(env.TRAE_CONFIG_DIR) : path.join(home, ".trae");
+      return env.TRAE_CONFIG_DIR
+        ? expandTilde(env.TRAE_CONFIG_DIR)
+        : path.join(home, ".trae");
     case "codebuddy":
-      return env.CODEBUDDY_CONFIG_DIR ? expandTilde(env.CODEBUDDY_CONFIG_DIR) : path.join(home, ".codebuddy");
+      return env.CODEBUDDY_CONFIG_DIR
+        ? expandTilde(env.CODEBUDDY_CONFIG_DIR)
+        : path.join(home, ".codebuddy");
     case "cline":
-      return env.CLINE_CONFIG_DIR ? expandTilde(env.CLINE_CONFIG_DIR) : path.join(home, "Documents", "Cline");
+      return env.CLINE_CONFIG_DIR
+        ? expandTilde(env.CLINE_CONFIG_DIR)
+        : path.join(home, "Documents", "Cline");
     case "opencode": {
       if (env.OPENCODE_CONFIG_DIR) return expandTilde(env.OPENCODE_CONFIG_DIR);
-      if (env.XDG_CONFIG_HOME) return path.join(expandTilde(env.XDG_CONFIG_HOME), "opencode");
+      if (env.XDG_CONFIG_HOME)
+        return path.join(expandTilde(env.XDG_CONFIG_HOME), "opencode");
       return path.join(home, ".config", "opencode");
     }
     case "kilo": {
       if (env.KILO_CONFIG_DIR) return expandTilde(env.KILO_CONFIG_DIR);
-      if (env.XDG_CONFIG_HOME) return path.join(expandTilde(env.XDG_CONFIG_HOME), "kilo");
+      if (env.XDG_CONFIG_HOME)
+        return path.join(expandTilde(env.XDG_CONFIG_HOME), "kilo");
       return path.join(home, ".config", "kilo");
     }
     case "openclaw":
       return env.OPENCLAW_STATE_DIR
         ? expandTilde(env.OPENCLAW_STATE_DIR)
-        : env.OPENCLAW_CONFIG_DIR ? expandTilde(env.OPENCLAW_CONFIG_DIR) : path.join(home, ".openclaw");
+        : env.OPENCLAW_CONFIG_DIR
+          ? expandTilde(env.OPENCLAW_CONFIG_DIR)
+          : path.join(home, ".openclaw");
     case "qoder":
-      return env.QODER_CONFIG_DIR ? expandTilde(env.QODER_CONFIG_DIR) : path.join(home, ".qoder");
+      return env.QODER_CONFIG_DIR
+        ? expandTilde(env.QODER_CONFIG_DIR)
+        : path.join(home, ".qoder");
     default:
-      return env.CLAUDE_CONFIG_DIR ? expandTilde(env.CLAUDE_CONFIG_DIR) : path.join(home, ".claude");
+      return env.CLAUDE_CONFIG_DIR
+        ? expandTilde(env.CLAUDE_CONFIG_DIR)
+        : path.join(home, ".claude");
   }
 }
 
@@ -104,7 +131,9 @@ export function getInstallBaseDir({
 }
 
 export function getLegacyGlobalConfigDirs(runtime: string): string[] {
-  if (runtime === "antigravity" && !process.env.ANTIGRAVITY_CONFIG_DIR) return [path.join(os.homedir(), ".gemini", "antigravity")];
-  if (runtime === "cline" && !process.env.CLINE_CONFIG_DIR) return [path.join(os.homedir(), ".cline")];
+  if (runtime === "antigravity" && !process.env.ANTIGRAVITY_CONFIG_DIR)
+    return [path.join(os.homedir(), ".gemini", "antigravity")];
+  if (runtime === "cline" && !process.env.CLINE_CONFIG_DIR)
+    return [path.join(os.homedir(), ".cline")];
   return [];
 }

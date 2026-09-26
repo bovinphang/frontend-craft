@@ -7,13 +7,23 @@ import path from "node:path";
 import { resolvePluginRoot } from "../../src/install/shared/resolve-plugin-root.js";
 
 const root = resolvePluginRoot(import.meta.url);
-const script = path.join(root, "skills", "fec-ui-design", "scripts", "design-system.mjs");
+const script = path.join(
+  root,
+  "skills",
+  "fec-ui-design",
+  "scripts",
+  "design-system.mjs",
+);
 
 test("fec-ui-design generator recommends wellness booking direction", () => {
-  const output = execFileSync(process.execPath, [script, "beauty spa booking"], {
-    cwd: root,
-    encoding: "utf8",
-  });
+  const output = execFileSync(
+    process.execPath,
+    [script, "beauty spa booking"],
+    {
+      cwd: root,
+      encoding: "utf8",
+    },
+  );
 
   assert.match(output, /wellness/i);
   assert.match(output, /booking/i);
@@ -22,10 +32,14 @@ test("fec-ui-design generator recommends wellness booking direction", () => {
 });
 
 test("fec-ui-design generator emits parseable json", () => {
-  const output = execFileSync(process.execPath, [script, "beauty spa booking", "--format", "json"], {
-    cwd: root,
-    encoding: "utf8",
-  });
+  const output = execFileSync(
+    process.execPath,
+    [script, "beauty spa booking", "--format", "json"],
+    {
+      cwd: root,
+      encoding: "utf8",
+    },
+  );
   const parsed = JSON.parse(output) as {
     designRead: string;
     designDials: {
@@ -54,7 +68,17 @@ test("fec-ui-design generator persists master and page overrides", () => {
   try {
     execFileSync(
       process.execPath,
-      [script, "analytics dashboard", "--persist", "--project", "TestApp", "--page", "dashboard", "--output-dir", tmp],
+      [
+        script,
+        "analytics dashboard",
+        "--persist",
+        "--project",
+        "TestApp",
+        "--page",
+        "dashboard",
+        "--output-dir",
+        tmp,
+      ],
       {
         cwd: root,
         encoding: "utf8",
@@ -62,7 +86,13 @@ test("fec-ui-design generator persists master and page overrides", () => {
     );
 
     const master = path.join(tmp, "design-system", "testapp", "MASTER.md");
-    const page = path.join(tmp, "design-system", "testapp", "pages", "dashboard.md");
+    const page = path.join(
+      tmp,
+      "design-system",
+      "testapp",
+      "pages",
+      "dashboard.md",
+    );
     assert.ok(fs.existsSync(master), "MASTER.md should be generated");
     assert.ok(fs.existsSync(page), "page override should be generated");
     assert.match(fs.readFileSync(page, "utf8"), /Page Override: dashboard/);
@@ -72,14 +102,22 @@ test("fec-ui-design generator persists master and page overrides", () => {
 });
 
 test("fec-ui-design generator includes stack guidance", () => {
-  const output = execFileSync(process.execPath, [script, "saas admin dashboard", "--format", "json", "--stack", "next"], {
-    cwd: root,
-    encoding: "utf8",
-  });
-  const parsed = JSON.parse(output) as { stackGuidance: { stack: string; guidance: string[] } };
+  const output = execFileSync(
+    process.execPath,
+    [script, "saas admin dashboard", "--format", "json", "--stack", "next"],
+    {
+      cwd: root,
+      encoding: "utf8",
+    },
+  );
+  const parsed = JSON.parse(output) as {
+    stackGuidance: { stack: string; guidance: string[] };
+  };
 
   assert.equal(parsed.stackGuidance.stack, "next");
-  assert.ok(parsed.stackGuidance.guidance.some((item) => /server|route/i.test(item)));
+  assert.ok(
+    parsed.stackGuidance.guidance.some((item) => /server|route/i.test(item)),
+  );
 });
 
 test("fec-ui-design generator adapts design dials by page intent", () => {
@@ -94,23 +132,48 @@ test("fec-ui-design generator adapts design dials by page intent", () => {
     checklist: Array<{ id: string }>;
   };
 
-  const landing = JSON.parse(execFileSync(process.execPath, [script, "saas landing", "--format", "json"], {
-    cwd: root,
-    encoding: "utf8",
-  })) as DesignModel;
-  const portfolio = JSON.parse(execFileSync(process.execPath, [script, "portfolio", "--format", "json"], {
-    cwd: root,
-    encoding: "utf8",
-  })) as DesignModel;
-  const dashboard = JSON.parse(execFileSync(process.execPath, [script, "admin dashboard", "--format", "json"], {
-    cwd: root,
-    encoding: "utf8",
-  })) as DesignModel;
+  const landing = JSON.parse(
+    execFileSync(
+      process.execPath,
+      [script, "saas landing", "--format", "json"],
+      {
+        cwd: root,
+        encoding: "utf8",
+      },
+    ),
+  ) as DesignModel;
+  const portfolio = JSON.parse(
+    execFileSync(process.execPath, [script, "portfolio", "--format", "json"], {
+      cwd: root,
+      encoding: "utf8",
+    }),
+  ) as DesignModel;
+  const dashboard = JSON.parse(
+    execFileSync(
+      process.execPath,
+      [script, "admin dashboard", "--format", "json"],
+      {
+        cwd: root,
+        encoding: "utf8",
+      },
+    ),
+  ) as DesignModel;
 
-  assert.ok(landing.designDials.mediaAuthenticity > dashboard.designDials.mediaAuthenticity);
-  assert.ok(portfolio.designDials.visualTension > dashboard.designDials.visualTension);
-  assert.ok(dashboard.designDials.informationDensity > portfolio.designDials.informationDensity);
-  assert.ok(landing.designDials.contentPersuasion > dashboard.designDials.contentPersuasion);
+  assert.ok(
+    landing.designDials.mediaAuthenticity >
+      dashboard.designDials.mediaAuthenticity,
+  );
+  assert.ok(
+    portfolio.designDials.visualTension > dashboard.designDials.visualTension,
+  );
+  assert.ok(
+    dashboard.designDials.informationDensity >
+      portfolio.designDials.informationDensity,
+  );
+  assert.ok(
+    landing.designDials.contentPersuasion >
+      dashboard.designDials.contentPersuasion,
+  );
 
   const landingChecks = new Set(landing.checklist.map((item) => item.id));
   const dashboardChecks = new Set(dashboard.checklist.map((item) => item.id));

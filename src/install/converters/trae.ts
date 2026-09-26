@@ -13,7 +13,9 @@ export async function installTrae(ctx: InstallContext): Promise<void> {
   ensureDir(rulesDir);
   const rulesSrc = path.join(contentRoot, "templates", "shared", "rules");
   /** @type {string[]} */
-  const parts = ["---\nalwaysApply: true\n---\n\n# Frontend Craft - Trae rules bundle\n"];
+  const parts = [
+    "---\nalwaysApply: true\n---\n\n# Frontend Craft - Trae rules bundle\n",
+  ];
   if (fs.existsSync(rulesSrc)) {
     for (const name of fs.readdirSync(rulesSrc)) {
       if (!name.endsWith(".md")) continue;

@@ -37,9 +37,14 @@ const root = resolveRoot(process.argv.slice(2));
 const packageJson = readPackageJson(path.join(root, "package.json"));
 const version = packageJson.version;
 
-syncJson<ClaudePluginManifest>(path.join(root, ".claude-plugin", "plugin.json"), 4, isVersionedObject, (plugin) => {
-  plugin.version = version;
-});
+syncJson<ClaudePluginManifest>(
+  path.join(root, ".claude-plugin", "plugin.json"),
+  4,
+  isVersionedObject,
+  (plugin) => {
+    plugin.version = version;
+  },
+);
 
 syncJson<MarketplaceManifest>(
   path.join(root, ".claude-plugin", "marketplace.json"),
@@ -53,15 +58,27 @@ syncJson<MarketplaceManifest>(
   },
 );
 
-syncJson<OpenClawManifest>(path.join(root, "openclaw.plugin.json"), 4, isVersionedObject, (openclaw) => {
-  openclaw.version = version;
-});
+syncJson<OpenClawManifest>(
+  path.join(root, "openclaw.plugin.json"),
+  4,
+  isVersionedObject,
+  (openclaw) => {
+    openclaw.version = version;
+  },
+);
 
-syncJson<SkillMetadataEntry[]>(path.join(root, "skills", "metadata.json"), 2, isSkillMetadata, (skills) => {
-  for (const skill of skills) skill.version = version;
-});
+syncJson<SkillMetadataEntry[]>(
+  path.join(root, "skills", "metadata.json"),
+  2,
+  isSkillMetadata,
+  (skills) => {
+    for (const skill of skills) skill.version = version;
+  },
+);
 
-console.log(`[sync-version] public metadata now follows package.json version ${version}`);
+console.log(
+  `[sync-version] public metadata now follows package.json version ${version}`,
+);
 
 function resolveRoot(args: string[]): string {
   const rootFlagIndex = args.indexOf("--root");
@@ -77,7 +94,11 @@ function resolveRoot(args: string[]): string {
 
 function readPackageJson(file: string): PackageJson {
   const value = readJson(file);
-  if (!isObject(value) || typeof value.version !== "string" || value.version.length === 0) {
+  if (
+    !isObject(value) ||
+    typeof value.version !== "string" ||
+    value.version.length === 0
+  ) {
     throw new Error("package.json must include a non-empty version");
   }
 
@@ -96,7 +117,9 @@ function syncJson<T>(
 ): void {
   const value = readJson(file);
   if (!isExpectedShape(value)) {
-    throw new Error(`${path.relative(root, file)} has an unsupported JSON shape`);
+    throw new Error(
+      `${path.relative(root, file)} has an unsupported JSON shape`,
+    );
   }
 
   mutate(value);
@@ -107,12 +130,18 @@ function isObject(value: unknown): value is Record<string, unknown> {
   return typeof value === "object" && value !== null && !Array.isArray(value);
 }
 
-function isVersionedObject(value: unknown): value is ClaudePluginManifest | OpenClawManifest {
+function isVersionedObject(
+  value: unknown,
+): value is ClaudePluginManifest | OpenClawManifest {
   return isObject(value) && typeof value.version === "string";
 }
 
 function isMarketplaceManifest(value: unknown): value is MarketplaceManifest {
-  if (!isObject(value) || !Array.isArray(value.plugins) || value.plugins.length === 0) {
+  if (
+    !isObject(value) ||
+    !Array.isArray(value.plugins) ||
+    value.plugins.length === 0
+  ) {
     return false;
   }
 

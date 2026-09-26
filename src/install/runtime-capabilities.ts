@@ -197,10 +197,23 @@ export const RUNTIME_CAPABILITIES: Record<string, RuntimeCapabilities> = {
 };
 
 export function renderRuntimeCapabilityMatrix(runtimes: string[]): string {
-  const columns = ["Runtime", "Tier", "Skills", "Agents", "Commands", "Hooks", "Rules", "Templates", "MCP", "Reports", "Init"];
+  const columns = [
+    "Runtime",
+    "Tier",
+    "Skills",
+    "Agents",
+    "Commands",
+    "Hooks",
+    "Rules",
+    "Templates",
+    "MCP",
+    "Reports",
+    "Init",
+  ];
   const rows = runtimes.map((runtime) => {
     const cap = RUNTIME_CAPABILITIES[runtime];
-    if (!cap) throw new Error(`Missing capability declaration for runtime: ${runtime}`);
+    if (!cap)
+      throw new Error(`Missing capability declaration for runtime: ${runtime}`);
     return [
       runtime,
       cap.tier,
@@ -219,7 +232,11 @@ export function renderRuntimeCapabilityMatrix(runtimes: string[]): string {
   const widths = columns.map((column, index) =>
     Math.max(column.length, ...rows.map((row) => row[index].length)),
   );
-  const formatRow = (row: string[]) => row.map((value, index) => value.padEnd(widths[index])).join("  ").trimEnd();
+  const formatRow = (row: string[]) =>
+    row
+      .map((value, index) => value.padEnd(widths[index]))
+      .join("  ")
+      .trimEnd();
   return [formatRow(columns), ...rows.map(formatRow)].join("\n");
 }
 

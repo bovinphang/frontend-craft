@@ -18,4 +18,8 @@ if (bytes === 0) {
   console.error("[verify-openclaw-dist] Bundle is empty:", bundle);
   process.exit(1);
 }
-console.log("[verify-openclaw-dist] OK:", bundle, `(${bytes} bytes, ${lines} lines)`);
+console.log(
+  "[verify-openclaw-dist] OK:",
+  bundle,
+  `(${bytes} bytes, ${lines} lines)`,
+);

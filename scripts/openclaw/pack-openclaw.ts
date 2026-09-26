@@ -65,7 +65,10 @@ cpSync(path.join(root, "skills"), path.join(packRoot, "skills"), {
 cpSync(path.join(root, "commands"), path.join(packRoot, "commands"), {
   recursive: true,
 });
-installCommandSkills(path.join(root, "commands"), path.join(packRoot, "skills"));
+installCommandSkills(
+  path.join(root, "commands"),
+  path.join(packRoot, "skills"),
+);
 mkdirSync(path.join(packRoot, "templates"), { recursive: true });
 cpSync(
   path.join(root, "templates", "openclaw"),

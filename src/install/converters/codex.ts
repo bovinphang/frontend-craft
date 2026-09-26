@@ -2,7 +2,13 @@ import path from "node:path";
 import fs from "node:fs";
 import os from "node:os";
 import type { InstallContext } from "../types.js";
-import { copyDir, copyFile, ensureDir, readUtf8, writeUtf8 } from "../shared/fs.js";
+import {
+  copyDir,
+  copyFile,
+  ensureDir,
+  readUtf8,
+  writeUtf8,
+} from "../shared/fs.js";
 import { agentMdToToml } from "../codex-agents.js";
 
 /**
@@ -18,7 +24,9 @@ export async function installCodex(ctx: InstallContext): Promise<void> {
     : path.join(cwd, ".agents", "skills");
 
   if (dryRun) {
-    console.log(`[dry-run] codex: ${baseDir}, agents -> ${codexAgents}, skills -> ${agentsDestGlobal}`);
+    console.log(
+      `[dry-run] codex: ${baseDir}, agents -> ${codexAgents}, skills -> ${agentsDestGlobal}`,
+    );
     return;
   }
 
@@ -44,5 +52,6 @@ export async function installCodex(ctx: InstallContext): Promise<void> {
     if (!fs.existsSync(dest)) copyFile(tmplAgents, dest);
   }
   const configDest = path.join(baseDir, "config.toml");
-  if (fs.existsSync(tmplCfg) && !fs.existsSync(configDest)) copyFile(tmplCfg, configDest);
+  if (fs.existsSync(tmplCfg) && !fs.existsSync(configDest))
+    copyFile(tmplCfg, configDest);
 }

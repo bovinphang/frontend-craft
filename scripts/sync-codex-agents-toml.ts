@@ -12,7 +12,9 @@ const agentsDir = path.join(root, "agents");
 const outDir = process.env.CODEX_AGENTS_DIR;
 
 if (!outDir) {
-  console.error("Set CODEX_AGENTS_DIR to the target directory for .toml files (e.g. a temp dir).");
+  console.error(
+    "Set CODEX_AGENTS_DIR to the target directory for .toml files (e.g. a temp dir).",
+  );
   process.exit(1);
 }
 

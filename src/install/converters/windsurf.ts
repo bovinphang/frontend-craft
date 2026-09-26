@@ -1,7 +1,13 @@
 import path from "node:path";
 import fs from "node:fs";
 import type { InstallContext } from "../types.js";
-import { copyDir, ensureDir, readUtf8, writeUtf8, retireManagedFile } from "../shared/fs.js";
+import {
+  copyDir,
+  ensureDir,
+  readUtf8,
+  writeUtf8,
+  retireManagedFile,
+} from "../shared/fs.js";
 
 /**
  * @param {import('../types.js').InstallContext} ctx
