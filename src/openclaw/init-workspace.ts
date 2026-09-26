@@ -13,7 +13,9 @@ const RULES_DIR = "templates/shared/rules";
 const AGENTS_TEMPLATE = "templates/openclaw/AGENTS.md";
 const SKILLS_SUBDIR = "skills/frontend-craft-rules";
 
-export type InitResult = { ok: true; copied: string[] } | { ok: false; error: string };
+export type InitResult =
+  | { ok: true; copied: string[] }
+  | { ok: false; error: string };
 
 export function initFrontendCraftWorkspace(
   pluginRoot: string,
@@ -56,11 +58,17 @@ export function initFrontendCraftWorkspace(
       }
       const skillFile = join(destDir, "SKILL.md");
       if (!existsSync(skillFile)) {
-        const references = readdirSync(destDir).filter(name => name.endsWith(".md") && name !== "SKILL.md");
-        writeFileSync(skillFile,
+        const references = readdirSync(destDir).filter(
+          (name) => name.endsWith(".md") && name !== "SKILL.md",
+        );
+        writeFileSync(
+          skillFile,
           "---\nname: frontend-craft-rules\ndescription: Apply the workspace frontend engineering rules when implementing or reviewing frontend code.\n---\n\n" +
-          "Read the relevant rules before changing code:\n\n" +
-          references.map(name => `- [${name}](./${name})`).join("\n") + "\n", "utf8");
+            "Read the relevant rules before changing code:\n\n" +
+            references.map((name) => `- [${name}](./${name})`).join("\n") +
+            "\n",
+          "utf8",
+        );
         copied.push(skillFile);
       }
     }

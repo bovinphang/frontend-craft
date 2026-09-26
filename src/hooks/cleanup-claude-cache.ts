@@ -21,6 +21,8 @@ function readCurrentVersion(): string {
   const hookPath = fileURLToPath(import.meta.url);
   const pluginRoot = path.resolve(path.dirname(hookPath), "..", "..");
   const packagePath = path.join(pluginRoot, "package.json");
-  const parsed = JSON.parse(fs.readFileSync(packagePath, "utf8")) as { version?: unknown };
+  const parsed = JSON.parse(fs.readFileSync(packagePath, "utf8")) as {
+    version?: unknown;
+  };
   return typeof parsed.version === "string" ? parsed.version : "0.0.0";
 }

@@ -14,7 +14,9 @@ const DANGEROUS = [
   />\s*\/dev\/sda/i,
 ];
 
-export function getDangerousExecBlockReason(command: string): string | undefined {
+export function getDangerousExecBlockReason(
+  command: string,
+): string | undefined {
   const trimmed = command.trim();
   if (!trimmed) return undefined;
   for (const pattern of DANGEROUS) {

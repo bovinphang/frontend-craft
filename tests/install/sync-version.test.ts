@@ -30,7 +30,9 @@ interface SkillFixture extends VersionedObject {
 }
 
 test("sync-version updates public metadata from package.json", () => {
-  const tempRoot = fs.mkdtempSync(path.join(os.tmpdir(), "frontend-craft-sync-version-"));
+  const tempRoot = fs.mkdtempSync(
+    path.join(os.tmpdir(), "frontend-craft-sync-version-"),
+  );
   try {
     copyFixture("package.json", tempRoot);
     copyFixture("openclaw.plugin.json", tempRoot);
@@ -41,33 +43,62 @@ test("sync-version updates public metadata from package.json", () => {
     copyFixture(path.join("skills", "metadata.json"), tempRoot);
 
     const nextVersion = "9.8.7";
-    updateJson(path.join(tempRoot, "package.json"), assertVersionedObject, (pkg) => {
-      pkg.version = nextVersion;
-    });
-    updateJson(path.join(tempRoot, ".claude-plugin", "plugin.json"), assertVersionedObject, (plugin) => {
-      plugin.version = "0.0.0";
-    });
-    updateJson(path.join(tempRoot, ".claude-plugin", "marketplace.json"), assertMarketplaceFixture, (marketplace) => {
-      marketplace.plugins[0].version = "0.0.0";
-      if (marketplace.plugins[0].source?.source === "npm") {
-        marketplace.plugins[0].source.version = "0.0.0";
-      }
-    });
-    updateJson(path.join(tempRoot, "openclaw.plugin.json"), assertVersionedObject, (openclaw) => {
-      openclaw.version = "0.0.0";
-    });
-    updateJson(path.join(tempRoot, "skills", "metadata.json"), assertSkillMetadataFixture, (skills) => {
-      for (const skill of skills) skill.version = "0.0.0";
-    });
+    updateJson(
+      path.join(tempRoot, "package.json"),
+      assertVersionedObject,
+      (pkg) => {
+        pkg.version = nextVersion;
+      },
+    );
+    updateJson(
+      path.join(tempRoot, ".claude-plugin", "plugin.json"),
+      assertVersionedObject,
+      (plugin) => {
+        plugin.version = "0.0.0";
+      },
+    );
+    updateJson(
+      path.join(tempRoot, ".claude-plugin", "marketplace.json"),
+      assertMarketplaceFixture,
+      (marketplace) => {
+        marketplace.plugins[0].version = "0.0.0";
+        if (marketplace.plugins[0].source?.source === "npm") {
+          marketplace.plugins[0].source.version = "0.0.0";
+        }
+      },
+    );
+    updateJson(
+      path.join(tempRoot, "openclaw.plugin.json"),
+      assertVersionedObject,
+      (openclaw) => {
+        openclaw.version = "0.0.0";
+      },
+    );
+    updateJson(
+      path.join(tempRoot, "skills", "metadata.json"),
+      assertSkillMetadataFixture,
+      (skills) => {
+        for (const skill of skills) skill.version = "0.0.0";
+      },
+    );
 
     execFileSync(
       process.execPath,
-      [path.join(root, "node_modules", "tsx", "dist", "cli.mjs"), path.join(root, "scripts", "sync-version.ts"), "--root", tempRoot],
+      [
+        path.join(root, "node_modules", "tsx", "dist", "cli.mjs"),
+        path.join(root, "scripts", "sync-version.ts"),
+        "--root",
+        tempRoot,
+      ],
       { encoding: "utf8" },
     );
 
-    const plugin = readJson(path.join(tempRoot, ".claude-plugin", "plugin.json"));
-    const marketplace = readJson(path.join(tempRoot, ".claude-plugin", "marketplace.json"));
+    const plugin = readJson(
+      path.join(tempRoot, ".claude-plugin", "plugin.json"),
+    );
+    const marketplace = readJson(
+      path.join(tempRoot, ".claude-plugin", "marketplace.json"),
+    );
     const openclaw = readJson(path.join(tempRoot, "openclaw.plugin.json"));
     const skills = readJson(path.join(tempRoot, "skills", "metadata.json"));
     assertVersionedObject(plugin);
@@ -83,7 +114,8 @@ test("sync-version updates public metadata from package.json", () => {
       version: nextVersion,
     });
     assert.equal(openclaw.version, nextVersion);
-    for (const skill of skills) assert.equal(skill.version, nextVersion, skill.id);
+    for (const skill of skills)
+      assert.equal(skill.version, nextVersion, skill.id);
   } finally {
     fs.rmSync(tempRoot, { recursive: true, force: true });
   }
@@ -100,26 +132,42 @@ function readJson(file: string): unknown {
   return JSON.parse(fs.readFileSync(file, "utf8")) as unknown;
 }
 
-function updateJson<T>(file: string, assertShape: (value: unknown) => asserts value is T, mutate: (value: T) => void): void {
+function updateJson<T>(
+  file: string,
+  assertShape: (value: unknown) => asserts value is T,
+  mutate: (value: T) => void,
+): void {
   const value = readJson(file);
   assertShape(value);
   mutate(value);
   fs.writeFileSync(file, `${JSON.stringify(value, null, 2)}\n`, "utf8");
 }
 
-function assertVersionedObject(value: unknown): asserts value is VersionedObject {
+function assertVersionedObject(
+  value: unknown,
+): asserts value is VersionedObject {
   assert.ok(isObject(value), "expected an object");
   assert.equal(typeof value.version, "string");
 }
 
-function assertMarketplaceFixture(value: unknown): asserts value is MarketplaceFixture {
+function assertMarketplaceFixture(
+  value: unknown,
+): asserts value is MarketplaceFixture {
   assert.ok(isObject(value), "expected marketplace to be an object");
-  assert.ok(Array.isArray(value.plugins), "expected marketplace plugins to be an array");
-  assert.ok(value.plugins.length > 0, "expected marketplace to include at least one plugin");
+  assert.ok(
+    Array.isArray(value.plugins),
+    "expected marketplace plugins to be an array",
+  );
+  assert.ok(
+    value.plugins.length > 0,
+    "expected marketplace to include at least one plugin",
+  );
   for (const plugin of value.plugins) assertVersionedObject(plugin);
 }
 
-function assertSkillMetadataFixture(value: unknown): asserts value is SkillFixture[] {
+function assertSkillMetadataFixture(
+  value: unknown,
+): asserts value is SkillFixture[] {
   assert.ok(Array.isArray(value), "expected skills metadata to be an array");
   for (const skill of value) assertVersionedObject(skill);
 }

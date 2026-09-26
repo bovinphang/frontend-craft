@@ -1,6 +1,9 @@
 import { definePluginEntry } from "openclaw/plugin-sdk/plugin-entry";
 import { Type } from "@sinclair/typebox";
-import { extractShellCommand, getDangerousExecBlockReason } from "./security.js";
+import {
+  extractShellCommand,
+  getDangerousExecBlockReason,
+} from "./security.js";
 import { pathFromWriteLikeParams, tryPrettierWrite } from "./format-file.js";
 import { buildFrameworkHint } from "./framework-hint.js";
 import { notifyTaskComplete } from "./notify-complete.js";
@@ -11,7 +14,9 @@ type PluginConfig = {
   formatAfterWrite: boolean;
 };
 
-function resolveConfig(pluginConfig: Record<string, unknown> | undefined): PluginConfig {
+function resolveConfig(
+  pluginConfig: Record<string, unknown> | undefined,
+): PluginConfig {
   const c = pluginConfig ?? {};
   return {
     notifyOnAgentEnd: c.notifyOnAgentEnd !== false,
@@ -25,7 +30,9 @@ export default definePluginEntry({
   description:
     "Frontend skills, OpenClaw workspace templates, optional init tool, exec safety hooks, and post-write formatting.",
   register(api) {
-    const config = resolveConfig(api.pluginConfig as Record<string, unknown> | undefined);
+    const config = resolveConfig(
+      api.pluginConfig as Record<string, unknown> | undefined,
+    );
     const pluginRoot = api.rootDir ?? "";
 
     api.on("before_tool_call", async (event) => {
@@ -86,20 +93,29 @@ export default definePluginEntry({
               "Absolute path to the agent workspace root (often ~/.openclaw/workspace).",
           }),
           overwriteAgents: Type.Optional(
-            Type.Boolean({ description: "When true, replace existing AGENTS.md." }),
+            Type.Boolean({
+              description: "When true, replace existing AGENTS.md.",
+            }),
           ),
         }),
         async execute(
           _toolCallId: string,
           params: { workspaceDir: string; overwriteAgents?: boolean },
         ) {
-          const result = initFrontendCraftWorkspace(pluginRoot, params.workspaceDir, {
-            overwriteAgents: params.overwriteAgents === true,
-          });
+          const result = initFrontendCraftWorkspace(
+            pluginRoot,
+            params.workspaceDir,
+            {
+              overwriteAgents: params.overwriteAgents === true,
+            },
+          );
           if (!result.ok) {
             return {
               content: [
-                { type: "text" as const, text: `frontend-craft init failed: ${result.error}` },
+                {
+                  type: "text" as const,
+                  text: `frontend-craft init failed: ${result.error}`,
+                },
               ],
               isError: true,
               details: {},

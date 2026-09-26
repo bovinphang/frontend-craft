@@ -6,7 +6,11 @@ import { installOpencode } from "./converters/opencode.js";
 import { installKilo } from "./converters/kilo.js";
 import { installGemini } from "./converters/gemini.js";
 import { installCopilot } from "./converters/copilot.js";
-import { installAntigravity, installAugment, installCodebuddy } from "./converters/generic-skills.js";
+import {
+  installAntigravity,
+  installAugment,
+  installCodebuddy,
+} from "./converters/generic-skills.js";
 import { installTrae } from "./converters/trae.js";
 import { installCline } from "./converters/cline.js";
 import { installOpenclaw } from "./converters/openclaw.js";
@@ -31,7 +35,10 @@ export const ALL_RUNTIMES = [
   "qoder",
 ];
 
-export const INSTALLERS: Record<string, (ctx: InstallContext) => Promise<void>> = {
+export const INSTALLERS: Record<
+  string,
+  (ctx: InstallContext) => Promise<void>
+> = {
   claude: installClaude,
   codex: installCodex,
   cursor: installCursor,

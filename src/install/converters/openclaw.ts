@@ -1,7 +1,12 @@
 import path from "node:path";
 import fs from "node:fs";
 import type { InstallContext } from "../types.js";
-import { copyDir, copyFile, ensureDir, retireManagedTree } from "../shared/fs.js";
+import {
+  copyDir,
+  copyFile,
+  ensureDir,
+  retireManagedTree,
+} from "../shared/fs.js";
 import { installCommandSkills } from "../shared/command-skills.js";
 
 /**

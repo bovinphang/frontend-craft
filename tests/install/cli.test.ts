@@ -59,7 +59,10 @@ test("install help flag prints help without installing", () => {
   assert.match(help, /frontend-craft setup all \[options\]/);
   assert.match(help, /fec setup \[runtime\] \[options\]/);
   assert.match(help, /fec setup all \[options\]/);
-  assert.match(help, /setup <runtime> and setup all install locally by default/);
+  assert.match(
+    help,
+    /setup <runtime> and setup all install locally by default/,
+  );
   assert.match(help, /--lang <lang>/);
   assert.doesNotMatch(help, /Installing frontend-craft/);
 });

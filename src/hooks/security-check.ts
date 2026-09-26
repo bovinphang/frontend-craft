@@ -44,7 +44,7 @@ const dangerous = [
 for (const pattern of dangerous) {
   if (pattern.test(command)) {
     process.stderr.write(
-      `Blocked potentially dangerous command by frontend-craft: matched pattern '${pattern}'`
+      `Blocked potentially dangerous command by frontend-craft: matched pattern '${pattern}'`,
     );
     process.exit(2);
   }
