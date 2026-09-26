@@ -51,20 +51,24 @@ test("fec-ui-design generator emits parseable json", () => {
 
 test("fec-ui-design generator persists master and page overrides", () => {
   const tmp = fs.mkdtempSync(path.join(os.tmpdir(), "fec-ui-design-"));
-  execFileSync(
-    process.execPath,
-    [script, "analytics dashboard", "--persist", "--project", "TestApp", "--page", "dashboard", "--output-dir", tmp],
-    {
-      cwd: root,
-      encoding: "utf8",
-    },
-  );
+  try {
+    execFileSync(
+      process.execPath,
+      [script, "analytics dashboard", "--persist", "--project", "TestApp", "--page", "dashboard", "--output-dir", tmp],
+      {
+        cwd: root,
+        encoding: "utf8",
+      },
+    );
 
-  const master = path.join(tmp, "design-system", "testapp", "MASTER.md");
-  const page = path.join(tmp, "design-system", "testapp", "pages", "dashboard.md");
-  assert.ok(fs.existsSync(master), "MASTER.md should be generated");
-  assert.ok(fs.existsSync(page), "page override should be generated");
-  assert.match(fs.readFileSync(page, "utf8"), /Page Override: dashboard/);
+    const master = path.join(tmp, "design-system", "testapp", "MASTER.md");
+    const page = path.join(tmp, "design-system", "testapp", "pages", "dashboard.md");
+    assert.ok(fs.existsSync(master), "MASTER.md should be generated");
+    assert.ok(fs.existsSync(page), "page override should be generated");
+    assert.match(fs.readFileSync(page, "utf8"), /Page Override: dashboard/);
+  } finally {
+    fs.rmSync(tmp, { recursive: true, force: true });
+  }
 });
 
 test("fec-ui-design generator includes stack guidance", () => {

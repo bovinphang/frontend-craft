@@ -48,35 +48,41 @@ test("small explicit boxes report overflow without changing dimensions", async (
 
 function render(model: object, kind: string) {
   const dir = fs.mkdtempSync(path.join(os.tmpdir(), "fec-quality-"));
-  const input = path.join(dir, "模型 with spaces.json");
-  const output = path.join(dir, "diagram.html");
-  const manifest = path.join(dir, "layout.json");
-  fs.writeFileSync(input, JSON.stringify(model));
-  const result = spawnSync(
-    process.execPath,
-    [
-      path.join(scripts, "tech-diagram-render.mjs"),
-      "--input",
-      input,
-      "--output",
+  // Callers only receive `dir` when this returns, so a failure here still has to clean it up itself.
+  try {
+    const input = path.join(dir, "模型 with spaces.json");
+    const output = path.join(dir, "diagram.html");
+    const manifest = path.join(dir, "layout.json");
+    fs.writeFileSync(input, JSON.stringify(model));
+    const result = spawnSync(
+      process.execPath,
+      [
+        path.join(scripts, "tech-diagram-render.mjs"),
+        "--input",
+        input,
+        "--output",
+        output,
+        "--type",
+        kind,
+        "--manifest",
+        manifest,
+        "--format",
+        "json",
+      ],
+      { encoding: "utf8" },
+    );
+    assert.equal(result.status, 0, result.stderr || result.stdout);
+    return {
+      dir,
       output,
-      "--type",
-      kind,
-      "--manifest",
       manifest,
-      "--format",
-      "json",
-    ],
-    { encoding: "utf8" },
-  );
-  assert.equal(result.status, 0, result.stderr || result.stdout);
-  return {
-    dir,
-    output,
-    manifest,
-    html: fs.readFileSync(output, "utf8"),
-    geometry: JSON.parse(fs.readFileSync(manifest, "utf8")),
-  };
+      html: fs.readFileSync(output, "utf8"),
+      geometry: JSON.parse(fs.readFileSync(manifest, "utf8")),
+    };
+  } catch (error) {
+    fs.rmSync(dir, { recursive: true, force: true });
+    throw error;
+  }
 }
 
 test("workflow expands columns and lanes for tall Chinese nodes", () => {
@@ -97,18 +103,22 @@ test("workflow expands columns and lanes for tall Chinese nodes", () => {
     },
     "workflow",
   );
-  const boxes = result.geometry.boxes;
-  for (let i = 0; i < boxes.length; i++)
-    for (let j = i + 1; j < boxes.length; j++) {
-      const a = boxes[i],
-        b = boxes[j];
-      assert.ok(
-        a.x + a.width <= b.x ||
-          b.x + b.width <= a.x ||
-          a.y + a.height <= b.y ||
-          b.y + b.height <= a.y,
-      );
-    }
+  try {
+    const boxes = result.geometry.boxes;
+    for (let i = 0; i < boxes.length; i++)
+      for (let j = i + 1; j < boxes.length; j++) {
+        const a = boxes[i],
+          b = boxes[j];
+        assert.ok(
+          a.x + a.width <= b.x ||
+            b.x + b.width <= a.x ||
+            a.y + a.height <= b.y ||
+            b.y + b.height <= a.y,
+        );
+      }
+  } finally {
+    fs.rmSync(result.dir, { recursive: true, force: true });
+  }
 });
 
 test("automatic routes avoid intervening nodes and separate reverse edges", async () => {
@@ -180,14 +190,18 @@ test("rendered labels are escaped and do not truncate after two lines", () => {
     },
     "workflow",
   );
-  assert.match(result.html, /&lt;/);
-  assert.match(result.html, /&gt;/);
-  assert.match(result.html, /&amp;/);
-  assert.ok(!result.html.includes("<value>"));
-  const texts = result.geometry.labels.filter(
-    (entry: { owner: string }) => entry.owner === "a",
-  );
-  assert.equal(texts[0].lines.join(""), label);
+  try {
+    assert.match(result.html, /&lt;/);
+    assert.match(result.html, /&gt;/);
+    assert.match(result.html, /&amp;/);
+    assert.ok(!result.html.includes("<value>"));
+    const texts = result.geometry.labels.filter(
+      (entry: { owner: string }) => entry.owner === "a",
+    );
+    assert.equal(texts[0].lines.join(""), label);
+  } finally {
+    fs.rmSync(result.dir, { recursive: true, force: true });
+  }
 });
 
 test("sequence self call has visible loop and long labels fit its canvas", () => {
@@ -208,15 +222,19 @@ test("sequence self call has visible loop and long labels fit its canvas", () =>
     },
     "sequence",
   );
-  const first = result.geometry.connectors[0].points;
-  assert.equal(first.length, 4);
-  assert.notEqual(first[0][1], first[3][1]);
-  for (const label of result.geometry.labels) {
-    assert.ok(label.x >= 0 && label.y >= 0);
-    assert.ok(label.x + label.width <= result.geometry.canvas.width);
-    assert.ok(label.y + label.height <= result.geometry.canvas.height);
+  try {
+    const first = result.geometry.connectors[0].points;
+    assert.equal(first.length, 4);
+    assert.notEqual(first[0][1], first[3][1]);
+    for (const label of result.geometry.labels) {
+      assert.ok(label.x >= 0 && label.y >= 0);
+      assert.ok(label.x + label.width <= result.geometry.canvas.width);
+      assert.ok(label.y + label.height <= result.geometry.canvas.height);
+    }
+    assert.ok(result.geometry.connectors[1].points[0][1] > first[3][1]);
+  } finally {
+    fs.rmSync(result.dir, { recursive: true, force: true });
   }
-  assert.ok(result.geometry.connectors[1].points[0][1] > first[3][1]);
 });
 
 test("standalone SVG retains its theme and complete text", () => {
@@ -231,28 +249,32 @@ test("standalone SVG retains its theme and complete text", () => {
     },
     "workflow",
   );
-  const output = path.join(result.dir, "独立 diagram.svg");
-  const exported = spawnSync(
-    process.execPath,
-    [
-      path.join(scripts, "export-diagram.mjs"),
-      "--input",
-      result.output,
-      "--output",
-      output,
-      "--format",
-      "svg",
-    ],
-    { encoding: "utf8" },
-  );
-  assert.equal(exported.status, 0, exported.stderr);
-  const svg = fs.readFileSync(output, "utf8");
-  assert.match(svg, /<style/);
-  assert.match(svg, /--text:/);
-  assert.match(svg, /\.surface\s*\{/);
-  assert.match(svg, /marker path/);
-  assert.doesNotMatch(svg, /body\s*\{/);
-  assert.match(svg, /检查身份和访问权限/);
+  try {
+    const output = path.join(result.dir, "独立 diagram.svg");
+    const exported = spawnSync(
+      process.execPath,
+      [
+        path.join(scripts, "export-diagram.mjs"),
+        "--input",
+        result.output,
+        "--output",
+        output,
+        "--format",
+        "svg",
+      ],
+      { encoding: "utf8" },
+    );
+    assert.equal(exported.status, 0, exported.stderr);
+    const svg = fs.readFileSync(output, "utf8");
+    assert.match(svg, /<style/);
+    assert.match(svg, /--text:/);
+    assert.match(svg, /\.surface\s*\{/);
+    assert.match(svg, /marker path/);
+    assert.doesNotMatch(svg, /body\s*\{/);
+    assert.match(svg, /检查身份和访问权限/);
+  } finally {
+    fs.rmSync(result.dir, { recursive: true, force: true });
+  }
 });
 
 test("browser export measures text and scales every manifest coordinate", async (t) => {
@@ -274,35 +296,39 @@ test("browser export measures text and scales every manifest coordinate", async 
     },
     "workflow",
   );
-  const output = path.join(result.dir, "image with 中文.png");
-  const manifest = path.join(result.dir, "actual.json");
-  const exported = spawnSync(
-    process.execPath,
-    [
-      path.join(scripts, "export-diagram.mjs"),
-      "--input",
-      result.output,
-      "--format",
-      "png",
-      "--output",
-      output,
-      "--scale",
-      "2",
-      "--manifest",
-      result.manifest,
-      "--output-manifest",
-      manifest,
-    ],
-    { encoding: "utf8", timeout: 40000 },
-  );
-  assert.equal(exported.status, 0, exported.stderr);
-  const png = fs.readFileSync(output);
-  const actual = JSON.parse(fs.readFileSync(manifest, "utf8"));
-  assert.equal(png.readUInt32BE(16), actual.canvas.width);
-  assert.equal(png.readUInt32BE(20), actual.canvas.height);
-  assert.equal(actual.measurement, "browser");
-  assert.equal(actual.boxes[0].x, result.geometry.boxes[0].x * 2);
-  assert.ok(actual.labels[0].width > 0);
+  try {
+    const output = path.join(result.dir, "image with 中文.png");
+    const manifest = path.join(result.dir, "actual.json");
+    const exported = spawnSync(
+      process.execPath,
+      [
+        path.join(scripts, "export-diagram.mjs"),
+        "--input",
+        result.output,
+        "--format",
+        "png",
+        "--output",
+        output,
+        "--scale",
+        "2",
+        "--manifest",
+        result.manifest,
+        "--output-manifest",
+        manifest,
+      ],
+      { encoding: "utf8", timeout: 40000 },
+    );
+    assert.equal(exported.status, 0, exported.stderr);
+    const png = fs.readFileSync(output);
+    const actual = JSON.parse(fs.readFileSync(manifest, "utf8"));
+    assert.equal(png.readUInt32BE(16), actual.canvas.width);
+    assert.equal(png.readUInt32BE(20), actual.canvas.height);
+    assert.equal(actual.measurement, "browser");
+    assert.equal(actual.boxes[0].x, result.geometry.boxes[0].x * 2);
+    assert.ok(actual.labels[0].width > 0);
+  } finally {
+    fs.rmSync(result.dir, { recursive: true, force: true });
+  }
 });
 
 test("QA checks actual labels and self calls without treating groups as nodes", async () => {
@@ -357,39 +383,11 @@ test("QA checks actual labels and self calls without treating groups as nodes", 
 
 test("Mermaid route reports missing tools without claiming an export", () => {
   const dir = fs.mkdtempSync(path.join(os.tmpdir(), "fec-mermaid-"));
-  const input = path.join(dir, "flow.mmd"),
-    output = path.join(dir, "flow.svg");
-  fs.writeFileSync(input, "flowchart TD\n A-->B");
-  const result = spawnSync(
-    process.execPath,
-    [
-      path.join(scripts, "mermaid-render.mjs"),
-      "--input",
-      input,
-      "--output",
-      output,
-      "--cli",
-      path.join(dir, "missing.mjs"),
-    ],
-    { encoding: "utf8" },
-  );
-  assert.equal(result.status, 1);
-  assert.match(result.stderr, /Mermaid CLI unavailable/);
-  assert.ok(!fs.existsSync(output));
-});
-
-test("Mermaid invocation handles spaces and rejects stale output", () => {
-  const dir = fs.mkdtempSync(path.join(os.tmpdir(), "fec mermaid 中文 "));
-  const cli = path.join(dir, "cli.mjs"),
-    input = path.join(dir, "flow.mmd"),
-    output = path.join(dir, "output.svg");
-  fs.writeFileSync(input, "flowchart TD\n A-->B");
-  fs.writeFileSync(
-    cli,
-    `import fs from 'node:fs';if(process.argv.includes('--version')) console.log('test-cli');else fs.writeFileSync(process.argv[process.argv.indexOf('-o')+1],'<svg xmlns="http://www.w3.org/2000/svg"><text>stub</text></svg>');`,
-  );
-  const invoke = () =>
-    spawnSync(
+  try {
+    const input = path.join(dir, "flow.mmd"),
+      output = path.join(dir, "flow.svg");
+    fs.writeFileSync(input, "flowchart TD\n A-->B");
+    const result = spawnSync(
       process.execPath,
       [
         path.join(scripts, "mermaid-render.mjs"),
@@ -398,17 +396,53 @@ test("Mermaid invocation handles spaces and rejects stale output", () => {
         "--output",
         output,
         "--cli",
-        cli,
+        path.join(dir, "missing.mjs"),
       ],
       { encoding: "utf8" },
     );
-  assert.equal(invoke().status, 0);
-  fs.writeFileSync(
-    cli,
-    `if(process.argv.includes('--version')) console.log('test-cli');`,
-  );
-  assert.equal(invoke().status, 1);
-  assert.match(fs.readFileSync(output, "utf8"), /stub/);
+    assert.equal(result.status, 1);
+    assert.match(result.stderr, /Mermaid CLI unavailable/);
+    assert.ok(!fs.existsSync(output));
+  } finally {
+    fs.rmSync(dir, { recursive: true, force: true });
+  }
+});
+
+test("Mermaid invocation handles spaces and rejects stale output", () => {
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), "fec mermaid 中文 "));
+  try {
+    const cli = path.join(dir, "cli.mjs"),
+      input = path.join(dir, "flow.mmd"),
+      output = path.join(dir, "output.svg");
+    fs.writeFileSync(input, "flowchart TD\n A-->B");
+    fs.writeFileSync(
+      cli,
+      `import fs from 'node:fs';if(process.argv.includes('--version')) console.log('test-cli');else fs.writeFileSync(process.argv[process.argv.indexOf('-o')+1],'<svg xmlns="http://www.w3.org/2000/svg"><text>stub</text></svg>');`,
+    );
+    const invoke = () =>
+      spawnSync(
+        process.execPath,
+        [
+          path.join(scripts, "mermaid-render.mjs"),
+          "--input",
+          input,
+          "--output",
+          output,
+          "--cli",
+          cli,
+        ],
+        { encoding: "utf8" },
+      );
+    assert.equal(invoke().status, 0);
+    fs.writeFileSync(
+      cli,
+      `if(process.argv.includes('--version')) console.log('test-cli');`,
+    );
+    assert.equal(invoke().status, 1);
+    assert.match(fs.readFileSync(output, "utf8"), /stub/);
+  } finally {
+    fs.rmSync(dir, { recursive: true, force: true });
+  }
 });
 
 test("explicit architecture geometry stays stable and reports invalid containment", () => {
@@ -436,13 +470,17 @@ test("explicit architecture geometry stays stable and reports invalid containmen
     },
     "architecture",
   );
-  assert.equal(
-    result.geometry.boxes.find((b: { id: string }) => b.id === "a").x,
-    110,
-  );
-  const codes = result.geometry.issues.map((i: { code: string }) => i.code);
-  assert.ok(codes.includes("group-containment"));
-  assert.ok(codes.includes("box-overlap"));
+  try {
+    assert.equal(
+      result.geometry.boxes.find((b: { id: string }) => b.id === "a").x,
+      110,
+    );
+    const codes = result.geometry.issues.map((i: { code: string }) => i.code);
+    assert.ok(codes.includes("group-containment"));
+    assert.ok(codes.includes("box-overlap"));
+  } finally {
+    fs.rmSync(result.dir, { recursive: true, force: true });
+  }
 });
 
 test("QA rejects text crossing and unknown owners but allows endpoint contact", async () => {
@@ -564,18 +602,22 @@ test("actor and step annotations preserve text in measurement manifest", () => {
     },
     "workflow",
   );
-  assert.ok(
-    result.geometry.labels.some(
-      (l: { id: string; text: string }) =>
-        l.id === "a-actor" && l.text.includes("full ownership"),
-    ),
-  );
-  assert.ok(
-    result.geometry.labels.some(
-      (l: { id: string; text: string }) =>
-        l.id === "a-step" && l.text === "123",
-    ),
-  );
+  try {
+    assert.ok(
+      result.geometry.labels.some(
+        (l: { id: string; text: string }) =>
+          l.id === "a-actor" && l.text.includes("full ownership"),
+      ),
+    );
+    assert.ok(
+      result.geometry.labels.some(
+        (l: { id: string; text: string }) =>
+          l.id === "a-step" && l.text === "123",
+      ),
+    );
+  } finally {
+    fs.rmSync(result.dir, { recursive: true, force: true });
+  }
 });
 
 test("Mermaid failure and timeout do not replace previous output", () => {
@@ -583,35 +625,39 @@ test("Mermaid failure and timeout do not replace previous output", () => {
     cli = path.join(dir, "cli.mjs"),
     input = path.join(dir, "source.mmd"),
     output = path.join(dir, "diagram.svg");
-  fs.writeFileSync(input, "unsupported syntax preserved");
-  fs.writeFileSync(output, "previous output");
-  for (const behavior of ["process.exit(2)", "setTimeout(()=>{},5000)"]) {
-    fs.writeFileSync(
-      cli,
-      `if(process.argv.includes('--version'))console.log('stub');else {${behavior}}`,
-    );
-    const result = spawnSync(
-      process.execPath,
-      [
-        path.join(scripts, "mermaid-render.mjs"),
-        "--input",
-        input,
-        "--output",
-        output,
-        "--cli",
+  try {
+    fs.writeFileSync(input, "unsupported syntax preserved");
+    fs.writeFileSync(output, "previous output");
+    for (const behavior of ["process.exit(2)", "setTimeout(()=>{},5000)"]) {
+      fs.writeFileSync(
         cli,
-        "--timeout",
-        "1000",
-      ],
-      { encoding: "utf8", timeout: 10000 },
-    );
-    assert.equal(result.status, 1);
-    assert.match(result.stderr, /Mermaid render failed/);
-    assert.equal(fs.readFileSync(output, "utf8"), "previous output");
-    assert.equal(
-      fs.readFileSync(input, "utf8"),
-      "unsupported syntax preserved",
-    );
+        `if(process.argv.includes('--version'))console.log('stub');else {${behavior}}`,
+      );
+      const result = spawnSync(
+        process.execPath,
+        [
+          path.join(scripts, "mermaid-render.mjs"),
+          "--input",
+          input,
+          "--output",
+          output,
+          "--cli",
+          cli,
+          "--timeout",
+          "1000",
+        ],
+        { encoding: "utf8", timeout: 10000 },
+      );
+      assert.equal(result.status, 1);
+      assert.match(result.stderr, /Mermaid render failed/);
+      assert.equal(fs.readFileSync(output, "utf8"), "previous output");
+      assert.equal(
+        fs.readFileSync(input, "utf8"),
+        "unsupported syntax preserved",
+      );
+    }
+  } finally {
+    fs.rmSync(dir, { recursive: true, force: true });
   }
 });
 
@@ -636,10 +682,14 @@ test("long sequence messages retain lifelines through the final message", () => 
     },
     "sequence",
   );
-  const last = result.geometry.connectors.at(-1).points[0][1];
-  const lifelines = [
-    ...result.html.matchAll(/<line[^>]*y2="([\d.]+)"[^>]*class="lifeline"/g),
-  ];
-  assert.equal(lifelines.length, 2);
-  assert.ok(lifelines.every((line) => Number(line[1]) > last));
+  try {
+    const last = result.geometry.connectors.at(-1).points[0][1];
+    const lifelines = [
+      ...result.html.matchAll(/<line[^>]*y2="([\d.]+)"[^>]*class="lifeline"/g),
+    ];
+    assert.equal(lifelines.length, 2);
+    assert.ok(lifelines.every((line) => Number(line[1]) > last));
+  } finally {
+    fs.rmSync(result.dir, { recursive: true, force: true });
+  }
 });
