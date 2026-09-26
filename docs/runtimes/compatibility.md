@@ -23,3 +23,5 @@ Shared Claude/Qoder settings are never owned as a whole file. The manifest recor
 ## Verification
 
 Regression tests exercise artifact discovery paths, metadata, existing settings, repeated installation and uninstall behavior. `npm test` runs the package's build, type checks and test suite. `npm run typecheck:openclaw` and `npm run pack:openclaw` verify the separate native package. Full host-session tests require the corresponding installed product and account.
+
+Review scope and diagram delivery rules are shared across adapters; installed artifacts do not guarantee that local Mermaid or a Chromium browser is available. See [review scope and technical diagram delivery](../review-and-diagram-workflows.md).

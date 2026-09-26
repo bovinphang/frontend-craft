@@ -220,6 +220,10 @@ The OpenClaw package includes all 56 public workflow skills from `skills/`, grou
 | `fec-implement-from-design`   | Implement UI from Figma, Sketch, MasterGo, Pixso, Modao, or screenshots              |
 | `fec-storybook-component-doc` | Storybook component docs, design-system presentation, isolated state previews        |
 
+Technical diagram quality: `fec-image-generation` prefers local Mermaid for standard sequence/workflow diagrams and the draw.io workflow for editable architecture, with JSON/HTML fallback when tools are unavailable. Export a browser-measured manifest scaled to the PNG, run QA and inspect the final image. Preserve complete text, explicit layout and relationships; repair the source for at most two automatic rounds and report unresolved issues. Reproducible fixtures are in `skills/fec-image-generation/assets/quality-examples/`.
+
+[Review and technical diagram guide](docs/review-and-diagram-workflows.md).
+
 **Legacy migration**
 
 | Skill                            | Purpose                                                                     |
@@ -353,6 +357,3 @@ A file/directory request reviews its full contents; add "recent changes" to revi
 Examples: `/fec-review`,`/fec-review review recent changes`,  `/fec-review review src/components/Button.tsx`, `/fec-review review src/features/`, and `/fec-review review the entire project`. These are natural-language instructions, not CLI flags. Explicit scope takes precedence over the default.
 
 Dependency directories, build outputs, caches, generated files and third-party code are excluded by default. Reports record the mode, target scope, reviewed and unreviewed files/modules, exclusions, completion status and verification results. Limited coverage is marked partial; reading callers or running project-wide lint/typecheck does not establish manual review coverage. Change reviews retain merge recommendations; targeted/project reviews assess risk within reviewed scope. The frontend review does not replace a backend audit, and reviewers do not edit business code unless repairs are requested.
-
-
-Technical diagram quality: `fec-image-generation` prefers local Mermaid for standard sequence/workflow diagrams and the draw.io workflow for editable architecture, with JSON/HTML fallback when tools are unavailable. Export a browser-measured manifest scaled to the PNG, run QA and inspect the final image. Preserve complete text, explicit layout and relationships; repair the source for at most two automatic rounds and report unresolved issues. Reproducible fixtures are in `skills/fec-image-generation/assets/quality-examples/`.

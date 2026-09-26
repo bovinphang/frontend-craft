@@ -166,7 +166,7 @@ Marketplace が既にインストールされている場合、CLI は `--force`
 | コマンド              | 用途                                                                   | レポート                                             |
 | --------------------- | ---------------------------------------------------------------------- | ---------------------------------------------------- |
 | `/fec-init`           | プロジェクトテンプレート（CLAUDE.md、ルール、設定）を初期化            | —                                                    |
-| `/fec-review`         | 変更、指定ファイル・ディレクトリ、プロジェクト全体のレビュー | `code-review-*.md`                                   |
+| `/fec-review`         | 既定はプロジェクト全体。ファイル・ディレクトリや変更範囲の明示も可能 | `code-review-*.md`                                   |
 | `/fec-scaffold`       | 規約に従い page / feature / component のボイラープレートを作成         | —                                                    |
 | `/fec-plan`           | 統合計画：実装アーキテクチャまたはテスト戦略                           | `architecture-proposal-*.md` または `test-plan-*.md` |
 | `/fec-tdd`            | 赤 → 緑 → リファクタリングのフロントエンド TDD ループ                  | —                                                    |
@@ -276,6 +276,10 @@ Marketplace が既にインストールされている場合、CLI は `--force`
 | `fec-motion-interaction`      | 文脈に応じた motion 強度、ページ遷移、スクロール animation、reduced-motion                                       |
 | `fec-implement-from-design`   | デザインツール、スクリーンショット、または section 単位のビジュアル参照から UI を実装                            |
 | `fec-storybook-component-doc` | Storybook コンポーネント文書、デザインシステム表示、隔離状態プレビュー                                           |
+
+技術図の品質: 標準のシーケンス図とフローチャートはローカル Mermaid、編集可能な構成図は draw.io を優先します。ツールがない場合は JSON/HTML を使用します。PNG と同じ倍率の実測 manifest で QA を実行し、最終画像を目視確認します。修正は原則 2 回までで、未解決の問題を報告します。
+
+[レビューと技術図のガイド](../review-and-diagram-workflows.md).
 
 **レガシー移行** — モダナイゼーション時に起動：
 
@@ -528,6 +532,3 @@ npx skills check                           # 利用可能なアップデート�
 **frontend-craft がチームの助けになったら、[Star をお願いします](https://github.com/bovinphang/frontend-craft)。**
 
 </div>
-
-
-技術図の品質: 標準のシーケンス図とフローチャートはローカル Mermaid、編集可能な構成図は draw.io を優先します。ツールがない場合は JSON/HTML を使用します。PNG と同じ倍率の実測 manifest で QA を実行し、最終画像を目視確認します。修正は原則 2 回までで、未解決の問題を報告します。

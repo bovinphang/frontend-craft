@@ -185,3 +185,5 @@ npx @bovinphang/frontend-craft@latest update claude --local
 ## CLI 兼容性更新
 
 CLI 安装会将 hooks 合并到 `settings.json`，保留其他用户配置；无效 JSON 会阻止安装。原生 Marketplace 插件继续使用 `hooks/hooks.json`。参见[兼容性与升级说明](compatibility.md)。
+
+审核默认覆盖全项目；指定文件或目录时审核全部现有代码，仅明确要求改动 / PR / 提交时增量审核。技术图使用结构化源文件，PNG 导出需本地浏览器并报告 QA 覆盖情况。详见[审核范围与技术图交付](../zh-CN/review-and-diagram-workflows.md)。

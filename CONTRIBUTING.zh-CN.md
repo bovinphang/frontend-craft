@@ -367,3 +367,5 @@ skills:
 使用 [GitHub Issues](https://github.com/bovinphang/frontend-craft/issues) 提交 Bug 或功能建议。请尽量包含 runtime、操作系统、Node.js 版本、执行命令、预期行为和实际行为。
 
 **安全敏感漏洞**不要提交公开 Issue，请按 [SECURITY.zh-CN.md](SECURITY.zh-CN.md)（或 [SECURITY.md](SECURITY.md)）处理。
+
+修改审核或图表能力时，同步各语言 README 与运行时指南中的范围默认值、自然语言示例、工具前提、QA 边界和覆盖报告要求。参见 [审核范围与技术图交付](docs/zh-CN/review-and-diagram-workflows.md).

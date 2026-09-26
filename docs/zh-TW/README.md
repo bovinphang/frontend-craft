@@ -166,7 +166,7 @@ npx @bovinphang/frontend-craft@latest list
 | 指令                  | 用途                                                        | 報告                                             |
 | --------------------- | ----------------------------------------------------------- | ------------------------------------------------ |
 | `/fec-init`           | 初始化專案範本（CLAUDE.md、規則、settings）                 | —                                                |
-| `/fec-review`         | 審查變更、指定檔案或目錄、整個專案 | `code-review-*.md`                               |
+| `/fec-review`         | 預設審查全專案；支援指定檔案、目錄或明確變更範圍 | `code-review-*.md`                               |
 | `/fec-scaffold`       | 依規範建立 page / feature / component 樣板                  | —                                                |
 | `/fec-plan`           | 統一規劃入口：實現架構或測試策略                            | `architecture-proposal-*.md` 或 `test-plan-*.md` |
 | `/fec-tdd`            | 紅 → 綠 → 重構的前端 TDD 循環                               | —                                                |
@@ -276,6 +276,10 @@ npx @bovinphang/frontend-craft@latest list
 | `fec-motion-interaction`      | 場景化動效強度、頁面轉場、滾動動畫、reduced-motion                                               |
 | `fec-implement-from-design`   | 基於設計工具、截圖或分區級視覺參考實現 UI                                                        |
 | `fec-storybook-component-doc` | Storybook 元件文件、設計系統呈現、隔離狀態預覽                                                   |
+
+技術圖品質：標準時序圖、流程圖優先本機 Mermaid，可編輯架構圖優先 draw.io；工具缺少時使用 JSON/HTML。以符合 PNG 比例的實測 manifest 執行 QA，並檢視最終圖片。預設最多修復兩輪，未解決問題必須明確回報。
+
+[審查範圍與技術圖交付指南](../zh-CN/review-and-diagram-workflows.md).
 
 **遺留遷移** — 現代化遷移時啟用：
 
@@ -528,6 +532,3 @@ npx skills check                           # 預覽可用更新
 **如果 frontend-craft 幫助了你的團隊，[請給它一個 Star](https://github.com/bovinphang/frontend-craft)。**
 
 </div>
-
-
-技術圖品質：標準時序圖、流程圖優先本機 Mermaid，可編輯架構圖優先 draw.io；工具缺少時使用 JSON/HTML。以符合 PNG 比例的實測 manifest 執行 QA，並檢視最終圖片。預設最多修復兩輪，未解決問題必須明確回報。

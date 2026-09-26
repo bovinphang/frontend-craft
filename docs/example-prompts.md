@@ -153,3 +153,5 @@ Use these when you know the internal entry point you want.
 
 
 Technical diagram quality: `fec-image-generation` prefers local Mermaid for standard sequence/workflow diagrams and the draw.io workflow for editable architecture, with JSON/HTML fallback when tools are unavailable. Export a browser-measured manifest scaled to the PNG, run QA and inspect the final image. Preserve complete text, explicit layout and relationships; repair the source for at most two automatic rounds and report unresolved issues. Reproducible fixtures are in `skills/fec-image-generation/assets/quality-examples/`.
+
+[Review scope and technical diagram delivery](review-and-diagram-workflows.md) — scope, tool prerequisites, export commands, and QA limits.

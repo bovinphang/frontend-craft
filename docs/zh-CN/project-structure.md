@@ -144,3 +144,5 @@ frontend-craft/
 
 
 技术图质量工作流：`fec-image-generation` 的标准时序/流程图优先本地 Mermaid，架构图复用 draw.io 工作流，工具缺失时使用 JSON/HTML。导出 PNG 时生成实际测量且与缩放一致的 manifest，再运行 QA 并检查最终 PNG；保留完整文字、显式布局与关系，最多自动修复两轮，未解决问题需明确报告。可复现样例位于 `skills/fec-image-generation/assets/quality-examples/`。
+
+[审核范围与技术图交付](review-and-diagram-workflows.md) — 范围规则、工具前提、导出命令与 QA 边界。

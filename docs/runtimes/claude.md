@@ -187,3 +187,5 @@ npx @bovinphang/frontend-craft@latest update claude --local
 ## CLI compatibility update
 
 CLI hooks are merged into `settings.json`, preserving unrelated settings. Malformed JSON stops installation. Native Marketplace plugins continue to use `hooks/hooks.json`. See [compatibility and upgrade notes](compatibility.md).
+
+Review defaults to the full project; a file/directory request includes unchanged code, while incremental review requires an explicit changes/PR/commit request. Technical diagrams use structured sources; PNG export requires a local browser and disclosed QA coverage. See [review scope and technical diagram delivery](../review-and-diagram-workflows.md).

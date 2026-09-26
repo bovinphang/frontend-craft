@@ -172,7 +172,7 @@ npx @bovinphang/frontend-craft@latest list
 | 命令                  | 用途                                                        | 报告                                             |
 | --------------------- | ----------------------------------------------------------- | ------------------------------------------------ |
 | `/fec-init`           | 初始化项目模板（CLAUDE.md、规则、settings）                 | —                                                |
-| `/fec-review`         | 审核改动、指定文件或目录、整个项目 | `code-review-*.md`                               |
+| `/fec-review`         | 默认审核全项目；支持指定文件、目录或明确改动范围 | `code-review-*.md`                               |
 | `/fec-scaffold`       | 按规范创建 page / feature / component 样板                  | —                                                |
 | `/fec-plan`           | 统一规划入口：实现架构或测试策略                            | `architecture-proposal-*.md` 或 `test-plan-*.md` |
 | `/fec-tdd`            | 红 → 绿 → 重构的前端 TDD 循环                               | —                                                |
@@ -282,6 +282,10 @@ npx @bovinphang/frontend-craft@latest list
 | `fec-motion-interaction`      | 场景化动效强度、页面转场、滚动动画、reduced-motion       |
 | `fec-implement-from-design`   | 基于设计工具、截图或分区级视觉参考实现 UI                |
 | `fec-storybook-component-doc` | Storybook 组件文档、设计系统呈现、隔离状态预览           |
+
+技术图质量工作流：`fec-image-generation` 的标准时序/流程图优先本地 Mermaid，架构图复用 draw.io 工作流，工具缺失时使用 JSON/HTML。导出 PNG 时生成实际测量且与缩放一致的 manifest，再运行 QA 并检查最终 PNG；保留完整文字、显式布局与关系，最多自动修复两轮，未解决问题需明确报告。可复现样例位于 `skills/fec-image-generation/assets/quality-examples/`。
+
+[审核范围与技术图交付指南](docs/zh-CN/review-and-diagram-workflows.md).
 
 **遗留迁移** — 现代化迁移时激活：
 
@@ -539,6 +543,3 @@ npx skills check                           # 预览可用更新
 **如果 frontend-craft 帮助了你的团队，[请给它一个 Star](https://github.com/bovinphang/frontend-craft)。**
 
 </div>
-
-
-技术图质量工作流：`fec-image-generation` 的标准时序/流程图优先本地 Mermaid，架构图复用 draw.io 工作流，工具缺失时使用 JSON/HTML。导出 PNG 时生成实际测量且与缩放一致的 manifest，再运行 QA 并检查最终 PNG；保留完整文字、显式布局与关系，最多自动修复两轮，未解决问题需明确报告。可复现样例位于 `skills/fec-image-generation/assets/quality-examples/`。

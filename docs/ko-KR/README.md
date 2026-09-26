@@ -166,7 +166,7 @@ Marketplace가 이미 설치된 경우, `--force`를 사용해도 CLI는 두 번
 | 명령어                | 용도                                                                 | 보고서                                             |
 | --------------------- | -------------------------------------------------------------------- | -------------------------------------------------- |
 | `/fec-init`           | 프로젝트 템플릿 초기화 (CLAUDE.md, 규칙, 설정)                       | —                                                  |
-| `/fec-review`         | 변경, 지정 파일/디렉터리 또는 전체 프로젝트 리뷰 | `code-review-*.md`                                 |
+| `/fec-review`         | 기본은 전체 프로젝트 리뷰; 파일/디렉터리 또는 변경 범위 지정 가능 | `code-review-*.md`                                 |
 | `/fec-scaffold`       | 규칙에 따라 page / feature / component 보일러플레이트 생성           | —                                                  |
 | `/fec-plan`           | 통합 계획: 구현 아키텍처 또는 테스트 전략                            | `architecture-proposal-*.md` 또는 `test-plan-*.md` |
 | `/fec-tdd`            | 빨강 → 초록 → 리팩토링 프론트엔드 TDD 루프                           | —                                                  |
@@ -276,6 +276,10 @@ Marketplace가 이미 설치된 경우, `--force`를 사용해도 CLI는 두 번
 | `fec-motion-interaction`      | 맥락 기반 motion 강도, 페이지 전환, 스크롤 animation, reduced-motion                                                     |
 | `fec-implement-from-design`   | 디자인 도구, 스크린샷 또는 section 단위 시각 참조에서 UI 구현                                                            |
 | `fec-storybook-component-doc` | Storybook 컴포넌트 문서, 디자인 시스템 표시, 격리 상태 미리보기                                                          |
+
+기술 다이어그램 품질: 표준 시퀀스와 흐름도는 로컬 Mermaid, 편집 가능한 아키텍처는 draw.io를 우선합니다. 도구가 없으면 JSON/HTML을 사용합니다. PNG 배율에 맞는 실제 측정 manifest로 QA를 실행하고 최종 이미지를 직접 확인합니다. 기본 수정은 두 번이며 남은 문제를 보고합니다.
+
+[리뷰 및 기술 다이어그램 가이드](../review-and-diagram-workflows.md).
 
 **레거시 마이그레이션** — 현대화 작업에서 활성화:
 
@@ -528,6 +532,3 @@ npx skills check                           # 사용 가능한 업데이트 미�
 **frontend-craft가 팀에 도움이 되었다면, [Star를 눌러주세요](https://github.com/bovinphang/frontend-craft).**
 
 </div>
-
-
-기술 다이어그램 품질: 표준 시퀀스와 흐름도는 로컬 Mermaid, 편집 가능한 아키텍처는 draw.io를 우선합니다. 도구가 없으면 JSON/HTML을 사용합니다. PNG 배율에 맞는 실제 측정 manifest로 QA를 실행하고 최종 이미지를 직접 확인합니다. 기본 수정은 두 번이며 남은 문제를 보고합니다.

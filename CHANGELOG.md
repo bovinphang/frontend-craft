@@ -12,6 +12,7 @@ Project-facing release notes are maintained in English from 2.0.0 onward. Histor
 ## [2.9.0] - 2026-09-26
 
 - **`fec-image-generation`**: Technical diagram quality: complete Unicode wrapping, content-driven layout, obstacle routing and visible self calls; self-contained SVG styles, browser-measured PNG geometry and scaled manifests, extended QA, optional local Mermaid adapter and three reproducible diagram fixtures.
+- **Documentation**: Consolidate review scope and technical diagram delivery in a bilingual guide; synchronize runtime entry points and multilingual README capability sections, including tool prerequisites and QA limits.
 
 ### Added
 

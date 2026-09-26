@@ -367,3 +367,5 @@ Before opening a pull request:
 Use [GitHub Issues](https://github.com/bovinphang/frontend-craft/issues) for bugs and feature requests. Include the runtime, operating system, Node.js version, exact command, expected behavior, and actual behavior whenever possible.
 
 Do not file security-sensitive vulnerabilities as public issues. Follow [SECURITY.md](SECURITY.md) instead.
+
+When changing review or diagram capabilities, synchronize scope defaults, natural-language examples, tool prerequisites, QA limits, and coverage reporting across README translations and runtime guides. See [review scope and technical diagram delivery](docs/review-and-diagram-workflows.md).

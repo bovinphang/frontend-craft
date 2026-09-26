@@ -172,7 +172,7 @@ Slash commands are the primary entry points for structured workflows. Most produ
 | Command               | Purpose                                                                | Report                                           |
 | --------------------- | ---------------------------------------------------------------------- | ------------------------------------------------ |
 | `/fec-init`           | Initialize project templates (CLAUDE.md, rules, settings)              | —                                                |
-| `/fec-review`         | Review changes, specified files/directories, or the entire project | `code-review-*.md`                               |
+| `/fec-review`         | Review the full project by default; explicit file/directory or change scope | `code-review-*.md`                               |
 | `/fec-scaffold`       | Create page / feature / component boilerplate by convention            | —                                                |
 | `/fec-plan`           | Unified planning: implementation architecture or test strategy         | `architecture-proposal-*.md` or `test-plan-*.md` |
 | `/fec-tdd`            | Red → green → refactor loop for frontend TDD                           | —                                                |
@@ -282,6 +282,10 @@ The skills below are grouped by use case so you can quickly find project standar
 | `fec-motion-interaction`      | Context-aware motion intensity, page transitions, scroll animation, reduced motion |
 | `fec-implement-from-design`   | Build UI from design tools, screenshots, or section-level visual references   |
 | `fec-storybook-component-doc` | Storybook component docs, design-system presentation, isolated state previews |
+
+Technical diagram quality: `fec-image-generation` prefers local Mermaid for standard sequence/workflow diagrams and the draw.io workflow for editable architecture, with JSON/HTML fallback when tools are unavailable. Export a browser-measured manifest scaled to the PNG, run QA and inspect the final image. Preserve complete text, explicit layout and relationships; repair the source for at most two automatic rounds and report unresolved issues. Reproducible fixtures are in `skills/fec-image-generation/assets/quality-examples/`.
+
+[Review and technical diagram guide](docs/review-and-diagram-workflows.md).
 
 **Legacy migration** — activated during modernization work:
 
@@ -539,6 +543,3 @@ To disable telemetry: `DISABLE_TELEMETRY=1`. Details: [skills.sh CLI docs](https
 **If frontend-craft helps your team ship better code, [give it a Star](https://github.com/bovinphang/frontend-craft).**
 
 </div>
-
-
-Technical diagram quality: `fec-image-generation` prefers local Mermaid for standard sequence/workflow diagrams and the draw.io workflow for editable architecture, with JSON/HTML fallback when tools are unavailable. Export a browser-measured manifest scaled to the PNG, run QA and inspect the final image. Preserve complete text, explicit layout and relationships; repair the source for at most two automatic rounds and report unresolved issues. Reproducible fixtures are in `skills/fec-image-generation/assets/quality-examples/`.
