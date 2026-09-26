@@ -9,7 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 Project-facing release notes are maintained in English from 2.0.0 onward. Historical entries may preserve their original language.
 
-## [2.9.0] - 2026-09-01
+## [2.9.0] - 2026-09-26
 
 ### Added
 
@@ -18,15 +18,28 @@ Project-facing release notes are maintained in English from 2.0.0 onward. Histor
 - **Frontend-specific refactoring adaptation:** added TypeScript, React, Vue, hooks/composables, state, routing, async/lifecycle, public API, SSR/hydration, and dynamic-reference guidance without forcing class-based patterns into modern frontend code.
 - **Simplified Chinese refactoring mirror:** added natural Chinese Agent, Command, Skill, catalog, smell matrix, and refactoring navigation content under `localized/zh-CN` and `docs/refactoring`.
 
+- **Content integrity tooling:** added shared YAML frontmatter schemas, source/zh-CN capability and structure checks, and automatic discovery of all `tests/**/*.test.ts` files.
+
 ### Changed
 
 - **Refactoring safety model:** pure refactoring now uses `GREEN → REFACTOR → GREEN`, one primary transformation at a time, step-level verification, rollback-before-repair, `SAFE/CAUTION/DANGER` risk classification, diff budgets, and `PASS/PARTIAL/NOT PROVEN` proof verdicts.
 - **Workflow boundaries:** clarified that new behavior and behavior-changing defects remain in TDD, unexplained failures remain in debugging, proven dead code remains in `fec-refactor-clean`, and general merge-readiness remains in code review.
 - **Public capability counts:** documentation and Marketplace metadata now advertise 14 agents, 56 skills, and 11 commands.
 
+- **Contributor toolchain:** standardized development and CI on pnpm 12.4.1 with a frozen lockfile, ESLint, content lint, and read-only formatting checks; version synchronization no longer stages files automatically.
+- **Validation hooks:** select npm, pnpm, yarn, or bun from project declarations and lockfiles, and avoid running duplicate validation stages.
+
+### Fixed
+
+- **Content parsing and conversion:** repaired malformed agent/command YAML and stale reviewer references; converters now preserve decoded descriptions and safely escape Codex TOML instructions. Same-name source skills retain priority over converted commands.
+- **Published CLI startup:** bundled the YAML parser and its Node module bridge so isolated npm packages can install Codex and OpenClaw content without repository development dependencies.
+- **Localized content and refactoring links:** synchronized Chinese diagram workflow boundaries, capability tags, and keywords; repaired catalog links and clarified skill summaries.
+- **Managed file ownership:** strengthened manifest path validation to prevent install/update operations from claiming paths outside managed content.
+
 ### Chore
 
 - **Deterministic refactoring coverage:** added install-time integrity checks for 24 smells, 61 techniques, family totals, root/zh-CN alignment, metadata/relations/eval registration, command modes, public docs, and version synchronization.
+- **Release verification:** expanded regressions for parsing, conversion, test discovery, hook package-manager selection, and isolated package installation; the full suite now contains 223 tests. Packaging checks cover OpenClaw and all 56 standalone skill packages.
 
 ## [2.8.0] - 2026-06-25
 

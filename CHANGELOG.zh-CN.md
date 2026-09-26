@@ -8,7 +8,7 @@
 
 自 **2.0.0** 起，面向发布的说明以英文 `CHANGELOG.md` 为权威来源；历史条目可能保留最初撰写语言。
 
-## [2.9.0] - 2026-09-01
+## [2.9.0] - 2026-09-26
 
 ### 新增
 
@@ -17,15 +17,28 @@
 - **前端专项适配**：补充 TypeScript、React、Vue、hooks/composables、状态管理、路由、异步/生命周期、公开 API、SSR/hydration 与动态引用场景，同时避免把现代前端机械改写为 class hierarchy。
 - **简体中文重构镜像**：在 `localized/zh-CN` 和 `docs/refactoring` 中新增自然中文的 Agent、Command、Skill、目录、坏味道矩阵与导航文档。
 
+- **内容完整性工具**：新增共享 YAML frontmatter 类型校验、中英文能力引用与结构检查，以及 `tests/**/*.test.ts` 自动发现。
+
 ### 变更
 
 - **重构安全模型**：纯重构统一采用 `GREEN → REFACTOR → GREEN`，一次只做一个主要结构变换，每步验证；新增“先回滚再修复”、`SAFE/CAUTION/DANGER` 风险分级、差异预算，以及 `PASS/PARTIAL/NOT PROVEN` 行为保持证明等级。
 - **工作流边界**：新增行为和行为变化型缺陷仍由 TDD 负责；原因未知的失败仍由调试框架负责；已证明的死代码仍由 `fec-refactor-clean` 负责；一般 PR 合并就绪性仍由代码评审负责。
 - **公开能力数量**：README、OpenClaw 文档与 Marketplace 元数据同步为 14 个 Agent、56 个 Skill、11 个 Command。
 
+- **贡献者工具链**：开发与 CI 统一使用 pnpm 12.4.1、冻结锁文件、ESLint、内容 lint 和只读格式检查；版本同步不再自动暂存文件。
+- **验证 Hook**：根据项目声明和锁文件选择 npm、pnpm、yarn 或 bun，避免重复执行验证阶段。
+
+### 修复
+
+- **内容解析与转换**：修复 Agent/Command 的非法 YAML 和过时 reviewer 引用；转换器使用解码后的描述，并安全转义 Codex TOML 指令。同名原始技能继续优先于转换后的命令。
+- **发布 CLI 启动**：内置 YAML 解析器及其 Node 模块桥接，确保隔离 npm 包无需仓库开发依赖即可安装 Codex 和 OpenClaw 内容。
+- **中文内容与重构链接**：同步图表工作流边界、能力标签及关键词，修复目录链接并完善技能摘要。
+- **受管文件归属**：加强 manifest 路径校验，避免安装或更新操作将受管内容之外的路径纳入管理。
+
 ### Chore
 
 - **确定性重构验收**：新增安装级完整性检查，覆盖 24 种坏味道、61 个手法、7 个 family 数量、root/zh-CN 对齐、metadata/relations/eval 注册、命令模式、公开文档与版本同步。
+- **发布验证**：扩充解析、转换、测试发现、Hook 包管理器选择和隔离包安装回归；完整测试共 223 项，打包检查覆盖 OpenClaw 和全部 56 个独立技能包。
 
 ## [2.8.0] - 2026-06-25
 
