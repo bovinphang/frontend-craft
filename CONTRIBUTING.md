@@ -9,6 +9,7 @@ Thanks for your interest in `frontend-craft`. Issues, pull requests, documentati
 - Node.js >= 22 for the universal installer and OpenClaw package build.
 - Git.
 - pnpm 12.4.1 (pinned in package.json); installing pnpm through npm requires Node.js >=22.13. The published plugin still supports Node.js >=22.0.0.
+- On Windows, install pnpm through Corepack (`corepack enable pnpm`) or npm rather than the standalone installer; a standalone pnpm 10+ blocks the lifecycle scripts that install the pinned version's native binary and leaves a shim Windows cannot execute.
 - pnpm-lock.yaml is the sole dependency lockfile. pnpm-workspace.yaml permits esbuild build scripts and explicitly skips optional SDK/native setup not used by this project.
 - Run `pnpm install --frozen-lockfile` before local development.
 

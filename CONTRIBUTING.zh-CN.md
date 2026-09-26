@@ -8,7 +8,10 @@
 
 - Node.js >= 22，用于通用安装器与 OpenClaw 包构建。
 - Git。
-- 本地开发前运行 `pnpm install`。
+- pnpm 12.4.1（在 package.json 中固定）；通过 npm 安装 pnpm 需要 Node.js >=22.13。已发布的插件仍支持 Node.js >=22.0.0。
+- pnpm-lock.yaml 是唯一的依赖锁文件。pnpm-workspace.yaml 允许 esbuild 构建脚本，并显式跳过本项目未使用的可选 SDK/原生依赖安装。
+- Windows 上请通过 Corepack（`corepack enable pnpm`）或 npm 安装 pnpm，不要使用 standalone 安装器；standalone 的 pnpm 10+ 会屏蔽安装固定版本原生二进制的 lifecycle 脚本，留下 Windows 无法执行的 shim。
+- 本地开发前运行 `pnpm install --frozen-lockfile`。
 
 仅修改文档时，重点阅读语言与文档策略以及 Pull Request 自检。修改 skill 或 OpenClaw 时，请在提交 PR 前参考下方对应章节。
 
