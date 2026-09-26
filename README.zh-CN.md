@@ -172,7 +172,7 @@ npx @bovinphang/frontend-craft@latest list
 | 命令                  | 用途                                                        | 报告                                             |
 | --------------------- | ----------------------------------------------------------- | ------------------------------------------------ |
 | `/fec-init`           | 初始化项目模板（CLAUDE.md、规则、settings）                 | —                                                |
-| `/fec-review`         | 对指定文件或最近变更的代码执行结构化评审                    | `code-review-*.md`                               |
+| `/fec-review`         | 审核改动、指定文件或目录、整个项目 | `code-review-*.md`                               |
 | `/fec-scaffold`       | 按规范创建 page / feature / component 样板                  | —                                                |
 | `/fec-plan`           | 统一规划入口：实现架构或测试策略                            | `architecture-proposal-*.md` 或 `test-plan-*.md` |
 | `/fec-tdd`            | 红 → 绿 → 重构的前端 TDD 循环                               | —                                                |
@@ -182,6 +182,20 @@ npx @bovinphang/frontend-craft@latest list
 | `/fec-refactor-plan`  | 生成有序、保持行为的小步重构计划                                  | `refactoring/plan-*.md`                        |
 | `/fec-refactor`       | 一次执行一个经过验证的保持行为重构步骤                            | `refactoring/refactoring-*.md`                 |
 | `/fec-doc-sync`       | 同步 README、docs、环境变量、脚本、API/路由说明和部署文档 | —                                                |
+
+### 审核范围
+
+`/fec-review`、代码 / TypeScript / 安全审核 agent 及其审核 skill 采用三种模式：
+
+- **改动审核**：明确要求最近改动、本次修改、暂存区、PR 或提交，或当前任务已明确这些改动上下文。无改动时说明没有可审核的改动，不自动审核最近提交。
+- **指定范围审核**：指定文件或目录，审核其中现有代码，包括未改动代码，不要求 Git 差异。
+- **全项目审核（默认）**：未指定范围或改动上下文，或明确要求审核整个项目时，先建立项目自有前端代码、相关测试、配置和依赖声明清单，再按模块审核。
+
+指定文件或目录默认审核其全部代码；加上“本次改动”才仅审核差异。裸调用 `/fec-review` 即使有改动也默认全项目；开始时说明模式和范围，修改后自动委托审核须显式传入本次改动范围。
+
+示例：`/fec-review`、`/fec-review 审核最近改动`、`/fec-review 审核 src/components/Button.tsx`、`/fec-review 审核 src/features/`、`/fec-review 审核整个项目`。这些是自然语言指令，不是 CLI 参数；明确指定的范围优先于默认模式。
+
+默认排除依赖目录、构建产物、缓存、生成文件和第三方代码。报告记录模式、目标范围、已审核及未覆盖文件或模块、排除项、完成状态和验证结果；覆盖不足时标记部分完成。读取调用方或执行全项目 lint/类型检查不等于完成人工审核。改动审核保留合并建议，指定范围和全项目审核评估已审核范围的风险。前端审核不替代后端专项审核；未要求修复时不修改业务代码。
 
 ### 技能（Skills，自动激活）
 
@@ -525,3 +539,6 @@ npx skills check                           # 预览可用更新
 **如果 frontend-craft 帮助了你的团队，[请给它一个 Star](https://github.com/bovinphang/frontend-craft)。**
 
 </div>
+
+
+技术图质量工作流：`fec-image-generation` 的标准时序/流程图优先本地 Mermaid，架构图复用 draw.io 工作流，工具缺失时使用 JSON/HTML。导出 PNG 时生成实际测量且与缩放一致的 manifest，再运行 QA 并检查最终 PNG；保留完整文字、显式布局与关系，最多自动修复两轮，未解决问题需明确报告。可复现样例位于 `skills/fec-image-generation/assets/quality-examples/`。

@@ -63,8 +63,16 @@ After initialization, customize for your project:
 ### Step 3: Start using
 
 ```bash
-# Code review (outputs to reports/code-review-*.md)
+# Full project review by default (outputs to reports/code-review-*.md)
 /fec-review
+
+# Explicit change review
+/fec-review review recent changes
+
+# Specify a file, directory or entire project (natural language, not CLI flags)
+/fec-review review src/components/Button.tsx
+/fec-review review src/features/
+/fec-review review the entire project
 
 # Create page/feature/component by convention
 /fec-scaffold page UserDetail

@@ -7,10 +7,10 @@
 | ER 图 | Mermaid ER、DBML、Graphviz、SVG | 基数标签、表名、关键字段、交叉关系。 |
 | UML 类图 | Mermaid class、PlantUML、Graphviz | 继承方向、方法/属性换行、包分组。 |
 | 序列图 | Mermaid sequence、PlantUML | lifeline 顺序、activation 范围、异步/返回箭头、消息文本。 |
-| 技术架构 | HTML `architecture` IR、Mermaid flowchart、C4/Structurizr、SVG/HTML、draw.io | 分层分组、信任边界、数据流方向、图例。 |
+| 技术架构 | draw.io、Mermaid/C4、HTML `architecture` IR、SVG/HTML | 分层分组、信任边界、数据流方向、图例。 |
 | Agent / memory 架构 | 带语义节点类型和 flow 连线的 HTML `architecture` IR、SVG/HTML、draw.io | read/write 路径分离、tool-call 回路、memory 分层、retrieval 标签、flow legend。 |
 | ML / 深度学习 | SVG/HTML/canvas | tensor shape、层顺序、分支汇合、重复块、注释。 |
-| 流程图 / 流程工作流 | HTML `workflow` IR、Mermaid flowchart、SVG、draw.io | 决策标签、终止状态、回环可读性、连接线间距、异常路径清晰度。 |
+| 流程图 / 流程工作流 | Mermaid flowchart、HTML `workflow` IR、SVG、draw.io | 决策标签、终止状态、回环可读性、连接线间距、异常路径清晰度。 |
 | 会话实时草图 | 本地交互式浏览器服务 | 增量呈现、session 隔离、拖拽后的标签可读性、导出交接。 |
 
 ## 交互式实时图表
@@ -50,7 +50,7 @@ node skills/fec-image-generation/scripts/interactive-diagram-server.mjs --port 6
 ## 图表修复手册
 
 - **节点重叠：** 增加 rank/列间距、拆分簇，或将低优先级注释移入图例。
-- **标签截断：** 加宽节点、添加手动换行、缩短标签，或提高导出倍率。
+- **标签截断：** 加宽节点、添加手动换行、保留完整文字并调整源布局。
 - **连接线穿过标签：** 添加 waypoints、沿框体周围正交布线，或将标签移到线段上方。
 - **连接线堆叠：** 用不同 waypoints 分离平行边，或用带共享标签的 bus 汇总。
 - **边缘裁剪：** 增加外边距，或扩大导出 viewBox/canvas 尺寸。
@@ -72,3 +72,10 @@ UML 覆盖优先走确定性源：class、ER、state-machine、activity 和 sequ
 ## 导出指引
 
 位图 PNG 优先以 2x 倍率导出；只有在文字仍清晰时才下采样。凡是未来可能修改图表的地方，都应提交或附上可编辑源文件。
+
+
+## 质量交付约定
+
+标准序列/流程图优先本地 Mermaid；架构图需要手工编辑时复用 fec-drawio-studio，大型拓扑可选 Graphviz。无本地工具时使用兼容 JSON/HTML，不自动安装或下载。HTML 预览、独立 SVG 和 PNG 使用同源主题样式；导出指定 `--theme light|dark`。PNG 导出等待字体并测量文字，使用 `--manifest source.layout.json --output-manifest image.actual.json` 写出缩放后的像素坐标。QA 必须读取 actual manifest，不能把估算坐标直接用于 2x PNG。
+
+扩展 manifest 保留 canvas/boxes/connectors，增加 coordinateSpace、scale、measurement、groups、labels 与 issues。分组包含节点不算节点重叠。新增 node-text-overflow、label-content-loss、label-out-of-bounds、edge-label-collision、text-overlap 与 degenerate-connector 检查。旧 manifest 保留估算检测。显式尺寸或 waypoints 不满足约束时定位问题，不删字、不改关系、不静默移动。提高导出分辨率不能修复源级溢出。最终 PNG 必须视觉审阅；记录工具可用性、版本、主题、比例、修复轮次和残留问题，未解决时标记部分验收。

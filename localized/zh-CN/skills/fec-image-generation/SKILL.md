@@ -14,7 +14,7 @@ description: 用于生成或编辑图表、图形资产、海报、UI 样机、�
 1. 判断产物类型
    - 文本、结构和连线准确性优先时，用 Mermaid、SVG、HTML/CSS、canvas 或图表库生成可编辑源，再导出 PNG。
    - 需要单文件浏览器打开、暗/亮主题和结构化 QA 的系统蓝图、架构图、部署拓扑、Agent runtime、memory flow、before-after architecture、流程、序列、数据流、生命周期、runbook、状态机或 PII/数据血缘图时，使用 HTML technical diagrams。
-   - 流程地图、审批流、自动化运行、异常路径和循环运营流需要清晰的起止节点、决策、参与者、步骤编号和摘要，但不需要 diagrams.net 时，使用 HTML `workflow` 路线。
+   - 流程地图、审批流、自动化运行、异常路径和循环运营流需要清晰的起止节点、决策、参与者、步骤编号和摘要，但不需要 diagrams.net 时，在 Mermaid 不可用或明确需要浏览器泳道/主题交付时，使用兼容 HTML `workflow` 路线。
    - 系统、Agent、memory、数据或 tool-call 图需要语义节点形状、有含义的连线和可浏览器打开、可导出、可 QA 的源文件时，使用主题化 HTML technical diagrams。
    - 用户需要在本地浏览器里看到节点和连线实时出现，或需要在会话中拖拽、改标签、删除、缩放并快速导出草图时，使用交互式实时图表路线。
    - 审美、质感、照片、插画、漫画、产品图或品牌氛围优先时，用图片生成或编辑工具，再把最终资产保存到项目或报告目录。
@@ -78,3 +78,33 @@ description: 用于生成或编辑图表、图形资产、海报、UI 样机、�
 ## 预期输出
 
 产出可编辑源、最终 PNG 或编辑后图片，并附带生成路线与 QA 结果。图表应结构清晰、标签不截断、连线不混乱；视觉资产应匹配用途、尺寸、品牌语气和交付路径。
+
+
+## 技术图质量与工具路由
+
+标准时序图、流程图优先使用本地 Mermaid；架构图需长期手工编辑时复用 fec-drawio-studio；大型拓扑可选本地 Graphviz。工具不可用时明确记录并使用兼容的 JSON/HTML 路线，不自动安装、下载或使用 CDN。示意图保留完整文字与所有节点、连接关系；显式尺寸、坐标和 waypoints 不静默重排。
+
+```sh
+node skills/fec-image-generation/scripts/mermaid-render.mjs --input sequence.mmd --output sequence.svg --report sequence.render.json
+node skills/fec-image-generation/scripts/export-diagram.mjs --input diagram.html --format png --output diagram.png --theme light --scale 2 --manifest diagram.layout.json --output-manifest diagram.actual.json
+node skills/fec-image-generation/scripts/png-qa.mjs --png diagram.png --manifest diagram.actual.json --format json
+```
+
+PNG QA 使用导出后的 actual manifest；原始 manifest 是 SVG 坐标与估算边界，2x 导出不能直接复用。浏览器等待字体并测量真实文字边界；独立 SVG 内嵌主题样式。渲染成功、静态估算和自动检测通过都不等于人工视觉验收；检查最终 PNG 后记录工具版本、主题、缩放、修复轮次、未解决问题及部分验收状态。提高分辨率不会修复文字截断或布局冲突。
+
+技能内部模块与可复现样例：
+- [mermaid-render.mjs](scripts/mermaid-render.mjs)
+- [diagram-layout.mjs](scripts/diagram-layout.mjs)
+- [diagram-browser.mjs](scripts/diagram-browser.mjs)
+- [quality examples](assets/quality-examples/README.md)
+- [sequence.json](assets/quality-examples/sequence.json)
+- [workflow.json](assets/quality-examples/workflow.json)
+- [architecture.json](assets/quality-examples/architecture.json)
+- [sequence.mmd](assets/quality-examples/sequence.mmd)
+- [workflow.mmd](assets/quality-examples/workflow.mmd)
+
+内置 sequence 仅支持参与者和有序消息；activation、alt、loop、par、复杂 async 片段请使用 Mermaid，不把这些语义悄悄简化成直线消息。可选 ELK 仅在本机 Mermaid 版本确实支持时启用，否则使用兼容默认布局。
+
+- [invalid-explicit.json](assets/quality-examples/invalid-explicit.json)
+
+- [png-qa.mjs](scripts/png-qa.mjs)

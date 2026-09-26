@@ -61,8 +61,16 @@ Marketplace 条目会从已发布的 npm 包解析插件；npm 包中包含 Clau
 ### 第三步：开始使用
 
 ```bash
-# 代码评审（输出到 reports/code-review-*.md）
+# 默认全项目审核（输出到 reports/code-review-*.md）
 /fec-review
+
+# 明确增量审核
+/fec-review 审核最近改动
+
+# 指定文件、目录或全项目（自然语言范围，不是 CLI 参数）
+/fec-review 审核 src/components/Button.tsx
+/fec-review 审核 src/features/
+/fec-review 审核整个项目
 
 # 按规范创建页面/功能/组件
 /fec-scaffold page UserDetail

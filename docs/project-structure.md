@@ -89,7 +89,7 @@ frontend-craft/
 |
 |-- commands/         # Slash commands for quick execution
 |   |-- fec-init.md     # /fec-init - Initialize project templates
-|   |-- fec-review.md   # /fec-review - Code review
+|   |-- fec-review.md   # /fec-review - Project by default; targeted scope or explicit changes
 |   |-- fec-scaffold.md # /fec-scaffold - Create page/feature/component
 |   |-- fec-plan.md     # /fec-plan - Implementation planning before frontend changes
 |   |-- fec-tdd.md      # /fec-tdd - Test-driven frontend implementation
@@ -144,3 +144,6 @@ frontend-craft/
 | `src/openclaw/` | OpenClaw runtime TypeScript source                                                                                    |
 | `templates/`    | Runtime-specific project templates (Claude/Codex/Cursor/Gemini/OpenClaw/Windsurf configs + shared rules)             |
 | `tests/`        | Test suite (converter tests, installer tests)                                                                         |
+
+
+Technical diagram quality: `fec-image-generation` prefers local Mermaid for standard sequence/workflow diagrams and the draw.io workflow for editable architecture, with JSON/HTML fallback when tools are unavailable. Export a browser-measured manifest scaled to the PNG, run QA and inspect the final image. Preserve complete text, explicit layout and relationships; repair the source for at most two automatic rounds and report unresolved issues. Reproducible fixtures are in `skills/fec-image-generation/assets/quality-examples/`.

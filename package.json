@@ -55,7 +55,7 @@
     "clean": "node scripts/clean-dist.mjs",
     "typecheck": "pnpm run typecheck:ts && pnpm run typecheck:skill-scripts",
     "typecheck:ts": "tsc --noEmit -p tsconfig.json",
-    "typecheck:skill-scripts": "tsc --allowJs --checkJs --noEmit --strict --module NodeNext --moduleResolution NodeNext --target ES2022 skills/fec-ui-design/scripts/design-system.mjs skills/fec-image-generation/scripts/png-qa.mjs skills/fec-image-generation/scripts/tech-diagram-render.mjs skills/fec-image-generation/scripts/interactive-diagram-server.mjs skills/fec-image-generation/scripts/export-diagram.mjs",
+    "typecheck:skill-scripts": "tsc --allowJs --checkJs --noEmit --strict --module NodeNext --moduleResolution NodeNext --target ES2022 skills/fec-ui-design/scripts/design-system.mjs skills/fec-image-generation/scripts/png-qa.mjs skills/fec-image-generation/scripts/tech-diagram-render.mjs skills/fec-image-generation/scripts/interactive-diagram-server.mjs skills/fec-image-generation/scripts/export-diagram.mjs skills/fec-image-generation/scripts/diagram-layout.mjs skills/fec-image-generation/scripts/diagram-browser.mjs skills/fec-image-generation/scripts/mermaid-render.mjs",
     "build": "pnpm run clean && pnpm run typecheck && tsx scripts/build-dist.ts",
     "test:only": "tsx scripts/run-tests.ts",
     "test": "pnpm run build && pnpm run test:only",

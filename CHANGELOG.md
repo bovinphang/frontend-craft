@@ -11,6 +11,8 @@ Project-facing release notes are maintained in English from 2.0.0 onward. Histor
 
 ## [2.9.0] - 2026-09-26
 
+- **`fec-image-generation`**: Technical diagram quality: complete Unicode wrapping, content-driven layout, obstacle routing and visible self calls; self-contained SVG styles, browser-measured PNG geometry and scaled manifests, extended QA, optional local Mermaid adapter and three reproducible diagram fixtures.
+
 ### Added
 
 - **Behavior-preserving refactoring subsystem:** added `fec-refactoring-expert`, `/fec-smell`, `/fec-refactor-plan`, `/fec-refactor`, and 11 refactoring skills that separate diagnosis, planning, execution, validation, catalog selection, and seven technique families.
@@ -21,6 +23,8 @@ Project-facing release notes are maintained in English from 2.0.0 onward. Histor
 - **Content integrity tooling:** added shared YAML frontmatter schemas, source/zh-CN capability and structure checks, and automatic discovery of all `tests/**/*.test.ts` files.
 
 ### Changed
+
+- **Review scope:** code, TypeScript and security review workflows now support project review (default), specified files/directories, and incremental review for explicit change/PR/commit context. Reports record coverage, exclusions, unreviewed scope and partial completion; targeted/project reviews assess risk without requiring a Git diff. Updated multilingual READMEs, runtime guidance and example prompts.
 
 - **Refactoring safety model:** pure refactoring now uses `GREEN → REFACTOR → GREEN`, one primary transformation at a time, step-level verification, rollback-before-repair, `SAFE/CAUTION/DANGER` risk classification, diff budgets, and `PASS/PARTIAL/NOT PROVEN` proof verdicts.
 - **Workflow boundaries:** clarified that new behavior and behavior-changing defects remain in TDD, unexplained failures remain in debugging, proven dead code remains in `fec-refactor-clean`, and general merge-readiness remains in code review.

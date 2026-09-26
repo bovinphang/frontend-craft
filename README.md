@@ -172,7 +172,7 @@ Slash commands are the primary entry points for structured workflows. Most produ
 | Command               | Purpose                                                                | Report                                           |
 | --------------------- | ---------------------------------------------------------------------- | ------------------------------------------------ |
 | `/fec-init`           | Initialize project templates (CLAUDE.md, rules, settings)              | —                                                |
-| `/fec-review`         | Structured review of specified or recently changed files               | `code-review-*.md`                               |
+| `/fec-review`         | Review changes, specified files/directories, or the entire project | `code-review-*.md`                               |
 | `/fec-scaffold`       | Create page / feature / component boilerplate by convention            | —                                                |
 | `/fec-plan`           | Unified planning: implementation architecture or test strategy         | `architecture-proposal-*.md` or `test-plan-*.md` |
 | `/fec-tdd`            | Red → green → refactor loop for frontend TDD                           | —                                                |
@@ -182,6 +182,20 @@ Slash commands are the primary entry points for structured workflows. Most produ
 | `/fec-refactor-plan`  | Build an ordered behavior-preserving refactoring plan                      | `refactoring/plan-*.md`                        |
 | `/fec-refactor`       | Execute one validated behavior-preserving refactoring step at a time       | `refactoring/refactoring-*.md`                 |
 | `/fec-doc-sync`       | Sync READMEs, docs, env notes, scripts, API/route notes, and deploy docs | —                                                |
+
+### Review scope
+
+`/fec-review`, the code/TypeScript/security review agents, and their review skills use three modes:
+
+- **Change review:** explicitly request recent/current/staged changes, a PR or a commit, or use an established change context. With no changes, report that there is nothing to review; do not automatically review recent commits.
+- **Targeted review:** specify a file or directory to review existing code, including unchanged code, without requiring a Git diff.
+- **Project review (default):** with no scope or change context, or when the entire project is requested, inventory project-owned frontend code, related tests, configuration and dependency declarations, then review by module.
+
+A file/directory request reviews its full contents; add "recent changes" to review only its diff. Bare `/fec-review` reviews the project even when changes exist. State mode and scope before review. Automatic review after edits must pass the current change scope explicitly.
+
+Examples: `/fec-review`,`/fec-review review recent changes`,  `/fec-review review src/components/Button.tsx`, `/fec-review review src/features/`, and `/fec-review review the entire project`. These are natural-language instructions, not CLI flags. Explicit scope takes precedence over the default.
+
+Dependency directories, build outputs, caches, generated files and third-party code are excluded by default. Reports record the mode, target scope, reviewed and unreviewed files/modules, exclusions, completion status and verification results. Limited coverage is marked partial; reading callers or running project-wide lint/typecheck does not establish manual review coverage. Change reviews retain merge recommendations; targeted/project reviews assess risk within reviewed scope. The frontend review does not replace a backend audit, and reviewers do not edit business code unless repairs are requested.
 
 ### Skills (auto-activated)
 
@@ -525,3 +539,6 @@ To disable telemetry: `DISABLE_TELEMETRY=1`. Details: [skills.sh CLI docs](https
 **If frontend-craft helps your team ship better code, [give it a Star](https://github.com/bovinphang/frontend-craft).**
 
 </div>
+
+
+Technical diagram quality: `fec-image-generation` prefers local Mermaid for standard sequence/workflow diagrams and the draw.io workflow for editable architecture, with JSON/HTML fallback when tools are unavailable. Export a browser-measured manifest scaled to the PNG, run QA and inspect the final image. Preserve complete text, explicit layout and relationships; repair the source for at most two automatic rounds and report unresolved issues. Reproducible fixtures are in `skills/fec-image-generation/assets/quality-examples/`.

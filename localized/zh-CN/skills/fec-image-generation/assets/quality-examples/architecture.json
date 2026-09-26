@@ -1,0 +1,121 @@
+{
+  "schema_version": 1,
+  "diagram_type": "architecture",
+  "meta": {
+    "title": "业务平台分层与信任边界"
+  },
+  "visual": {
+    "style": "minimal"
+  },
+  "groups": [
+    {
+      "id": "private",
+      "label": "内部可信网络 / 业务与数据服务",
+      "x": 360,
+      "y": 70,
+      "width": 920,
+      "height": 470,
+      "type": "security"
+    }
+  ],
+  "nodes": [
+    {
+      "id": "web",
+      "label": "用户浏览器应用",
+      "sublabel": "外部入口",
+      "type": "browser",
+      "x": 70,
+      "y": 160,
+      "width": 200,
+      "height": 112
+    },
+    {
+      "id": "gateway",
+      "label": "统一身份验证与请求路由网关",
+      "type": "gateway",
+      "x": 420,
+      "y": 150,
+      "width": 220,
+      "height": 112,
+      "group": "private"
+    },
+    {
+      "id": "service",
+      "label": "订单查询与审批业务服务",
+      "type": "backend",
+      "x": 760,
+      "y": 150,
+      "width": 220,
+      "height": 112,
+      "group": "private"
+    },
+    {
+      "id": "cache",
+      "label": "短期查询结果缓存",
+      "type": "memory",
+      "x": 420,
+      "y": 370,
+      "width": 220,
+      "height": 112,
+      "group": "private"
+    },
+    {
+      "id": "db",
+      "label": "订单与审批记录数据库",
+      "type": "database",
+      "x": 760,
+      "y": 370,
+      "width": 220,
+      "height": 112,
+      "group": "private"
+    },
+    {
+      "id": "queue",
+      "label": "异步任务与消息通知队列",
+      "type": "queue",
+      "x": 1060,
+      "y": 370,
+      "width": 180,
+      "height": 112,
+      "group": "private"
+    }
+  ],
+  "connections": [
+    {
+      "from": "web",
+      "to": "gateway",
+      "label": "鉴权请求",
+      "flow": "control"
+    },
+    {
+      "from": "gateway",
+      "to": "service",
+      "label": "已验证请求",
+      "flow": "control"
+    },
+    {
+      "from": "service",
+      "to": "gateway",
+      "label": "查询响应",
+      "flow": "data"
+    },
+    {
+      "from": "service",
+      "to": "cache",
+      "label": "读取缓存",
+      "flow": "read"
+    },
+    {
+      "from": "service",
+      "to": "db",
+      "label": "查询记录",
+      "flow": "read"
+    },
+    {
+      "from": "service",
+      "to": "queue",
+      "label": "提交通知任务",
+      "flow": "async"
+    }
+  ]
+}

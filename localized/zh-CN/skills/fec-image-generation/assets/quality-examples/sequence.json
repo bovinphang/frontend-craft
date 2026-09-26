@@ -1,0 +1,53 @@
+{
+  "schema_version": 1,
+  "diagram_type": "sequence",
+  "meta": {
+    "title": "订单查询与缓存回填"
+  },
+  "participants": [
+    {
+      "id": "client",
+      "label": "用户浏览器客户端",
+      "type": "frontend"
+    },
+    {
+      "id": "api",
+      "label": "订单服务接口",
+      "type": "backend"
+    },
+    {
+      "id": "db",
+      "label": "持久化数据库",
+      "type": "database"
+    }
+  ],
+  "messages": [
+    {
+      "from": "client",
+      "to": "api",
+      "label": "查询订单详细信息与当前支付状态"
+    },
+    {
+      "from": "api",
+      "to": "api",
+      "label": "验证身份与订单访问权限"
+    },
+    {
+      "from": "api",
+      "to": "db",
+      "label": "缓存未命中，读取订单记录"
+    },
+    {
+      "from": "db",
+      "to": "api",
+      "label": "返回订单记录与支付状态",
+      "variant": "return"
+    },
+    {
+      "from": "api",
+      "to": "client",
+      "label": "返回查询结果并更新页面",
+      "variant": "return"
+    }
+  ]
+}

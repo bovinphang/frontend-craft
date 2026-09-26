@@ -3,6 +3,19 @@
 
 import fs from "node:fs";
 import path from "node:path";
+import { layoutText, fitNodeText, routeConnector, placeEdgeLabel, overlaps } from "./diagram-layout.mjs";
+
+/** @type {import("./diagram-layout.mjs").QualityIssue[]} */
+const qualityIssues = [];
+/** @type {Array<{id:string,owner:string,kind:string,text:string,lines:string[],x:number,y:number,width:number,height:number}>} */
+const textBounds = [];
+/** @type {Box[]} */
+let routeObstacles = [];
+/** @type {Array<Array<[number,number]>>} */
+const occupiedRoutes = [];
+/** @type {Array<{id:string,label:string,points:Array<[number,number]>}>} */
+const deferredLabels=[];
+let finalCanvas = { width: 0, height: 0 };
 
 const ALLOWED_TYPES = new Set(["workflow", "sequence", "dataflow", "lifecycle", "architecture"]);
 const NODE_TYPES = new Set([
@@ -34,8 +47,12 @@ try {
   /** @type {SummaryCard[]} */
   const summary = "summary" in renderResult ? /** @type {SummaryCard[]} */ (renderResult.summary) : [];
   const style = normalizeVisualStyle(diagram.visual, "/visual");
-  const html = renderHtml(diagram.meta.title, diagram.meta.subtitle ?? "", renderResult.svg, type, summary, style);
+  const rawHtml = renderHtml(diagram.meta.title, diagram.meta.subtitle ?? "", renderResult.svg, type, summary, style);
 
+  const pageStyles = rawHtml.match(/<style>([\s\S]*?)<\/style>/)?.[1] ?? "";
+  const diagramStyles=(pageStyles.match(/[^{}]+\{[^{}]*\}/g) ?? []).filter(rule=>/^\s*(?:[:][r]oot|\[data-|\.node|\.edge|\.group|\.lane|\.legend|\.flow|\.label|\.sublabel|\.muted|\.actor|\.step|\.lifeline|\.tech-diagram|\.surface|\.stage|marker|#arrow)/.test(rule)).join("\n");
+  const svgStyles = diagramStyles.replaceAll(":root", "svg").replaceAll(/\[data-theme=/g, "svg[data-theme=").replaceAll(/\[data-visual-style=/g, "svg[data-visual-style=");
+  const html = rawHtml.replace('data-visual-style="default" data-export-root', `data-visual-style="${style}" data-export-root`).replace(/(<svg[^>]*>)/, `$1<style>${svgStyles}\nsvg{font-family:ui-sans-serif,system-ui,"Segoe UI",sans-serif;}svg[data-theme="dark"]{--surface:#172033;--text:#e2e8f0;--muted:#94a3b8;--line:#94a3b8;}svg[data-theme="light"]{--surface:#f8fafc;--text:#0f172a;--muted:#475569;--line:#475569;--frontend:#0369a1;--backend:#047857;--database:#0e7490;--external:#475569;--agent:#0e7490;--model:#7e22ce;--memory:#047857;--gateway:#a16207;--browser:#0369a1;--queue:#c2410c;--flow-control:#b45309;--flow-data:#0369a1;--flow-read:#047857;--flow-write:#15803d;--flow-async:#64748b;--flow-feedback:#7e22ce;}</style>`);
   fs.mkdirSync(path.dirname(path.resolve(outputPath)), { recursive: true });
   fs.writeFileSync(outputPath, html, "utf8");
 
@@ -50,6 +67,7 @@ try {
     input: inputPath,
     output: outputPath,
     manifest: args.manifest ?? null,
+    quality: { status: qualityIssues.length ? "partial" : "estimated", issues: qualityIssues },
     nodes: renderResult.manifest.boxes.length,
     connectors: renderResult.manifest.connectors.length,
   };
@@ -165,6 +183,7 @@ function renderArchitecture(diagram) {
       label,
       sublabel: "",
       type,
+      kind: "group",
     };
     groupBoxes.push(box);
   }
@@ -186,6 +205,14 @@ function renderArchitecture(diagram) {
       type: normalizeType(node.type, `/nodes/${index}/type`),
     });
   }
+
+  prepareBoxes(boxes, nodes);
+  for (const node of nodes) {
+    const box = boxes.get(String(node.id));
+    const group = groupBoxes.find((candidate) => candidate.id === node.group);
+    if (box && group && (box.x < group.x + 12 || box.y < group.y + 32 || box.x + box.width > group.x + group.width - 12 || box.y + box.height > group.y + group.height - 12)) qualityIssues.push({code:"group-containment",id:box.id,message:`Node "${box.id}" exceeds group "${group.id}" content area.`});
+  }
+
 
   /** @type {Connector[]} */
   const connectors = [];
@@ -209,11 +236,13 @@ function renderArchitecture(diagram) {
   const contentBottom = Math.max(360, maxBoxExtent(allBoxes, "y") + 64);
   const legend = normalizeLegend(diagram.legend, [...boxes.values()]);
   const flowLegend = normalizeFlowLegend(diagram.flowLegend, [...flowSet]);
-  const legendWidth = Math.max(88 + legend.length * 118, 88 + flowLegend.length * 128);
-  const width = Math.max(860, maxBoxExtent(allBoxes, "x") + 64, legendWidth);
-  const legendSvg = renderArchitectureLegend(legend, 44, contentBottom - 4);
-  const flowLegendSvg = renderFlowLegend(flowLegend, 44, contentBottom + (legend.length > 0 ? 42 : 0));
-  const height = contentBottom + (legend.length > 0 ? 54 : 0) + (flowLegend.length > 0 ? 54 : 0);
+  const width = Math.max(860, maxBoxExtent(allBoxes, "x") + 64);
+  const columns=Math.max(1,Math.floor((width-88)/200));
+  const legendHeight=legend.length ? 30+Math.ceil(legend.length/columns)*72 : 0;
+  const flowHeight=flowLegend.length ? 30+Math.ceil(flowLegend.length/columns)*72 : 0;
+  const legendSvg = renderArchitectureLegend(legend,44,contentBottom-4,columns);
+  const flowLegendSvg = renderFlowLegend(flowLegend,44,contentBottom+legendHeight,columns);
+  const height=contentBottom+legendHeight+flowHeight+32;
   const groupSvg = groupBoxes.map(renderGroup).join("\n");
   const boxSvg = [...boxes.values()].map(renderBox).join("\n");
   const svg = wrapSvg(width, height, `${groupSvg}\n${connectionSvg}\n${boxSvg}\n${legendSvg}\n${flowLegendSvg}`);
@@ -249,8 +278,8 @@ function renderLaneDiagram(diagram, itemKey, edgeKey) {
     assertObject(item, `/${itemKey}/${index}`);
     return requireNumber(item, "col", `/${itemKey}/${index}/col`);
   }));
-  const width = Math.max(780, 190 + (maxCol + 1) * 180);
-  const height = Math.max(420, 140 + lanes.length * 145);
+  let width = Math.max(780, 190 + (maxCol + 1) * 180);
+  let height = Math.max(420, 140 + lanes.length * 145);
   const laneHeight = 118;
   const top = 72;
   const left = 142;
@@ -285,6 +314,36 @@ function renderLaneDiagram(diagram, itemKey, edgeKey) {
     boxes.set(id, box);
   }
 
+  prepareBoxes(boxes, items);
+  let laneTop = 72;
+  /** @type {Array<{y:number,height:number}>} */
+  const laneGeometry = [];
+  const columns = [...new Set(items.map((item) => Number(item.col)))].sort((a, b) => a - b);
+  const columnX = new Map();
+  let nextX = 160;
+  for (const col of columns) {
+    columnX.set(col, nextX);
+    nextX += Math.max(0, ...items.filter((item) => item.col === col).map((item) => boxes.get(String(item.id))?.width ?? 0)) + 64;
+  }
+  for (const lane of lanes) {
+    const members = items.filter((item) => item.lane === lane.id);
+    const columnBottom = new Map();
+    for (const item of members) {
+      const box = boxes.get(String(item.id));
+      if (!box) continue;
+      box.x = Number(columnX.get(Number(item.col)));
+      const baseline = columnBottom.get(item.col) ?? laneTop + 48;
+      box.y = baseline + (typeof item.yOffset === "number" ? item.yOffset : 0);
+      columnBottom.set(item.col, box.y + box.height + 32);
+    }
+    const bottom = Math.max(laneTop + 112, ...members.map((item) => { const b = boxes.get(String(item.id)); return b ? b.y + b.height + 24 : laneTop; }));
+    laneGeometry.push({ y: laneTop, height: bottom - laneTop });
+    laneTop = bottom + 32;
+  }
+  width = Math.max(width, nextX + 40);
+  height = Math.max(height, laneTop + 40);
+
+
   /** @type {Connector[]} */
   const connectors = [];
   const edgeSvg = edges.map((edge, index) => {
@@ -303,8 +362,8 @@ function renderLaneDiagram(diagram, itemKey, edgeKey) {
   }).join("\n");
 
   const laneSvg = lanes.map((lane, index) => {
-    const y = top + index * laneHeight;
-    return `<g class="lane"><rect x="34" y="${y}" width="${width - 68}" height="${laneHeight - 16}" rx="10"/><text x="52" y="${y + 28}" class="label muted">${escapeHtml(String(lane.label))}</text></g>`;
+    const y = laneGeometry[index].y;
+    return `<g class="lane"><rect x="34" y="${y}" width="${width - 68}" height="${laneGeometry[index].height}" rx="10"/><text x="52" y="${y + 28}" class="label muted">${escapeHtml(String(lane.label))}</text></g>`;
   }).join("\n");
   const boxSvg = [...boxes.values()].map(renderBox).join("\n");
   const svg = wrapSvg(width, height, `${laneSvg}\n${edgeSvg}\n${boxSvg}`);
@@ -323,8 +382,8 @@ function renderSequence(diagram) {
   const participants = requireObjectArray(diagram.participants, "/participants");
   const messages = requireObjectArray(diagram.messages, "/messages");
   const ids = new Set();
-  const width = Math.max(760, 160 + participants.length * 170);
-  const height = Math.max(420, 170 + messages.length * 82);
+  let width = Math.max(760, 160 + participants.length * 170);
+  let height = Math.max(420, 170 + messages.length * 82);
   const top = 74;
   const laneGap = (width - 160) / Math.max(1, participants.length - 1);
   /** @type {Map<string, Box>} */
@@ -349,25 +408,40 @@ function renderSequence(diagram) {
     });
   }
 
+  prepareBoxes(boxes, participants);
+  const gap = Math.max(280, ...[...boxes.values()].map(box=>box.width+80), ...messages.map((m) => layoutText(typeof m.label === "string" ? m.label : "", 260, 12, 16).width + 60));
+  width = Math.max(width, 160 + participants.length * gap);
+  [...boxes.values()].forEach((box, index) => { box.x = 80 + index * gap + gap / 2 - box.width / 2; });
+  let messageY = Math.max(...[...boxes.values()].map((box) => box.y + box.height)) + 72;
+  height = Math.max(height, messageY + messages.length * 108 + 80);
+
+
   /** @type {Connector[]} */
   const connectors = [];
-  const lifelines = [...boxes.values()].map((box) => `<line x1="${centerX(box)}" y1="${box.y + box.height}" x2="${centerX(box)}" y2="${height - 56}" class="lifeline"/>`).join("\n");
+
   const messageSvg = messages.map((message, index) => {
     assertObject(message, `/messages/${index}`);
+    if (["activation","activate","deactivate","fragment","alt","loop","par","async"].some((key)=>key in message)) throw usageError(`/messages/${index}`,"Complex sequence semantics require the Mermaid route; do not simplify activation/fragments/async fields.");
     const from = requireId(message, "from", `/messages/${index}/from`);
     const to = requireId(message, "to", `/messages/${index}/to`);
     const fromBox = boxes.get(from);
     const toBox = boxes.get(to);
     if (!fromBox) throw usageError(`/messages/${index}/from`, `Unknown endpoint "${from}".`);
     if (!toBox) throw usageError(`/messages/${index}/to`, `Unknown endpoint "${to}".`);
-    const y = top + 104 + index * 72;
+    const messageText = typeof message.label === "string" ? message.label : "";
+    const textLayout = layoutText(messageText, 190, 12, 16);
+    const y = messageY;
+    messageY += Math.max(72, textLayout.height + 56 + (from === to ? 32 : 0));
     /** @type {Array<[number, number]>} */
-    const points = [[centerX(fromBox), y], [centerX(toBox), y]];
+    const points = from === to ? [[centerX(fromBox), y], [centerX(fromBox) + 64, y], [centerX(fromBox) + 64, y + 32], [centerX(fromBox), y + 32]] : [[centerX(fromBox), y], [centerX(toBox), y]];
+    occupiedRoutes.push(points);
     const variant = normalizeVariant(message.variant, `/messages/${index}/variant`);
-    connectors.push({ id: `${from}-${to}-${index}`, from, to, points });
+    connectors.push({ id: `${from}-${to}-${index}`, from, to, points, kind: "sequence", self: from === to });
     return renderConnector(points, variant, typeof message.label === "string" ? message.label : "");
   }).join("\n");
   const boxSvg = [...boxes.values()].map(renderBox).join("\n");
+  height=Math.max(height,messageY+80);
+  const lifelines = [...boxes.values()].map((box) => `<line x1="${centerX(box)}" y1="${box.y + box.height}" x2="${centerX(box)}" y2="${height - 56}" class="lifeline"/>`).join("\n");
   const svg = wrapSvg(width, height, `${lifelines}\n${messageSvg}\n${boxSvg}`);
 
   return { svg, manifest: manifestFrom(width, height, [...boxes.values()], connectors) };
@@ -409,6 +483,8 @@ function renderDataflow(diagram) {
       type,
     });
   }
+
+  prepareBoxes(boxes, nodes);
 
   /** @type {Connector[]} */
   const connectors = [];
@@ -463,22 +539,45 @@ function countStageBefore(nodes, endIndex, stage) {
   return count;
 }
 
+
+/** @param {Map<string, Box>} boxes @param {Array<Record<string, unknown>>} sources */
+function prepareBoxes(boxes, sources) {
+  for (const [id, box] of boxes) {
+    const source = sources.find((item) => item.id === id) ?? {};
+    const fitted = fitNodeText(box, { width: typeof source.width === "number", height: typeof source.height === "number" });
+    boxes.set(id, fitted.box);
+    qualityIssues.push(...fitted.issues);
+  }
+  routeObstacles = [...boxes.values()];
+}
+
+/** @param {string} id @param {string} owner @param {string} kind @param {string} text @param {import("./diagram-layout.mjs").TextLayout} layout @param {number} cx @param {number} top @param {string} cls */
+function renderText(id, owner, kind, text, layout, cx, top, cls) {
+  textBounds.push({ id, owner, kind, text, lines: layout.lines, x: cx - layout.width / 2, y: top, width: layout.width, height: layout.height });
+  return `<text data-label-id="${escapeHtml(id)}" x="${cx}" y="${top + layout.fontSize}" class="${cls}" font-size="${layout.fontSize}" text-anchor="middle">${layout.lines.map((line, i) => `<tspan x="${cx}" dy="${i ? layout.lineHeight : 0}">${escapeHtml(line)}</tspan>`).join("")}</text>`;
+}
+
 /**
  * @param {Box} box
  */
 function renderBox(box) {
-  const labelLines = wrapLabel(box.label, 18).slice(0, 2);
   const shape = box.shape ?? "box";
   const isSemantic = isSemanticNodeType(box.type);
-  const labelStartY = shape === "diamond" ? centerY(box) - (labelLines.length > 1 ? 5 : -3) : box.y + (isSemantic ? Math.max(30, box.height - 24) : 23);
-  const labelSvg = labelLines.map((line, index) => `<text x="${centerX(box)}" y="${labelStartY + index * 13}" class="label" text-anchor="middle">${escapeHtml(line)}</text>`).join("\n");
-  const sublabel = box.sublabel ? `<text x="${centerX(box)}" y="${box.y + box.height - 13}" class="sublabel" text-anchor="middle">${escapeHtml(box.sublabel)}</text>` : "";
-  const actor = box.actor ? `<text x="${centerX(box)}" y="${box.y - 8}" class="actor" text-anchor="middle">${escapeHtml(box.actor)}</text>` : "";
-  const step = box.step ? `<g class="step-badge"><circle cx="${box.x + 13}" cy="${box.y + 13}" r="10"/><text x="${box.x + 13}" y="${box.y + 17}" text-anchor="middle">${escapeHtml(box.step)}</text></g>` : "";
+  const available = shape === "diamond" ? box.width * 0.5 - 12 : (box.type === "queue" ? box.width - 64 : box.width - 32);
+  const main = layoutText(box.label, available);
+  const sub = layoutText(box.sublabel, available, 12, 16);
+  const total = main.height + (box.sublabel ? sub.height + 6 : 0);
+  const textTop = shape === "diamond" ? centerY(box) - total / 2 : box.y + (["database", "vectorstore"].includes(box.type) ? 30 : box.type === "queue" ? 20 : isSemantic ? 46 : box.actor ? 40 : 20);
+  const labelSvg = renderText(box.id + "-label", box.id, "node", box.label, main, centerX(box), textTop, "label");
+  const sublabel = box.sublabel ? renderText(box.id + "-sub", box.id, "node", box.sublabel, sub, centerX(box), textTop + main.height + 6, "sublabel") : "";
+  const actorLayout=layoutText(box.actor??"",box.width-32,12,16);
+  const actor = box.actor ? renderText(box.id+"-actor",box.id,"group",box.actor,actorLayout,centerX(box),box.y-actorLayout.height-12,"actor") : "";
+  const stepLayout=layoutText(box.step??"",Math.max(14,box.width-16),9,12);
+  const step = box.step ? `<g class="step-badge"><circle cx="${box.x + 13}" cy="${box.y + 13}" r="${Math.max(10,stepLayout.width/2+4)}"/>${renderText(box.id+"-step",box.id,"group",box.step,stepLayout,box.x+13,box.y+7,"step-label")}</g>` : "";
   const shapeSvg = renderSemanticShape(box) ?? (shape === "diamond"
     ? `<polygon points="${centerX(box)},${box.y} ${box.x + box.width},${centerY(box)} ${centerX(box)},${box.y + box.height} ${box.x},${centerY(box)}"/>`
     : `<rect x="${box.x}" y="${box.y}" width="${box.width}" height="${box.height}" rx="${shape === "terminal" ? Math.round(box.height / 2) : 10}"/>`);
-  return `<g class="node node-${box.type}">${actor}\n${shapeSvg}\n${step}\n${labelSvg}\n${sublabel}</g>`;
+  return `<g data-node-id="${escapeHtml(box.id)}" class="node node-${box.type}">${actor}\n${shapeSvg}\n${step}\n${labelSvg}\n${sublabel}</g>`;
 }
 
 /**
@@ -514,8 +613,9 @@ function renderSemanticShape(box) {
     return `<path d="M ${box.x} ${box.y} L ${box.x + box.width - fold} ${box.y} L ${box.x + box.width} ${box.y + fold} L ${box.x + box.width} ${box.y + box.height} L ${box.x} ${box.y + box.height} Z"/><path d="M ${box.x + box.width - fold} ${box.y} L ${box.x + box.width - fold} ${box.y + fold} L ${box.x + box.width} ${box.y + fold}" fill="none"/>`;
   }
   if (box.type === "queue") {
-    const ry = Math.min(18, box.height / 3);
-    return `<ellipse cx="${box.x + ry}" cy="${cy}" rx="${ry * 0.58}" ry="${ry}"/><rect x="${box.x + ry}" y="${cy - ry}" width="${box.width - ry * 2}" height="${ry * 2}" stroke="none"/><line x1="${box.x + ry}" y1="${cy - ry}" x2="${box.x + box.width - ry}" y2="${cy - ry}"/><line x1="${box.x + ry}" y1="${cy + ry}" x2="${box.x + box.width - ry}" y2="${cy + ry}"/><ellipse cx="${box.x + box.width - ry}" cy="${cy}" rx="${ry * 0.58}" ry="${ry}"/>`;
+    const ry = box.height / 2;
+    const end = Math.min(18, box.width / 6);
+    return `<ellipse cx="${box.x + end}" cy="${cy}" rx="${end}" ry="${ry}"/><rect x="${box.x + end}" y="${cy - ry}" width="${box.width - end * 2}" height="${ry * 2}" stroke="none"/><line x1="${box.x + end}" y1="${cy - ry}" x2="${box.x + box.width - end}" y2="${cy - ry}"/><line x1="${box.x + end}" y1="${cy + ry}" x2="${box.x + box.width - end}" y2="${cy + ry}"/><ellipse cx="${box.x + box.width - end}" cy="${cy}" rx="${end}" ry="${ry}"/>`;
   }
   if (box.type === "browser") {
     return `<rect x="${box.x}" y="${box.y}" width="${box.width}" height="${box.height}" rx="10"/><rect x="${box.x}" y="${box.y}" width="${box.width}" height="20" rx="10" class="node-chrome"/><circle cx="${box.x + 14}" cy="${box.y + 10}" r="3" class="node-dot"/><circle cx="${box.x + 26}" cy="${box.y + 10}" r="3" class="node-dot"/><circle cx="${box.x + 38}" cy="${box.y + 10}" r="3" class="node-dot"/>`;
@@ -534,7 +634,7 @@ function renderSemanticShape(box) {
  * @param {Box} box
  */
 function renderGroup(box) {
-  return `<g class="group group-${box.type}"><rect x="${box.x}" y="${box.y}" width="${box.width}" height="${box.height}" rx="14"/><text x="${box.x + 16}" y="${box.y + 26}" class="label muted">${escapeHtml(box.label)}</text></g>`;
+  return `<g class="group group-${box.type}"><rect x="${box.x}" y="${box.y}" width="${box.width}" height="${box.height}" rx="14"/>${renderText(box.id+"-group",box.id,"group",box.label,layoutText(box.label,box.width-32,12,16),box.x+box.width/2,box.y+10,"sublabel")}</g>`;
 }
 
 /**
@@ -544,8 +644,12 @@ function renderGroup(box) {
  */
 function renderConnector(points, variant, label, flow = "") {
   const pathData = points.map(([x, y], index) => `${index === 0 ? "M" : "L"} ${x} ${y}`).join(" ");
-  const midpoint = points[Math.floor((points.length - 1) / 2)];
-  const labelSvg = label ? `<text x="${midpoint[0]}" y="${midpoint[1] - 8}" class="edge-label" text-anchor="middle">${escapeHtml(label)}</text>` : "";
+  const textLayout = layoutText(label, 190, 12, 16);
+  const placed = placeEdgeLabel(points, textLayout, [...routeObstacles, ...textBounds]);
+  const id = `edge-label-${textBounds.length}`;
+  if (label) qualityIssues.push(...placed.issues.map((issue) => ({ ...issue, id })));
+  if(label) deferredLabels.push({id,label,points});
+  const labelSvg = label ? renderText(id, id, "edge", label, textLayout, placed.rect.x + placed.rect.width / 2, placed.rect.y, "edge-label") : "";
   const marker = flow ? `flow-${flow}` : (variant === "return" ? "default" : variant);
   return `<g class="edge edge-${variant}${flow ? ` flow-${flow}` : ""}"><path d="${pathData}" marker-end="url(#arrow-${marker})"/>\n${labelSvg}</g>`;
 }
@@ -556,7 +660,19 @@ function renderConnector(points, variant, label, flow = "") {
  * @param {string} body
  */
 function wrapSvg(width, height, body) {
-  return `<svg class="tech-diagram" data-export-root="1" role="img" viewBox="0 0 ${width} ${height}" xmlns="http://www.w3.org/2000/svg">
+  for(let i=textBounds.length-1;i>=0;i--) if(textBounds[i].kind === "edge") textBounds.splice(i,1);
+  for(const {id,label,points} of deferredLabels) {
+    const layout=layoutText(label,190,12,16);
+    const placed=placeEdgeLabel(points,layout,[...routeObstacles,...textBounds],occupiedRoutes);
+    qualityIssues.push(...placed.issues);
+    const replacement=renderText(id,id,"edge",label,layout,placed.rect.x+placed.rect.width/2,placed.rect.y,"edge-label");
+    body=body.replace(new RegExp('<text data-label-id="'+id+'"[^>]*>[\\s\\S]*?</text>'),replacement);
+  }
+
+  width = Math.ceil(Math.max(width, ...routeObstacles.map((b) => b.x + b.width + 40), ...textBounds.map((b) => b.x + b.width + 40), ...occupiedRoutes.flat().map((p) => p[0] + 40)));
+  height = Math.ceil(Math.max(height, ...routeObstacles.map((b) => b.y + b.height + 40), ...textBounds.map((b) => b.y + b.height + 40), ...occupiedRoutes.flat().map((p) => p[1] + 40)));
+  finalCanvas = { width, height };
+  return `<svg class="tech-diagram" data-theme="light" data-visual-style="default" data-export-root="1" role="img" viewBox="0 0 ${width} ${height}" xmlns="http://www.w3.org/2000/svg">
   <defs>
     <marker id="arrow-default" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z"/></marker>
     <marker id="arrow-emphasis" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z"/></marker>
@@ -760,8 +876,8 @@ button {
 .node-glyph-outline, .node-glyph-line { fill: none; stroke: currentColor; }
 .node-chrome { fill: currentColor; opacity: 0.25; stroke: none; }
 .node-dot { fill: currentColor; stroke: none; opacity: 0.65; }
-.label { fill: var(--text); font-weight: 650; font-size: 12px; }
-.sublabel, .muted, .actor { fill: var(--muted); font-size: 10px; }
+.label { fill: var(--text); font-weight: 650; font-size: 14px; }
+.sublabel, .muted, .actor { fill: var(--muted); font-size: 12px; }
 .actor { font-weight: 650; }
 .step-badge circle { fill: var(--panel); stroke: currentColor; stroke-width: 1.3; }
 .step-badge text { fill: var(--text); font-size: 9px; font-weight: 750; }
@@ -775,7 +891,7 @@ button {
 .flow-write path { stroke: var(--flow-write); stroke-dasharray: 5 4; }
 .flow-async path { stroke: var(--flow-async); stroke-dasharray: 4 4; }
 .flow-feedback path { stroke: var(--flow-feedback); stroke-width: 2; }
-.edge-label { fill: var(--muted); font-size: 10px; paint-order: stroke; stroke: var(--surface); stroke-width: 5px; stroke-linejoin: round; }
+.edge-label { fill: var(--muted); font-size: 12px; paint-order: stroke; stroke: var(--surface); stroke-width: 5px; stroke-linejoin: round; }
 .lifeline { stroke: color-mix(in srgb, var(--muted), transparent 48%); stroke-dasharray: 4 5; }
 .summary-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 10px; margin-top: 12px; }
 .summary-card { background: var(--panel); border: 1px solid color-mix(in srgb, var(--muted), transparent 74%); border-radius: 8px; padding: 12px; }
@@ -823,16 +939,25 @@ ${summaryHtml}
 <script>
 const root = document.documentElement;
 const stored = localStorage.getItem("fec-tech-diagram-theme");
-if (stored === "dark" || stored === "light") root.dataset.theme = stored;
+const diagramSvg = document.querySelector("[data-export-root]");
+root.dataset.theme = stored === "dark" ? "dark" : "light";
+diagramSvg.dataset.theme = root.dataset.theme;
+diagramSvg.dataset.visualStyle = root.dataset.visualStyle;
 document.querySelector('[data-action="theme"]').addEventListener("click", () => {
   const next = root.dataset.theme === "light" ? "dark" : "light";
   root.dataset.theme = next;
+  diagramSvg.dataset.theme = next;
   localStorage.setItem("fec-tech-diagram-theme", next);
 });
 document.querySelector('[data-action="print"]').addEventListener("click", () => window.print());
 document.querySelector('[data-action="svg"]').addEventListener("click", () => {
   const svg = document.querySelector("[data-export-root]");
-  const source = new XMLSerializer().serializeToString(svg);
+  const clone = svg.cloneNode(true);
+  const originals = [svg, ...svg.querySelectorAll("*")];
+  const copies = [clone, ...clone.querySelectorAll("*")];
+  const properties = ["fill","stroke","stroke-width","stroke-dasharray","font-family","font-size","font-weight","color","opacity","paint-order","text-anchor"];
+  originals.forEach((element,index) => { const computed=getComputedStyle(element); properties.forEach(property=>copies[index].style?.setProperty(property,computed.getPropertyValue(property))); });
+  const source = new XMLSerializer().serializeToString(clone);
   const blob = new Blob([source], { type: "image/svg+xml" });
   const link = document.createElement("a");
   link.href = URL.createObjectURL(blob);
@@ -866,10 +991,20 @@ ${summary.map((card) => `    <article class="summary-card summary-${card.type}">
  * @param {Connector[]} connectors
  */
 function manifestFrom(width, height, boxes, connectors) {
+  for(const connector of connectors) if(connector.points.some(([x,y])=>x<0||y<0)) qualityIssues.push({code:"connector-out-of-bounds",id:connector.id,message:`Connector "${connector.id}" has negative explicit coordinates.`});
+  const nodes = boxes.filter((box) => box.kind !== "group");
+  for (const box of boxes) if (box.x < 0 || box.y < 0) qualityIssues.push({code:"box-out-of-bounds",id:box.id,message:`Box "${box.id}" has negative coordinates.`});
+  for (let i=0;i<nodes.length;i++) for (let j=i+1;j<nodes.length;j++) if (overlaps(nodes[i],nodes[j])) qualityIssues.push({code:"box-overlap",id:nodes[i].id,message:`Nodes "${nodes[i].id}" and "${nodes[j].id}" overlap.`});
   return {
-    canvas: { width, height },
-    boxes: boxes.map(({ id, x, y, width: boxWidth, height: boxHeight, label }) => ({ id, x, y, width: boxWidth, height: boxHeight, label })),
+    canvas: finalCanvas.width ? finalCanvas : { width, height },
+    boxes: boxes.map(({ id, x, y, width: boxWidth, height: boxHeight, label, kind }) => ({ id, x, y, width: boxWidth, height: boxHeight, label, kind })),
+    groups: boxes.filter((box) => box.kind === "group").map((box) => ({ ...box })),
     connectors,
+    labels: textBounds,
+    coordinateSpace: "svg",
+    scale: 1,
+    measurement: "estimated",
+    issues: qualityIssues,
   };
 }
 
@@ -905,14 +1040,15 @@ function routeWithWaypoints(from, to, waypoints, pointer) {
   if (!Array.isArray(waypoints)) throw usageError(pointer, "Expected array of [x, y] waypoints.");
   /** @type {Array<[number, number]>} */
   const parsed = waypoints.map((point, index) => {
-    if (!Array.isArray(point) || point.length !== 2 || typeof point[0] !== "number" || typeof point[1] !== "number") {
+    if (!Array.isArray(point) || point.length !== 2 || typeof point[0] !== "number" || typeof point[1] !== "number" || !Number.isFinite(point[0]) || !Number.isFinite(point[1])) {
       throw usageError(`${pointer}/${index}`, "Expected [x, y] number tuple.");
     }
     return [point[0], point[1]];
   });
-  const firstTarget = parsed[0] ?? [centerX(to), centerY(to)];
-  const lastTarget = parsed[parsed.length - 1] ?? [centerX(from), centerY(from)];
-  return [edgePointToward(from, firstTarget), ...parsed, edgePointToward(to, lastTarget)];
+  const result = routeConnector(from, to, routeObstacles.filter((box) => box.id !== from.id && box.id !== to.id), occupiedRoutes, parsed);
+  qualityIssues.push(...result.issues);
+  occupiedRoutes.push(result.points);
+  return result.points;
 }
 
 /**
@@ -1006,11 +1142,13 @@ function normalizeLegend(legend, boxes) {
  * @param {number} x
  * @param {number} y
  */
-function renderArchitectureLegend(items, x, y) {
+function renderArchitectureLegend(items, x, y, columns = 4) {
   if (items.length === 0) return "";
   const itemSvg = items.map((item, index) => {
-    const itemX = x + index * 118;
-    return `<g class="node node-${item.type}"><rect x="${itemX}" y="${y + 16}" width="16" height="10" rx="2"/><text x="${itemX + 24}" y="${y + 25}" class="sublabel">${escapeHtml(item.label)}</text></g>`;
+    const itemX = x + (index % columns) * 200;
+    const itemY = y + Math.floor(index / columns) * 72;
+    const text = layoutText(item.label,160,12,16);
+    return `<g class="node node-${item.type}"><rect x="${itemX}" y="${itemY + 16}" width="16" height="10" rx="2"/>${renderText("legend-"+index,"legend","group",item.label,text,itemX+24+text.width/2,itemY+14,"sublabel")}</g>`;
   }).join("\n");
   return `<g class="legend"><text x="${x}" y="${y}" class="label">Legend</text>\n${itemSvg}</g>`;
 }
@@ -1020,11 +1158,13 @@ function renderArchitectureLegend(items, x, y) {
  * @param {number} x
  * @param {number} y
  */
-function renderFlowLegend(items, x, y) {
+function renderFlowLegend(items, x, y, columns = 4) {
   if (items.length === 0) return "";
   const itemSvg = items.map((item, index) => {
-    const itemX = x + index * 128;
-    return `<g class="edge flow-${item.type}"><path d="M ${itemX} ${y + 22} L ${itemX + 28} ${y + 22}" marker-end="url(#arrow-flow-${item.type})"/><text x="${itemX + 38}" y="${y + 26}" class="sublabel">${escapeHtml(item.label)}</text></g>`;
+    const itemX = x + (index % columns) * 200;
+    const itemY = y + Math.floor(index / columns) * 72;
+    const text = layoutText(item.label,152,12,16);
+    return `<g class="edge flow-${item.type}"><path d="M ${itemX} ${itemY + 22} L ${itemX + 28} ${itemY + 22}" marker-end="url(#arrow-flow-${item.type})"/>${renderText("flow-legend-"+index,"flow-legend","group",item.label,text,itemX+38+text.width/2,itemY+14,"sublabel")}</g>`;
   }).join("\n");
   return `<g class="flow-legend"><text x="${x}" y="${y}" class="label">Flow Legend</text>\n${itemSvg}</g>`;
 }
@@ -1115,13 +1255,10 @@ function normalizeSummary(summary) {
  * @returns {Array<[number, number]>}
  */
 function routeBoxes(from, to) {
-  const start = [centerX(from), centerY(from)];
-  const end = [centerX(to), centerY(to)];
-  if (Math.abs(start[1] - end[1]) < 18) {
-    return [[from.x + from.width, start[1]], [to.x, end[1]]];
-  }
-  const midX = Math.round((start[0] + end[0]) / 2);
-  return [[start[0], start[1]], [midX, start[1]], [midX, end[1]], [end[0], end[1]]];
+  const result = routeConnector(from, to, routeObstacles.filter((box) => box.id !== from.id && box.id !== to.id), occupiedRoutes);
+  qualityIssues.push(...result.issues);
+  occupiedRoutes.push(result.points);
+  return result.points;
 }
 
 /**
@@ -1341,6 +1478,7 @@ function printReport(report, format) {
  *   type: string;
  *   actor?: string;
  *   step?: string;
+ *   kind?: string;
  *   shape?: "box" | "diamond" | "terminal";
  * }} Box
  *
@@ -1348,6 +1486,8 @@ function printReport(report, format) {
  *   id: string;
  *   from: string;
  *   to: string;
+ *   kind?: string;
+ *   self?: boolean;
  *   points: Array<[number, number]>;
  * }} Connector
  *

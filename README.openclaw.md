@@ -257,7 +257,7 @@ This section is a quick OpenClaw-oriented sample, not the full prompt catalog. F
 
 | Scenario                                   | Skill (reference)                | Example prompt (no skill names)                                                                                                                  |
 | ------------------------------------------ | -------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------ |
-| PR or branch review before merge           | `fec-code-review`                | “Please review `src/features/checkout/` before I merge: architecture, types, a11y, and tests. Save a markdown report under `reports/`.”          |
+| Review a specified directory           | `fec-code-review`                | “Please review `src/features/checkout/` before I merge: architecture, types, a11y, and tests. Save a markdown report under `reports/`.”          |
 | Focus on XSS, secrets, dangerous DOM       | `fec-security-review`            | “Audit `src/lib/auth.ts` and anything that renders or stores user-controlled HTML for XSS and secret leaks; list fixes by severity.”             |
 | New dialog / form — keyboard & ARIA        | `fec-accessibility-check`        | “Check `src/components/ConfirmDialog.tsx` for keyboard traps, focus order, labels, and ARIA; suggest concrete fixes.”                            |
 | Align a React module with team conventions | `fec-react-project-standard`     | “We use React 18 and TanStack Query. Review `src/pages/Dashboard/` against solid React + TS patterns and our existing abstractions.”             |
@@ -339,3 +339,20 @@ npm run pack:openclaw
 ## License
 
 MIT
+
+### Review scope
+
+Code and security review skills use three modes. In OpenClaw, request them in natural language; the slash-command examples below apply to runtimes that expose `/fec-review`:
+
+- **Change review:** explicitly request recent/current/staged changes, a PR or a commit, or use an established change context. With no changes, report that there is nothing to review; do not automatically review recent commits.
+- **Targeted review:** specify a file or directory to review existing code, including unchanged code, without requiring a Git diff.
+- **Project review (default):** with no scope or change context, or when the entire project is requested, inventory project-owned frontend code, related tests, configuration and dependency declarations, then review by module.
+
+A file/directory request reviews its full contents; add "recent changes" to review only its diff. A natural-language request such as "Review the code" reviews the project even when changes exist. State mode and scope before review. Automatic review after edits must pass the current change scope explicitly.
+
+Examples: `/fec-review`,`/fec-review review recent changes`,  `/fec-review review src/components/Button.tsx`, `/fec-review review src/features/`, and `/fec-review review the entire project`. These are natural-language instructions, not CLI flags. Explicit scope takes precedence over the default.
+
+Dependency directories, build outputs, caches, generated files and third-party code are excluded by default. Reports record the mode, target scope, reviewed and unreviewed files/modules, exclusions, completion status and verification results. Limited coverage is marked partial; reading callers or running project-wide lint/typecheck does not establish manual review coverage. Change reviews retain merge recommendations; targeted/project reviews assess risk within reviewed scope. The frontend review does not replace a backend audit, and reviewers do not edit business code unless repairs are requested.
+
+
+Technical diagram quality: `fec-image-generation` prefers local Mermaid for standard sequence/workflow diagrams and the draw.io workflow for editable architecture, with JSON/HTML fallback when tools are unavailable. Export a browser-measured manifest scaled to the PNG, run QA and inspect the final image. Preserve complete text, explicit layout and relationships; repair the source for at most two automatic rounds and report unresolved issues. Reproducible fixtures are in `skills/fec-image-generation/assets/quality-examples/`.

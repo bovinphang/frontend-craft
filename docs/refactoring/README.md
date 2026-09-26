@@ -28,7 +28,7 @@
 - 新增行为或行为变化型 bug 修复：使用 `fec-tdd-workflow`；
 - 原因未知的构建、运行时、UI 或 API 故障：使用 `fec-debug-framework`；
 - 已知的 lint/typecheck/test/build 失败修复：使用 `fec-validation-fix`；
-- PR 合并就绪性评审：使用 `fec-code-review`；
+- 改动合并就绪性、指定文件或目录、全项目代码审核：使用 `fec-code-review`；未限定时默认全项目，明确改动 / PR / 提交上下文时增量审核；明确指定范围时包括未改动代码，全项目审核按模块记录覆盖情况；
 - 框架、依赖、状态库迁移或大范围架构替换：进入对应 migration/architecture 工作流，而不是当作普通重构。
 
 ## 知识范围

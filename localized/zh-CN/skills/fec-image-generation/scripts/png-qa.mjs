@@ -3,7 +3,10 @@
 import fs from "node:fs";
 import path from "node:path";
 import zlib from "node:zlib";
+import { segmentHits } from "./diagram-layout.mjs";
+import { pathToFileURL } from "node:url";
 
+if (process.argv[1] && pathToFileURL(path.resolve(process.argv[1])).href === import.meta.url) {
 const args = parseArgs(process.argv.slice(2));
 
 if (!args.png || args.help) {
@@ -24,6 +27,8 @@ try {
 } catch (error) {
   console.error(error instanceof Error ? error.message : String(error));
   process.exit(1);
+}
+
 }
 
 function parseArgs(values) {
@@ -50,6 +55,7 @@ function printHelp() {
 function readManifest(filePath) {
   const manifest = JSON.parse(fs.readFileSync(filePath, "utf8"));
   return {
+    ...manifest,
     canvas: manifest.canvas,
     boxes: Array.isArray(manifest.boxes) ? manifest.boxes : [],
     connectors: Array.isArray(manifest.connectors) ? manifest.connectors : [],
@@ -188,6 +194,8 @@ function analyze(image, manifest, strict) {
       inkCoverage: Number(ink.coverage.toFixed(6)),
       inkBounds: ink.bounds,
     },
+    measurement: manifest?.measurement ?? "image-only",
+    verification: { image: "checked", geometry: manifest ? "checked" : "unavailable", text: manifest?.measurement === "browser" ? "browser-measured" : "estimated-or-unavailable", visual: "pending" },
     issues,
     nextActions: [...nextActions],
   };
@@ -243,7 +251,7 @@ function colorDistance(left, right) {
   return Math.abs(left.r - right.r) + Math.abs(left.g - right.g) + Math.abs(left.b - right.b) + Math.abs(left.a - right.a);
 }
 
-function analyzeManifest(image, manifest, issues, nextActions, strict) {
+export function analyzeManifest(image, manifest, issues, nextActions, strict) {
   if (manifest.canvas && (manifest.canvas.width !== image.width || manifest.canvas.height !== image.height)) {
     addIssue(
       issues,
@@ -254,12 +262,26 @@ function analyzeManifest(image, manifest, issues, nextActions, strict) {
     );
   }
 
-  const boxes = manifest.boxes.map(normalizeBox).filter(Boolean);
+  for (const box of manifest.boxes) if (![box.x,box.y,box.width,box.height].every(Number.isFinite) || box.width <= 0 || box.height <= 0) addIssue(issues,nextActions,"invalid-box-geometry",`Invalid geometry for "${box.id}".`,"Correct source dimensions.");
+  const allBoxes = manifest.boxes.map(normalizeBox).filter(Boolean);
+  const boxes = allBoxes.filter((box) => box.kind !== "group");
+  for (const issue of manifest.issues ?? []) addIssue(issues, nextActions, issue.code, issue.message, "Fix the source layout and render again.");
+  const labels = manifest.labels ?? [];
+  for (const label of labels) {
+    const owner = allBoxes.find((box) => box.id === label.owner);
+    if (label.kind === "node" && !owner) addIssue(issues,nextActions,"label-owner-missing",`Label "${label.id}" has an unknown node owner.`,"Correct label ownership in the manifest.");
+    if (![label.x,label.y,label.width,label.height].every(Number.isFinite) || label.width < 0 || label.height < 0) addIssue(issues,nextActions,"invalid-label-geometry",`Label "${label.id}" has invalid bounds.`,"Measure source labels again.");
+    if (label.x < 0 || label.y < 0 || label.x + label.width > image.width || label.y + label.height > image.height) addIssue(issues, nextActions, "label-out-of-bounds", `Label "${label.id}" exceeds the canvas.`, "Expand the canvas or adjust the source label position.");
+    if (label.kind === "node" && owner && (label.x < owner.x || label.y < owner.y || label.x + label.width > owner.x + owner.width || label.y + label.height > owner.y + owner.height)) addIssue(issues, nextActions, "node-text-overflow", `Label "${label.id}" exceeds node "${owner.id}".`, "Expand the source node or adjust its text layout.");
+    if (Array.isArray(label.lines) && label.lines.join("").replace(/\r?\n/g, "") !== String(label.text ?? "").replace(/\r?\n/g, "")) addIssue(issues, nextActions, "label-content-loss", `Label "${label.id}" does not preserve source text.`, "Restore the complete source label.");
+    if (label.kind === "edge") for (const box of boxes) if (overlapArea(label, box) > 0) addIssue(issues, nextActions, "edge-label-collision", `Label "${label.id}" overlaps node "${box.id}".`, "Move the edge label to a clear route segment.");
+  }
+  for (let i = 0; i < labels.length; i++) for (let j = i + 1; j < labels.length; j++) if (overlapArea(labels[i], labels[j]) > 0) addIssue(issues, nextActions, "text-overlap", `Labels "${labels[i].id}" and "${labels[j].id}" overlap.`, "Increase label spacing in the source.");
   for (const box of boxes) {
     if (box.x < 0 || box.y < 0 || box.x + box.width > image.width || box.y + box.height > image.height) {
       addIssue(issues, nextActions, "box-out-of-bounds", `Box "${box.id}" is outside the canvas.`, "Move out-of-bounds nodes inside the canvas or expand the canvas.");
     }
-    if (box.label && estimateLabelOverflow(box, strict)) {
+    if (!labels.length && box.label && estimateLabelOverflow(box, strict)) {
       addIssue(issues, nextActions, "label-overflow", `Box "${box.id}" label is likely to overflow.`, "Wrap or shorten labels, widen boxes, or increase export scale.");
     }
   }
@@ -277,9 +299,12 @@ function analyzeManifest(image, manifest, issues, nextActions, strict) {
   const segments = [];
   for (const connector of manifest.connectors) {
     const points = normalizePoints(connector.points);
+    if(points.some(point=>point.x<0||point.y<0||point.x>image.width||point.y>image.height)) addIssue(issues,nextActions,"connector-out-of-bounds",`Connector "${connector.id}" exceeds the canvas.`,"Correct explicit waypoints or expand the source canvas.");
+    if (points.length < 2 || points.every((point) => point.x === points[0].x && point.y === points[0].y)) addIssue(issues, nextActions, "degenerate-connector", `Connector "${connector.id ?? "unnamed"}" has no visible path.`, "Give self calls a loop and other connectors distinct endpoints.");
     for (let index = 0; index < points.length - 1; index += 1) {
       const segment = { connector, a: points[index], b: points[index + 1] };
       segments.push(segment);
+      for (const label of labels) if (segmentHits([segment.a.x,segment.a.y],[segment.b.x,segment.b.y],label)) addIssue(issues,nextActions,"connector-through-text",`Connector "${connector.id}" crosses label "${label.id}".`,"Move the source label or route around its text.");
       for (const box of boxes) {
         if (box.id === connector.from || box.id === connector.to) continue;
         if (segmentIntersectsBox(segment, box)) {
@@ -306,6 +331,7 @@ function normalizeBox(box) {
   if (!box || typeof box.id !== "string") return null;
   const normalized = {
     id: box.id,
+    kind: box.kind,
     x: Number(box.x),
     y: Number(box.y),
     width: Number(box.width),
@@ -347,6 +373,10 @@ function overlapArea(left, right) {
 }
 
 function segmentIntersectsBox(segment, box) {
+  return segmentHits([segment.a.x,segment.a.y],[segment.b.x,segment.b.y],box);
+}
+
+function legacySegmentIntersectsBox(segment, box) {
   if (pointInsideBox(segment.a, box) || pointInsideBox(segment.b, box)) return true;
   const edges = [
     [{ x: box.x, y: box.y }, { x: box.x + box.width, y: box.y }],
@@ -399,7 +429,8 @@ function rangesOverlap(left, right) {
 
 function addIssue(issues, nextActions, code, message, action) {
   issues.push({ code, message, action });
-  nextActions.add(action);
+  if (typeof nextActions.add === "function") nextActions.add(action);
+  else if (!nextActions.includes(action)) nextActions.push(action);
 }
 
 function renderMarkdown(report) {

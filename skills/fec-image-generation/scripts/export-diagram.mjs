@@ -1,11 +1,14 @@
 #!/usr/bin/env node
 // @ts-check
 
+import { analyzeManifest } from "./png-qa.mjs";
+import { withDiagramPage } from "./diagram-browser.mjs";
 import { spawnSync } from "node:child_process";
 import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
-import { pathToFileURL } from "node:url";
+/** @typedef {{id:string,x:number,y:number,width:number,height:number,[key:string]:unknown}} LabelRect */
+/** @typedef {{canvas:{width:number,height:number},boxes:LabelRect[],groups?:LabelRect[],labels?:LabelRect[],connectors:Array<{points:Array<[number,number]>,[key:string]:unknown}>,[key:string]:unknown}} Manifest */
 
 const SUPPORTED_FORMATS = new Set(["svg", "png", "jpg", "jpeg"]);
 const JPEG_FORMATS = new Set(["jpg", "jpeg"]);
@@ -15,7 +18,7 @@ try {
   const inputPath = path.resolve(requireArg(args, "input"));
   const format = requireArg(args, "format").toLowerCase();
   const scale = args.scale === undefined ? 2 : parseScale(args.scale);
-  const background = args.background ?? "#0f172a";
+  const background = args.background ?? (args.theme === "dark" ? "#0f172a" : "#ffffff");
 
   if (!SUPPORTED_FORMATS.has(format)) {
     throw usageError(`Unsupported --format "${format}". Expected svg, png, jpg, or jpeg.`);
@@ -24,14 +27,48 @@ try {
     throw usageError(`Input file does not exist: ${inputPath}`);
   }
 
-  const svg = extractSvg(inputPath);
+  let svg = extractSvg(inputPath);
+  const theme = args.theme ?? "light";
+  if (theme !== "light" && theme !== "dark") throw usageError("--theme must be light or dark");
+  svg = svg.replace(/data-theme=["'][^"']*["']/, `data-theme="${theme}"`);
+  /** @type {Manifest|null} */
+  const manifest = args.manifest ? JSON.parse(fs.readFileSync(path.resolve(args.manifest), "utf8")) : null;
   const outputPath = path.resolve(resolveOutputPath(inputPath, format, args.output));
 
+  for(const metadataPath of [args["output-manifest"],args["qa-report"]]) if(metadataPath) fs.mkdirSync(path.dirname(path.resolve(metadataPath)),{recursive:true});
   fs.mkdirSync(path.dirname(outputPath), { recursive: true });
   if (format === "svg") {
     fs.writeFileSync(outputPath, `${svg.trim()}\n`, "utf8");
+    if (manifest && args["output-manifest"]) fs.writeFileSync(path.resolve(args["output-manifest"]), JSON.stringify({...manifest,coordinateSpace:"svg",scale:1,measurement:"estimated"},null,2)+"\n");
+    if (args["qa-report"]) fs.writeFileSync(path.resolve(args["qa-report"]),JSON.stringify({status:"estimated",measurement:"estimated",theme,issues:manifest?.issues??[],visualQA:"pending"},null,2)+"\n");
   } else {
-    exportRaster(svg, outputPath, format, scale, background);
+    const dimensions = measureSvg(svg);
+    const pageHtml = `<!doctype html><meta charset="utf-8"><style>html,body{margin:0;padding:0;background:${background};}svg.tech-diagram,body>svg{display:block;width:${dimensions.width}px;min-width:0;height:${dimensions.height}px;}</style>${svg}`;
+    const result = await withDiagramPage(pageHtml, { theme, timeoutMs: 30000 }, async (session) => {
+      await session.evaluate(`(async()=>{let last="";for(let i=0;i<8;i++){let next=Array.from(document.querySelectorAll('[data-label-id]')).map(el=>el.getBBox().width).join(',');if(next===last)return;last=next;await new Promise(r=>requestAnimationFrame(r));}throw new Error('Text layout did not stabilize');})()`);
+      const labels = await session.evaluate(`Array.from(document.querySelectorAll('[data-label-id]')).map(el=>{const r=el.getBBox();return {id:el.getAttribute('data-label-id'),x:r.x,y:r.y,width:r.width,height:r.height,fontFamily:getComputedStyle(el).fontFamily,fontSize:getComputedStyle(el).fontSize};})`);
+      const png = await session.screenshot(dimensions.width, dimensions.height, scale);
+      return { png, labels };
+    });
+    if (result.png.length < 24 || result.png.readUInt32BE(16) !== Math.ceil(dimensions.width * scale) || result.png.readUInt32BE(20) !== Math.ceil(dimensions.height * scale)) throw usageError("Browser raster export failed: unexpected image dimensions.");
+    if(manifest) {
+      const measured=/** @type {LabelRect[]} */ (result.labels);
+      const missing=(manifest.labels??[]).filter(label=>!measured.some(actual=>actual.id===label.id));
+      if(missing.length) throw usageError("Browser measurement missing manifest labels: "+missing.map(label=>label.id).join(", "));
+    }
+    if (JPEG_FORMATS.has(format)) {
+      const temp = fs.mkdtempSync(path.join(os.tmpdir(), "fec-diagram-jpeg-"));
+      try { const pngPath = path.join(temp, "image.png"); fs.writeFileSync(pngPath, result.png); convertPngToJpeg(pngPath, outputPath); } finally { fs.rmSync(temp, { recursive: true, force: true }); }
+    } else fs.writeFileSync(outputPath, result.png);
+    if (manifest) {
+      manifest.labels = (manifest.labels ?? []).map((label) => ({ ...label, .../** @type {LabelRect[]} */ (result.labels).find((actual) => actual.id === label.id) }));
+      manifest.measurement = "browser";
+      if (args["output-manifest"]) fs.writeFileSync(path.resolve(args["output-manifest"]), JSON.stringify(scaleManifest(manifest, scale), null, 2) + "\n");
+    }
+    /** @type {Array<{code:string,message:string}>} */
+    const boundaryIssues=[];
+    if(manifest) analyzeManifest({width:Math.ceil(dimensions.width*scale),height:Math.ceil(dimensions.height*scale)},scaleManifest(manifest,scale),boundaryIssues,new Set(),false);
+    if (args["qa-report"]) fs.writeFileSync(path.resolve(args["qa-report"]), JSON.stringify({ status: boundaryIssues.length ? "partial" : "measured", issues:boundaryIssues, measurement: "browser", theme, width: dimensions.width * scale, height: dimensions.height * scale, note: "Run PNG QA and inspect the final image; browser measurement alone is not approval." }, null, 2) + "\n");
   }
 
   console.log(`Exported ${format.toUpperCase()} diagram: ${outputPath}`);
@@ -126,51 +163,6 @@ function extractSvg(inputPath) {
  * @param {number} scale
  * @param {string} background
  */
-function exportRaster(svg, outputPath, format, scale, background) {
-  const browser = findBrowser();
-  if (!browser) {
-    throw usageError(
-      "PNG/JPG export requires a local Chromium browser (Chrome, Edge, Chromium, Brave, or Vivaldi) because Node.js has no built-in SVG rasterizer. Export SVG instead, or install a Chromium browser and rerun this command.",
-    );
-  }
-
-  const tempDir = fs.mkdtempSync(path.join(os.tmpdir(), "fec-diagram-export-"));
-  const htmlPath = path.join(tempDir, "diagram.html");
-  const screenshotPath = path.join(tempDir, "diagram.png");
-  const { width, height } = measureSvg(svg);
-  const viewportWidth = Math.ceil(width * scale);
-  const viewportHeight = Math.ceil(height * scale);
-
-  try {
-    fs.writeFileSync(htmlPath, renderScreenshotHtml(svg, width, height, scale, background), "utf8");
-
-    const result = spawnSync(browser, [
-      "--headless=new",
-      "--disable-gpu",
-      "--hide-scrollbars",
-      `--window-size=${viewportWidth},${viewportHeight}`,
-      `--screenshot=${screenshotPath}`,
-      pathToFileURL(htmlPath).href,
-    ], {
-      encoding: "utf8",
-      timeout: 30000,
-      windowsHide: true,
-    });
-
-    if (result.status !== 0 || !fs.existsSync(screenshotPath)) {
-      throw usageError(`Browser raster export failed: ${result.stderr || result.stdout || `exit code ${result.status}`}`.trim());
-    }
-
-    if (JPEG_FORMATS.has(format)) {
-      convertPngToJpeg(screenshotPath, outputPath);
-    } else {
-      fs.copyFileSync(screenshotPath, outputPath);
-    }
-  } finally {
-    fs.rmSync(tempDir, { recursive: true, force: true });
-  }
-}
-
 /**
  * @param {string} pngPath
  * @param {string} outputPath
@@ -259,37 +251,6 @@ function convertWithSips(pngPath, outputPath) {
   return result.status === 0;
 }
 
-function findBrowser() {
-  const envBrowser = process.env.CHROME_PATH || process.env.EDGE_PATH || process.env.BROWSER;
-  const candidates = [
-    envBrowser,
-    process.platform === "win32" ? "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe" : undefined,
-    process.platform === "win32" ? "C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe" : undefined,
-    process.platform === "win32" ? "C:\\Program Files\\Microsoft\\Edge\\Application\\msedge.exe" : undefined,
-    process.platform === "win32" ? "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe" : undefined,
-    process.platform === "darwin" ? "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome" : undefined,
-    process.platform === "darwin" ? "/Applications/Microsoft Edge.app/Contents/MacOS/Microsoft Edge" : undefined,
-    "google-chrome",
-    "google-chrome-stable",
-    "chromium",
-    "chromium-browser",
-    "microsoft-edge",
-    "msedge",
-    "brave-browser",
-    "vivaldi",
-  ].filter(Boolean);
-
-  for (const candidate of candidates) {
-    if (typeof candidate !== "string") continue;
-    if (path.isAbsolute(candidate) && fs.existsSync(candidate)) return candidate;
-    if (!path.isAbsolute(candidate)) {
-      const result = spawnSync(candidate, ["--version"], { encoding: "utf8", timeout: 5000, windowsHide: true });
-      if (result.status === 0) return candidate;
-    }
-  }
-  return null;
-}
-
 /**
  * @param {string} value
  */
@@ -361,4 +322,11 @@ svg {
  */
 function usageError(message) {
   return new Error(message);
+}
+
+/** @param {Manifest} manifest @param {number} scale */
+function scaleManifest(manifest, scale) {
+  /** @param {LabelRect} r */
+  const rect = (r) => ({ ...r, x: r.x * scale, y: r.y * scale, width: r.width * scale, height: r.height * scale });
+  return { ...manifest, coordinateSpace: "png", scale, canvas: { width: Math.ceil(manifest.canvas.width * scale), height: Math.ceil(manifest.canvas.height * scale) }, boxes: manifest.boxes.map(rect), groups: (manifest.groups ?? []).map(rect), labels: (manifest.labels ?? []).map(rect), connectors: manifest.connectors.map((c) => ({ ...c, points: c.points.map(([x, y]) => [x * scale, y * scale]) })) };
 }

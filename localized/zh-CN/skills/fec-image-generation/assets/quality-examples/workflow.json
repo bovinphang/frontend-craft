@@ -1,0 +1,98 @@
+{
+  "schema_version": 1,
+  "diagram_type": "workflow",
+  "meta": {
+    "title": "订单审批与异常回退"
+  },
+  "lanes": [
+    {
+      "id": "user",
+      "label": "用户提交"
+    },
+    {
+      "id": "ops",
+      "label": "审批与处理"
+    },
+    {
+      "id": "sys",
+      "label": "系统执行"
+    }
+  ],
+  "nodes": [
+    {
+      "id": "start",
+      "lane": "user",
+      "col": 0,
+      "label": "提交订单申请",
+      "type": "start"
+    },
+    {
+      "id": "check",
+      "lane": "ops",
+      "col": 1,
+      "label": "检查订单信息是否完整且符合审核条件",
+      "type": "decision"
+    },
+    {
+      "id": "approve",
+      "lane": "ops",
+      "col": 2,
+      "label": "人工审批并记录处理意见",
+      "type": "backend"
+    },
+    {
+      "id": "retry",
+      "lane": "user",
+      "col": 1,
+      "label": "补充缺失材料后重新提交",
+      "type": "waiting"
+    },
+    {
+      "id": "save",
+      "lane": "sys",
+      "col": 3,
+      "label": "保存审批结果并异步通知申请人",
+      "type": "database"
+    },
+    {
+      "id": "done",
+      "lane": "sys",
+      "col": 4,
+      "label": "处理完成",
+      "type": "success"
+    }
+  ],
+  "edges": [
+    {
+      "from": "start",
+      "to": "check",
+      "label": "提交审核"
+    },
+    {
+      "from": "check",
+      "to": "approve",
+      "label": "信息完整"
+    },
+    {
+      "from": "check",
+      "to": "retry",
+      "label": "需要补充",
+      "variant": "dashed"
+    },
+    {
+      "from": "retry",
+      "to": "check",
+      "label": "重新审核"
+    },
+    {
+      "from": "approve",
+      "to": "save",
+      "label": "审批通过"
+    },
+    {
+      "from": "save",
+      "to": "done",
+      "label": "通知成功"
+    }
+  ]
+}

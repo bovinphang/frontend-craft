@@ -166,7 +166,7 @@ npx @bovinphang/frontend-craft@latest list
 | 指令                  | 用途                                                        | 報告                                             |
 | --------------------- | ----------------------------------------------------------- | ------------------------------------------------ |
 | `/fec-init`           | 初始化專案範本（CLAUDE.md、規則、settings）                 | —                                                |
-| `/fec-review`         | 對指定或最近變更的檔案執行結構化審查                        | `code-review-*.md`                               |
+| `/fec-review`         | 審查變更、指定檔案或目錄、整個專案 | `code-review-*.md`                               |
 | `/fec-scaffold`       | 依規範建立 page / feature / component 樣板                  | —                                                |
 | `/fec-plan`           | 統一規劃入口：實現架構或測試策略                            | `architecture-proposal-*.md` 或 `test-plan-*.md` |
 | `/fec-tdd`            | 紅 → 綠 → 重構的前端 TDD 循環                               | —                                                |
@@ -176,6 +176,20 @@ npx @bovinphang/frontend-craft@latest list
 | `/fec-refactor-plan` | Plan behavior-preserving refactoring | `refactoring/plan-*.md` |
 | `/fec-refactor` | Execute validated behavior-preserving refactoring | `refactoring/refactoring-*.md` |
 | `/fec-doc-sync`       | 同步 README、docs、環境變數、腳本、API/路由說明和部署文件   | —                                                |
+
+### 審查範圍
+
+`/fec-review`、程式碼 / TypeScript / 安全審查 agent 及其 skill 採用三種模式：
+
+- **變更審查**：明確要求最近變更、本次修改、暫存區、PR 或提交，或目前任務已明確這些變更範圍。沒有變更時說明情況，不自動審查最近提交。
+- **指定範圍審查**：指定檔案或目錄，審查其中現有程式碼，包括未變更程式碼，不要求 Git 差異。
+- **全專案審查（預設）**：未指定範圍或變更脈絡，或明確要求審查整個專案時，先建立專案自有前端程式碼、相關測試、設定與相依宣告清單，再按模組審查。
+
+指定檔案或目錄預設審查全部程式碼；明確要求本次變更才僅審查差異。即使有變更，單獨呼叫 `/fec-review` 仍預設全專案。開始時說明模式與範圍，修改後自動委託須明確傳入本次變更範圍。
+
+範例：`/fec-review`、`/fec-review 審查最近變更`、`/fec-review 審查 src/components/Button.tsx`、`/fec-review 審查 src/features/`、`/fec-review 審查整個專案`。這些是自然語言指令，不是 CLI 參數；明確指定的範圍優先於預設模式。
+
+預設排除相依目錄、建置產物、快取、生成檔案與第三方程式碼。報告記錄模式、目標範圍、已審查及未涵蓋檔案或模組、排除項目、完成狀態與驗證結果；涵蓋不足時標記部分完成。讀取呼叫端或執行全專案 lint/型別檢查不等於完成人工審查。變更審查保留合併建議，指定範圍與全專案審查評估已審查範圍的風險。前端審查不取代後端專項審查；未要求修復時不修改業務程式碼。
 
 ### 技能（Skills，自動啟用）
 
@@ -514,3 +528,6 @@ npx skills check                           # 預覽可用更新
 **如果 frontend-craft 幫助了你的團隊，[請給它一個 Star](https://github.com/bovinphang/frontend-craft)。**
 
 </div>
+
+
+技術圖品質：標準時序圖、流程圖優先本機 Mermaid，可編輯架構圖優先 draw.io；工具缺少時使用 JSON/HTML。以符合 PNG 比例的實測 manifest 執行 QA，並檢視最終圖片。預設最多修復兩輪，未解決問題必須明確回報。

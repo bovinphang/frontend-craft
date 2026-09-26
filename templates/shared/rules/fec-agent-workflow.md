@@ -41,6 +41,7 @@ Merge rules:
 ## Collaboration constraints
 
 - Clarify the scope, input and output before delegating, and do not leave ambiguous tasks to sub-agents.
+- For automatic review after edits, explicitly pass the current change scope (files and diff/PR/commit context). Unqualified review defaults to the entire project; specifying a file/directory alone requests full review of that scope, not incremental review.
 - Multiple independent problems can be analyzed in parallel; tasks that depend on each other are advanced in sequence.
 - Subagent output must lead to verifiable conclusions: reports, file paths, command results, or specific risks.
 - Subagent suggestions do not automatically equal implementation decisions; when they conflict with the existing contracts of the warehouse, the warehouse contracts take precedence.

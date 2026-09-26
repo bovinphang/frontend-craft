@@ -23,8 +23,12 @@
 
 | 场景                | 提示词                                                                                                                           | 适用能力                                                    | 预期产物                                               | 补充说明                                     |
 | ------------------- | -------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------- | ------------------------------------------------------ | -------------------------------------------- |
+| 默认全项目审核 | 「`/fec-review`」 | cmd: `/fec-review` | 全项目风险评估，记录覆盖范围、排除项及剩余模块。 | 即使存在 Git 改动也默认全项目审核。 |
 | 评审最近改动        | 「合并前请评审我最近的改动。重点看架构、类型安全、渲染行为、样式、无障碍和缺失测试；先列问题。」                                 | skill: `fec-code-review` · agent: `fec-code-reviewer` · cmd: `/fec-review`       | 按严重级别排序的评审，带文件引用和测试缺口。           | 可补充分支名或 diff 范围。                   |
-| PR 合并准备         | 「请把 `src/features/checkout/` 当作 PR 评审，指出阻塞项、风险假设，以及合并前必须补的测试。」                                   | agent: `fec-code-reviewer`                                         | 合并准备度判断和结构化报告。                           | 若运行时可访问 PR，可贴 PR 链接。            |
+| PR 合并准备 | 「请评审这个 PR 的改动，指出阻塞项、风险假设，以及合并前必须补的测试。」 | agent: `fec-code-reviewer` | 合并准备度判断和结构化报告。 | 提供 PR 链接或明确差异范围。 |
+| 指定文件审核 | 「审核 `src/components/Button.tsx`，包括未改动代码；只报告，不修复。」 | cmd: `/fec-review` · skill: `fec-code-review` | 文件风险评估及覆盖范围。 | 不要求 Git 差异。 |
+| 指定目录审核 | 「审核 `src/features/checkout/` 的全部现有前端代码，包括未改动代码。」 | agent: `fec-code-reviewer` | 目录风险评估及未覆盖清单。 | 明确范围优先于默认全项目模式。 |
+| 全项目审核 | 「审核整个项目的自有前端代码、相关测试、配置和依赖声明。先建立清单，按模块审核，报告排除项和未覆盖范围；未完成时标记部分完成，只报告不修复。」 | skill: `fec-code-review` · cmd: `/fec-review` | 全项目风险评估及覆盖清单。 | 无改动也可执行；不替代后端审核。 |
 | TypeScript 专项评审 | 「请审计本次改动中的 `.ts` 和 `.tsx`：不安全类型、异步问题、过宽接口、陈旧派生状态、React/TypeScript 惯用法。」                  | agent: `fec-typescript-reviewer`                                   | TypeScript 专项问题清单，通常只报告不修改。            | JS/TS 改动占主要部分时最适合。               |
 | 类型契约评审        | 「请评审 `src/features/billing/` 的 API DTO、组件 props、泛型工具和类型守卫，找出不安全断言、过宽类型和缺失的运行时收窄。」      | skill: `fec-typescript-project-standard` · agent: `fec-typescript-reviewer`     | 类型边界问题、更安全的建模建议和类型测试建议。         | 适合 SDK、设计系统或 API 密集改动。          |
 | 安全审查            | 「请审计 `src/lib/auth.ts`、API client 和所有渲染用户 HTML 的代码，关注 XSS、token 泄露、不安全存储、CSRF 假设和危险 DOM API。」 | skill: `fec-security-review` · agent: `fec-security-reviewer`              | 按严重程度排序的安全问题和修复建议。                   | 补充鉴权模型和存储约束。                     |
@@ -145,4 +149,7 @@
 | 斜杠命令构建修复 | 「`/fec-debug` 请根据这段日志修复验证失败：<粘贴日志>。」                                         | cmd: `/fec-debug`      | 增量验证修复。                  | 粘贴准确日志。                        |
 | 斜杠命令清理     | 「`/fec-refactor-clean` 请安全移除这个包里的未使用导出和依赖。」                                      | cmd: `/fec-refactor-clean` | 清理报告和安全修改。            | 修改后运行测试。                      |
 | 斜杠命令文档同步 | 「`/fec-doc-sync` 请同步 README、docs、env examples、脚本、API/路由说明和部署文档，使其匹配当前项目。」 | cmd: `/fec-doc-sync`       | 文档更新和验证说明。            | 发布前使用。                          |
-| 显式代理         | 「请委托 `fec-code-reviewer` 对 `src/features/payments/` 做 PR 风格评审，然后先总结阻塞项。」         | agent: `fec-code-reviewer`        | 专项代理报告和摘要。            | 适合专家评审。                        |
+| 显式代理 | 「请委托 `fec-code-reviewer` 审核 `src/features/payments/` 的现有代码，包括未改动代码，然后先总结阻塞项。」 | agent: `fec-code-reviewer` | 指定范围风险评估及专项报告。 | 不要求 Git 差异。 |
+
+
+技术图质量工作流：`fec-image-generation` 的标准时序/流程图优先本地 Mermaid，架构图复用 draw.io 工作流，工具缺失时使用 JSON/HTML。导出 PNG 时生成实际测量且与缩放一致的 manifest，再运行 QA 并检查最终 PNG；保留完整文字、显式布局与关系，最多自动修复两轮，未解决问题需明确报告。可复现样例位于 `skills/fec-image-generation/assets/quality-examples/`。
