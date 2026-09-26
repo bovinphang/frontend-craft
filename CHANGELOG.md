@@ -11,11 +11,10 @@ Project-facing release notes are maintained in English from 2.0.0 onward. Histor
 
 ## [2.9.0] - 2026-09-26
 
-- **`fec-image-generation`**: Technical diagram quality: complete Unicode wrapping, content-driven layout, obstacle routing and visible self calls; self-contained SVG styles, browser-measured PNG geometry and scaled manifests, extended QA, optional local Mermaid adapter and three reproducible diagram fixtures.
-- **Documentation**: Consolidate review scope and technical diagram delivery in a bilingual guide; synchronize runtime entry points and multilingual README capability sections, including tool prerequisites and QA limits.
-
 ### Added
 
+- **Technical diagram tools:** added an optional local Mermaid adapter and reproducible sequence, workflow, and architecture fixtures.
+- **Documentation:** added a bilingual review scope and technical diagram delivery guide.
 - **Behavior-preserving refactoring subsystem:** added `fec-refactoring-expert`, `/fec-smell`, `/fec-refactor-plan`, `/fec-refactor`, and 11 refactoring skills that separate diagnosis, planning, execution, validation, catalog selection, and seven technique families.
 - **Complete refactoring knowledge coverage:** normalized the supplied 24 code smells and 61 refactoring techniques from Chapters 6–12 into stable `SMELL-*` / `RF-*` identifiers, selection guidance, composition relationships, and progressive references.
 - **Frontend-specific refactoring adaptation:** added TypeScript, React, Vue, hooks/composables, state, routing, async/lifecycle, public API, SSR/hydration, and dynamic-reference guidance without forcing class-based patterns into modern frontend code.
@@ -25,6 +24,8 @@ Project-facing release notes are maintained in English from 2.0.0 onward. Histor
 
 ### Changed
 
+- **Technical diagram quality:** preserve complete Unicode labels with content-driven layout, obstacle routing, visible self calls, and extended QA.
+- **Documentation:** synchronized runtime entry points and multilingual README capability sections, including tool prerequisites and QA limits.
 - **Review scope:** code, TypeScript and security review workflows now support project review (default), specified files/directories, and incremental review for explicit change/PR/commit context. Reports record coverage, exclusions, unreviewed scope and partial completion; targeted/project reviews assess risk without requiring a Git diff. Updated multilingual READMEs, runtime guidance and example prompts.
 
 - **Refactoring safety model:** pure refactoring now uses `GREEN → REFACTOR → GREEN`, one primary transformation at a time, step-level verification, rollback-before-repair, `SAFE/CAUTION/DANGER` risk classification, diff budgets, and `PASS/PARTIAL/NOT PROVEN` proof verdicts.
@@ -36,6 +37,7 @@ Project-facing release notes are maintained in English from 2.0.0 onward. Histor
 
 ### Fixed
 
+- **Technical diagram exports:** repaired self-contained SVG styles, browser-measured PNG geometry, and manifests scaled to the exported image.
 - **Content parsing and conversion:** repaired malformed agent/command YAML and stale reviewer references; converters now preserve decoded descriptions and safely escape Codex TOML instructions. Same-name source skills retain priority over converted commands.
 - **Published CLI startup:** bundled the YAML parser and its Node module bridge so isolated npm packages can install Codex and OpenClaw content without repository development dependencies.
 - **Localized content and refactoring links:** synchronized Chinese diagram workflow boundaries, capability tags, and keywords; repaired catalog links and clarified skill summaries.
@@ -44,7 +46,7 @@ Project-facing release notes are maintained in English from 2.0.0 onward. Histor
 ### Chore
 
 - **Deterministic refactoring coverage:** added install-time integrity checks for 24 smells, 61 techniques, family totals, root/zh-CN alignment, metadata/relations/eval registration, command modes, public docs, and version synchronization.
-- **Release verification:** expanded regressions for parsing, conversion, test discovery, hook package-manager selection, and isolated package installation; the full suite now contains 223 tests. Packaging checks cover OpenClaw and all 56 standalone skill packages.
+- **Release verification:** expanded regressions for parsing, conversion, test discovery, hook package-manager selection, and isolated package installation; the full suite now contains 242 tests. Packaging checks cover OpenClaw and all 56 standalone skill packages.
 
 ## [2.8.0] - 2026-06-25
 
