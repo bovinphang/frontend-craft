@@ -5,6 +5,7 @@ import os from "node:os";
 import path from "node:path";
 import { pathToFileURL } from "node:url";
 import { spawnSync } from "node:child_process";
+import { runInNewContext } from "node:vm";
 import { resolvePluginRoot } from "../../src/install/shared/resolve-plugin-root.js";
 
 const root = resolvePluginRoot(import.meta.url);
@@ -275,6 +276,46 @@ test("standalone SVG retains its theme and complete text", () => {
   } finally {
     fs.rmSync(result.dir, { recursive: true, force: true });
   }
+});
+
+test("browser readiness survives initial navigation and rejects the blank document", async () => {
+  const { waitForDiagramReady } = await import(
+    pathToFileURL(path.join(scripts, "diagram-browser.mjs")).href
+  );
+  let attempts = 0;
+  await waitForDiagramReady(async (expression: string) => {
+    attempts++;
+    if (attempts === 1)
+      throw new Error("Browser raster export failed: Execution context was destroyed.");
+    return runInNewContext(expression, {
+      location: { href: attempts === 2 ? "about:blank" : "file:///diagram.html" },
+      document: { readyState: "complete", fonts: { ready: Promise.resolve() } },
+      requestAnimationFrame: (callback: () => void) => callback(),
+    });
+  }, "file:///diagram.html", Date.now() + 2000);
+  assert.equal(attempts, 3);
+});
+
+test("browser readiness propagates errors unrelated to navigation", async () => {
+  const { waitForDiagramReady } = await import(
+    pathToFileURL(path.join(scripts, "diagram-browser.mjs")).href
+  );
+  const error = new Error("Diagram evaluation failed: invalid page script");
+  let attempts = 0;
+  await assert.rejects(waitForDiagramReady(async () => {
+    attempts++;
+    throw error;
+  }, "file:///diagram.html", Date.now() + 2000), (actual) => actual === error);
+  assert.equal(attempts, 1);
+});
+
+test("browser readiness stops transient navigation failures at its deadline", async () => {
+  const { waitForDiagramReady } = await import(
+    pathToFileURL(path.join(scripts, "diagram-browser.mjs")).href
+  );
+  await assert.rejects(waitForDiagramReady(async () => {
+    throw new Error("Browser raster export failed: Execution context was destroyed.");
+  }, "file:///diagram.html", Date.now() + 60), /diagram page did not become ready/);
 });
 
 test("browser export measures text and scales every manifest coordinate", async (t) => {
