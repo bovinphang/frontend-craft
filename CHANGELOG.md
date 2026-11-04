@@ -9,6 +9,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 Project-facing release notes are maintained in English from 2.0.0 onward. Historical entries may preserve their original language.
 
+## [3.0.0] - 2026-11-04
+
+### Breaking changes and migration
+
+- Top-level `fec update` / `upgrade` now upgrades the npm/pnpm global CLI from its original registry, then refreshes managed resources with the new CLI in the current project and user-global scope. It does not scan other projects or manage Marketplace installations.
+- Top-level `fec uninstall` / `remove` now removes only the CLI. `--purge` cleans discovered managed resources first while preserving user modifications; cleanup errors keep the CLI installed. Interactive removal requires confirmation; non-interactive removal requires `--yes`.
+- Move resource commands to `fec runtime install/update/uninstall [runtime]`, with `runtime upgrade/remove` aliases and existing resource options. `setup` remains available; top-level `install` is a deprecated compatibility alias. Old runtime arguments and resource options on top-level update/uninstall are rejected before changes with migration guidance.
+- Replace `fec update codex --global` with `fec runtime update codex --global`, and `fec uninstall --local` with `fec runtime uninstall --local`. For temporary execution, use `npx @bovinphang/frontend-craft@latest runtime update`; `runtime update` uses the running package contents without fetching a new CLI package.
+
+### Added
+
+- Verified npm/pnpm global installation ownership, original package-manager reuse, new-version entry-point continuation, phase-specific failure reporting, and read-only `--dry-run`. An already-current CLI still refreshes resources; a CLI upgrade failure stops resource updates. Partial resource failures do not roll back the upgraded CLI and can be retried with `fec runtime update`.
+- Temporary npx update checks registry `latest` and never creates a global installation; if the running version differs, it prints the latest-package runtime command. npx self-uninstall is unsupported. Source links, project dependencies, unknown sources and pnpm groups shared with other packages are refused for automatic self-management before changes.
+
+The entries below describe historical 2.x behavior. For current resource commands use the `runtime` group described above.
+
 ## [2.9.0] - 2026-09-26
 
 ### Added

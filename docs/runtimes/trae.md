@@ -7,7 +7,7 @@ fec doctor trae --local
 fec doctor trae --global
 ```
 
-Without a global CLI installation, use `npx @bovinphang/frontend-craft install trae --local` or `--global`.
+Without a global CLI installation, use `npx @bovinphang/frontend-craft runtime install trae --local` or `--global`.
 
 Project rules: `.trae/rules/frontend-craft.md`; user rules: `~/.trae/user_rules/frontend-craft.md` (`TRAE_CONFIG_DIR` base override). Both include explicit `alwaysApply: true` metadata. This adapter installs rules, not native skills, agents or MCP configuration.
 

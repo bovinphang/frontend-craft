@@ -24,12 +24,14 @@ export type InstallDiscoveryOptions = {
   cwd: string;
   runtimes?: string[];
   scopes?: InstallScope[];
+  onError?: (error: Error) => void;
 };
 
 export function discoverManifestInstalls({
   cwd,
   runtimes = ALL_RUNTIMES,
   scopes = ["local", "global"],
+  onError,
 }: InstallDiscoveryOptions): DiscoveredInstall[] {
   const installs: DiscoveredInstall[] = [];
   const seen = new Set<string>();
@@ -46,7 +48,36 @@ export function discoverManifestInstalls({
         if (seen.has(key)) continue;
         seen.add(key);
 
+        if (onError) {
+          try {
+            fs.lstatSync(manifestPath);
+          } catch (error) {
+            if ((error as NodeJS.ErrnoException).code !== "ENOENT")
+              onError(
+                new Error(
+                  `Cannot inspect ownership manifest: ${manifestPath}`,
+                  { cause: error },
+                ),
+              );
+            continue;
+          }
+        }
         const manifest = readInstallManifest(manifestPath);
+        if (
+          onError &&
+          (!manifest ||
+            manifest.runtime !== runtime ||
+            manifest.scope !== scope ||
+            typeof manifest.packageVersion !== "string" ||
+            !manifest.packageVersion)
+        ) {
+          onError(
+            new Error(
+              `Cannot read ownership manifest: ${manifestPath}. Invalid JSON, structure, ownership, or unreadable file; existing files were preserved.`,
+            ),
+          );
+          continue;
+        }
         if (!manifest) continue;
         if (manifest.runtime !== runtime || manifest.scope !== scope) continue;
         installs.push({ runtime, scope, baseDir, manifestPath, manifest });

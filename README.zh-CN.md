@@ -79,7 +79,7 @@ fec setup claude --global
 fec setup all --global
 
 # 6. 预览 / 查询
-fec install --all --dry-run --global
+fec runtime install --all --dry-run --global
 fec list
 ```
 
@@ -92,17 +92,17 @@ fec list
 npx @bovinphang/frontend-craft@latest
 
 # 2. 接入当前项目
-npx @bovinphang/frontend-craft@latest install --local codex
-npx @bovinphang/frontend-craft@latest install --local claude
-npx @bovinphang/frontend-craft@latest install --all --local
+npx @bovinphang/frontend-craft@latest runtime install --local codex
+npx @bovinphang/frontend-craft@latest runtime install --local claude
+npx @bovinphang/frontend-craft@latest runtime install --all --local
 
 # 3. 全局接入，适用于所有项目
-npx @bovinphang/frontend-craft@latest install --global codex
-npx @bovinphang/frontend-craft@latest install --global claude
-npx @bovinphang/frontend-craft@latest install --all --global
+npx @bovinphang/frontend-craft@latest runtime install --global codex
+npx @bovinphang/frontend-craft@latest runtime install --global claude
+npx @bovinphang/frontend-craft@latest runtime install --all --global
 
 # 4. 预览 / 查询
-npx @bovinphang/frontend-craft@latest install --all --dry-run --global
+npx @bovinphang/frontend-craft@latest runtime install --all --dry-run --global
 npx @bovinphang/frontend-craft@latest list
 ```
 
@@ -112,7 +112,7 @@ npx @bovinphang/frontend-craft@latest list
 
 对 Claude Code 用户，**Claude Code Marketplace** 是推荐的单一来源安装方式。只有在需要跨运行时安装、脚本化/离线复制文件，或非 Marketplace 环境时，才建议对 Claude 使用 CLI。
 
-如果已经通过 Marketplace 安装，CLI 不会再安装或更新第二份 Claude 副本，即使传入 `--force` 也不会覆盖；请通过 Claude Code Marketplace 更新。如果已存在另一个作用域的 CLI 管理安装，交互式终端会询问是保持已安装来源并更新，还是卸载后切换到当前来源；非交互终端会停止并打印明确的 `update`、`uninstall`、`install` 命令。
+如果已经通过 Marketplace 安装，CLI 不会再安装或更新第二份 Claude 副本，即使传入 `--force` 也不会覆盖；请通过 Claude Code Marketplace 更新。如果已存在另一个作用域的 CLI 管理安装，交互式终端会询问是保持已安装来源并更新，还是卸载后切换到当前来源；非交互终端会停止并打印明确的 `runtime update`、`runtime uninstall`、`runtime install` 命令。
 
 完整步骤见 [docs/runtimes/claude.zh-CN.md](docs/runtimes/claude.zh-CN.md) · [English](docs/runtimes/claude.md)。
 
@@ -471,33 +471,55 @@ $env:MODAO_TOKEN = "your-modao-token"
 
 ## 更新与移除
 
-`fec` 是 `frontend-craft` 的短命令。如果没有全局安装 `fec`，可以把同样参数接在 `npx @bovinphang/frontend-craft@latest` 后使用，例如 `npx @bovinphang/frontend-craft@latest update`。
+### CLI 自身管理（3.0）
 
-### 更新
+`fec update`（别名 `upgrade`）通过原 npm/pnpm 升级全局 CLI 到原 registry 的 `latest`，再启动新版 CLI 刷新当前项目及用户全局的托管资源；已是最新版也会刷新。不扫描其他项目，不管理 Marketplace 安装。CLI 升级失败即停止；独立资源安装的失败会分阶段报告且不回滚 CLI，可用 `fec runtime update` 重试资源刷新。
 
-```bash
-fec update                         # 更新自动发现到的所有 CLI 管理安装
-fec update <runtime> --local        # 更新一个本地 CLI 管理安装
-fec update <runtime> --global       # 更新一个全局 CLI 管理安装
-fec upgrade <runtime> --global      # `upgrade` 是 `update` 的别名
-```
-
-### 移除
+`fec uninstall`（别名 `remove`）默认只卸载全局 CLI。`--purge` 先清理发现的托管资源并保留用户修改；清理实际失败时保留 CLI。交互终端要求确认，非交互终端必须加 `--yes`。自身管理仅支持经过归属验证的 npm/pnpm 注册表全局安装；源码链接、项目依赖、未知来源及含其他包的 pnpm 共享安装组均在修改前拒绝，请通过原包管理器手动管理共享组。`--dry-run` 只读预览，不安装、不删除、不启动刷新续跑。
 
 ```bash
-fec uninstall                       # 移除自动发现到的所有 CLI 管理安装
-fec remove                          # `remove` 是 `uninstall` 的别名
-fec uninstall <runtime>             # 移除指定 runtime 安装
-fec remove <runtime>                # 使用别名移除指定 runtime
-fec uninstall --global              # 只移除发现到的全局安装
-fec remove --local                  # 只移除发现到的本地安装
-fec uninstall <runtime> --dry-run   # 预览将移除的文件
-fec uninstall <runtime> --force     # 连同已修改的托管文件一起移除
+fec update
+fec uninstall --dry-run
+fec uninstall --purge --yes
 ```
 
-CLI 会在 runtime 目录写入 `frontend-craft.manifest.json`。不传 runtime 时，`update` 会自动发现这些 manifest，并**跳过你本地修改过的文件**——自定义内容在更新后依然保留。
+临时 npx 运行不会创建全局 CLI，且不支持自身卸载。npx 顶层 `update` 仅在当前包版本等于 registry `latest` 时刷新资源，否则提示使用 `npx @bovinphang/frontend-craft@latest runtime update`。
 
-`uninstall`/`remove` 只删除 manifest 记录的文件，默认跳过已修改文件；只有确认要移除修改过的托管文件时才加 `--force`。`--force` 不会覆盖 Claude Code Marketplace 安装。
+| 2.x 资源命令 | 3.0 替代命令 |
+| --- | --- |
+| `fec update [runtime] [options]` | `fec runtime update [runtime] [options]` |
+| `fec uninstall [runtime] [options]` | `fec runtime uninstall [runtime] [options]` |
+| `fec install [runtime] [options]` | `fec runtime install [runtime] [options]` |
+
+顶层 update/uninstall 会在修改前拒绝旧 runtime 位置参数及 `--global` 等资源选项。`setup` 保留，顶层 `install` 为弃用兼容入口；`runtime upgrade/remove` 分别为 `runtime update/uninstall` 的别名。资源选项保留。`runtime update` 只使用当前运行的 CLI 包内容，不联网获取新包。
+
+`fec` 是 `frontend-craft` 的短命令。未全局安装 CLI 时，资源操作使用 `npx @bovinphang/frontend-craft@latest runtime update`（或 `runtime install/uninstall`）。
+
+### 资源更新
+
+```bash
+fec runtime update                              # 更新自动发现到的所有 CLI 管理安装
+fec runtime update <runtime> --local            # 更新一个本地 CLI 管理安装
+fec runtime update <runtime> --global           # 更新一个全局 CLI 管理安装
+fec runtime upgrade <runtime> --global          # `upgrade` 是 `update` 的别名
+```
+
+### 资源移除
+
+```bash
+fec runtime uninstall                           # 移除自动发现到的所有 CLI 管理安装
+fec runtime remove                              # `remove` 是 `uninstall` 的别名
+fec runtime uninstall <runtime>                 # 移除指定 runtime 安装
+fec runtime remove <runtime>                    # 使用别名移除指定 runtime
+fec runtime uninstall --global                  # 只移除发现到的全局安装
+fec runtime remove --local                      # 只移除发现到的本地安装
+fec runtime uninstall <runtime> --dry-run       # 预览将移除的文件
+fec runtime uninstall <runtime> --force         # 连同已修改的托管文件一起移除
+```
+
+CLI 会在 runtime 目录写入 `frontend-craft.manifest.json`。不传 runtime 时，`runtime update` 会自动发现这些 manifest，并**跳过你本地修改过的文件**——自定义内容在更新后依然保留。
+
+`runtime uninstall`/`runtime remove` 只删除 manifest 记录的文件，默认跳过已修改文件；只有确认要移除修改过的托管文件时才加 `--force`。`--force` 不会覆盖 Claude Code Marketplace 安装。
 
 **Claude Code Marketplace** 或 **submodule** 安装的更新方式见 [docs/runtimes/claude.zh-CN.md](docs/runtimes/claude.zh-CN.md) · [English](docs/runtimes/claude.md)。`/fec-init` 只初始化项目配置，不是第二次安装插件本体。
 

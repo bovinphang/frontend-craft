@@ -25,11 +25,15 @@ test("dry-run install claude does not throw", () => {
     path.join(os.tmpdir(), "fc-dry-claude-home-"),
   );
   try {
-    execFileSync(process.execPath, [cli, "install", "claude", "--dry-run"], {
-      cwd: root,
-      encoding: "utf8",
-      env: isolatedRuntimeEnv(runtimeHome),
-    });
+    execFileSync(
+      process.execPath,
+      [cli, "runtime", "install", "claude", "--dry-run"],
+      {
+        cwd: root,
+        encoding: "utf8",
+        env: isolatedRuntimeEnv(runtimeHome),
+      },
+    );
   } finally {
     fs.rmSync(runtimeHome, { recursive: true, force: true });
   }
@@ -41,15 +45,19 @@ test("interactive install selects runtime and local location", () => {
     path.join(os.tmpdir(), "fc-interactive-local-home-"),
   );
   try {
-    const out = execFileSync(process.execPath, [cli, "install", "--dry-run"], {
-      cwd: dir,
-      encoding: "utf8",
-      input: "1\n1\n2\n",
-      env: {
-        ...isolatedRuntimeEnv(runtimeHome),
-        FRONTEND_CRAFT_FORCE_INTERACTIVE: "1",
+    const out = execFileSync(
+      process.execPath,
+      [cli, "runtime", "install", "--dry-run"],
+      {
+        cwd: dir,
+        encoding: "utf8",
+        input: "1\n1\n2\n",
+        env: {
+          ...isolatedRuntimeEnv(runtimeHome),
+          FRONTEND_CRAFT_FORCE_INTERACTIVE: "1",
+        },
       },
-    });
+    );
     assert.match(out, /Which runtime\(s\) would you like to install for\?/);
     assert.match(out, /Where would you like to install\?/);
     assert.match(out, /Installing frontend-craft for "claude"/);
@@ -100,7 +108,7 @@ test("specified runtime prompts for install location", () => {
   try {
     const out = execFileSync(
       process.execPath,
-      [cli, "install", "claude", "--dry-run"],
+      [cli, "runtime", "install", "claude", "--dry-run"],
       {
         cwd: dir,
         encoding: "utf8",
@@ -130,11 +138,15 @@ test("non-interactive install defaults to claude global dry-run", () => {
     path.join(os.tmpdir(), "fc-non-interactive-home-"),
   );
   try {
-    const out = execFileSync(process.execPath, [cli, "install", "--dry-run"], {
-      cwd: root,
-      encoding: "utf8",
-      env: isolatedRuntimeEnv(runtimeHome),
-    });
+    const out = execFileSync(
+      process.execPath,
+      [cli, "runtime", "install", "--dry-run"],
+      {
+        cwd: root,
+        encoding: "utf8",
+        env: isolatedRuntimeEnv(runtimeHome),
+      },
+    );
     assert.match(out, /Non-interactive terminal detected/);
     assert.match(out, /Installing frontend-craft for "claude"/);
     assert.match(out, /\(global\)/);
@@ -149,11 +161,15 @@ test("install claude into temp dir creates hooks and skills", () => {
     path.join(os.tmpdir(), "fc-test-claude-home-"),
   );
   try {
-    execFileSync(process.execPath, [cli, "install", "claude", "--local"], {
-      cwd: dir,
-      encoding: "utf8",
-      env: { ...process.env, CLAUDE_CONFIG_DIR: claudeHome },
-    });
+    execFileSync(
+      process.execPath,
+      [cli, "runtime", "install", "claude", "--local"],
+      {
+        cwd: dir,
+        encoding: "utf8",
+        env: { ...process.env, CLAUDE_CONFIG_DIR: claudeHome },
+      },
+    );
     assert.ok(fs.existsSync(path.join(dir, ".claude", "settings.json")));
     assert.ok(
       fs.existsSync(
@@ -233,11 +249,15 @@ test("global claude install does not write project sidecar files into cwd", () =
     path.join(os.tmpdir(), "fc-global-claude-"),
   );
   try {
-    execFileSync(process.execPath, [cli, "install", "claude", "--global"], {
-      cwd: dir,
-      encoding: "utf8",
-      env: { ...process.env, CLAUDE_CONFIG_DIR: claudeHome },
-    });
+    execFileSync(
+      process.execPath,
+      [cli, "runtime", "install", "claude", "--global"],
+      {
+        cwd: dir,
+        encoding: "utf8",
+        env: { ...process.env, CLAUDE_CONFIG_DIR: claudeHome },
+      },
+    );
 
     assert.ok(fs.existsSync(path.join(claudeHome, "settings.json")));
     assert.ok(
@@ -275,16 +295,20 @@ test("global installs do not write shared rules into runtime config dirs", () =>
       path.join(os.tmpdir(), `fc-global-${runtime}-home-`),
     );
     try {
-      execFileSync(process.execPath, [cli, "install", runtime, "--global"], {
-        cwd: dir,
-        encoding: "utf8",
-        env: {
-          ...process.env,
-          HOME: runtimeHome,
-          USERPROFILE: runtimeHome,
-          [envName]: runtimeHome,
+      execFileSync(
+        process.execPath,
+        [cli, "runtime", "install", runtime, "--global"],
+        {
+          cwd: dir,
+          encoding: "utf8",
+          env: {
+            ...process.env,
+            HOME: runtimeHome,
+            USERPROFILE: runtimeHome,
+            [envName]: runtimeHome,
+          },
         },
-      });
+      );
 
       assert.ok(
         !fs.existsSync(path.join(runtimeHome, "rules")),
@@ -330,12 +354,16 @@ test("claude install warns and exits when native plugin is already installed", (
 
     assert.throws(
       () =>
-        execFileSync(process.execPath, [cli, "install", "claude", "--local"], {
-          cwd: dir,
-          encoding: "utf8",
-          env: { ...process.env, CLAUDE_CONFIG_DIR: claudeHome },
-          stdio: "pipe",
-        }),
+        execFileSync(
+          process.execPath,
+          [cli, "runtime", "install", "claude", "--local"],
+          {
+            cwd: dir,
+            encoding: "utf8",
+            env: { ...process.env, CLAUDE_CONFIG_DIR: claudeHome },
+            stdio: "pipe",
+          },
+        ),
       (err: unknown) => {
         const error = err as { stdout?: Buffer | string; status?: number };
         assert.equal(error.status, 1);
@@ -369,7 +397,7 @@ test("claude install --force still exits when native plugin is already installed
       () =>
         execFileSync(
           process.execPath,
-          [cli, "install", "claude", "--local", "--force"],
+          [cli, "runtime", "install", "claude", "--local", "--force"],
           {
             cwd: dir,
             encoding: "utf8",
@@ -412,11 +440,15 @@ test("runtime command installers keep fec command names", () => {
   for (const [runtime, baseDir, commandDir] of cases) {
     const dir = fs.mkdtempSync(path.join(os.tmpdir(), `fc-${runtime}-`));
     try {
-      execFileSync(process.execPath, [cli, "install", runtime, "--local"], {
-        cwd: dir,
-        encoding: "utf8",
-        env: { ...process.env },
-      });
+      execFileSync(
+        process.execPath,
+        [cli, "runtime", "install", runtime, "--local"],
+        {
+          cwd: dir,
+          encoding: "utf8",
+          env: { ...process.env },
+        },
+      );
 
       const commandsPath = path.join(dir, baseDir, commandDir);
       assert.ok(
@@ -483,11 +515,15 @@ test("all runtime local installs match declared capabilities", () => {
       path.join(os.tmpdir(), `fc-${runtime}-cap-claude-home-`),
     );
     try {
-      execFileSync(process.execPath, [cli, "install", runtime, "--local"], {
-        cwd: dir,
-        encoding: "utf8",
-        env: { ...process.env, CLAUDE_CONFIG_DIR: claudeHome },
-      });
+      execFileSync(
+        process.execPath,
+        [cli, "runtime", "install", runtime, "--local"],
+        {
+          cwd: dir,
+          encoding: "utf8",
+          env: { ...process.env, CLAUDE_CONFIG_DIR: claudeHome },
+        },
+      );
 
       const cap = RUNTIME_CAPABILITIES[runtime];
       const report = execFileSync(
@@ -661,11 +697,15 @@ test("all runtime global installs are isolated and doctor recognizes their actua
     fs.mkdirSync(userHome);
     const env = isolatedRuntimeEnv(userHome);
     try {
-      execFileSync(process.execPath, [cli, "install", runtime, "--global"], {
-        cwd,
-        env,
-        encoding: "utf8",
-      });
+      execFileSync(
+        process.execPath,
+        [cli, "runtime", "install", runtime, "--global"],
+        {
+          cwd,
+          env,
+          encoding: "utf8",
+        },
+      );
       const report = execFileSync(
         process.execPath,
         [cli, "doctor", runtime, "--global"],

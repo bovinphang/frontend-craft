@@ -7,7 +7,7 @@ fec doctor copilot --local
 fec doctor copilot --global
 ```
 
-Without a global CLI installation, use `npx @bovinphang/frontend-craft install copilot --local` or `--global`.
+Without a global CLI installation, use `npx @bovinphang/frontend-craft runtime install copilot --local` or `--global`.
 
 Local installation targets repository customization: `.github/instructions/frontend-craft.instructions.md` with `applyTo: "**"` and `.github/prompts/fec-*.prompt.md`. Prompt files are supported by compatible IDE clients. Global installation targets Copilot CLI user instructions in `~/.copilot/copilot-instructions.md` (`COPILOT_CONFIG_DIR` override), preserving an existing file. Global IDE prompt installation is not provided; use `--local` for prompts.
 

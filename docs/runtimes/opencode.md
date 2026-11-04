@@ -7,7 +7,7 @@ fec doctor opencode --local
 fec doctor opencode --global
 ```
 
-Without a global CLI installation, use `npx @bovinphang/frontend-craft install opencode --local` or `--global`.
+Without a global CLI installation, use `npx @bovinphang/frontend-craft runtime install opencode --local` or `--global`.
 
 Project base: `.opencode`; user base: `~/.config/opencode` (`XDG_CONFIG_HOME` / `OPENCODE_CONFIG_DIR` supported). Skills use `skills/`; commands use `commands/`. The generated `opencode.jsonc` uses `permission`, not `permissions`. The exact old generated template is repaired; custom JSONC is preserved. Unchanged manifest-owned `command/` files migrate to `commands/`.
 

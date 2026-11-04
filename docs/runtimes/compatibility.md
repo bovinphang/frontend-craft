@@ -2,13 +2,21 @@
 
 The adapters install different capability subsets. Run `fec matrix` for the project-level inventory and read the runtime-specific page for global differences. A successful install or doctor result proves the expected artifacts exist, not that every host feature is integrated or a particular release was tested interactively.
 
+## CLI 3.0 command migration
+
+Use `fec runtime install/update/uninstall [runtime]` for managed resources, including npx examples (`npx @bovinphang/frontend-craft@latest runtime update`). Resource flags and the `runtime upgrade/remove` aliases remain available; `setup` remains supported and top-level `install` is deprecated.
+
+Top-level `fec update/upgrade` now upgrades a verified npm/pnpm global CLI to registry `latest`, then refreshes resources in the current project and user-global scope with the new version. Top-level `fec uninstall/remove` removes only the CLI; `--purge` first cleans managed resources while preserving user edits. It requires terminal confirmation or non-interactive `--yes`. `--dry-run` is read-only. Old runtime arguments and resource flags on these top-level commands are rejected before changes.
+
+`runtime update` uses the running CLI package without fetching a new one. Temporary npx runs never create a global install and cannot self-uninstall; use the latest-package runtime command when an npx update reports a version mismatch. CLI upgrade failure stops refresh; partial resource failure is reported without CLI rollback. Other projects and Marketplace installs are not scanned or managed. Source links, project dependencies, unknown sources and pnpm groups shared with other packages are refused for automatic self-management.
+
 ## Updating existing installations
 
-Use `fec update <runtime> --local` or `--global` with the new CLI. Updates preserve manifest-tracked files changed by the user. Fresh installs retain existing Codex configuration and context files. Merge any missing rule imports into existing Gemini context files manually.
+Use `fec runtime update <runtime> --local` or `--global` with the new CLI. Updates preserve manifest-tracked files changed by the user. Fresh installs retain existing Codex configuration and context files. Merge any missing rule imports into existing Gemini context files manually.
 
 Unchanged manifest-owned legacy command paths are retired when replacements are installed for OpenCode, Kilo, Copilot, Gemini, OpenClaw and global Windsurf. Unknown or edited old files are preserved. Files that remain in old directories stay tracked for a later uninstall. Claude CLI hooks now live in settings.json; the original native Marketplace packaging stays unchanged.
 
-Antigravity and Cline global defaults changed. Run `fec setup antigravity --global` / `fec setup cline --global` to copy manifest-tracked files to the current destination before updating; user edits and old originals are preserved. `fec update --global` also discovers these legacy installations. For product-specific or redirected directories, use the documented runtime configuration-directory environment variable. It is an installer override; configure the host consistently too.
+Antigravity and Cline global defaults changed. Run `fec setup antigravity --global` / `fec setup cline --global` to copy manifest-tracked files to the current destination before updating; user edits and old originals are preserved. `fec runtime update --global` also discovers these legacy installations. For product-specific or redirected directories, use the documented runtime configuration-directory environment variable. It is an installer override; configure the host consistently too.
 
 Shared Claude/Qoder settings are never owned as a whole file. The manifest records installed hook entries, so uninstall removes only exact matching entries and preserves other settings. A user-modified hook entry is preserved; remove it manually if it still refers to a script you uninstall. Malformed settings stop the operation rather than being replaced. Keep the install manifest for safe updates and uninstall.
 

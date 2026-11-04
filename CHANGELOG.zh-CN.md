@@ -8,6 +8,22 @@
 
 自 **2.0.0** 起，面向发布的说明以英文 `CHANGELOG.md` 为权威来源；历史条目可能保留最初撰写语言。
 
+## [3.0.0] - 2026-11-04
+
+### 破坏性变更与迁移
+
+- 顶层 `fec update` / `upgrade` 改为通过原 npm/pnpm 及原 registry 升级全局 CLI，再用新版 CLI 刷新当前项目及用户全局的托管资源；不扫描其他项目，不管理 Marketplace 安装。
+- 顶层 `fec uninstall` / `remove` 默认只卸载 CLI；`--purge` 先清理已发现的托管资源并保留用户修改，清理实际失败时保留 CLI。交互终端要求确认，非交互终端必须传入 `--yes`。
+- 资源命令迁至 `fec runtime install/update/uninstall [runtime]`，保留 `runtime upgrade/remove` 别名及原资源选项。`setup` 保留，顶层 `install` 为弃用兼容入口。顶层 update/uninstall 在修改前拒绝旧 runtime 位置参数和资源选项，并输出迁移指引。
+- 将 `fec update codex --global` 改为 `fec runtime update codex --global`，将 `fec uninstall --local` 改为 `fec runtime uninstall --local`。临时运行使用 `npx @bovinphang/frontend-craft@latest runtime update`；`runtime update` 仅使用当前运行的 CLI 包资源，不联网获取新 CLI 包。
+
+### 新增
+
+- 验证 npm/pnpm 全局安装归属、复用原包管理器、新入口续跑、分阶段失败报告及只读 `--dry-run`。已是最新版仍刷新资源；CLI 升级失败停止资源操作。资源部分失败不回滚新版 CLI，可通过 `fec runtime update` 重试。
+- 临时 npx 更新检查 registry `latest`，不创建全局安装；当前版本不匹配时提示最新版 runtime 命令。npx 不支持自身卸载。源码链接、项目依赖、未知来源及含其他包的 pnpm 共享安装组均在修改前拒绝自动自身管理。
+
+以下条目记录 2.x 历史行为；当前资源命令请使用上述 `runtime` 分组。
+
 ## [2.9.0] - 2026-09-26
 
 ### 新增

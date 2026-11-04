@@ -5,16 +5,18 @@
 仅当你需要跨运行时安装、离线/脚本化复制文件，或处在非 Marketplace 环境时，再使用 CLI：
 
 ```bash
-npx @bovinphang/frontend-craft@latest install --local claude
+npx @bovinphang/frontend-craft@latest runtime install --local claude
 # 或
-npx @bovinphang/frontend-craft@latest install --global claude
+npx @bovinphang/frontend-craft@latest runtime install --global claude
 ```
 
 > **非交互场景：** 请加上 `--local` 或 `--global`，避免询问安装位置。交互与脚本行为说明见根目录 README **通用安装**。
 
 同一个 Claude 作用域请只选择一个激活来源：Marketplace/原生插件、CLI 安装或 `--plugin-dir`。它们技术上可以共存，但不推荐在同一个 Claude 会话里同时启用多份完整插件，否则 commands、skills、agents 与 hooks 可能重复。
 
-CLI 会对 Marketplace 安装执行单一来源保护：如果已经由 Claude Code Marketplace 管理 `frontend-craft`，`frontend-craft install/update claude` 会停止，并提示改用 Marketplace 更新。`--force` 不会覆盖 Marketplace 安装。
+CLI 3.0 的顶层 `fec update` 会升级受支持的 npm/pnpm 全局 CLI，再刷新其托管资源。仅操作资源请使用下述 `runtime` 分组；`runtime update` 只使用当前包内容，不获取新版包。顶层 `fec uninstall` 卸载 CLI 本体；`fec runtime uninstall claude --local`（或 `--global`）移除托管的 Claude 资源。迁移表见 [README](../../README.zh-CN.md)。
+
+CLI 会对 Marketplace 安装执行单一来源保护：如果已经由 Claude Code Marketplace 管理 `frontend-craft`，`frontend-craft runtime install/update claude` 会停止，并提示改用 Marketplace 更新。`--force` 不会覆盖 Marketplace 安装。
 
 ---
 
@@ -171,11 +173,11 @@ claude --plugin-dir .claude/plugins/frontend-craft
 git submodule update --remote .claude/plugins/frontend-craft
 ```
 
-**CLI 安装：** 对同一作用域执行 `npx @bovinphang/frontend-craft@latest update claude --local` 或 `... --global`，版本说明见 [CHANGELOG.zh-CN.md](../../CHANGELOG.zh-CN.md) 或 [CHANGELOG.md](../../CHANGELOG.md)。如果已经检测到 Claude Code Marketplace 安装，CLI 会拒绝 Claude install/update，并提示通过 Marketplace 更新。如果另一个 CLI 作用域已安装，交互式终端会询问是保持该来源并更新，还是卸载后切换；非交互终端会打印可执行命令。
+**CLI 安装：** 对同一作用域执行 `npx @bovinphang/frontend-craft@latest runtime update claude --local` 或 `... --global`，版本说明见 [CHANGELOG.zh-CN.md](../../CHANGELOG.zh-CN.md) 或 [CHANGELOG.md](../../CHANGELOG.md)。如果已经检测到 Claude Code Marketplace 安装，CLI 会拒绝 Claude install/update，并提示通过 Marketplace 更新。如果另一个 CLI 作用域已安装，交互式终端会询问是保持该来源并更新，还是卸载后切换；非交互终端会打印可执行命令。
 
 ```bash
-npx @bovinphang/frontend-craft@latest update claude --global
-npx @bovinphang/frontend-craft@latest update claude --local
+npx @bovinphang/frontend-craft@latest runtime update claude --global
+npx @bovinphang/frontend-craft@latest runtime update claude --local
 ```
 
 ---

@@ -18,11 +18,15 @@ for (const rt of ALL_RUNTIMES) {
       path.join(os.tmpdir(), `fc-dry-${rt}-home-`),
     );
     try {
-      execFileSync(process.execPath, [cli, "install", rt, "--dry-run"], {
-        cwd: root,
-        encoding: "utf8",
-        env: isolatedRuntimeEnv(runtimeHome),
-      });
+      execFileSync(
+        process.execPath,
+        [cli, "runtime", "install", rt, "--dry-run"],
+        {
+          cwd: root,
+          encoding: "utf8",
+          env: isolatedRuntimeEnv(runtimeHome),
+        },
+      );
     } finally {
       fs.rmSync(runtimeHome, { recursive: true, force: true });
     }

@@ -700,9 +700,8 @@ test("public docs expose the refactoring subsystem consistently", () => {
     assertExists(file);
 });
 
-test("refactoring release metadata is synchronized at 2.9.0", () => {
+test("refactoring release metadata is synchronized with package.json", () => {
   const pkg = JSON.parse(read("package.json")) as { version: string };
-  assert.equal(pkg.version, "2.9.0");
 
   for (const file of [
     ".claude-plugin/plugin.json",
@@ -714,10 +713,10 @@ test("refactoring release metadata is synchronized at 2.9.0", () => {
       plugins?: Array<{ version?: string; source?: { version?: string } }>;
     };
     if (file.endsWith("marketplace.json")) {
-      assert.equal(parsed.plugins?.[0]?.version, "2.9.0");
-      assert.equal(parsed.plugins?.[0]?.source?.version, "2.9.0");
+      assert.equal(parsed.plugins?.[0]?.version, pkg.version);
+      assert.equal(parsed.plugins?.[0]?.source?.version, pkg.version);
     } else {
-      assert.equal(parsed.version, "2.9.0");
+      assert.equal(parsed.version, pkg.version);
     }
   }
 
@@ -727,8 +726,8 @@ test("refactoring release metadata is synchronized at 2.9.0", () => {
   ]) {
     const metadata = JSON.parse(read(file)) as Array<{ version: string }>;
     assert.ok(
-      metadata.every((entry) => entry.version === "2.9.0"),
-      `${file} versions must be 2.9.0`,
+      metadata.every((entry) => entry.version === pkg.version),
+      `${file} versions must be ${pkg.version}`,
     );
   }
 });

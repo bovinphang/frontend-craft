@@ -7,7 +7,7 @@ fec doctor qoder --local
 fec doctor qoder --global
 ```
 
-Without a global CLI installation, use `npx @bovinphang/frontend-craft install qoder --local` or `--global`.
+Without a global CLI installation, use `npx @bovinphang/frontend-craft runtime install qoder --local` or `--global`.
 
 Project base: `.qoder`; user base: `~/.qoder` (`QODER_CONFIG_DIR` override). Skills, agents and commands are installed in their named directories; project rules go in `rules/`. Hooks are merged into `settings.json`, with absolute global script paths and deduplicated entries. Invalid settings JSON stops installation. Known unchanged legacy relative global hooks are replaced. This adapter does not configure MCP.
 

@@ -7,7 +7,7 @@ fec doctor windsurf --local
 fec doctor windsurf --global
 ```
 
-Without a global CLI installation, use `npx @bovinphang/frontend-craft install windsurf --local` or `--global`.
+Without a global CLI installation, use `npx @bovinphang/frontend-craft runtime install windsurf --local` or `--global`.
 
 Project skills/workflows: `.windsurf/skills` and `.windsurf/workflows`. User skills: `~/.codeium/windsurf/skills`; user workflows: `~/.codeium/windsurf/global_workflows` (base override: `WINDSURF_CONFIG_DIR`). Project rules retain the supported `.windsurf/rules` layout. Unchanged manifest-owned legacy global workflows are retired on update.
 

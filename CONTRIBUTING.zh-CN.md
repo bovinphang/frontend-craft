@@ -57,17 +57,19 @@ pnpm install
 pnpm run build
 
 # 3. 本地安装到指定 runtime（如 claude）
-node dist/bin/frontend-craft.js install claude --local --dry-run  # 先 dry-run 预览
-node dist/bin/frontend-craft.js install claude --local            # 实际安装
+node dist/bin/frontend-craft.js runtime install claude --local --dry-run  # 先 dry-run 预览
+node dist/bin/frontend-craft.js runtime install claude --local            # 实际安装
 
 # 4. 安装到所有 runtime
-node dist/bin/frontend-craft.js install --all --dry-run
+node dist/bin/frontend-craft.js runtime install --all --dry-run
 
 # 5. 列出所有支持的 runtime
 node dist/bin/frontend-craft.js list
 ```
 
 `pnpm run build` 会依次运行 `clean`、`typecheck` 和 `scripts/build-dist.ts`。本地使用 `dist/bin/frontend-craft.js` 或打包后的 hook 脚本前，请先运行它。
+
+源码检出不支持 CLI 自身管理。使用 `node dist/bin/frontend-craft.js runtime update --dry-run` 预览包内资源更新；顶层 update/uninstall 应通过隔离的 npm/pnpm 全局安装、假包管理器及临时 HOME 验证。顶层 `--dry-run` 必须保持只读。3.0 命令迁移见 README 迁移表。
 
 ## 测试指南
 

@@ -5,16 +5,18 @@ Recommended path for most Claude Code users: install through **Claude Code Marke
 Use the CLI only when you need cross-runtime installation, offline/scripted file copies, or a non-Marketplace environment:
 
 ```bash
-npx @bovinphang/frontend-craft@latest install --local claude
+npx @bovinphang/frontend-craft@latest runtime install --local claude
 # or
-npx @bovinphang/frontend-craft@latest install --global claude
+npx @bovinphang/frontend-craft@latest runtime install --global claude
 ```
 
 > **Non-interactive:** append `--local` or `--global` to skip install-location prompts. See the repository README **Universal Install** for interactive vs. scripted behavior.
 
 Choose one active source of truth for the same Claude scope: Marketplace/native plugin, CLI install, or `--plugin-dir`. They can technically coexist, but running multiple complete copies in the same Claude session can duplicate commands, skills, agents, and hooks.
 
-The CLI enforces this for Marketplace installs: if Claude Code Marketplace already manages `frontend-craft`, `frontend-craft install/update claude` stops and tells you to update through Marketplace instead. `--force` does not override a Marketplace install.
+In CLI 3.0, top-level `fec update` upgrades a supported npm/pnpm global CLI and then refreshes its managed resources. Use the `runtime` group below for resource-only operations; `runtime update` uses the running package contents without fetching a newer package. Top-level `fec uninstall` removes the CLI itself; `fec runtime uninstall claude --local` (or `--global`) removes the managed Claude resources. See the [3.0 migration table](../../README.md#update-and-remove).
+
+The CLI enforces this for Marketplace installs: if Claude Code Marketplace already manages `frontend-craft`, `frontend-craft runtime install/update claude` stops and tells you to update through Marketplace instead. `--force` does not override a Marketplace install.
 
 ---
 
@@ -173,11 +175,11 @@ For Git submodule installs:
 git submodule update --remote .claude/plugins/frontend-craft
 ```
 
-**CLI installs:** re-run `npx @bovinphang/frontend-craft@latest update claude --local` or `... --global` for the same scope, and read [CHANGELOG.md](../../CHANGELOG.md) for release notes. If Claude Code Marketplace is already installed, the CLI refuses Claude install/update and prints the Marketplace update path. If the opposite CLI scope is already installed, interactive terminals ask whether to keep that source updated or uninstall it before switching; non-interactive terminals print the exact commands to run.
+**CLI installs:** re-run `npx @bovinphang/frontend-craft@latest runtime update claude --local` or `... --global` for the same scope, and read [CHANGELOG.md](../../CHANGELOG.md) for release notes. If Claude Code Marketplace is already installed, the CLI refuses Claude install/update and prints the Marketplace update path. If the opposite CLI scope is already installed, interactive terminals ask whether to keep that source updated or uninstall it before switching; non-interactive terminals print the exact commands to run.
 
 ```bash
-npx @bovinphang/frontend-craft@latest update claude --global
-npx @bovinphang/frontend-craft@latest update claude --local
+npx @bovinphang/frontend-craft@latest runtime update claude --global
+npx @bovinphang/frontend-craft@latest runtime update claude --local
 ```
 
 ---

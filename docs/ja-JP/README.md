@@ -79,7 +79,7 @@ fec setup claude --global
 fec setup all --global
 
 # 6. プレビュー / 確認
-fec install --all --dry-run --global
+fec runtime install --all --dry-run --global
 fec list
 ```
 
@@ -92,17 +92,17 @@ fec list
 npx @bovinphang/frontend-craft@latest
 
 # 2. 現在のプロジェクトに接続
-npx @bovinphang/frontend-craft@latest install --local codex
-npx @bovinphang/frontend-craft@latest install --local claude
-npx @bovinphang/frontend-craft@latest install --all --local
+npx @bovinphang/frontend-craft@latest runtime install --local codex
+npx @bovinphang/frontend-craft@latest runtime install --local claude
+npx @bovinphang/frontend-craft@latest runtime install --all --local
 
 # 3. グローバル接続、すべてのプロジェクトで利用
-npx @bovinphang/frontend-craft@latest install --global codex
-npx @bovinphang/frontend-craft@latest install --global claude
-npx @bovinphang/frontend-craft@latest install --all --global
+npx @bovinphang/frontend-craft@latest runtime install --global codex
+npx @bovinphang/frontend-craft@latest runtime install --global claude
+npx @bovinphang/frontend-craft@latest runtime install --all --global
 
 # 4. プレビュー / 確認
-npx @bovinphang/frontend-craft@latest install --all --dry-run --global
+npx @bovinphang/frontend-craft@latest runtime install --all --dry-run --global
 npx @bovinphang/frontend-craft@latest list
 ```
 
@@ -112,7 +112,7 @@ npx @bovinphang/frontend-craft@latest list
 
 Claude Code ユーザーには、**Claude Code Marketplace** からの单一ソースでのインストールを推奨します。CLI を Claude 用に使うのは、クロスランタイムインストール、スクリプト/オフラインのファイルコピー、または非 Marketplace 環境の場合に限ってください。
 
-Marketplace が既にインストールされている場合、CLI は `--force` を付けても 2 つ目の Claude コピーをインストールまたはアップデートしません。代わりに Claude Code Marketplace からアップデートしてください。他のスコープに CLI 管理の Claude インストールが既に存在する場合、対話型ターミナルではそのソースを最新に保つか、アンインストールしてから切り替えるかを確認します。非対話型ターミナルでは停止し、実行すべき `update`、`uninstall`、`install` コマンドを正確に表示します。
+Marketplace が既にインストールされている場合、CLI は `--force` を付けても 2 つ目の Claude コピーをインストールまたはアップデートしません。代わりに Claude Code Marketplace からアップデートしてください。他のスコープに CLI 管理の Claude インストールが既に存在する場合、対話型ターミナルではそのソースを最新に保つか、アンインストールしてから切り替えるかを確認します。非対話型ターミナルでは停止し、実行すべき `runtime update`、`runtime uninstall`、`runtime install` コマンドを正確に表示します。
 
 完全な Claude 固有の手順は [docs/runtimes/claude.md](../runtimes/claude.md) · [简体中文](../runtimes/claude.zh-CN.md) にあります。
 
@@ -460,33 +460,55 @@ $env:MODAO_TOKEN = "your-modao-token"
 
 ## アップデートと削除
 
-`fec` は `frontend-craft` の短いコマンドです。グローバルの `fec` コマンドをインストールしていない場合は、同じ引数を `npx @bovinphang/frontend-craft@latest` に渡してください。例：`npx @bovinphang/frontend-craft@latest update`。
+### CLI 自体の管理（3.0）
 
-### アップデート
+`fec update`（別名 `upgrade`）は元の npm/pnpm と registry の `latest` でグローバル CLI を更新し、新しい CLI で現在のプロジェクトとユーザー全体の管理リソースを更新します。最新版でもリソースを更新します。他のプロジェクトの走査や Marketplace の管理は行いません。CLI 更新失敗時は停止し、リソースの部分失敗は段階別に報告します。CLI はロールバックせず、`fec runtime update` で再試行できます。
 
-```bash
-fec update                         # 検出された CLI 管理インストールをすべてアップデート
-fec update <runtime> --local        # ローカルの CLI 管理インストールを 1 つアップデート
-fec update <runtime> --global       # グローバルの CLI 管理インストールを 1 つアップデート
-fec upgrade <runtime> --global      # `upgrade` は `update` のエイリアス
-```
-
-### 削除
+`fec uninstall`（別名 `remove`）は既定で CLI だけを削除します。`--purge` は先に管理リソースを削除し、ユーザーの変更を保持します。削除処理が失敗すると CLI を保持します。対話端末では確認し、非対話実行では `--yes` が必要です。検証済みの npm/pnpm registry グローバルインストールのみ対応します。ソースリンク、プロジェクト依存、未知の配布元、他のパッケージを含む pnpm 共有グループは変更前に拒否します。共有グループは元のパッケージマネージャーで手動管理してください。`--dry-run` は読み取り専用で、インストール、削除、後続更新を実行しません。
 
 ```bash
-fec uninstall                       # 検出された CLI 管理インストールをすべて削除
-fec remove                          # `remove` は `uninstall` のエイリアス
-fec uninstall <runtime>             # 指定 runtime のインストールを削除
-fec remove <runtime>                # エイリアスで指定 runtime を削除
-fec uninstall --global              # 検出されたグローバルインストールだけを削除
-fec remove --local                  # 検出されたローカルインストールだけを削除
-fec uninstall <runtime> --dry-run   # 削除内容をプレビュー
-fec uninstall <runtime> --force     # 変更済みの管理ファイルも削除
+fec update
+fec uninstall --dry-run
+fec uninstall --purge --yes
 ```
 
-CLI はランタイムディレクトリに `frontend-craft.manifest.json` を書き込みます。runtime を指定しない場合、`update` はこれらの manifest を自動検出し、**ローカルで修正したファイルをスキップ**します——カスタマイズはアップデート後も保持されます。
+一時的な npx 実行ではグローバル CLI を作成せず、CLI の削除もできません。npx のトップレベル `update` は実行中のバージョンが registry の `latest` と一致する場合のみリソースを更新します。一致しなければ `npx @bovinphang/frontend-craft@latest runtime update` を使用してください。
 
-`uninstall`/`remove` は manifest に記録されたファイルだけを削除します。変更済みファイルは既定でスキップされます。変更済みの管理ファイルも削除したい場合のみ `--force` を追加してください。`--force` は Claude Code Marketplace インストールを上書きしません。
+| 2.x リソースコマンド | 3.0 の代替 |
+| --- | --- |
+| `fec update [runtime] [options]` | `fec runtime update [runtime] [options]` |
+| `fec uninstall [runtime] [options]` | `fec runtime uninstall [runtime] [options]` |
+| `fec install [runtime] [options]` | `fec runtime install [runtime] [options]` |
+
+トップレベル update/uninstall は旧 runtime 引数と `--global` などのリソースオプションを変更前に拒否します。`setup` は継続し、トップレベル `install` は非推奨の互換エイリアスです。リソースオプションと `runtime upgrade/remove` の別名は維持されます。`runtime update` は実行中の CLI パッケージのみを使用し、新しいパッケージをネットから取得しません。
+
+`fec` は `frontend-craft` の短いコマンドです。グローバル CLI がない場合、リソース操作には `npx @bovinphang/frontend-craft@latest runtime update`（または `runtime install/uninstall`）を使用してください。
+
+### リソースのアップデート
+
+```bash
+fec runtime update                              # 検出された CLI 管理インストールをすべてアップデート
+fec runtime update <runtime> --local            # ローカルの CLI 管理インストールを 1 つアップデート
+fec runtime update <runtime> --global           # グローバルの CLI 管理インストールを 1 つアップデート
+fec runtime upgrade <runtime> --global          # `upgrade` は `update` のエイリアス
+```
+
+### リソースの削除
+
+```bash
+fec runtime uninstall                           # 検出された CLI 管理インストールをすべて削除
+fec runtime remove                              # `remove` は `uninstall` のエイリアス
+fec runtime uninstall <runtime>                 # 指定 runtime のインストールを削除
+fec runtime remove <runtime>                    # エイリアスで指定 runtime を削除
+fec runtime uninstall --global                  # 検出されたグローバルインストールだけを削除
+fec runtime remove --local                      # 検出されたローカルインストールだけを削除
+fec runtime uninstall <runtime> --dry-run       # 削除内容をプレビュー
+fec runtime uninstall <runtime> --force         # 変更済みの管理ファイルも削除
+```
+
+CLI はランタイムディレクトリに `frontend-craft.manifest.json` を書き込みます。runtime を指定しない場合、`runtime update` はこれらの manifest を自動検出し、**ローカルで修正したファイルをスキップ**します——カスタマイズはアップデート後も保持されます。
+
+`runtime uninstall`/`runtime remove` は manifest に記録されたファイルだけを削除します。変更済みファイルは既定でスキップされます。変更済みの管理ファイルも削除したい場合のみ `--force` を追加してください。`--force` は Claude Code Marketplace インストールを上書きしません。
 
 **Claude Code Marketplace** または **submodule** インストールのアップデート方法は [docs/runtimes/claude.md](../runtimes/claude.md) · [简体中文](../runtimes/claude.zh-CN.md) を参照してください。`/fec-init` はプロジェクト設定を初期化するだけであり、2 回目のプラグインインストールではありません。
 

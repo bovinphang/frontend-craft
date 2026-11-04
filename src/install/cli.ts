@@ -3,6 +3,7 @@ import path from "node:path";
 import os from "node:os";
 import readline from "node:readline";
 import { ALL_RUNTIMES, INSTALLERS } from "./registry.js";
+import { runCliLifecycle } from "./cli-lifecycle.js";
 import {
   promptLanguage,
   promptLocation,
@@ -83,7 +84,9 @@ function parseInstallArgs(argv: string[]) {
     } else if (a.startsWith("--lang=")) {
       language = a.slice("--lang=".length);
     } else if (!a.startsWith("-")) rest.push(a);
+    else throw new Error(`Unknown option: ${a}`);
   }
+  if (rest.length > 1) throw new Error(`Unexpected argument: ${rest[1]}`);
   return {
     runtime: rest[0],
     installLocation,
@@ -100,16 +103,18 @@ function printHelp(): void {
   console.log(`frontend-craft - universal installer
 
 Usage:
-  frontend-craft install <runtime> [options]
-  frontend-craft install --all [options]
-  frontend-craft install
+  frontend-craft update|upgrade [--dry-run]
+  frontend-craft uninstall|remove [--purge] [--yes] [--dry-run]
+  frontend-craft runtime install <runtime> [options]
+  frontend-craft runtime install --all [options]
+  frontend-craft runtime install
+  frontend-craft install [runtime] [options] (deprecated alias)
   frontend-craft setup [runtime] [options]
   frontend-craft setup all [options]
   fec setup [runtime] [options]
   fec setup all [options]
-  frontend-craft update [runtime] [options]
-  frontend-craft upgrade [runtime] [options]
-  frontend-craft uninstall|remove [runtime] [options]
+  frontend-craft runtime update|upgrade [runtime] [options]
+  frontend-craft runtime uninstall|remove [runtime] [options]
   frontend-craft list
   frontend-craft matrix
   frontend-craft doctor <runtime>
@@ -118,6 +123,8 @@ Usage:
   frontend-craft version
 
 Options:
+  --purge          CLI uninstall: clean managed resources before removing CLI
+  --yes, -y        CLI uninstall: confirm without prompting (required for non-TTY)
   --global, -g     Install to tool global config directory
   --local, -l      Install to this project only
   --lang <lang>    Install content language: ${SUPPORTED_LANGUAGES.join(", ")} (default: ${DEFAULT_LANGUAGE})
@@ -128,8 +135,11 @@ Options:
 Notes:
   setup connects frontend-craft to the current project. Omit runtime in an interactive terminal to choose runtimes.
   setup <runtime> and setup all install locally by default unless --global is explicitly provided.
-  update without a runtime refreshes discovered frontend-craft manifests.
-  uninstall/remove deletes manifest-managed files and skips modified files unless --force is provided.
+  update upgrades the CLI and refreshes current-project and global resources with the new CLI.
+  uninstall/remove removes only the CLI unless --purge is provided.
+  runtime update uses this package's content without downloading a new CLI.
+  runtime update without a runtime refreshes discovered frontend-craft manifests.
+  runtime uninstall/remove deletes manifest-managed files and skips modified files unless --force is provided.
   /fec-init is the in-assistant slash command; fec setup is the terminal CLI command.
 
 Runtimes:
@@ -155,10 +165,46 @@ function isInstallInvocation(argv: string[]): boolean {
 }
 
 export async function main(argv: string[]): Promise<void> {
-  const cmd = isInstallInvocation(argv) ? "install" : argv[0];
-  const cmdArgs = isInstallInvocation(argv) ? argv : argv.slice(1);
+  let cmd = isInstallInvocation(argv) ? "install" : argv[0];
+  let cmdArgs = isInstallInvocation(argv) ? argv : argv.slice(1);
+  if (argv.some((arg) => arg === "help" || arg === "--help" || arg === "-h")) {
+    printHelp();
+    return;
+  }
+  const resourceCommand = cmd === "runtime";
+  if (resourceCommand) {
+    cmd = cmdArgs[0];
+    cmdArgs = cmdArgs.slice(1);
+    if (
+      !["install", "update", "upgrade", "uninstall", "remove"].includes(
+        cmd ?? "",
+      )
+    ) {
+      console.error(`Unknown runtime command: ${cmd ?? "(missing)"}`);
+      printHelp();
+      process.exitCode = 1;
+      return;
+    }
+  }
   const isSetup = cmd === "setup";
   const pluginRoot = resolvePluginRoot(import.meta.url);
+  const cwd = process.cwd();
+  if (
+    !resourceCommand &&
+    ["update", "upgrade", "uninstall", "remove"].includes(cmd ?? "")
+  ) {
+    await runCliLifecycle(
+      cmd === "update" || cmd === "upgrade" ? "update" : "uninstall",
+      cmdArgs,
+      {
+        pluginRoot,
+        cwd,
+        purgeResources: (dryRun) => uninstallResources({ cwd, dryRun }),
+        describeResources: () => describeResourceInstalls(cwd),
+      },
+    );
+    return;
+  }
 
   if (cmd === "version" || cmd === "-v" || cmd === "--version") {
     console.log(readPkgVersion(pluginRoot));
@@ -237,7 +283,18 @@ export async function main(argv: string[]): Promise<void> {
     return;
   }
 
-  const parsedInstallArgs = parseInstallArgs(cmdArgs);
+  if (cmd === "install" && !resourceCommand && argv[0] === "install")
+    console.log(
+      'Deprecated: use "frontend-craft runtime install" instead of "frontend-craft install".',
+    );
+  let parsedInstallArgs: ReturnType<typeof parseInstallArgs>;
+  try {
+    parsedInstallArgs = parseInstallArgs(cmdArgs);
+  } catch (error) {
+    console.error(error instanceof Error ? error.message : String(error));
+    process.exitCode = 1;
+    return;
+  }
   let runtime: string | undefined = parsedInstallArgs.runtime;
   let all = parsedInstallArgs.all;
   const { installLocation, dryRun, force, hasGlobal, hasLocal } =
@@ -266,37 +323,16 @@ export async function main(argv: string[]): Promise<void> {
     return;
   }
 
-  const cwd = process.cwd();
   if (cmd === "uninstall" || cmd === "remove") {
     const scopes = getScopeFilter(hasLocal, hasGlobal);
     const runtimes = runtime ? [runtime] : all ? ALL_RUNTIMES : undefined;
-    const installs = discoverManifestInstalls({ cwd, runtimes, scopes });
     if (runtime && !INSTALLERS[runtime]) {
       console.error(`Unknown runtime: ${runtime}`);
       process.exitCode = 1;
       return;
     }
-    if (installs.length === 0) {
-      console.log(renderNoInstallsFound("uninstall", runtime, scopes));
-      return;
-    }
-    for (const install of installs) {
-      console.log(
-        `Uninstalling frontend-craft for "${install.runtime}" -> ${install.baseDir}${install.scope === "global" ? " (global)" : ""}`,
-      );
-      const result = uninstallManagedInstall({ install, cwd, dryRun, force });
-      for (const file of result.removed) {
-        const action = dryRun ? "[dry-run] would remove" : "Removed";
-        console.log(
-          `${action}${file.modified ? " modified file" : " file"}: ${file.path}`,
-        );
-      }
-      for (const file of result.skipped)
-        console.log(`Skipped modified file: ${file}`);
-      for (const file of result.missing) console.log(`Missing file: ${file}`);
-      if (dryRun && result.skipped.length === 0)
-        console.log(`[dry-run] would remove manifest: ${install.manifestPath}`);
-    }
+    if (!(await uninstallResources({ cwd, dryRun, force, runtimes, scopes })))
+      process.exitCode = 1;
     return;
   }
 
@@ -306,13 +342,20 @@ export async function main(argv: string[]): Promise<void> {
 
   if (mode === "update" && !runtime) {
     const scopes = getScopeFilter(hasLocal, hasGlobal);
+    let discoveryFailed = false;
     const installs = discoverManifestInstalls({
       cwd,
       runtimes: all ? ALL_RUNTIMES : undefined,
       scopes,
+      onError: (error) => {
+        discoveryFailed = true;
+        console.error(error.message);
+        process.exitCode = 1;
+      },
     });
     if (installs.length === 0) {
-      console.log(renderNoInstallsFound("update", undefined, scopes));
+      if (!discoveryFailed)
+        console.log(renderNoInstallsFound("update", undefined, scopes));
       return;
     }
     const updatedScopes = new Set<string>();
@@ -322,7 +365,7 @@ export async function main(argv: string[]): Promise<void> {
       updatedScopes.add(scopeKey);
       const language =
         languageArg ?? install.manifest.language ?? DEFAULT_LANGUAGE;
-      await runInstaller({
+      await runResourceInstaller({
         rt: install.runtime,
         mode,
         isGlobal: install.scope === "global",
@@ -390,7 +433,7 @@ export async function main(argv: string[]): Promise<void> {
       continue;
     }
     const baseDir = getInstallBaseDir({ runtime: rt, isGlobal, cwd });
-    await runInstaller({
+    await runResourceInstaller({
       rt,
       mode,
       isGlobal,
@@ -402,6 +445,123 @@ export async function main(argv: string[]): Promise<void> {
       canPrompt,
       language,
     });
+  }
+}
+
+export function describeResourceInstalls(cwd: string): string[] {
+  const diagnostics: string[] = [];
+  const installs = discoverManifestInstalls({
+    cwd,
+    onError: (error) => diagnostics.push(error.message),
+  });
+  return [
+    ...installs.map(
+      (install) => `${install.runtime} (${install.scope}): ${install.baseDir}`,
+    ),
+    ...diagnostics,
+  ];
+}
+
+async function uninstallResources({
+  cwd,
+  dryRun,
+  force = false,
+  runtimes,
+  scopes = ["local", "global"],
+}: {
+  cwd: string;
+  dryRun: boolean;
+  force?: boolean;
+  runtimes?: string[];
+  scopes?: Array<"local" | "global">;
+}): Promise<boolean> {
+  let succeeded = true;
+  const installs = discoverManifestInstalls({
+    cwd,
+    runtimes,
+    scopes,
+    onError: (error) => {
+      succeeded = false;
+      console.error(error.message);
+    },
+  });
+  if (installs.length === 0 && succeeded)
+    console.log(
+      renderNoInstallsFound(
+        "uninstall",
+        runtimes?.length === 1 ? runtimes[0] : undefined,
+        scopes,
+      ),
+    );
+  for (const install of installs) {
+    try {
+      console.log(
+        `Uninstalling frontend-craft for "${install.runtime}" -> ${install.baseDir}${install.scope === "global" ? " (global)" : ""}`,
+      );
+      const result = uninstallManagedInstall({ install, cwd, dryRun, force });
+      for (const file of result.removed) {
+        const action = dryRun ? "[dry-run] would remove" : "Removed";
+        console.log(
+          `${action}${file.modified ? " modified file" : " file"}: ${file.path}`,
+        );
+      }
+      for (const file of result.skipped)
+        console.log(`Skipped modified file: ${file}`);
+      for (const file of result.missing) console.log(`Missing file: ${file}`);
+      if (result.skipped.length > 0) {
+        console.log(
+          `Preserved manifest for modified files: ${install.manifestPath}`,
+        );
+        console.log(
+          `Recover with: npx @bovinphang/frontend-craft@latest runtime uninstall ${install.runtime} --${install.scope}`,
+        );
+      } else if (dryRun)
+        console.log(`[dry-run] would remove manifest: ${install.manifestPath}`);
+    } catch (error) {
+      succeeded = false;
+      reportResourceFailure(
+        "uninstall",
+        install.runtime,
+        install.scope === "global",
+        error,
+      );
+    }
+  }
+  return succeeded;
+}
+
+function reportResourceFailure(
+  action: "install" | "update" | "uninstall",
+  runtime: string,
+  isGlobal: boolean,
+  error: unknown,
+): void {
+  console.error(
+    `Failed ${action} for ${runtime} (${isGlobal ? "global" : "local"}): ${error instanceof Error ? error.message : String(error)}`,
+  );
+  console.error(
+    `Retry: frontend-craft runtime ${action} ${runtime} --${isGlobal ? "global" : "local"}`,
+  );
+}
+
+async function runResourceInstaller(
+  options: Parameters<typeof runInstaller>[0],
+): Promise<void> {
+  try {
+    if (options.mode === "update")
+      discoverManifestInstalls({
+        cwd: options.cwd,
+        runtimes: [options.rt],
+        scopes: [options.isGlobal ? "global" : "local"],
+        onError: (error) => {
+          throw error;
+        },
+      });
+    await runInstaller(options);
+  } catch (error) {
+    discardManifestSession();
+    reportResourceFailure(options.mode, options.rt, options.isGlobal, error);
+    process.exitCode = 1;
   }
 }
 
@@ -474,7 +634,7 @@ async function runInstaller({
     );
     if (!dryRun && fs.existsSync(getManifestPath(baseDir))) {
       console.log(
-        `Existing frontend-craft manifest found; use "frontend-craft update ${rt}" to refresh managed files.`,
+        `Existing frontend-craft manifest found; use "frontend-craft runtime update ${rt}" to refresh managed files.`,
       );
     }
   } else {
@@ -482,17 +642,17 @@ async function runInstaller({
       `Updating frontend-craft for "${rt}" -> ${baseDir}${isGlobal ? " (global)" : ""}`,
     );
   }
-  if (!dryRun)
-    beginManifestSession({
-      baseDir,
-      cwd,
-      mode,
-      packageVersion: readPkgVersion(pluginRoot),
-      runtime: rt,
-      isGlobal,
-      language,
-    });
   try {
+    if (!dryRun)
+      beginManifestSession({
+        baseDir,
+        cwd,
+        mode,
+        packageVersion: readPkgVersion(pluginRoot),
+        runtime: rt,
+        isGlobal,
+        language,
+      });
     await INSTALLERS[rt](ctx);
     if (!dryRun) endManifestSession();
   } catch (err) {
@@ -640,10 +800,10 @@ function printClaudeCliConflictGuidance(
   const existingFlag = sourceScopeFlag(existingSource);
   const targetFlag = sourceScopeFlag(targetSource);
   console.log(
-    `Keep the existing source updated with: frontend-craft update claude ${existingFlag}`,
+    `Keep the existing source updated with: frontend-craft runtime update claude ${existingFlag}`,
   );
   console.log(
-    `Or switch sources with: frontend-craft uninstall claude ${existingFlag} && frontend-craft install claude ${targetFlag}`,
+    `Or switch sources with: frontend-craft runtime uninstall claude ${existingFlag} && frontend-craft runtime install claude ${targetFlag}`,
   );
 }
 
