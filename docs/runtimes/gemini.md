@@ -7,7 +7,7 @@ fec doctor gemini --local
 fec doctor gemini --global
 ```
 
-Without a global CLI installation, use `npx @bovinphang/frontend-craft install gemini --local` or `--global`.
+Without a global CLI installation, use `npx @bovinphang/frontend-craft runtime install gemini --local` or `--global`.
 
 Skills use `.gemini/skills` or `~/.gemini/skills` (`GEMINI_CONFIG_DIR` override). Rules are copied into `rules/` under that base. If absent, project `GEMINI.md` or user `~/.gemini/GEMINI.md` is created with resolvable rule imports. Existing context files are preserved; add the rule imports manually if you want them in an existing context. This installs native skills, not an incomplete extension.
 

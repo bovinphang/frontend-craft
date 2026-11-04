@@ -7,7 +7,7 @@ fec doctor codebuddy --local
 fec doctor codebuddy --global
 ```
 
-Without a global CLI installation, use `npx @bovinphang/frontend-craft install codebuddy --local` or `--global`.
+Without a global CLI installation, use `npx @bovinphang/frontend-craft runtime install codebuddy --local` or `--global`.
 
 Skills use `.codebuddy/skills` or `~/.codebuddy/skills` (`CODEBUDDY_CONFIG_DIR` override). This adapter installs skills only; commands, agents, hooks and MCP supported by the product are separate integration opportunities.
 

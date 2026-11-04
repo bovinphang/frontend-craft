@@ -29,7 +29,12 @@ interface SkillFixture extends VersionedObject {
   id?: string;
 }
 
-test("sync-version updates public metadata from package.json", () => {
+for (const includeLocalized of [false, true]) {
+  test(`sync-version updates public metadata from package.json (${includeLocalized ? "with" : "without"} localized metadata)`, () =>
+    verifyVersionSync(includeLocalized));
+}
+
+function verifyVersionSync(includeLocalized: boolean): void {
   const tempRoot = fs.mkdtempSync(
     path.join(os.tmpdir(), "frontend-craft-sync-version-"),
   );
@@ -41,6 +46,13 @@ test("sync-version updates public metadata from package.json", () => {
     copyFixture(path.join(".claude-plugin", "plugin.json"), tempRoot);
     copyFixture(path.join(".claude-plugin", "marketplace.json"), tempRoot);
     copyFixture(path.join("skills", "metadata.json"), tempRoot);
+    const localizedMetadataPath = path.join(
+      "localized",
+      "zh-CN",
+      "skills",
+      "metadata.json",
+    );
+    if (includeLocalized) copyFixture(localizedMetadataPath, tempRoot);
 
     const nextVersion = "9.8.7";
     updateJson(
@@ -81,6 +93,15 @@ test("sync-version updates public metadata from package.json", () => {
         for (const skill of skills) skill.version = "0.0.0";
       },
     );
+    if (includeLocalized) {
+      updateJson(
+        path.join(tempRoot, localizedMetadataPath),
+        assertSkillMetadataFixture,
+        (skills) => {
+          for (const skill of skills) skill.version = "0.0.0";
+        },
+      );
+    }
 
     execFileSync(
       process.execPath,
@@ -116,10 +137,20 @@ test("sync-version updates public metadata from package.json", () => {
     assert.equal(openclaw.version, nextVersion);
     for (const skill of skills)
       assert.equal(skill.version, nextVersion, skill.id);
+    if (includeLocalized) {
+      const localizedSkills = readJson(
+        path.join(tempRoot, localizedMetadataPath),
+      );
+      assertSkillMetadataFixture(localizedSkills);
+      for (const skill of localizedSkills)
+        assert.equal(skill.version, nextVersion, skill.id);
+    } else {
+      assert.equal(fs.existsSync(path.join(tempRoot, "localized")), false);
+    }
   } finally {
     fs.rmSync(tempRoot, { recursive: true, force: true });
   }
-});
+}
 
 function copyFixture(relativePath: string, tempRoot: string): void {
   const source = path.join(root, relativePath);

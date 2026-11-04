@@ -59,17 +59,19 @@ pnpm install
 pnpm run build
 
 # 3. Install to a specific runtime (e.g., claude)
-node dist/bin/frontend-craft.js install claude --local --dry-run  # preview first
-node dist/bin/frontend-craft.js install claude --local            # actual install
+node dist/bin/frontend-craft.js runtime install claude --local --dry-run  # preview first
+node dist/bin/frontend-craft.js runtime install claude --local            # actual install
 
 # 4. Install to all runtimes
-node dist/bin/frontend-craft.js install --all --dry-run
+node dist/bin/frontend-craft.js runtime install --all --dry-run
 
 # 5. List all supported runtimes
 node dist/bin/frontend-craft.js list
 ```
 
 `pnpm run build` runs `clean`, `typecheck`, and `scripts/build-dist.ts`. Run it before using `dist/bin/frontend-craft.js` or the bundled hook scripts locally.
+
+Local source checkouts intentionally do not support CLI self-management. Use `node dist/bin/frontend-craft.js runtime update --dry-run` to preview bundled resource updates; test top-level update/uninstall only against isolated npm/pnpm global installations with fake package managers and temporary HOME directories. Top-level `--dry-run` must remain read-only. See the README migration table for the 3.0 command split.
 
 ## Testing
 

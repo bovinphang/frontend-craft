@@ -79,7 +79,7 @@ fec setup claude --global
 fec setup all --global
 
 # 6. Preview / query
-fec install --all --dry-run --global
+fec runtime install --all --dry-run --global
 fec list
 ```
 
@@ -92,17 +92,17 @@ fec list
 npx @bovinphang/frontend-craft@latest
 
 # 2. Connect the current project
-npx @bovinphang/frontend-craft@latest install --local codex
-npx @bovinphang/frontend-craft@latest install --local claude
-npx @bovinphang/frontend-craft@latest install --all --local
+npx @bovinphang/frontend-craft@latest runtime install --local codex
+npx @bovinphang/frontend-craft@latest runtime install --local claude
+npx @bovinphang/frontend-craft@latest runtime install --all --local
 
 # 3. Connect globally, available across all projects
-npx @bovinphang/frontend-craft@latest install --global codex
-npx @bovinphang/frontend-craft@latest install --global claude
-npx @bovinphang/frontend-craft@latest install --all --global
+npx @bovinphang/frontend-craft@latest runtime install --global codex
+npx @bovinphang/frontend-craft@latest runtime install --global claude
+npx @bovinphang/frontend-craft@latest runtime install --all --global
 
 # 4. Preview / query
-npx @bovinphang/frontend-craft@latest install --all --dry-run --global
+npx @bovinphang/frontend-craft@latest runtime install --all --dry-run --global
 npx @bovinphang/frontend-craft@latest list
 ```
 
@@ -112,7 +112,7 @@ Use `npx` when you do not want to install a global `fec` command. Without argume
 
 For Claude Code users, **Claude Code Marketplace** is the preferred single-source install. Use the CLI for Claude only when you need cross-runtime installs, scripted/offline file copies, or non-Marketplace environments.
 
-If Marketplace is already installed, the CLI will not install or update a second Claude copy, even with `--force`; update through Claude Code Marketplace instead. If a CLI-managed Claude install already exists in the other scope, interactive terminals ask whether to keep that source updated or uninstall it before switching. Non-interactive terminals stop and print the exact `update`, `uninstall`, and `install` commands to run.
+If Marketplace is already installed, the CLI will not install or update a second Claude copy, even with `--force`; update through Claude Code Marketplace instead. If a CLI-managed Claude install already exists in the other scope, interactive terminals ask whether to keep that source updated or uninstall it before switching. Non-interactive terminals stop and print the exact `runtime update`, `runtime uninstall`, and `runtime install` commands to run.
 
 Full Claude-specific steps are in [docs/runtimes/claude.md](docs/runtimes/claude.md) · [简体中文](docs/runtimes/claude.zh-CN.md).
 
@@ -471,33 +471,55 @@ Every review, analysis, and evaluation writes a timestamped Markdown report to `
 
 ## Update and Remove
 
-`fec` is the short command for `frontend-craft`. If you have not installed the global `fec` command, use the same arguments with `npx @bovinphang/frontend-craft@latest`, for example `npx @bovinphang/frontend-craft@latest update`.
+### CLI lifecycle (3.0)
 
-### Update
+`fec update` (`upgrade`) upgrades an npm/pnpm global CLI to the original registry's `latest`, then starts the new CLI to refresh managed resources in the current project and user-global scope, even when already latest. Other projects and Marketplace installs are not scanned or managed. CLI upgrade failure stops refresh; independent resource failures are reported by phase without rolling back the CLI. Retry those resources with `fec runtime update`.
 
-```bash
-fec update                         # Update all discovered CLI-managed installs
-fec update <runtime> --local        # Update one local CLI-managed install
-fec update <runtime> --global       # Update one global CLI-managed install
-fec upgrade <runtime> --global      # `upgrade` is an alias for `update`
-```
-
-### Remove
+`fec uninstall` (`remove`) removes only the global CLI by default. `--purge` first removes discovered managed resources while preserving user modifications; cleanup errors keep the CLI installed. A terminal prompts for confirmation; non-interactive runs require `--yes`. Self-management supports verified npm/pnpm global registry installs only; source links, project dependencies, unknown sources and pnpm groups shared with other packages are refused before changes. Use the original package manager manually for shared groups. `--dry-run` only previews; it never installs, deletes or starts the refresh process.
 
 ```bash
-fec uninstall                       # Remove all discovered CLI-managed installs
-fec remove                          # `remove` is an alias for `uninstall`
-fec uninstall <runtime>             # Remove a specific runtime install
-fec remove <runtime>                # Same removal through the alias
-fec uninstall --global              # Remove discovered global installs only
-fec remove --local                  # Remove discovered local installs only
-fec uninstall <runtime> --dry-run   # Preview removals
-fec uninstall <runtime> --force     # Remove modified managed files too
+fec update
+fec uninstall --dry-run
+fec uninstall --purge --yes
 ```
 
-The CLI writes `frontend-craft.manifest.json` into the runtime directory. `update` discovers those manifests automatically when no runtime is provided and **skips files you’ve modified locally**, so customizations survive updates.
+Temporary npx runs never create a global CLI install and cannot uninstall the CLI. Top-level npx `update` refreshes resources only if its package version equals registry `latest`; otherwise use `npx @bovinphang/frontend-craft@latest runtime update`.
 
-`uninstall`/`remove` only deletes files recorded in the manifest. It skips modified files by default; add `--force` only when you want to remove modified managed files too. `--force` does not override a Claude Code Marketplace install.
+| 2.x resource command | 3.0 replacement |
+| --- | --- |
+| `fec update [runtime] [options]` | `fec runtime update [runtime] [options]` |
+| `fec uninstall [runtime] [options]` | `fec runtime uninstall [runtime] [options]` |
+| `fec install [runtime] [options]` | `fec runtime install [runtime] [options]` |
+
+Top-level update/uninstall reject old runtime arguments and resource options such as `--global` before making changes. `setup` remains available; top-level `install` is a deprecated compatibility alias. `runtime upgrade/remove` alias `runtime update/uninstall`. Resource options remain available. `runtime update` uses only the currently running CLI package, without fetching a new package from the network.
+
+`fec` is the short command for `frontend-craft`. For resource operations without a global CLI, use `npx @bovinphang/frontend-craft@latest runtime update` (or `runtime install/uninstall`).
+
+### Resource update
+
+```bash
+fec runtime update                              # Update all discovered CLI-managed installs
+fec runtime update <runtime> --local            # Update one local CLI-managed install
+fec runtime update <runtime> --global           # Update one global CLI-managed install
+fec runtime upgrade <runtime> --global          # `upgrade` is an alias for `update`
+```
+
+### Resource removal
+
+```bash
+fec runtime uninstall                           # Remove all discovered CLI-managed installs
+fec runtime remove                              # `remove` is an alias for `uninstall`
+fec runtime uninstall <runtime>                 # Remove a specific runtime install
+fec runtime remove <runtime>                    # Same removal through the alias
+fec runtime uninstall --global                  # Remove discovered global installs only
+fec runtime remove --local                      # Remove discovered local installs only
+fec runtime uninstall <runtime> --dry-run       # Preview removals
+fec runtime uninstall <runtime> --force         # Remove modified managed files too
+```
+
+The CLI writes `frontend-craft.manifest.json` into the runtime directory. `runtime update` discovers those manifests automatically when no runtime is provided and **skips files you’ve modified locally**, so customizations survive updates.
+
+`runtime uninstall`/`runtime remove` only deletes files recorded in the manifest. It skips modified files by default; add `--force` only when you want to remove modified managed files too. `--force` does not override a Claude Code Marketplace install.
 
 For **Claude Code Marketplace** or **submodule** installs, see [docs/runtimes/claude.md](docs/runtimes/claude.md) · [简体中文](docs/runtimes/claude.zh-CN.md). `/fec-init` only initializes project config; it is not a second plugin install.
 

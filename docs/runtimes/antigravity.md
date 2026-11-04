@@ -7,7 +7,7 @@ fec doctor antigravity --local
 fec doctor antigravity --global
 ```
 
-Without a global CLI installation, use `npx @bovinphang/frontend-craft install antigravity --local` or `--global`.
+Without a global CLI installation, use `npx @bovinphang/frontend-craft runtime install antigravity --local` or `--global`.
 
 Project skills retain backward-compatible `.agent/skills`; the current IDE/2.0 user base is `~/.gemini/config`, so skills go in `~/.gemini/config/skills`. For Antigravity CLI set `ANTIGRAVITY_CONFIG_DIR` to `~/.gemini/antigravity-cli` before global installation. The override selects one product scope; this adapter does not install plugins or hooks. After upgrading an old default global install, run `fec setup antigravity --global`; the old `~/.gemini/antigravity` files are preserved.
 

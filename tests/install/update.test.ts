@@ -60,11 +60,15 @@ test("install writes a frontend-craft manifest for the runtime scope", () => {
     path.join(os.tmpdir(), "fc-manifest-claude-home-"),
   );
   try {
-    execFileSync(process.execPath, [cli, "install", "claude", "--local"], {
-      cwd: dir,
-      encoding: "utf8",
-      env: { ...process.env, CLAUDE_CONFIG_DIR: claudeHome },
-    });
+    execFileSync(
+      process.execPath,
+      [cli, "runtime", "install", "claude", "--local"],
+      {
+        cwd: dir,
+        encoding: "utf8",
+        env: { ...process.env, CLAUDE_CONFIG_DIR: claudeHome },
+      },
+    );
 
     const manifestPath = path.join(
       dir,
@@ -111,7 +115,7 @@ test("install with Simplified Chinese writes localized content and manifest lang
   try {
     execFileSync(
       process.execPath,
-      [cli, "install", "claude", "--local", "--lang", "zh-CN"],
+      [cli, "runtime", "install", "claude", "--local", "--lang", "zh-CN"],
       {
         cwd: dir,
         encoding: "utf8",
@@ -186,7 +190,7 @@ test("update reuses manifest language when --lang is omitted", () => {
   try {
     execFileSync(
       process.execPath,
-      [cli, "install", "claude", "--local", "--lang", "zh-CN"],
+      [cli, "runtime", "install", "claude", "--local", "--lang", "zh-CN"],
       {
         cwd: dir,
         encoding: "utf8",
@@ -194,11 +198,15 @@ test("update reuses manifest language when --lang is omitted", () => {
       },
     );
 
-    execFileSync(process.execPath, [cli, "update", "claude", "--local"], {
-      cwd: dir,
-      encoding: "utf8",
-      env: { ...process.env, CLAUDE_CONFIG_DIR: claudeHome },
-    });
+    execFileSync(
+      process.execPath,
+      [cli, "runtime", "update", "claude", "--local"],
+      {
+        cwd: dir,
+        encoding: "utf8",
+        env: { ...process.env, CLAUDE_CONFIG_DIR: claudeHome },
+      },
+    );
 
     const commandPath = path.join(dir, ".claude", "commands", "fec-init.md");
     const manifest = JSON.parse(
@@ -222,11 +230,15 @@ test("update and upgrade aliases refresh an existing local install", () => {
       path.join(os.tmpdir(), `fc-${command}-claude-home-`),
     );
     try {
-      execFileSync(process.execPath, [cli, "install", "claude", "--local"], {
-        cwd: dir,
-        encoding: "utf8",
-        env: { ...process.env, CLAUDE_CONFIG_DIR: claudeHome },
-      });
+      execFileSync(
+        process.execPath,
+        [cli, "runtime", "install", "claude", "--local"],
+        {
+          cwd: dir,
+          encoding: "utf8",
+          env: { ...process.env, CLAUDE_CONFIG_DIR: claudeHome },
+        },
+      );
 
       const skillPath = path.join(
         dir,
@@ -239,7 +251,7 @@ test("update and upgrade aliases refresh an existing local install", () => {
 
       const out = execFileSync(
         process.execPath,
-        [cli, command, "claude", "--local"],
+        [cli, "runtime", command, "claude", "--local"],
         {
           cwd: dir,
           encoding: "utf8",
@@ -267,18 +279,22 @@ test("update skips files modified since the previous manifest", () => {
     path.join(os.tmpdir(), "fc-update-conflict-claude-home-"),
   );
   try {
-    execFileSync(process.execPath, [cli, "install", "claude", "--local"], {
-      cwd: dir,
-      encoding: "utf8",
-      env: { ...process.env, CLAUDE_CONFIG_DIR: claudeHome },
-    });
+    execFileSync(
+      process.execPath,
+      [cli, "runtime", "install", "claude", "--local"],
+      {
+        cwd: dir,
+        encoding: "utf8",
+        env: { ...process.env, CLAUDE_CONFIG_DIR: claudeHome },
+      },
+    );
 
     const commandPath = path.join(dir, ".claude", "commands", "fec-init.md");
     fs.appendFileSync(commandPath, "\nUSER CUSTOMIZATION\n", "utf8");
 
     const out = execFileSync(
       process.execPath,
-      [cli, "update", "claude", "--local"],
+      [cli, "runtime", "update", "claude", "--local"],
       {
         cwd: dir,
         encoding: "utf8",
@@ -302,7 +318,7 @@ test("update dry-run does not write files or manifests", () => {
   try {
     const out = execFileSync(
       process.execPath,
-      [cli, "update", "claude", "--local", "--dry-run"],
+      [cli, "runtime", "update", "claude", "--local", "--dry-run"],
       {
         cwd: dir,
         encoding: "utf8",
@@ -326,7 +342,7 @@ test("Claude Marketplace install blocks CLI install even with force", () => {
       () =>
         execFileSync(
           process.execPath,
-          [cli, "install", "claude", "--local", "--force"],
+          [cli, "runtime", "install", "claude", "--local", "--force"],
           {
             cwd: dir,
             encoding: "utf8",
@@ -364,12 +380,16 @@ test("Claude Marketplace install blocks explicit CLI update", () => {
   try {
     assert.throws(
       () =>
-        execFileSync(process.execPath, [cli, "update", "claude", "--global"], {
-          cwd: dir,
-          encoding: "utf8",
-          env: { ...process.env, CLAUDE_CONFIG_DIR: claudeHome },
-          stdio: "pipe",
-        }),
+        execFileSync(
+          process.execPath,
+          [cli, "runtime", "update", "claude", "--global"],
+          {
+            cwd: dir,
+            encoding: "utf8",
+            env: { ...process.env, CLAUDE_CONFIG_DIR: claudeHome },
+            stdio: "pipe",
+          },
+        ),
       (error: unknown) => {
         const output = String(
           (error as { stdout?: Buffer | string }).stdout ?? "",
@@ -403,20 +423,27 @@ test("Claude CLI scope conflict fails non-interactively with update and uninstal
 
     assert.throws(
       () =>
-        execFileSync(process.execPath, [cli, "install", "claude", "--local"], {
-          cwd: dir,
-          encoding: "utf8",
-          env: { ...process.env, CLAUDE_CONFIG_DIR: claudeHome },
-          stdio: "pipe",
-        }),
+        execFileSync(
+          process.execPath,
+          [cli, "runtime", "install", "claude", "--local"],
+          {
+            cwd: dir,
+            encoding: "utf8",
+            env: { ...process.env, CLAUDE_CONFIG_DIR: claudeHome },
+            stdio: "pipe",
+          },
+        ),
       (error: unknown) => {
         const output = String(
           (error as { stdout?: Buffer | string }).stdout ?? "",
         );
         assert.match(output, /Claude CLI global install detected/);
-        assert.match(output, /frontend-craft update claude --global/);
-        assert.match(output, /frontend-craft uninstall claude --global/);
-        assert.match(output, /frontend-craft install claude --local/);
+        assert.match(output, /frontend-craft runtime update claude --global/);
+        assert.match(
+          output,
+          /frontend-craft runtime uninstall claude --global/,
+        );
+        assert.match(output, /frontend-craft runtime install claude --local/);
         return true;
       },
     );
@@ -444,7 +471,7 @@ test("Claude CLI scope conflict can keep the existing source and update it inter
 
     const out = execFileSync(
       process.execPath,
-      [cli, "install", "claude", "--local", "--lang", "en"],
+      [cli, "runtime", "install", "claude", "--local", "--lang", "en"],
       {
         cwd: dir,
         encoding: "utf8",
@@ -486,7 +513,7 @@ test("Claude CLI scope conflict can uninstall the existing source and install th
 
     const out = execFileSync(
       process.execPath,
-      [cli, "install", "claude", "--local", "--lang", "en"],
+      [cli, "runtime", "install", "claude", "--local", "--lang", "en"],
       {
         cwd: dir,
         encoding: "utf8",
@@ -522,13 +549,17 @@ test("update without a runtime refreshes discovered local installs", () => {
     path.join(os.tmpdir(), "fc-update-discover-home-"),
   );
   try {
-    execFileSync(process.execPath, [cli, "install", "claude", "--local"], {
-      cwd: dir,
-      encoding: "utf8",
-      env: isolatedRuntimeEnv(runtimeHome),
-    });
+    execFileSync(
+      process.execPath,
+      [cli, "runtime", "install", "claude", "--local"],
+      {
+        cwd: dir,
+        encoding: "utf8",
+        env: isolatedRuntimeEnv(runtimeHome),
+      },
+    );
 
-    const out = execFileSync(process.execPath, [cli, "update"], {
+    const out = execFileSync(process.execPath, [cli, "runtime", "update"], {
       cwd: dir,
       encoding: "utf8",
       env: isolatedRuntimeEnv(runtimeHome),
@@ -551,7 +582,7 @@ test("update without a discovered install prints a clear no-op message", () => {
     path.join(os.tmpdir(), "fc-update-none-home-"),
   );
   try {
-    const out = execFileSync(process.execPath, [cli, "update"], {
+    const out = execFileSync(process.execPath, [cli, "runtime", "update"], {
       cwd: dir,
       encoding: "utf8",
       env: isolatedRuntimeEnv(runtimeHome),
@@ -571,15 +602,19 @@ test("uninstall removes unchanged manifest-managed files and manifest", () => {
     path.join(os.tmpdir(), "fc-uninstall-claude-home-"),
   );
   try {
-    execFileSync(process.execPath, [cli, "install", "claude", "--local"], {
-      cwd: dir,
-      encoding: "utf8",
-      env: { ...process.env, CLAUDE_CONFIG_DIR: claudeHome },
-    });
+    execFileSync(
+      process.execPath,
+      [cli, "runtime", "install", "claude", "--local"],
+      {
+        cwd: dir,
+        encoding: "utf8",
+        env: { ...process.env, CLAUDE_CONFIG_DIR: claudeHome },
+      },
+    );
 
     const out = execFileSync(
       process.execPath,
-      [cli, "uninstall", "claude", "--local"],
+      [cli, "runtime", "uninstall", "claude", "--local"],
       {
         cwd: dir,
         encoding: "utf8",
@@ -621,7 +656,7 @@ test("uninstall does not remove Claude Marketplace installs without a CLI manife
   try {
     const out = execFileSync(
       process.execPath,
-      [cli, "uninstall", "claude", "--global"],
+      [cli, "runtime", "uninstall", "claude", "--global"],
       {
         cwd: dir,
         encoding: "utf8",
@@ -643,18 +678,22 @@ test("uninstall skips modified files unless force is provided", () => {
     path.join(os.tmpdir(), "fc-uninstall-modified-claude-home-"),
   );
   try {
-    execFileSync(process.execPath, [cli, "install", "claude", "--local"], {
-      cwd: dir,
-      encoding: "utf8",
-      env: { ...process.env, CLAUDE_CONFIG_DIR: claudeHome },
-    });
+    execFileSync(
+      process.execPath,
+      [cli, "runtime", "install", "claude", "--local"],
+      {
+        cwd: dir,
+        encoding: "utf8",
+        env: { ...process.env, CLAUDE_CONFIG_DIR: claudeHome },
+      },
+    );
 
     const commandPath = path.join(dir, ".claude", "commands", "fec-init.md");
     fs.appendFileSync(commandPath, "\nUSER CUSTOMIZATION\n", "utf8");
 
     const skipped = execFileSync(
       process.execPath,
-      [cli, "remove", "claude", "--local"],
+      [cli, "runtime", "remove", "claude", "--local"],
       {
         cwd: dir,
         encoding: "utf8",
@@ -667,7 +706,7 @@ test("uninstall skips modified files unless force is provided", () => {
 
     const forced = execFileSync(
       process.execPath,
-      [cli, "uninstall", "claude", "--local", "--force"],
+      [cli, "runtime", "uninstall", "claude", "--local", "--force"],
       {
         cwd: dir,
         encoding: "utf8",
@@ -686,11 +725,15 @@ test("uninstall skips modified files unless force is provided", () => {
 test("codex local manifest tracks project-level agent skills for uninstall", () => {
   const dir = fs.mkdtempSync(path.join(os.tmpdir(), "fc-uninstall-codex-"));
   try {
-    execFileSync(process.execPath, [cli, "install", "codex", "--local"], {
-      cwd: dir,
-      encoding: "utf8",
-      env: { ...process.env },
-    });
+    execFileSync(
+      process.execPath,
+      [cli, "runtime", "install", "codex", "--local"],
+      {
+        cwd: dir,
+        encoding: "utf8",
+        env: { ...process.env },
+      },
+    );
 
     const manifestPath = path.join(
       dir,
@@ -708,11 +751,15 @@ test("codex local manifest tracks project-level agent skills for uninstall", () 
       ),
     );
 
-    execFileSync(process.execPath, [cli, "uninstall", "codex", "--local"], {
-      cwd: dir,
-      encoding: "utf8",
-      env: { ...process.env },
-    });
+    execFileSync(
+      process.execPath,
+      [cli, "runtime", "uninstall", "codex", "--local"],
+      {
+        cwd: dir,
+        encoding: "utf8",
+        env: { ...process.env },
+      },
+    );
 
     assert.ok(
       !fs.existsSync(

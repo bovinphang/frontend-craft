@@ -67,14 +67,26 @@ syncJson<OpenClawManifest>(
   },
 );
 
-syncJson<SkillMetadataEntry[]>(
-  path.join(root, "skills", "metadata.json"),
-  2,
-  isSkillMetadata,
-  (skills) => {
+const skillMetadataFiles = [path.join(root, "skills", "metadata.json")];
+const localizedRoot = path.join(root, "localized");
+if (fs.existsSync(localizedRoot)) {
+  for (const locale of fs.readdirSync(localizedRoot, { withFileTypes: true })) {
+    if (!locale.isDirectory()) continue;
+    const metadataFile = path.join(
+      localizedRoot,
+      locale.name,
+      "skills",
+      "metadata.json",
+    );
+    if (fs.existsSync(metadataFile)) skillMetadataFiles.push(metadataFile);
+  }
+}
+
+for (const file of skillMetadataFiles) {
+  syncJson<SkillMetadataEntry[]>(file, 2, isSkillMetadata, (skills) => {
     for (const skill of skills) skill.version = version;
-  },
-);
+  });
+}
 
 console.log(
   `[sync-version] public metadata now follows package.json version ${version}`,

@@ -7,7 +7,7 @@ fec doctor kilo --local
 fec doctor kilo --global
 ```
 
-Without a global CLI installation, use `npx @bovinphang/frontend-craft install kilo --local` or `--global`.
+Without a global CLI installation, use `npx @bovinphang/frontend-craft runtime install kilo --local` or `--global`.
 
 This adapter targets the current Kilo CLI: project `.kilo`, user `$XDG_CONFIG_HOME/kilo` or `~/.config/kilo`, with `KILO_CONFIG_DIR` override. Skills use `skills/`, commands use canonical `commands/`. Official CLI source also discovers legacy singular directories and home `.kilo` / `.kilocode` roots. IDE-only installations can have different global discovery behavior; this is not a blanket IDE certification.
 

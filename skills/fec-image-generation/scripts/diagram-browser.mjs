@@ -29,6 +29,24 @@ export function findBrowser() {
 const exportFailure = (detail) => new Error(`Browser raster export failed: ${detail}`);
 
 /**
+ * The target URL can be advertised before its execution context has finished navigating.
+ * Retry only that initialization window; action failures must propagate without replaying exports.
+ * @param {DiagramSession['evaluate']} evaluate @param {string} url @param {number} deadline
+ */
+export async function waitForDiagramReady(evaluate, url, deadline) {
+  while (Date.now() < deadline) {
+    try {
+      const ready = await evaluate(`(async()=>{if(location.href!==${JSON.stringify(url)})return false;if(document.readyState!=="complete")await new Promise(r=>window.addEventListener("load",r,{once:true}));await document.fonts.ready;await new Promise(r=>requestAnimationFrame(()=>requestAnimationFrame(r)));return true;})()`);
+      if (ready === true) return;
+    } catch (error) {
+      if (!(error instanceof Error) || !/^Browser raster export failed: (?:Execution context was destroyed|Cannot find default execution context)\.?$/.test(error.message)) throw error;
+    }
+    await new Promise((resolve) => setTimeout(resolve, Math.min(50, Math.max(0, deadline - Date.now()))));
+  }
+  throw exportFailure("diagram page did not become ready before the initialization deadline.");
+}
+
+/**
  * Chromium keeps profile files locked until its whole process tree is gone, so cleanup waits for
  * the process instead of sleeping a fixed amount. @param {ReturnType<typeof spawn>} child @param {number} ms @returns {Promise<void>}
  */
@@ -64,13 +82,12 @@ export async function withDiagramPage(html, options, action) {
     while (!fs.existsSync(portFile) && Date.now() < deadline && (child.exitCode === null || child.exitCode === 0) && !childError) await new Promise((resolve) => setTimeout(resolve, 50));
     if (!fs.existsSync(portFile)) throw exportFailure(`browser did not start a debugging session${childError ? ` (${childError})` : ""}.`);
     const port = Number(fs.readFileSync(portFile, "utf8").split("\n")[0]);
-    // A page target is about:blank until its document commits; evaluating during that window races
-    // the replacement ("Execution context was destroyed"). Wait for the file URL before attaching.
+    // Select the intended target first; the readiness handshake below also waits for its context.
     /** @type {{webSocketDebuggerUrl?:string}|undefined} */
     let target;
     while (Date.now() < deadline) {
       const pages = await (await fetch(`http://127.0.0.1:${port}/json/list`, { signal: AbortSignal.timeout(Math.min(5000, options.timeoutMs)) })).json();
-      target = pages.find(/** @param {{type:string,url:string}} p */ (p) => p.type === "page" && p.url.startsWith("file:"));
+      target = pages.find(/** @param {{type:string,url:string}} p */ (p) => p.type === "page" && p.url === pathToFileURL(page).href);
       if (target) break;
       await new Promise((resolve) => setTimeout(resolve, 50));
     }
@@ -102,7 +119,7 @@ export async function withDiagramPage(html, options, action) {
       const result = await call("Page.captureScreenshot", { format: "png", captureBeyondViewport: true, clip: { x: 0, y: 0, width, height, scale: 1 } });
       return Buffer.from(String(result.data), "base64");
     } };
-    await evaluate(`(async()=>{if(document.readyState!=="complete")await new Promise(r=>window.addEventListener("load",r,{once:true}));await document.fonts.ready;await new Promise(r=>requestAnimationFrame(()=>requestAnimationFrame(r)));})()`);
+    await waitForDiagramReady(evaluate, pathToFileURL(page).href, deadline);
     return await action(session);
     };
     return await Promise.race([work(), new Promise(/** @param {(reason:Error)=>void} reject */ (_, reject) => { timer = setTimeout(() => reject(exportFailure("export timed out.")), options.timeoutMs); })]);

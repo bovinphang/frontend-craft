@@ -7,7 +7,7 @@ fec doctor cursor --local
 fec doctor cursor --global
 ```
 
-Without a global CLI installation, use `npx @bovinphang/frontend-craft install cursor --local` or `--global`.
+Without a global CLI installation, use `npx @bovinphang/frontend-craft runtime install cursor --local` or `--global`.
 
 Project skills: `.cursor/skills`; user skills: `~/.cursor/skills` (or `CURSOR_CONFIG_DIR/skills`). Project rules use `.cursor/rules/*.mdc`. This adapter installs skills and project rules; it does not install native agents, hooks, commands or MCP configuration.
 
