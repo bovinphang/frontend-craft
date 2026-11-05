@@ -33,3 +33,10 @@ Shared Claude/Qoder settings are never owned as a whole file. The manifest recor
 Regression tests exercise artifact discovery paths, metadata, existing settings, repeated installation and uninstall behavior. `npm test` runs the package's build, type checks and test suite. `npm run typecheck:openclaw` and `npm run pack:openclaw` verify the separate native package. Full host-session tests require the corresponding installed product and account.
 
 Review scope and diagram delivery rules are shared across adapters; installed artifacts do not guarantee that local Mermaid or a Chromium browser is available. See [review scope and technical diagram delivery](../review-and-diagram-workflows.md).
+# 3.0 公共能力说明
+
+公共 Skill 使用 `cc-*`，由固定版本的 craft-common 随产品提供。CLI 按实际 Skill 目录记录公共所有权，而不是按配置目录猜测：Codex 使用项目或用户目录下的 `.agents/skills`；OpenClaw 本地使用项目 `skills`；其他支持标准 Skill 的适配器使用其现有 Skill 目标。
+
+同一真实目标的消费者必须使用一致的公共版本、语言与内容摘要。公共账本位于目标父目录的 `craft-manifests/<目标摘要>/`；产品清单保存依赖指针并继续独立管理 `fec-*` 文件。卸载一个产品保留其他消费者引用，最后退出时也只回收未修改的公共文件。`doctor` 的 `common` 行检查公共依赖和资源状态。
+
+Copilot、Trae、Cline 延续现有规则/命令降级，不宣称新增标准 Skill 支持。原生插件渠道本期保证单产品快照完整，双产品原生去重需另外验证。迁移步骤见 [迁移指南](../common-migration.md)。

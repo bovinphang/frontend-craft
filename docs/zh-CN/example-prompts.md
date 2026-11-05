@@ -43,7 +43,7 @@
 | 功能规划     | 「先不要写代码，请规划账号账单功能：路由结构、组件边界、数据流、状态归属、校验流程和上线风险。」                         | cmd: `/fec-plan` · agent: `fec-architect`                            | 架构方案和实施计划。                                         | 补充验收标准和限制。              |
 | 拆分复杂页面 | 「请先在方案层面重构 `src/pages/Dashboard.tsx`：组件边界、hooks、状态归属和安全迁移步骤。」                              | agent: `fec-architect` · skill: `fec-refactor-clean`                   | 重构计划和风险控制。                                         | 如果只要计划，请明确不要改代码。  |
 | 测试策略     | 「针对 checkout 重写，请把风险映射到静态检查、单元测试、组件测试、E2E、视觉检查、无障碍和安全覆盖。」                    | cmd: `/fec-plan` · skill: `fec-testing-strategy` · agent: `fec-test-planner` | 测试矩阵和优先级。                                           | 大改动前很适合。                  |
-| 来源驱动决策 | 「修改 Next.js 缓存方案前，请先核对当前项目代码和官方文档，总结版本假设、推荐模式、迁移影响和需要补的测试。」            | skill: `fec-source-driven-development`                         | 基于来源的决策摘要，包含项目事实、官方依据、假设和验证步骤。 | 适合可能随版本变化的框架/库行为。 |
+| 来源驱动决策 | 「修改 Next.js 缓存方案前，请先核对当前项目代码和官方文档，总结版本假设、推荐模式、迁移影响和需要补的测试。」            | skill: `cc-source-driven-development`                         | 基于来源的决策摘要，包含项目事实、官方依据、假设和验证步骤。 | 适合可能随版本变化的框架/库行为。 |
 | 遗留迁移     | 「我们有一个 jQuery 多页应用在 `public/js/legacy/`。请制定分阶段迁移到 React + TypeScript 的方案，同时不阻塞日常需求。」 | skill: `fec-legacy-to-modern-migration`                        | 迁移计划、风险、里程碑和兼容策略。                           | 补充发布节奏和遗留约束。          |
 
 ## 功能实现
@@ -55,9 +55,9 @@
 | Next.js App Router | 「请评审并改进 `app/(dashboard)/reports/page.tsx`：App Router 数据获取、metadata、loading/error 状态、server/client 边界和 actions。」      | skill: `fec-nextjs-project-standard`                                | Next.js 专项问题或代码修改。                       | 补充路由分组行为。                    |
 | Nuxt 3 页面        | 「请在 Nuxt 3 中构建 admin reports 页面，处理 SSR 行为、`useFetch`/composables、中间件和类型化 server routes。」                            | skill: `fec-nuxt-project-standard`                                  | 符合 Nuxt 约定的实现。                             | 说明该路由是 SSR、SSG 还是 SPA。      |
 | Vite 配置          | 「请审计 `vite.config.ts`：HMR、环境变量暴露、开发代理、构建产物、依赖预构建和插件顺序。」                                                  | skill: `fec-vite-project-standard`                                  | Vite 配置问题和安全修改。                          | 补充构建或 dev server 症状。          |
-| 官方文档核对       | 「请确认当前 Vite 版本是否还需要这个依赖预构建 workaround。先看项目配置和官方文档，再建议是否删除。」                                       | skill: `fec-source-driven-development` · skill: `fec-vite-project-standard` | 版本感知的建议，包含来源说明、回退和验证计划。     | 适合删除兼容代码前使用。              |
+| 官方文档核对       | 「请确认当前 Vite 版本是否还需要这个依赖预构建 workaround。先看项目配置和官方文档，再建议是否删除。」                                       | skill: `cc-source-driven-development` · skill: `fec-vite-project-standard` | 版本感知的建议，包含来源说明、回退和验证计划。     | 适合删除兼容代码前使用。              |
 | Monorepo 边界      | 「请检查 `apps/web` 和 `packages/ui` 的包边界、workspace 依赖、构建脚本和 Turborepo/Nx 任务图。」                                           | skill: `fec-monorepo-project-standard`                              | 边界与任务编排评审。                               | 补充包管理器和 workspace 文件。       |
-| 依赖升级           | 「为这个仓库规划 Vite 和 Storybook 升级：查 release notes，识别 breaking changes，评审 lockfile 与 peer dependency 风险，并提出验证矩阵。」 | skill: `fec-dependency-upgrade` · skill: `fec-source-driven-development`    | 升级批次、来源依据、影响范围、验证命令和回滚说明。 | 大版本升级不要和无关重构混在一起。    |
+| 依赖升级           | 「为这个仓库规划 Vite 和 Storybook 升级：查 release notes，识别 breaking changes，评审 lockfile 与 peer dependency 风险，并提出验证矩阵。」 | skill: `fec-dependency-upgrade` · skill: `cc-source-driven-development`    | 升级批次、来源依据、影响范围、验证命令和回滚说明。 | 大版本升级不要和无关重构混在一起。    |
 | 服务端状态         | 「请评审 `src/queries/useReports.ts`：query key、缓存时间、失效策略、乐观更新、错误状态和 suspense/loading 行为。」                         | skill: `fec-data-fetching`                                          | TanStack Query / 服务端状态建议或实现。            | 补充 API 变化频率和 UX 预期。         |
 | 状态归属           | 「请审计 dashboard 的状态归属：哪些属于 URL 参数、TanStack Query、本地组件 state、浏览器持久化或全局 store，并给出安全迁移方案。」          | skill: `fec-state-management`                                       | 状态清单、归属决策、store 边界和验证步骤。         | 适合 store 重构或清理重复状态前使用。 |
 | 后端需求交接       | 「请为订单详情页写一份前端到后端的需求交接：需要展示的数据、用户动作、UI 状态、权限规则、不确定点和后端问题清单。」                       | skill: `fec-backend-requirements-handoff`                           | 面向后端的需求说明，聚焦 UI 需要什么和待确认问题。 | 后端拥有实现方案、接口形状前使用。    |
@@ -71,7 +71,7 @@
 | Canvas / Three.js  | 「请添加 WebGL shader 背景或 Three.js 产品展示器：响应式尺寸、WebGL2/shader 错误检查、可访问降级、性能保护，并验证 canvas 确实渲染。」      | skill: `fec-canvas-threejs`                                         | 3D/canvas/shader 实现和视觉验证。                  | 补充资源、shader 要求和交互约束。     |
 | SVG 动效           | 「请用项目已有动画库为 hero SVG 添加微交互，并为 reduced-motion 用户提供静态降级。」                                                        | skill: `fec-svg-animation`                                          | SVG 动效和降级行为。                               | 补充动效约束和目标浏览器。            |
 | 跨能力吸收         | 「请把这个参考仓库的测试策略吸收到本项目：保留能用的部分，按本仓库约定重写，并写 1 页可复用模式清单和迁移路径的方案。」                  | skill: `fec-alchemy`                                                | 可复用模式清单、改造建议和迁移路径。              | 附上参考仓库 URL 或本地路径；说明技术栈和项目约束。        |
-| 可编辑技术图       | 「请为 auth 流程生成可编辑的 draw.io 架构图：产出 `.drawio` 源、跑 lint、给出 viewer URL、导出 PNG。复用现有 shape 和 brand symbol 查找。」 | skill: `fec-drawio-studio`                                          | `.drawio` 源、lint 报告、viewer/editor URL、PNG 导出。 | 数据驻留敏感时请改用自托管 base URL 或本地 CLI 导出。      |
+| 可编辑技术图       | 「请为 auth 流程生成可编辑的 draw.io 架构图：产出 `.drawio` 源、跑 lint、给出 viewer URL、导出 PNG。复用现有 shape 和 brand symbol 查找。」 | skill: `cc-drawio-studio`                                          | `.drawio` 源、lint 报告、viewer/editor URL、PNG 导出。 | 数据驻留敏感时请改用自托管 base URL 或本地 CLI 导出。      |
 
 ## UI 与设计
 
@@ -79,10 +79,10 @@
 | --------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------- | ---------------------------------------------------- | ---------------------------------------------------- |
 | 设计稿实现            | 「请按 Figma 节点 `123:456` 实现 UI。复用现有 design token 和组件，匹配间距与响应式状态，并说明假设。」                                                  | skill: `fec-implement-from-design` · agent: `fec-figma-implementer` | UI 代码和设计实现说明/报告。                         | 配好 MCP 凭据效果最好。                              |
 | 截图到 UI 打磨        | 「请打磨这个 dashboard，让它像生产级 SaaS 工具：信息密度、层级、空/加载/错误状态、响应式布局和交互状态。」                                               | skill: `fec-ui-design`                                      | UI 改进和视觉 QA 说明。                              | 可提供截图或本地 URL。                               |
-| 图片与图表生成        | 「请生成可编辑技术架构图和 PNG，然后自检重叠、标签截断、连线堆叠，并最多修复两轮源文件。」                                                          | skill: `fec-image-generation` · skill: `fec-ui-design`              | 可编辑源、导出 PNG、QA 报告和修复说明。               | 渲染器能暴露布局框时附带 manifest 坐标。             |
-| 系统蓝图图表 | 「请为我们的 checkout 平台创建适合演示的系统蓝图。保留 JSON 和生成的 HTML 作为源文件，然后导出 SVG 和 PNG 交付物。」 | skill: `fec-image-generation` | JSON/HTML 源文件、导出的 SVG/PNG，以及源文件/资产交接说明。 | 适合架构、部署拓扑、agent runtime、memory 和 before/after 系统图。 |
-| 流程工作流图 | 「请把这个审批和自动化流程转成清晰的流程工作流图：包含 lanes、顺序步骤、决策、异常路径、循环回退和 waypoint 路由连线。」 | skill: `fec-image-generation` | Workflow JSON/HTML 源文件、导出图片，以及 lanes、nodes、edges、waypoints 说明。 | 当归属和分支比精确基础设施拓扑更重要时使用。 |
-| 交互式实时图 | 「请为 onboarding flow 启动本地交互式图表会话。逐步添加节点和连线，让我可以拖拽、改名、删除、缩放，最后导出交付物。」 | skill: `fec-image-generation` | 浏览器实时预览，以及保存的 JSON/SVG/PNG，或切换到 HTML/draw.io 源文件交付。 | 适合协作草图；需要长期维护源文件时切换到 HTML 技术图或 draw.io。 |
+| 图片与图表生成        | 「请生成可编辑技术架构图和 PNG，然后自检重叠、标签截断、连线堆叠，并最多修复两轮源文件。」                                                          | skill: `cc-technical-diagrams` · skill: `fec-ui-design`              | 可编辑源、导出 PNG、QA 报告和修复说明。               | 渲染器能暴露布局框时附带 manifest 坐标。             |
+| 系统蓝图图表 | 「请为我们的 checkout 平台创建适合演示的系统蓝图。保留 JSON 和生成的 HTML 作为源文件，然后导出 SVG 和 PNG 交付物。」 | skill: `cc-technical-diagrams` | JSON/HTML 源文件、导出的 SVG/PNG，以及源文件/资产交接说明。 | 适合架构、部署拓扑、agent runtime、memory 和 before/after 系统图。 |
+| 流程工作流图 | 「请把这个审批和自动化流程转成清晰的流程工作流图：包含 lanes、顺序步骤、决策、异常路径、循环回退和 waypoint 路由连线。」 | skill: `cc-technical-diagrams` | Workflow JSON/HTML 源文件、导出图片，以及 lanes、nodes、edges、waypoints 说明。 | 当归属和分支比精确基础设施拓扑更重要时使用。 |
+| 交互式实时图 | 「请为 onboarding flow 启动本地交互式图表会话。逐步添加节点和连线，让我可以拖拽、改名、删除、缩放，最后导出交付物。」 | skill: `cc-technical-diagrams` | 浏览器实时预览，以及保存的 JSON/SVG/PNG，或切换到 HTML/draw.io 源文件交付。 | 适合协作草图；需要长期维护源文件时切换到 HTML 技术图或 draw.io。 |
 | 网页视频演示 | 「把这篇文章转成可录屏的 16:9 网页视频演示：生成口播稿和 outline，创建 Vite/React 舞台，并定义章节 step 方便录屏。」 | skill: `fec-web-video-presentation` · skill: `fec-ui-design` | 口播稿/outline、步进演示脚手架、主题说明和录屏清单。 | 适合技术分享、课程、产品 demo 和口播讲解。 |
 | 响应式布局            | 「修复这个后台表格在 375px、768px、1440px 下的问题：决定移动端列优先级、容器查询、触摸目标、安全区域和溢出规则。」                                       | skill: `fec-responsive-layout` · agent: `fec-ui-checker`            | 响应式策略、布局修改、视口检查和剩余风险。           | 最好提供截图或本地路由。                             |
 | Tailwind 设计系统     | 「把这些 Tailwind 组件重构成语义 token 和 variants：theme 扩展、暗色模式、class 组合、动态 class 安全和 Storybook 状态覆盖。」                           | skill: `fec-tailwind-design-system` · skill: `fec-ui-design`        | token/variant 方案或实现、class 治理和暗色模式检查。 | 适合共享 UI 包变复杂前使用。                         |
@@ -132,7 +132,7 @@
 | 清理死代码   | 「请查找并安全移除未使用导出、死路由、过期样式和未使用依赖。保持 public API，并写报告。」                                 | cmd: `/fec-refactor-clean` · skill: `fec-refactor-clean` · agent: `fec-refactor-cleaner`       | 清理计划/变更和报告。                        | 发布前很适合。                     |
 | 文档同步     | 「请更新 README 和 docs，让安装步骤、脚本、环境变量、API 路由、UI 路由和部署说明与当前前端代码和配置一致。」             | cmd: `/fec-doc-sync` · skill: `fec-doc-sync` · agent: `fec-doc-updater`                        | 同步后的文档和验证说明。                     | 不要把临时报告复制进公开文档。     |
 | 能力文档同步 | 「这个仓库发布 skills 和 commands。请同步能力表、metadata、runtime docs 和 package 文件，使其匹配已安装内容。」          | cmd: `/fec-doc-sync` · skill: `fec-doc-sync` · agent: `fec-doc-updater`                        | 基于已安装文件的分发文档。                   | 用于 skill/agent/command 仓库。     |
-| 来源驱动升级 | 「请规划 React Router/TanStack Query/Vite 的安全升级。核对官方迁移说明、当前项目用法、破坏性变更，并给出验证步骤。」      | skill: `fec-dependency-upgrade` · skill: `fec-source-driven-development` · cmd: `/fec-doc-sync` | 升级决策说明、影响文件、迁移风险和验证清单。 | 如果公开指南变化，再配合文档同步。 |
+| 来源驱动升级 | 「请规划 React Router/TanStack Query/Vite 的安全升级。核对官方迁移说明、当前项目用法、破坏性变更，并给出验证步骤。」      | skill: `fec-dependency-upgrade` · skill: `cc-source-driven-development` · cmd: `/fec-doc-sync` | 升级决策说明、影响文件、迁移风险和验证清单。 | 如果公开指南变化，再配合文档同步。 |
 | 遗留项目维护 | 「请改进 `public/js/legacy/cart.js`，保持当前 jQuery/MPA 技术栈，降低风险、改善结构，但暂时不要重写成 React。」           | skill: `fec-legacy-web-standard`                                                 | 安全的遗留维护变更或建议。                   | 补充浏览器兼容限制。               |
 
 ## 高级用户提示词
@@ -152,6 +152,6 @@
 | 显式代理 | 「请委托 `fec-code-reviewer` 审核 `src/features/payments/` 的现有代码，包括未改动代码，然后先总结阻塞项。」 | agent: `fec-code-reviewer` | 指定范围风险评估及专项报告。 | 不要求 Git 差异。 |
 
 
-技术图质量工作流：`fec-image-generation` 的标准时序/流程图优先本地 Mermaid，架构图复用 draw.io 工作流，工具缺失时使用 JSON/HTML。导出 PNG 时生成实际测量且与缩放一致的 manifest，再运行 QA 并检查最终 PNG；保留完整文字、显式布局与关系，最多自动修复两轮，未解决问题需明确报告。可复现样例位于 `skills/fec-image-generation/assets/quality-examples/`。
+技术图质量工作流：`cc-technical-diagrams` 的标准时序/流程图优先本地 Mermaid，架构图复用 draw.io 工作流，工具缺失时使用 JSON/HTML。导出 PNG 时生成实际测量且与缩放一致的 manifest，再运行 QA 并检查最终 PNG；保留完整文字、显式布局与关系，最多自动修复两轮，未解决问题需明确报告。可复现样例位于 `skills/cc-technical-diagrams/assets/quality-examples/`。
 
 [审核范围与技术图交付](review-and-diagram-workflows.md) — 范围规则、工具前提、导出命令与 QA 边界。

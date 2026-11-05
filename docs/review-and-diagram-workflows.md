@@ -20,20 +20,20 @@ Examples: “Review the project”; “Review all code in `src/features/`”; �
 
 ## Technical diagrams
 
-Use `fec-image-generation` for sequence diagrams and workflows with local Mermaid where available; use `fec-drawio-studio` for editable architecture diagrams. Use the JSON/HTML renderer when these tools are unavailable. Keep technical relationships and labels in editable source rather than relying on raster image generation for exact structure.
+Use `cc-technical-diagrams` for sequence diagrams and workflows with local Mermaid where available; use `cc-drawio-studio` for editable architecture diagrams. Use the JSON/HTML renderer when these tools are unavailable. Keep technical relationships and labels in editable source rather than relying on raster image generation for exact structure.
 
 The Mermaid adapter uses an installed CLI only; it does not download packages. PNG export requires a local Chromium browser, with `FEC_BROWSER_PATH` available for an explicit executable. Missing tools must be reported rather than claimed as successful exports.
 
 For the JSON/HTML route, render the source, export PNG with a browser-measured manifest at the same scale, run QA, and inspect the final image:
 
 ```bash
-node skills/fec-image-generation/scripts/tech-diagram-render.mjs --input skills/fec-image-generation/assets/quality-examples/workflow.json --type workflow --output workflow.html --manifest workflow.layout.json
-node skills/fec-image-generation/scripts/export-diagram.mjs --input workflow.html --format png --output workflow.png --theme light --scale 2 --manifest workflow.layout.json --output-manifest workflow.actual.json
-node skills/fec-image-generation/scripts/png-qa.mjs --png workflow.png --manifest workflow.actual.json --format json
+node skills/cc-technical-diagrams/scripts/tech-diagram-render.mjs --input skills/cc-technical-diagrams/assets/quality-examples/workflow.json --type workflow --output workflow.html --manifest workflow.layout.json
+node skills/cc-technical-diagrams/scripts/export-diagram.mjs --input workflow.html --format png --output workflow.png --theme light --scale 2 --manifest workflow.layout.json --output-manifest workflow.actual.json
+node skills/cc-technical-diagrams/scripts/png-qa.mjs --png workflow.png --manifest workflow.actual.json --format json
 ```
 
 Preserve complete Unicode labels, explicit geometry, edge direction, sequence order, and self calls. Keep exported SVG styles self-contained. Geometry QA and browser measurement support visual inspection; neither proves semantic correctness nor completes a human visual review. Missing measurements or partial coverage must be disclosed. Repair the editable source for at most two automatic rounds, then report unresolved defects.
 
-Deliver editable source, the requested export, and QA/coverage results. See [reproducible examples](../skills/fec-image-generation/assets/quality-examples/README.md), [diagram workflows](../skills/fec-image-generation/references/diagram-workflows.md), and [PNG QA](../skills/fec-image-generation/references/png-qa-autofix.md).
+Deliver editable source, the requested export, and QA/coverage results. See [reproducible examples](../skills/cc-technical-diagrams/assets/quality-examples/README.md), [diagram workflows](../skills/cc-technical-diagrams/references/diagram-workflows.md), and [PNG QA](../skills/cc-technical-diagrams/references/png-qa-autofix.md).
 
 [简体中文](zh-CN/review-and-diagram-workflows.md)

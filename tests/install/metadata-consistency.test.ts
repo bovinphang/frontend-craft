@@ -10,6 +10,7 @@ import {
 import { auditContent } from "../../src/install/shared/content-audit.js";
 
 const root = resolvePluginRoot(import.meta.url);
+import { resolveSkillOrigin } from "../../scripts/skill-packaging.js";
 
 test("source and localized frontmatter and capability references are valid", () => {
   assert.deepEqual(auditContent(root), []);
@@ -273,7 +274,7 @@ test("skills metadata includes standalone publish fields", () => {
   for (const skill of metadata) {
     assert.equal(
       skill.version,
-      pkg.version,
+      resolveSkillOrigin(skill.id, root).version,
       `version should follow package.json: ${skill.id}`,
     );
     assert.equal(
@@ -283,12 +284,12 @@ test("skills metadata includes standalone publish fields", () => {
     );
     assert.equal(
       skill.homepage,
-      pkg.homepage,
+      resolveSkillOrigin(skill.id, root).repository,
       `homepage should follow package.json: ${skill.id}`,
     );
     assert.equal(
       skill.repository,
-      pkg.repository.url,
+      resolveSkillOrigin(skill.id, root).repository,
       `repository should follow package.json: ${skill.id}`,
     );
     assert.equal(
@@ -411,7 +412,7 @@ test("public metadata versions follow package.json", () => {
     fs.readFileSync(path.join(root, "skills", "metadata.json"), "utf8"),
   ) as SkillMetadata[];
   for (const skill of skills) {
-    assert.equal(skill.version, pkg.version);
+    assert.equal(skill.version, resolveSkillOrigin(skill.id, root).version);
   }
 });
 
@@ -478,14 +479,9 @@ test("zh-CN localized content keeps natural Chinese copy", () => {
       return (
         /\.(md|json|toml)$/.test(file) &&
         relative !==
-          path.join(
-            "skills",
-            "fec-drawio-studio",
-            "data",
-            "shape-index.json",
-          ) &&
+          path.join("skills", "cc-drawio-studio", "data", "shape-index.json") &&
         relative !==
-          path.join("skills", "fec-drawio-studio", "data", "brand-icons.json")
+          path.join("skills", "cc-drawio-studio", "data", "brand-icons.json")
       );
     }),
   );

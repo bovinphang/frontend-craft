@@ -8,7 +8,7 @@ import zlib from "node:zlib";
 import { resolvePluginRoot } from "../../src/install/shared/resolve-plugin-root.js";
 
 const root = resolvePluginRoot(import.meta.url);
-const scriptsDir = path.join(root, "skills", "fec-drawio-studio", "scripts");
+const scriptsDir = path.join(root, "skills", "cc-drawio-studio", "scripts");
 
 function run(
   script: string,
@@ -27,7 +27,7 @@ function run(
 }
 
 function withTempDir<T>(fn: (dir: string) => T): T {
-  const dir = fs.mkdtempSync(path.join(os.tmpdir(), "fec-drawio-studio-"));
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), "cc-drawio-studio-"));
   try {
     return fn(dir);
   } finally {

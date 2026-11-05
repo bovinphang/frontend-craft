@@ -165,6 +165,10 @@ settings:
 importers:
 
   .:
+    dependencies:
+      '@bovinphang/craft-common':
+        specifier: 1.0.0
+        version: 1.0.0
     devDependencies:
       '@eslint/js':
         specifier: 9.39.5
@@ -326,6 +330,10 @@ packages:
 
   '@borewit/text-codec@0.2.2':
     resolution: {integrity: sha512-DDaRehssg1aNrH4+2hnj1B7vnUGEjU6OIlyRdkMd0aUdIUvKXrJfXsy8LVtXAy7DRvYVluWbMspsRhz2lcW0mQ==}
+
+  '@bovinphang/craft-common@1.0.0':
+    resolution: {integrity: sha512-kll85RJZul8cKdzRM5ut5p4CsxOr/5Jeoa0fSloS10svSx47i1gp5jLlbMKEFQ3TBVS7Z7ZJlHv0KiFKj2YHRw==}
+    engines: {node: '>=22.0.0'}
 
   '@clack/core@1.3.1':
     resolution: {integrity: sha512-fT1qHVGAag4IEkrupZ6lRRbNCs1vS9P01KB/sG8zKgvUztbYtFBtQpjSITNwooDZ83tpsPzP0mRNs1/KVszCRA==}
@@ -1292,6 +1300,7 @@ packages:
   eslint@9.39.4:
     resolution: {integrity: sha512-XoMjdBOwe/esVgEvLmNsD3IRHkm7fbKIUGvrleloJXUZgDHig2IPWNniv+GwjyJXzuNqVjlr5+4yVUZjycJwfQ==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
+    deprecated: This version is no longer supported. Please see https://eslint.org/version-support for other options.
     hasBin: true
     peerDependencies:
       jiti: '*'
@@ -2585,6 +2594,8 @@ snapshots:
   '@babel/runtime@7.29.7': {}
 
   '@borewit/text-codec@0.2.2': {}
+
+  '@bovinphang/craft-common@1.0.0': {}
 
   '@clack/core@1.3.1':
     dependencies:

@@ -35,7 +35,7 @@
 
 Per-runtime paths and caveats live in [`docs/runtimes/`](docs/runtimes/).
 
-It bundles **14 specialized agents**, **56 auto-activated skills**, **11 slash commands**, **5 event-driven hooks**, **MCP integrations** for 6 design-tool endpoints, and a complete **rules library** into a single installable package. Run one command, and every AI session on your team writes React, Vue, Next.js, or Nuxt the same way — typed, accessible, secure, and consistent.
+It bundles **14 specialized agents**, **61 auto-activated skills**, **11 slash commands**, **5 event-driven hooks**, **MCP integrations** for 6 design-tool endpoints, and a complete **rules library** into a single installable package. Run one command, and every AI session on your team writes React, Vue, Next.js, or Nuxt the same way — typed, accessible, secure, and consistent.
 
 ---
 
@@ -43,7 +43,7 @@ It bundles **14 specialized agents**, **56 auto-activated skills**, **11 slash c
 
 | Problem                                                              | What frontend-craft does                                                                       |
 | -------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------- |
-| AI assistants write inconsistent, untyped, or insecure frontend code | **56 skills** encode team standards — auto-activated when the assistant touches matching files |
+| AI assistants write inconsistent, untyped, or insecure frontend code | **61 skills** encode team standards — auto-activated when the assistant touches matching files |
 | Each AI tool has its own plugin format                               | **One CLI** installs the same rules, agents, and hooks into 15 runtimes                        |
 | Design-to-code handoff is lossy                                      | **MCP integrations** bring in richer context from Figma, Figma Desktop, Sketch, MasterGo, Pixso, and 墨刀 |
 | Reviews are ad-hoc and shallow                                       | **14 agents** produce graded reports: code, security, a11y, performance, TS, UI fidelity       |
@@ -274,8 +274,8 @@ The skills below are grouped by use case so you can quickly find project standar
 | Skill                         | Scope                                                                         |
 | ----------------------------- | ----------------------------------------------------------------------------- |
 | `fec-ui-design`               | Product-context UI direction, anti-generic design dials, media strategy, states, visual QA |
-| `fec-image-generation`        | System blueprints, process workflows, interactive live diagrams, HTML/SVG/PNG exports, image generation/editing, visual assets, and PNG QA |
-| `fec-drawio-studio`         | Editable draw.io / diagrams.net technical diagrams, XML/Mermaid/CSV URL handoff, shape lookup, auto-layout, code maps |
+| `fec-image-generation`        | UI, product and brand image generation/editing with shared PNG QA |
+| `cc-drawio-studio`         | Editable draw.io / diagrams.net technical diagrams, XML/Mermaid/CSV URL handoff, shape lookup, auto-layout, code maps |
 | `fec-web-video-presentation` | Recordable 16:9 step-driven web presentations from articles, scripts, lessons, and demos |
 | `fec-tailwind-design-system`  | Tailwind tokens, theme extension, variants, class governance, dark mode       |
 | `fec-responsive-layout`       | Mobile-first layouts, container queries, data-dense responsive UI             |
@@ -283,7 +283,7 @@ The skills below are grouped by use case so you can quickly find project standar
 | `fec-implement-from-design`   | Build UI from design tools, screenshots, or section-level visual references   |
 | `fec-storybook-component-doc` | Storybook component docs, design-system presentation, isolated state previews |
 
-Technical diagram quality: `fec-image-generation` prefers local Mermaid for standard sequence/workflow diagrams and the draw.io workflow for editable architecture, with JSON/HTML fallback when tools are unavailable. Export a browser-measured manifest scaled to the PNG, run QA and inspect the final image. Preserve complete text, explicit layout and relationships; repair the source for at most two automatic rounds and report unresolved issues. Reproducible fixtures are in `skills/fec-image-generation/assets/quality-examples/`.
+Technical diagram quality: `cc-technical-diagrams` prefers local Mermaid for standard sequence/workflow diagrams and the draw.io workflow for editable architecture, with JSON/HTML fallback when tools are unavailable. Export a browser-measured manifest scaled to the PNG, run QA and inspect the final image. Preserve complete text, explicit layout and relationships; repair the source for at most two automatic rounds and report unresolved issues. Reproducible fixtures are in `skills/cc-technical-diagrams/assets/quality-examples/`.
 
 [Review and technical diagram guide](docs/review-and-diagram-workflows.md).
 
@@ -306,7 +306,7 @@ Technical diagram quality: `fec-image-generation` prefers local Mermaid for stan
 | ------------------------------- | -------------------------------------------------------------------------------------- |
 | `fec-backend-requirements-handoff` | Frontend-to-backend handoff for UI data needs, actions, states, rules, and questions |
 | `fec-doc-sync`                  | Keep frontend docs in sync with code, config, scripts, routes, APIs, env, and deploy facts |
-| `fec-source-driven-development` | Verify version-sensitive frontend decisions against project facts and official sources |
+| `cc-source-driven-development` | Verify version-sensitive frontend decisions against project facts and official sources |
 
 ### Agents
 
@@ -565,3 +565,18 @@ To disable telemetry: `DISABLE_TELEMETRY=1`. Details: [skills.sh CLI docs](https
 **If frontend-craft helps your team ship better code, [give it a Star](https://github.com/bovinphang/frontend-craft).**
 
 </div>
+
+## Craft Common in 3.0
+
+Version 3.0 is unreleased. It delivers 54 frontend entries and seven shared entries (61 skills total) from the pinned craft-common dependency, without a third manual plugin install. Common source is maintained only in craft-common.
+
+- `cc-drawio-studio`
+- `cc-technical-diagrams`
+- `cc-source-driven-development`
+- `cc-doc-sync-core`
+- `cc-debug-methodology`
+- `cc-refactoring-core`
+- `cc-tdd-methodology`
+
+Run `fec runtime check-migration codex --local --json` and read [migration guide](docs/common-migration.md).
+CLI installation manages shared ownership and uninstall references. Native channels guarantee complete single-product payloads; native dual-product deduplication is not promised.

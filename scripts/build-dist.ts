@@ -3,8 +3,20 @@ import { mkdir, rm } from "node:fs/promises";
 import path from "node:path";
 import { build, type BuildOptions } from "esbuild";
 import { resolvePluginRoot } from "../src/install/shared/resolve-plugin-root.js";
+import { syncCommonContent } from "./sync-common.js";
+import { fileURLToPath } from "node:url";
 
 const root = resolvePluginRoot(import.meta.url);
+syncCommonContent({
+  productRoot: root,
+  commonRoot: path.resolve(
+    path.dirname(
+      fileURLToPath(import.meta.resolve("@bovinphang/craft-common")),
+    ),
+    "..",
+  ),
+  check: true,
+});
 const cliOutfile = path.join(root, "dist", "bin", "frontend-craft.js");
 
 const hookEntries = [

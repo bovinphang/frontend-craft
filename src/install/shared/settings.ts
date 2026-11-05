@@ -1,5 +1,5 @@
-import fs from "node:fs";
 import { readUtf8, writeSharedUtf8, recordSettingsHooks } from "./fs.js";
+import { productFileExists } from "./product-write-plan.js";
 
 export function asRecord(value: unknown): Record<string, unknown> {
   return value !== null && typeof value === "object" && !Array.isArray(value)
@@ -8,7 +8,7 @@ export function asRecord(value: unknown): Record<string, unknown> {
 }
 
 export function readSettings(file: string): Record<string, unknown> {
-  if (!fs.existsSync(file)) return {};
+  if (!productFileExists(file)) return {};
   try {
     const value: unknown = JSON.parse(readUtf8(file));
     if (value === null || typeof value !== "object" || Array.isArray(value))

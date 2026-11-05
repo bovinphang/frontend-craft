@@ -35,6 +35,7 @@
     "localized",
     "hooks",
     "templates",
+    "common-content.lock.json",
     ".mcp.json",
     ".claude-plugin",
     "openclaw.plugin.json",
@@ -52,10 +53,12 @@
     "docs"
   ],
   "scripts": {
+    "sync:common": "tsx scripts/sync-common.ts",
+    "check:common": "tsx scripts/sync-common.ts --check",
     "clean": "node scripts/clean-dist.mjs",
     "typecheck": "pnpm run typecheck:ts && pnpm run typecheck:skill-scripts",
     "typecheck:ts": "tsc --noEmit -p tsconfig.json",
-    "typecheck:skill-scripts": "tsc --allowJs --checkJs --noEmit --strict --module NodeNext --moduleResolution NodeNext --target ES2022 skills/fec-ui-design/scripts/design-system.mjs skills/fec-image-generation/scripts/png-qa.mjs skills/fec-image-generation/scripts/tech-diagram-render.mjs skills/fec-image-generation/scripts/interactive-diagram-server.mjs skills/fec-image-generation/scripts/export-diagram.mjs skills/fec-image-generation/scripts/diagram-layout.mjs skills/fec-image-generation/scripts/diagram-browser.mjs skills/fec-image-generation/scripts/mermaid-render.mjs",
+    "typecheck:skill-scripts": "tsc --allowJs --checkJs --noEmit --strict --module NodeNext --moduleResolution NodeNext --target ES2022 skills/fec-ui-design/scripts/design-system.mjs skills/cc-technical-diagrams/scripts/png-qa.mjs skills/cc-technical-diagrams/scripts/tech-diagram-render.mjs skills/cc-technical-diagrams/scripts/interactive-diagram-server.mjs skills/cc-technical-diagrams/scripts/export-diagram.mjs skills/cc-technical-diagrams/scripts/diagram-layout.mjs skills/cc-technical-diagrams/scripts/diagram-browser.mjs skills/cc-technical-diagrams/scripts/mermaid-render.mjs",
     "build": "pnpm run clean && pnpm run typecheck && tsx scripts/build-dist.ts",
     "test:only": "tsx scripts/run-tests.ts",
     "test": "pnpm run build && pnpm run test:only",
@@ -108,5 +111,8 @@
     "playwright",
     "eslint"
   ],
-  "packageManager": "pnpm@12.4.1"
+  "packageManager": "pnpm@12.4.1",
+  "dependencies": {
+    "@bovinphang/craft-common": "1.0.0"
+  }
 }

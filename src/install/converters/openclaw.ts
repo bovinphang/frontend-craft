@@ -1,12 +1,8 @@
+import { copyProductSkills } from "../shared/fs.js";
 import path from "node:path";
 import fs from "node:fs";
 import type { InstallContext } from "../types.js";
-import {
-  copyDir,
-  copyFile,
-  ensureDir,
-  retireManagedTree,
-} from "../shared/fs.js";
+import { copyFile, ensureDir, retireManagedTree } from "../shared/fs.js";
 import { installCommandSkills } from "../shared/command-skills.js";
 
 /**
@@ -17,7 +13,7 @@ export async function installOpenclaw(ctx: InstallContext): Promise<void> {
   if (dryRun) return console.log(`[dry-run] openclaw -> ${baseDir}`);
   ensureDir(baseDir);
   const skillsDir = path.join(isGlobal ? baseDir : cwd, "skills");
-  copyDir(path.join(contentRoot, "skills"), skillsDir);
+  copyProductSkills(path.join(contentRoot, "skills"), skillsDir);
   installCommandSkills(path.join(contentRoot, "commands"), skillsDir);
   retireManagedTree(path.join(baseDir, "commands"));
   if (isGlobal) return;

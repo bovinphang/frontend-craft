@@ -20,20 +20,20 @@
 
 ## 技术图
 
-时序图和流程图通过 `fec-image-generation` 优先使用本地 Mermaid；可编辑架构图使用 `fec-drawio-studio`。工具缺失时使用 JSON/HTML 渲染器。需要准确结构的技术关系与标签应保存在可编辑源文件中。
+时序图和流程图通过 `cc-technical-diagrams` 优先使用本地 Mermaid；可编辑架构图使用 `cc-drawio-studio`。工具缺失时使用 JSON/HTML 渲染器。需要准确结构的技术关系与标签应保存在可编辑源文件中。
 
 Mermaid 适配器仅使用已安装 CLI，不自动下载依赖。PNG 导出需要本地 Chromium 浏览器，可通过 `FEC_BROWSER_PATH` 指定可执行文件。缺少工具时明确报告，不宣称导出成功。
 
 JSON/HTML 路线先渲染源文件，导出 PNG 与同比例的浏览器实测 manifest，再运行 QA 并检查最终图片：
 
 ```bash
-node skills/fec-image-generation/scripts/tech-diagram-render.mjs --input skills/fec-image-generation/assets/quality-examples/workflow.json --type workflow --output workflow.html --manifest workflow.layout.json
-node skills/fec-image-generation/scripts/export-diagram.mjs --input workflow.html --format png --output workflow.png --theme light --scale 2 --manifest workflow.layout.json --output-manifest workflow.actual.json
-node skills/fec-image-generation/scripts/png-qa.mjs --png workflow.png --manifest workflow.actual.json --format json
+node skills/cc-technical-diagrams/scripts/tech-diagram-render.mjs --input skills/cc-technical-diagrams/assets/quality-examples/workflow.json --type workflow --output workflow.html --manifest workflow.layout.json
+node skills/cc-technical-diagrams/scripts/export-diagram.mjs --input workflow.html --format png --output workflow.png --theme light --scale 2 --manifest workflow.layout.json --output-manifest workflow.actual.json
+node skills/cc-technical-diagrams/scripts/png-qa.mjs --png workflow.png --manifest workflow.actual.json --format json
 ```
 
 保留完整 Unicode 标签、显式几何布局、连线方向、时序顺序与自调用；独立 SVG 应包含自身样式。几何 QA 和浏览器测量辅助视觉检查，不证明语义正确，也不等同于完成人工视觉审核。缺少测量或仅部分覆盖时必须说明。最多自动修复源文件两轮，之后报告未解决缺陷。
 
-交付可编辑源文件、请求的导出文件和 QA/覆盖结果。参见[可复现样例](../../localized/zh-CN/skills/fec-image-generation/assets/quality-examples/README.md)、[图表工作流](../../localized/zh-CN/skills/fec-image-generation/references/diagram-workflows.md)及 [PNG QA](../../localized/zh-CN/skills/fec-image-generation/references/png-qa-autofix.md)。
+交付可编辑源文件、请求的导出文件和 QA/覆盖结果。参见[可复现样例](../../localized/zh-CN/skills/cc-technical-diagrams/assets/quality-examples/README.md)、[图表工作流](../../localized/zh-CN/skills/cc-technical-diagrams/references/diagram-workflows.md)及 [PNG QA](../../localized/zh-CN/skills/cc-technical-diagrams/references/png-qa-autofix.md)。
 
 [English](../review-and-diagram-workflows.md)

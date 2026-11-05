@@ -2,7 +2,7 @@ import path from "node:path";
 import fs from "node:fs";
 import type { InstallContext } from "../types.js";
 import {
-  copyDir,
+  copyProductSkills,
   ensureDir,
   readUtf8,
   writeUtf8,
@@ -32,16 +32,7 @@ export async function installOpencodeFamily(
 
   const skillsDest = path.join(baseDir, "skills");
   ensureDir(skillsDest);
-  const skillsRoot = path.join(contentRoot, "skills");
-  for (const name of fs.readdirSync(skillsRoot)) {
-    const p = path.join(skillsRoot, name);
-    if (!fs.statSync(p).isDirectory()) continue;
-    const skillMd = path.join(p, "SKILL.md");
-    if (fs.existsSync(skillMd)) {
-      const destDir = path.join(skillsDest, name);
-      copyDir(p, destDir);
-    }
-  }
+  copyProductSkills(path.join(contentRoot, "skills"), skillsDest);
 
   const jsoncPath = path.join(baseDir, "opencode.jsonc");
   if (

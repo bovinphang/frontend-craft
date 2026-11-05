@@ -1,8 +1,19 @@
+import {
+  runCommonAwareInstall,
+  uninstallCommonAwareInstall,
+  commonRequest,
+} from "./shared/common-install.js";
+import {
+  planSharedDeployment,
+  resolveSharedIdentity,
+} from "@bovinphang/craft-common";
 import fs from "node:fs";
 import path from "node:path";
 import os from "node:os";
 import readline from "node:readline";
 import { ALL_RUNTIMES, INSTALLERS } from "./registry.js";
+import { readProductCommonCatalog } from "./shared/common-content.js";
+import { checkMigration, type MigrationReport } from "./migration.js";
 import { runCliLifecycle } from "./cli-lifecycle.js";
 import {
   promptLanguage,
@@ -24,15 +35,12 @@ import {
 } from "./runtime-capabilities.js";
 import { resolvePluginRoot } from "./shared/resolve-plugin-root.js";
 import {
-  beginManifestSession,
   discardManifestSession,
-  endManifestSession,
   getManifestPath,
   readInstallManifest,
 } from "./shared/fs.js";
 import {
   discoverManifestInstalls,
-  uninstallManagedInstall,
   copyInstallToNewBase,
 } from "./manifest-installs.js";
 import {
@@ -115,6 +123,7 @@ Usage:
   fec setup all [options]
   frontend-craft runtime update|upgrade [runtime] [options]
   frontend-craft runtime uninstall|remove [runtime] [options]
+  frontend-craft runtime check-migration [runtime] [--local|--global] [--json]
   frontend-craft list
   frontend-craft matrix
   frontend-craft doctor <runtime>
@@ -176,9 +185,14 @@ export async function main(argv: string[]): Promise<void> {
     cmd = cmdArgs[0];
     cmdArgs = cmdArgs.slice(1);
     if (
-      !["install", "update", "upgrade", "uninstall", "remove"].includes(
-        cmd ?? "",
-      )
+      ![
+        "install",
+        "update",
+        "upgrade",
+        "uninstall",
+        "remove",
+        "check-migration",
+      ].includes(cmd ?? "")
     ) {
       console.error(`Unknown runtime command: ${cmd ?? "(missing)"}`);
       printHelp();
@@ -189,6 +203,42 @@ export async function main(argv: string[]): Promise<void> {
   const isSetup = cmd === "setup";
   const pluginRoot = resolvePluginRoot(import.meta.url);
   const cwd = process.cwd();
+  if (resourceCommand && cmd === "check-migration") {
+    const allowed = new Set(["--json", "--global", "--local", "-g", "-l"]);
+    const unknown = cmdArgs.filter(
+      (arg) => arg.startsWith("-") && !allowed.has(arg),
+    );
+    const positional = cmdArgs.filter((arg) => !arg.startsWith("-"));
+    const global = cmdArgs.includes("--global") || cmdArgs.includes("-g");
+    const local = cmdArgs.includes("--local") || cmdArgs.includes("-l");
+    const report: MigrationReport =
+      unknown.length || positional.length > 1 || (global && local)
+        ? {
+            findings: [],
+            errors: [
+              "迁移检查参数无效；使用 [runtime] [--local|--global] [--json]",
+            ],
+            exitCode: 2,
+          }
+        : checkMigration({
+            cwd,
+            runtime: positional[0],
+            scope: global ? "global" : "local",
+          });
+    if (cmdArgs.includes("--json"))
+      console.log(JSON.stringify(report, null, 2));
+    else {
+      for (const finding of report.findings)
+        console.log(
+          `${finding.file}${finding.line ? `:${finding.line}` : ""} [${finding.kind}] ${finding.id}${finding.replacement ? ` -> ${finding.replacement}` : ""}: ${finding.message}`,
+        );
+      for (const error of report.errors) console.log(error);
+      if (!report.findings.length && !report.errors.length)
+        console.log("未发现待迁移的公共 Skill 引用或旧安装");
+    }
+    process.exitCode = report.exitCode;
+    return;
+  }
   if (
     !resourceCommand &&
     ["update", "upgrade", "uninstall", "remove"].includes(cmd ?? "")
@@ -498,7 +548,12 @@ async function uninstallResources({
       console.log(
         `Uninstalling frontend-craft for "${install.runtime}" -> ${install.baseDir}${install.scope === "global" ? " (global)" : ""}`,
       );
-      const result = uninstallManagedInstall({ install, cwd, dryRun, force });
+      const result = await uninstallCommonAwareInstall({
+        install,
+        cwd,
+        dryRun,
+        force,
+      });
       for (const file of result.removed) {
         const action = dryRun ? "[dry-run] would remove" : "Removed";
         console.log(
@@ -603,6 +658,7 @@ async function runInstaller({
     baseDir = resolved.redirect.baseDir;
     mode = "update";
   }
+  let beforeManifest: ((dryRun?: boolean) => void) | undefined;
   if (isGlobal && !fs.existsSync(getManifestPath(baseDir))) {
     const legacy = discoverManifestInstalls({
       cwd,
@@ -612,7 +668,8 @@ async function runInstaller({
       (install) => path.resolve(install.baseDir) !== path.resolve(baseDir),
     );
     if (legacy) {
-      copyInstallToNewBase(legacy, baseDir, dryRun);
+      beforeManifest = (preview = dryRun) =>
+        copyInstallToNewBase(legacy, baseDir, preview);
       mode = "update";
     }
   }
@@ -642,23 +699,7 @@ async function runInstaller({
       `Updating frontend-craft for "${rt}" -> ${baseDir}${isGlobal ? " (global)" : ""}`,
     );
   }
-  try {
-    if (!dryRun)
-      beginManifestSession({
-        baseDir,
-        cwd,
-        mode,
-        packageVersion: readPkgVersion(pluginRoot),
-        runtime: rt,
-        isGlobal,
-        language,
-      });
-    await INSTALLERS[rt](ctx);
-    if (!dryRun) endManifestSession();
-  } catch (err) {
-    if (!dryRun) discardManifestSession();
-    throw err;
-  }
+  await runCommonAwareInstall(ctx, () => INSTALLERS[rt](ctx), beforeManifest);
 }
 
 async function resolveClaudeInstallConflict({
@@ -726,7 +767,7 @@ async function resolveClaudeInstallConflict({
     targetSource,
   );
   if (choice === "switch") {
-    const removed = uninstallConflictingClaudeCliSources({
+    const removed = await uninstallConflictingClaudeCliSources({
       installs: conflicts,
       cwd,
       dryRun,
@@ -752,7 +793,7 @@ async function resolveClaudeInstallConflict({
   };
 }
 
-function uninstallConflictingClaudeCliSources({
+async function uninstallConflictingClaudeCliSources({
   installs,
   cwd,
   dryRun,
@@ -762,7 +803,7 @@ function uninstallConflictingClaudeCliSources({
   cwd: string;
   dryRun: boolean;
   force: boolean;
-}): boolean {
+}): Promise<boolean> {
   for (const cliInstall of installs) {
     const install = discoverManifestInstalls({
       cwd,
@@ -773,7 +814,12 @@ function uninstallConflictingClaudeCliSources({
     console.log(
       `Uninstalling existing ${formatClaudeInstallSource(toClaudeCliSource(cliInstall))} install before switching source.`,
     );
-    const result = uninstallManagedInstall({ install, cwd, dryRun, force });
+    const result = await uninstallCommonAwareInstall({
+      install,
+      cwd,
+      dryRun,
+      force,
+    });
     for (const file of result.removed) {
       const action = dryRun ? "[dry-run] would remove" : "Removed";
       console.log(
@@ -902,6 +948,35 @@ function renderDoctorReport({
   lines.push(
     `skills: ${status(checkSkills(runtime, baseDir, cwd, isGlobal), cap.skills)}`,
   );
+  let commonHealthy = false;
+  if (cap.skills) {
+    try {
+      const manifest = readInstallManifest(getManifestPath(baseDir));
+      const request = commonRequest({
+        pluginRoot,
+        contentRoot: resolveContentRoot(pluginRoot, manifest?.language ?? "en"),
+        cwd,
+        baseDir,
+        runtime,
+        isGlobal,
+        dryRun: true,
+        mode: "install",
+        language: manifest?.language ?? "en",
+      });
+      if (manifest?.common && request) {
+        const identity = resolveSharedIdentity(request.skillsDir);
+        const plan = planSharedDeployment(request);
+        commonHealthy =
+          manifest.common.target === identity.target &&
+          manifest.common.ledgerDir === identity.ledgerDir &&
+          plan.conflicts.length === 0 &&
+          plan.mutations.length === 0;
+      }
+    } catch {
+      commonHealthy = false;
+    }
+  }
+  lines.push(`common: ${status(commonHealthy, cap.skills)}`);
   lines.push(
     `agents: ${status(fs.existsSync(path.join(baseDir, "agents")), cap.agents)}`,
   );
@@ -1103,9 +1178,12 @@ function checkPublicMetadata(pluginRoot: string): string[] {
     repository?: string;
   }>;
   for (const skill of skillsMetadata) {
-    if (skill.version !== pkg.version)
+    const expectedVersion = skill.id.startsWith("cc-")
+      ? readProductCommonCatalog(pluginRoot, "en").packageVersion
+      : pkg.version;
+    if (skill.version !== expectedVersion)
       issues.push(
-        `skills/metadata.json ${skill.id}.version is ${skill.version}, expected ${pkg.version}`,
+        `skills/metadata.json ${skill.id}.version is ${skill.version}, expected ${expectedVersion}`,
       );
   }
 

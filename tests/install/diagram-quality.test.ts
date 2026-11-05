@@ -9,7 +9,7 @@ import { runInNewContext } from "node:vm";
 import { resolvePluginRoot } from "../../src/install/shared/resolve-plugin-root.js";
 
 const root = resolvePluginRoot(import.meta.url);
-const scripts = path.join(root, "skills/fec-image-generation/scripts");
+const scripts = path.join(root, "skills/cc-technical-diagrams/scripts");
 const layout = () =>
   import(pathToFileURL(path.join(scripts, "diagram-layout.mjs")).href);
 
@@ -283,16 +283,27 @@ test("browser readiness survives initial navigation and rejects the blank docume
     pathToFileURL(path.join(scripts, "diagram-browser.mjs")).href
   );
   let attempts = 0;
-  await waitForDiagramReady(async (expression: string) => {
-    attempts++;
-    if (attempts === 1)
-      throw new Error("Browser raster export failed: Execution context was destroyed.");
-    return runInNewContext(expression, {
-      location: { href: attempts === 2 ? "about:blank" : "file:///diagram.html" },
-      document: { readyState: "complete", fonts: { ready: Promise.resolve() } },
-      requestAnimationFrame: (callback: () => void) => callback(),
-    });
-  }, "file:///diagram.html", Date.now() + 2000);
+  await waitForDiagramReady(
+    async (expression: string) => {
+      attempts++;
+      if (attempts === 1)
+        throw new Error(
+          "Browser raster export failed: Execution context was destroyed.",
+        );
+      return runInNewContext(expression, {
+        location: {
+          href: attempts === 2 ? "about:blank" : "file:///diagram.html",
+        },
+        document: {
+          readyState: "complete",
+          fonts: { ready: Promise.resolve() },
+        },
+        requestAnimationFrame: (callback: () => void) => callback(),
+      });
+    },
+    "file:///diagram.html",
+    Date.now() + 2000,
+  );
   assert.equal(attempts, 3);
 });
 
@@ -302,10 +313,17 @@ test("browser readiness propagates errors unrelated to navigation", async () => 
   );
   const error = new Error("Diagram evaluation failed: invalid page script");
   let attempts = 0;
-  await assert.rejects(waitForDiagramReady(async () => {
-    attempts++;
-    throw error;
-  }, "file:///diagram.html", Date.now() + 2000), (actual) => actual === error);
+  await assert.rejects(
+    waitForDiagramReady(
+      async () => {
+        attempts++;
+        throw error;
+      },
+      "file:///diagram.html",
+      Date.now() + 2000,
+    ),
+    (actual) => actual === error,
+  );
   assert.equal(attempts, 1);
 });
 
@@ -313,9 +331,18 @@ test("browser readiness stops transient navigation failures at its deadline", as
   const { waitForDiagramReady } = await import(
     pathToFileURL(path.join(scripts, "diagram-browser.mjs")).href
   );
-  await assert.rejects(waitForDiagramReady(async () => {
-    throw new Error("Browser raster export failed: Execution context was destroyed.");
-  }, "file:///diagram.html", Date.now() + 60), /diagram page did not become ready/);
+  await assert.rejects(
+    waitForDiagramReady(
+      async () => {
+        throw new Error(
+          "Browser raster export failed: Execution context was destroyed.",
+        );
+      },
+      "file:///diagram.html",
+      Date.now() + 60,
+    ),
+    /diagram page did not become ready/,
+  );
 });
 
 test("browser export measures text and scales every manifest coordinate", async (t) => {
@@ -584,7 +611,7 @@ test("source and localized script modules are byte identical", () => {
       fs.readFileSync(
         path.join(
           root,
-          "localized/zh-CN/skills/fec-image-generation/scripts",
+          "localized/zh-CN/skills/cc-technical-diagrams/scripts",
           name,
         ),
       ),

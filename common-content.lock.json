@@ -1,0 +1,1139 @@
+{
+  "schemaVersion": 1,
+  "packageName": "@bovinphang/craft-common",
+  "packageVersion": "1.0.0",
+  "catalogs": {
+    "en": {
+      "schemaVersion": 1,
+      "packageName": "@bovinphang/craft-common",
+      "packageVersion": "1.0.0",
+      "language": "en",
+      "skills": [
+        {
+          "id": "cc-debug-methodology",
+          "version": "1.0.0",
+          "sourcePackage": "@bovinphang/craft-common",
+          "repository": "https://github.com/bovinphang/craft-common",
+          "files": [
+            {
+              "relativePath": "SKILL.md",
+              "hash": "ba5f9d27cbad05c856e80eed47ecf43d2ed300b4db2cd19b8a391cb8c79800c3"
+            },
+            {
+              "relativePath": "references/method.md",
+              "hash": "186ef03edb9a636623cc9ac9737c5538894a5fb2e4ec50e759cb9e36f0787ff6"
+            }
+          ]
+        },
+        {
+          "id": "cc-doc-sync-core",
+          "version": "1.0.0",
+          "sourcePackage": "@bovinphang/craft-common",
+          "repository": "https://github.com/bovinphang/craft-common",
+          "files": [
+            {
+              "relativePath": "SKILL.md",
+              "hash": "87f977dc152b3b7a88c3f0b564d1b927605e075d3ed28bdc08dc2e15e523e781"
+            },
+            {
+              "relativePath": "references/method.md",
+              "hash": "66ceaa8221aad83847252358f112c3fcb49ce153003a1531ca17b5af9068c8ac"
+            }
+          ]
+        },
+        {
+          "id": "cc-drawio-studio",
+          "version": "1.0.0",
+          "sourcePackage": "@bovinphang/craft-common",
+          "repository": "https://github.com/bovinphang/craft-common",
+          "files": [
+            {
+              "relativePath": "SKILL.md",
+              "hash": "b023a5d1ffe70415d85c6a711a2b3b1fec45ffe1ca0eba55309c359b8f07e79e"
+            },
+            {
+              "relativePath": "data/THIRD_PARTY_NOTICES.md",
+              "hash": "6d0a20dcad5186a44f7db844a8f85ce642d63f695d64c4077bdc4ace938a8ef5"
+            },
+            {
+              "relativePath": "data/brand-icons.json",
+              "hash": "e7c309bd5ebf4df948563d48469090d0868432549f168319534215f79b0077cc"
+            },
+            {
+              "relativePath": "data/shape-index.json",
+              "hash": "09b84516025e46238e5dd47465cc96ecfd96134ea853ace1063e1ca19dd34601"
+            },
+            {
+              "relativePath": "references/data-residency.md",
+              "hash": "c5ec44272e5a40522a86968cca20fca8e4ed0c645cb66f4bf08275d7da9a5b48"
+            },
+            {
+              "relativePath": "references/diagram-patterns.md",
+              "hash": "8ef3c2c09d21635901fca086923b7ae76ff6156d84e36230d62c1978d77ffde3"
+            },
+            {
+              "relativePath": "references/flowchart-quality.md",
+              "hash": "ddd1be0fdbf1fce7f517688b0d4421f3eac67f8af469e6a2ead63d3abdf59ee5"
+            },
+            {
+              "relativePath": "references/layout-and-export.md",
+              "hash": "52eb3f54803ac5a067d2226eb469faeb8d3e3dbca26a747d70f0e4a10156955c"
+            },
+            {
+              "relativePath": "references/troubleshooting.md",
+              "hash": "a42f600d2a40f373aa744ce7033e1855be20c8e799effdfd3fc4241e0e1de02c"
+            },
+            {
+              "relativePath": "references/xml-and-mermaid.md",
+              "hash": "9827f228277e5c61b0e3f2f802b919f90fe59879ff80d56edfa037b28f96f2e5"
+            },
+            {
+              "relativePath": "scripts/brand-symbols.mjs",
+              "hash": "27e640fbe026f456f092a7a718cf66207b808bca32788e43251425535d06f39e"
+            },
+            {
+              "relativePath": "scripts/diagram-lint.mjs",
+              "hash": "651d2073ce018d1946bd03abed09e46243991441ef6dcb7262fd84d69764ce6a"
+            },
+            {
+              "relativePath": "scripts/diagram-url.mjs",
+              "hash": "4885b88eb52287fd1396b83375109d634f1fa31c2bd4173788116632446722dd"
+            },
+            {
+              "relativePath": "scripts/drawio-export.mjs",
+              "hash": "372c708cba70aab1214b507643940b04276b35f05038721c9215c72338091639"
+            },
+            {
+              "relativePath": "scripts/layout-graph.mjs",
+              "hash": "25c3b50c27476ceded7a40b0454c8284a067b7570e92ed78a3e07ed59ff743ba"
+            },
+            {
+              "relativePath": "scripts/png-embed-fix.mjs",
+              "hash": "39180bbf5d4c3f7a85f9e2416c050f5179216c63eb6f93f28a6702daf81c269b"
+            },
+            {
+              "relativePath": "scripts/scan-go-packages.mjs",
+              "hash": "d602c4b9cc53cd5af6aa65f8d53ed12637e6a67068d49e9946ea59946a2b732b"
+            },
+            {
+              "relativePath": "scripts/scan-js-modules.mjs",
+              "hash": "e33ba48ec4131e426bcdf99aa3ded6161eafbf204027f715c97d11421f33f117"
+            },
+            {
+              "relativePath": "scripts/scan-python-classes.mjs",
+              "hash": "791e8522b462eedf6f73944ed4477872d4d945f1cc552bfe24afac90faa30731"
+            },
+            {
+              "relativePath": "scripts/scan-python-modules.mjs",
+              "hash": "f9358a944c4d1c57848d4a33808b8542108109f095bc22cb5f3f6f4e9872df26"
+            },
+            {
+              "relativePath": "scripts/scan-rust-modules.mjs",
+              "hash": "9f766358066b4256d38a8f5f529b8dccf0345bac613fbd049f259779b1243ada"
+            },
+            {
+              "relativePath": "scripts/scan-ts-modules.mjs",
+              "hash": "174a8811b73939afe1d66cd6b646625bb27897b3115cc1440c58a5e625bc376c"
+            },
+            {
+              "relativePath": "scripts/shape-query.mjs",
+              "hash": "081f1a12a68e1e63284545ffcec8fcedda773cc5dd635ddff87d947ce67cadde"
+            },
+            {
+              "relativePath": "scripts/studio-core.mjs",
+              "hash": "8cf441564a6b91186309171b13209888f9cd4945bb1e59905bb1631c18fdfe4a"
+            },
+            {
+              "relativePath": "styles/built-in/corporate.json",
+              "hash": "0cb0ba05b44e5938ce775bb917b6ffaa3a0501ceedbd610975cc6e909fe5e60b"
+            },
+            {
+              "relativePath": "styles/built-in/default.json",
+              "hash": "5340c1f80ab983f412e895d58d5dffb4949c246acc516702fd565675fec140e1"
+            },
+            {
+              "relativePath": "styles/built-in/handdrawn.json",
+              "hash": "92a1fdca1bbb95e5239fca62b2da81d4035936a11ca690e026419a5c2508e541"
+            },
+            {
+              "relativePath": "styles/schema.json",
+              "hash": "28f4998bf9db8ab3844ea00b7b7c22ea87a9ab90e76ab70ef7997d0bdc0deb06"
+            }
+          ]
+        },
+        {
+          "id": "cc-refactoring-core",
+          "version": "1.0.0",
+          "sourcePackage": "@bovinphang/craft-common",
+          "repository": "https://github.com/bovinphang/craft-common",
+          "files": [
+            {
+              "relativePath": "SKILL.md",
+              "hash": "0888d34fc8cf487a50e7d0749d77869d647d2f1a7b28283ac1129abf68eb64a1"
+            },
+            {
+              "relativePath": "references/method.md",
+              "hash": "a71e0041e5926caf6f7bf36b05a849252abefab3ce53a5d13a0353e6315da554"
+            }
+          ]
+        },
+        {
+          "id": "cc-source-driven-development",
+          "version": "1.0.0",
+          "sourcePackage": "@bovinphang/craft-common",
+          "repository": "https://github.com/bovinphang/craft-common",
+          "files": [
+            {
+              "relativePath": "SKILL.md",
+              "hash": "36f71cf9946ff4257dc72b86d386a8f2564b9c8e95b2a9161e15450adc4071c0"
+            },
+            {
+              "relativePath": "references/method.md",
+              "hash": "a6a760ddb91eb273c4a1e45a05daa25e700aeb021b2395103e67af48e8d029ed"
+            }
+          ]
+        },
+        {
+          "id": "cc-tdd-methodology",
+          "version": "1.0.0",
+          "sourcePackage": "@bovinphang/craft-common",
+          "repository": "https://github.com/bovinphang/craft-common",
+          "files": [
+            {
+              "relativePath": "SKILL.md",
+              "hash": "54ea82060987f3b830269f46edf4d84930431a3b1825214adb7f5ba295abe447"
+            },
+            {
+              "relativePath": "references/method.md",
+              "hash": "092f8648ff54b7bd656cf0f642948f43f154d6755a8ece6caf97ee754b2d649b"
+            }
+          ]
+        },
+        {
+          "id": "cc-technical-diagrams",
+          "version": "1.0.0",
+          "sourcePackage": "@bovinphang/craft-common",
+          "repository": "https://github.com/bovinphang/craft-common",
+          "files": [
+            {
+              "relativePath": "SKILL.md",
+              "hash": "2a069875afd2227defa370445cebc533790d4eb91dd417fa0af99612821cb13e"
+            },
+            {
+              "relativePath": "assets/interactive-diagram.html",
+              "hash": "d011f1ebd9f6916025f557e97a2cdbc014d8197094fddbd8f35b4136bcc2c14c"
+            },
+            {
+              "relativePath": "assets/quality-examples/README.md",
+              "hash": "6f842809af6608b5dad64b13ad7b72e8a91c492e27a6024c53903a0063d8223c"
+            },
+            {
+              "relativePath": "assets/quality-examples/architecture.json",
+              "hash": "b350e249ea66cd708e0e4f6324674dfba05edd576b439664c4685eb5054273cb"
+            },
+            {
+              "relativePath": "assets/quality-examples/invalid-explicit.json",
+              "hash": "ef6df2f5859062ef464f66cf4b915e8ce1c9b315372c370e5d578664dd5da837"
+            },
+            {
+              "relativePath": "assets/quality-examples/sequence.json",
+              "hash": "956a100daaaedcb6b6725539527bfb8dc04cfd8c2157b0bce04dd84d37460e2e"
+            },
+            {
+              "relativePath": "assets/quality-examples/sequence.mmd",
+              "hash": "c57f9be5a4647962f84b145e1fc82b396395090f53b6680335748396e2f7d267"
+            },
+            {
+              "relativePath": "assets/quality-examples/workflow.json",
+              "hash": "e8295c6efbf6dfde835e2048e43beb6264dc9058b78e5abc5f78db761b7a2929"
+            },
+            {
+              "relativePath": "assets/quality-examples/workflow.mmd",
+              "hash": "eb0f8ca306f49185419c427e804972d185371ad9cd5f0e1eca442aa37e9c577f"
+            },
+            {
+              "relativePath": "references/diagram-workflows.md",
+              "hash": "0b1837a574f3677006bcc9673903e6d2fb909cec964f1c5cfa462745b31bfb06"
+            },
+            {
+              "relativePath": "references/html-technical-diagrams.md",
+              "hash": "748041cd9415236dae6379362fef873501db349914eb3db277adcfb1e92c4178"
+            },
+            {
+              "relativePath": "references/png-qa-autofix.md",
+              "hash": "8806c87c487d3ecfd437f2866479d22c3b0c821888eef1dba575eb2f24d1fb01"
+            },
+            {
+              "relativePath": "scripts/diagram-browser.mjs",
+              "hash": "9fdb528671ea2a4e9cd0a338ef35d7c1b624d9e462ce14dfef762ed9ba093d6b"
+            },
+            {
+              "relativePath": "scripts/diagram-layout.mjs",
+              "hash": "c252c1b956d3ab067119056bc4bbd1540ee3cf82732067a20f467ecafbb1ce05"
+            },
+            {
+              "relativePath": "scripts/export-diagram.mjs",
+              "hash": "b5509ec4ac7c3bb48b6b6790b37c027c870932626419f39a3500acf895add0be"
+            },
+            {
+              "relativePath": "scripts/interactive-diagram-server.mjs",
+              "hash": "0eb36be19da7645b5b9bd47b05fb882e885f5ac0a175508637bead2929fdbb47"
+            },
+            {
+              "relativePath": "scripts/mermaid-render.mjs",
+              "hash": "068c538fd8ceb05776227cc66ada504a063a365382e7110410d1b2d7e50feb42"
+            },
+            {
+              "relativePath": "scripts/png-qa.mjs",
+              "hash": "4f81da6fbfeab07a413e328a762a001db6d56daf5472d84e74ff1db9c1bf4d92"
+            },
+            {
+              "relativePath": "scripts/tech-diagram-render.mjs",
+              "hash": "ede67017683f1a164c3bedd64ebabedf5517104eeab9e5a299d46ea945968fc4"
+            }
+          ]
+        }
+      ],
+      "digest": "9f7185a6a980182b7856e6a46578490a6a7489cae7f88a61efa7a999e26b63ce"
+    },
+    "zh-CN": {
+      "schemaVersion": 1,
+      "packageName": "@bovinphang/craft-common",
+      "packageVersion": "1.0.0",
+      "language": "zh-CN",
+      "skills": [
+        {
+          "id": "cc-debug-methodology",
+          "version": "1.0.0",
+          "sourcePackage": "@bovinphang/craft-common",
+          "repository": "https://github.com/bovinphang/craft-common",
+          "files": [
+            {
+              "relativePath": "SKILL.md",
+              "hash": "3cd16d973f88d8775171bd762ef6d25fdc2bde57f2f6f6c56f49bd9321540b8d"
+            },
+            {
+              "relativePath": "references/method.md",
+              "hash": "9c1ddceaa37fe95f6874016e499a566cc348f56fde0c31cf4d56b87f3aee5500"
+            }
+          ]
+        },
+        {
+          "id": "cc-doc-sync-core",
+          "version": "1.0.0",
+          "sourcePackage": "@bovinphang/craft-common",
+          "repository": "https://github.com/bovinphang/craft-common",
+          "files": [
+            {
+              "relativePath": "SKILL.md",
+              "hash": "967b163c5ceee9d830087191f3ea9debf200014265e0eaac72b4cd2a1ed10890"
+            },
+            {
+              "relativePath": "references/method.md",
+              "hash": "4ef1c82389c3b37408e16df27444a37de416e7d6492799c45d5ae5fac6a3ed31"
+            }
+          ]
+        },
+        {
+          "id": "cc-drawio-studio",
+          "version": "1.0.0",
+          "sourcePackage": "@bovinphang/craft-common",
+          "repository": "https://github.com/bovinphang/craft-common",
+          "files": [
+            {
+              "relativePath": "SKILL.md",
+              "hash": "21c714f312fd91b972e559fd200420bad963a66cb3f2856ddd51a43a007e3a2b"
+            },
+            {
+              "relativePath": "data/THIRD_PARTY_NOTICES.md",
+              "hash": "285a34f730d772aea429333ab8a130bce23b3e2099fd656b7cee6f87192f0f3f"
+            },
+            {
+              "relativePath": "data/brand-icons.json",
+              "hash": "e7c309bd5ebf4df948563d48469090d0868432549f168319534215f79b0077cc"
+            },
+            {
+              "relativePath": "data/shape-index.json",
+              "hash": "09b84516025e46238e5dd47465cc96ecfd96134ea853ace1063e1ca19dd34601"
+            },
+            {
+              "relativePath": "references/data-residency.md",
+              "hash": "94f991af136ca152fe9fbd6d2fed13874e33daf88a1f4ef2eee8667a8dbffaa2"
+            },
+            {
+              "relativePath": "references/diagram-patterns.md",
+              "hash": "463c17a61673a0fe100a830fda08d73c1e3e3236de7ce27e22550286d450fd2d"
+            },
+            {
+              "relativePath": "references/flowchart-quality.md",
+              "hash": "7ae3ddfefa52f9101fac7e5262f561deaaddc5ccb7f7e2ef1eadd753478968ed"
+            },
+            {
+              "relativePath": "references/layout-and-export.md",
+              "hash": "c2ebcba345db38cf91cf8dc36a709fd2f72a78e43cc1fdbf4b97d85a0e5faceb"
+            },
+            {
+              "relativePath": "references/troubleshooting.md",
+              "hash": "ae02fc6a6cd275e25955c797259d043af62b9756827000984acdea769ab02d41"
+            },
+            {
+              "relativePath": "references/xml-and-mermaid.md",
+              "hash": "83204fbfbb0ee7a0aff53df2ebf96a0c981aeed77abe67c4e01af83d232a8d32"
+            },
+            {
+              "relativePath": "scripts/brand-symbols.mjs",
+              "hash": "27e640fbe026f456f092a7a718cf66207b808bca32788e43251425535d06f39e"
+            },
+            {
+              "relativePath": "scripts/diagram-lint.mjs",
+              "hash": "651d2073ce018d1946bd03abed09e46243991441ef6dcb7262fd84d69764ce6a"
+            },
+            {
+              "relativePath": "scripts/diagram-url.mjs",
+              "hash": "4885b88eb52287fd1396b83375109d634f1fa31c2bd4173788116632446722dd"
+            },
+            {
+              "relativePath": "scripts/drawio-export.mjs",
+              "hash": "372c708cba70aab1214b507643940b04276b35f05038721c9215c72338091639"
+            },
+            {
+              "relativePath": "scripts/layout-graph.mjs",
+              "hash": "25c3b50c27476ceded7a40b0454c8284a067b7570e92ed78a3e07ed59ff743ba"
+            },
+            {
+              "relativePath": "scripts/png-embed-fix.mjs",
+              "hash": "39180bbf5d4c3f7a85f9e2416c050f5179216c63eb6f93f28a6702daf81c269b"
+            },
+            {
+              "relativePath": "scripts/scan-go-packages.mjs",
+              "hash": "d602c4b9cc53cd5af6aa65f8d53ed12637e6a67068d49e9946ea59946a2b732b"
+            },
+            {
+              "relativePath": "scripts/scan-js-modules.mjs",
+              "hash": "e33ba48ec4131e426bcdf99aa3ded6161eafbf204027f715c97d11421f33f117"
+            },
+            {
+              "relativePath": "scripts/scan-python-classes.mjs",
+              "hash": "791e8522b462eedf6f73944ed4477872d4d945f1cc552bfe24afac90faa30731"
+            },
+            {
+              "relativePath": "scripts/scan-python-modules.mjs",
+              "hash": "f9358a944c4d1c57848d4a33808b8542108109f095bc22cb5f3f6f4e9872df26"
+            },
+            {
+              "relativePath": "scripts/scan-rust-modules.mjs",
+              "hash": "9f766358066b4256d38a8f5f529b8dccf0345bac613fbd049f259779b1243ada"
+            },
+            {
+              "relativePath": "scripts/scan-ts-modules.mjs",
+              "hash": "174a8811b73939afe1d66cd6b646625bb27897b3115cc1440c58a5e625bc376c"
+            },
+            {
+              "relativePath": "scripts/shape-query.mjs",
+              "hash": "081f1a12a68e1e63284545ffcec8fcedda773cc5dd635ddff87d947ce67cadde"
+            },
+            {
+              "relativePath": "scripts/studio-core.mjs",
+              "hash": "8cf441564a6b91186309171b13209888f9cd4945bb1e59905bb1631c18fdfe4a"
+            },
+            {
+              "relativePath": "styles/built-in/corporate.json",
+              "hash": "0cb0ba05b44e5938ce775bb917b6ffaa3a0501ceedbd610975cc6e909fe5e60b"
+            },
+            {
+              "relativePath": "styles/built-in/default.json",
+              "hash": "5340c1f80ab983f412e895d58d5dffb4949c246acc516702fd565675fec140e1"
+            },
+            {
+              "relativePath": "styles/built-in/handdrawn.json",
+              "hash": "92a1fdca1bbb95e5239fca62b2da81d4035936a11ca690e026419a5c2508e541"
+            },
+            {
+              "relativePath": "styles/schema.json",
+              "hash": "28f4998bf9db8ab3844ea00b7b7c22ea87a9ab90e76ab70ef7997d0bdc0deb06"
+            }
+          ]
+        },
+        {
+          "id": "cc-refactoring-core",
+          "version": "1.0.0",
+          "sourcePackage": "@bovinphang/craft-common",
+          "repository": "https://github.com/bovinphang/craft-common",
+          "files": [
+            {
+              "relativePath": "SKILL.md",
+              "hash": "43c1e83b43f5f2d582b9caa95bf0dbe0e84f27bbf325f49d78880d7d2647bd8f"
+            },
+            {
+              "relativePath": "references/method.md",
+              "hash": "892fceddb374faa2451a65dde20227d983d5b927f2d6e904fedf3aad913853d2"
+            }
+          ]
+        },
+        {
+          "id": "cc-source-driven-development",
+          "version": "1.0.0",
+          "sourcePackage": "@bovinphang/craft-common",
+          "repository": "https://github.com/bovinphang/craft-common",
+          "files": [
+            {
+              "relativePath": "SKILL.md",
+              "hash": "6b82d0ca214980aa840808e70b0f6d923eade345ff24ec4fa4bb81bd4185549d"
+            },
+            {
+              "relativePath": "references/method.md",
+              "hash": "1aa3c3fd6244b2cd73b2296d07e8fbcb29bf9d41d18da3c5c30f3e4ff83358d5"
+            }
+          ]
+        },
+        {
+          "id": "cc-tdd-methodology",
+          "version": "1.0.0",
+          "sourcePackage": "@bovinphang/craft-common",
+          "repository": "https://github.com/bovinphang/craft-common",
+          "files": [
+            {
+              "relativePath": "SKILL.md",
+              "hash": "7155a6414eec03dda29ecc1a3a32719b96122b63eec9fee249600629326cb46b"
+            },
+            {
+              "relativePath": "references/method.md",
+              "hash": "6849e3691ed93712ce46f6a3352b90bed415b00a26b1cbac321310635268fe6e"
+            }
+          ]
+        },
+        {
+          "id": "cc-technical-diagrams",
+          "version": "1.0.0",
+          "sourcePackage": "@bovinphang/craft-common",
+          "repository": "https://github.com/bovinphang/craft-common",
+          "files": [
+            {
+              "relativePath": "SKILL.md",
+              "hash": "2debf6d74dcc44270bbef5c27320cf40691af715613425962feea32c69c43bf6"
+            },
+            {
+              "relativePath": "assets/interactive-diagram.html",
+              "hash": "95e2c0a2afc0646eaaee838a5ffa8ea4a545b10fa608619c415626ccc515142b"
+            },
+            {
+              "relativePath": "assets/quality-examples/README.md",
+              "hash": "8e7035e7c8a1c9773f4686e5c27e6ad00a396f26463298265a8148b7a8dd9b24"
+            },
+            {
+              "relativePath": "assets/quality-examples/architecture.json",
+              "hash": "8f80ce4a86d4111100ee8fffafea1f94999a30b019131b9966dce5124d8d98d3"
+            },
+            {
+              "relativePath": "assets/quality-examples/invalid-explicit.json",
+              "hash": "63cf22e3e341330cbc7aa505ad8b2121797d4080456069bfc895e834cb256f0c"
+            },
+            {
+              "relativePath": "assets/quality-examples/sequence.json",
+              "hash": "70ec762710a59d6b9d5fec0349e6634a8e0ff951bd0e98969bf19db6f5c4423a"
+            },
+            {
+              "relativePath": "assets/quality-examples/sequence.mmd",
+              "hash": "1e1c2f814fb47bb13389e8b511ec1d4f070cc446c505f3827dca4d318b974ae5"
+            },
+            {
+              "relativePath": "assets/quality-examples/workflow.json",
+              "hash": "99d3c9cae62b3f3b08380e3117a77b99b84f2daa1595cfae1df98a03ea5a281d"
+            },
+            {
+              "relativePath": "assets/quality-examples/workflow.mmd",
+              "hash": "4e1d781656cb53089c2726103e2900ca000f9454330d2598efdef81b1e656a4a"
+            },
+            {
+              "relativePath": "references/diagram-workflows.md",
+              "hash": "60d94fbc5ecbdf156e3dc80332191979121afe5b829a139752a45f29faee1fdc"
+            },
+            {
+              "relativePath": "references/html-technical-diagrams.md",
+              "hash": "71e8072ca937b032d2b8a3150ebcd933788d4f82f2efcdc2b8f820d8c4085872"
+            },
+            {
+              "relativePath": "references/png-qa-autofix.md",
+              "hash": "5596070ccc65a883ac991cdd2a7246b26b2fbd45bdaea5f8a56fed3edfaaa794"
+            },
+            {
+              "relativePath": "scripts/diagram-browser.mjs",
+              "hash": "9fdb528671ea2a4e9cd0a338ef35d7c1b624d9e462ce14dfef762ed9ba093d6b"
+            },
+            {
+              "relativePath": "scripts/diagram-layout.mjs",
+              "hash": "c252c1b956d3ab067119056bc4bbd1540ee3cf82732067a20f467ecafbb1ce05"
+            },
+            {
+              "relativePath": "scripts/export-diagram.mjs",
+              "hash": "b5509ec4ac7c3bb48b6b6790b37c027c870932626419f39a3500acf895add0be"
+            },
+            {
+              "relativePath": "scripts/interactive-diagram-server.mjs",
+              "hash": "0eb36be19da7645b5b9bd47b05fb882e885f5ac0a175508637bead2929fdbb47"
+            },
+            {
+              "relativePath": "scripts/mermaid-render.mjs",
+              "hash": "068c538fd8ceb05776227cc66ada504a063a365382e7110410d1b2d7e50feb42"
+            },
+            {
+              "relativePath": "scripts/png-qa.mjs",
+              "hash": "4f81da6fbfeab07a413e328a762a001db6d56daf5472d84e74ff1db9c1bf4d92"
+            },
+            {
+              "relativePath": "scripts/tech-diagram-render.mjs",
+              "hash": "ede67017683f1a164c3bedd64ebabedf5517104eeab9e5a299d46ea945968fc4"
+            }
+          ]
+        }
+      ],
+      "digest": "cdff3db6460ad6aa38a2e15cb63d55fed302027dce5e3711ba1e5754f30dafc4"
+    }
+  },
+  "files": [
+    {
+      "relativePath": "localized/zh-CN/skills/cc-debug-methodology/SKILL.md",
+      "hash": "3cd16d973f88d8775171bd762ef6d25fdc2bde57f2f6f6c56f49bd9321540b8d"
+    },
+    {
+      "relativePath": "localized/zh-CN/skills/cc-debug-methodology/references/method.md",
+      "hash": "9c1ddceaa37fe95f6874016e499a566cc348f56fde0c31cf4d56b87f3aee5500"
+    },
+    {
+      "relativePath": "localized/zh-CN/skills/cc-doc-sync-core/SKILL.md",
+      "hash": "967b163c5ceee9d830087191f3ea9debf200014265e0eaac72b4cd2a1ed10890"
+    },
+    {
+      "relativePath": "localized/zh-CN/skills/cc-doc-sync-core/references/method.md",
+      "hash": "4ef1c82389c3b37408e16df27444a37de416e7d6492799c45d5ae5fac6a3ed31"
+    },
+    {
+      "relativePath": "localized/zh-CN/skills/cc-drawio-studio/SKILL.md",
+      "hash": "21c714f312fd91b972e559fd200420bad963a66cb3f2856ddd51a43a007e3a2b"
+    },
+    {
+      "relativePath": "localized/zh-CN/skills/cc-drawio-studio/data/THIRD_PARTY_NOTICES.md",
+      "hash": "285a34f730d772aea429333ab8a130bce23b3e2099fd656b7cee6f87192f0f3f"
+    },
+    {
+      "relativePath": "localized/zh-CN/skills/cc-drawio-studio/data/brand-icons.json",
+      "hash": "e7c309bd5ebf4df948563d48469090d0868432549f168319534215f79b0077cc"
+    },
+    {
+      "relativePath": "localized/zh-CN/skills/cc-drawio-studio/data/shape-index.json",
+      "hash": "09b84516025e46238e5dd47465cc96ecfd96134ea853ace1063e1ca19dd34601"
+    },
+    {
+      "relativePath": "localized/zh-CN/skills/cc-drawio-studio/references/data-residency.md",
+      "hash": "94f991af136ca152fe9fbd6d2fed13874e33daf88a1f4ef2eee8667a8dbffaa2"
+    },
+    {
+      "relativePath": "localized/zh-CN/skills/cc-drawio-studio/references/diagram-patterns.md",
+      "hash": "463c17a61673a0fe100a830fda08d73c1e3e3236de7ce27e22550286d450fd2d"
+    },
+    {
+      "relativePath": "localized/zh-CN/skills/cc-drawio-studio/references/flowchart-quality.md",
+      "hash": "7ae3ddfefa52f9101fac7e5262f561deaaddc5ccb7f7e2ef1eadd753478968ed"
+    },
+    {
+      "relativePath": "localized/zh-CN/skills/cc-drawio-studio/references/layout-and-export.md",
+      "hash": "c2ebcba345db38cf91cf8dc36a709fd2f72a78e43cc1fdbf4b97d85a0e5faceb"
+    },
+    {
+      "relativePath": "localized/zh-CN/skills/cc-drawio-studio/references/troubleshooting.md",
+      "hash": "ae02fc6a6cd275e25955c797259d043af62b9756827000984acdea769ab02d41"
+    },
+    {
+      "relativePath": "localized/zh-CN/skills/cc-drawio-studio/references/xml-and-mermaid.md",
+      "hash": "83204fbfbb0ee7a0aff53df2ebf96a0c981aeed77abe67c4e01af83d232a8d32"
+    },
+    {
+      "relativePath": "localized/zh-CN/skills/cc-drawio-studio/scripts/brand-symbols.mjs",
+      "hash": "27e640fbe026f456f092a7a718cf66207b808bca32788e43251425535d06f39e"
+    },
+    {
+      "relativePath": "localized/zh-CN/skills/cc-drawio-studio/scripts/diagram-lint.mjs",
+      "hash": "651d2073ce018d1946bd03abed09e46243991441ef6dcb7262fd84d69764ce6a"
+    },
+    {
+      "relativePath": "localized/zh-CN/skills/cc-drawio-studio/scripts/diagram-url.mjs",
+      "hash": "4885b88eb52287fd1396b83375109d634f1fa31c2bd4173788116632446722dd"
+    },
+    {
+      "relativePath": "localized/zh-CN/skills/cc-drawio-studio/scripts/drawio-export.mjs",
+      "hash": "372c708cba70aab1214b507643940b04276b35f05038721c9215c72338091639"
+    },
+    {
+      "relativePath": "localized/zh-CN/skills/cc-drawio-studio/scripts/layout-graph.mjs",
+      "hash": "25c3b50c27476ceded7a40b0454c8284a067b7570e92ed78a3e07ed59ff743ba"
+    },
+    {
+      "relativePath": "localized/zh-CN/skills/cc-drawio-studio/scripts/png-embed-fix.mjs",
+      "hash": "39180bbf5d4c3f7a85f9e2416c050f5179216c63eb6f93f28a6702daf81c269b"
+    },
+    {
+      "relativePath": "localized/zh-CN/skills/cc-drawio-studio/scripts/scan-go-packages.mjs",
+      "hash": "d602c4b9cc53cd5af6aa65f8d53ed12637e6a67068d49e9946ea59946a2b732b"
+    },
+    {
+      "relativePath": "localized/zh-CN/skills/cc-drawio-studio/scripts/scan-js-modules.mjs",
+      "hash": "e33ba48ec4131e426bcdf99aa3ded6161eafbf204027f715c97d11421f33f117"
+    },
+    {
+      "relativePath": "localized/zh-CN/skills/cc-drawio-studio/scripts/scan-python-classes.mjs",
+      "hash": "791e8522b462eedf6f73944ed4477872d4d945f1cc552bfe24afac90faa30731"
+    },
+    {
+      "relativePath": "localized/zh-CN/skills/cc-drawio-studio/scripts/scan-python-modules.mjs",
+      "hash": "f9358a944c4d1c57848d4a33808b8542108109f095bc22cb5f3f6f4e9872df26"
+    },
+    {
+      "relativePath": "localized/zh-CN/skills/cc-drawio-studio/scripts/scan-rust-modules.mjs",
+      "hash": "9f766358066b4256d38a8f5f529b8dccf0345bac613fbd049f259779b1243ada"
+    },
+    {
+      "relativePath": "localized/zh-CN/skills/cc-drawio-studio/scripts/scan-ts-modules.mjs",
+      "hash": "174a8811b73939afe1d66cd6b646625bb27897b3115cc1440c58a5e625bc376c"
+    },
+    {
+      "relativePath": "localized/zh-CN/skills/cc-drawio-studio/scripts/shape-query.mjs",
+      "hash": "081f1a12a68e1e63284545ffcec8fcedda773cc5dd635ddff87d947ce67cadde"
+    },
+    {
+      "relativePath": "localized/zh-CN/skills/cc-drawio-studio/scripts/studio-core.mjs",
+      "hash": "8cf441564a6b91186309171b13209888f9cd4945bb1e59905bb1631c18fdfe4a"
+    },
+    {
+      "relativePath": "localized/zh-CN/skills/cc-drawio-studio/styles/built-in/corporate.json",
+      "hash": "0cb0ba05b44e5938ce775bb917b6ffaa3a0501ceedbd610975cc6e909fe5e60b"
+    },
+    {
+      "relativePath": "localized/zh-CN/skills/cc-drawio-studio/styles/built-in/default.json",
+      "hash": "5340c1f80ab983f412e895d58d5dffb4949c246acc516702fd565675fec140e1"
+    },
+    {
+      "relativePath": "localized/zh-CN/skills/cc-drawio-studio/styles/built-in/handdrawn.json",
+      "hash": "92a1fdca1bbb95e5239fca62b2da81d4035936a11ca690e026419a5c2508e541"
+    },
+    {
+      "relativePath": "localized/zh-CN/skills/cc-drawio-studio/styles/schema.json",
+      "hash": "28f4998bf9db8ab3844ea00b7b7c22ea87a9ab90e76ab70ef7997d0bdc0deb06"
+    },
+    {
+      "relativePath": "localized/zh-CN/skills/cc-refactoring-core/SKILL.md",
+      "hash": "43c1e83b43f5f2d582b9caa95bf0dbe0e84f27bbf325f49d78880d7d2647bd8f"
+    },
+    {
+      "relativePath": "localized/zh-CN/skills/cc-refactoring-core/references/method.md",
+      "hash": "892fceddb374faa2451a65dde20227d983d5b927f2d6e904fedf3aad913853d2"
+    },
+    {
+      "relativePath": "localized/zh-CN/skills/cc-source-driven-development/SKILL.md",
+      "hash": "6b82d0ca214980aa840808e70b0f6d923eade345ff24ec4fa4bb81bd4185549d"
+    },
+    {
+      "relativePath": "localized/zh-CN/skills/cc-source-driven-development/references/method.md",
+      "hash": "1aa3c3fd6244b2cd73b2296d07e8fbcb29bf9d41d18da3c5c30f3e4ff83358d5"
+    },
+    {
+      "relativePath": "localized/zh-CN/skills/cc-tdd-methodology/SKILL.md",
+      "hash": "7155a6414eec03dda29ecc1a3a32719b96122b63eec9fee249600629326cb46b"
+    },
+    {
+      "relativePath": "localized/zh-CN/skills/cc-tdd-methodology/references/method.md",
+      "hash": "6849e3691ed93712ce46f6a3352b90bed415b00a26b1cbac321310635268fe6e"
+    },
+    {
+      "relativePath": "localized/zh-CN/skills/cc-technical-diagrams/SKILL.md",
+      "hash": "2debf6d74dcc44270bbef5c27320cf40691af715613425962feea32c69c43bf6"
+    },
+    {
+      "relativePath": "localized/zh-CN/skills/cc-technical-diagrams/assets/interactive-diagram.html",
+      "hash": "95e2c0a2afc0646eaaee838a5ffa8ea4a545b10fa608619c415626ccc515142b"
+    },
+    {
+      "relativePath": "localized/zh-CN/skills/cc-technical-diagrams/assets/quality-examples/README.md",
+      "hash": "8e7035e7c8a1c9773f4686e5c27e6ad00a396f26463298265a8148b7a8dd9b24"
+    },
+    {
+      "relativePath": "localized/zh-CN/skills/cc-technical-diagrams/assets/quality-examples/architecture.json",
+      "hash": "8f80ce4a86d4111100ee8fffafea1f94999a30b019131b9966dce5124d8d98d3"
+    },
+    {
+      "relativePath": "localized/zh-CN/skills/cc-technical-diagrams/assets/quality-examples/invalid-explicit.json",
+      "hash": "63cf22e3e341330cbc7aa505ad8b2121797d4080456069bfc895e834cb256f0c"
+    },
+    {
+      "relativePath": "localized/zh-CN/skills/cc-technical-diagrams/assets/quality-examples/sequence.json",
+      "hash": "70ec762710a59d6b9d5fec0349e6634a8e0ff951bd0e98969bf19db6f5c4423a"
+    },
+    {
+      "relativePath": "localized/zh-CN/skills/cc-technical-diagrams/assets/quality-examples/sequence.mmd",
+      "hash": "1e1c2f814fb47bb13389e8b511ec1d4f070cc446c505f3827dca4d318b974ae5"
+    },
+    {
+      "relativePath": "localized/zh-CN/skills/cc-technical-diagrams/assets/quality-examples/workflow.json",
+      "hash": "99d3c9cae62b3f3b08380e3117a77b99b84f2daa1595cfae1df98a03ea5a281d"
+    },
+    {
+      "relativePath": "localized/zh-CN/skills/cc-technical-diagrams/assets/quality-examples/workflow.mmd",
+      "hash": "4e1d781656cb53089c2726103e2900ca000f9454330d2598efdef81b1e656a4a"
+    },
+    {
+      "relativePath": "localized/zh-CN/skills/cc-technical-diagrams/references/diagram-workflows.md",
+      "hash": "60d94fbc5ecbdf156e3dc80332191979121afe5b829a139752a45f29faee1fdc"
+    },
+    {
+      "relativePath": "localized/zh-CN/skills/cc-technical-diagrams/references/html-technical-diagrams.md",
+      "hash": "71e8072ca937b032d2b8a3150ebcd933788d4f82f2efcdc2b8f820d8c4085872"
+    },
+    {
+      "relativePath": "localized/zh-CN/skills/cc-technical-diagrams/references/png-qa-autofix.md",
+      "hash": "5596070ccc65a883ac991cdd2a7246b26b2fbd45bdaea5f8a56fed3edfaaa794"
+    },
+    {
+      "relativePath": "localized/zh-CN/skills/cc-technical-diagrams/scripts/diagram-browser.mjs",
+      "hash": "9fdb528671ea2a4e9cd0a338ef35d7c1b624d9e462ce14dfef762ed9ba093d6b"
+    },
+    {
+      "relativePath": "localized/zh-CN/skills/cc-technical-diagrams/scripts/diagram-layout.mjs",
+      "hash": "c252c1b956d3ab067119056bc4bbd1540ee3cf82732067a20f467ecafbb1ce05"
+    },
+    {
+      "relativePath": "localized/zh-CN/skills/cc-technical-diagrams/scripts/export-diagram.mjs",
+      "hash": "b5509ec4ac7c3bb48b6b6790b37c027c870932626419f39a3500acf895add0be"
+    },
+    {
+      "relativePath": "localized/zh-CN/skills/cc-technical-diagrams/scripts/interactive-diagram-server.mjs",
+      "hash": "0eb36be19da7645b5b9bd47b05fb882e885f5ac0a175508637bead2929fdbb47"
+    },
+    {
+      "relativePath": "localized/zh-CN/skills/cc-technical-diagrams/scripts/mermaid-render.mjs",
+      "hash": "068c538fd8ceb05776227cc66ada504a063a365382e7110410d1b2d7e50feb42"
+    },
+    {
+      "relativePath": "localized/zh-CN/skills/cc-technical-diagrams/scripts/png-qa.mjs",
+      "hash": "4f81da6fbfeab07a413e328a762a001db6d56daf5472d84e74ff1db9c1bf4d92"
+    },
+    {
+      "relativePath": "localized/zh-CN/skills/cc-technical-diagrams/scripts/tech-diagram-render.mjs",
+      "hash": "ede67017683f1a164c3bedd64ebabedf5517104eeab9e5a299d46ea945968fc4"
+    },
+    {
+      "relativePath": "localized/zh-CN/skills/eval_queries.json",
+      "hash": "8135c2720f6c530983396be35fc93d2a16bebb197002f1aaba29a46a99cdfe26"
+    },
+    {
+      "relativePath": "localized/zh-CN/skills/fec-debug-framework/references/common/debug.md",
+      "hash": "9c1ddceaa37fe95f6874016e499a566cc348f56fde0c31cf4d56b87f3aee5500"
+    },
+    {
+      "relativePath": "localized/zh-CN/skills/fec-doc-sync/references/common/doc-sync.md",
+      "hash": "4ef1c82389c3b37408e16df27444a37de416e7d6492799c45d5ae5fac6a3ed31"
+    },
+    {
+      "relativePath": "localized/zh-CN/skills/fec-image-generation/references/png-qa-autofix.md",
+      "hash": "5596070ccc65a883ac991cdd2a7246b26b2fbd45bdaea5f8a56fed3edfaaa794"
+    },
+    {
+      "relativePath": "localized/zh-CN/skills/fec-image-generation/scripts/diagram-layout.mjs",
+      "hash": "c252c1b956d3ab067119056bc4bbd1540ee3cf82732067a20f467ecafbb1ce05"
+    },
+    {
+      "relativePath": "localized/zh-CN/skills/fec-image-generation/scripts/png-qa.mjs",
+      "hash": "4f81da6fbfeab07a413e328a762a001db6d56daf5472d84e74ff1db9c1bf4d92"
+    },
+    {
+      "relativePath": "localized/zh-CN/skills/fec-refactoring/references/common/refactoring.md",
+      "hash": "892fceddb374faa2451a65dde20227d983d5b927f2d6e904fedf3aad913853d2"
+    },
+    {
+      "relativePath": "localized/zh-CN/skills/fec-tdd-workflow/references/common/tdd.md",
+      "hash": "6849e3691ed93712ce46f6a3352b90bed415b00a26b1cbac321310635268fe6e"
+    },
+    {
+      "relativePath": "localized/zh-CN/skills/metadata.json",
+      "hash": "898f511c9f42fa935f83c70e1768f26078774a0ae1dedc3d05d75a14e5f0a2a6"
+    },
+    {
+      "relativePath": "localized/zh-CN/skills/relations.json",
+      "hash": "343696663764f08d3d156fb545d1e231491f549477515433109e2e71575e5412"
+    },
+    {
+      "relativePath": "localized/zh-CN/templates/shared/rules/references/common/source-driven-development.md",
+      "hash": "1aa3c3fd6244b2cd73b2296d07e8fbcb29bf9d41d18da3c5c30f3e4ff83358d5"
+    },
+    {
+      "relativePath": "skills/cc-debug-methodology/SKILL.md",
+      "hash": "ba5f9d27cbad05c856e80eed47ecf43d2ed300b4db2cd19b8a391cb8c79800c3"
+    },
+    {
+      "relativePath": "skills/cc-debug-methodology/references/method.md",
+      "hash": "186ef03edb9a636623cc9ac9737c5538894a5fb2e4ec50e759cb9e36f0787ff6"
+    },
+    {
+      "relativePath": "skills/cc-doc-sync-core/SKILL.md",
+      "hash": "87f977dc152b3b7a88c3f0b564d1b927605e075d3ed28bdc08dc2e15e523e781"
+    },
+    {
+      "relativePath": "skills/cc-doc-sync-core/references/method.md",
+      "hash": "66ceaa8221aad83847252358f112c3fcb49ce153003a1531ca17b5af9068c8ac"
+    },
+    {
+      "relativePath": "skills/cc-drawio-studio/SKILL.md",
+      "hash": "b023a5d1ffe70415d85c6a711a2b3b1fec45ffe1ca0eba55309c359b8f07e79e"
+    },
+    {
+      "relativePath": "skills/cc-drawio-studio/data/THIRD_PARTY_NOTICES.md",
+      "hash": "6d0a20dcad5186a44f7db844a8f85ce642d63f695d64c4077bdc4ace938a8ef5"
+    },
+    {
+      "relativePath": "skills/cc-drawio-studio/data/brand-icons.json",
+      "hash": "e7c309bd5ebf4df948563d48469090d0868432549f168319534215f79b0077cc"
+    },
+    {
+      "relativePath": "skills/cc-drawio-studio/data/shape-index.json",
+      "hash": "09b84516025e46238e5dd47465cc96ecfd96134ea853ace1063e1ca19dd34601"
+    },
+    {
+      "relativePath": "skills/cc-drawio-studio/references/data-residency.md",
+      "hash": "c5ec44272e5a40522a86968cca20fca8e4ed0c645cb66f4bf08275d7da9a5b48"
+    },
+    {
+      "relativePath": "skills/cc-drawio-studio/references/diagram-patterns.md",
+      "hash": "8ef3c2c09d21635901fca086923b7ae76ff6156d84e36230d62c1978d77ffde3"
+    },
+    {
+      "relativePath": "skills/cc-drawio-studio/references/flowchart-quality.md",
+      "hash": "ddd1be0fdbf1fce7f517688b0d4421f3eac67f8af469e6a2ead63d3abdf59ee5"
+    },
+    {
+      "relativePath": "skills/cc-drawio-studio/references/layout-and-export.md",
+      "hash": "52eb3f54803ac5a067d2226eb469faeb8d3e3dbca26a747d70f0e4a10156955c"
+    },
+    {
+      "relativePath": "skills/cc-drawio-studio/references/troubleshooting.md",
+      "hash": "a42f600d2a40f373aa744ce7033e1855be20c8e799effdfd3fc4241e0e1de02c"
+    },
+    {
+      "relativePath": "skills/cc-drawio-studio/references/xml-and-mermaid.md",
+      "hash": "9827f228277e5c61b0e3f2f802b919f90fe59879ff80d56edfa037b28f96f2e5"
+    },
+    {
+      "relativePath": "skills/cc-drawio-studio/scripts/brand-symbols.mjs",
+      "hash": "27e640fbe026f456f092a7a718cf66207b808bca32788e43251425535d06f39e"
+    },
+    {
+      "relativePath": "skills/cc-drawio-studio/scripts/diagram-lint.mjs",
+      "hash": "651d2073ce018d1946bd03abed09e46243991441ef6dcb7262fd84d69764ce6a"
+    },
+    {
+      "relativePath": "skills/cc-drawio-studio/scripts/diagram-url.mjs",
+      "hash": "4885b88eb52287fd1396b83375109d634f1fa31c2bd4173788116632446722dd"
+    },
+    {
+      "relativePath": "skills/cc-drawio-studio/scripts/drawio-export.mjs",
+      "hash": "372c708cba70aab1214b507643940b04276b35f05038721c9215c72338091639"
+    },
+    {
+      "relativePath": "skills/cc-drawio-studio/scripts/layout-graph.mjs",
+      "hash": "25c3b50c27476ceded7a40b0454c8284a067b7570e92ed78a3e07ed59ff743ba"
+    },
+    {
+      "relativePath": "skills/cc-drawio-studio/scripts/png-embed-fix.mjs",
+      "hash": "39180bbf5d4c3f7a85f9e2416c050f5179216c63eb6f93f28a6702daf81c269b"
+    },
+    {
+      "relativePath": "skills/cc-drawio-studio/scripts/scan-go-packages.mjs",
+      "hash": "d602c4b9cc53cd5af6aa65f8d53ed12637e6a67068d49e9946ea59946a2b732b"
+    },
+    {
+      "relativePath": "skills/cc-drawio-studio/scripts/scan-js-modules.mjs",
+      "hash": "e33ba48ec4131e426bcdf99aa3ded6161eafbf204027f715c97d11421f33f117"
+    },
+    {
+      "relativePath": "skills/cc-drawio-studio/scripts/scan-python-classes.mjs",
+      "hash": "791e8522b462eedf6f73944ed4477872d4d945f1cc552bfe24afac90faa30731"
+    },
+    {
+      "relativePath": "skills/cc-drawio-studio/scripts/scan-python-modules.mjs",
+      "hash": "f9358a944c4d1c57848d4a33808b8542108109f095bc22cb5f3f6f4e9872df26"
+    },
+    {
+      "relativePath": "skills/cc-drawio-studio/scripts/scan-rust-modules.mjs",
+      "hash": "9f766358066b4256d38a8f5f529b8dccf0345bac613fbd049f259779b1243ada"
+    },
+    {
+      "relativePath": "skills/cc-drawio-studio/scripts/scan-ts-modules.mjs",
+      "hash": "174a8811b73939afe1d66cd6b646625bb27897b3115cc1440c58a5e625bc376c"
+    },
+    {
+      "relativePath": "skills/cc-drawio-studio/scripts/shape-query.mjs",
+      "hash": "081f1a12a68e1e63284545ffcec8fcedda773cc5dd635ddff87d947ce67cadde"
+    },
+    {
+      "relativePath": "skills/cc-drawio-studio/scripts/studio-core.mjs",
+      "hash": "8cf441564a6b91186309171b13209888f9cd4945bb1e59905bb1631c18fdfe4a"
+    },
+    {
+      "relativePath": "skills/cc-drawio-studio/styles/built-in/corporate.json",
+      "hash": "0cb0ba05b44e5938ce775bb917b6ffaa3a0501ceedbd610975cc6e909fe5e60b"
+    },
+    {
+      "relativePath": "skills/cc-drawio-studio/styles/built-in/default.json",
+      "hash": "5340c1f80ab983f412e895d58d5dffb4949c246acc516702fd565675fec140e1"
+    },
+    {
+      "relativePath": "skills/cc-drawio-studio/styles/built-in/handdrawn.json",
+      "hash": "92a1fdca1bbb95e5239fca62b2da81d4035936a11ca690e026419a5c2508e541"
+    },
+    {
+      "relativePath": "skills/cc-drawio-studio/styles/schema.json",
+      "hash": "28f4998bf9db8ab3844ea00b7b7c22ea87a9ab90e76ab70ef7997d0bdc0deb06"
+    },
+    {
+      "relativePath": "skills/cc-refactoring-core/SKILL.md",
+      "hash": "0888d34fc8cf487a50e7d0749d77869d647d2f1a7b28283ac1129abf68eb64a1"
+    },
+    {
+      "relativePath": "skills/cc-refactoring-core/references/method.md",
+      "hash": "a71e0041e5926caf6f7bf36b05a849252abefab3ce53a5d13a0353e6315da554"
+    },
+    {
+      "relativePath": "skills/cc-source-driven-development/SKILL.md",
+      "hash": "36f71cf9946ff4257dc72b86d386a8f2564b9c8e95b2a9161e15450adc4071c0"
+    },
+    {
+      "relativePath": "skills/cc-source-driven-development/references/method.md",
+      "hash": "a6a760ddb91eb273c4a1e45a05daa25e700aeb021b2395103e67af48e8d029ed"
+    },
+    {
+      "relativePath": "skills/cc-tdd-methodology/SKILL.md",
+      "hash": "54ea82060987f3b830269f46edf4d84930431a3b1825214adb7f5ba295abe447"
+    },
+    {
+      "relativePath": "skills/cc-tdd-methodology/references/method.md",
+      "hash": "092f8648ff54b7bd656cf0f642948f43f154d6755a8ece6caf97ee754b2d649b"
+    },
+    {
+      "relativePath": "skills/cc-technical-diagrams/SKILL.md",
+      "hash": "2a069875afd2227defa370445cebc533790d4eb91dd417fa0af99612821cb13e"
+    },
+    {
+      "relativePath": "skills/cc-technical-diagrams/assets/interactive-diagram.html",
+      "hash": "d011f1ebd9f6916025f557e97a2cdbc014d8197094fddbd8f35b4136bcc2c14c"
+    },
+    {
+      "relativePath": "skills/cc-technical-diagrams/assets/quality-examples/README.md",
+      "hash": "6f842809af6608b5dad64b13ad7b72e8a91c492e27a6024c53903a0063d8223c"
+    },
+    {
+      "relativePath": "skills/cc-technical-diagrams/assets/quality-examples/architecture.json",
+      "hash": "b350e249ea66cd708e0e4f6324674dfba05edd576b439664c4685eb5054273cb"
+    },
+    {
+      "relativePath": "skills/cc-technical-diagrams/assets/quality-examples/invalid-explicit.json",
+      "hash": "ef6df2f5859062ef464f66cf4b915e8ce1c9b315372c370e5d578664dd5da837"
+    },
+    {
+      "relativePath": "skills/cc-technical-diagrams/assets/quality-examples/sequence.json",
+      "hash": "956a100daaaedcb6b6725539527bfb8dc04cfd8c2157b0bce04dd84d37460e2e"
+    },
+    {
+      "relativePath": "skills/cc-technical-diagrams/assets/quality-examples/sequence.mmd",
+      "hash": "c57f9be5a4647962f84b145e1fc82b396395090f53b6680335748396e2f7d267"
+    },
+    {
+      "relativePath": "skills/cc-technical-diagrams/assets/quality-examples/workflow.json",
+      "hash": "e8295c6efbf6dfde835e2048e43beb6264dc9058b78e5abc5f78db761b7a2929"
+    },
+    {
+      "relativePath": "skills/cc-technical-diagrams/assets/quality-examples/workflow.mmd",
+      "hash": "eb0f8ca306f49185419c427e804972d185371ad9cd5f0e1eca442aa37e9c577f"
+    },
+    {
+      "relativePath": "skills/cc-technical-diagrams/references/diagram-workflows.md",
+      "hash": "0b1837a574f3677006bcc9673903e6d2fb909cec964f1c5cfa462745b31bfb06"
+    },
+    {
+      "relativePath": "skills/cc-technical-diagrams/references/html-technical-diagrams.md",
+      "hash": "748041cd9415236dae6379362fef873501db349914eb3db277adcfb1e92c4178"
+    },
+    {
+      "relativePath": "skills/cc-technical-diagrams/references/png-qa-autofix.md",
+      "hash": "8806c87c487d3ecfd437f2866479d22c3b0c821888eef1dba575eb2f24d1fb01"
+    },
+    {
+      "relativePath": "skills/cc-technical-diagrams/scripts/diagram-browser.mjs",
+      "hash": "9fdb528671ea2a4e9cd0a338ef35d7c1b624d9e462ce14dfef762ed9ba093d6b"
+    },
+    {
+      "relativePath": "skills/cc-technical-diagrams/scripts/diagram-layout.mjs",
+      "hash": "c252c1b956d3ab067119056bc4bbd1540ee3cf82732067a20f467ecafbb1ce05"
+    },
+    {
+      "relativePath": "skills/cc-technical-diagrams/scripts/export-diagram.mjs",
+      "hash": "b5509ec4ac7c3bb48b6b6790b37c027c870932626419f39a3500acf895add0be"
+    },
+    {
+      "relativePath": "skills/cc-technical-diagrams/scripts/interactive-diagram-server.mjs",
+      "hash": "0eb36be19da7645b5b9bd47b05fb882e885f5ac0a175508637bead2929fdbb47"
+    },
+    {
+      "relativePath": "skills/cc-technical-diagrams/scripts/mermaid-render.mjs",
+      "hash": "068c538fd8ceb05776227cc66ada504a063a365382e7110410d1b2d7e50feb42"
+    },
+    {
+      "relativePath": "skills/cc-technical-diagrams/scripts/png-qa.mjs",
+      "hash": "4f81da6fbfeab07a413e328a762a001db6d56daf5472d84e74ff1db9c1bf4d92"
+    },
+    {
+      "relativePath": "skills/cc-technical-diagrams/scripts/tech-diagram-render.mjs",
+      "hash": "ede67017683f1a164c3bedd64ebabedf5517104eeab9e5a299d46ea945968fc4"
+    },
+    {
+      "relativePath": "skills/eval_queries.json",
+      "hash": "d2ec1ecfab841f7302f2b7b26247160a3bcdb632dd92ce2c02117bd13aff1a3b"
+    },
+    {
+      "relativePath": "skills/fec-debug-framework/references/common/debug.md",
+      "hash": "186ef03edb9a636623cc9ac9737c5538894a5fb2e4ec50e759cb9e36f0787ff6"
+    },
+    {
+      "relativePath": "skills/fec-doc-sync/references/common/doc-sync.md",
+      "hash": "66ceaa8221aad83847252358f112c3fcb49ce153003a1531ca17b5af9068c8ac"
+    },
+    {
+      "relativePath": "skills/fec-image-generation/references/png-qa-autofix.md",
+      "hash": "8806c87c487d3ecfd437f2866479d22c3b0c821888eef1dba575eb2f24d1fb01"
+    },
+    {
+      "relativePath": "skills/fec-image-generation/scripts/diagram-layout.mjs",
+      "hash": "c252c1b956d3ab067119056bc4bbd1540ee3cf82732067a20f467ecafbb1ce05"
+    },
+    {
+      "relativePath": "skills/fec-image-generation/scripts/png-qa.mjs",
+      "hash": "4f81da6fbfeab07a413e328a762a001db6d56daf5472d84e74ff1db9c1bf4d92"
+    },
+    {
+      "relativePath": "skills/fec-refactoring/references/common/refactoring.md",
+      "hash": "a71e0041e5926caf6f7bf36b05a849252abefab3ce53a5d13a0353e6315da554"
+    },
+    {
+      "relativePath": "skills/fec-tdd-workflow/references/common/tdd.md",
+      "hash": "092f8648ff54b7bd656cf0f642948f43f154d6755a8ece6caf97ee754b2d649b"
+    },
+    {
+      "relativePath": "skills/metadata.json",
+      "hash": "dd66e665b286aa5ba0a80e80bb21022092a391901e91c66e9f6b7cad6803d3dd"
+    },
+    {
+      "relativePath": "skills/relations.json",
+      "hash": "f33835e1c277b17ea508a0d8e753b66239082869938aea0b40cb0a3df453bf5d"
+    },
+    {
+      "relativePath": "templates/shared/rules/references/common/source-driven-development.md",
+      "hash": "a6a760ddb91eb273c4a1e45a05daa25e700aeb021b2395103e67af48e8d029ed"
+    }
+  ]
+}

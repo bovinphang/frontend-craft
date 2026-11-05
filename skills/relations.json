@@ -1,7 +1,58 @@
 {
+  "cc-debug-methodology": {
+    "capabilityTags": [
+      "debug",
+      "evidence",
+      "root-cause"
+    ]
+  },
+  "cc-doc-sync-core": {
+    "capabilityTags": [
+      "documentation",
+      "source-of-truth",
+      "i18n"
+    ]
+  },
+  "cc-drawio-studio": {
+    "capabilityTags": [
+      "drawio",
+      "uml",
+      "erd",
+      "architecture"
+    ]
+  },
+  "cc-refactoring-core": {
+    "capabilityTags": [
+      "refactoring",
+      "behavior-preservation",
+      "baseline"
+    ]
+  },
+  "cc-source-driven-development": {
+    "capabilityTags": [
+      "official-docs",
+      "versioning",
+      "local-knowledge"
+    ]
+  },
+  "cc-tdd-methodology": {
+    "capabilityTags": [
+      "tdd",
+      "regression",
+      "red-green-refactor"
+    ]
+  },
+  "cc-technical-diagrams": {
+    "capabilityTags": [
+      "architecture",
+      "sequence",
+      "workflow",
+      "png-qa"
+    ]
+  },
   "fec-alchemy": {
     "relatedSkills": [
-      "fec-source-driven-development",
+      "cc-source-driven-development",
       "fec-doc-sync",
       "fec-refactor-clean",
       "fec-code-review",
@@ -26,7 +77,7 @@
       "fec-route-protection",
       "fec-form-handling",
       "fec-typescript-project-standard",
-      "fec-source-driven-development"
+      "cc-source-driven-development"
     ],
     "boundaryWorkflows": [
       "Use a data-fetching workflow for TanStack Query cache policy, query keys, optimistic updates, and server-state hooks.",
@@ -45,7 +96,7 @@
     "relatedSkills": [
       "fec-api-integration",
       "fec-doc-sync",
-      "fec-source-driven-development",
+      "cc-source-driven-development",
       "fec-testing-strategy",
       "fec-route-protection"
     ],
@@ -107,7 +158,7 @@
       "fec-performance-optimization",
       "fec-typescript-project-standard",
       "fec-state-management",
-      "fec-source-driven-development",
+      "cc-source-driven-development",
       "fec-dependency-upgrade",
       "fec-responsive-layout"
     ],
@@ -120,6 +171,27 @@
       "code-review",
       "quality",
       "frontend"
+    ]
+  },
+  "fec-code-smells": {
+    "relatedSkills": [
+      "fec-refactoring",
+      "fec-refactoring-catalog",
+      "fec-code-review"
+    ],
+    "boundaryWorkflows": [
+      "Use dead-code cleanup for proven unused code, exports, styles, routes, fixtures, or dependencies.",
+      "Use TDD when adding new observable behavior or fixing a behavior-changing defect.",
+      "Use debugging first when the failure cause is unknown.",
+      "Use validation repair for understood lint, typecheck, test, or build failures that predate the refactoring step.",
+      "Use code review for merge-readiness review rather than structure-changing execution.",
+      "Use migration or architecture planning for dependency, framework, router, state-library, or platform replacements."
+    ],
+    "capabilityTags": [
+      "code-smells",
+      "diagnosis",
+      "maintainability",
+      "evidence"
     ]
   },
   "fec-component-testing": {
@@ -176,7 +248,7 @@
   },
   "fec-dependency-upgrade": {
     "relatedSkills": [
-      "fec-source-driven-development",
+      "cc-source-driven-development",
       "fec-validation-fix",
       "fec-refactor-clean",
       "fec-security-review",
@@ -192,28 +264,6 @@
       "lockfile",
       "cve",
       "migration"
-    ]
-  },
-  "fec-drawio-studio": {
-    "relatedSkills": [
-      "fec-image-generation",
-      "fec-canvas-threejs",
-      "fec-svg-animation",
-      "fec-ui-design",
-      "fec-source-driven-development"
-    ],
-    "boundaryWorkflows": [
-      "Use image generation for raster-first posters, visual concepts, product images, and PNG QA beyond editable technical diagrams.",
-      "Use image generation's HTML technical diagram route when the priority is a browser-ready themed single-file workflow, sequence, data-flow, or lifecycle diagram.",
-      "Use Canvas/Three.js when the diagram becomes an interactive runtime visualization, simulation, game scene, shader, or 3D renderer.",
-      "Use SVG animation for motion-specific vector micro-interactions; use drawio studio for static or editable technical SVG exports."
-    ],
-    "capabilityTags": [
-      "drawio",
-      "editable-diagram",
-      "autolayout",
-      "shape-search",
-      "code-structure-map"
     ]
   },
   "fec-e2e-testing": {
@@ -451,6 +501,249 @@
       "fec-architecture"
     ]
   },
+  "fec-refactoring": {
+    "relatedSkills": [
+      "fec-code-smells",
+      "fec-refactoring-catalog",
+      "fec-refactoring-validation",
+      "fec-refactor-clean",
+      "fec-code-review",
+      "fec-tdd-workflow",
+      "fec-debug-framework",
+      "fec-validation-fix",
+      "fec-testing-strategy"
+    ],
+    "boundaryWorkflows": [
+      "Use dead-code cleanup for proven unused code, exports, styles, routes, fixtures, or dependencies.",
+      "Use TDD when adding new observable behavior or fixing a behavior-changing defect.",
+      "Use debugging first when the failure cause is unknown.",
+      "Use validation repair for understood lint, typecheck, test, or build failures that predate the refactoring step.",
+      "Use code review for merge-readiness review rather than structure-changing execution.",
+      "Use migration or architecture planning for dependency, framework, router, state-library, or platform replacements."
+    ],
+    "capabilityTags": [
+      "refactoring",
+      "behavior-preservation",
+      "workflow",
+      "validation"
+    ]
+  },
+  "fec-refactoring-api": {
+    "relatedSkills": [
+      "fec-refactoring",
+      "fec-code-smells",
+      "fec-refactoring-catalog",
+      "fec-refactoring-validation",
+      "fec-api-integration",
+      "fec-typescript-project-standard"
+    ],
+    "boundaryWorkflows": [
+      "Use dead-code cleanup for proven unused code, exports, styles, routes, fixtures, or dependencies.",
+      "Use TDD when adding new observable behavior or fixing a behavior-changing defect.",
+      "Use debugging first when the failure cause is unknown.",
+      "Use validation repair for understood lint, typecheck, test, or build failures that predate the refactoring step.",
+      "Use code review for merge-readiness review rather than structure-changing execution.",
+      "Use migration or architecture planning for dependency, framework, router, state-library, or platform replacements."
+    ],
+    "capabilityTags": [
+      "refactoring",
+      "api",
+      "parameters",
+      "dependencies"
+    ]
+  },
+  "fec-refactoring-catalog": {
+    "relatedSkills": [
+      "fec-refactoring",
+      "fec-code-smells",
+      "fec-refactoring-functions",
+      "fec-refactoring-encapsulation",
+      "fec-refactoring-move-features",
+      "fec-refactoring-data",
+      "fec-refactoring-control",
+      "fec-refactoring-api",
+      "fec-refactoring-inheritance",
+      "fec-refactoring-validation"
+    ],
+    "boundaryWorkflows": [
+      "Use dead-code cleanup for proven unused code, exports, styles, routes, fixtures, or dependencies.",
+      "Use TDD when adding new observable behavior or fixing a behavior-changing defect.",
+      "Use debugging first when the failure cause is unknown.",
+      "Use validation repair for understood lint, typecheck, test, or build failures that predate the refactoring step.",
+      "Use code review for merge-readiness review rather than structure-changing execution.",
+      "Use migration or architecture planning for dependency, framework, router, state-library, or platform replacements."
+    ],
+    "capabilityTags": [
+      "refactoring",
+      "catalog",
+      "selection",
+      "composition"
+    ]
+  },
+  "fec-refactoring-control": {
+    "relatedSkills": [
+      "fec-refactoring",
+      "fec-code-smells",
+      "fec-refactoring-catalog",
+      "fec-refactoring-validation",
+      "fec-typescript-project-standard"
+    ],
+    "boundaryWorkflows": [
+      "Use dead-code cleanup for proven unused code, exports, styles, routes, fixtures, or dependencies.",
+      "Use TDD when adding new observable behavior or fixing a behavior-changing defect.",
+      "Use debugging first when the failure cause is unknown.",
+      "Use validation repair for understood lint, typecheck, test, or build failures that predate the refactoring step.",
+      "Use code review for merge-readiness review rather than structure-changing execution.",
+      "Use migration or architecture planning for dependency, framework, router, state-library, or platform replacements."
+    ],
+    "capabilityTags": [
+      "refactoring",
+      "conditionals",
+      "guard-clauses",
+      "polymorphism"
+    ]
+  },
+  "fec-refactoring-data": {
+    "relatedSkills": [
+      "fec-refactoring",
+      "fec-code-smells",
+      "fec-refactoring-catalog",
+      "fec-refactoring-validation",
+      "fec-state-management",
+      "fec-typescript-project-standard"
+    ],
+    "boundaryWorkflows": [
+      "Use dead-code cleanup for proven unused code, exports, styles, routes, fixtures, or dependencies.",
+      "Use TDD when adding new observable behavior or fixing a behavior-changing defect.",
+      "Use debugging first when the failure cause is unknown.",
+      "Use validation repair for understood lint, typecheck, test, or build failures that predate the refactoring step.",
+      "Use code review for merge-readiness review rather than structure-changing execution.",
+      "Use migration or architecture planning for dependency, framework, router, state-library, or platform replacements."
+    ],
+    "capabilityTags": [
+      "refactoring",
+      "data",
+      "derived-state",
+      "identity"
+    ]
+  },
+  "fec-refactoring-encapsulation": {
+    "relatedSkills": [
+      "fec-refactoring",
+      "fec-code-smells",
+      "fec-refactoring-catalog",
+      "fec-refactoring-validation",
+      "fec-state-management"
+    ],
+    "boundaryWorkflows": [
+      "Use dead-code cleanup for proven unused code, exports, styles, routes, fixtures, or dependencies.",
+      "Use TDD when adding new observable behavior or fixing a behavior-changing defect.",
+      "Use debugging first when the failure cause is unknown.",
+      "Use validation repair for understood lint, typecheck, test, or build failures that predate the refactoring step.",
+      "Use code review for merge-readiness review rather than structure-changing execution.",
+      "Use migration or architecture planning for dependency, framework, router, state-library, or platform replacements."
+    ],
+    "capabilityTags": [
+      "refactoring",
+      "encapsulation",
+      "delegation",
+      "value-object"
+    ]
+  },
+  "fec-refactoring-functions": {
+    "relatedSkills": [
+      "fec-refactoring",
+      "fec-code-smells",
+      "fec-refactoring-catalog",
+      "fec-refactoring-validation",
+      "fec-typescript-project-standard"
+    ],
+    "boundaryWorkflows": [
+      "Use dead-code cleanup for proven unused code, exports, styles, routes, fixtures, or dependencies.",
+      "Use TDD when adding new observable behavior or fixing a behavior-changing defect.",
+      "Use debugging first when the failure cause is unknown.",
+      "Use validation repair for understood lint, typecheck, test, or build failures that predate the refactoring step.",
+      "Use code review for merge-readiness review rather than structure-changing execution.",
+      "Use migration or architecture planning for dependency, framework, router, state-library, or platform replacements."
+    ],
+    "capabilityTags": [
+      "refactoring",
+      "functions",
+      "parameters",
+      "decomposition"
+    ]
+  },
+  "fec-refactoring-inheritance": {
+    "relatedSkills": [
+      "fec-refactoring",
+      "fec-code-smells",
+      "fec-refactoring-catalog",
+      "fec-refactoring-validation",
+      "fec-typescript-project-standard",
+      "fec-legacy-to-modern-migration"
+    ],
+    "boundaryWorkflows": [
+      "Use dead-code cleanup for proven unused code, exports, styles, routes, fixtures, or dependencies.",
+      "Use TDD when adding new observable behavior or fixing a behavior-changing defect.",
+      "Use debugging first when the failure cause is unknown.",
+      "Use validation repair for understood lint, typecheck, test, or build failures that predate the refactoring step.",
+      "Use code review for merge-readiness review rather than structure-changing execution.",
+      "Use migration or architecture planning for dependency, framework, router, state-library, or platform replacements."
+    ],
+    "capabilityTags": [
+      "refactoring",
+      "inheritance",
+      "delegation",
+      "composition"
+    ]
+  },
+  "fec-refactoring-move-features": {
+    "relatedSkills": [
+      "fec-refactoring",
+      "fec-code-smells",
+      "fec-refactoring-catalog",
+      "fec-refactoring-validation",
+      "fec-refactor-clean"
+    ],
+    "boundaryWorkflows": [
+      "Use dead-code cleanup for proven unused code, exports, styles, routes, fixtures, or dependencies.",
+      "Use TDD when adding new observable behavior or fixing a behavior-changing defect.",
+      "Use debugging first when the failure cause is unknown.",
+      "Use validation repair for understood lint, typecheck, test, or build failures that predate the refactoring step.",
+      "Use code review for merge-readiness review rather than structure-changing execution.",
+      "Use migration or architecture planning for dependency, framework, router, state-library, or platform replacements."
+    ],
+    "capabilityTags": [
+      "refactoring",
+      "move-function",
+      "ownership",
+      "loops"
+    ]
+  },
+  "fec-refactoring-validation": {
+    "relatedSkills": [
+      "fec-refactoring",
+      "fec-testing-strategy",
+      "fec-tdd-workflow",
+      "fec-validation-fix",
+      "fec-debug-framework",
+      "fec-code-review"
+    ],
+    "boundaryWorkflows": [
+      "Use dead-code cleanup for proven unused code, exports, styles, routes, fixtures, or dependencies.",
+      "Use TDD when adding new observable behavior or fixing a behavior-changing defect.",
+      "Use debugging first when the failure cause is unknown.",
+      "Use validation repair for understood lint, typecheck, test, or build failures that predate the refactoring step.",
+      "Use code review for merge-readiness review rather than structure-changing execution.",
+      "Use migration or architecture planning for dependency, framework, router, state-library, or platform replacements."
+    ],
+    "capabilityTags": [
+      "refactoring",
+      "validation",
+      "behavior-preservation",
+      "rollback"
+    ]
+  },
   "fec-responsive-layout": {
     "relatedSkills": [
       "fec-ui-design",
@@ -487,26 +780,6 @@
       "security",
       "review",
       "frontend"
-    ]
-  },
-  "fec-source-driven-development": {
-    "relatedSkills": [
-      "fec-doc-sync",
-      "fec-dependency-upgrade",
-      "fec-api-integration",
-      "fec-vite-project-standard",
-      "fec-nextjs-project-standard",
-      "fec-nuxt-project-standard"
-    ],
-    "boundaryWorkflows": [
-      "Use documentation sync when source-verified decisions change public docs, runtime docs, or metadata.",
-      "Use API integration when source checking leads to frontend-backend contract or error-shape changes.",
-      "Use framework project workflows when the source-verified behavior is specific to Vite, Next.js, Nuxt, React, or Vue."
-    ],
-    "capabilityTags": [
-      "source-driven",
-      "official-docs",
-      "version-sensitive"
     ]
   },
   "fec-state-management": {
@@ -754,270 +1027,6 @@
       "web-workers",
       "performance",
       "main-thread"
-    ]
-  },
-  "fec-refactoring": {
-    "relatedSkills": [
-      "fec-code-smells",
-      "fec-refactoring-catalog",
-      "fec-refactoring-validation",
-      "fec-refactor-clean",
-      "fec-code-review",
-      "fec-tdd-workflow",
-      "fec-debug-framework",
-      "fec-validation-fix",
-      "fec-testing-strategy"
-    ],
-    "boundaryWorkflows": [
-      "Use dead-code cleanup for proven unused code, exports, styles, routes, fixtures, or dependencies.",
-      "Use TDD when adding new observable behavior or fixing a behavior-changing defect.",
-      "Use debugging first when the failure cause is unknown.",
-      "Use validation repair for understood lint, typecheck, test, or build failures that predate the refactoring step.",
-      "Use code review for merge-readiness review rather than structure-changing execution.",
-      "Use migration or architecture planning for dependency, framework, router, state-library, or platform replacements."
-    ],
-    "capabilityTags": [
-      "refactoring",
-      "behavior-preservation",
-      "workflow",
-      "validation"
-    ]
-  },
-  "fec-code-smells": {
-    "relatedSkills": [
-      "fec-refactoring",
-      "fec-refactoring-catalog",
-      "fec-code-review"
-    ],
-    "boundaryWorkflows": [
-      "Use dead-code cleanup for proven unused code, exports, styles, routes, fixtures, or dependencies.",
-      "Use TDD when adding new observable behavior or fixing a behavior-changing defect.",
-      "Use debugging first when the failure cause is unknown.",
-      "Use validation repair for understood lint, typecheck, test, or build failures that predate the refactoring step.",
-      "Use code review for merge-readiness review rather than structure-changing execution.",
-      "Use migration or architecture planning for dependency, framework, router, state-library, or platform replacements."
-    ],
-    "capabilityTags": [
-      "code-smells",
-      "diagnosis",
-      "maintainability",
-      "evidence"
-    ]
-  },
-  "fec-refactoring-catalog": {
-    "relatedSkills": [
-      "fec-refactoring",
-      "fec-code-smells",
-      "fec-refactoring-functions",
-      "fec-refactoring-encapsulation",
-      "fec-refactoring-move-features",
-      "fec-refactoring-data",
-      "fec-refactoring-control",
-      "fec-refactoring-api",
-      "fec-refactoring-inheritance",
-      "fec-refactoring-validation"
-    ],
-    "boundaryWorkflows": [
-      "Use dead-code cleanup for proven unused code, exports, styles, routes, fixtures, or dependencies.",
-      "Use TDD when adding new observable behavior or fixing a behavior-changing defect.",
-      "Use debugging first when the failure cause is unknown.",
-      "Use validation repair for understood lint, typecheck, test, or build failures that predate the refactoring step.",
-      "Use code review for merge-readiness review rather than structure-changing execution.",
-      "Use migration or architecture planning for dependency, framework, router, state-library, or platform replacements."
-    ],
-    "capabilityTags": [
-      "refactoring",
-      "catalog",
-      "selection",
-      "composition"
-    ]
-  },
-  "fec-refactoring-functions": {
-    "relatedSkills": [
-      "fec-refactoring",
-      "fec-code-smells",
-      "fec-refactoring-catalog",
-      "fec-refactoring-validation",
-      "fec-typescript-project-standard"
-    ],
-    "boundaryWorkflows": [
-      "Use dead-code cleanup for proven unused code, exports, styles, routes, fixtures, or dependencies.",
-      "Use TDD when adding new observable behavior or fixing a behavior-changing defect.",
-      "Use debugging first when the failure cause is unknown.",
-      "Use validation repair for understood lint, typecheck, test, or build failures that predate the refactoring step.",
-      "Use code review for merge-readiness review rather than structure-changing execution.",
-      "Use migration or architecture planning for dependency, framework, router, state-library, or platform replacements."
-    ],
-    "capabilityTags": [
-      "refactoring",
-      "functions",
-      "parameters",
-      "decomposition"
-    ]
-  },
-  "fec-refactoring-encapsulation": {
-    "relatedSkills": [
-      "fec-refactoring",
-      "fec-code-smells",
-      "fec-refactoring-catalog",
-      "fec-refactoring-validation",
-      "fec-state-management"
-    ],
-    "boundaryWorkflows": [
-      "Use dead-code cleanup for proven unused code, exports, styles, routes, fixtures, or dependencies.",
-      "Use TDD when adding new observable behavior or fixing a behavior-changing defect.",
-      "Use debugging first when the failure cause is unknown.",
-      "Use validation repair for understood lint, typecheck, test, or build failures that predate the refactoring step.",
-      "Use code review for merge-readiness review rather than structure-changing execution.",
-      "Use migration or architecture planning for dependency, framework, router, state-library, or platform replacements."
-    ],
-    "capabilityTags": [
-      "refactoring",
-      "encapsulation",
-      "delegation",
-      "value-object"
-    ]
-  },
-  "fec-refactoring-move-features": {
-    "relatedSkills": [
-      "fec-refactoring",
-      "fec-code-smells",
-      "fec-refactoring-catalog",
-      "fec-refactoring-validation",
-      "fec-refactor-clean"
-    ],
-    "boundaryWorkflows": [
-      "Use dead-code cleanup for proven unused code, exports, styles, routes, fixtures, or dependencies.",
-      "Use TDD when adding new observable behavior or fixing a behavior-changing defect.",
-      "Use debugging first when the failure cause is unknown.",
-      "Use validation repair for understood lint, typecheck, test, or build failures that predate the refactoring step.",
-      "Use code review for merge-readiness review rather than structure-changing execution.",
-      "Use migration or architecture planning for dependency, framework, router, state-library, or platform replacements."
-    ],
-    "capabilityTags": [
-      "refactoring",
-      "move-function",
-      "ownership",
-      "loops"
-    ]
-  },
-  "fec-refactoring-data": {
-    "relatedSkills": [
-      "fec-refactoring",
-      "fec-code-smells",
-      "fec-refactoring-catalog",
-      "fec-refactoring-validation",
-      "fec-state-management",
-      "fec-typescript-project-standard"
-    ],
-    "boundaryWorkflows": [
-      "Use dead-code cleanup for proven unused code, exports, styles, routes, fixtures, or dependencies.",
-      "Use TDD when adding new observable behavior or fixing a behavior-changing defect.",
-      "Use debugging first when the failure cause is unknown.",
-      "Use validation repair for understood lint, typecheck, test, or build failures that predate the refactoring step.",
-      "Use code review for merge-readiness review rather than structure-changing execution.",
-      "Use migration or architecture planning for dependency, framework, router, state-library, or platform replacements."
-    ],
-    "capabilityTags": [
-      "refactoring",
-      "data",
-      "derived-state",
-      "identity"
-    ]
-  },
-  "fec-refactoring-control": {
-    "relatedSkills": [
-      "fec-refactoring",
-      "fec-code-smells",
-      "fec-refactoring-catalog",
-      "fec-refactoring-validation",
-      "fec-typescript-project-standard"
-    ],
-    "boundaryWorkflows": [
-      "Use dead-code cleanup for proven unused code, exports, styles, routes, fixtures, or dependencies.",
-      "Use TDD when adding new observable behavior or fixing a behavior-changing defect.",
-      "Use debugging first when the failure cause is unknown.",
-      "Use validation repair for understood lint, typecheck, test, or build failures that predate the refactoring step.",
-      "Use code review for merge-readiness review rather than structure-changing execution.",
-      "Use migration or architecture planning for dependency, framework, router, state-library, or platform replacements."
-    ],
-    "capabilityTags": [
-      "refactoring",
-      "conditionals",
-      "guard-clauses",
-      "polymorphism"
-    ]
-  },
-  "fec-refactoring-api": {
-    "relatedSkills": [
-      "fec-refactoring",
-      "fec-code-smells",
-      "fec-refactoring-catalog",
-      "fec-refactoring-validation",
-      "fec-api-integration",
-      "fec-typescript-project-standard"
-    ],
-    "boundaryWorkflows": [
-      "Use dead-code cleanup for proven unused code, exports, styles, routes, fixtures, or dependencies.",
-      "Use TDD when adding new observable behavior or fixing a behavior-changing defect.",
-      "Use debugging first when the failure cause is unknown.",
-      "Use validation repair for understood lint, typecheck, test, or build failures that predate the refactoring step.",
-      "Use code review for merge-readiness review rather than structure-changing execution.",
-      "Use migration or architecture planning for dependency, framework, router, state-library, or platform replacements."
-    ],
-    "capabilityTags": [
-      "refactoring",
-      "api",
-      "parameters",
-      "dependencies"
-    ]
-  },
-  "fec-refactoring-inheritance": {
-    "relatedSkills": [
-      "fec-refactoring",
-      "fec-code-smells",
-      "fec-refactoring-catalog",
-      "fec-refactoring-validation",
-      "fec-typescript-project-standard",
-      "fec-legacy-to-modern-migration"
-    ],
-    "boundaryWorkflows": [
-      "Use dead-code cleanup for proven unused code, exports, styles, routes, fixtures, or dependencies.",
-      "Use TDD when adding new observable behavior or fixing a behavior-changing defect.",
-      "Use debugging first when the failure cause is unknown.",
-      "Use validation repair for understood lint, typecheck, test, or build failures that predate the refactoring step.",
-      "Use code review for merge-readiness review rather than structure-changing execution.",
-      "Use migration or architecture planning for dependency, framework, router, state-library, or platform replacements."
-    ],
-    "capabilityTags": [
-      "refactoring",
-      "inheritance",
-      "delegation",
-      "composition"
-    ]
-  },
-  "fec-refactoring-validation": {
-    "relatedSkills": [
-      "fec-refactoring",
-      "fec-testing-strategy",
-      "fec-tdd-workflow",
-      "fec-validation-fix",
-      "fec-debug-framework",
-      "fec-code-review"
-    ],
-    "boundaryWorkflows": [
-      "Use dead-code cleanup for proven unused code, exports, styles, routes, fixtures, or dependencies.",
-      "Use TDD when adding new observable behavior or fixing a behavior-changing defect.",
-      "Use debugging first when the failure cause is unknown.",
-      "Use validation repair for understood lint, typecheck, test, or build failures that predate the refactoring step.",
-      "Use code review for merge-readiness review rather than structure-changing execution.",
-      "Use migration or architecture planning for dependency, framework, router, state-library, or platform replacements."
-    ],
-    "capabilityTags": [
-      "refactoring",
-      "validation",
-      "behavior-preservation",
-      "rollback"
     ]
   }
 }

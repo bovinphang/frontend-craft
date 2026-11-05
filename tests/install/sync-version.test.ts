@@ -90,7 +90,8 @@ function verifyVersionSync(includeLocalized: boolean): void {
       path.join(tempRoot, "skills", "metadata.json"),
       assertSkillMetadataFixture,
       (skills) => {
-        for (const skill of skills) skill.version = "0.0.0";
+        for (const skill of skills)
+          skill.version = skill.id?.startsWith("cc-") ? "1.0.0" : "0.0.0";
       },
     );
     if (includeLocalized) {
@@ -98,7 +99,8 @@ function verifyVersionSync(includeLocalized: boolean): void {
         path.join(tempRoot, localizedMetadataPath),
         assertSkillMetadataFixture,
         (skills) => {
-          for (const skill of skills) skill.version = "0.0.0";
+          for (const skill of skills)
+            skill.version = skill.id?.startsWith("cc-") ? "1.0.0" : "0.0.0";
         },
       );
     }
@@ -136,14 +138,22 @@ function verifyVersionSync(includeLocalized: boolean): void {
     });
     assert.equal(openclaw.version, nextVersion);
     for (const skill of skills)
-      assert.equal(skill.version, nextVersion, skill.id);
+      assert.equal(
+        skill.version,
+        skill.id?.startsWith("cc-") ? "1.0.0" : nextVersion,
+        skill.id,
+      );
     if (includeLocalized) {
       const localizedSkills = readJson(
         path.join(tempRoot, localizedMetadataPath),
       );
       assertSkillMetadataFixture(localizedSkills);
       for (const skill of localizedSkills)
-        assert.equal(skill.version, nextVersion, skill.id);
+        assert.equal(
+          skill.version,
+          skill.id?.startsWith("cc-") ? "1.0.0" : nextVersion,
+          skill.id,
+        );
     } else {
       assert.equal(fs.existsSync(path.join(tempRoot, "localized")), false);
     }

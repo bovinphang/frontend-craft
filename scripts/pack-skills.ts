@@ -9,6 +9,7 @@ import {
   assertStandaloneSkillBody,
   assertSkillRelation,
   extractReferencedFiles,
+  resolveSkillOrigin,
   listSkillIds,
   parseSkillFrontmatter,
   readJsonFile,
@@ -64,7 +65,8 @@ for (const skillId of skillIds) {
   const skillBody = fs.readFileSync(path.join(sourceDir, "SKILL.md"), "utf8");
   assertStandaloneSkillBody(skillBody, skillId);
   const frontmatter = parseSkillFrontmatter(skillBody, skillId);
-  const references = extractReferencedFiles(skillBody);
+  const references = extractReferencedFiles(skillBody, sourceDir);
+  const origin = resolveSkillOrigin(skillId, root);
   const relation = relations[skillId];
 
   fs.mkdirSync(destDir, { recursive: true });
@@ -112,10 +114,10 @@ for (const skillId of skillIds) {
 
   const publishMetadata = {
     ...skillMeta,
-    version: pkg.version,
+    version: origin.version,
     license: pkg.license,
-    homepage: pkg.homepage,
-    repository: pkg.repository.url,
+    homepage: origin.repository,
+    repository: origin.repository,
     description: frontmatter.description,
     source: `skills/${skillId}`,
     references,
@@ -124,13 +126,14 @@ for (const skillId of skillIds) {
 
   const standalonePackage = {
     name: `@bovinphang/${skillId}`,
-    version: pkg.version,
+    version: origin.version,
     description: frontmatter.description,
     type: "module",
     license: pkg.license,
     author: pkg.author,
     repository: {
-      ...pkg.repository,
+      type: "git",
+      url: origin.repository,
       directory: `skills/${skillId}`,
     },
     homepage: pkg.homepage,
@@ -147,6 +150,7 @@ for (const skillId of skillIds) {
       "scripts",
       "data",
       "assets",
+      "styles",
       "metadata.json",
       "README.md",
       "LICENSE",
@@ -166,7 +170,7 @@ for (const skillId of skillIds) {
   );
   fs.writeFileSync(
     path.join(destDir, "README.md"),
-    renderReadme(skillMeta, frontmatter, references, relation),
+    renderReadme(skillMeta, frontmatter, references, relation, origin),
     "utf8",
   );
 
@@ -177,7 +181,7 @@ for (const skillId of skillIds) {
     summary: skillMeta.summary,
     category: skillMeta.category,
     tags: skillMeta.tags,
-    version: pkg.version,
+    version: origin.version,
     packagePath: toPosixPath(path.relative(root, destDir)),
     sourcePath: `skills/${skillId}`,
   });
@@ -196,6 +200,7 @@ function renderReadme(
   frontmatter: { name: string; description: string },
   references: string[],
   relation: SkillRelations[string] | undefined,
+  origin: ReturnType<typeof resolveSkillOrigin>,
 ): string {
   const referenceSection =
     references.length > 0
@@ -208,7 +213,7 @@ function renderReadme(
           .join("\n")}\n`
       : "";
 
-  return `# ${metadata.name}\n\n${metadata.summary}\n\n## Skill\n\n- ID: \`${metadata.id}\`\n- Category: \`${metadata.category}\`\n- Version: \`${pkg.version}\`\n- Source: \`skills/${metadata.id}/SKILL.md\`\n\n## Description\n\n${frontmatter.description}\n\n## Usage\n\nInstall or import this package with any skill runtime that understands the standard \`SKILL.md\` layout. The canonical source remains the Frontend Craft repository.\n${referenceSection}${relatedSection}\n## License\n\nMIT\n`;
+  return `# ${metadata.name}\n\n${metadata.summary}\n\n## Skill\n\n- ID: \`${metadata.id}\`\n- Category: \`${metadata.category}\`\n- Version: \`${origin.version}\`\n- Source: \`skills/${metadata.id}/SKILL.md\`\n\n## Description\n\n${frontmatter.description}\n\n## Usage\n\nInstall or import this package with any skill runtime that understands the standard \`SKILL.md\` layout. The canonical source is ${origin.repository}.\n${referenceSection}${relatedSection}\n## License\n\nMIT\n`;
 }
 
 function unique(values: string[]): string[] {

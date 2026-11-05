@@ -35,7 +35,7 @@
 
 各运行时的路径与注意事项详见 [`docs/runtimes/`](docs/runtimes/)。
 
-它将 **14 个专业 agent**、**56 个自动激活 skill**、**11 个斜杠命令**、**5 个事件驱动 hook**、面向 6 个设计工具端点的 **MCP 集成**以及一整套**规则库**打包为一个可安装单元。运行一条命令，团队里的每一次 AI 会话都将以相同的方式编写 React、Vue、Next.js 或 Nuxt——类型安全、可访问、安全、一致。
+它将 **14 个专业 agent**、**61 个自动激活 skill**、**11 个斜杠命令**、**5 个事件驱动 hook**、面向 6 个设计工具端点的 **MCP 集成**以及一整套**规则库**打包为一个可安装单元。运行一条命令，团队里的每一次 AI 会话都将以相同的方式编写 React、Vue、Next.js 或 Nuxt——类型安全、可访问、安全、一致。
 
 ---
 
@@ -43,7 +43,7 @@
 
 | 痛点                                          | frontend-craft 的解法                                                 |
 | --------------------------------------------- | --------------------------------------------------------------------- |
-| AI 助手写出的前端代码风格不一、缺类型、不安全 | **56 个 skill** 将团队规范编码为可自动激活的工作流                    |
+| AI 助手写出的前端代码风格不一、缺类型、不安全 | **61 个 skill** 将团队规范编码为可自动激活的工作流                    |
 | 每款 AI 工具都有自己的插件格式                | **一条 CLI 命令** 把相同的规则、agent 和 hook 安装到 15 个运行时      |
 | 设计稿到代码的交接总有信息损失                | **MCP 集成** 从 Figma、Figma Desktop、Sketch、MasterGo、Pixso、墨刀引入更完整设计上下文 |
 | 代码评审随意、浅层                            | **14 个 agent** 输出分级报告：代码、安全、无障碍、性能、TS、UI 还原度 |
@@ -274,8 +274,8 @@ npx @bovinphang/frontend-craft@latest list
 | 技能                          | 范围                                                     |
 | ----------------------------- | -------------------------------------------------------- |
 | `fec-ui-design`               | 产品语境 UI 方向、反模板设计拨盘、媒体策略、状态、视觉 QA |
-| `fec-image-generation`        | 系统蓝图、流程工作流、交互式实时图、HTML/SVG/PNG 导出、图片生成/编辑、视觉资产和 PNG 自检 |
-| `fec-drawio-studio`         | 可编辑 draw.io / diagrams.net 技术图、XML/Mermaid/CSV URL 交付、形状检索、自动布局和代码结构图 |
+| `fec-image-generation`        | UI、产品和品牌视觉生成与编辑，复用公共 PNG 质检 |
+| `cc-drawio-studio`         | 可编辑 draw.io / diagrams.net 技术图、XML/Mermaid/CSV URL 交付、形状检索、自动布局和代码结构图 |
 | `fec-web-video-presentation` | 将文章、口播稿、课程和 demo 转成可录屏的 16:9 步进网页演示 |
 | `fec-tailwind-design-system`  | Tailwind token、主题扩展、组件变体、class 治理和暗色模式 |
 | `fec-responsive-layout`       | 移动优先布局、容器查询、数据密集型响应式界面             |
@@ -283,7 +283,7 @@ npx @bovinphang/frontend-craft@latest list
 | `fec-implement-from-design`   | 基于设计工具、截图或分区级视觉参考实现 UI                |
 | `fec-storybook-component-doc` | Storybook 组件文档、设计系统呈现、隔离状态预览           |
 
-技术图质量工作流：`fec-image-generation` 的标准时序/流程图优先本地 Mermaid，架构图复用 draw.io 工作流，工具缺失时使用 JSON/HTML。导出 PNG 时生成实际测量且与缩放一致的 manifest，再运行 QA 并检查最终 PNG；保留完整文字、显式布局与关系，最多自动修复两轮，未解决问题需明确报告。可复现样例位于 `skills/fec-image-generation/assets/quality-examples/`。
+技术图质量工作流：`cc-technical-diagrams` 的标准时序/流程图优先本地 Mermaid，架构图复用 draw.io 工作流，工具缺失时使用 JSON/HTML。导出 PNG 时生成实际测量且与缩放一致的 manifest，再运行 QA 并检查最终 PNG；保留完整文字、显式布局与关系，最多自动修复两轮，未解决问题需明确报告。可复现样例位于 `skills/cc-technical-diagrams/assets/quality-examples/`。
 
 [审核范围与技术图交付指南](docs/zh-CN/review-and-diagram-workflows.md).
 
@@ -306,7 +306,7 @@ npx @bovinphang/frontend-craft@latest list
 | ------------------------------- | ------------------------------------------ |
 | `fec-backend-requirements-handoff` | 前端向后端交接 UI 数据需求、用户动作、状态、业务规则与待确认问题 |
 | `fec-doc-sync`                  | 让前端文档与代码、配置、脚本、路由、API、环境变量和部署事实保持同步 |
-| `fec-source-driven-development` | 以项目事实和官方来源验证版本敏感的前端决策 |
+| `cc-source-driven-development` | 以项目事实和官方来源验证版本敏感的前端决策 |
 
 ### 代理（Agents）
 
@@ -565,3 +565,18 @@ npx skills check                           # 预览可用更新
 **如果 frontend-craft 帮助了你的团队，[请给它一个 Star](https://github.com/bovinphang/frontend-craft)。**
 
 </div>
+
+## 3.0 公共能力
+
+3.0 尚未正式发布，包含 54 个前端专属入口和 7 个公共入口，共 61 个 Skill。公共能力由精确版本的 craft-common 自动交付，无需额外安装插件；公共源码仅在 craft-common 维护。
+
+- `cc-drawio-studio`
+- `cc-technical-diagrams`
+- `cc-source-driven-development`
+- `cc-doc-sync-core`
+- `cc-debug-methodology`
+- `cc-refactoring-core`
+- `cc-tdd-methodology`
+
+迁移前运行 `fec runtime check-migration codex --local --json`，再参阅 [migration guide](docs/zh-CN/common-migration.md).
+CLI 管理共享安装及卸载引用；原生插件渠道本期保证单产品资源完整，不承诺双产品原生去重。

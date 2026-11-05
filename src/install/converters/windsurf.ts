@@ -1,8 +1,8 @@
+import { copyProductSkills } from "../shared/fs.js";
 import path from "node:path";
 import fs from "node:fs";
 import type { InstallContext } from "../types.js";
 import {
-  copyDir,
   ensureDir,
   readUtf8,
   writeUtf8,
@@ -41,5 +41,8 @@ export async function installWindsurf(ctx: InstallContext): Promise<void> {
     }
   }
 
-  copyDir(path.join(contentRoot, "skills"), path.join(baseDir, "skills"));
+  copyProductSkills(
+    path.join(contentRoot, "skills"),
+    path.join(baseDir, "skills"),
+  );
 }

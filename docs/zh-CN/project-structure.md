@@ -35,7 +35,7 @@ frontend-craft/
 |   |-- fec-implement-from-design/   # 基于设计工具、截图和视觉参考实现 UI
 |   |-- fec-validation-fix/            # lint、type-check、test、build 与修复
 |   |-- fec-performance-optimization/  # Core Web Vitals、包体、渲染、网络、内存
-|   |-- fec-source-driven-development/ # 官方来源、项目事实、版本敏感决策
+|   |-- cc-source-driven-development/ # 官方来源、项目事实、版本敏感决策
 |   |-- fec-typescript-project-standard/   # TypeScript 配置、公开类型、声明文件、DTO 和泛型
 |   |-- fec-state-management/         # 状态归属、store 选型、URL/服务端/表单/本地边界
 |   |-- fec-tailwind-design-system/   # Tailwind token、组件变体、暗色模式和 class 治理
@@ -77,8 +77,8 @@ frontend-craft/
 |   |-- fec-list-virtualization/        # react-window / TanStack Virtual 大列表窗口化与测量策略
 |   |-- fec-storybook-component-doc/    # Storybook 组件文档、addon、MDX、交互和视觉测试集成
 |   |-- fec-ui-design/                  # 产品语境 UI 方向、设计拨盘、媒体策略、视觉 QA
-|   |-- fec-image-generation/           # 图表/图片生成、编辑工作流、PNG 自检和修复循环
-|   |-- fec-drawio-studio/             # 可编辑 draw.io 技术图、形状检索、自动布局、代码结构图
+|   |-- fec-image-generation/           # UI/产品/品牌视觉生成、编辑与公共 PNG 质检
+|   |-- cc-drawio-studio/             # 可编辑 draw.io 技术图、形状检索、自动布局、代码结构图
 |   |-- fec-web-video-presentation/    # 可录屏的 16:9 步进网页视频演示
 |   |-- fec-motion-interaction/         # 场景化动效强度、页面转场、滚动动画、reduced motion
 |   |-- fec-vite-project-standard/      # Vite 配置、环境变量安全、HMR、代理、构建与 library mode
@@ -143,6 +143,6 @@ frontend-craft/
 | `tests/`        | 测试套件（转换器测试、安装器测试）                                                 |
 
 
-技术图质量工作流：`fec-image-generation` 的标准时序/流程图优先本地 Mermaid，架构图复用 draw.io 工作流，工具缺失时使用 JSON/HTML。导出 PNG 时生成实际测量且与缩放一致的 manifest，再运行 QA 并检查最终 PNG；保留完整文字、显式布局与关系，最多自动修复两轮，未解决问题需明确报告。可复现样例位于 `skills/fec-image-generation/assets/quality-examples/`。
+技术图质量工作流：`cc-technical-diagrams` 的标准时序/流程图优先本地 Mermaid，架构图复用 draw.io 工作流，工具缺失时使用 JSON/HTML。导出 PNG 时生成实际测量且与缩放一致的 manifest，再运行 QA 并检查最终 PNG；保留完整文字、显式布局与关系，最多自动修复两轮，未解决问题需明确报告。可复现样例位于 `skills/cc-technical-diagrams/assets/quality-examples/`。
 
 [审核范围与技术图交付](review-and-diagram-workflows.md) — 范围规则、工具前提、导出命令与 QA 边界。

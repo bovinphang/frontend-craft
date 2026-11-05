@@ -44,6 +44,9 @@ jobs:
       - name: Lint code and validate content
         run: pnpm lint
 
+      - name: Verify pinned common content snapshots
+        run: pnpm run check:common
+
       - name: Test and verify release packages
         run: pnpm run pack:all
 

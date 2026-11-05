@@ -12,28 +12,28 @@ const root = resolvePluginRoot(import.meta.url);
 const script = path.join(
   root,
   "skills",
-  "fec-image-generation",
+  "cc-technical-diagrams",
   "scripts",
   "png-qa.mjs",
 );
 const renderScript = path.join(
   root,
   "skills",
-  "fec-image-generation",
+  "cc-technical-diagrams",
   "scripts",
   "tech-diagram-render.mjs",
 );
 const interactiveScript = path.join(
   root,
   "skills",
-  "fec-image-generation",
+  "cc-technical-diagrams",
   "scripts",
   "interactive-diagram-server.mjs",
 );
 const exportScript = path.join(
   root,
   "skills",
-  "fec-image-generation",
+  "cc-technical-diagrams",
   "scripts",
   "export-diagram.mjs",
 );
@@ -183,7 +183,7 @@ test("interactive-diagram-server rejects malformed command JSON", async () => {
 });
 
 test("png-qa reports parseable json for a normal PNG", () => {
-  const tmp = fs.mkdtempSync(path.join(os.tmpdir(), "fec-image-generation-"));
+  const tmp = fs.mkdtempSync(path.join(os.tmpdir(), "cc-technical-diagrams-"));
   try {
     const png = path.join(tmp, "normal.png");
     writePng(png, 120, 80, (x, y) =>
@@ -215,7 +215,7 @@ test("png-qa reports parseable json for a normal PNG", () => {
 });
 
 test("png-qa detects blank images and edge clipping", () => {
-  const tmp = fs.mkdtempSync(path.join(os.tmpdir(), "fec-image-generation-"));
+  const tmp = fs.mkdtempSync(path.join(os.tmpdir(), "cc-technical-diagrams-"));
   try {
     const blank = path.join(tmp, "blank.png");
     const clipped = path.join(tmp, "clipped.png");
@@ -255,7 +255,7 @@ test("png-qa detects blank images and edge clipping", () => {
 });
 
 test("png-qa detects manifest overlap, connector collisions, stacking, and label overflow", () => {
-  const tmp = fs.mkdtempSync(path.join(os.tmpdir(), "fec-image-generation-"));
+  const tmp = fs.mkdtempSync(path.join(os.tmpdir(), "cc-technical-diagrams-"));
   try {
     const png = path.join(tmp, "diagram.png");
     const manifest = path.join(tmp, "layout.json");

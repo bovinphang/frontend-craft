@@ -79,7 +79,7 @@ export function auditContent(root: string): string[] {
     for (const kind of ["agents", "commands"] as const) {
       for (const entry of tree.get(kind)!.values()) {
         for (const match of entry.body.matchAll(
-          /`(fec-[a-z0-9-]+|typescript-reviewer)`/g,
+          /`((?:fec|cc)-[a-z0-9-]+|typescript-reviewer)`/g,
         )) {
           if (!ids.has(match[1]))
             issues.push(`${entry.source}: unknown capability ${match[1]}`);

@@ -49,7 +49,7 @@ function parseArgs(values) {
 }
 
 function printHelp() {
-  console.log(`Usage: node skills/fec-image-generation/scripts/png-qa.mjs --png <file> [--manifest <layout.json>] [--format json|markdown] [--strict]`);
+  console.log(`Usage: node skills/cc-technical-diagrams/scripts/png-qa.mjs --png <file> [--manifest <layout.json>] [--format json|markdown] [--strict]`);
 }
 
 function readManifest(filePath) {

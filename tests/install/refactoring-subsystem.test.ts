@@ -5,6 +5,7 @@ import path from "node:path";
 import { resolvePluginRoot } from "../../src/install/shared/resolve-plugin-root.js";
 
 const root = resolvePluginRoot(import.meta.url);
+import { resolveSkillOrigin } from "../../scripts/skill-packaging.js";
 
 function read(relativePath: string): string {
   return fs.readFileSync(path.join(root, relativePath), "utf8");
@@ -604,12 +605,14 @@ test("refactoring skills are registered in metadata evals and relations", () => 
   }
 
   assert.match(
-    read("skills/fec-tdd-workflow/SKILL.md"),
-    /Pure behavior-preserving refactoring does not manufacture a failing test/,
+    read("skills/fec-tdd-workflow/SKILL.md") +
+      read("skills/fec-tdd-workflow/references/common/tdd.md"),
+    /do not invent a failure/i,
   );
   assert.match(
-    read("localized/zh-CN/skills/fec-tdd-workflow/SKILL.md"),
-    /纯粹的保持行为重构，不应人为制造一个失败测试/,
+    read("localized/zh-CN/skills/fec-tdd-workflow/SKILL.md") +
+      read("localized/zh-CN/skills/fec-tdd-workflow/references/common/tdd.md"),
+    /不为流程形式制造失败/,
   );
   assert.match(
     read("commands/fec-tdd.md"),
@@ -680,7 +683,7 @@ test("public docs expose the refactoring subsystem consistently", () => {
       body,
       /14 specialized agents|14 个.*Agent|14 个.*agent|14 个.*智能体/i,
     );
-    assert.match(body, /56 .*skills|56 .*Skill|56 个.*技能/i);
+    assert.match(body, /61 .*skills|61 .*Skill|61 个.*技能/i);
     assert.match(body, /11 .*commands|11 .*Command|11 个.*命令/i);
   }
 
@@ -724,9 +727,14 @@ test("refactoring release metadata is synchronized with package.json", () => {
     "skills/metadata.json",
     "localized/zh-CN/skills/metadata.json",
   ]) {
-    const metadata = JSON.parse(read(file)) as Array<{ version: string }>;
+    const metadata = JSON.parse(read(file)) as Array<{
+      id: string;
+      version: string;
+    }>;
     assert.ok(
-      metadata.every((entry) => entry.version === pkg.version),
+      metadata.every(
+        (entry) => entry.version === resolveSkillOrigin(entry.id, root).version,
+      ),
       `${file} versions must be ${pkg.version}`,
     );
   }
@@ -826,7 +834,7 @@ test("refactoring agent skills and public counts are internally complete", () =>
     })
     .filter((entry) => entry.isDirectory())
     .map((entry) => entry.name);
-  assert.equal(rootSkillDirs.length, 56);
+  assert.equal(rootSkillDirs.length, 61);
   assert.deepEqual(rootSkillDirs.sort(), zhSkillDirs.sort());
   assert.equal(
     fs

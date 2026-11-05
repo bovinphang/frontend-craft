@@ -9,7 +9,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 Project-facing release notes are maintained in English from 2.0.0 onward. Historical entries may preserve their original language.
 
-## [3.0.0] - 2026-11-04
+## [3.0.0] - Unreleased
+
+### Shared capabilities
+
+- Extract common capabilities into craft-common and deliver seven cc entries directly in 3.0, retaining frontend workflows.
+- Add shared ownership, exact version/language conflict checks, transactional recovery and read-only migration checks.
+- See the [migration guide](docs/common-migration.md) for legacy entries and independent uninstall behavior.
+
 
 ### Breaking changes and migration
 

@@ -8,11 +8,11 @@ import {
   assertStandaloneSkillBody,
   assertSkillRelation,
   extractReferencedFiles,
+  resolveSkillOrigin,
   listSkillIds,
   parseSkillFrontmatter,
   readJsonFile,
   toPosixPath,
-  type RootPackage,
   type SkillMetadata,
   type SkillRelation,
   type SkillRelations,
@@ -21,7 +21,6 @@ import {
 const root = resolvePluginRoot(import.meta.url);
 const skillsDir = path.join(root, "skills");
 const packageRoot = path.join(root, "skill-packages");
-const pkg = readJsonFile<RootPackage>(path.join(root, "package.json"));
 const metadata = readJsonFile<SkillMetadata[]>(
   path.join(skillsDir, "metadata.json"),
 );
@@ -78,7 +77,8 @@ for (const skillId of skillIds) {
     fail(error instanceof Error ? error.message : String(error));
   }
   const frontmatter = parseSkillFrontmatter(skillBody, skillId);
-  const references = extractReferencedFiles(skillBody);
+  const references = extractReferencedFiles(skillBody, sourceDir);
+  const origin = resolveSkillOrigin(skillId, root);
   const relation = relations[skillId];
 
   for (const requiredFile of [
@@ -113,12 +113,12 @@ for (const skillId of skillIds) {
   );
   assertEqual(
     packageJson.version,
-    pkg.version,
+    origin.version,
     `package version mismatch: ${skillId}`,
   );
   assertEqual(
     publishMetadata.version,
-    pkg.version,
+    origin.version,
     `metadata version mismatch: ${skillId}`,
   );
   assertEqual(
@@ -136,7 +136,11 @@ for (const skillId of skillIds) {
     JSON.stringify(relation ?? null),
     `relations mismatch: ${skillId}`,
   );
-  assertEqual(entry.version, pkg.version, `index version mismatch: ${skillId}`);
+  assertEqual(
+    entry.version,
+    origin.version,
+    `index version mismatch: ${skillId}`,
+  );
   assertEqual(
     entry.packagePath,
     toPosixPath(path.relative(root, destDir)),

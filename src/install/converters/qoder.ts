@@ -1,3 +1,4 @@
+import { copyProductSkills } from "../shared/fs.js";
 import path from "node:path";
 import fs from "node:fs";
 import type { InstallContext } from "../types.js";
@@ -29,7 +30,10 @@ export async function installQoder(ctx: InstallContext): Promise<void> {
   readSettings(path.join(baseDir, "settings.json"));
 
   ensureDir(baseDir);
-  copyDir(path.join(contentRoot, "skills"), path.join(baseDir, "skills"));
+  copyProductSkills(
+    path.join(contentRoot, "skills"),
+    path.join(baseDir, "skills"),
+  );
   copyDir(path.join(contentRoot, "commands"), path.join(baseDir, "commands"));
   copyDir(path.join(contentRoot, "agents"), path.join(baseDir, "agents"));
   if (!isGlobal) {

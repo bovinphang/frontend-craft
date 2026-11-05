@@ -3,58 +3,9 @@ name: fec-debug-framework
 description: Use when diagnosing frontend build failures, runtime errors, UI anomalies, API/data problems, white screens, request failures, or unexplained production exceptions; Chinese triggers include debugging, debug, troubleshooting, positioning, error reporting, exceptions, white screens, request failures.
 ---
 
-# Front-end diagnostic framework
+# Frontend diagnosis
 
-## Purpose
-
-Use an evidence-driven triage, collection, hypothesis, verification, and remediation process to locate front-end faults and avoid relying on intuition to expand the scope of changes.
-
-## Procedure
-
-All front-end problem diagnosis follows a unified process:
-
-### Step 1: Classify
-
-Identify problem type and scope of impact:
-
-| Type | Judgment basis | Diagnosis entrance |
-| ------- | ---------------------------- | -------------- |
-| build | Command exit is non-zero, stderr has error | → Build module |
-| runtime | Console exception, white screen, function unavailable | → Runtime module |
-| ui | Visual deviation, interaction not as expected | → UI module |
-| api | Request status code exception, data inconsistency | → API module |
-
-Cross-type problems (such as API failure leading to UI exceptions) start with the most superficial symptoms and drill down layer by layer.
-
-### Step 2: Collect
-
-Collect evidence by type (specific strategies for each module, see below).
-
-### Step 3: Hypothesize
-
-Propose possible root causes based on evidence, ranked by likelihood:
-
-- Every hypothesis must be testable (have clear verification methods)
-- Keep at most 3 hypotheses to avoid divergence
-- Format: "Because X leads to Y, which can be verified by Z"
-
-### Step 4: Verify
-
-Test the hypotheses one by one:
-
-- Start with the most likely hypothesis
-- Only change one variable at a time
-- Verification result record: confirmed / falsified / pending
-- If all assumptions are falsified, return to Step 2 and collect again.
-
-### Step 5: Fix & Validate
-
-- Apply minimal fixes
-- Run affected verification commands
-- Confirmed no regression
-- Output repair report
-
----
+Follow the [common five-step diagnostic method](references/common/debug.md), then collect evidence using these frontend modules.
 
 ## Diagnostic module
 

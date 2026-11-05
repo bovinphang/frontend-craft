@@ -1,3 +1,4 @@
+import { copyProductSkills } from "../shared/fs.js";
 import path from "node:path";
 import fs from "node:fs";
 import type { InstallContext } from "../types.js";
@@ -22,7 +23,10 @@ export async function installGemini(ctx: InstallContext): Promise<void> {
   retireManagedTree(
     path.join(baseDir, "extensions", "frontend-craft", "skills"),
   );
-  copyDir(path.join(contentRoot, "skills"), path.join(baseDir, "skills"));
+  copyProductSkills(
+    path.join(contentRoot, "skills"),
+    path.join(baseDir, "skills"),
+  );
   copyDir(
     path.join(contentRoot, "templates", "shared", "rules"),
     path.join(baseDir, "rules"),

@@ -1,0 +1,21 @@
+sequenceDiagram
+ participant Web as 用户浏览器客户端
+ participant API as 订单服务接口
+ participant DB as 持久化数据库
+ Web->>API: 查询订单详细信息与当前支付状态
+ API->>API: 验证身份与订单访问权限
+ API->>DB: 缓存未命中，读取订单记录
+ DB-->>API: 返回订单记录与支付状态
+ API-->>Web: 返回查询结果并更新页面
+
+ activate API
+ alt 缓存命中
+ API-->>Web: 返回缓存结果
+ else 缓存未命中
+ loop 重试失败查询
+ API->>DB: 读取记录
+ DB-->>API: 返回结果
+ end
+ end
+ API-)Web: 异步更新通知
+ deactivate API

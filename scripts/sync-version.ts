@@ -30,6 +30,7 @@ interface OpenClawManifest {
 }
 
 interface SkillMetadataEntry {
+  id?: string;
   version: string;
 }
 
@@ -84,7 +85,8 @@ if (fs.existsSync(localizedRoot)) {
 
 for (const file of skillMetadataFiles) {
   syncJson<SkillMetadataEntry[]>(file, 2, isSkillMetadata, (skills) => {
-    for (const skill of skills) skill.version = version;
+    for (const skill of skills)
+      if (!skill.id?.startsWith("cc-")) skill.version = version;
   });
 }
 

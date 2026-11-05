@@ -154,7 +154,14 @@ test("install with Simplified Chinese writes localized content and manifest lang
     );
     assert.ok(
       fs.existsSync(
-        path.join(imageGenerationScriptsDir, "tech-diagram-render.mjs"),
+        path.join(
+          dir,
+          ".claude",
+          "skills",
+          "cc-technical-diagrams",
+          "scripts",
+          "tech-diagram-render.mjs",
+        ),
       ),
     );
     assert.equal(manifest.language, "zh-CN");

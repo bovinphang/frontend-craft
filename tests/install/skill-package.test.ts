@@ -7,6 +7,7 @@ import { resolvePluginRoot } from "../../src/install/shared/resolve-plugin-root.
 import {
   assertStandaloneSkillBody,
   extractReferencedFiles,
+  resolveSkillOrigin,
   listSkillIds,
   parseSkillFrontmatter,
   readJsonFile,
@@ -35,9 +36,6 @@ test("pack:skills creates one standalone publish package per skill", () => {
     "pack:skills should not write dist/skill-packages",
   );
 
-  const pkg = readJsonFile<{ version: string }>(
-    path.join(root, "package.json"),
-  );
   const skillIds = listSkillIds(skillsDir);
   const relations = readJsonFile<SkillRelations>(
     path.join(skillsDir, "relations.json"),
@@ -62,7 +60,8 @@ test("pack:skills creates one standalone publish package per skill", () => {
       "utf8",
     );
     const frontmatter = parseSkillFrontmatter(skillBody, skillId);
-    const references = extractReferencedFiles(skillBody);
+    const references = extractReferencedFiles(skillBody, sourceDir);
+    const origin = resolveSkillOrigin(skillId, root);
     const relation = relations[skillId];
 
     assertStandaloneSkillBody(packageSkillBody, skillId);
@@ -95,7 +94,7 @@ test("pack:skills creates one standalone publish package per skill", () => {
     const entry = index.find((candidate) => candidate.id === skillId);
 
     assert.ok(entry, `missing index entry: ${skillId}`);
-    assert.equal(standalonePkg.version, pkg.version);
+    assert.equal(standalonePkg.version, origin.version);
     assert.equal(standalonePkg.description, frontmatter.description);
     assert.ok(standalonePkg.keywords.includes("agent-skill"));
     assert.ok(standalonePkg.keywords.includes("frontend-craft"));
@@ -103,7 +102,7 @@ test("pack:skills creates one standalone publish package per skill", () => {
     assert.ok(standalonePkg.files.includes("scripts"));
     assert.ok(standalonePkg.files.includes("data"));
     assert.ok(standalonePkg.files.includes("assets"));
-    assert.equal(publishMetadata.version, pkg.version);
+    assert.equal(publishMetadata.version, origin.version);
     assert.equal(publishMetadata.description, frontmatter.description);
     assert.deepEqual(publishMetadata.references, references);
     assert.deepEqual(publishMetadata.relations ?? null, relation ?? null);
@@ -111,7 +110,7 @@ test("pack:skills creates one standalone publish package per skill", () => {
       !("relatedAgents" in (publishMetadata.relations ?? {})),
       `package metadata includes relatedAgents: ${skillId}`,
     );
-    assert.equal(entry?.version, pkg.version);
+    assert.equal(entry?.version, origin.version);
     assert.equal(entry?.packagePath, toPosixPath(path.relative(root, destDir)));
     assert.equal(entry?.sourcePath, `skills/${skillId}`);
 
@@ -163,13 +162,13 @@ test("pack:skills creates one standalone publish package per skill", () => {
 
   const sourceShapeIndex = path.join(
     skillsDir,
-    "fec-drawio-studio",
+    "cc-drawio-studio",
     "data",
     "shape-index.json",
   );
   const packagedShapeIndex = path.join(
     packageRoot,
-    "fec-drawio-studio",
+    "cc-drawio-studio",
     "data",
     "shape-index.json",
   );

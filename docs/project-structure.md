@@ -38,7 +38,7 @@ frontend-craft/
 |   |-- fec-implement-from-design/   # Implement UI from design tools, screenshots, and visual references
 |   |-- fec-validation-fix/            # lint, type-check, test, build and fix
 |   |-- fec-performance-optimization/  # Core Web Vitals, bundle, rendering, network, memory
-|   |-- fec-source-driven-development/ # Official sources, project facts, version-sensitive decisions
+|   |-- cc-source-driven-development/ # Official sources, project facts, version-sensitive decisions
 |   |-- fec-typescript-project-standard/   # TypeScript config, public API types, declarations, DTOs, generics
 |   |-- fec-state-management/         # State ownership, store selection, URL/server/form/local boundaries
 |   |-- fec-tailwind-design-system/   # Tailwind tokens, variants, dark mode, class governance
@@ -81,8 +81,8 @@ frontend-craft/
 |   |-- fec-list-virtualization/        # Large-list windowing with react-window / TanStack Virtual and measurement strategies
 |   |-- fec-storybook-component-doc/    # Storybook component docs, addons, MDX, interaction and visual test integration
 |   |-- fec-ui-design/                  # Product-context UI direction, design dials, media strategy, visual QA
-|   |-- fec-image-generation/           # Diagram/image generation, editing workflows, PNG QA and repair loops
-|   |-- fec-drawio-studio/              # Editable draw.io diagrams, shape lookup, auto-layout, code structure maps
+|   |-- fec-image-generation/           # UI/product/brand image generation, editing and shared PNG QA
+|   |-- cc-drawio-studio/              # Editable draw.io diagrams, shape lookup, auto-layout, code structure maps
 |   |-- fec-web-video-presentation/     # Recordable 16:9 step-driven web video presentations
 |   |-- fec-motion-interaction/         # Context-aware motion intensity, transitions, scroll animation, reduced motion
 |   |-- fec-alchemy/                    # Project absorption workflow — extract reference ideas and redesign natively
@@ -146,6 +146,6 @@ frontend-craft/
 | `tests/`        | Test suite (converter tests, installer tests)                                                                         |
 
 
-Technical diagram quality: `fec-image-generation` prefers local Mermaid for standard sequence/workflow diagrams and the draw.io workflow for editable architecture, with JSON/HTML fallback when tools are unavailable. Export a browser-measured manifest scaled to the PNG, run QA and inspect the final image. Preserve complete text, explicit layout and relationships; repair the source for at most two automatic rounds and report unresolved issues. Reproducible fixtures are in `skills/fec-image-generation/assets/quality-examples/`.
+Technical diagram quality: `cc-technical-diagrams` prefers local Mermaid for standard sequence/workflow diagrams and the draw.io workflow for editable architecture, with JSON/HTML fallback when tools are unavailable. Export a browser-measured manifest scaled to the PNG, run QA and inspect the final image. Preserve complete text, explicit layout and relationships; repair the source for at most two automatic rounds and report unresolved issues. Reproducible fixtures are in `skills/cc-technical-diagrams/assets/quality-examples/`.
 
 [Review scope and technical diagram delivery](review-and-diagram-workflows.md) — scope, tool prerequisites, export commands, and QA limits.

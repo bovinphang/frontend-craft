@@ -32,6 +32,6 @@
 
 ## 质量交付约定
 
-标准序列/流程图优先本地 Mermaid；架构图需要手工编辑时复用 fec-drawio-studio，大型拓扑可选 Graphviz。无本地工具时使用兼容 JSON/HTML，不自动安装或下载。HTML 预览、独立 SVG 和 PNG 使用同源主题样式；导出指定 `--theme light|dark`。PNG 导出等待字体并测量文字，使用 `--manifest source.layout.json --output-manifest image.actual.json` 写出缩放后的像素坐标。QA 必须读取 actual manifest，不能把估算坐标直接用于 2x PNG。
+标准序列/流程图优先本地 Mermaid；架构图需要手工编辑时复用 cc-drawio-studio，大型拓扑可选 Graphviz。无本地工具时使用兼容 JSON/HTML，不自动安装或下载。HTML 预览、独立 SVG 和 PNG 使用同源主题样式；导出指定 `--theme light|dark`。PNG 导出等待字体并测量文字，使用 `--manifest source.layout.json --output-manifest image.actual.json` 写出缩放后的像素坐标。QA 必须读取 actual manifest，不能把估算坐标直接用于 2x PNG。
 
 扩展 manifest 保留 canvas/boxes/connectors，增加 coordinateSpace、scale、measurement、groups、labels 与 issues。分组包含节点不算节点重叠。新增 node-text-overflow、label-content-loss、label-out-of-bounds、edge-label-collision、text-overlap 与 degenerate-connector 检查。旧 manifest 保留估算检测。显式尺寸或 waypoints 不满足约束时定位问题，不删字、不改关系、不静默移动。提高导出分辨率不能修复源级溢出。最终 PNG 必须视觉审阅；记录工具可用性、版本、主题、比例、修复轮次和残留问题，未解决时标记部分验收。

@@ -9,6 +9,12 @@ import {
 import { getManifestPath, hashFile, readInstallManifest } from "./shared/fs.js";
 import type { InstallManifest, ManifestRoot } from "./shared/fs.js";
 import { asRecord, readSettings } from "./shared/settings.js";
+import {
+  isPlanningWrites,
+  writeProductFile,
+  removeProductFile,
+  productFileExists,
+} from "./shared/product-write-plan.js";
 
 export type InstallScope = "global" | "local";
 
@@ -124,14 +130,11 @@ export function copyInstallToNewBase(
       fs.existsSync(dest)
     )
       continue;
-    fs.mkdirSync(path.dirname(dest), { recursive: true });
-    fs.copyFileSync(source, dest, fs.constants.COPYFILE_EXCL);
+    writeProductFile(dest, fs.readFileSync(source));
   }
-  fs.mkdirSync(baseDir, { recursive: true });
-  fs.writeFileSync(
+  writeProductFile(
     manifestPath,
-    `${JSON.stringify({ ...install.manifest, files }, null, 2)}\n`,
-    "utf8",
+    Buffer.from(`${JSON.stringify({ ...install.manifest, files }, null, 2)}\n`),
   );
   console.log(
     `Migrated install to ${baseDir}; original files remain at ${install.baseDir}.`,
@@ -167,7 +170,7 @@ export function uninstallManagedInstall({
       baseDir: install.baseDir,
       cwd,
     });
-    if (!file || !fs.existsSync(file)) continue;
+    if (!file || !productFileExists(file)) continue;
     // Read before deleting scripts: malformed settings must not lose their dependencies.
     const settings = readSettings(file);
     const hooks = { ...asRecord(settings.hooks) };
@@ -185,7 +188,10 @@ export function uninstallManagedInstall({
     if (Object.keys(hooks).length) settings.hooks = hooks;
     else delete settings.hooks;
     if (!dryRun)
-      fs.writeFileSync(file, `${JSON.stringify(settings, null, 2)}\n`, "utf8");
+      writeProductFile(
+        file,
+        Buffer.from(`${JSON.stringify(settings, null, 2)}\n`),
+      );
   }
 
   for (const file of install.manifest.files) {
@@ -210,18 +216,19 @@ export function uninstallManagedInstall({
 
     result.removed.push({ path: file.path, modified: isModified });
     touchedDirs.add(path.dirname(absolutePath));
-    if (!dryRun) fs.rmSync(absolutePath, { force: true });
+    if (!dryRun) removeProductFile(absolutePath);
   }
 
   if (!dryRun && result.skipped.length === 0) {
-    fs.rmSync(install.manifestPath, { force: true });
-    pruneEmptyDirs([...touchedDirs], [install.baseDir, cwd, os.homedir()]);
+    removeProductFile(install.manifestPath);
+    if (!isPlanningWrites())
+      pruneEmptyDirs([...touchedDirs], [install.baseDir, cwd, os.homedir()]);
   }
 
   return result;
 }
 
-function resolveManifestFile({
+export function resolveManifestFile({
   filePath,
   root,
   baseDir,

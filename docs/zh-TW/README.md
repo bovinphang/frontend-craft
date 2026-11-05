@@ -35,7 +35,7 @@
 
 各執行時的路徑與注意事項詳見 [`docs/runtimes/`](../runtimes/)。
 
-它將 **14 個專業 agent**、**56 個自動啟用 skill**、**11 個斜線指令**、**5 個事件驅動 hook**、面向 6 個設計工具端點的 **MCP 整合**以及一整套**規則庫**打包為一個可安裝單元。執行一條指令，團隊裡的每一次 AI 會話都將以相同的方式編寫 React、Vue、Next.js 或 Nuxt——型別安全、可存取、安全、一致。
+它將 **14 個專業 agent**、**61 個自動啟用 skill**、**11 個斜線指令**、**5 個事件驅動 hook**、面向 6 個設計工具端點的 **MCP 整合**以及一整套**規則庫**打包為一個可安裝單元。執行一條指令，團隊裡的每一次 AI 會話都將以相同的方式編寫 React、Vue、Next.js 或 Nuxt——型別安全、可存取、安全、一致。
 
 ---
 
@@ -43,7 +43,7 @@
 
 | 痛點                                            | frontend-craft 的解法                                                                   |
 | ----------------------------------------------- | --------------------------------------------------------------------------------------- |
-| AI 助手寫出的前端程式碼風格不一、缺型別、不安全 | **56 個 skill** 將團隊規範編碼為可自動啟用的工作流                                      |
+| AI 助手寫出的前端程式碼風格不一、缺型別、不安全 | **61 個 skill** 將團隊規範編碼為可自動啟用的工作流                                      |
 | 每款 AI 工具都有自己的插件格式                  | **一條 CLI 指令** 把相同的規則、agent 和 hook 安裝到 15 個執行時                        |
 | 設計稿到程式碼的交接總有資訊損失                | **MCP 整合** 從 Figma、Figma Desktop、Sketch、MasterGo、Pixso、墨刀引入更完整設計上下文 |
 | 程式碼審查隨意、淺層                            | **14 個 agent** 輸出分級報告：程式碼、安全、無障礙、效能、TS、UI 還原度                 |
@@ -268,8 +268,8 @@ npx @bovinphang/frontend-craft@latest list
 | 技能                          | 範圍                                                                                             |
 | ----------------------------- | ------------------------------------------------------------------------------------------------ |
 | `fec-ui-design`               | 產品語境 UI 方向、反模板設計撥盤、媒體策略、狀態、視覺 QA                                        |
-| `fec-image-generation`        | 系統藍圖、流程工作流、互動式即時圖、HTML/SVG/PNG 匯出、圖片生成/編輯、視覺資產和 PNG 自檢         |
-| `fec-drawio-studio`           | 可編輯 draw.io / diagrams.net 技術圖、XML/Mermaid/CSV URL 交付、形狀檢索、自動布局和程式碼結構圖 |
+| `fec-image-generation`        | UI、產品和品牌視覺生成與編輯，重用共用 PNG 檢查 |
+| `cc-drawio-studio`           | 可編輯 draw.io / diagrams.net 技術圖、XML/Mermaid/CSV URL 交付、形狀檢索、自動布局和程式碼結構圖 |
 | `fec-web-video-presentation`  | 將文章、口播稿、課程和 demo 轉成可錄屏的 16:9 步進網頁演示                                       |
 | `fec-tailwind-design-system`  | Tailwind token、主題擴展、元件變體、class 治理和暗色模式                                         |
 | `fec-responsive-layout`       | 移動優先布局、容器查詢、資料密集型響應式界面                                                     |
@@ -300,7 +300,7 @@ npx @bovinphang/frontend-craft@latest list
 | ---------------------------------- | --------------------------------------------------------------------- |
 | `fec-backend-requirements-handoff` | 前端向後端交接 UI 資料需求、使用者動作、狀態、業務規則與待確認問題    |
 | `fec-doc-sync`                     | 讓前端文件與程式碼、設定、腳本、路由、API、環境變數和部署事實保持同步 |
-| `fec-source-driven-development`    | 以專案事實和官方來源驗證版本敏感的前端決策                            |
+| `cc-source-driven-development`    | 以專案事實和官方來源驗證版本敏感的前端決策                            |
 
 ### 代理（Agents）
 
@@ -554,3 +554,17 @@ npx skills check                           # 預覽可用更新
 **如果 frontend-craft 幫助了你的團隊，[請給它一個 Star](https://github.com/bovinphang/frontend-craft)。**
 
 </div>
+
+## 3.0 共用能力
+
+3.0 尚未正式發布，包含 54 個前端專屬入口與 7 個共用入口，共 61 個 Skill。共用能力由固定版本的 craft-common 隨產品提供，無需額外手動安裝第三個外掛；原始內容只在 craft-common 維護。
+
+- `cc-drawio-studio`
+- `cc-technical-diagrams`
+- `cc-source-driven-development`
+- `cc-doc-sync-core`
+- `cc-debug-methodology`
+- `cc-refactoring-core`
+- `cc-tdd-methodology`
+
+執行 `fec runtime check-migration codex --local --json` 並閱讀 [遷移指南](../common-migration.md)。CLI 管理共用檔案所有權與解除安裝引用；原生外掛本期保證單一產品資源完整，不承諾雙產品原生去重。

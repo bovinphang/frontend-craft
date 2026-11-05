@@ -39,8 +39,10 @@ const pkg = {
   files: [
     "dist",
     "skills",
+    "localized",
     "commands",
     "templates",
+    "common-content.lock.json",
     ".mcp.json",
     "openclaw.plugin.json",
     "README.md",
@@ -60,6 +62,13 @@ const pkg = {
 
 cpSync(sourceDist, path.join(packRoot, "dist"), { recursive: true });
 cpSync(path.join(root, "skills"), path.join(packRoot, "skills"), {
+  recursive: true,
+});
+cpSync(
+  path.join(root, "common-content.lock.json"),
+  path.join(packRoot, "common-content.lock.json"),
+);
+cpSync(path.join(root, "localized"), path.join(packRoot, "localized"), {
   recursive: true,
 });
 cpSync(path.join(root, "commands"), path.join(packRoot, "commands"), {

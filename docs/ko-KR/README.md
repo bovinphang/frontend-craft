@@ -35,7 +35,7 @@
 
 각 런타임의 경로와 주의사항은 [`docs/runtimes/`](../runtimes/)에 있습니다.
 
-**14개의 전문 에이전트**, **56개의 자동 활성화 스킬**, **11개의 슬래시 명령어**, **5개의 이벤트 기반 훅**, 6개 디자인 도구 엔드포인트를 위한 **MCP 통합**, 그리고 완전한 **규칙 라이브러리**를 하나의 설치 가능한 패키지로 묶었습니다. 명령어 하나만 실행하면, 팀의 모든 AI 세션이 React, Vue, Next.js, Nuxt를 같은 방식으로 작성합니다 — 타입 안전하고, 접근성 있고, 안전하며, 일관성 있게.
+**14개의 전문 에이전트**, **61개의 자동 활성화 스킬**, **11개의 슬래시 명령어**, **5개의 이벤트 기반 훅**, 6개 디자인 도구 엔드포인트를 위한 **MCP 통합**, 그리고 완전한 **규칙 라이브러리**를 하나의 설치 가능한 패키지로 묶었습니다. 명령어 하나만 실행하면, 팀의 모든 AI 세션이 React, Vue, Next.js, Nuxt를 같은 방식으로 작성합니다 — 타입 안전하고, 접근성 있고, 안전하며, 일관성 있게.
 
 ---
 
@@ -43,7 +43,7 @@
 
 | 문제점                                                                       | frontend-craft의 해결책                                                                                     |
 | ---------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------- |
-| AI 어시스턴트가 일관성 없고, 타입 없고, 안전하지 않은 프론트엔드 코드를 작성 | **56개 스킬**이 팀 표준을 인코딩 — 해당 파일을 건드릴 때 자동 활성화                                        |
+| AI 어시스턴트가 일관성 없고, 타입 없고, 안전하지 않은 프론트엔드 코드를 작성 | **61개 스킬**이 팀 표준을 인코딩 — 해당 파일을 건드릴 때 자동 활성화                                        |
 | AI 도구마다 플러그인 형식이 다름                                             | **하나의 CLI**로 동일한 규칙, 에이전트, 훅을 15개 런타임에 설치                                             |
 | 디자인에서 코드로의 전달 과정에서 정보 손실                                  | **MCP 통합**이 Figma, Figma Desktop, Sketch, MasterGo, Pixso, 墨刀에서 더 풍부한 디자인 컨텍스트를 가져오기 |
 | 리뷰가 즉흥적이고 얕음                                                       | **14개 에이전트**가 등급별 보고서 출력: 코드, 보안, 접근성, 성능, TS, UI 충실도                             |
@@ -268,8 +268,8 @@ Marketplace가 이미 설치된 경우, `--force`를 사용해도 CLI는 두 번
 | 스킬                          | 범위                                                                                                                     |
 | ----------------------------- | ------------------------------------------------------------------------------------------------------------------------ |
 | `fec-ui-design`               | 제품 맥락 UI 방향, 반템플릿 디자인 다이얼, 미디어 전략, 상태, visual QA                                                  |
-| `fec-image-generation`        | 시스템 블루프린트, 프로세스 워크플로, 인터랙티브 라이브 다이어그램, HTML/SVG/PNG 내보내기, 이미지 생성/편집, 비주얼 에셋, PNG QA |
-| `fec-drawio-studio`           | 편집 가능한 draw.io / diagrams.net 기술 다이어그램, XML/Mermaid/CSV URL 핸드오프, shape 검색, 자동 레이아웃, 코드 구조도 |
+| `fec-image-generation`        | UI·제품·브랜드 이미지 생성과 편집, 공통 PNG 품질 검사 |
+| `cc-drawio-studio`           | 편집 가능한 draw.io / diagrams.net 기술 다이어그램, XML/Mermaid/CSV URL 핸드오프, shape 검색, 자동 레이아웃, 코드 구조도 |
 | `fec-web-video-presentation`  | 글, 스크립트, 레슨, demo를 녹화 가능한 16:9 step-driven 웹 프레젠테이션으로 변환                                         |
 | `fec-tailwind-design-system`  | Tailwind token, 테마 확장, variants, class 관리, dark mode                                                               |
 | `fec-responsive-layout`       | 모바일 우선, container queries, 데이터 밀집 responsive UI                                                                |
@@ -300,7 +300,7 @@ Marketplace가 이미 설치된 경우, `--force`를 사용해도 CLI는 두 번
 | ---------------------------------- | ------------------------------------------------------------------------------------ |
 | `fec-backend-requirements-handoff` | Frontend-to-backend handoff for UI data needs, actions, states, rules, and questions |
 | `fec-doc-sync`                     | 프론트엔드 문서를 코드, 설정, 스크립트, 라우트, API, 환경 변수, 배포 사실과 동기화   |
-| `fec-source-driven-development`    | 프로젝트 사실과 공식 소스로 버전 의존 결정을 검증                                    |
+| `cc-source-driven-development`    | 프로젝트 사실과 공식 소스로 버전 의존 결정을 검증                                    |
 
 ### 에이전트
 
@@ -554,3 +554,17 @@ npx skills check                           # 사용 가능한 업데이트 미�
 **frontend-craft가 팀에 도움이 되었다면, [Star를 눌러주세요](https://github.com/bovinphang/frontend-craft).**
 
 </div>
+
+## 3.0 공통 기능
+
+3.0은 아직 출시되지 않았습니다. 프런트엔드 전용 54개와 공통 7개를 합쳐 Skill 61개를 제공합니다. 고정 버전의 craft-common이 제품과 함께 배포되므로 세 번째 플러그인을 수동으로 설치할 필요가 없습니다. 공통 소스는 craft-common에서만 관리합니다.
+
+- `cc-drawio-studio`
+- `cc-technical-diagrams`
+- `cc-source-driven-development`
+- `cc-doc-sync-core`
+- `cc-debug-methodology`
+- `cc-refactoring-core`
+- `cc-tdd-methodology`
+
+`fec runtime check-migration codex --local --json`을 실행하고 [마이그레이션 가이드](../common-migration.md)를 확인하세요. CLI는 공유 파일 소유권과 제거 시 참조를 관리합니다. 네이티브 배포는 단일 제품의 완전한 리소스를 보장하며, 두 제품의 네이티브 중복 제거는 보장하지 않습니다.

@@ -22,7 +22,7 @@
 
 `frontend-craft` ships the OpenClaw-native package for [frontend-craft](https://github.com/bovinphang/frontend-craft): workflow skills, markdown commands, OpenClaw workspace templates, typed hooks, a design MCP reference, and the optional `frontend_craft_init_workspace` tool.
 
-The native package includes **56 workflow skills** and **11 commands exposed through skills (same-name workflows reuse the full skill)**. The 14 specialized agents belong to other runtime adapters and are not native OpenClaw agents.
+The native package includes **61 workflow skills** and **11 commands exposed through skills (same-name workflows reuse the full skill)**. The 14 specialized agents belong to other runtime adapters and are not native OpenClaw agents.
 
 **Requirements:** Node.js **>= 22**, OpenClaw plugin API **>= 2026.4.20**.
 
@@ -138,7 +138,7 @@ frontend-craft/
 
 ### Skills
 
-The OpenClaw package includes all 56 public workflow skills from `skills/`, grouped here by use case.
+The OpenClaw package includes all 61 public workflow skills from `skills/`, grouped here by use case.
 
 **Project standards**
 
@@ -211,8 +211,8 @@ The OpenClaw package includes all 56 public workflow skills from `skills/`, grou
 | Skill                         | Purpose                                                                              |
 | ----------------------------- | ------------------------------------------------------------------------------------ |
 | `fec-ui-design`               | UI direction, visual identity, polish, states, visual QA                             |
-| `fec-image-generation`        | Diagrams, image generation/editing, visual assets, and PNG QA repair loops           |
-| `fec-drawio-studio`           | Editable draw.io / diagrams.net technical diagrams, shape lookup, and code maps      |
+| `fec-image-generation`        | UI, product and brand image generation/editing with shared PNG QA |
+| `cc-drawio-studio`           | Editable draw.io / diagrams.net technical diagrams, shape lookup, and code maps      |
 | `fec-web-video-presentation`  | Recordable 16:9 step-driven web presentations from articles, scripts, lessons, demos |
 | `fec-tailwind-design-system`  | Tailwind tokens, theme extension, variants, class governance, dark mode              |
 | `fec-responsive-layout`       | Mobile-first layouts, container queries, data-dense responsive UI                    |
@@ -220,7 +220,7 @@ The OpenClaw package includes all 56 public workflow skills from `skills/`, grou
 | `fec-implement-from-design`   | Implement UI from Figma, Sketch, MasterGo, Pixso, Modao, or screenshots              |
 | `fec-storybook-component-doc` | Storybook component docs, design-system presentation, isolated state previews        |
 
-Technical diagram quality: `fec-image-generation` prefers local Mermaid for standard sequence/workflow diagrams and the draw.io workflow for editable architecture, with JSON/HTML fallback when tools are unavailable. Export a browser-measured manifest scaled to the PNG, run QA and inspect the final image. Preserve complete text, explicit layout and relationships; repair the source for at most two automatic rounds and report unresolved issues. Reproducible fixtures are in `skills/fec-image-generation/assets/quality-examples/`.
+Technical diagram quality: `cc-technical-diagrams` prefers local Mermaid for standard sequence/workflow diagrams and the draw.io workflow for editable architecture, with JSON/HTML fallback when tools are unavailable. Export a browser-measured manifest scaled to the PNG, run QA and inspect the final image. Preserve complete text, explicit layout and relationships; repair the source for at most two automatic rounds and report unresolved issues. Reproducible fixtures are in `skills/cc-technical-diagrams/assets/quality-examples/`.
 
 [Review and technical diagram guide](docs/review-and-diagram-workflows.md).
 
@@ -243,7 +243,7 @@ Technical diagram quality: `fec-image-generation` prefers local Mermaid for stan
 | ------------------------------- | ---------------------------------------------------------------------------------- |
 | `fec-backend-requirements-handoff` | Frontend-to-backend handoff for UI data needs, actions, states, rules, questions |
 | `fec-doc-sync`                  | Keep frontend docs in sync with code, config, scripts, routes, APIs, and env facts |
-| `fec-source-driven-development` | Verify version-sensitive frontend decisions against project facts and sources      |
+| `cc-source-driven-development` | Verify version-sensitive frontend decisions against project facts and sources      |
 
 ### Using skills (scenarios & examples)
 
@@ -357,3 +357,15 @@ A file/directory request reviews its full contents; add "recent changes" to revi
 Examples: `/fec-review`,`/fec-review review recent changes`,  `/fec-review review src/components/Button.tsx`, `/fec-review review src/features/`, and `/fec-review review the entire project`. These are natural-language instructions, not CLI flags. Explicit scope takes precedence over the default.
 
 Dependency directories, build outputs, caches, generated files and third-party code are excluded by default. Reports record the mode, target scope, reviewed and unreviewed files/modules, exclusions, completion status and verification results. Limited coverage is marked partial; reading callers or running project-wide lint/typecheck does not establish manual review coverage. Change reviews retain merge recommendations; targeted/project reviews assess risk within reviewed scope. The frontend review does not replace a backend audit, and reviewers do not edit business code unless repairs are requested.
+
+## Common capabilities
+
+Shared capabilities are delivered from craft-common with this product:
+
+- `cc-debug-methodology`
+- `cc-doc-sync-core`
+- `cc-drawio-studio`
+- `cc-refactoring-core`
+- `cc-source-driven-development`
+- `cc-tdd-methodology`
+- `cc-technical-diagrams`

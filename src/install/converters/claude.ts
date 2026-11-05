@@ -1,3 +1,4 @@
+import { copyProductSkills } from "../shared/fs.js";
 import path from "node:path";
 import fs from "node:fs";
 import type { InstallContext } from "../types.js";
@@ -53,7 +54,10 @@ export async function installClaude(ctx: InstallContext): Promise<void> {
   const settingsPath = path.join(baseDir, "settings.json");
   readSettings(settingsPath);
   ensureDir(baseDir);
-  copyDir(path.join(contentRoot, "skills"), path.join(baseDir, "skills"));
+  copyProductSkills(
+    path.join(contentRoot, "skills"),
+    path.join(baseDir, "skills"),
+  );
   copyDir(path.join(contentRoot, "agents"), path.join(baseDir, "agents"));
   copyDir(path.join(contentRoot, "commands"), path.join(baseDir, "commands"));
   if (!isGlobal) {

@@ -137,7 +137,7 @@ test("setup all installs every runtime locally by default", () => {
       process.execPath,
       [cli, "setup", "all", "--dry-run"],
       {
-        cwd: root,
+        cwd: runtimeHome,
         encoding: "utf8",
         env: isolatedRuntimeEnv(runtimeHome),
       },
@@ -146,19 +146,19 @@ test("setup all installs every runtime locally by default", () => {
     assert.match(
       out,
       new RegExp(
-        `Installing frontend-craft for "claude" -> ${escapeRegExp(path.join(root, ".claude"))}`,
+        `Installing frontend-craft for "claude" -> ${escapeRegExp(path.join(runtimeHome, ".claude"))}`,
       ),
     );
     assert.match(
       out,
       new RegExp(
-        `Installing frontend-craft for "codex" -> ${escapeRegExp(path.join(root, ".codex"))}`,
+        `Installing frontend-craft for "codex" -> ${escapeRegExp(path.join(runtimeHome, ".codex"))}`,
       ),
     );
     assert.match(
       out,
       new RegExp(
-        `Installing frontend-craft for "qoder" -> ${escapeRegExp(path.join(root, ".qoder"))}`,
+        `Installing frontend-craft for "qoder" -> ${escapeRegExp(path.join(runtimeHome, ".qoder"))}`,
       ),
     );
     assert.doesNotMatch(out, /\(global\)/);

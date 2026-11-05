@@ -22,7 +22,7 @@ for (const rt of ALL_RUNTIMES) {
         process.execPath,
         [cli, "runtime", "install", rt, "--dry-run"],
         {
-          cwd: root,
+          cwd: runtimeHome,
           encoding: "utf8",
           env: isolatedRuntimeEnv(runtimeHome),
         },

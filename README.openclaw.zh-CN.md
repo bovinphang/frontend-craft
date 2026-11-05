@@ -22,7 +22,7 @@
 
 `frontend-craft` 是 [frontend-craft](https://github.com/bovinphang/frontend-craft) 的 OpenClaw 原生打包产物，包含工作流技能、Markdown 命令、OpenClaw 工作区模板、typed hooks、设计工具 MCP 参考配置，以及可选的 `frontend_craft_init_workspace` 初始化工具。
 
-该原生包提供 **56 个工作流技能**，并将 **11 个命令工作流通过技能提供（同名工作流复用完整技能）**。14 个专业 Agent 属于其他运行时适配器，不是 OpenClaw 原生 Agent。
+该原生包提供 **61 个工作流技能**，并将 **11 个命令工作流通过技能提供（同名工作流复用完整技能）**。14 个专业 Agent 属于其他运行时适配器，不是 OpenClaw 原生 Agent。
 
 **环境要求：** Node.js **>= 22**，OpenClaw plugin API **>= 2026.4.20**。
 
@@ -138,7 +138,7 @@ frontend-craft/
 
 ### 技能
 
-OpenClaw 包包含 `skills/` 下全部 56 个公开工作流技能，按使用场景分组如下。
+OpenClaw 包包含 `skills/` 下全部 61 个公开工作流技能，按使用场景分组如下。
 
 **项目规范**
 
@@ -211,8 +211,8 @@ OpenClaw 包包含 `skills/` 下全部 56 个公开工作流技能，按使用�
 | 技能                          | 用途                                                       |
 | ----------------------------- | ---------------------------------------------------------- |
 | `fec-ui-design`               | UI 方向、视觉识别、界面打磨、状态与视觉 QA                 |
-| `fec-image-generation`        | 图表、图片生成/编辑、视觉资产与 PNG QA 修复循环            |
-| `fec-drawio-studio`           | 可编辑 draw.io / diagrams.net 技术图、形状检索与代码结构图 |
+| `fec-image-generation`        | UI、产品和品牌视觉生成与编辑，复用公共 PNG 质检 |
+| `cc-drawio-studio`           | 可编辑 draw.io / diagrams.net 技术图、形状检索与代码结构图 |
 | `fec-web-video-presentation`  | 将文章、口播稿、课程和 demo 转成可录屏的 16:9 步进网页演示 |
 | `fec-tailwind-design-system`  | Tailwind token、主题扩展、组件变体、class 治理和暗色模式   |
 | `fec-responsive-layout`       | 移动优先布局、容器查询、数据密集型响应式界面               |
@@ -220,7 +220,7 @@ OpenClaw 包包含 `skills/` 下全部 56 个公开工作流技能，按使用�
 | `fec-implement-from-design`   | 基于 Figma、Sketch、MasterGo、Pixso、墨刀或截图实现 UI     |
 | `fec-storybook-component-doc` | Storybook 组件文档、设计系统展示与隔离状态预览             |
 
-技术图质量工作流：`fec-image-generation` 的标准时序/流程图优先本地 Mermaid，架构图复用 draw.io 工作流，工具缺失时使用 JSON/HTML。导出 PNG 时生成实际测量且与缩放一致的 manifest，再运行 QA 并检查最终 PNG；保留完整文字、显式布局与关系，最多自动修复两轮，未解决问题需明确报告。可复现样例位于 `skills/fec-image-generation/assets/quality-examples/`。
+技术图质量工作流：`cc-technical-diagrams` 的标准时序/流程图优先本地 Mermaid，架构图复用 draw.io 工作流，工具缺失时使用 JSON/HTML。导出 PNG 时生成实际测量且与缩放一致的 manifest，再运行 QA 并检查最终 PNG；保留完整文字、显式布局与关系，最多自动修复两轮，未解决问题需明确报告。可复现样例位于 `skills/cc-technical-diagrams/assets/quality-examples/`。
 
 [审核范围与技术图交付指南](docs/zh-CN/review-and-diagram-workflows.md).
 
@@ -243,7 +243,7 @@ OpenClaw 包包含 `skills/` 下全部 56 个公开工作流技能，按使用�
 | ------------------------------- | -------------------------------------------------------- |
 | `fec-backend-requirements-handoff` | 面向后端交接 UI 数据需求、用户动作、状态、规则和问题   |
 | `fec-doc-sync`                  | 同步 README、配置、脚本、路由/API、环境变量与部署事实   |
-| `fec-source-driven-development` | 根据项目事实和官方来源校验版本敏感的前端决策             |
+| `cc-source-driven-development` | 根据项目事实和官方来源校验版本敏感的前端决策             |
 
 ### 技能使用：场景与示例
 
@@ -357,3 +357,15 @@ MIT
 示例：`/fec-review`、`/fec-review 审核最近改动`、`/fec-review 审核 src/components/Button.tsx`、`/fec-review 审核 src/features/`、`/fec-review 审核整个项目`。这些是自然语言指令，不是 CLI 参数；明确指定的范围优先于默认模式。
 
 默认排除依赖目录、构建产物、缓存、生成文件和第三方代码。报告记录模式、目标范围、已审核及未覆盖文件或模块、排除项、完成状态和验证结果；覆盖不足时标记部分完成。读取调用方或执行全项目 lint/类型检查不等于完成人工审核。改动审核保留合并建议，指定范围和全项目审核评估已审核范围的风险。前端审核不替代后端专项审核；未要求修复时不修改业务代码。
+
+## 公共能力
+
+公共能力由 craft-common 随产品提供：
+
+- `cc-debug-methodology`
+- `cc-doc-sync-core`
+- `cc-drawio-studio`
+- `cc-refactoring-core`
+- `cc-source-driven-development`
+- `cc-tdd-methodology`
+- `cc-technical-diagrams`

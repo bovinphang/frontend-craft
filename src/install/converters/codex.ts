@@ -1,3 +1,4 @@
+import { copyProductSkills } from "../shared/fs.js";
 import path from "node:path";
 import fs from "node:fs";
 import os from "node:os";
@@ -40,7 +41,7 @@ export async function installCodex(ctx: InstallContext): Promise<void> {
     writeUtf8(path.join(codexAgents, f.replace(/\.md$/, ".toml")), tom);
   }
 
-  copyDir(path.join(contentRoot, "skills"), agentsDestGlobal);
+  copyProductSkills(path.join(contentRoot, "skills"), agentsDestGlobal);
 
   const rulesShared = path.join(contentRoot, "templates", "shared", "rules");
   if (!isGlobal && fs.existsSync(rulesShared)) copyDir(rulesShared, codexRules);

@@ -48,7 +48,57 @@ export function parseSkillFrontmatter(
   return parseSkillDocument(body, `${skillId}/SKILL.md`, skillId).metadata;
 }
 
-export function extractReferencedFiles(body: string): string[] {
+export function resolveSkillOrigin(
+  skillId: string,
+  productRoot: string,
+): { packageName: string; version: string; repository: string } {
+  if (skillId.startsWith("cc-")) {
+    const lock = readJsonFile<{
+      packageName: string;
+      packageVersion: string;
+      catalogs: { en: { skills: Array<{ id: string; repository: string }> } };
+    }>(path.join(productRoot, "common-content.lock.json"));
+    const source = lock.catalogs.en.skills.find(
+      (skill) => skill.id === skillId,
+    );
+    if (!source) throw new Error(`公共内容锁没有该技能：${skillId}`);
+    return {
+      packageName: lock.packageName,
+      version: lock.packageVersion,
+      repository: source.repository,
+    };
+  }
+  const pkg = readJsonFile<{
+    name: string;
+    version: string;
+    repository: { url: string };
+  }>(path.join(productRoot, "package.json"));
+  return {
+    packageName: pkg.name,
+    version: pkg.version,
+    repository: pkg.repository.url,
+  };
+}
+
+export function extractReferencedFiles(
+  body: string,
+  skillRoot?: string,
+): string[] {
+  if (skillRoot) {
+    const files: string[] = [];
+    const visit = (dir: string): void => {
+      for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
+        const file = path.join(dir, entry.name);
+        if (entry.isSymbolicLink())
+          throw new Error(`独立包不允许符号链接：${file}`);
+        if (entry.isDirectory()) visit(file);
+        else if (entry.isFile() && file !== path.join(skillRoot, "SKILL.md"))
+          files.push(toPosixPath(path.relative(skillRoot, file)));
+      }
+    };
+    visit(skillRoot);
+    return files.sort();
+  }
   return [
     ...new Set(
       [
@@ -80,11 +130,11 @@ export function assertStandaloneSkillBody(body: string, skillId: string): void {
     { pattern: /^## 相关技能$/m, label: "related skills section" },
     { pattern: /^## 与子代理的配合$/m, label: "subagent coordination section" },
     {
-      pattern: /`fec-[a-z0-9-]+`/,
+      pattern: /`(?:fec|cc)-[a-z0-9-]+`/,
       label: "inline skill or agent id navigation",
     },
     {
-      pattern: /[「『“"]fec-[a-z0-9-]+[」』”"]\s*(?:skill|技能)/,
+      pattern: /[「『“"](?:fec|cc)-[a-z0-9-]+[」』”"]\s*(?:skill|技能)/,
       label: "quoted skill id navigation",
     },
     { pattern: /\]\(\.\.\/\.\.\/agents\//, label: "../../agents link" },
