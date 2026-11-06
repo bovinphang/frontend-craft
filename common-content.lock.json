@@ -1,17 +1,17 @@
 {
   "schemaVersion": 1,
   "packageName": "@bovinphang/craft-common",
-  "packageVersion": "1.0.0",
+  "packageVersion": "1.0.1",
   "catalogs": {
     "en": {
       "schemaVersion": 1,
       "packageName": "@bovinphang/craft-common",
-      "packageVersion": "1.0.0",
+      "packageVersion": "1.0.1",
       "language": "en",
       "skills": [
         {
           "id": "cc-debug-methodology",
-          "version": "1.0.0",
+          "version": "1.0.1",
           "sourcePackage": "@bovinphang/craft-common",
           "repository": "https://github.com/bovinphang/craft-common",
           "files": [
@@ -27,7 +27,7 @@
         },
         {
           "id": "cc-doc-sync-core",
-          "version": "1.0.0",
+          "version": "1.0.1",
           "sourcePackage": "@bovinphang/craft-common",
           "repository": "https://github.com/bovinphang/craft-common",
           "files": [
@@ -43,7 +43,7 @@
         },
         {
           "id": "cc-drawio-studio",
-          "version": "1.0.0",
+          "version": "1.0.1",
           "sourcePackage": "@bovinphang/craft-common",
           "repository": "https://github.com/bovinphang/craft-common",
           "files": [
@@ -163,7 +163,7 @@
         },
         {
           "id": "cc-refactoring-core",
-          "version": "1.0.0",
+          "version": "1.0.1",
           "sourcePackage": "@bovinphang/craft-common",
           "repository": "https://github.com/bovinphang/craft-common",
           "files": [
@@ -179,7 +179,7 @@
         },
         {
           "id": "cc-source-driven-development",
-          "version": "1.0.0",
+          "version": "1.0.1",
           "sourcePackage": "@bovinphang/craft-common",
           "repository": "https://github.com/bovinphang/craft-common",
           "files": [
@@ -195,7 +195,7 @@
         },
         {
           "id": "cc-tdd-methodology",
-          "version": "1.0.0",
+          "version": "1.0.1",
           "sourcePackage": "@bovinphang/craft-common",
           "repository": "https://github.com/bovinphang/craft-common",
           "files": [
@@ -211,7 +211,7 @@
         },
         {
           "id": "cc-technical-diagrams",
-          "version": "1.0.0",
+          "version": "1.0.1",
           "sourcePackage": "@bovinphang/craft-common",
           "repository": "https://github.com/bovinphang/craft-common",
           "files": [
@@ -221,7 +221,7 @@
             },
             {
               "relativePath": "assets/interactive-diagram.html",
-              "hash": "d011f1ebd9f6916025f557e97a2cdbc014d8197094fddbd8f35b4136bcc2c14c"
+              "hash": "3c3c4aa9b5293414d643a0e552a65a0ee8c44cca2a28bebbbc9ed422ec8c006c"
             },
             {
               "relativePath": "assets/quality-examples/README.md",
@@ -241,7 +241,7 @@
             },
             {
               "relativePath": "assets/quality-examples/sequence.mmd",
-              "hash": "c57f9be5a4647962f84b145e1fc82b396395090f53b6680335748396e2f7d267"
+              "hash": "5b4d9d909d11ef0092cb8503dece1be8320878c77425249643eb166ad22b8cad"
             },
             {
               "relativePath": "assets/quality-examples/workflow.json",
@@ -249,7 +249,7 @@
             },
             {
               "relativePath": "assets/quality-examples/workflow.mmd",
-              "hash": "eb0f8ca306f49185419c427e804972d185371ad9cd5f0e1eca442aa37e9c577f"
+              "hash": "6bdbf672123c4b44ab244ba1c8aebfd5509bf6d83e6e29e711902e8938323923"
             },
             {
               "relativePath": "references/diagram-workflows.md",
@@ -294,17 +294,17 @@
           ]
         }
       ],
-      "digest": "9f7185a6a980182b7856e6a46578490a6a7489cae7f88a61efa7a999e26b63ce"
+      "digest": "b7bc2406bee09029764ca86275b5515bb7f188f0bc03e4eb41868d5c45ffaff5"
     },
     "zh-CN": {
       "schemaVersion": 1,
       "packageName": "@bovinphang/craft-common",
-      "packageVersion": "1.0.0",
+      "packageVersion": "1.0.1",
       "language": "zh-CN",
       "skills": [
         {
           "id": "cc-debug-methodology",
-          "version": "1.0.0",
+          "version": "1.0.1",
           "sourcePackage": "@bovinphang/craft-common",
           "repository": "https://github.com/bovinphang/craft-common",
           "files": [
@@ -320,7 +320,7 @@
         },
         {
           "id": "cc-doc-sync-core",
-          "version": "1.0.0",
+          "version": "1.0.1",
           "sourcePackage": "@bovinphang/craft-common",
           "repository": "https://github.com/bovinphang/craft-common",
           "files": [
@@ -336,7 +336,7 @@
         },
         {
           "id": "cc-drawio-studio",
-          "version": "1.0.0",
+          "version": "1.0.1",
           "sourcePackage": "@bovinphang/craft-common",
           "repository": "https://github.com/bovinphang/craft-common",
           "files": [
@@ -456,7 +456,7 @@
         },
         {
           "id": "cc-refactoring-core",
-          "version": "1.0.0",
+          "version": "1.0.1",
           "sourcePackage": "@bovinphang/craft-common",
           "repository": "https://github.com/bovinphang/craft-common",
           "files": [
@@ -472,7 +472,7 @@
         },
         {
           "id": "cc-source-driven-development",
-          "version": "1.0.0",
+          "version": "1.0.1",
           "sourcePackage": "@bovinphang/craft-common",
           "repository": "https://github.com/bovinphang/craft-common",
           "files": [
@@ -488,7 +488,7 @@
         },
         {
           "id": "cc-tdd-methodology",
-          "version": "1.0.0",
+          "version": "1.0.1",
           "sourcePackage": "@bovinphang/craft-common",
           "repository": "https://github.com/bovinphang/craft-common",
           "files": [
@@ -504,7 +504,7 @@
         },
         {
           "id": "cc-technical-diagrams",
-          "version": "1.0.0",
+          "version": "1.0.1",
           "sourcePackage": "@bovinphang/craft-common",
           "repository": "https://github.com/bovinphang/craft-common",
           "files": [
@@ -514,7 +514,7 @@
             },
             {
               "relativePath": "assets/interactive-diagram.html",
-              "hash": "95e2c0a2afc0646eaaee838a5ffa8ea4a545b10fa608619c415626ccc515142b"
+              "hash": "b074a5810a8dc31b0f9ca116fc80fd3f580d52f507dc8befd8c33f1b855ef688"
             },
             {
               "relativePath": "assets/quality-examples/README.md",
@@ -534,7 +534,7 @@
             },
             {
               "relativePath": "assets/quality-examples/sequence.mmd",
-              "hash": "1e1c2f814fb47bb13389e8b511ec1d4f070cc446c505f3827dca4d318b974ae5"
+              "hash": "dab1b4467848ded0bf9db0919a03afd1d7dce83412baa273e9e3a6cfd40c1c05"
             },
             {
               "relativePath": "assets/quality-examples/workflow.json",
@@ -542,7 +542,7 @@
             },
             {
               "relativePath": "assets/quality-examples/workflow.mmd",
-              "hash": "4e1d781656cb53089c2726103e2900ca000f9454330d2598efdef81b1e656a4a"
+              "hash": "f39960572023011b1e2c738c72af7eb50db0673de6ddd5ed1a9bf5a09fdfdb3a"
             },
             {
               "relativePath": "references/diagram-workflows.md",
@@ -587,7 +587,7 @@
           ]
         }
       ],
-      "digest": "cdff3db6460ad6aa38a2e15cb63d55fed302027dce5e3711ba1e5754f30dafc4"
+      "digest": "2a3602b5c95f8dce0ba8fd0b62d94d954e3a40b66bf27276f2b09b48d2bd937a"
     }
   },
   "files": [
@@ -749,7 +749,7 @@
     },
     {
       "relativePath": "localized/zh-CN/skills/cc-technical-diagrams/assets/interactive-diagram.html",
-      "hash": "95e2c0a2afc0646eaaee838a5ffa8ea4a545b10fa608619c415626ccc515142b"
+      "hash": "b074a5810a8dc31b0f9ca116fc80fd3f580d52f507dc8befd8c33f1b855ef688"
     },
     {
       "relativePath": "localized/zh-CN/skills/cc-technical-diagrams/assets/quality-examples/README.md",
@@ -769,7 +769,7 @@
     },
     {
       "relativePath": "localized/zh-CN/skills/cc-technical-diagrams/assets/quality-examples/sequence.mmd",
-      "hash": "1e1c2f814fb47bb13389e8b511ec1d4f070cc446c505f3827dca4d318b974ae5"
+      "hash": "dab1b4467848ded0bf9db0919a03afd1d7dce83412baa273e9e3a6cfd40c1c05"
     },
     {
       "relativePath": "localized/zh-CN/skills/cc-technical-diagrams/assets/quality-examples/workflow.json",
@@ -777,7 +777,7 @@
     },
     {
       "relativePath": "localized/zh-CN/skills/cc-technical-diagrams/assets/quality-examples/workflow.mmd",
-      "hash": "4e1d781656cb53089c2726103e2900ca000f9454330d2598efdef81b1e656a4a"
+      "hash": "f39960572023011b1e2c738c72af7eb50db0673de6ddd5ed1a9bf5a09fdfdb3a"
     },
     {
       "relativePath": "localized/zh-CN/skills/cc-technical-diagrams/references/diagram-workflows.md",
@@ -853,7 +853,7 @@
     },
     {
       "relativePath": "localized/zh-CN/skills/metadata.json",
-      "hash": "898f511c9f42fa935f83c70e1768f26078774a0ae1dedc3d05d75a14e5f0a2a6"
+      "hash": "6e65f767a36ef81be73a8c8e9b962e5e65b852fe7ad6c59bb06ae6e5c2ffcd03"
     },
     {
       "relativePath": "localized/zh-CN/skills/relations.json",
@@ -1021,7 +1021,7 @@
     },
     {
       "relativePath": "skills/cc-technical-diagrams/assets/interactive-diagram.html",
-      "hash": "d011f1ebd9f6916025f557e97a2cdbc014d8197094fddbd8f35b4136bcc2c14c"
+      "hash": "3c3c4aa9b5293414d643a0e552a65a0ee8c44cca2a28bebbbc9ed422ec8c006c"
     },
     {
       "relativePath": "skills/cc-technical-diagrams/assets/quality-examples/README.md",
@@ -1041,7 +1041,7 @@
     },
     {
       "relativePath": "skills/cc-technical-diagrams/assets/quality-examples/sequence.mmd",
-      "hash": "c57f9be5a4647962f84b145e1fc82b396395090f53b6680335748396e2f7d267"
+      "hash": "5b4d9d909d11ef0092cb8503dece1be8320878c77425249643eb166ad22b8cad"
     },
     {
       "relativePath": "skills/cc-technical-diagrams/assets/quality-examples/workflow.json",
@@ -1049,7 +1049,7 @@
     },
     {
       "relativePath": "skills/cc-technical-diagrams/assets/quality-examples/workflow.mmd",
-      "hash": "eb0f8ca306f49185419c427e804972d185371ad9cd5f0e1eca442aa37e9c577f"
+      "hash": "6bdbf672123c4b44ab244ba1c8aebfd5509bf6d83e6e29e711902e8938323923"
     },
     {
       "relativePath": "skills/cc-technical-diagrams/references/diagram-workflows.md",
@@ -1125,7 +1125,7 @@
     },
     {
       "relativePath": "skills/metadata.json",
-      "hash": "dd66e665b286aa5ba0a80e80bb21022092a391901e91c66e9f6b7cad6803d3dd"
+      "hash": "d4e678dc9dbaaea843c517f5adaa15c1bddf1f771319e0d541862e363bed3b98"
     },
     {
       "relativePath": "skills/relations.json",

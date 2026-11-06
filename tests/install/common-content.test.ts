@@ -25,7 +25,7 @@ test("从固定公共包生成中英文快照且不依赖源码相邻目录", (t
   syncCommonContent({ productRoot: root, commonRoot, check: false });
   assert.equal(readProductCommonCatalog(root, "en").skills.length, 7);
   assert.equal(readProductCommonCatalog(root, "zh-CN").skills.length, 7);
-  assert.equal(readProductCommonCatalog(root, "en").packageVersion, "1.0.0");
+  assert.equal(readProductCommonCatalog(root, "en").packageVersion, "1.0.1");
   assert.equal(readProductCommonCatalog(root, "en").root, root);
   assert.ok(
     fs.existsSync(

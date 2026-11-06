@@ -9,7 +9,7 @@
       "root-cause"
     ],
     "summary": "证据驱动诊断",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "license": "MIT",
     "homepage": "https://github.com/bovinphang/craft-common",
     "repository": "https://github.com/bovinphang/craft-common",
@@ -40,7 +40,7 @@
       "i18n"
     ],
     "summary": "文档事实同步",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "license": "MIT",
     "homepage": "https://github.com/bovinphang/craft-common",
     "repository": "https://github.com/bovinphang/craft-common",
@@ -72,7 +72,7 @@
       "architecture"
     ],
     "summary": "可编辑技术图",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "license": "MIT",
     "homepage": "https://github.com/bovinphang/craft-common",
     "repository": "https://github.com/bovinphang/craft-common",
@@ -104,7 +104,7 @@
       "baseline"
     ],
     "summary": "保持行为的重构",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "license": "MIT",
     "homepage": "https://github.com/bovinphang/craft-common",
     "repository": "https://github.com/bovinphang/craft-common",
@@ -135,7 +135,7 @@
       "local-knowledge"
     ],
     "summary": "以事实来源驱动开发",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "license": "MIT",
     "homepage": "https://github.com/bovinphang/craft-common",
     "repository": "https://github.com/bovinphang/craft-common",
@@ -166,7 +166,7 @@
       "red-green-refactor"
     ],
     "summary": "测试驱动开发",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "license": "MIT",
     "homepage": "https://github.com/bovinphang/craft-common",
     "repository": "https://github.com/bovinphang/craft-common",
@@ -198,7 +198,7 @@
       "png-qa"
     ],
     "summary": "结构化技术图表",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "license": "MIT",
     "homepage": "https://github.com/bovinphang/craft-common",
     "repository": "https://github.com/bovinphang/craft-common",

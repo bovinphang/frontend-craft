@@ -6,3 +6,7 @@
 *.md text eol=lf
 hooks/** text eol=lf
 scripts/** text eol=lf
+
+# 公共内容锁按原始字节校验，跨平台检出保持 LF。
+skills/cc-*/** text=auto eol=lf
+localized/zh-CN/skills/cc-*/** text=auto eol=lf

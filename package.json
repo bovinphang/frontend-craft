@@ -113,6 +113,6 @@
   ],
   "packageManager": "pnpm@12.4.1",
   "dependencies": {
-    "@bovinphang/craft-common": "1.0.0"
+    "@bovinphang/craft-common": "1.0.1"
   }
 }

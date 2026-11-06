@@ -12,7 +12,7 @@ const root = resolvePluginRoot(import.meta.url);
 test("公共独立包来源版本和前端产品版本分离", () => {
   assert.deepEqual(resolveSkillOrigin("cc-drawio-studio", root), {
     packageName: "@bovinphang/craft-common",
-    version: "1.0.0",
+    version: "1.0.1",
     repository: "https://github.com/bovinphang/craft-common",
   });
   assert.deepEqual(resolveSkillOrigin("fec-react-project-standard", root), {

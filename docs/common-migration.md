@@ -1,6 +1,8 @@
 # Common capability migration in frontend-craft 3.0
 
-The 3.x series has not been released. Version 3.0 uses `cc-*` common entries immediately. The exact `@bovinphang/craft-common@1.0.0` dependency is delivered with the product; users do not install a third plugin manually.
+The 3.x series has not been released. Version 3.0 uses `cc-*` common entries immediately. The exact `@bovinphang/craft-common@1.0.1` dependency is delivered with the product; users do not install a third plugin manually.
+
+The 1.0.1 repair fixes large transaction journal recovery. Both products must use the same common version, language and digest. For an existing 1.0.0 deployment, uninstall the old consumers and resolve preserved edits before installing the 1.0.1 consumers. Do not force-overwrite shared resources. A clean public-registry installation requires the repair release to be published.
 
 | Previous entry | Version 3.0 |
 | --- | --- |
