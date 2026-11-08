@@ -568,3 +568,5 @@ npx skills check                           # 利用可能なアップデート�
 - `cc-tdd-methodology`
 
 `fec runtime check-migration codex --local --json` を実行し、[移行ガイド](../common-migration.md)を確認してください。CLI は共有ファイルの所有権とアンインストール時の参照を管理します。ネイティブ配布では単一製品の完全なリソースを保証しますが、2 製品間のネイティブ重複排除は保証しません。
+
+共通ソースは `@bovinphang/craft-common@1.0.1` に固定されています。[構成と保守範囲（英語）](../project-structure.md)と[開発チェック（英語）](../../CONTRIBUTING.md)を参照してください。

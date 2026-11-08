@@ -1,6 +1,6 @@
 # 项目结构
 
-`frontend-craft` 的详细目录布局。
+`frontend-craft` 的目录布局。当前版本 3.0.0，使用 TypeScript、ESM 和 esbuild，测试使用 Node.js `node:test`。分发 14 个 Agent、61 个 Skill（54 个前端 + 7 个公共）和 11 个命令。
 
 ## 仓库布局
 
@@ -83,6 +83,11 @@ frontend-craft/
 |   |-- fec-motion-interaction/         # 场景化动效强度、页面转场、滚动动画、reduced motion
 |   |-- fec-vite-project-standard/      # Vite 配置、环境变量安全、HMR、代理、构建与 library mode
 |   |-- fec-alchemy/                    # 项目吸收工作流——抽取参考系统能力并原创化重写
+|   |-- cc-technical-diagrams/ # 技术图、导出及 PNG QA
+|   |-- cc-doc-sync-core/ # 公共文档事实同步方法
+|   |-- cc-debug-methodology/ # 公共循证诊断方法
+|   |-- cc-refactoring-core/ # 公共行为保持重构方法
+|   |-- cc-tdd-methodology/ # 公共 TDD 方法
 |
 |-- commands/         # 快速执行的斜杠命令
 |   |-- fec-init.md     # /fec-init - 初始化项目模板
@@ -102,13 +107,22 @@ frontend-craft/
 |
 |-- src/              # 发布运行时代码的 TypeScript 源码
 |   |-- hooks/         # 打包到 dist/hooks 的运行时 hook 脚本
-|   |-- security-check.ts      # 拦截危险命令
-|   |-- format-changed-file.ts # 自动执行 Prettier 格式化
-|   |-- run-tests.ts           # 会话结束时运行检查
-|   |-- session-start.ts       # 会话开始时检测框架
-|   |-- notify.ts              # 跨平台桌面通知
+|   |   |-- security-check.ts      # 拦截危险命令
+|   |   |-- format-changed-file.ts # 自动执行 Prettier 格式化
+|   |   |-- run-tests.ts           # 会话结束时运行检查
+|   |   |-- session-start.ts       # 会话开始时检测框架
+|   |   |-- notify.ts              # 跨平台桌面通知
 |   |-- install/       # 安装器核心（CLI、交互向导、运行时转换器）
+|   |   |-- cli-lifecycle.ts # CLI 自升级/自卸载与资源刷新
+|   |   |-- migration.ts # 只读旧入口迁移检查
+|   |   |-- shared/ # 公共快照、所有权与产品事务协调
 |   |-- openclaw/      # OpenClaw 运行时 TypeScript 源码
+|
+|-- bin/              # TypeScript CLI 入口，构建到 dist/bin/
+|-- localized/zh-CN/  # 中文 agents、commands、skills 和 templates
+|-- common-content.lock.json # 固定公共版本、来源与文件摘要
+|-- tests/            # 内容、安装、迁移、公共事务与 CLI 生命周期测试
+|-- dist/             # 生成的 CLI、hooks 和 OpenClaw bundle，不手改
 |
 |-- scripts/          # 仓库维护脚本源码，不发布到 npm runtime
 |
@@ -146,3 +160,5 @@ frontend-craft/
 技术图质量工作流：`cc-technical-diagrams` 的标准时序/流程图优先本地 Mermaid，架构图复用 draw.io 工作流，工具缺失时使用 JSON/HTML。导出 PNG 时生成实际测量且与缩放一致的 manifest，再运行 QA 并检查最终 PNG；保留完整文字、显式布局与关系，最多自动修复两轮，未解决问题需明确报告。可复现样例位于 `skills/cc-technical-diagrams/assets/quality-examples/`。
 
 [审核范围与技术图交付](review-and-diagram-workflows.md) — 范围规则、工具前提、导出命令与 QA 边界。
+
+公共 `cc-*` 与领域方法副本由 `craft-common@1.0.1` 生成；修改上游后运行 `pnpm run sync:common`，使用 `pnpm run check:common` 只读检查。不要手工编辑公共分发副本。领域内容的权威源在本仓库，中文镜像位于 `localized/zh-CN/`。

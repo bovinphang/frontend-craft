@@ -580,3 +580,5 @@ Version 3.0 is unreleased. It delivers 54 frontend entries and seven shared entr
 
 Run `fec runtime check-migration codex --local --json` and read [migration guide](docs/common-migration.md).
 CLI installation manages shared ownership and uninstall references. Native channels guarantee complete single-product payloads; native dual-product deduplication is not promised.
+
+Pinned common source: `@bovinphang/craft-common@1.0.1`. See [project structure and maintenance boundaries](docs/project-structure.md) and [contributor checks](CONTRIBUTING.md).

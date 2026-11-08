@@ -1,6 +1,6 @@
 # Project Structure
 
-Detailed directory layout for `frontend-craft`.
+Directory layout for `frontend-craft` 3.0.0. The CLI uses TypeScript, ESM and esbuild; tests use Node.js `node:test`. Distribution includes 14 agents, 61 skills (54 frontend + 7 common) and 11 commands.
 
 ## Repository Layout
 
@@ -27,9 +27,6 @@ frontend-craft/
 |   |-- fec-design-token-mapper.md   # Map design variables to Design Tokens
 |
 |-- skills/           # Workflow definitions and domain knowledge
-|   |-- fec-code-review/    # Architecture, types, rendering, styles, a11y
-|   |-- fec-security-review/     # XSS, CSRF, sensitive data, input validation
-|   |-- fec-accessibility-check/     # WCAG 2.2 accessibility, keyboard, focus, screen readers
 |   |-- fec-code-review/    # Architecture, types, rendering, styles, a11y
 |   |-- fec-security-review/     # XSS, CSRF, sensitive data, input validation
 |   |-- fec-accessibility-check/     # WCAG 2.2 accessibility, keyboard, focus, screen readers
@@ -86,6 +83,11 @@ frontend-craft/
 |   |-- fec-web-video-presentation/     # Recordable 16:9 step-driven web video presentations
 |   |-- fec-motion-interaction/         # Context-aware motion intensity, transitions, scroll animation, reduced motion
 |   |-- fec-alchemy/                    # Project absorption workflow — extract reference ideas and redesign natively
+|   |-- cc-technical-diagrams/ # Technical diagrams, export and PNG QA
+|   |-- cc-doc-sync-core/ # Shared documentation fact synchronization
+|   |-- cc-debug-methodology/ # Shared evidence-driven diagnosis
+|   |-- cc-refactoring-core/ # Shared behavior-preserving refactoring
+|   |-- cc-tdd-methodology/ # Shared TDD methodology
 |
 |-- commands/         # Slash commands for quick execution
 |   |-- fec-init.md     # /fec-init - Initialize project templates
@@ -105,13 +107,22 @@ frontend-craft/
 |
 |-- src/              # TypeScript source for published runtime code
 |   |-- hooks/         # Runtime hook scripts bundled to dist/hooks
-|   |-- security-check.ts      # Block dangerous commands
-|   |-- format-changed-file.ts # Auto Prettier formatting
-|   |-- run-tests.ts           # Run checks on session end
-|   |-- session-start.ts       # Detect framework on session start
-|   |-- notify.ts              # Cross-platform desktop notifications
+|   |   |-- security-check.ts      # Block dangerous commands
+|   |   |-- format-changed-file.ts # Auto Prettier formatting
+|   |   |-- run-tests.ts           # Run checks on session end
+|   |   |-- session-start.ts       # Detect framework on session start
+|   |   |-- notify.ts              # Cross-platform desktop notifications
 |   |-- install/       # Installer core (CLI, interactive wizard, runtime converters)
+|   |   |-- cli-lifecycle.ts # CLI self-update/removal and resource refresh
+|   |   |-- migration.ts # Read-only legacy-entry checks
+|   |   |-- shared/ # Common snapshots, ownership and product transactions
 |   |-- openclaw/      # OpenClaw runtime TypeScript source
+|
+|-- bin/              # TypeScript CLI entry bundled into dist/bin/
+|-- localized/zh-CN/  # Chinese agents, commands, skills and templates
+|-- common-content.lock.json # Pinned common version, provenance and hashes
+|-- tests/            # Content, install, migration, shared transaction and CLI lifecycle tests
+|-- dist/             # Generated CLI, hooks and OpenClaw bundles; do not edit
 |
 |-- scripts/          # Source-run repository maintenance scripts, not published to npm
 |
@@ -149,3 +160,5 @@ frontend-craft/
 Technical diagram quality: `cc-technical-diagrams` prefers local Mermaid for standard sequence/workflow diagrams and the draw.io workflow for editable architecture, with JSON/HTML fallback when tools are unavailable. Export a browser-measured manifest scaled to the PNG, run QA and inspect the final image. Preserve complete text, explicit layout and relationships; repair the source for at most two automatic rounds and report unresolved issues. Reproducible fixtures are in `skills/cc-technical-diagrams/assets/quality-examples/`.
 
 [Review scope and technical diagram delivery](review-and-diagram-workflows.md) — scope, tool prerequisites, export commands, and QA limits.
+
+Shared `cc-*` entries and embedded method copies are generated from `craft-common@1.0.1`. Run `pnpm run sync:common` after upstream changes and `pnpm run check:common` for a read-only comparison. Do not edit generated common snapshots. Frontend domain content is maintained here, with Chinese mirrors in `localized/zh-CN/`.

@@ -120,13 +120,13 @@ Clone the repo and load via `--plugin-dir` (no install, suitable for development
 ```bash
 git clone https://github.com/bovinphang/frontend-craft.git
 cd frontend-craft
-npm install
-npm run build
+pnpm install --frozen-lockfile
+pnpm run build
 cd ..
 claude --plugin-dir ./frontend-craft
 ```
 
-When using `--plugin-dir` for development, run `npm run build` after changing hook or CLI sources because Claude executes the compiled files under `dist/`. Disable or avoid a Marketplace install of the same plugin in that session so you know which copy is running.
+When using `--plugin-dir` for development, run `pnpm run build` after changing hook or CLI sources because Claude executes the compiled files under `dist/`. Disable or avoid a Marketplace install of the same plugin in that session so you know which copy is running.
 
 ### Option 4: Git Submodule (project-level sharing)
 

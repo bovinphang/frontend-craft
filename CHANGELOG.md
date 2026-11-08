@@ -9,7 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 Project-facing release notes are maintained in English from 2.0.0 onward. Historical entries may preserve their original language.
 
-## [3.0.0] - Unreleased
+## [3.0.0] - 2026-11-06
 
 ### Shared capabilities
 

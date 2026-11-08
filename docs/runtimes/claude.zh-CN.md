@@ -118,13 +118,13 @@ Marketplace 条目会从已发布的 npm 包解析插件；npm 包中包含 Clau
 ```bash
 git clone https://github.com/bovinphang/frontend-craft.git
 cd frontend-craft
-npm install
-npm run build
+pnpm install --frozen-lockfile
+pnpm run build
 cd ..
 claude --plugin-dir ./frontend-craft
 ```
 
-使用 `--plugin-dir` 做开发调试时，修改 hooks 或 CLI 源码后需要重新执行 `npm run build`，因为 Claude 会运行 `dist/` 下的已编译文件。请避免在同一会话里同时启用 Marketplace 版本，这样才能确定当前运行的是哪一份代码。
+使用 `--plugin-dir` 做开发调试时，修改 hooks 或 CLI 源码后需要重新执行 `pnpm run build`，因为 Claude 会运行 `dist/` 下的已编译文件。请避免在同一会话里同时启用 Marketplace 版本，这样才能确定当前运行的是哪一份代码。
 
 ### 选项 4：Git Submodule（项目内共享）
 

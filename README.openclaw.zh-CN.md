@@ -47,9 +47,9 @@ openclaw plugins install frontend-craft
 从主仓库构建出的本地 tarball 安装：
 
 ```bash
-npm install
-npm run pack:openclaw
-openclaw plugins install ./frontend-craft-<version>.tgz
+pnpm install --frozen-lockfile
+pnpm run pack:openclaw
+openclaw plugins install ./npm-packages/openclaw/frontend-craft-<version>.tgz
 ```
 
 本地开发时可链接包目录：

@@ -580,3 +580,5 @@ npx skills check                           # 预览可用更新
 
 迁移前运行 `fec runtime check-migration codex --local --json`，再参阅 [migration guide](docs/zh-CN/common-migration.md).
 CLI 管理共享安装及卸载引用；原生插件渠道本期保证单产品资源完整，不承诺双产品原生去重。
+
+公共源精确固定为 `@bovinphang/craft-common@1.0.1`。参见[项目结构与维护边界](docs/zh-CN/project-structure.md)及[贡献校验指引](CONTRIBUTING.zh-CN.md)。

@@ -568,3 +568,5 @@ npx skills check                           # 사용 가능한 업데이트 미�
 - `cc-tdd-methodology`
 
 `fec runtime check-migration codex --local --json`을 실행하고 [마이그레이션 가이드](../common-migration.md)를 확인하세요. CLI는 공유 파일 소유권과 제거 시 참조를 관리합니다. 네이티브 배포는 단일 제품의 완전한 리소스를 보장하며, 두 제품의 네이티브 중복 제거는 보장하지 않습니다.
+
+공통 소스는 `@bovinphang/craft-common@1.0.1`로 고정됩니다. [구조와 유지 관리 범위(영어)](../project-structure.md), [개발 검증 안내(영어)](../../CONTRIBUTING.md)를 참고하세요.

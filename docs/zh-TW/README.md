@@ -568,3 +568,5 @@ npx skills check                           # 預覽可用更新
 - `cc-tdd-methodology`
 
 執行 `fec runtime check-migration codex --local --json` 並閱讀 [遷移指南](../common-migration.md)。CLI 管理共用檔案所有權與解除安裝引用；原生外掛本期保證單一產品資源完整，不承諾雙產品原生去重。
+
+公共來源精確固定為 `@bovinphang/craft-common@1.0.1`。參見[專案結構與維護邊界（簡體中文）](../zh-CN/project-structure.md)及[貢獻校驗指引（簡體中文）](../../CONTRIBUTING.zh-CN.md)。

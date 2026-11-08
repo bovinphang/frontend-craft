@@ -18,7 +18,10 @@
 快速自检（最小推荐）：
 
 ```bash
-pnpm test                         # 通用校验
+pnpm lint                         # ESLint + 内容一致性
+pnpm typecheck                    # TypeScript + Skill 脚本类型检查
+pnpm run check:common             # 公共快照只读校验
+pnpm test                         # 构建 + 全部测试
 pnpm run pack:skills              # Skill 变更
 pnpm run check:skills-publish     # Skill 变更
 pnpm run typecheck:openclaw       # OpenClaw 变更
@@ -98,7 +101,7 @@ node --import tsx --test tests/install/all-runtimes-dry.test.ts
 FRONTEND_CRAFT_FORCE_INTERACTIVE=1 node --import tsx --test tests/install/cli.test.ts
 ```
 
-`pnpm test` 会先运行 `pnpm run build`，再通过 `tsx` 执行 `tests/` 下精选的 converter 与 installer 测试。
+`pnpm test` 会先运行 `pnpm run build`，再递归发现 `tests/**/*.test.ts`，通过 Node.js `node:test` 串行执行全部测试。已有构建时可使用 `pnpm run test:only`。
 
 ## OpenClaw 构建流程
 
@@ -124,7 +127,7 @@ pnpm run check:skills-publish   # 校验包元数据、索引和引用文件
 pnpm run pack:all               # 构建 + 测试 + OpenClaw 包 + 独立 skill 包
 ```
 
-`pnpm run pack:skills` 会生成 `skill-packages/<skill-id>/`，其中包含 `SKILL.md`、该 skill 实际引用的 `references/` 文件、`metadata.json`、`package.json`、`README.md` 和 `LICENSE`。同时会生成 `skill-packages/index.json`，供平台索引或发布自动化使用。
+`pnpm run pack:skills` 会生成 `skill-packages/<skill-id>/`，其中包含 `SKILL.md`、实际引用的 `references/` 及运行所需的 scripts、assets、data、styles 等资源、`metadata.json`、`package.json`、`README.md` 和 `LICENSE`。同时会生成 `skill-packages/index.json`，供平台索引或发布自动化使用。
 
 修改 skill 时，请保持这些源文件一致：
 
@@ -149,7 +152,7 @@ pnpm run pack:all               # 构建 + 测试 + OpenClaw 包 + 独立 skill 
 | `pnpm run clean`                | 删除 `dist/`。                                                             |
 | `pnpm run typecheck`            | 运行主项目 TypeScript 检查，并检查 skill 辅助脚本。                        |
 | `pnpm run build`                | 运行 `clean`、`typecheck`，并通过 `scripts/build-dist.ts` 打包 CLI/hooks。 |
-| `pnpm test`                     | 先构建，再通过 `tsx` 运行精选的 `node:test` 测试集。                       |
+| `pnpm test`                     | 先构建，再递归发现并执行全部 `node:test` 测试。                       |
 | `pnpm run build:openclaw`       | 构建主项目，然后打包 OpenClaw runtime 输出。                               |
 | `pnpm run audit:skills`         | 构建后输出 skill 说明长度与描述重叠度信号。                                |
 | `pnpm run typecheck:openclaw`   | 使用 `tsconfig.openclaw.json` 检查 OpenClaw 类型。                         |
@@ -342,7 +345,7 @@ skills:
 1. 更新 `hooks/hooks.json`。
 2. 如需 runtime hook 脚本，放在 `src/hooks/` 下，并优先使用跨平台 Node.js。
 3. 在 `scripts/build-dist.ts` 中新增对应入口，确保 `pnpm run build` 会将其打包到 `dist/hooks/`。
-4. 在 `hooks/hooks.json` 中，引用内置 hook 入口请使用 **`${CLAUDE_PLUGIN_ROOT}/dist/hooks/<script>.js`**（Claude Code 会在运行时替换根路径；见官方 [Plugins reference](https://code.claude.com/docs/en/plugins-reference)）。本仓库的 Claude 安装器在将 `hooks.json` 写入 `.claude/` 时，也会把 **`${CLAUDE_PLUGIN_ROOT}`** 及旧占位符 **`${FRONTEND_CRAFT_ROOT}`** 展开为绝对路径。
+4. 在 `hooks/hooks.json` 中，引用内置 hook 入口请使用 **`${CLAUDE_PLUGIN_ROOT}/dist/hooks/<script>.js`**（Claude Code 会在运行时替换根路径；见官方 [Plugins reference](https://code.claude.com/docs/en/plugins-reference)）。本仓库的 Claude 安装器在将 CLI 管理的 hook 条目合并到 `.claude/settings.json` 时，也会把 **`${CLAUDE_PLUGIN_ROOT}`** 及旧占位符 **`${FRONTEND_CRAFT_ROOT}`** 展开为绝对路径。
 5. 仓库维护脚本继续放在 `scripts/`，不要在 runtime hook 配置中直接引用它们。
 6. 更新 `README.md` 的 Hooks 表格。
 
@@ -374,3 +377,7 @@ skills:
 **安全敏感漏洞**不要提交公开 Issue，请按 [SECURITY.zh-CN.md](SECURITY.zh-CN.md)（或 [SECURITY.md](SECURITY.md)）处理。
 
 修改审核或图表能力时，同步各语言 README 与运行时指南中的范围默认值、自然语言示例、工具前提、QA 边界和覆盖报告要求。参见 [审核范围与技术图交付](docs/zh-CN/review-and-diagram-workflows.md).
+
+## 公共内容维护
+
+`cc-*` Skill 和内嵌公共方法由精确依赖 `@bovinphang/craft-common@1.0.1` 生成，禁止直接修改分发副本。先在 craft-common 修改并准备对应包，再运行 `pnpm run sync:common`，审阅 `common-content.lock.json` 与中英文快照，最后运行 `pnpm run check:common` 和 `pnpm lint`。前端领域 Skill、元数据及中文镜像仍在本仓库维护。完整目录和维护边界见[项目结构](docs/zh-CN/project-structure.md)与[公共能力迁移](docs/zh-CN/common-migration.md)。

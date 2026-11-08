@@ -4,3 +4,4 @@ allowBuilds:
   openclaw: false
   protobufjs: false
   tree-sitter-bash: false
+  minimumReleaseAgeExclude: '@bovinphang/*'

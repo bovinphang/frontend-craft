@@ -20,7 +20,10 @@ Quick checks (minimum recommended):
 `pnpm lint` checks source code and both content languages. `pnpm format:check` checks changed source/config files without modifying them. `pnpm test` recursively discovers `tests/**/*.test.ts`, so new tests need no script-list update.
 
 ```bash
-pnpm test                         # General validation
+pnpm lint                         # ESLint + content validation
+pnpm typecheck                    # TypeScript + skill script types
+pnpm run check:common             # Read-only common snapshot check
+pnpm test                         # Build + all tests
 pnpm run pack:skills              # Skill changes
 pnpm run check:skills-publish     # Skill changes
 pnpm run typecheck:openclaw       # OpenClaw changes
@@ -100,7 +103,7 @@ For testing the interactive installation wizard, set `FRONTEND_CRAFT_FORCE_INTER
 FRONTEND_CRAFT_FORCE_INTERACTIVE=1 node --import tsx --test tests/install/cli.test.ts
 ```
 
-`pnpm test` runs `pnpm run build` first, then executes the curated converter and installer test suite from `tests/`.
+`pnpm test` runs `pnpm run build` first, then recursively discovers every `tests/**/*.test.ts` file and executes them serially with Node.js `node:test`. `pnpm run test:only` runs that suite against an existing build.
 
 ## OpenClaw Build
 
@@ -126,7 +129,7 @@ pnpm run check:skills-publish   # Verify package metadata, index, and copied ref
 pnpm run pack:all               # Build + test + OpenClaw package + standalone skill packages
 ```
 
-`pnpm run pack:skills` writes `skill-packages/<skill-id>/` with `SKILL.md`, only the referenced `references/` files, `metadata.json`, `package.json`, `README.md`, and `LICENSE`. It also writes `skill-packages/index.json` for platform crawlers and release automation.
+`pnpm run pack:skills` writes `skill-packages/<skill-id>/` with `SKILL.md`, referenced `references/` files and required scripts, assets, data and styles, `metadata.json`, `package.json`, `README.md`, and `LICENSE`. It also writes `skill-packages/index.json` for platform crawlers and release automation.
 
 When changing a skill, keep these source files aligned:
 
@@ -147,7 +150,7 @@ Use `package.json` scripts as the public development entrypoints.
 | `pnpm run clean`                | Remove `dist/`.                                                                  |
 | `pnpm run typecheck`            | Run main TypeScript checks plus checked skill support scripts.                   |
 | `pnpm run build`                | Run `clean`, `typecheck`, and bundle CLI/hooks via `scripts/build-dist.ts`.      |
-| `pnpm test`                     | Build, then run the curated `node:test` suite with `tsx`.                        |
+| `pnpm test`                     | Build, then recursively discover and run all `node:test` tests.                        |
 | `pnpm run build:openclaw`       | Build the main project, then bundle OpenClaw runtime output.                     |
 | `pnpm run audit:skills`         | Build, then report skill instruction size and description overlap signals.       |
 | `pnpm run typecheck:openclaw`   | Run TypeScript checking for OpenClaw with `tsconfig.openclaw.json`.              |
@@ -340,7 +343,7 @@ skills:
 1. Update `hooks/hooks.json`.
 2. Put runtime hook scripts under `src/hooks/` and prefer cross-platform Node.js.
 3. Add each new hook entrypoint to `scripts/build-dist.ts` so `pnpm run build` bundles it into `dist/hooks/`.
-4. In `hooks/hooks.json`, use **`${CLAUDE_PLUGIN_ROOT}/dist/hooks/<script>.js`** for bundled hook entrypoints (Claude Code substitutes the root at runtime; see the official [Plugins reference](https://code.claude.com/docs/en/plugins-reference)). The Claude installer in this repo also expands **`${CLAUDE_PLUGIN_ROOT}`** and legacy **`${FRONTEND_CRAFT_ROOT}`** to absolute paths when it writes `hooks.json` under `.claude/`.
+4. In `hooks/hooks.json`, use **`${CLAUDE_PLUGIN_ROOT}/dist/hooks/<script>.js`** for bundled hook entrypoints (Claude Code substitutes the root at runtime; see the official [Plugins reference](https://code.claude.com/docs/en/plugins-reference)). The Claude installer in this repo also expands **`${CLAUDE_PLUGIN_ROOT}`** and legacy **`${FRONTEND_CRAFT_ROOT}`** to absolute paths when it merges CLI-managed hook entries into `.claude/settings.json`. The source `hooks/hooks.json` remains the native plugin hook configuration.
 5. Keep repository maintenance scripts under `scripts/`; do not reference them directly from runtime hook configuration.
 6. Update the Hooks table in `README.md`.
 
@@ -372,3 +375,7 @@ Use [GitHub Issues](https://github.com/bovinphang/frontend-craft/issues) for bug
 Do not file security-sensitive vulnerabilities as public issues. Follow [SECURITY.md](SECURITY.md) instead.
 
 When changing review or diagram capabilities, synchronize scope defaults, natural-language examples, tool prerequisites, QA limits, and coverage reporting across README translations and runtime guides. See [review scope and technical diagram delivery](docs/review-and-diagram-workflows.md).
+
+## Maintaining common content
+
+`cc-*` skills and embedded common methods are generated from the exact `@bovinphang/craft-common@1.0.1` dependency. Change the upstream common package first, prepare its corresponding package, then run `pnpm run sync:common`. Review `common-content.lock.json` and both language snapshots, then run `pnpm run check:common` and `pnpm lint`. Do not edit generated common content directly. Frontend domain skills, metadata and Chinese mirrors remain maintained here. See [project structure](docs/project-structure.md) and [common migration](docs/common-migration.md).
