@@ -1,24 +1,24 @@
-import { copyProductSkills } from "../shared/fs.js";
+import { createFileTools } from "../shared/fs.js";
 import path from "node:path";
 import fs from "node:fs";
 import type { InstallContext } from "../types.js";
-import {
-  copyDir,
-  ensureDir,
-  retireManagedTree,
-  readUtf8,
-  writeUtf8,
-} from "../shared/fs.js";
-
 /**
  * @param {import('../types.js').InstallContext} ctx
  */
 export async function installGemini(ctx: InstallContext): Promise<void> {
   const { contentRoot, baseDir, cwd, dryRun, isGlobal } = ctx;
-  if (dryRun) {
+  if (dryRun && !ctx.session) {
     console.log(`[dry-run] gemini -> ${baseDir}`);
     return;
   }
+  const {
+    ensureDir,
+    retireManagedTree,
+    copyProductSkills,
+    copyDir,
+    readUtf8,
+    writeUtf8,
+  } = createFileTools(ctx);
   ensureDir(baseDir);
   retireManagedTree(
     path.join(baseDir, "extensions", "frontend-craft", "skills"),
@@ -31,7 +31,6 @@ export async function installGemini(ctx: InstallContext): Promise<void> {
     path.join(contentRoot, "templates", "shared", "rules"),
     path.join(baseDir, "rules"),
   );
-
   const claudeTmpl = path.join(contentRoot, "templates", "claude", "CLAUDE.md");
   const geminiMd = path.join(isGlobal ? baseDir : cwd, "GEMINI.md");
   if (!fs.existsSync(geminiMd) && fs.existsSync(claudeTmpl)) {

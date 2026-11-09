@@ -8,11 +8,12 @@ import {
   extractReferencedFiles,
 } from "../../scripts/skill-packaging.js";
 const root = resolvePluginRoot(import.meta.url);
+const pinnedCommonVersion=JSON.parse(fs.readFileSync(path.join(root,"package.json"),"utf8")).dependencies["@bovinphang/craft-common"];
 
 test("公共独立包来源版本和前端产品版本分离", () => {
   assert.deepEqual(resolveSkillOrigin("cc-drawio-studio", root), {
     packageName: "@bovinphang/craft-common",
-    version: "1.0.1",
+    version: pinnedCommonVersion,
     repository: "https://github.com/bovinphang/craft-common",
   });
   assert.deepEqual(resolveSkillOrigin("fec-react-project-standard", root), {

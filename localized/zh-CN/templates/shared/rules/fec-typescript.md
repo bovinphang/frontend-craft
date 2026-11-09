@@ -1,6 +1,6 @@
 # TypeScript / JavaScript 规则
 
-编写、修改或评审 `.ts`、`.tsx`、`.js`、`.jsx` 时应用本文件。本文只保留项目常驻硬约束；复杂类型建模、`tsconfig` 分层、声明产物、DTO / view model 边界、类型测试与发布入口设计，交给 `fec-typescript-project-standard` skill 或专项评审处理。注释风格另见 `fec-code-comments.md`；E2E 与校验流程另见 `fec-testing.md`。
+编写、修改或评审 `.ts`、`.tsx`、`.js`、`.jsx` 时应用本文件。本文只保留项目常驻硬约束；复杂类型建模、`tsconfig` 分层、声明产物、DTO / view model 边界、类型测试与发布入口设计，交给 `cc-typescript-project-standard` skill 或专项评审处理。注释风格另见 `fec-code-comments.md`；E2E 与校验流程另见 `fec-testing.md`。
 
 ## 类型与接口
 
@@ -11,7 +11,7 @@
 - 对**导出**的函数、共享工具函数、公开类方法，写明参数与返回值类型。
 - **局部**变量在类型显而易见时交给 TypeScript 推断，不为显而易见的中间变量重复标注。
 - 重复出现的内联对象形状抽成具名 `interface` 或 `type`，避免同一契约散落在多个签名中。
-- 外部数据、API DTO、路由参数、表单值与组件 props 的边界要显式命名；复杂建模分流到 `fec-typescript-project-standard`。
+- 外部数据、API DTO、路由参数、表单值与组件 props 的边界要显式命名；复杂建模分流到 `cc-typescript-project-standard`。
 
 ### `interface` 与 `type`
 
@@ -37,7 +37,7 @@
 - 用具名 `interface` 或 `type` 定义 props，复杂公共 props 分流到类型模块。
 - 回调 props 写清参数与返回值；事件 payload 不用裸对象长期内联。
 - 无特殊理由不使用 `React.FC`，避免隐式 `children` 等差异。
-- TSX 泛型、复杂组件 props 或外部 DTO 映射问题，交给 React 规则与 `fec-typescript-project-standard` 共同收敛。
+- TSX 泛型、复杂组件 props 或外部 DTO 映射问题，交给 React 规则与 `cc-typescript-project-standard` 共同收敛。
 
 ## 单文件规模与模块拆分
 
@@ -74,7 +74,7 @@
 
 - 外部输入（表单、API、URL 参数、localStorage、postMessage、第三方 SDK 回调等）必须在边界处校验或收窄。
 - 可使用 Zod、Valibot、Yup 或项目选用的同类 schema 工具；不要把具体库作为无条件新依赖引入。
-- schema 推导类型可作为输入类型单一真源；复杂 DTO、领域模型与 UI view model 的分层交给 `fec-typescript-project-standard`。
+- schema 推导类型可作为输入类型单一真源；复杂 DTO、领域模型与 UI view model 的分层交给 `cc-typescript-project-standard`。
 
 ## 类型资产分层与命名
 

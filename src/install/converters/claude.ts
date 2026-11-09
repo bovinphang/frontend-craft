@@ -1,21 +1,12 @@
-import { copyProductSkills } from "../shared/fs.js";
+import { createFileTools, readUtf8 } from "../shared/fs.js";
 import path from "node:path";
 import fs from "node:fs";
 import type { InstallContext } from "../types.js";
 import {
-  copyDir,
-  copyFile,
-  ensureDir,
-  readUtf8,
-  retireManagedFile,
-} from "../shared/fs.js";
-import {
   asRecord,
   mergeHooks,
-  readSettings,
-  writeSettings,
+  createSettingsTools,
 } from "../shared/settings.js";
-
 /**
  * @param {string} pluginRoot
  * @param {string} body
@@ -26,7 +17,6 @@ export function injectPluginRoot(pluginRoot: string, body: string): string {
     .replaceAll("${CLAUDE_PLUGIN_ROOT}", abs)
     .replaceAll("${FRONTEND_CRAFT_ROOT}", abs);
 }
-
 /**
  * @param {string} pluginRoot
  */
@@ -41,17 +31,19 @@ export function buildHooksJson(pluginRoot: string): string {
     2,
   );
 }
-
 /**
  * @param {{ pluginRoot: string; baseDir: string; cwd: string; dryRun: boolean }} ctx
  */
 export async function installClaude(ctx: InstallContext): Promise<void> {
   const { pluginRoot, contentRoot, baseDir, dryRun, cwd, isGlobal } = ctx;
-  if (dryRun) {
+  if (dryRun && !ctx.session) {
     console.log(`[dry-run] would install Claude Code files into ${baseDir}`);
     return;
   }
+  const { ensureDir, copyProductSkills, copyDir, copyFile, retireManagedFile } =
+    createFileTools(ctx);
   const settingsPath = path.join(baseDir, "settings.json");
+  const { readSettings, writeSettings } = createSettingsTools(ctx);
   readSettings(settingsPath);
   ensureDir(baseDir);
   copyProductSkills(

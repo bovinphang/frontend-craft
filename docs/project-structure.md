@@ -1,6 +1,6 @@
 # Project Structure
 
-Directory layout for `frontend-craft` 3.0.0. The CLI uses TypeScript, ESM and esbuild; tests use Node.js `node:test`. Distribution includes 14 agents, 61 skills (54 frontend + 7 common) and 11 commands.
+Directory layout for `frontend-craft` 3.0.0. The CLI uses TypeScript, ESM and esbuild; tests use Node.js `node:test`. Distribution includes 14 agents, 74 skills (53 frontend + 21 common) and 11 commands.
 
 ## Repository Layout
 
@@ -36,7 +36,7 @@ frontend-craft/
 |   |-- fec-validation-fix/            # lint, type-check, test, build and fix
 |   |-- fec-performance-optimization/  # Core Web Vitals, bundle, rendering, network, memory
 |   |-- cc-source-driven-development/ # Official sources, project facts, version-sensitive decisions
-|   |-- fec-typescript-project-standard/   # TypeScript config, public API types, declarations, DTOs, generics
+|   |-- cc-typescript-project-standard/   # TypeScript config, public API types, declarations, DTOs, generics
 |   |-- fec-state-management/         # State ownership, store selection, URL/server/form/local boundaries
 |   |-- fec-tailwind-design-system/   # Tailwind tokens, variants, dark mode, class governance
 |   |-- fec-responsive-layout/        # Mobile-first layouts, container queries, touch-safe responsive UI
@@ -161,4 +161,6 @@ Technical diagram quality: `cc-technical-diagrams` prefers local Mermaid for sta
 
 [Review scope and technical diagram delivery](review-and-diagram-workflows.md) — scope, tool prerequisites, export commands, and QA limits.
 
-Shared `cc-*` entries and embedded method copies are generated from `craft-common@1.0.1`. Run `pnpm run sync:common` after upstream changes and `pnpm run check:common` for a read-only comparison. Do not edit generated common snapshots. Frontend domain content is maintained here, with Chinese mirrors in `localized/zh-CN/`.
+Shared `cc-*` entries and embedded method copies are generated from `craft-common@2.0.0`. Run `pnpm run sync:common` after upstream changes and `pnpm run check:common` for a read-only comparison. Do not edit generated common snapshots. Frontend domain content is maintained here, with Chinese mirrors in `localized/zh-CN/`.
+
+`src/project/` keeps product framework declarations and inspect integration. Bounded discovery and task recommendation live in craft-common; backend retains the six-language validation projection. 产品不复制扫描器或公共安装算法。

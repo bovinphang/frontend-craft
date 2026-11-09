@@ -33,7 +33,7 @@ Standardize front-end API integration boundaries to make requests, errors, authe
    - 404: Display missing status or return to the upper level entrance.
    - 409: Prompt for conflict and next step.
    - 422: Mapping field level error.
-   - 429/5xx/Network Error: Allow backoff to retry or show try again later.
+   - 429/5xx/network errors: first distinguish safe reads from writes whose commit is uncertain. Retry only when the operation contract makes replay safe (including a server-supported idempotency key and the same intent where needed), within one bounded backoff/deadline budget. Otherwise show pending status and reconcile; a network failure alone does not authorize repeating a write.
    - Unrecognized errors should fall into a unified fallback, and the original backend exception should not be exposed to the user.
    - All errors should be attributed to user-recoverable actions: retry, log in again, modify input, return to the previous level, contact support, or try again later.
    - The error object should retain the log-oriented trace id / request id, but the UI should not expose the internal stack, SQL, service name or sensitive fields.
@@ -76,3 +76,7 @@ Standardize front-end API integration boundaries to make requests, errors, authe
 ## Expected Output
 
 The output should include API client boundaries, interface type sources, error mappings, authentication refresh policies, upload/real-time schemes, and validation results. After completion, the component will not scatter request details, the user status will be intact, failure scenarios can be recovered, and the client will not leak the server key.
+
+## Engineering practices
+
+Read the [local engineering decisions](references/engineering-practices.md) for this task and follow their links to relevant shared principles. Apply levels and exceptions against actual project contracts; product frontend/backend labels do not constrain language or role.

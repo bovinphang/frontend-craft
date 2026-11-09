@@ -683,7 +683,7 @@ test("public docs expose the refactoring subsystem consistently", () => {
       body,
       /14 specialized agents|14 个.*Agent|14 个.*agent|14 个.*智能体/i,
     );
-    assert.match(body, /61 .*skills|61 .*Skill|61 个.*技能/i);
+    assert.match(body, /74 .*skills|74 .*Skill|74 个.*技能/i);
     assert.match(body, /11 .*commands|11 .*Command|11 个.*命令/i);
   }
 
@@ -834,7 +834,7 @@ test("refactoring agent skills and public counts are internally complete", () =>
     })
     .filter((entry) => entry.isDirectory())
     .map((entry) => entry.name);
-  assert.equal(rootSkillDirs.length, 61);
+  assert.equal(rootSkillDirs.length, 74);
   assert.deepEqual(rootSkillDirs.sort(), zhSkillDirs.sort());
   assert.equal(
     fs

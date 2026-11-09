@@ -1,3 +1,6 @@
+import { MANIFEST_CODEC } from "./manifest-codec.js";
+import { toProductContext } from "./product-definition.js";
+import { LEGACY_SKILL_IDS } from "./product-definition.js";
 export type MigrationFinding = {
   file: string;
   line?: number;
@@ -11,10 +14,7 @@ export type MigrationReport = {
   errors: string[];
   exitCode: 0 | 1 | 2;
 };
-const renamed: Record<string, string> = {
-  "fec-drawio-studio": "cc-drawio-studio",
-  "fec-source-driven-development": "cc-source-driven-development",
-};
+const renamed = LEGACY_SKILL_IDS;
 const split: Record<string, string> = {
   "fec-image-generation": "cc-technical-diagrams",
   "fec-doc-sync": "cc-doc-sync-core",
@@ -58,7 +58,10 @@ export function checkMigration({
   )
     return { findings: [], errors: ["Runtime 或安装范围无效"], exitCode: 2 };
   const seen = new Set<string>();
-  function scan(file: string): void {
+  let entries = 0;
+  function scan(file: string, depth = 0): void {
+    if (++entries > 10000 || depth > 12)
+      throw new Error("迁移引用扫描达到上限，结果不完整");
     if (seen.has(file) || sensitive.test(path.basename(file))) return;
     seen.add(file);
     const stat = fs.lstatSync(file);
@@ -66,17 +69,16 @@ export function checkMigration({
     if (stat.isDirectory()) {
       if (!excluded.has(path.basename(file)))
         for (const child of fs.readdirSync(file).sort())
-          scan(path.join(file, child));
+          scan(path.join(file, child), depth + 1);
       return;
     }
-    if (!stat.isFile() || !textFile.test(file) || stat.size > 2 * 1024 * 1024)
-      return;
+    if (!stat.isFile() || !textFile.test(file) || stat.size > 262144) return;
     const bytes = fs.readFileSync(file);
     if (bytes.includes(0)) return;
     const lines = bytes.toString("utf8").split(/\r?\n/);
     for (let i = 0; i < lines.length; i++) {
       for (const match of lines[i].matchAll(
-        /(?<![a-z0-9-])(fec-(?:drawio-studio|source-driven-development|image-generation|doc-sync|debug-framework|refactoring|tdd-workflow))(?![a-z0-9-])/g,
+        /(?<![a-z0-9-])(fec-(?:typescript-project-standard|drawio-studio|source-driven-development|image-generation|doc-sync|debug-framework|refactoring|tdd-workflow))(?![a-z0-9-])/g,
       )) {
         const id = match[1];
         if (renamed[id])
@@ -117,17 +119,25 @@ export function checkMigration({
       const manifest = readInstallManifest(manifestPath);
       if (fs.existsSync(manifestPath) && !manifest)
         throw new Error(`无法读取安装清单：${manifestPath}`);
-      if (scope === "global" && manifest)
-        for (const file of manifest.files) {
-          const resolved = resolveManifestFile({
-            filePath: file.path,
-            root: file.root ?? "baseDir",
-            baseDir,
-            cwd,
-          });
-          if (!resolved) throw new Error(`安装清单路径越界：${manifestPath}`);
-          if (fs.existsSync(resolved)) scan(resolved);
-        }
+      if (scope === "global" && manifest) {
+        const context = toProductContext({
+          pluginRoot: "",
+          contentRoot: "",
+          cwd,
+          baseDir,
+          runtime: rt,
+          isGlobal: true,
+          dryRun: true,
+          mode: "install",
+          language: manifest.language ?? "en",
+        });
+        const state = MANIFEST_CODEC.decode(
+          Buffer.from(JSON.stringify(manifest)),
+          context,
+        );
+        for (const file of [...state.files, ...state.sharedEntries])
+          if (fs.existsSync(file.path)) scan(file.path);
+      }
       const skillsDir = getRuntimeSkillsTarget({
         pluginRoot: "",
         contentRoot: "",
@@ -147,21 +157,30 @@ export function checkMigration({
   } catch (error) {
     report.errors.push(error instanceof Error ? error.message : String(error));
   }
-  report.exitCode = report.errors.length ? 2 : report.findings.length ? 1 : 0;
+  report.exitCode =
+    report.errors.length || report.findings.some((f) => f.kind === "conflict")
+      ? 2
+      : report.findings.length
+        ? 1
+        : 0;
   return report;
 }
 export function inspectLegacyCommonInstall({
   cwd,
   baseDir,
   skillsDir,
+  manifest: providedManifest,
+  pending = [],
 }: {
   cwd: string;
   baseDir: string;
   skillsDir: string;
+  manifest?: import("./shared/fs.js").InstallManifest;
+  pending?: readonly import("@bovinphang/craft-common").FileMutation[];
 }): { findings: MigrationFinding[]; retiredFiles: string[] } {
   const manifestPath = getManifestPath(baseDir);
-  const manifest = readInstallManifest(manifestPath);
-  if (productFileExists(manifestPath) && !manifest)
+  const manifest = providedManifest ?? readInstallManifest(manifestPath);
+  if (fs.existsSync(manifestPath) && !manifest)
     throw new Error(`无法读取旧安装清单 manifest：${manifestPath}`);
   const owned = new Map<string, string>();
   for (const file of manifest?.files ?? []) {
@@ -192,24 +211,37 @@ export function inspectLegacyCommonInstall({
       else if (stat.isFile()) files.add(file);
       else invalid = true;
     };
-    if (fs.existsSync(dir)) walk(dir);
-    for (const pending of getPlannedProductMutations()) {
-      const relative = path.relative(dir, pending.path);
+    let present = false;
+    try {
+      fs.lstatSync(dir);
+      present = true;
+    } catch (error) {
+      if ((error as NodeJS.ErrnoException).code !== "ENOENT") throw error;
+    }
+    if (present) walk(dir);
+    for (const planned of pending) {
+      const relative = path.relative(dir, planned.path);
       if (
         relative &&
         relative !== ".." &&
         !relative.startsWith(`..${path.sep}`) &&
         !path.isAbsolute(relative)
       ) {
-        if (pending.after === null) files.delete(pending.path);
-        else files.add(pending.path);
+        if (planned.after === null) files.delete(planned.path);
+        else files.add(planned.path);
       }
     }
     if (!invalid && !files.size) continue;
     if (
       !manifest ||
       invalid ||
-      [...files].some((file) => owned.get(file) !== hashFile(file))
+      [...files].some((file) => {
+        const planned = pending.find((entry) => entry.path === file);
+        return (
+          owned.get(file) !==
+          (planned?.after ? hashContent(planned.after) : hashFile(file))
+        );
+      })
     )
       findings.push({
         file: dir,
@@ -237,9 +269,10 @@ import path from "node:path";
 import { ALL_RUNTIMES } from "./registry.js";
 import { getInstallBaseDir } from "./runtime-homes.js";
 import { getRuntimeSkillsTarget } from "./runtime-skill-targets.js";
-import { getManifestPath, hashFile, readInstallManifest } from "./shared/fs.js";
-import { resolveManifestFile } from "./manifest-installs.js";
 import {
-  getPlannedProductMutations,
-  productFileExists,
-} from "./shared/product-write-plan.js";
+  getManifestPath,
+  hashFile,
+  hashContent,
+  readInstallManifest,
+} from "./shared/fs.js";
+import { resolveManifestFile } from "./manifest-installs.js";

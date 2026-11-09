@@ -43,3 +43,7 @@ Choose your testing approach by “closeness to code/level of risk coverage” t
 ## Expected Output
 
 Output test layering recommendations, mapping of risks to test layers, priorities, recommended commands, the scope of test files that need to be added or adjusted, and the specific skills or agents that need to be clearly diverted.
+
+## Engineering practices
+
+Read the [local engineering decisions](references/engineering-practices.md) for this task and follow their links to relevant shared principles. Apply levels and exceptions against actual project contracts; product frontend/backend labels do not constrain language or role.

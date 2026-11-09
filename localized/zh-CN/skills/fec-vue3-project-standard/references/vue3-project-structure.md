@@ -144,9 +144,9 @@ src/
 
 ## TypeScript 规范
 
-通用 TypeScript 工程规则由 `fec-typescript-project-standard` 负责，包括 `tsconfig`、strictness、DTO / view model 边界、`unknown` 收窄、public API 类型、声明产物和类型测试。
+通用 TypeScript 工程规则由 `cc-typescript-project-standard` 负责，包括 `tsconfig`、strictness、DTO / view model 边界、`unknown` 收窄、public API 类型、声明产物和类型测试。
 
-Vue 规范只补充 SFC、Props / Emits、暴露方法、Provide / Inject 和 composable 响应性类型；复杂类型建模或跨框架类型契约先分流到 `fec-typescript-project-standard`。
+Vue 规范只补充 SFC、Props / Emits、暴露方法、Provide / Inject 和 composable 响应性类型；复杂类型建模或跨框架类型契约先分流到 `cc-typescript-project-standard`。
 
 ### Vue 3 项目补充约定
 

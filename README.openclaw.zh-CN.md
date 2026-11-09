@@ -22,7 +22,7 @@
 
 `frontend-craft` 是 [frontend-craft](https://github.com/bovinphang/frontend-craft) 的 OpenClaw 原生打包产物，包含工作流技能、Markdown 命令、OpenClaw 工作区模板、typed hooks、设计工具 MCP 参考配置，以及可选的 `frontend_craft_init_workspace` 初始化工具。
 
-该原生包提供 **61 个工作流技能**，并将 **11 个命令工作流通过技能提供（同名工作流复用完整技能）**。14 个专业 Agent 属于其他运行时适配器，不是 OpenClaw 原生 Agent。
+该原生包提供 **74 个工作流技能**，并将 **11 个命令工作流通过技能提供（同名工作流复用完整技能）**。14 个专业 Agent 属于其他运行时适配器，不是 OpenClaw 原生 Agent。
 
 **环境要求：** Node.js **>= 22**，OpenClaw plugin API **>= 2026.4.20**。
 
@@ -138,7 +138,7 @@ frontend-craft/
 
 ### 技能
 
-OpenClaw 包包含 `skills/` 下全部 61 个公开工作流技能，按使用场景分组如下。
+OpenClaw 包包含 `skills/` 下全部 74 个公开工作流技能，按使用场景分组如下。
 
 **项目规范**
 
@@ -150,7 +150,7 @@ OpenClaw 包包含 `skills/` 下全部 61 个公开工作流技能，按使用�
 | `fec-nuxt-project-standard`      | Nuxt 3 SSR/SSG、组合式函数、路由、中间件            |
 | `fec-vite-project-standard`      | Vite 配置、环境变量安全、HMR、开发代理、构建优化    |
 | `fec-monorepo-project-standard`  | pnpm workspace、Turborepo、Nx 结构与任务编排        |
-| `fec-typescript-project-standard` | TypeScript 配置、公开类型、声明文件、DTO 和泛型     |
+| `cc-typescript-project-standard` | TypeScript 配置、公开类型、声明文件、DTO 和泛型     |
 
 **实现能力**
 
@@ -369,3 +369,27 @@ MIT
 - `cc-source-driven-development`
 - `cc-tdd-methodology`
 - `cc-technical-diagrams`
+
+## 跨领域语言能力
+
+以下公共入口同时用于库、CLI、桌面核心和服务，不按前后端划分语言。
+
+| Skill | 用途 |
+| --- | --- |
+| `cc-c-project-standard` | C 工程规范 |
+| `cc-cpp-project-standard` | C++ 工程规范 |
+| `cc-go-concurrency` | Go 并发生命周期 |
+| `cc-go-project-standard` | Go 工程规范 |
+| `cc-java-project-standard` | Java 工程规范 |
+| `cc-java-runtime` | Java 运行时诊断 |
+| `cc-native-memory-safety` | 原生内存与 FFI 安全 |
+| `cc-python-async` | Python 异步生命周期 |
+| `cc-python-project-standard` | Python 工程规范 |
+| `cc-rust-async` | Rust 异步生命周期 |
+| `cc-rust-project-standard` | Rust 工程规范 |
+| `cc-typescript-project-standard` | TypeScript 项目规范 |
+
+| `cc-tauri-project-standard` | Tauri 应用工程 |
+| `cc-electron-project-standard` | Electron 应用工程 |
+
+公共依赖精确固定为craft-common2.0.0，当前待发布；frontend3.0.0和backend1.0.0继续未发布，版本号不变。发布common不自动发布或启用本原生插件。

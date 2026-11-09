@@ -56,3 +56,7 @@ Load more detailed reference files as needed:
 - Styles are isolated using scoped, and key behaviors are covered by tests
 - The file structure is consistent with the project convention (pages/features/components are separated)
 - Input responsiveness, Pinia/Router boundaries and asynchronous component testing strategies for reusable composables explained
+
+## Engineering practices
+
+Read the [local engineering decisions](references/engineering-practices.md) for this task and follow their links to relevant shared principles. Apply levels and exceptions against actual project contracts; product frontend/backend labels do not constrain language or role.

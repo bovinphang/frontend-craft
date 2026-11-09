@@ -1,5 +1,15 @@
-import { readUtf8, writeSharedUtf8, recordSettingsHooks } from "./fs.js";
-import { productFileExists } from "./product-write-plan.js";
+import {
+  readUtf8,
+  writeUtf8,
+  readInstallManifest,
+  getManifestPath,
+} from "./fs.js";
+import path from "node:path";
+import { entryHash } from "@bovinphang/craft-common";
+import type { InstallSession } from "@bovinphang/craft-common";
+import type { InstallContext } from "../types.js";
+import { hookEntry } from "../manifest-codec.js";
+import fs from "node:fs";
 
 export function asRecord(value: unknown): Record<string, unknown> {
   return value !== null && typeof value === "object" && !Array.isArray(value)
@@ -7,10 +17,15 @@ export function asRecord(value: unknown): Record<string, unknown> {
     : {};
 }
 
-export function readSettings(file: string): Record<string, unknown> {
-  if (!productFileExists(file)) return {};
+export function readSettings(
+  file: string,
+  session?: InstallSession,
+): Record<string, unknown> {
+  if (!(session ? session.exists(file) : fs.existsSync(file))) return {};
   try {
-    const value: unknown = JSON.parse(readUtf8(file));
+    const value: unknown = JSON.parse(
+      session ? session.read(file).toString("utf8") : readUtf8(file),
+    );
     if (value === null || typeof value !== "object" || Array.isArray(value))
       throw new Error("Expected an object");
     return value as Record<string, unknown>;
@@ -100,16 +115,62 @@ function hookKey(entry: Record<string, unknown>): string {
 export function writeSettings(
   file: string,
   value: Record<string, unknown>,
-  ownedHooks: Record<string, unknown> = {},
+  _ownedHooks: Record<string, unknown> = {},
 ): void {
-  // Settings mix user and plugin content; never claim ownership of the whole file.
-  writeSharedUtf8(file, `${JSON.stringify(value, null, 2)}\n`);
-  recordSettingsHooks(
-    file,
-    Object.fromEntries(
-      Object.entries(ownedHooks).filter((entry): entry is [string, unknown[]] =>
-        Array.isArray(entry[1]),
-      ),
-    ),
-  );
+  writeUtf8(file, JSON.stringify(value, null, 2) + "\n");
+}
+export function createSettingsTools(
+  ctx: InstallContext,
+  legacyHooks: Record<string, unknown> = {},
+) {
+  const session = ctx.session;
+  if (!session)
+    throw new Error("Settings writes require an explicit installation session");
+  return {
+    readSettings: (file: string) => readSettings(file, session),
+    writeSettings(
+      file: string,
+      _value: Record<string, unknown>,
+      ownedHooks: Record<string, unknown> = {},
+    ): void {
+      const previous = readInstallManifest(getManifestPath(ctx.baseDir));
+      const previousGroups =
+        previous?.settingsHooks?.filter(
+          (record) =>
+            (record.root ?? "baseDir") === "baseDir" &&
+            record.path ===
+              path.relative(ctx.baseDir, file).split(path.sep).join("/"),
+        ) ?? [];
+      for (const [event, values] of Object.entries(legacyHooks)) {
+        if (!Array.isArray(values))
+          throw new Error("Invalid legacy Hook declarations");
+        const owned = new Set(
+          previousGroups.flatMap((record) =>
+            (record.hooks[event] ?? []).map((value) =>
+              entryHash({ kind: "json-hook", value }),
+            ),
+          ),
+        );
+        const unownedLegacy = values.filter(
+          (value) => !owned.has(entryHash({ kind: "json-hook", value })),
+        );
+        if (unownedLegacy.length && session.exists(file)) {
+          const before = readSettings(file, session);
+          const after = removeExactHooks(before, { [event]: unownedLegacy });
+          if (JSON.stringify(after) !== JSON.stringify(before))
+            session.stage(
+              file,
+              Buffer.from(JSON.stringify(after, null, 2) + "\n"),
+            );
+        }
+      }
+      for (const [event, entries] of Object.entries(ownedHooks)) {
+        if (!Array.isArray(entries))
+          throw new Error("Invalid owned Hook entries");
+        entries.forEach((value, index) =>
+          session.editShared(file, hookEntry(event, index, value)),
+        );
+      }
+    },
+  };
 }

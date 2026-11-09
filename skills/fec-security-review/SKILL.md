@@ -52,3 +52,7 @@ Identify client-side security risks in front-end code and recommend actionable f
 ## Expected Output
 
 Output a CRITICAL/HIGH/MEDIUM/LOW graded security review report. Each issue is associated with a specific file and line number, and repair suggestions are given; the report is saved as `reports/security-review-YYYY-MM-DD-HHmmss.md`.
+
+## Engineering practices
+
+Read the [local engineering decisions](references/engineering-practices.md) for this task and follow their links to relevant shared principles. Apply levels and exceptions against actual project contracts; product frontend/backend labels do not constrain language or role.

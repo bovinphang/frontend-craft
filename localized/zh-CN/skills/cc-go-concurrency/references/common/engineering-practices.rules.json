@@ -1,0 +1,121 @@
+{
+  "schemaVersion": 1,
+  "rules": [
+    {
+      "id": "ENG-CONTRACT",
+      "kind": "core",
+      "level": "required",
+      "anchor": "ENG-CONTRACT",
+      "sourceIds": [
+        "typescript-publishing",
+        "rust-api"
+      ],
+      "caseIds": [
+        "EP-TS-01",
+        "EP-SVC-01"
+      ]
+    },
+    {
+      "id": "ENG-ERROR",
+      "kind": "core",
+      "level": "required",
+      "anchor": "ENG-ERROR",
+      "sourceIds": [
+        "oracle-resources",
+        "uber-go"
+      ],
+      "caseIds": [
+        "EP-RS-01",
+        "EP-JAVA-01"
+      ]
+    },
+    {
+      "id": "ENG-RESOURCE",
+      "kind": "core",
+      "level": "required",
+      "anchor": "ENG-RESOURCE",
+      "sourceIds": [
+        "cert-c",
+        "cpp-core"
+      ],
+      "caseIds": [
+        "EP-C-01",
+        "EP-CPP-01",
+        "EP-PY-01"
+      ]
+    },
+    {
+      "id": "ENG-CONCURRENCY",
+      "kind": "core",
+      "level": "conditional",
+      "anchor": "ENG-CONCURRENCY",
+      "sourceIds": [
+        "go-context",
+        "tokio-join",
+        "python-asyncio"
+      ],
+      "caseIds": [
+        "EP-GO-01",
+        "EP-IPC-01",
+        "EP-UI-01"
+      ]
+    },
+    {
+      "id": "ENG-BOUNDARY",
+      "kind": "core",
+      "level": "required",
+      "anchor": "ENG-BOUNDARY",
+      "sourceIds": [
+        "electron-security",
+        "tauri-permissions"
+      ],
+      "caseIds": [
+        "EP-TS-01",
+        "EP-IPC-01"
+      ]
+    },
+    {
+      "id": "ENG-DEPENDENCY",
+      "kind": "core",
+      "level": "recommended",
+      "anchor": "ENG-DEPENDENCY",
+      "sourceIds": [
+        "typescript-publishing",
+        "google-review"
+      ],
+      "caseIds": [
+        "EP-TS-01"
+      ]
+    },
+    {
+      "id": "ENG-VERIFICATION",
+      "kind": "core",
+      "level": "required",
+      "anchor": "ENG-VERIFICATION",
+      "sourceIds": [
+        "ms-playbook",
+        "ms-faults",
+        "google-review"
+      ],
+      "caseIds": [
+        "EP-TS-01",
+        "EP-C-01",
+        "EP-SVC-01"
+      ]
+    },
+    {
+      "id": "ENG-OPERABILITY",
+      "kind": "core",
+      "level": "conditional",
+      "anchor": "ENG-OPERABILITY",
+      "sourceIds": [
+        "aws-retry",
+        "aws-idempotency"
+      ],
+      "caseIds": [
+        "EP-SVC-01",
+        "EP-UI-01"
+      ]
+    }
+  ]
+}

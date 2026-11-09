@@ -22,7 +22,7 @@
 
 `frontend-craft` ships the OpenClaw-native package for [frontend-craft](https://github.com/bovinphang/frontend-craft): workflow skills, markdown commands, OpenClaw workspace templates, typed hooks, a design MCP reference, and the optional `frontend_craft_init_workspace` tool.
 
-The native package includes **61 workflow skills** and **11 commands exposed through skills (same-name workflows reuse the full skill)**. The 14 specialized agents belong to other runtime adapters and are not native OpenClaw agents.
+The native package includes **74 workflow skills** and **11 commands exposed through skills (same-name workflows reuse the full skill)**. The 14 specialized agents belong to other runtime adapters and are not native OpenClaw agents.
 
 **Requirements:** Node.js **>= 22**, OpenClaw plugin API **>= 2026.4.20**.
 
@@ -138,7 +138,7 @@ frontend-craft/
 
 ### Skills
 
-The OpenClaw package includes all 61 public workflow skills from `skills/`, grouped here by use case.
+The OpenClaw package includes all 74 public workflow skills from `skills/`, grouped here by use case.
 
 **Project standards**
 
@@ -150,7 +150,7 @@ The OpenClaw package includes all 61 public workflow skills from `skills/`, grou
 | `fec-nuxt-project-standard`      | Nuxt 3 SSR/SSG, composables, routing, middleware                      |
 | `fec-vite-project-standard`      | Vite config, env safety, HMR, dev proxy, build optimization           |
 | `fec-monorepo-project-standard`  | pnpm workspace, Turborepo, Nx structure and task orchestration        |
-| `fec-typescript-project-standard` | TypeScript config, public API types, declarations, DTOs, and generics |
+| `cc-typescript-project-standard` | TypeScript config, public API types, declarations, DTOs, and generics |
 
 **Implementation capabilities**
 
@@ -369,3 +369,27 @@ Shared capabilities are delivered from craft-common with this product:
 - `cc-source-driven-development`
 - `cc-tdd-methodology`
 - `cc-technical-diagrams`
+
+## Cross-domain language capabilities
+
+These common entries apply to libraries, CLI tools, desktop cores and services; product names do not constrain languages.
+
+| Skill | Purpose |
+| --- | --- |
+| `cc-c-project-standard` | C project engineering |
+| `cc-cpp-project-standard` | C++ project engineering |
+| `cc-go-concurrency` | Go concurrency lifecycle |
+| `cc-go-project-standard` | Go project engineering |
+| `cc-java-project-standard` | Java project engineering |
+| `cc-java-runtime` | Java runtime diagnosis |
+| `cc-native-memory-safety` | Native memory and FFI safety |
+| `cc-python-async` | Python async lifecycle |
+| `cc-python-project-standard` | Python project engineering |
+| `cc-rust-async` | Rust async lifecycle |
+| `cc-rust-project-standard` | Rust project engineering |
+| `cc-typescript-project-standard` | TypeScript project specifications |
+
+| `cc-tauri-project-standard` | Tauri application engineering |
+| `cc-electron-project-standard` | Electron application engineering |
+
+The common dependency is pinned exactly to craft-common 2.0.0, prepared for publication. Frontend3.0.0 and backend 1.0.0 remain unreleased with unchanged versions; publishing common does not publish or activate this native plugin.

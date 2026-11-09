@@ -207,7 +207,7 @@ Marketplace が既にインストールされている場合、CLI は `--force`
 | `fec-nuxt-project-standard`       | Nuxt 3 SSR/SSG、Composition API、データ取得、ミドルウェア               |
 | `fec-vite-project-standard`       | Vite 設定、環境変数安全性、HMR、開発プロキシ、ビルド最適化              |
 | `fec-monorepo-project-standard`   | pnpm workspace、Turborepo、Nx の構造とタスクオーケストレーション        |
-| `fec-typescript-project-standard` | TypeScript 設定、公開 API 型、宣言ファイル、DTO、ジェネリクス           |
+| `cc-typescript-project-standard` | TypeScript 設定、公開 API 型、宣言ファイル、DTO、ジェネリクス           |
 
 **実装機能** — 特定のフロントエンド機能を構築する際に起動：
 
@@ -557,16 +557,32 @@ npx skills check                           # 利用可能なアップデート�
 
 ## 3.0 の共通機能
 
-3.0 は未公開です。フロントエンド専用の 54 個と共通の 7 個を合わせ、61 個の Skill を提供します。固定バージョンの craft-common が製品とともに配布されるため、3 個目のプラグインを手動でインストールする必要はありません。共通ソースは craft-common でのみ保守します。
+3.0.0は未公開のままです。フロントエンド専用53個と共通21個、合計74個のSkillを提供します。共通依存は`@bovinphang/craft-common@2.0.0`に固定します。2.0.0は公開準備中の正式バージョンで、backend1.0.0も未公開です。commonを先に公開・検証し、製品バージョンを変更したり自動公開したりしません。
 
-- `cc-drawio-studio`
-- `cc-technical-diagrams`
-- `cc-source-driven-development`
-- `cc-doc-sync-core`
+言語・役割・フレームワークを別々に選びます。C/C++には独立した入口があり、Tauri/Electronは共通のデスクトップ専門機能です。製品名で言語を制限しません。
+
+- `cc-c-project-standard`
+- `cc-cpp-project-standard`
 - `cc-debug-methodology`
+- `cc-doc-sync-core`
+- `cc-drawio-studio`
+- `cc-electron-project-standard`
+- `cc-go-concurrency`
+- `cc-go-project-standard`
+- `cc-java-project-standard`
+- `cc-java-runtime`
+- `cc-native-memory-safety`
+- `cc-python-async`
+- `cc-python-project-standard`
 - `cc-refactoring-core`
+- `cc-rust-async`
+- `cc-rust-project-standard`
+- `cc-source-driven-development`
+- `cc-tauri-project-standard`
 - `cc-tdd-methodology`
+- `cc-technical-diagrams`
+- `cc-typescript-project-standard`
 
-`fec runtime check-migration codex --local --json` を実行し、[移行ガイド](../common-migration.md)を確認してください。CLI は共有ファイルの所有権とアンインストール時の参照を管理します。ネイティブ配布では単一製品の完全なリソースを保証しますが、2 製品間のネイティブ重複排除は保証しません。
+`fec runtime check-migration codex --local --json`を実行し、旧CLIで旧共通参照を解除して保存された編集を処理してから、一致する製品を導入します。別の利用者や不明なファイルを強制上書きしません。CLIとネイティブ配布は排他的で、二製品のネイティブ重複排除は保証しません。
 
-共通ソースは `@bovinphang/craft-common@1.0.1` に固定されています。[構成と保守範囲（英語）](../project-structure.md)と[開発チェック（英語）](../../CONTRIBUTING.md)を参照してください。
+[移行](../common-migration.md) · [変更履歴](../../CHANGELOG.md) · [構成](../project-structure.md)

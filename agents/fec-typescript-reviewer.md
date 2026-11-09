@@ -6,7 +6,7 @@ model: sonnet
 permissionMode: default
 maxTurns: 16
 skills:
-  - fec-typescript-project-standard
+  - cc-typescript-project-standard
   - fec-code-review
   - fec-security-review
   - fec-react-project-standard

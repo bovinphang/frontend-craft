@@ -1,6 +1,6 @@
 # TypeScript / JavaScript rules
 
-Use this file when writing, modifying or reviewing `.ts`, `.tsx`, `.js`, `.jsx`. This article only retains the permanent hard constraints of the project; complex type modeling, `tsconfig` layering, declared products, DTO / view model boundaries, type testing and release entry design are left to the `fec-typescript-project-standard` skill or special review. See also `fec-code-comments.md` for comment style; see `fec-testing.md` for E2E and verification process.
+Use this file when writing, modifying or reviewing `.ts`, `.tsx`, `.js`, `.jsx`. This article only retains the permanent hard constraints of the project; complex type modeling, `tsconfig` layering, declared products, DTO / view model boundaries, type testing and release entry design are left to the `cc-typescript-project-standard` skill or special review. See also `fec-code-comments.md` for comment style; see `fec-testing.md` for E2E and verification process.
 
 ## Types and interfaces
 
@@ -11,7 +11,7 @@ Use types to make external APIs, shared models, and component props explicit, re
 - For **export** functions, shared tool functions, and public class methods, indicate the parameter and return value types.
 - **Local** variables are handed over to TypeScript for inference when the type is obvious, and obvious intermediate variables are not repeatedly annotated.
 - Recurring inline object shapes are extracted into named `interface` or `type` to avoid the same contract being scattered in multiple signatures.
-- The boundaries of external data, API DTOs, routing parameters, form values and component props must be explicitly named; complex modeling is offloaded to `fec-typescript-project-standard`.
+- The boundaries of external data, API DTOs, routing parameters, form values and component props must be explicitly named; complex modeling is offloaded to `cc-typescript-project-standard`.
 
 ### `interface` and `type`
 
@@ -37,7 +37,7 @@ Use types to make external APIs, shared models, and component props explicit, re
 - Define props with named `interface` or `type`, and offload complex public props to type modules.
 - Write clear parameters and return values in callback props; event payload does not require long-term inlining of bare objects.
 - Don't use `React.FC` without special reason, avoid differences such as implicit `children`.
-- TSX generics, complex component props or external DTO mapping issues are left to React rules and `fec-typescript-project-standard` to converge together.
+- TSX generics, complex component props or external DTO mapping issues are left to React rules and `cc-typescript-project-standard` to converge together.
 
 ## Single file size and module splitting
 
@@ -74,7 +74,7 @@ Use types to make external APIs, shared models, and component props explicit, re
 
 - External input (forms, APIs, URL parameters, localStorage, postMessage, third-party SDK callbacks, etc.) must be validated or narrowed at boundaries.
 - You can use Zod, Valibot, Yup or similar schema tools selected by the project; do not introduce specific libraries as unconditional new dependencies.
-- Schema derived types serve as a single source of truth for input types; layering of complex DTOs, domain models and UI view models is left to `fec-typescript-project-standard`.
+- Schema derived types serve as a single source of truth for input types; layering of complex DTOs, domain models and UI view models is left to `cc-typescript-project-standard`.
 
 ## Type asset layering and naming
 

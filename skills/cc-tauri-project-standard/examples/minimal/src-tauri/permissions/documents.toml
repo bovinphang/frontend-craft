@@ -1,0 +1,4 @@
+[[permission]]
+identifier = "allow-read-document"
+description = "Read one bounded document through the validated Rust command"
+commands.allow = ["read_document"]

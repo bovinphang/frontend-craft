@@ -89,3 +89,9 @@ description: 用于设计或审查 React + TypeScript 项目结构、feature/mod
 - 对新增模块，优先输出最小可落地结构，而不是一次性过度设计
 - 对重构任务，优先保证可迁移性和风险可控
 - 对性能相关 React 变更，说明触发的风险类别、证据来源和验证命令
+
+泛型组件的 Props 与回调契约见[组件类型示例](references/generic-component-types.md)。
+
+## 工程实践
+
+按当前任务读取[本入口工程细则](references/engineering-practices.md)，再按链接选择公共原则。规则级别与例外以实际项目契约为准；不因产品前后端标签限制语言或职责。

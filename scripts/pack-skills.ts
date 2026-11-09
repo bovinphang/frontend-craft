@@ -112,6 +112,36 @@ for (const skillId of skillIds) {
     }
   }
 
+  const translatedRoot = path.join(root, "localized/zh-CN/skills", skillId);
+  const translatedBody = fs.readFileSync(
+    path.join(translatedRoot, "SKILL.md"),
+    "utf8",
+  );
+  assertStandaloneSkillBody(translatedBody, skillId);
+  for (const reference of [
+    "SKILL.md",
+    ...extractReferencedFiles(translatedBody, translatedRoot),
+  ]) {
+    const target = path.join(destDir, "localized/zh-CN", reference);
+    fs.mkdirSync(path.dirname(target), { recursive: true });
+    if (
+      skillId === "fec-refactoring-catalog" &&
+      reference === "references/catalog-index.md"
+    ) {
+      const catalog = fs.readFileSync(
+        path.join(translatedRoot, reference),
+        "utf8",
+      );
+      fs.writeFileSync(
+        target,
+        catalog.replaceAll(
+          /\]\(\.\.\/\.\.\/(fec-refactoring-[^)]+\.md)\)/g,
+          "](" + pkg.homepage + "/blob/main/localized/zh-CN/skills/$1)",
+        ),
+      );
+    } else fs.copyFileSync(path.join(translatedRoot, reference), target);
+  }
+
   const publishMetadata = {
     ...skillMeta,
     version: origin.version,
@@ -151,6 +181,8 @@ for (const skillId of skillIds) {
       "data",
       "assets",
       "styles",
+      "examples",
+      "localized",
       "metadata.json",
       "README.md",
       "LICENSE",

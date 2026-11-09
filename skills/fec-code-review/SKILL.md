@@ -160,3 +160,7 @@ When writing a code review report, load [references/report-template.md](referenc
 ## Refactoring Boundary
 
 A general review may flag maintainability evidence, but dedicated smell diagnosis or a behavior-preserving refactoring plan owns deeper structural analysis. Review should not silently execute structural changes; it can recommend diagnosis/planning when a finding needs systematic transformation.
+
+## Engineering practices
+
+Read the [local engineering decisions](references/engineering-practices.md) for this task and follow their links to relevant shared principles. Apply levels and exceptions against actual project contracts; product frontend/backend labels do not constrain language or role.

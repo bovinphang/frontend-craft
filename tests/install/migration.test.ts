@@ -71,6 +71,10 @@ test("只退役旧清单中未修改的完整迁出入口", (t) => {
   fs.writeFileSync(
     path.join(baseDir, "frontend-craft.manifest.json"),
     JSON.stringify({
+      packageVersion: "2.9.0",
+      runtime: "claude",
+      scope: "local",
+      installedAt: "2026-01-01",
       files: [
         {
           path: "skills/fec-drawio-studio/SKILL.md",
@@ -138,5 +142,94 @@ test("迁移 CLI 的 JSON 输出可解析，错误参数返回 2", async (t) => 
   } finally {
     process.chdir(previousCwd);
     process.exitCode = previousCode;
+  }
+});
+test("TypeScript old entry is reported as a complete rename and user files block retirement", (t) => {
+  const cwd = fixture(t);
+  fs.writeFileSync(
+    path.join(cwd, "README.md"),
+    "fec-typescript-project-standard",
+  );
+  const report = checkMigration({ cwd, scope: "local", runtime: "claude" });
+  assert.equal(report.exitCode, 1);
+  assert.equal(
+    report.findings[0].replacement,
+    "cc-typescript-project-standard",
+  );
+  const baseDir = path.join(cwd, ".claude"),
+    skillsDir = path.join(baseDir, "skills");
+  fs.mkdirSync(path.join(skillsDir, "fec-typescript-project-standard"), {
+    recursive: true,
+  });
+  fs.writeFileSync(
+    path.join(skillsDir, "fec-typescript-project-standard/SKILL.md"),
+    "user",
+  );
+  assert.equal(
+    inspectLegacyCommonInstall({ cwd, baseDir, skillsDir }).findings[0].kind,
+    "conflict",
+  );
+});
+test("dangling legacy root links are conflicts instead of absent trees", (t) => {
+  const cwd = fixture(t),
+    baseDir = path.join(cwd, ".claude"),
+    skillsDir = path.join(baseDir, "skills");
+  fs.mkdirSync(skillsDir, { recursive: true });
+  const link = path.join(skillsDir, "fec-typescript-project-standard");
+  fs.symlinkSync(
+    path.join(cwd, "missing"),
+    link,
+    process.platform === "win32" ? "junction" : "dir",
+  );
+  assert.equal(fs.existsSync(link), false);
+  assert.equal(
+    inspectLegacyCommonInstall({ cwd, baseDir, skillsDir }).findings[0]?.kind,
+    "conflict",
+  );
+});
+test("global migration refuses forged cwd roots and ancestor links before scanning their contents", (t) => {
+  const root = fixture(t),
+    cwd = path.join(root, "external"),
+    baseDir = path.join(root, "config");
+  fs.mkdirSync(cwd);
+  fs.mkdirSync(baseDir);
+  fs.writeFileSync(
+    path.join(cwd, "notes.md"),
+    "PRIVATE_ORIGINAL fec-typescript-project-standard",
+  );
+  fs.symlinkSync(
+    cwd,
+    path.join(baseDir, "alias"),
+    process.platform === "win32" ? "junction" : "dir",
+  );
+  const prior = process.env.CLAUDE_CONFIG_DIR;
+  process.env.CLAUDE_CONFIG_DIR = baseDir;
+  try {
+    for (const entry of [
+      { root: "cwd", path: "notes.md" },
+      { root: "baseDir", path: "alias/notes.md" },
+    ]) {
+      fs.writeFileSync(
+        path.join(baseDir, "frontend-craft.manifest.json"),
+        JSON.stringify({
+          packageVersion: "2.9.0",
+          installedAt: "2026-11-01",
+          runtime: "claude",
+          scope: "global",
+          files: [{ ...entry, hash: "0".repeat(64) }],
+        }),
+      );
+      const report = checkMigration({
+        cwd,
+        scope: "global",
+        runtime: "claude",
+      });
+      assert.equal(report.exitCode, 2);
+      assert.deepEqual(report.findings, []);
+      assert.doesNotMatch(JSON.stringify(report), /PRIVATE_ORIGINAL/);
+    }
+  } finally {
+    if (prior === undefined) delete process.env.CLAUDE_CONFIG_DIR;
+    else process.env.CLAUDE_CONFIG_DIR = prior;
   }
 });

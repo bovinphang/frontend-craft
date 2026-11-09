@@ -167,8 +167,8 @@ importers:
   .:
     dependencies:
       '@bovinphang/craft-common':
-        specifier: 1.0.1
-        version: 1.0.1
+        specifier: 2.0.0
+        version: 2.0.0
     devDependencies:
       '@eslint/js':
         specifier: 9.39.5
@@ -267,8 +267,8 @@ packages:
   '@borewit/text-codec@0.2.3':
     resolution: {integrity: sha512-49CycTz1aAZmvFcwkeFyhud1HUmRIB5Tabf7ALV+VA4Iu85MTfz2cUwzPagMFAdVBvrWdkCxG67I30tUwwpKsw==}
 
-  '@bovinphang/craft-common@1.0.1':
-    resolution: {integrity: sha512-If8IDZ4r77j3XZGkF4tRYBj2ZRH2PlbiKq118VJyHPS99NbpeSsNz+U67dvyFOq/9ghBfTaUgr5/Ftes4n+8Ig==}
+  '@bovinphang/craft-common@2.0.0':
+    resolution: {integrity: sha512-WX1ql10CdU6gz4w1+TZHG9w541GI/wOArxaEEPzc/+ylGJ1UDsj+hW/R1zNXzr+bTrJ2hwyXk+YohylHPL2gTA==}
     engines: {node: '>=22.0.0'}
 
   '@clack/core@1.5.1':
@@ -1384,6 +1384,7 @@ packages:
   eslint@9.39.4:
     resolution: {integrity: sha512-XoMjdBOwe/esVgEvLmNsD3IRHkm7fbKIUGvrleloJXUZgDHig2IPWNniv+GwjyJXzuNqVjlr5+4yVUZjycJwfQ==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
+    deprecated: This version is no longer supported. Please see https://eslint.org/version-support for other options.
     hasBin: true
     peerDependencies:
       jiti: '*'
@@ -2299,6 +2300,10 @@ packages:
   sisteransi@1.0.5:
     resolution: {integrity: sha512-bLGGlR1QxBcynn2d5YmDX4MGjlZvy2MRBDRNHLJ8VI6l6+9FUiyTFNJ0IveOSP0bcXgVDPRcfGqA0pjaqUpfVg==}
 
+  smol-toml@1.9.1:
+    resolution: {integrity: sha512-j7WyPdf0CJoutMzMoPLF/bVXHtKZIT9Rb4eGeEbWw8X2t5oirjPgpL+OpaENZrILYaXqYwnVH+qgUwVbl+pUJQ==}
+    engines: {node: '>= 18'}
+
   source-map-support@0.5.21:
     resolution: {integrity: sha512-uBHU3L3czsIyYXKX88fdrGovxdSCoTGDRZ6SYXtSRxLZUzHg5P/66Ht6uoUlHu9EZod+inXhKo3qQgwXUT/y1w==}
 
@@ -2649,7 +2654,10 @@ snapshots:
 
   '@borewit/text-codec@0.2.3': {}
 
-  '@bovinphang/craft-common@1.0.1': {}
+  '@bovinphang/craft-common@2.0.0':
+    dependencies:
+      smol-toml: 1.9.1
+      yaml: 2.9.0
 
   '@clack/core@1.5.1':
     dependencies:
@@ -4623,6 +4631,8 @@ snapshots:
   signal-exit@4.1.0: {}
 
   sisteransi@1.0.5: {}
+
+  smol-toml@1.9.1: {}
 
   source-map-support@0.5.21:
     dependencies:

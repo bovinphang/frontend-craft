@@ -1,5 +1,8 @@
 <div align="center">
 
+> Release status (2026-11-09): craft-common 2.0.0 is published on npm. Frontend 3.0.0 and backend 1.0.0 remain unreleased; product versions are unchanged. Earlier preparation notes describe the pre-publication state.
+
+
 <img src="assets/brand/frontend-craft.png" alt="frontend-craft logo" width="200" />
 
 # frontend-craft
@@ -35,7 +38,7 @@
 
 Per-runtime paths and caveats live in [`docs/runtimes/`](docs/runtimes/).
 
-It bundles **14 specialized agents**, **61 auto-activated skills**, **11 slash commands**, **5 event-driven hooks**, **MCP integrations** for 6 design-tool endpoints, and a complete **rules library** into a single installable package. Run one command, and every AI session on your team writes React, Vue, Next.js, or Nuxt the same way — typed, accessible, secure, and consistent.
+It bundles **14 specialized agents**, **74 auto-activated skills**, **11 slash commands**, **5 event-driven hooks**, **MCP integrations** for 6 design-tool endpoints, and a complete **rules library** into a single installable package. Run one command, and every AI session on your team writes React, Vue, Next.js, or Nuxt the same way — typed, accessible, secure, and consistent.
 
 ---
 
@@ -43,7 +46,7 @@ It bundles **14 specialized agents**, **61 auto-activated skills**, **11 slash c
 
 | Problem                                                              | What frontend-craft does                                                                       |
 | -------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------- |
-| AI assistants write inconsistent, untyped, or insecure frontend code | **61 skills** encode team standards — auto-activated when the assistant touches matching files |
+| AI assistants write inconsistent, untyped, or insecure frontend code | **74 skills** encode team standards — auto-activated when the assistant touches matching files |
 | Each AI tool has its own plugin format                               | **One CLI** installs the same rules, agents, and hooks into 15 runtimes                        |
 | Design-to-code handoff is lossy                                      | **MCP integrations** bring in richer context from Figma, Figma Desktop, Sketch, MasterGo, Pixso, and 墨刀 |
 | Reviews are ad-hoc and shallow                                       | **14 agents** produce graded reports: code, security, a11y, performance, TS, UI fidelity       |
@@ -213,7 +216,7 @@ The skills below are grouped by use case so you can quickly find project standar
 | `fec-nuxt-project-standard`     | Nuxt 3 SSR/SSG, composables, data fetching, middleware                |
 | `fec-vite-project-standard`     | Vite config, env safety, HMR, dev proxy, build optimization           |
 | `fec-monorepo-project-standard` | pnpm workspace, Turborepo, Nx structure and task orchestration        |
-| `fec-typescript-project-standard`   | TypeScript config, public API types, declarations, DTOs, generics             |
+| `cc-typescript-project-standard`   | TypeScript config, public API types, declarations, DTOs, generics             |
 
 **Implementation capabilities** — activated when building specific frontend behavior:
 
@@ -568,7 +571,7 @@ To disable telemetry: `DISABLE_TELEMETRY=1`. Details: [skills.sh CLI docs](https
 
 ## Craft Common in 3.0
 
-Version 3.0 is unreleased. It delivers 54 frontend entries and seven shared entries (61 skills total) from the pinned craft-common dependency, without a third manual plugin install. Common source is maintained only in craft-common.
+Version 3.0 is unreleased. It delivers 53 frontend entries and 21 shared entries (74 skills total) from the pinned craft-common dependency, without a third manual plugin install. Common source is maintained only in craft-common.
 
 - `cc-drawio-studio`
 - `cc-technical-diagrams`
@@ -581,4 +584,22 @@ Version 3.0 is unreleased. It delivers 54 frontend entries and seven shared entr
 Run `fec runtime check-migration codex --local --json` and read [migration guide](docs/common-migration.md).
 CLI installation manages shared ownership and uninstall references. Native channels guarantee complete single-product payloads; native dual-product deduplication is not promised.
 
-Pinned common source: `@bovinphang/craft-common@1.0.1`. See [project structure and maintenance boundaries](docs/project-structure.md) and [contributor checks](CONTRIBUTING.md).
+Pinned common source: `@bovinphang/craft-common@2.0.0`. See [project structure and maintenance boundaries](docs/project-structure.md) and [contributor checks](CONTRIBUTING.md).
+
+## Mixed-project inspection
+
+`fec project inspect . --task-path apps/desktop/src-tauri/src/lib.rs --task-kind ipc --json` reads bounded manifest evidence and recommends only delivered capabilities. Roles (UI, desktop core, native library, service, CLI), languages and frameworks are separate dimensions. It never runs build scripts or installs tools. Shared language entries include independent C and C++ standards; Tauri/Electron are common specialties. Next/React/Vue/Nuxt/Vite stay frontend specialties. No task argument means project-level candidates only.
+
+Common uses the final version number 2.0.0 and is prepared for publication; frontend 3.0.0 and backend 1.0.0 remain unreleased. Exit old common consumers with each old product CLI before installing matching product builds. Run `fec runtime check-migration [runtime] --local --json` first. Unknown or edited retired entries block installation. See [migration](docs/common-migration.md).
+
+<!-- engineering-practices-20261108 -->
+
+## Conditional engineering practices
+
+Eight existing frontend entries now connect shared principles to React/Vue lifecycle, API replay safety, query ownership, review evidence, testing, security and dependency compatibility. Read the entry's local engineering reference for conditions and exceptions. Both products still deliver all21 common entries; language capability is independent of UI, desktop, library or service role. Company guidance does not authorize a toolchain migration.
+
+The [React sample](skills/fec-react-project-standard/examples/engineering/README.md) uses real React/Testing Library/JSDOM to verify stale-result rejection and owned cleanup. Its locked dependencies are isolated. Repository maintenance: explicitly run `pnpm run verify:engineering -- --prepare`, then omit --prepare to reuse only matching preparation. This is a source-repository maintenance task, not a new installed CLI command. DOM simulation does not prove browser E2E, remote rollback or desktop GUI.
+
+Payment writes are not retried solely because of429/5xx/network errors: require a server replay contract, same intent/key and bounded budget, otherwise reconcile the uncertain result. Public clean installation still awaits common publication; [upgrade ownership rules](docs/common-migration.md) remain in force.
+
+Common 2.0.0 release preparation: [current unreleased changes](CHANGELOG.md#300---unreleased). Publish and verify common first; this step does not publish frontend 3.0.0.

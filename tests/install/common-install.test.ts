@@ -9,7 +9,10 @@ import {
   uninstallCommonAwareInstall,
 } from "../../src/install/shared/common-install.js";
 import { readProductCommonCatalog } from "../../src/install/shared/common-content.js";
-import { executeSharedPlan } from "@bovinphang/craft-common";
+import {
+  executeSharedPlan,
+  withProductConfigurationLocks,
+} from "@bovinphang/craft-common";
 import {
   discoverManifestInstalls,
   copyInstallToNewBase,
@@ -17,7 +20,8 @@ import {
 } from "../../src/install/manifest-installs.js";
 import { getRuntimeSkillsTarget } from "../../src/install/runtime-skill-targets.js";
 import { planProductMutations } from "../../src/install/shared/product-write-plan.js";
-import { writeUtf8, hashContent } from "../../src/install/shared/fs.js";
+import { hashContent } from "../../src/install/shared/fs.js";
+import * as fileTools from "../../src/install/shared/fs.js";
 import { INSTALLERS, ALL_RUNTIMES } from "../../src/install/registry.js";
 import type { InstallContext } from "../../src/install/types.js";
 import { main } from "../../src/install/cli.js";
@@ -39,13 +43,24 @@ function fixture(t: { after: (fn: () => void) => void }, runtime = "codex") {
   };
   return ctx;
 }
+test("coordinated Qoder install respects the cross-product settings lock", async (t) => {
+  const ctx = fixture(t, "qoder"),
+    settings = path.join(ctx.baseDir, "settings.json");
+  await withProductConfigurationLocks([settings], async () => {
+    await assert.rejects(
+      runCommonAwareInstall(ctx, (planning) => INSTALLERS.qoder(planning)),
+      /lock/i,
+    );
+    assert.equal(fs.existsSync(settings), false);
+  });
+});
 test("Codex 的真实 Skill 目标与配置目录分离，产品清单不认领 cc", async (t) => {
   const ctx = fixture(t);
   assert.equal(
     getRuntimeSkillsTarget(ctx),
     path.join(ctx.cwd, ".agents/skills"),
   );
-  await runCommonAwareInstall(ctx, () => INSTALLERS.codex(ctx));
+  await runCommonAwareInstall(ctx, (planning) => INSTALLERS.codex(planning));
   assert.ok(
     fs.existsSync(
       path.join(ctx.cwd, ".agents/skills/cc-drawio-studio/SKILL.md"),
@@ -73,11 +88,30 @@ test("OpenClaw 本地公共目标是项目 skills，无 Skill 能力的 Runtime 
 test("产品写入先生成计划，不创建文件或目录", async (t) => {
   const ctx = fixture(t);
   const target = path.join(ctx.cwd, "new/file.md");
-  const mutations = await planProductMutations(async () =>
-    writeUtf8(target, "planned"),
+  const mutations = await planProductMutations(ctx, async (session) =>
+    fileTools.createFileTools({ ...ctx, session }).writeUtf8(target, "planned"),
   );
   assert.equal(fs.existsSync(path.dirname(target)), false);
   assert.equal(mutations[0].after?.toString(), "planned");
+});
+
+test("frontend installation callbacks receive an explicit isolated common session", async (t) => {
+  const ctx = fixture(t),
+    target = path.join(ctx.cwd, "fec-explicit.md");
+  await runCommonAwareInstall(ctx, async (...args: unknown[]) => {
+    const planning = args[0] as InstallContext & {
+      session?: { writeManaged(file: string, bytes: Buffer): void };
+    };
+    assert.equal(typeof planning?.session?.writeManaged, "function");
+    const api = fileTools as unknown as {
+      createFileTools(ctx: InstallContext): {
+        writeUtf8(file: string, body: string): void;
+      };
+    };
+    assert.equal(typeof api.createFileTools, "function");
+    api.createFileTools(planning).writeUtf8(target, "explicit");
+  });
+  assert.equal(fs.readFileSync(target, "utf8"), "explicit");
 });
 test("所有 Runtime 的协调 dry-run 都不写目标目录", async (t) => {
   const ctx = fixture(t);
@@ -88,14 +122,16 @@ test("所有 Runtime 的协调 dry-run 都不写目标目录", async (t) => {
       baseDir: path.join(ctx.cwd, `.${runtime}`),
       dryRun: true,
     };
-    await runCommonAwareInstall(dry, () => INSTALLERS[runtime](dry));
+    await runCommonAwareInstall(dry, (planning) =>
+      INSTALLERS[runtime](planning),
+    );
   }
   assert.deepEqual(fs.readdirSync(ctx.cwd), []);
 });
 
 test("卸载前端保留后端引用的公共资源，最后后端退出才回收", async (t) => {
   const ctx = fixture(t);
-  await runCommonAwareInstall(ctx, () => INSTALLERS.codex(ctx));
+  await runCommonAwareInstall(ctx, (planning) => INSTALLERS.codex(planning));
   const target = getRuntimeSkillsTarget(ctx)!;
   const backend = {
     product: "backend-craft",
@@ -156,13 +192,15 @@ test("公共语言冲突与产品执行失败都不写产品文件", async (t) =
     contentRoot: path.join(ctx.pluginRoot, "localized/zh-CN"),
   };
   await assert.rejects(
-    runCommonAwareInstall(localized, () => INSTALLERS.codex(localized)),
+    runCommonAwareInstall(localized, (planning) => INSTALLERS.codex(planning)),
     /冲突/,
   );
   assert.equal(fs.existsSync(ctx.baseDir), false);
   await assert.rejects(
-    runCommonAwareInstall(ctx, async () => {
-      writeUtf8(path.join(ctx.baseDir, "partial.md"), "partial");
+    runCommonAwareInstall(ctx, async (planning) => {
+      fileTools
+        .createFileTools(planning)
+        .writeUtf8(path.join(ctx.baseDir, "partial.md"), "partial");
       throw new Error("产品执行失败");
     }),
     /产品执行失败/,
@@ -172,7 +210,7 @@ test("公共语言冲突与产品执行失败都不写产品文件", async (t) =
 
 test("修改过的前端文件导致部分卸载时仍保留公共引用", async (t) => {
   const ctx = fixture(t);
-  await runCommonAwareInstall(ctx, () => INSTALLERS.codex(ctx));
+  await runCommonAwareInstall(ctx, (planning) => INSTALLERS.codex(planning));
   const [install] = discoverManifestInstalls({
     cwd: ctx.cwd,
     runtimes: ["codex"],
@@ -208,6 +246,7 @@ for (const edited of [false, true]) {
     const manifestFile = path.join(ctx.baseDir, "frontend-craft.manifest.json");
     const original = JSON.stringify({
       packageVersion: "2.0.0",
+      installedAt: "2026-01-01T00:00:00Z",
       runtime: "codex",
       scope: "local",
       files: [
@@ -221,7 +260,7 @@ for (const edited of [false, true]) {
     fs.writeFileSync(manifestFile, original);
     if (edited) {
       await assert.rejects(
-        runCommonAwareInstall(ctx, () => INSTALLERS.codex(ctx)),
+        runCommonAwareInstall(ctx, (planning) => INSTALLERS.codex(planning)),
         /旧公共 Skill/,
       );
       assert.equal(fs.readFileSync(manifestFile, "utf8"), original);
@@ -232,7 +271,9 @@ for (const edited of [false, true]) {
         false,
       );
     } else {
-      await runCommonAwareInstall(ctx, () => INSTALLERS.codex(ctx));
+      await runCommonAwareInstall(ctx, (planning) =>
+        INSTALLERS.codex(planning),
+      );
       assert.equal(fs.existsSync(old), false);
       assert.ok(
         fs.existsSync(
@@ -244,14 +285,16 @@ for (const edited of [false, true]) {
           (file: { path: string }) => !file.path.includes("fec-drawio-studio"),
         ),
       );
-      await runCommonAwareInstall(ctx, () => INSTALLERS.codex(ctx));
+      await runCommonAwareInstall(ctx, (planning) =>
+        INSTALLERS.codex(planning),
+      );
     }
   });
 }
 
 test("doctor 检查公共依赖及资源修改状态", async (t) => {
   const ctx = fixture(t);
-  await runCommonAwareInstall(ctx, () => INSTALLERS.codex(ctx));
+  await runCommonAwareInstall(ctx, (planning) => INSTALLERS.codex(planning));
   const previous = process.cwd(),
     previousCode = process.exitCode;
   const messages: string[] = [];
@@ -301,7 +344,7 @@ for (const edited of [false, true]) {
     const run = () =>
       runCommonAwareInstall(
         ctx,
-        () => INSTALLERS.antigravity(ctx),
+        (planning) => INSTALLERS.antigravity(planning),
         (dry = false) => copyInstallToNewBase(legacy, ctx.baseDir, dry),
       );
     if (edited) {
@@ -311,7 +354,7 @@ for (const edited of [false, true]) {
       await assert.rejects(
         runCommonAwareInstall(
           dry,
-          () => INSTALLERS.antigravity(dry),
+          (planning) => INSTALLERS.antigravity(planning),
           (preview = true) =>
             copyInstallToNewBase(legacy, ctx.baseDir, preview),
         ),
@@ -334,7 +377,7 @@ for (const edited of [false, true]) {
 for (const change of ["scope", "runtime"] as const) {
   test(`同一清单路径拒绝切换 ${change} 以免遗留公共引用`, async (t) => {
     const ctx = fixture(t, "cursor");
-    await runCommonAwareInstall(ctx, () => INSTALLERS.cursor(ctx));
+    await runCommonAwareInstall(ctx, (planning) => INSTALLERS.cursor(planning));
     const manifestPath = path.join(ctx.baseDir, "frontend-craft.manifest.json");
     const before = fs.readFileSync(manifestPath);
     const changed =
@@ -378,7 +421,139 @@ test("全局配置根通过 junction 别名仍能原子安装", async (t) => {
     ctx.baseDir,
     process.platform === "win32" ? "junction" : "dir",
   );
-  await runCommonAwareInstall(ctx, () => INSTALLERS.cursor(ctx));
+  await runCommonAwareInstall(ctx, (planning) => INSTALLERS.cursor(planning));
   assert.ok(fs.existsSync(path.join(real, "frontend-craft.manifest.json")));
   assert.ok(fs.existsSync(path.join(real, "skills/cc-drawio-studio/SKILL.md")));
+});
+
+for (const edited of [false, true]) {
+  test(`旧 TypeScript 入口${edited ? "已修改则阻断" : "未修改则随事务退役"}`, async (t) => {
+    const ctx = fixture(t);
+    const old = path.join(
+      ctx.cwd,
+      ".agents/skills/fec-typescript-project-standard/SKILL.md",
+    );
+    fs.mkdirSync(path.dirname(old), { recursive: true });
+    fs.mkdirSync(ctx.baseDir, { recursive: true });
+    fs.writeFileSync(old, edited ? "owned plus user edit" : "owned");
+    const manifestFile = path.join(ctx.baseDir, "frontend-craft.manifest.json");
+    const original = JSON.stringify({
+      packageVersion: "2.0.0",
+      installedAt: "2026-01-01T00:00:00Z",
+      runtime: "codex",
+      scope: "local",
+      files: [
+        {
+          root: "cwd",
+          path: ".agents/skills/fec-typescript-project-standard/SKILL.md",
+          hash: hashContent("owned"),
+        },
+      ],
+    });
+    fs.writeFileSync(manifestFile, original);
+    if (edited) {
+      await assert.rejects(
+        runCommonAwareInstall(ctx, (planning) => INSTALLERS.codex(planning)),
+        /旧公共 Skill/,
+      );
+      assert.equal(fs.readFileSync(manifestFile, "utf8"), original);
+      assert.equal(
+        fs.existsSync(
+          path.join(
+            ctx.cwd,
+            ".agents/skills/cc-typescript-project-standard/SKILL.md",
+          ),
+        ),
+        false,
+      );
+    } else {
+      await runCommonAwareInstall(ctx, (planning) =>
+        INSTALLERS.codex(planning),
+      );
+      assert.equal(fs.existsSync(old), false);
+      assert.ok(
+        fs.existsSync(
+          path.join(
+            ctx.cwd,
+            ".agents/skills/cc-typescript-project-standard/SKILL.md",
+          ),
+        ),
+      );
+      assert.ok(
+        JSON.parse(fs.readFileSync(manifestFile, "utf8")).files.every(
+          (file: { path: string }) =>
+            !file.path.includes("fec-typescript-project-standard"),
+        ),
+      );
+      await runCommonAwareInstall(ctx, (planning) =>
+        INSTALLERS.codex(planning),
+      );
+    }
+  });
+}
+test("legacy preflight is repeated under the lock after queued edits, before any retirement/common writes", async (t) => {
+  const ctx = fixture(t, "claude"),
+    dir = path.join(ctx.baseDir, "skills/fec-typescript-project-standard"),
+    old = path.join(dir, "SKILL.md");
+  fs.mkdirSync(dir, { recursive: true });
+  fs.writeFileSync(old, "owned");
+  const manifestFile = path.join(ctx.baseDir, "frontend-craft.manifest.json"),
+    before = JSON.stringify({
+      packageVersion: "2.9.0",
+      installedAt: "2026-11-01",
+      runtime: "claude",
+      scope: "local",
+      files: [
+        {
+          path: "skills/fec-typescript-project-standard/SKILL.md",
+          hash: hashContent("owned"),
+        },
+      ],
+    });
+  fs.writeFileSync(manifestFile, before);
+  const pending = runCommonAwareInstall(ctx, async () => {});
+  queueMicrotask(() => fs.writeFileSync(path.join(dir, "user.md"), "user"));
+  await assert.rejects(pending, /旧公共 Skill/);
+  assert.equal(fs.readFileSync(old, "utf8"), "owned");
+  assert.equal(fs.readFileSync(manifestFile, "utf8"), before);
+  assert.equal(
+    fs.existsSync(
+      path.join(ctx.baseDir, "skills/cc-typescript-project-standard"),
+    ),
+    false,
+  );
+});
+test("known legacy file edited during the recovery boundary blocks common deployment", async (t) => {
+  const ctx = fixture(t, "claude"),
+    old = path.join(
+      ctx.baseDir,
+      "skills/fec-typescript-project-standard/SKILL.md",
+    );
+  fs.mkdirSync(path.dirname(old), { recursive: true });
+  fs.writeFileSync(old, "owned");
+  const manifestFile = path.join(ctx.baseDir, "frontend-craft.manifest.json"),
+    before = JSON.stringify({
+      packageVersion: "2.9.0",
+      installedAt: "2026-11-01",
+      runtime: "claude",
+      scope: "local",
+      files: [
+        {
+          path: "skills/fec-typescript-project-standard/SKILL.md",
+          hash: hashContent("owned"),
+        },
+      ],
+    });
+  fs.writeFileSync(manifestFile, before);
+  const pending = runCommonAwareInstall(ctx, async () => {});
+  queueMicrotask(() => fs.appendFileSync(old, " user edit"));
+  await assert.rejects(pending, /旧公共 Skill/);
+  assert.equal(fs.readFileSync(old, "utf8"), "owned user edit");
+  assert.equal(fs.readFileSync(manifestFile, "utf8"), before);
+  assert.equal(
+    fs.existsSync(
+      path.join(ctx.baseDir, "skills/cc-typescript-project-standard"),
+    ),
+    false,
+  );
 });

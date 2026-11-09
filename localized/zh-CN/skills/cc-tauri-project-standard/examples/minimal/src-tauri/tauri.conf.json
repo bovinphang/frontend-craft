@@ -1,0 +1,13 @@
+{
+  "$schema": "https://schema.tauri.app/config/2",
+  "productName": "Craft Document Example",
+  "version": "0.1.0",
+  "identifier": "com.example.craft-document",
+  "build": { "frontendDist": "../ui" },
+  "app": {
+    "withGlobalTauri": true,
+    "windows": [{ "label": "main", "title": "Document" }],
+    "security": { "capabilities": ["main"], "csp": "default-src 'self'; script-src 'self'; connect-src ipc: http://ipc.localhost" }
+  },
+  "bundle": { "active": false }
+}

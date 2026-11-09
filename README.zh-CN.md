@@ -1,5 +1,8 @@
 <div align="center">
 
+> 发布状态更新（2026-11-09）：craft-common 2.0.0 已发布至 npm。frontend 3.0.0、backend 1.0.0 继续未发布，产品版本号不变；下方原发布准备说明保留当时状态。
+
+
 <img src="assets/brand/frontend-craft.png" alt="frontend-craft logo" width="200" />
 
 # frontend-craft
@@ -35,7 +38,7 @@
 
 各运行时的路径与注意事项详见 [`docs/runtimes/`](docs/runtimes/)。
 
-它将 **14 个专业 agent**、**61 个自动激活 skill**、**11 个斜杠命令**、**5 个事件驱动 hook**、面向 6 个设计工具端点的 **MCP 集成**以及一整套**规则库**打包为一个可安装单元。运行一条命令，团队里的每一次 AI 会话都将以相同的方式编写 React、Vue、Next.js 或 Nuxt——类型安全、可访问、安全、一致。
+它将 **14 个专业 agent**、**74 个自动激活 skill**、**11 个斜杠命令**、**5 个事件驱动 hook**、面向 6 个设计工具端点的 **MCP 集成**以及一整套**规则库**打包为一个可安装单元。运行一条命令，团队里的每一次 AI 会话都将以相同的方式编写 React、Vue、Next.js 或 Nuxt——类型安全、可访问、安全、一致。
 
 ---
 
@@ -43,7 +46,7 @@
 
 | 痛点                                          | frontend-craft 的解法                                                 |
 | --------------------------------------------- | --------------------------------------------------------------------- |
-| AI 助手写出的前端代码风格不一、缺类型、不安全 | **61 个 skill** 将团队规范编码为可自动激活的工作流                    |
+| AI 助手写出的前端代码风格不一、缺类型、不安全 | **74 个 skill** 将团队规范编码为可自动激活的工作流                    |
 | 每款 AI 工具都有自己的插件格式                | **一条 CLI 命令** 把相同的规则、agent 和 hook 安装到 15 个运行时      |
 | 设计稿到代码的交接总有信息损失                | **MCP 集成** 从 Figma、Figma Desktop、Sketch、MasterGo、Pixso、墨刀引入更完整设计上下文 |
 | 代码评审随意、浅层                            | **14 个 agent** 输出分级报告：代码、安全、无障碍、性能、TS、UI 还原度 |
@@ -213,7 +216,7 @@ npx @bovinphang/frontend-craft@latest list
 | `fec-nuxt-project-standard`     | Nuxt 3 SSR/SSG、组合式 API、数据获取、中间件          |
 | `fec-vite-project-standard`     | Vite 配置、环境变量安全、HMR、开发代理、构建优化      |
 | `fec-monorepo-project-standard` | pnpm workspace、Turborepo、Nx 结构与任务编排          |
-| `fec-typescript-project-standard`   | TypeScript 配置、公开类型、声明文件、DTO 和泛型       |
+| `cc-typescript-project-standard`   | TypeScript 配置、公开类型、声明文件、DTO 和泛型       |
 
 **实现能力** — 构建特定前端能力时激活：
 
@@ -568,7 +571,7 @@ npx skills check                           # 预览可用更新
 
 ## 3.0 公共能力
 
-3.0 尚未正式发布，包含 54 个前端专属入口和 7 个公共入口，共 61 个 Skill。公共能力由精确版本的 craft-common 自动交付，无需额外安装插件；公共源码仅在 craft-common 维护。
+3.0 尚未正式发布，包含 53 个前端专属入口和 21 个公共入口，共 74 个 Skill。公共能力由精确版本的 craft-common 自动交付，无需额外安装插件；公共源码仅在 craft-common 维护。
 
 - `cc-drawio-studio`
 - `cc-technical-diagrams`
@@ -581,4 +584,22 @@ npx skills check                           # 预览可用更新
 迁移前运行 `fec runtime check-migration codex --local --json`，再参阅 [migration guide](docs/zh-CN/common-migration.md).
 CLI 管理共享安装及卸载引用；原生插件渠道本期保证单产品资源完整，不承诺双产品原生去重。
 
-公共源精确固定为 `@bovinphang/craft-common@1.0.1`。参见[项目结构与维护边界](docs/zh-CN/project-structure.md)及[贡献校验指引](CONTRIBUTING.zh-CN.md)。
+公共源精确固定为 `@bovinphang/craft-common@2.0.0`。参见[项目结构与维护边界](docs/zh-CN/project-structure.md)及[贡献校验指引](CONTRIBUTING.zh-CN.md)。
+
+## 混合工程识别
+
+`fec project inspect . --task-path apps/desktop/src-tauri/src/lib.rs --task-kind ipc --json` 只读清单证据并推荐已交付能力。角色（UI、桌面核心、原生库、服务、CLI）、语言和框架分别匹配，不执行构建脚本或安装工具。C、C++ 有独立公共入口，Tauri/Electron 为公共专项，React/Vue/Next/Nuxt/Vite 仍由前端产品维护；未指定任务时只给工程级候选。
+
+common使用正式版本号2.0.0，当前待发布；frontend3.0.0与backend1.0.0仍未发布。先用各旧产品 CLI 退出旧公共引用，再安装匹配的新产品。使用 `fec runtime check-migration [runtime] --local --json` 检查；未知或用户修改的旧目录会阻断整批安装。见[迁移指南](docs/zh-CN/common-migration.md)。
+
+<!-- engineering-practices-20261108 -->
+
+## 按条件适用的工程实践
+
+八个既有前端入口将公共原则落到React/Vue生命期、API安全重放、查询所有权、评审证据、测试、安全和依赖兼容。按入口本地工程参考读取条件及例外。两产品仍交付全部21个公共入口；UI、桌面、库或服务职责不限制语言能力，企业指南不授权升级工具链。
+
+[React样例](skills/fec-react-project-standard/examples/engineering/README.md)用真实React/Testing Library/JSDOM验证旧结果拒绝和自有资源清理，精确依赖独立锁定。源码仓维护者显式运行`pnpm run verify:engineering -- --prepare`，后续不带--prepare复用匹配准备；这不是新增的已安装CLI命令。DOM模拟不证明浏览器E2E、远端回滚或桌面GUI。
+
+付款不能仅凭429/5xx/网络错误重试；须有服务端重放契约、同意图/同键和有界预算，否则核对待确认结果。公开源干净安装仍待common发布，[升级所有权保护](docs/common-migration.md)保持有效。
+
+common2.0.0发布准备见[当前未发布变更](CHANGELOG.zh-CN.md)；须先发布并核验common，本轮不发布frontend3.0.0。

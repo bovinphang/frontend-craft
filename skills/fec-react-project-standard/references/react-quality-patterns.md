@@ -27,9 +27,9 @@ Please note when adapting:
 
 ## TypeScript Specification
 
-Common TypeScript project rules are taken care of by `fec-typescript-project-standard`, including `tsconfig`, strictness, DTO / view model boundaries, `unknown` narrowing, public API types, declared artifacts, and type tests.
+Common TypeScript project rules are taken care of by `cc-typescript-project-standard`, including `tsconfig`, strictness, DTO / view model boundaries, `unknown` narrowing, public API types, declared artifacts, and type tests.
 
-The React specification only supplements components, Props, events and TSX generic writing; complex type modeling or cross-framework type contracts are first offloaded to `fec-typescript-project-standard`.
+The React specification only supplements components, Props, events and TSX generic writing; complex type modeling or cross-framework type contracts are first offloaded to `cc-typescript-project-standard`.
 
 ### React project supplementary conventions
 
@@ -119,7 +119,7 @@ When outputting React code or solutions, at least check:
 - [ ] Whether reusable logic has been extracted into hooks
 - [ ] loading / error / empty / data status is complete
 - [ ] Whether the API layer has type constraints and unified error handling
-- [ ] Whether complex DTO, external data narrowing, public types or `tsconfig` issues have been offloaded to `fec-typescript-project-standard`
+- [ ] Whether complex DTO, external data narrowing, public types or `tsconfig` issues have been offloaded to `cc-typescript-project-standard`
 - [ ] Whether status management complies with the proximity principle
 - [ ] Whether lazy loading is considered for routing-level or heavy-duty modules
 - [ ] Whether the style scheme is consistent with the warehouse

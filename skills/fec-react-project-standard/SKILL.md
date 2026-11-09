@@ -89,3 +89,9 @@ Load more detailed reference files as needed:
 - For new modules, give priority to outputting the smallest floor-mountable structure rather than over-designing it all at once
 - For reconstruction tasks, give priority to ensuring portability and risk controllability
 - For performance-related React changes, describe the triggered risk categories, evidence sources, and verification commands
+
+For generic component props and callbacks, use the [component type example](references/generic-component-types.md).
+
+## Engineering practices
+
+Read the [local engineering decisions](references/engineering-practices.md) for this task and follow their links to relevant shared principles. Apply levels and exceptions against actual project contracts; product frontend/backend labels do not constrain language or role.

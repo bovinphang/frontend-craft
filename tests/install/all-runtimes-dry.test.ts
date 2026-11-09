@@ -1,4 +1,5 @@
 import test from "node:test";
+import assert from "node:assert/strict";
 import { execFileSync } from "node:child_process";
 import fs from "node:fs";
 import os from "node:os";
@@ -26,6 +27,11 @@ for (const rt of ALL_RUNTIMES) {
           encoding: "utf8",
           env: isolatedRuntimeEnv(runtimeHome),
         },
+      );
+      assert.deepEqual(
+        fs.readdirSync(runtimeHome),
+        [],
+        "dry-run must not create configuration or state",
       );
     } finally {
       fs.rmSync(runtimeHome, { recursive: true, force: true });

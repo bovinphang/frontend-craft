@@ -1,34 +1,33 @@
-import { copyProductSkills } from "../shared/fs.js";
+import { createFileTools } from "../shared/fs.js";
 import path from "node:path";
 import fs from "node:fs";
 import type { InstallContext } from "../types.js";
-import { copyDir, copyFile, ensureDir } from "../shared/fs.js";
 import {
   mergeHooks,
   removeExactHooks,
-  readSettings,
-  writeSettings,
+  createSettingsTools,
 } from "../shared/settings.js";
-
 const HOOK_SCRIPTS = [
   "fec-security-check.js",
   "fec-format-changed-file.js",
   "fec-run-tests.js",
   "fec-notify.js",
 ];
-
 /**
  * @param {import('../types.js').InstallContext} ctx
  */
 export async function installQoder(ctx: InstallContext): Promise<void> {
   const { pluginRoot, contentRoot, baseDir, dryRun, isGlobal } = ctx;
-  if (dryRun) {
+  if (dryRun && !ctx.session) {
     console.log(`[dry-run] qoder -> ${baseDir}`);
     return;
   }
-
+  const { ensureDir, copyProductSkills, copyDir } = createFileTools(ctx);
+  const { readSettings, writeSettings } = createSettingsTools(
+    ctx,
+    isGlobal ? qoderHooks(baseDir, false) : {},
+  );
   readSettings(path.join(baseDir, "settings.json"));
-
   ensureDir(baseDir);
   copyProductSkills(
     path.join(contentRoot, "skills"),
@@ -42,7 +41,7 @@ export async function installQoder(ctx: InstallContext): Promise<void> {
       path.join(baseDir, "rules"),
     );
   }
-  copyHookScripts(pluginRoot, path.join(baseDir, "hooks"));
+  copyHookScripts(ctx, pluginRoot, path.join(baseDir, "hooks"));
   const ownedHooks = qoderHooks(baseDir, isGlobal);
   const existing = readSettings(path.join(baseDir, "settings.json"));
   writeSettings(
@@ -56,8 +55,12 @@ export async function installQoder(ctx: InstallContext): Promise<void> {
     ownedHooks,
   );
 }
-
-function copyHookScripts(pluginRoot: string, hooksDir: string): void {
+function copyHookScripts(
+  ctx: InstallContext,
+  pluginRoot: string,
+  hooksDir: string,
+): void {
+  const { ensureDir, copyFile } = createFileTools(ctx);
   ensureDir(hooksDir);
   for (const script of HOOK_SCRIPTS) {
     const src = path.join(pluginRoot, "dist", "hooks", script);
@@ -69,7 +72,6 @@ function copyHookScripts(pluginRoot: string, hooksDir: string): void {
     copyFile(src, path.join(hooksDir, script));
   }
 }
-
 function qoderHooks(
   baseDir: string,
   isGlobal: boolean,
@@ -103,7 +105,6 @@ function qoderHooks(
     Notification: [qoderHook(".*", hookPath("fec-notify.js"))],
   };
 }
-
 function qoderHook(
   matcher: string,
   scriptPath: string,

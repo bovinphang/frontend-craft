@@ -52,3 +52,7 @@ description: 用于审查前端安全风险，如 XSS、CSRF、敏感数据暴�
 ## 预期输出
 
 输出 CRITICAL/HIGH/MEDIUM/LOW 分级安全审查报告，每个问题关联具体文件和行号，给出修复建议；报告保存为 `reports/security-review-YYYY-MM-DD-HHmmss.md`。
+
+## 工程实践
+
+按当前任务读取[本入口工程细则](references/engineering-practices.md)，再按链接选择公共原则。规则级别与例外以实际项目契约为准；不因产品前后端标签限制语言或职责。

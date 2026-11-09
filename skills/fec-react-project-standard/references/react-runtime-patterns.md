@@ -28,7 +28,7 @@ The following patterns can be used in comparison with other chapters of this ski
 
 ### Form
 
-- Controlled fields + validation error objects are a feasible implementation; medium and large forms are given priority **React Hook Form** (or Formik) + **Zod**, and complex form values, DTO and validation type contracts are offloaded to `fec-typescript-project-standard`.
+- Controlled fields + validation error objects are a feasible implementation; medium and large forms are given priority **React Hook Form** (or Formik) + **Zod**, and complex form values, DTO and validation type contracts are offloaded to `cc-typescript-project-standard`.
 - Avoid huge `useState` form objects and repeated validation logic in a single component, detachable field subcomponents or extract `useFormSchema`.
 
 ### Error Boundary

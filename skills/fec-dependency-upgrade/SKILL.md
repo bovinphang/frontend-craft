@@ -32,3 +32,7 @@ Reduce disruptive changes, supply chain risks, and CI regressions by upgrading d
 ## Expected Output
 
 Output upgrade list, risk classification, source basis, batch strategy, modification scope, verification command, failure handling and rollback suggestions. After completion, the lockfile is consistent with the package manifest, key verification is passed, and destructive changes are recorded.
+
+## Engineering practices
+
+Read the [local engineering decisions](references/engineering-practices.md) for this task and follow their links to relevant shared principles. Apply levels and exceptions against actual project contracts; product frontend/backend labels do not constrain language or role.

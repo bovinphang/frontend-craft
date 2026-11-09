@@ -1,13 +1,17 @@
 import fs from "node:fs";
 import path from "node:path";
 import { readUtf8, writeUtf8 } from "./fs.js";
+import { createFileTools } from "./fs.js";
+import type { InstallContext } from "../types.js";
 import { parseCommandDocument } from "./frontmatter.js";
 
 /** OpenClaw discovers command workflows through Agent Skills, not loose Markdown. */
 export function installCommandSkills(
   commandsDir: string,
   skillsDir: string,
+  ctx?: InstallContext,
 ): void {
+  const write = ctx ? createFileTools(ctx).writeUtf8 : writeUtf8;
   if (!fs.existsSync(commandsDir)) return;
   for (const file of fs.readdirSync(commandsDir)) {
     if (!file.endsWith(".md")) continue;
@@ -19,7 +23,7 @@ export function installCommandSkills(
       metadata: { description },
       body,
     } = parseCommandDocument(raw, path.join(commandsDir, file), name);
-    writeUtf8(
+    write(
       path.join(skillsDir, name, "SKILL.md"),
       `---\nname: ${name}\ndescription: ${JSON.stringify(description)}\nuser-invocable: true\n---\n\n${body.trim()}\n`,
     );

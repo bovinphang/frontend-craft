@@ -78,7 +78,8 @@
     "check:content": "tsx scripts/check-content.ts",
     "lint:code": "eslint bin src scripts tests eslint.config.mjs --max-warnings=0",
     "lint": "pnpm run lint:code && pnpm run check:content",
-    "format:check": "tsx scripts/check-format.ts"
+    "format:check": "tsx scripts/check-format.ts",
+    "verify:engineering": "tsx scripts/verify-engineering.ts"
   },
   "devDependencies": {
     "@eslint/js": "9.39.5",
@@ -113,6 +114,6 @@
   ],
   "packageManager": "pnpm@12.4.1",
   "dependencies": {
-    "@bovinphang/craft-common": "1.0.1"
+    "@bovinphang/craft-common": "2.0.0"
   }
 }

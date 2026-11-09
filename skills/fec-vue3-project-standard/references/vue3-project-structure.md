@@ -144,9 +144,9 @@ Pages → Route mapping, layout combination
 
 ## TypeScript Specification
 
-Common TypeScript project rules are taken care of by `fec-typescript-project-standard`, including `tsconfig`, strictness, DTO / view model boundaries, `unknown` narrowing, public API types, declared artifacts, and type tests.
+Common TypeScript project rules are taken care of by `cc-typescript-project-standard`, including `tsconfig`, strictness, DTO / view model boundaries, `unknown` narrowing, public API types, declared artifacts, and type tests.
 
-The Vue specification only supplements SFC, Props / Emits, exposed methods, Provide / Inject and composable reactive types; complex type modeling or cross-framework type contracts are first offloaded to `fec-typescript-project-standard`.
+The Vue specification only supplements SFC, Props / Emits, exposed methods, Provide / Inject and composable reactive types; complex type modeling or cross-framework type contracts are first offloaded to `cc-typescript-project-standard`.
 
 ### Vue 3 project supplementary conventions
 

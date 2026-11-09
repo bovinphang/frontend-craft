@@ -1,4 +1,26 @@
 {
+  "cc-c-project-standard": {
+    "relatedSkills": [
+      "cc-native-memory-safety",
+      "cc-cpp-project-standard"
+    ],
+    "capabilityTags": [
+      "c",
+      "project",
+      "standard"
+    ]
+  },
+  "cc-cpp-project-standard": {
+    "relatedSkills": [
+      "cc-native-memory-safety",
+      "cc-c-project-standard"
+    ],
+    "capabilityTags": [
+      "cpp",
+      "project",
+      "standard"
+    ]
+  },
   "cc-debug-methodology": {
     "capabilityTags": [
       "debug",
@@ -21,6 +43,84 @@
       "architecture"
     ]
   },
+  "cc-electron-project-standard": {
+    "relatedSkills": [
+      "cc-typescript-project-standard"
+    ],
+    "capabilityTags": [
+      "electron",
+      "desktop",
+      "ipc"
+    ]
+  },
+  "cc-go-concurrency": {
+    "relatedSkills": [
+      "cc-go-project-standard"
+    ],
+    "capabilityTags": [
+      "go",
+      "concurrency"
+    ]
+  },
+  "cc-go-project-standard": {
+    "relatedSkills": [
+      "cc-go-concurrency"
+    ],
+    "capabilityTags": [
+      "go",
+      "project",
+      "standard"
+    ]
+  },
+  "cc-java-project-standard": {
+    "relatedSkills": [
+      "cc-java-runtime"
+    ],
+    "capabilityTags": [
+      "java",
+      "project",
+      "standard"
+    ]
+  },
+  "cc-java-runtime": {
+    "relatedSkills": [
+      "cc-java-project-standard"
+    ],
+    "capabilityTags": [
+      "java",
+      "runtime"
+    ]
+  },
+  "cc-native-memory-safety": {
+    "relatedSkills": [
+      "cc-c-project-standard",
+      "cc-cpp-project-standard"
+    ],
+    "capabilityTags": [
+      "native",
+      "memory",
+      "safety"
+    ]
+  },
+  "cc-python-async": {
+    "relatedSkills": [
+      "cc-python-project-standard"
+    ],
+    "capabilityTags": [
+      "python",
+      "async"
+    ]
+  },
+  "cc-python-project-standard": {
+    "relatedSkills": [
+      "cc-python-async"
+    ],
+    "capabilityTags": [
+      "python",
+      "project",
+      "standard"
+    ]
+  },
   "cc-refactoring-core": {
     "capabilityTags": [
       "refactoring",
@@ -28,11 +128,41 @@
       "baseline"
     ]
   },
+  "cc-rust-async": {
+    "relatedSkills": [
+      "cc-rust-project-standard"
+    ],
+    "capabilityTags": [
+      "rust",
+      "async"
+    ]
+  },
+  "cc-rust-project-standard": {
+    "relatedSkills": [
+      "cc-rust-async"
+    ],
+    "capabilityTags": [
+      "rust",
+      "project",
+      "standard"
+    ]
+  },
   "cc-source-driven-development": {
     "capabilityTags": [
       "official-docs",
       "versioning",
       "local-knowledge"
+    ]
+  },
+  "cc-tauri-project-standard": {
+    "relatedSkills": [
+      "cc-rust-project-standard",
+      "cc-typescript-project-standard"
+    ],
+    "capabilityTags": [
+      "tauri",
+      "desktop",
+      "ipc"
     ]
   },
   "cc-tdd-methodology": {
@@ -48,6 +178,19 @@
       "sequence",
       "workflow",
       "png-qa"
+    ]
+  },
+  "cc-typescript-project-standard": {
+    "relatedSkills": [
+      "cc-source-driven-development",
+      "cc-tdd-methodology"
+    ],
+    "capabilityTags": [
+      "typescript",
+      "project-standard",
+      "type-safety",
+      "tsconfig",
+      "declarations"
     ]
   },
   "fec-alchemy": {
@@ -76,7 +219,7 @@
       "fec-security-review",
       "fec-route-protection",
       "fec-form-handling",
-      "fec-typescript-project-standard",
+      "cc-typescript-project-standard",
       "cc-source-driven-development"
     ],
     "boundaryWorkflows": [
@@ -156,7 +299,7 @@
       "fec-e2e-testing",
       "fec-validation-fix",
       "fec-performance-optimization",
-      "fec-typescript-project-standard",
+      "cc-typescript-project-standard",
       "fec-state-management",
       "cc-source-driven-development",
       "fec-dependency-upgrade",
@@ -475,7 +618,7 @@
   },
   "fec-react-project-standard": {
     "relatedSkills": [
-      "fec-typescript-project-standard",
+      "cc-typescript-project-standard",
       "fec-state-management",
       "fec-tailwind-design-system",
       "fec-responsive-layout",
@@ -535,7 +678,7 @@
       "fec-refactoring-catalog",
       "fec-refactoring-validation",
       "fec-api-integration",
-      "fec-typescript-project-standard"
+      "cc-typescript-project-standard"
     ],
     "boundaryWorkflows": [
       "已证明未使用的代码、导出、样式、路由、fixture 或依赖使用死代码清理能力。",
@@ -586,7 +729,7 @@
       "fec-code-smells",
       "fec-refactoring-catalog",
       "fec-refactoring-validation",
-      "fec-typescript-project-standard"
+      "cc-typescript-project-standard"
     ],
     "boundaryWorkflows": [
       "已证明未使用的代码、导出、样式、路由、fixture 或依赖使用死代码清理能力。",
@@ -610,7 +753,7 @@
       "fec-refactoring-catalog",
       "fec-refactoring-validation",
       "fec-state-management",
-      "fec-typescript-project-standard"
+      "cc-typescript-project-standard"
     ],
     "boundaryWorkflows": [
       "已证明未使用的代码、导出、样式、路由、fixture 或依赖使用死代码清理能力。",
@@ -656,7 +799,7 @@
       "fec-code-smells",
       "fec-refactoring-catalog",
       "fec-refactoring-validation",
-      "fec-typescript-project-standard"
+      "cc-typescript-project-standard"
     ],
     "boundaryWorkflows": [
       "已证明未使用的代码、导出、样式、路由、fixture 或依赖使用死代码清理能力。",
@@ -679,7 +822,7 @@
       "fec-code-smells",
       "fec-refactoring-catalog",
       "fec-refactoring-validation",
-      "fec-typescript-project-standard",
+      "cc-typescript-project-standard",
       "fec-legacy-to-modern-migration"
     ],
     "boundaryWorkflows": [
@@ -892,29 +1035,6 @@
       "quality-gate"
     ]
   },
-  "fec-typescript-project-standard": {
-    "relatedSkills": [
-      "fec-code-review",
-      "fec-api-integration",
-      "fec-react-project-standard",
-      "fec-vue3-project-standard",
-      "fec-vite-project-standard",
-      "fec-monorepo-project-standard",
-      "fec-validation-fix"
-    ],
-    "boundaryWorkflows": [
-      "涉及组件架构、路由、状态归属和框架专项模块边界时，使用框架项目工作流。",
-      "当runtime API clients, auth refresh, uploads, realtime behavior, or error mapping go beyond TypeScript type contracts时，使用 API 集成。",
-      "当the task is to repair concrete lint, typecheck, test, build, or CI failures after TypeScript changes时，使用验证修复 fix。"
-    ],
-    "capabilityTags": [
-      "typescript",
-      "project-standard",
-      "type-safety",
-      "tsconfig",
-      "declarations"
-    ]
-  },
   "fec-ui-design": {
     "relatedSkills": [
       "fec-image-generation",
@@ -967,7 +1087,7 @@
   },
   "fec-vue3-project-standard": {
     "relatedSkills": [
-      "fec-typescript-project-standard",
+      "cc-typescript-project-standard",
       "fec-state-management",
       "fec-tailwind-design-system",
       "fec-responsive-layout",

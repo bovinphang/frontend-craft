@@ -1,16 +1,8 @@
 import fs from "node:fs";
 import path from "node:path";
-import crypto from "node:crypto";
-import os from "node:os";
+import { hashBytes } from "@bovinphang/craft-common";
 import type { InstallLanguage } from "../language.js";
-import {
-  isPlanningWrites,
-  writeProductFile,
-  removeProductFile,
-  readProductFile,
-  productFileExists,
-} from "./product-write-plan.js";
-
+import type { InstallContext } from "../types.js";
 export type InstallMode = "install" | "update";
 export type ManifestRoot = "baseDir" | "cwd" | "home";
 
@@ -41,114 +33,25 @@ export type InstallManifest = {
   }>;
 };
 
-type ManifestSession = {
-  common?: InstallManifest["common"];
-  baseDir: string;
-  cwd: string;
-  homeDir: string;
-  mode: InstallMode;
-  packageVersion: string;
-  runtime: string;
-  scope: "global" | "local";
-  language: InstallLanguage;
-  manifestPath: string;
-  previousFiles: Map<string, string>;
-  writtenFiles: Map<string, string>;
-  skippedFiles: Set<string>;
-  settingsHooks: NonNullable<InstallManifest["settingsHooks"]>;
-};
-
-let manifestSession: ManifestSession | undefined;
-
-export function beginManifestSession({
-  baseDir,
-  cwd = process.cwd(),
-  mode,
-  packageVersion,
-  runtime,
-  isGlobal,
-  language,
-  common,
-}: {
-  baseDir: string;
-  cwd?: string;
-  mode: InstallMode;
-  packageVersion: string;
-  runtime: string;
-  isGlobal: boolean;
-  language: InstallLanguage;
-  common?: InstallManifest["common"];
-}): void {
-  const manifestPath = path.join(baseDir, "frontend-craft.manifest.json");
-  manifestSession = {
-    baseDir: path.resolve(baseDir),
-    cwd: path.resolve(cwd),
-    homeDir: path.resolve(os.homedir()),
-    mode,
-    packageVersion,
-    runtime,
-    scope: isGlobal ? "global" : "local",
-    language,
-    common,
-    manifestPath,
-    previousFiles: readManifestFiles(manifestPath),
-    writtenFiles: new Map(),
-    skippedFiles: new Set(),
-    settingsHooks: [],
-  };
-}
-
-export function endManifestSession(): void {
-  const session = manifestSession;
-  manifestSession = undefined;
-  if (!session) return;
-
-  for (const [filePath, hash] of session.previousFiles) {
-    if (!session.writtenFiles.has(filePath)) {
-      session.writtenFiles.set(filePath, hash);
-    }
-  }
-
-  const files = [...session.writtenFiles.entries()]
-    .map(([fileKey, hash]) => parseManifestFileKey(fileKey, hash))
-    .sort((a, b) => a.path.localeCompare(b.path));
-  const manifest: InstallManifest = {
-    ...(session.common ? { common: session.common } : {}),
-    packageVersion: session.packageVersion,
-    runtime: session.runtime,
-    scope: session.scope,
-    language: session.language,
-    installedAt: new Date().toISOString(),
-    files,
-    ...(session.settingsHooks.length
-      ? { settingsHooks: session.settingsHooks }
-      : {}),
-  };
-  ensureDir(path.dirname(session.manifestPath));
-  writeProductFile(
-    session.manifestPath,
-    Buffer.from(`${JSON.stringify(manifest, null, 2)}\n`),
-  );
-}
-
-export function discardManifestSession(): void {
-  manifestSession = undefined;
-}
-
 export function getManifestPath(baseDir: string): string {
   return path.join(baseDir, "frontend-craft.manifest.json");
 }
-
-export function readInstallManifest(
-  manifestPath: string,
+export function parseInstallManifest(
+  bytes: Buffer,
 ): InstallManifest | undefined {
-  if (!productFileExists(manifestPath)) return undefined;
   try {
-    const parsed = JSON.parse(
-      readProductFile(manifestPath).toString("utf8"),
-    ) as InstallManifest;
+    const parsed = JSON.parse(bytes.toString("utf8")) as InstallManifest;
     if (
       !parsed ||
+      typeof parsed !== "object" ||
+      Array.isArray(parsed) ||
+      typeof parsed.packageVersion !== "string" ||
+      !parsed.packageVersion ||
+      typeof parsed.runtime !== "string" ||
+      !["local", "global"].includes(parsed.scope) ||
+      typeof parsed.installedAt !== "string" ||
+      (parsed.language !== undefined &&
+        !["en", "zh-CN"].includes(parsed.language)) ||
       !Array.isArray(parsed.files) ||
       parsed.files.some(
         (file) =>
@@ -156,254 +59,173 @@ export function readInstallManifest(
           typeof file.path !== "string" ||
           !file.path ||
           typeof file.hash !== "string" ||
-          !file.hash ||
+          !/^[a-f0-9]{64}$/.test(file.hash) ||
           (file.root !== undefined &&
             !["baseDir", "cwd", "home"].includes(file.root)),
       )
     )
-      return undefined;
+      return;
+    if (
+      parsed.settingsHooks !== undefined &&
+      (!Array.isArray(parsed.settingsHooks) ||
+        parsed.settingsHooks.some(
+          (record) =>
+            !record ||
+            typeof record.path !== "string" ||
+            !record.path ||
+            (record.root !== undefined &&
+              !["baseDir", "cwd", "home"].includes(record.root)) ||
+            !record.hooks ||
+            typeof record.hooks !== "object" ||
+            Array.isArray(record.hooks) ||
+            Object.values(record.hooks).some(
+              (entries) => !Array.isArray(entries),
+            ),
+        ))
+    )
+      return;
+    if (
+      parsed.common &&
+      (!path.isAbsolute(parsed.common.target) ||
+        !path.isAbsolute(parsed.common.ledgerDir) ||
+        typeof parsed.common.packageVersion !== "string" ||
+        !["en", "zh-CN"].includes(parsed.common.language) ||
+        !/^[a-f0-9]{64}$/.test(parsed.common.digest))
+    )
+      return;
     return {
       ...parsed,
-      files: (parsed.files ?? []).map((file) => ({
+      files: parsed.files.map((file) => ({
         ...file,
-        path: normalizeManifestPath(file.path),
+        path: file.path.split(path.sep).join("/"),
       })),
     };
   } catch {
-    return undefined;
+    return;
   }
 }
-
-function readManifestFiles(manifestPath: string): Map<string, string> {
-  const manifest = readInstallManifest(manifestPath);
-  if (productFileExists(manifestPath) && !manifest) {
-    throw new Error(
-      `Cannot read ownership manifest: ${manifestPath}. Existing files were preserved; repair the manifest before installing or updating.`,
-    );
+export function readInstallManifest(file: string): InstallManifest | undefined {
+  try {
+    const stat = fs.lstatSync(file);
+    if (!stat.isFile() || stat.isSymbolicLink()) return;
+    return parseInstallManifest(fs.readFileSync(file));
+  } catch {
+    return;
   }
-  return new Map(
-    (manifest?.files ?? []).map((file) => [
-      getManifestFileKey(
-        file.root ?? "baseDir",
-        normalizeManifestPath(file.path),
-      ),
-      file.hash,
-    ]),
-  );
 }
-
 export function hashContent(content: string | Buffer): string {
-  return crypto.createHash("sha256").update(content).digest("hex");
+  return hashBytes(Buffer.from(content));
 }
-
-export function hashFile(filePath: string): string {
-  return hashContent(readProductFile(filePath));
+export function hashFile(file: string): string {
+  return hashContent(fs.readFileSync(file));
 }
-
-function getSessionFileKey(filePath: string): string | undefined {
-  const session = manifestSession;
-  if (!session) return undefined;
-  const resolved = path.resolve(filePath);
-  const roots: Array<[ManifestRoot, string]> = [
-    ["baseDir", session.baseDir],
-    ["cwd", session.cwd],
-    ["home", session.homeDir],
-  ];
-  for (const [root, rootDir] of roots) {
-    const relative = path.relative(rootDir, resolved);
-    if (relative && !relative.startsWith("..") && !path.isAbsolute(relative)) {
-      return getManifestFileKey(root, normalizeManifestPath(relative));
-    }
-  }
-  return undefined;
-}
-
-function normalizeManifestPath(filePath: string): string {
-  return filePath.split(path.sep).join("/");
-}
-
-function getManifestFileKey(root: ManifestRoot, filePath: string): string {
-  return `${root}:${filePath}`;
-}
-
-function parseManifestFileKey(fileKey: string, hash: string): ManifestFile {
-  const match = /^(baseDir|cwd|home):(.*)$/.exec(fileKey);
-  if (!match) return { path: fileKey, hash };
-  const root = match[1] as ManifestRoot;
-  return {
-    ...(root === "baseDir" ? {} : { root }),
-    path: match[2],
-    hash,
-  };
-}
-
-function shouldSkipManagedWrite(dest: string): boolean {
-  const session = manifestSession;
-  const fileKey = getSessionFileKey(dest);
-  if (
-    !session ||
-    !fileKey ||
-    session.mode !== "update" ||
-    !productFileExists(dest)
-  )
-    return false;
-  const previousHash = session.previousFiles.get(fileKey);
-  if (!previousHash) return false;
-  if (hashFile(dest) === previousHash) return false;
-  session.skippedFiles.add(fileKey);
-  console.log(
-    `Skipped modified file: ${parseManifestFileKey(fileKey, previousHash).path}`,
-  );
-  return true;
-}
-
-function recordManagedWrite(dest: string, content: string | Buffer): void {
-  const session = manifestSession;
-  const fileKey = getSessionFileKey(dest);
-  if (!session || !fileKey) return;
-  session.writtenFiles.set(fileKey, hashContent(content));
-}
-
-/**
- * @param {string} dir
- */
 export function ensureDir(dir: string): void {
-  if (isPlanningWrites()) return;
-  if (fs.existsSync(dir)) return;
-  fs.mkdirSync(dir, { recursive: true });
+  if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
+  else if (!fs.statSync(dir).isDirectory())
+    throw new Error(`Expected directory: ${dir}`);
 }
-
-/**
- * @param {string} src
- * @param {string} dest
- */
-export function copyFile(src: string, dest: string): void {
-  if (shouldSkipManagedWrite(dest)) return;
-  ensureDir(path.dirname(dest));
-  const content = fs.readFileSync(src);
-  writeProductFile(dest, content);
-  recordManagedWrite(dest, content);
+export function readUtf8(file: string): string {
+  return fs.readFileSync(file, "utf8");
 }
-
-/**
- * @param {string} srcDir
- * @param {string} destDir
- * @param {{ filter?: (rel: string) => boolean }} [opts]
- */
+export function writeUtf8(file: string, body: string): void {
+  ensureDir(path.dirname(file));
+  fs.writeFileSync(file, body);
+}
+export function copyFile(source: string, target: string): void {
+  ensureDir(path.dirname(target));
+  fs.copyFileSync(source, target);
+}
 export function copyDir(
-  srcDir: string,
-  destDir: string,
-  opts: { filter?: (rel: string) => boolean } = {},
+  source: string,
+  target: string,
+  options: { filter?: (relative: string) => boolean } = {},
 ): void {
-  if (!fs.existsSync(srcDir)) return;
-  ensureDir(destDir);
-  for (const name of fs.readdirSync(srcDir)) {
-    const s = path.join(srcDir, name);
-    const rel = name;
-    if (opts.filter && !opts.filter(rel)) continue;
-    const d = path.join(destDir, name);
-    const st = fs.statSync(s);
-    if (st.isDirectory()) copyDir(s, d, opts);
-    else copyFile(s, d);
+  if (!fs.existsSync(source)) return;
+  ensureDir(target);
+  for (const item of fs.readdirSync(source, { withFileTypes: true })) {
+    if (options.filter && !options.filter(item.name)) continue;
+    if (item.isSymbolicLink())
+      throw new Error("Source resources cannot contain links");
+    const from = path.join(source, item.name),
+      to = path.join(target, item.name);
+    if (item.isDirectory()) copyDir(from, to, options);
+    else copyFile(from, to);
   }
 }
-
-/**
- * @param {string} filePath
- * @returns {string}
- */
-export function readUtf8(filePath: string): string {
-  return readProductFile(filePath).toString("utf8");
-}
-
-/**
- * @param {string} filePath
- * @param {string} content
- */
-export function writeUtf8(filePath: string, content: string): void {
-  if (shouldSkipManagedWrite(filePath)) return;
-  ensureDir(path.dirname(filePath));
-  writeProductFile(filePath, Buffer.from(content));
-  recordManagedWrite(filePath, content);
-}
-
-/** Shared user configuration must not be deleted by manifest-based uninstall. */
-export function writeSharedUtf8(filePath: string, content: string): void {
-  ensureDir(path.dirname(filePath));
-  writeProductFile(filePath, Buffer.from(content));
-  forgetManagedFile(filePath);
-}
-
-export function forgetManagedFile(filePath: string): void {
-  const key = getSessionFileKey(filePath);
-  if (manifestSession && key) {
-    manifestSession.previousFiles.delete(key);
-    manifestSession.writtenFiles.delete(key);
-    manifestSession.skippedFiles.delete(key);
-  }
-}
-
-export function recordSettingsHooks(
-  filePath: string,
-  hooks: Record<string, unknown[]>,
-): void {
-  const key = getSessionFileKey(filePath);
-  if (!manifestSession || !key) return;
-  const { path: relative, root } = parseManifestFileKey(key, "");
-  manifestSession.settingsHooks.push({
-    path: relative,
-    ...(root ? { root } : {}),
-    hooks,
+export function listFilesRecursive(dir: string): string[] {
+  if (!fs.existsSync(dir)) return [];
+  return fs.readdirSync(dir, { withFileTypes: true }).flatMap((item) => {
+    const file = path.join(dir, item.name);
+    if (item.isSymbolicLink())
+      throw new Error("Resource tree cannot contain links");
+    return item.isDirectory() ? listFilesRecursive(file) : [file];
   });
 }
+export function copyProductSkills(source: string, target: string): void {
+  for (const item of fs.readdirSync(source, { withFileTypes: true }))
+    if (item.isDirectory() && item.name.startsWith("fec-"))
+      copyDir(path.join(source, item.name), path.join(target, item.name));
+}
 
-/** Retire only unchanged files previously owned by this install, never user files. */
-export function retireManagedFile(filePath: string): void {
-  const key = getSessionFileKey(filePath);
-  const previous = key && manifestSession?.previousFiles.get(key);
-  if (!manifestSession || !key || !previous) return;
-  if (productFileExists(filePath)) {
+export function createFileTools(ctx: InstallContext) {
+  const session = ctx.session;
+  if (!session)
+    throw new Error("Installer requires an explicit planning session");
+  const write = (file: string, bytes: Buffer): void => {
     if (
-      (fs.existsSync(filePath) && !fs.statSync(filePath).isFile()) ||
-      hashFile(filePath) !== previous
-    ) {
-      console.log(`Preserved modified legacy file: ${filePath}`);
-      return;
-    }
-    removeProductFile(filePath);
-  }
-  manifestSession.previousFiles.delete(key);
-  manifestSession.writtenFiles.delete(key);
-}
-
-/**
- * @param {string} dir
- * @returns {string[]}
- */
-export function listFilesRecursive(dir: string): string[] {
-  const out: string[] = [];
-  if (!fs.existsSync(dir)) return out;
-  for (const name of fs.readdirSync(dir)) {
-    const p = path.join(dir, name);
-    const st = fs.statSync(p);
-    if (st.isDirectory()) out.push(...listFilesRecursive(p));
-    else out.push(p);
-  }
-  return out;
-}
-
-/** Remove obsolete generated files, preserving unknown and edited files. */
-export function retireManagedTree(dir: string): void {
-  for (const file of listFilesRecursive(dir)) retireManagedFile(file);
-}
-
-/** Public cc skills have separate ownership; product discovery metadata is source-only. */
-export function copyProductSkills(source: string, destination: string): void {
-  for (const entry of fs.readdirSync(source, { withFileTypes: true })) {
-    if (entry.isDirectory() && entry.name.startsWith("fec-"))
-      copyDir(
-        path.join(source, entry.name),
-        path.join(destination, entry.name),
-      );
-  }
+      ctx.runtime === "claude" &&
+      path.resolve(file) === path.resolve(ctx.baseDir, "settings.json")
+    )
+      session.stage(file, bytes);
+    else session.writeManaged(file, bytes);
+  };
+  const tools = {
+    ensureDir(_dir: string): void {},
+    readUtf8,
+    writeUtf8(file: string, body: string): void {
+      write(file, Buffer.from(body));
+    },
+    writeSharedUtf8(file: string, body: string): void {
+      session.stage(file, Buffer.from(body));
+    },
+    copyFile(source: string, target: string): void {
+      if (fs.lstatSync(source).isSymbolicLink())
+        throw new Error("Source resources cannot contain links");
+      write(target, fs.readFileSync(source));
+    },
+    copyDir(
+      source: string,
+      target: string,
+      options: { filter?: (relative: string) => boolean } = {},
+    ): void {
+      if (!fs.existsSync(source)) return;
+      for (const item of fs.readdirSync(source, { withFileTypes: true })) {
+        if (options.filter && !options.filter(item.name)) continue;
+        if (item.isSymbolicLink())
+          throw new Error("Source resources cannot contain links");
+        const from = path.join(source, item.name),
+          to = path.join(target, item.name);
+        if (item.isDirectory()) tools.copyDir(from, to, options);
+        else tools.copyFile(from, to);
+      }
+    },
+    copyProductSkills(source: string, target: string): void {
+      for (const item of fs.readdirSync(source, { withFileTypes: true }))
+        if (item.isDirectory() && item.name.startsWith("fec-"))
+          tools.copyDir(
+            path.join(source, item.name),
+            path.join(target, item.name),
+          );
+    },
+    retireManagedFile(file: string): void {
+      session.retireTree(file);
+    },
+    retireManagedTree(dir: string): void {
+      session.retireTree(dir);
+    },
+    forgetManagedFile(file: string): void {
+      session.retireTree(file);
+    },
+  };
+  return tools;
 }

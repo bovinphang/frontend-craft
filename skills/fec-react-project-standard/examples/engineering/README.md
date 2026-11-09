@@ -1,0 +1,7 @@
+# Owned async React state — EP-UI-01
+
+This isolated example renders the real React component through Testing Library and JSDOM. A controlled A/B completion order proves that a late older request cannot replace B; unmount proves the owned signal is aborted. No timer or live network chooses the order. `CRAFT_ENGINEERING_DEFECTIVE=1` removes both protections and must fail these assertions; the default is protected.
+
+From this directory, explicitly run `pnpm install --frozen-lockfile`, then `pnpm test`. Run with the defect environment variable set to `1` for the counterexample and `0` for the fix. For repository-maintained isolated preparation and paired logs use `pnpm run verify:engineering -- --prepare` from the product root; later runs omit `--prepare`. Normal repository tests never install dependencies. Source files remain outside the prepared cache.
+
+Exact dependencies and lock belong only to this sample. Node >=22.18, React/DOM 19.3.1, Testing Library React 16.3.3/DOM 10.4.2 and JSDOM 29.1.1 are deliberate compatible sample targets, not project upgrade requirements. JSDOM 31 requires newer Node 24 than this environment. Real DOM state assertions here do not prove browser rendering, Vue watcher behavior, shared query caches, backend rollback, desktop GUI, signing or a production network integration. Abort does not undo a committed remote write. See the [local decisions](../../references/engineering-practices.md).

@@ -1,0 +1,4 @@
+[[permission]]
+identifier = "allow-read-document"
+description = "通过已校验的 Rust command 读取有界文档"
+commands.allow = ["read_document"]

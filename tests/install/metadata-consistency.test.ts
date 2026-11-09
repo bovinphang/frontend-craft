@@ -2,6 +2,8 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import fs from "node:fs";
 import path from "node:path";
+import os from "node:os";
+import { fileURLToPath } from "node:url";
 import { resolvePluginRoot } from "../../src/install/shared/resolve-plugin-root.js";
 import {
   parseAgentDocument,
@@ -10,7 +12,62 @@ import {
 import { auditContent } from "../../src/install/shared/content-audit.js";
 
 const root = resolvePluginRoot(import.meta.url);
+test("machine anchors and prepared caches are separate from localized prose", () => {
+  assert.equal(
+    containsLikelyEnglishInstruction(
+      '<a id="fec-vue3-project-standard:watcher-cleanup"></a>',
+    ),
+    false,
+  );
+  assert.equal(
+    containsLikelyEnglishInstruction(
+      '<a id="sample">Use the existing network fallback</a>',
+    ),
+    true,
+  );
+  const temp = fs.mkdtempSync(path.join(os.tmpdir(), "craft-source-scope-"));
+  try {
+    fs.mkdirSync(path.join(temp, "reports/engineering/dependency"), {
+      recursive: true,
+    });
+    fs.writeFileSync(
+      path.join(temp, "reports/engineering/dependency/README.md"),
+      String.fromCharCode(0xfffd),
+    );
+    fs.writeFileSync(path.join(temp, "README.md"), "source");
+    assert.deepEqual(
+      collectFiles(temp, ["reports"]).map((file) => path.relative(temp, file)),
+      ["README.md"],
+    );
+  } finally {
+    fs.rmSync(temp, { recursive: true, force: true });
+  }
+});
 import { resolveSkillOrigin } from "../../scripts/skill-packaging.js";
+import { readCapabilityCandidates } from "@bovinphang/craft-common";
+import { readProductCommonCatalog } from "../../src/install/shared/common-content.js";
+
+test("applicability is optional and validated independently of runtime platforms", () => {
+  for (const language of ["en", "zh-CN"] as const) {
+    const common = readProductCommonCatalog(root, language);
+    const directory = path.join(common.root, "skills");
+    const domain = fs
+      .readdirSync(directory, { withFileTypes: true })
+      .filter((entry) => entry.isDirectory() && entry.name.startsWith("fec-"))
+      .map((entry) => [entry.name, "@bovinphang/frontend-craft"]);
+    const metadata: unknown = JSON.parse(
+      fs.readFileSync(path.join(directory, "metadata.json"), "utf8"),
+    );
+    const candidates = readCapabilityCandidates(
+      metadata,
+      Object.fromEntries([
+        ...domain,
+        ...common.skills.map((skill) => [skill.id, skill.sourcePackage]),
+      ]),
+    );
+    assert.equal(candidates.length, domain.length + common.skills.length);
+  }
+});
 
 test("source and localized frontmatter and capability references are valid", () => {
   assert.deepEqual(auditContent(root), []);
@@ -421,7 +478,16 @@ test("tracked source and docs do not contain mojibake markers", () => {
     `${String.fromCharCode(0x9225)}?`,
     String.fromCharCode(0xfffd),
   ];
-  const files = collectFiles(root).filter((file) => {
+  const files = collectFiles(root, [
+    "dist",
+    "node_modules",
+    ".git",
+    ".claude",
+    ".codex",
+    "npm-packages",
+    "skill-packages",
+    "reports",
+  ]).filter((file) => {
     const rel = path.relative(root, file);
     return (
       !rel.startsWith(`dist${path.sep}`) &&
@@ -501,6 +567,32 @@ test("zh-CN localized content keeps natural Chinese copy", () => {
   for (const file of files) {
     const relative = path.relative(root, file);
     const body = fs.readFileSync(file, "utf8");
+    const machine = path
+      .relative(localizedRoot, file)
+      .split(path.sep)
+      .join("/")
+      .match(
+        /^skills\/(?:cc|fec)-[a-z0-9-]+\/references\/common\/engineering-practices\.(sources|rules)\.json$/,
+      );
+    if (machine) {
+      const provider = path.resolve(
+        path.dirname(
+          fileURLToPath(import.meta.resolve("@bovinphang/craft-common")),
+        ),
+        "..",
+      );
+      assert.deepEqual(
+        fs.readFileSync(file),
+        fs.readFileSync(
+          path.join(
+            provider,
+            `methods/engineering-practices.${machine[1]}.json`,
+          ),
+        ),
+        `machine metadata must equal the authoritative installed provider: ${relative}`,
+      );
+      continue;
+    }
     for (const marker of artificialMarkers) {
       assert.doesNotMatch(
         body,
@@ -740,9 +832,13 @@ function extractAgentSkills(body: string): string[] {
   return parseAgentDocument(body, "agent frontmatter").metadata.skills ?? [];
 }
 
-function collectFiles(dir: string): string[] {
+function collectFiles(
+  dir: string,
+  ignoreTopLevel: readonly string[] = [],
+): string[] {
   const out: string[] = [];
   for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
+    if (ignoreTopLevel.includes(entry.name)) continue;
     const file = path.join(dir, entry.name);
     if (entry.isDirectory()) out.push(...collectFiles(file));
     else out.push(file);
@@ -755,6 +851,7 @@ function containsLikelyEnglishInstruction(line: string): boolean {
   if (!trimmed || /[\u3400-\u4dbf\u4e00-\u9fff\uf900-\ufaff]/.test(trimmed))
     return false;
   if (/^```/.test(trimmed)) return false;
+  if (/^<a id="[A-Za-z0-9_:-]+"><\/a>$/.test(trimmed)) return false;
   if (
     /^(name|description|tools|model|permissionMode|maxTurns|skills):\s*/.test(
       trimmed,

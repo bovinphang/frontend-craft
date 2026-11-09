@@ -36,6 +36,33 @@ test("pack:skills creates one standalone publish package per skill", () => {
     "pack:skills should not write dist/skill-packages",
   );
 
+  assert.ok(
+    fs.existsSync(
+      path.join(
+        packageRoot,
+        "cc-electron-project-standard/localized/zh-CN/examples/minimal/boundary.cjs",
+      ),
+    ),
+  );
+  const engineering = path.join(packageRoot, "fec-react-project-standard");
+  for (const prefix of ["", "localized/zh-CN/"])
+    for (const file of [
+      "references/engineering-practices.md",
+      "references/common/engineering-practices.md",
+      "references/common/engineering-practices.sources.json",
+      "references/common/engineering-practices.rules.json",
+      "examples/engineering/request-view.mjs",
+      "examples/engineering/request-view.test.mjs",
+      "examples/engineering/pnpm-lock.yaml",
+      "examples/engineering/pnpm-workspace.yaml",
+    ]) {
+      assert.deepEqual(
+        fs.readFileSync(path.join(engineering, prefix, file)),
+        fs.readFileSync(
+          path.join(root, prefix, "skills/fec-react-project-standard", file),
+        ),
+      );
+    }
   const skillIds = listSkillIds(skillsDir);
   const relations = readJsonFile<SkillRelations>(
     path.join(skillsDir, "relations.json"),
@@ -102,6 +129,14 @@ test("pack:skills creates one standalone publish package per skill", () => {
     assert.ok(standalonePkg.files.includes("scripts"));
     assert.ok(standalonePkg.files.includes("data"));
     assert.ok(standalonePkg.files.includes("assets"));
+    if (
+      skillId === "cc-electron-project-standard" ||
+      skillId === "cc-tauri-project-standard"
+    )
+      assert.ok(
+        standalonePkg.files.includes("examples"),
+        "framework examples must survive npm packing",
+      );
     assert.equal(publishMetadata.version, origin.version);
     assert.equal(publishMetadata.description, frontmatter.description);
     assert.deepEqual(publishMetadata.references, references);

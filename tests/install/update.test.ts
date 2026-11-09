@@ -5,10 +5,7 @@ import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
-import {
-  beginManifestSession,
-  discardManifestSession,
-} from "../../src/install/shared/fs.js";
+import { MANIFEST_CODEC } from "../../src/install/manifest-codec.js";
 
 test("update refuses damaged ownership manifests before touching managed files", () => {
   for (const body of [
@@ -22,14 +19,16 @@ test("update refuses damaged ownership manifests before touching managed files",
       fs.writeFileSync(path.join(dir, "user.txt"), "user changes");
       assert.throws(
         () =>
-          beginManifestSession({
+          MANIFEST_CODEC.decode(Buffer.from(body), {
             baseDir: dir,
             cwd: dir,
-            mode: "update",
-            packageVersion: "2.9.0",
+            home: dir,
+            packageVersion: "3.0.0",
             runtime: "codex",
-            isGlobal: false,
+            scope: "local",
             language: "en",
+            allowedRoots: [dir],
+            dryRun: false,
           }),
         /manifest.*preserved/i,
       );
@@ -42,7 +41,6 @@ test("update refuses damaged ownership manifests before touching managed files",
         body,
       );
     } finally {
-      discardManifestSession();
       fs.rmSync(dir, { recursive: true, force: true });
     }
   }
@@ -424,7 +422,7 @@ test("Claude CLI scope conflict fails non-interactively with update and uninstal
     fs.mkdirSync(claudeHome, { recursive: true });
     fs.writeFileSync(
       path.join(claudeHome, "frontend-craft.manifest.json"),
-      `${JSON.stringify({ packageVersion: "2.3.1", runtime: "claude", scope: "global", files: [] }, null, 2)}\n`,
+      `${JSON.stringify({ packageVersion: "2.3.1", runtime: "claude", scope: "global", installedAt: "2026-01-01", files: [] }, null, 2)}\n`,
       "utf8",
     );
 
@@ -472,7 +470,7 @@ test("Claude CLI scope conflict can keep the existing source and update it inter
     fs.mkdirSync(claudeHome, { recursive: true });
     fs.writeFileSync(
       path.join(claudeHome, "frontend-craft.manifest.json"),
-      `${JSON.stringify({ packageVersion: "2.3.1", runtime: "claude", scope: "global", files: [] }, null, 2)}\n`,
+      `${JSON.stringify({ packageVersion: "2.3.1", runtime: "claude", scope: "global", installedAt: "2026-01-01", files: [] }, null, 2)}\n`,
       "utf8",
     );
 
@@ -514,7 +512,7 @@ test("Claude CLI scope conflict can uninstall the existing source and install th
     fs.mkdirSync(claudeHome, { recursive: true });
     fs.writeFileSync(
       path.join(claudeHome, "frontend-craft.manifest.json"),
-      `${JSON.stringify({ packageVersion: "2.3.1", runtime: "claude", scope: "global", files: [] }, null, 2)}\n`,
+      `${JSON.stringify({ packageVersion: "2.3.1", runtime: "claude", scope: "global", installedAt: "2026-01-01", files: [] }, null, 2)}\n`,
       "utf8",
     );
 

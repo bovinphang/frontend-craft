@@ -16,6 +16,10 @@ import { installCline } from "./converters/cline.js";
 import { installOpenclaw } from "./converters/openclaw.js";
 import { installQoder } from "./converters/qoder.js";
 import type { InstallContext } from "./types.js";
+import path from "node:path";
+import { runProductLifecycle } from "@bovinphang/craft-common";
+import { PRODUCT_DEFINITION, toProductContext } from "./product-definition.js";
+import { MANIFEST_CODEC } from "./manifest-codec.js";
 
 export const ALL_RUNTIMES = [
   "claude",
@@ -35,7 +39,7 @@ export const ALL_RUNTIMES = [
   "qoder",
 ];
 
-export const INSTALLERS: Record<
+const PRODUCT_INSTALLERS: Record<
   string,
   (ctx: InstallContext) => Promise<void>
 > = {
@@ -55,3 +59,29 @@ export const INSTALLERS: Record<
   openclaw: installOpenclaw,
   qoder: installQoder,
 };
+
+export const INSTALLERS: typeof PRODUCT_INSTALLERS = Object.fromEntries(
+  Object.entries(PRODUCT_INSTALLERS).map(([id, install]) => [
+    id,
+    async (ctx: InstallContext): Promise<void> => {
+      if (ctx.session) return install(ctx);
+      const context = toProductContext(ctx);
+      await runProductLifecycle({
+        action: ctx.mode,
+        definition: PRODUCT_DEFINITION,
+        context,
+        codec: MANIFEST_CODEC,
+        adapter: {
+          configurationFiles: () => [
+            path.join(ctx.baseDir, "settings.json"),
+            path.join(ctx.isGlobal ? ctx.baseDir : ctx.cwd, "AGENTS.md"),
+            path.join(ctx.isGlobal ? ctx.baseDir : ctx.cwd, "GEMINI.md"),
+          ],
+          async plan(_context, session) {
+            await install({ ...ctx, session });
+          },
+        },
+      });
+    },
+  ]),
+);

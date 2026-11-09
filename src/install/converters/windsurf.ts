@@ -1,28 +1,27 @@
-import { copyProductSkills } from "../shared/fs.js";
+import { createFileTools } from "../shared/fs.js";
 import path from "node:path";
 import fs from "node:fs";
 import type { InstallContext } from "../types.js";
-import {
-  ensureDir,
-  readUtf8,
-  writeUtf8,
-  retireManagedFile,
-} from "../shared/fs.js";
-
 /**
  * @param {import('../types.js').InstallContext} ctx
  */
 export async function installWindsurf(ctx: InstallContext): Promise<void> {
   const { contentRoot, baseDir, dryRun, isGlobal } = ctx;
-  if (dryRun) {
+  if (dryRun && !ctx.session) {
     console.log(`[dry-run] windsurf -> ${baseDir}`);
     return;
   }
+  const {
+    ensureDir,
+    readUtf8,
+    writeUtf8,
+    retireManagedFile,
+    copyProductSkills,
+  } = createFileTools(ctx);
   ensureDir(baseDir);
   const wf = path.join(baseDir, isGlobal ? "global_workflows" : "workflows");
   const rulesDest = path.join(baseDir, "rules");
   ensureDir(wf);
-
   const cmdDir = path.join(contentRoot, "commands");
   for (const f of fs.readdirSync(cmdDir)) {
     if (!f.endsWith(".md")) continue;
@@ -30,7 +29,6 @@ export async function installWindsurf(ctx: InstallContext): Promise<void> {
     writeUtf8(path.join(wf, f), raw);
     if (isGlobal) retireManagedFile(path.join(baseDir, "workflows", f));
   }
-
   const rulesSrc = path.join(contentRoot, "templates", "shared", "rules");
   if (!isGlobal && fs.existsSync(rulesSrc)) {
     ensureDir(rulesDest);
@@ -40,7 +38,6 @@ export async function installWindsurf(ctx: InstallContext): Promise<void> {
       writeUtf8(path.join(rulesDest, name), body);
     }
   }
-
   copyProductSkills(
     path.join(contentRoot, "skills"),
     path.join(baseDir, "skills"),

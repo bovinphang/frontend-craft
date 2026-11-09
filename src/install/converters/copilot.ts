@@ -1,26 +1,21 @@
 import path from "node:path";
 import fs from "node:fs";
 import type { InstallContext } from "../types.js";
-import {
-  ensureDir,
-  readUtf8,
-  writeUtf8,
-  retireManagedFile,
-} from "../shared/fs.js";
-
+import { createFileTools } from "../shared/fs.js";
 /**
  * @param {import('../types.js').InstallContext} ctx
  */
 export async function installCopilot(ctx: InstallContext): Promise<void> {
   const { contentRoot, baseDir, dryRun, isGlobal } = ctx;
-  if (dryRun) {
+  if (dryRun && !ctx.session) {
     console.log(`[dry-run] copilot -> ${baseDir}`);
     return;
   }
+  const { ensureDir, readUtf8, writeUtf8, retireManagedFile } =
+    createFileTools(ctx);
   ensureDir(baseDir);
   const instr = path.join(baseDir, "instructions");
   const prompts = path.join(baseDir, "prompts");
-
   {
     ensureDir(instr);
     const rulesSrc = path.join(contentRoot, "templates", "shared", "rules");
@@ -41,7 +36,6 @@ export async function installCopilot(ctx: InstallContext): Promise<void> {
       : path.join(instr, "frontend-craft.instructions.md");
     if (!isGlobal || !fs.existsSync(dest)) writeUtf8(dest, parts.join(""));
   }
-
   if (isGlobal) {
     console.log(
       "Copilot global: installed CLI instructions; IDE prompt files require a local install.",
@@ -49,7 +43,6 @@ export async function installCopilot(ctx: InstallContext): Promise<void> {
     return;
   }
   ensureDir(prompts);
-
   const cmdDir = path.join(contentRoot, "commands");
   for (const f of fs.readdirSync(cmdDir)) {
     if (!f.endsWith(".md")) continue;

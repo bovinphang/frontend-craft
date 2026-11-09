@@ -207,7 +207,7 @@ npx @bovinphang/frontend-craft@latest list
 | `fec-nuxt-project-standard`       | Nuxt 3 SSR/SSG、組合式 API、資料獲取、中介軟體        |
 | `fec-vite-project-standard`       | Vite 設定、環境變數安全、HMR、開發代理、建置最佳化    |
 | `fec-monorepo-project-standard`   | pnpm workspace、Turborepo、Nx 結構與任務編排          |
-| `fec-typescript-project-standard` | TypeScript 設定、公開型別、宣告檔、DTO 和泛型         |
+| `cc-typescript-project-standard` | TypeScript 設定、公開型別、宣告檔、DTO 和泛型         |
 
 **實作能力** — 建構特定前端能力時啟用：
 
@@ -557,16 +557,32 @@ npx skills check                           # 預覽可用更新
 
 ## 3.0 共用能力
 
-3.0 尚未正式發布，包含 54 個前端專屬入口與 7 個共用入口，共 61 個 Skill。共用能力由固定版本的 craft-common 隨產品提供，無需額外手動安裝第三個外掛；原始內容只在 craft-common 維護。
+3.0.0仍未發布，包含53個前端專屬入口與21個共用入口，共74個Skill。公共來源精確固定為`@bovinphang/craft-common@2.0.0`；2.0.0為待發布的正式版本號，backend1.0.0也仍未發布。公共包先行發布並核驗，產品版本不變，不自動發布。
 
-- `cc-drawio-studio`
-- `cc-technical-diagrams`
-- `cc-source-driven-development`
-- `cc-doc-sync-core`
+語言、角色與框架分開選擇；C/C++有獨立入口，Tauri/Electron為共用桌面專項，不以產品前後端名稱限制語言。
+
+- `cc-c-project-standard`
+- `cc-cpp-project-standard`
 - `cc-debug-methodology`
+- `cc-doc-sync-core`
+- `cc-drawio-studio`
+- `cc-electron-project-standard`
+- `cc-go-concurrency`
+- `cc-go-project-standard`
+- `cc-java-project-standard`
+- `cc-java-runtime`
+- `cc-native-memory-safety`
+- `cc-python-async`
+- `cc-python-project-standard`
 - `cc-refactoring-core`
+- `cc-rust-async`
+- `cc-rust-project-standard`
+- `cc-source-driven-development`
+- `cc-tauri-project-standard`
 - `cc-tdd-methodology`
+- `cc-technical-diagrams`
+- `cc-typescript-project-standard`
 
-執行 `fec runtime check-migration codex --local --json` 並閱讀 [遷移指南](../common-migration.md)。CLI 管理共用檔案所有權與解除安裝引用；原生外掛本期保證單一產品資源完整，不承諾雙產品原生去重。
+執行`fec runtime check-migration codex --local --json`，先以舊CLI退出舊公共引用並處理保留編輯，再安裝匹配產品；不強制覆蓋另一消費者或未知檔案。CLI與原生渠道互斥，雙原生產品去重仍不在保證範圍。
 
-公共來源精確固定為 `@bovinphang/craft-common@1.0.1`。參見[專案結構與維護邊界（簡體中文）](../zh-CN/project-structure.md)及[貢獻校驗指引（簡體中文）](../../CONTRIBUTING.zh-CN.md)。
+[遷移指南](../zh-CN/common-migration.md) · [變更日誌](../../CHANGELOG.zh-CN.md) · [專案結構](../zh-CN/project-structure.md)

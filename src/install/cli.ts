@@ -1,3 +1,4 @@
+import { runProjectInspect } from "../project/inspect.js";
 import {
   runCommonAwareInstall,
   uninstallCommonAwareInstall,
@@ -34,11 +35,7 @@ import {
   renderRuntimeCapabilityMatrix,
 } from "./runtime-capabilities.js";
 import { resolvePluginRoot } from "./shared/resolve-plugin-root.js";
-import {
-  discardManifestSession,
-  getManifestPath,
-  readInstallManifest,
-} from "./shared/fs.js";
+import { getManifestPath, readInstallManifest } from "./shared/fs.js";
 import {
   discoverManifestInstalls,
   copyInstallToNewBase,
@@ -111,6 +108,7 @@ function printHelp(): void {
   console.log(`frontend-craft - universal installer
 
 Usage:
+  fec project inspect [path] [--task-path relative] [--task-kind kind] [--json]
   frontend-craft update|upgrade [--dry-run]
   frontend-craft uninstall|remove [--purge] [--yes] [--dry-run]
   frontend-craft runtime install <runtime> [options]
@@ -203,6 +201,24 @@ export async function main(argv: string[]): Promise<void> {
   const isSetup = cmd === "setup";
   const pluginRoot = resolvePluginRoot(import.meta.url);
   const cwd = process.cwd();
+  if (cmd === "project") {
+    try {
+      if (cmdArgs[0] !== "inspect") throw new Error("Unknown project command");
+      console.log(
+        JSON.stringify(
+          runProjectInspect(cmdArgs.slice(1), pluginRoot, cwd),
+          null,
+          2,
+        ),
+      );
+    } catch (error) {
+      console.error(
+        error instanceof Error ? error.message : "Inspection failed",
+      );
+      process.exitCode = 2;
+    }
+    return;
+  }
   if (resourceCommand && cmd === "check-migration") {
     const allowed = new Set(["--json", "--global", "--local", "-g", "-l"]);
     const unknown = cmdArgs.filter(
@@ -614,7 +630,6 @@ async function runResourceInstaller(
       });
     await runInstaller(options);
   } catch (error) {
-    discardManifestSession();
     reportResourceFailure(options.mode, options.rt, options.isGlobal, error);
     process.exitCode = 1;
   }
@@ -699,7 +714,11 @@ async function runInstaller({
       `Updating frontend-craft for "${rt}" -> ${baseDir}${isGlobal ? " (global)" : ""}`,
     );
   }
-  await runCommonAwareInstall(ctx, () => INSTALLERS[rt](ctx), beforeManifest);
+  await runCommonAwareInstall(
+    ctx,
+    (planning) => INSTALLERS[rt](planning),
+    beforeManifest,
+  );
 }
 
 async function resolveClaudeInstallConflict({

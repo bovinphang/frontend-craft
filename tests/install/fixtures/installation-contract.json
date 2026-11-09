@@ -1,0 +1,80 @@
+{
+  "schemaVersion": 1,
+  "runtimes": [
+    {
+      "id": "claude",
+      "localDirectory": ".claude",
+      "skills": "base"
+    },
+    {
+      "id": "codex",
+      "localDirectory": ".codex",
+      "skills": "agents"
+    },
+    {
+      "id": "cursor",
+      "localDirectory": ".cursor",
+      "skills": "base"
+    },
+    {
+      "id": "windsurf",
+      "localDirectory": ".windsurf",
+      "skills": "base"
+    },
+    {
+      "id": "opencode",
+      "localDirectory": ".opencode",
+      "skills": "base"
+    },
+    {
+      "id": "kilo",
+      "localDirectory": ".kilo",
+      "skills": "base"
+    },
+    {
+      "id": "gemini",
+      "localDirectory": ".gemini",
+      "skills": "base"
+    },
+    {
+      "id": "copilot",
+      "localDirectory": ".github",
+      "skills": "none"
+    },
+    {
+      "id": "antigravity",
+      "localDirectory": ".agent",
+      "skills": "base"
+    },
+    {
+      "id": "augment",
+      "localDirectory": ".augment",
+      "skills": "base"
+    },
+    {
+      "id": "trae",
+      "localDirectory": ".trae",
+      "skills": "none"
+    },
+    {
+      "id": "codebuddy",
+      "localDirectory": ".codebuddy",
+      "skills": "base"
+    },
+    {
+      "id": "cline",
+      "localDirectory": "",
+      "skills": "none"
+    },
+    {
+      "id": "openclaw",
+      "localDirectory": ".openclaw",
+      "skills": "workspace"
+    },
+    {
+      "id": "qoder",
+      "localDirectory": ".qoder",
+      "skills": "base"
+    }
+  ]
+}

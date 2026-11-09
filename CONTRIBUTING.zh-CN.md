@@ -380,4 +380,4 @@ skills:
 
 ## 公共内容维护
 
-`cc-*` Skill 和内嵌公共方法由精确依赖 `@bovinphang/craft-common@1.0.1` 生成，禁止直接修改分发副本。先在 craft-common 修改并准备对应包，再运行 `pnpm run sync:common`，审阅 `common-content.lock.json` 与中英文快照，最后运行 `pnpm run check:common` 和 `pnpm lint`。前端领域 Skill、元数据及中文镜像仍在本仓库维护。完整目录和维护边界见[项目结构](docs/zh-CN/project-structure.md)与[公共能力迁移](docs/zh-CN/common-migration.md)。
+`cc-*` Skill 和内嵌公共方法由精确依赖 `@bovinphang/craft-common@2.0.0` 生成，禁止直接修改分发副本。先在 craft-common 修改并准备对应包，再运行 `pnpm run sync:common`，审阅 `common-content.lock.json` 与中英文快照，最后运行 `pnpm run check:common` 和 `pnpm lint`。前端领域 Skill、元数据及中文镜像仍在本仓库维护。完整目录和维护边界见[项目结构](docs/zh-CN/project-structure.md)与[公共能力迁移](docs/zh-CN/common-migration.md)。

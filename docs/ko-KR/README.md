@@ -207,7 +207,7 @@ Marketplace가 이미 설치된 경우, `--force`를 사용해도 CLI는 두 번
 | `fec-nuxt-project-standard`       | Nuxt 3 SSR/SSG, Composition API, 데이터 페칭, 미들웨어       |
 | `fec-vite-project-standard`       | Vite 설정, 환경 변수 안전, HMR, 개발 프록시, 빌드 최적화     |
 | `fec-monorepo-project-standard`   | pnpm workspace, Turborepo, Nx 구조 및 태스크 오케스트레이션  |
-| `fec-typescript-project-standard` | TypeScript 설정, 공개 API 타입, 선언 파일, DTO, 제네릭       |
+| `cc-typescript-project-standard` | TypeScript 설정, 공개 API 타입, 선언 파일, DTO, 제네릭       |
 
 **구현 기능** — 특정 프론트엔드 기능을 구축할 때 활성화:
 
@@ -557,16 +557,32 @@ npx skills check                           # 사용 가능한 업데이트 미�
 
 ## 3.0 공통 기능
 
-3.0은 아직 출시되지 않았습니다. 프런트엔드 전용 54개와 공통 7개를 합쳐 Skill 61개를 제공합니다. 고정 버전의 craft-common이 제품과 함께 배포되므로 세 번째 플러그인을 수동으로 설치할 필요가 없습니다. 공통 소스는 craft-common에서만 관리합니다.
+3.0.0은 계속 미출시 상태입니다. 프런트엔드 전용53개와 공통21개, 총74개Skill을 제공합니다. 공통 의존성은`@bovinphang/craft-common@2.0.0`으로 고정됩니다.2.0.0은 배포 준비 중인 정식 버전 번호이며 backend1.0.0도 미출시 상태입니다. common을 먼저 배포하고 검증하며 제품 버전을 변경하거나 자동으로 배포하지 않습니다.
 
-- `cc-drawio-studio`
-- `cc-technical-diagrams`
-- `cc-source-driven-development`
-- `cc-doc-sync-core`
+언어·역할·프레임워크를 각각 선택합니다. C/C++은 독립된 진입점을, Tauri/Electron은 공통 데스크톱 전문 기능을 제공합니다. 제품 이름으로 언어를 제한하지 않습니다.
+
+- `cc-c-project-standard`
+- `cc-cpp-project-standard`
 - `cc-debug-methodology`
+- `cc-doc-sync-core`
+- `cc-drawio-studio`
+- `cc-electron-project-standard`
+- `cc-go-concurrency`
+- `cc-go-project-standard`
+- `cc-java-project-standard`
+- `cc-java-runtime`
+- `cc-native-memory-safety`
+- `cc-python-async`
+- `cc-python-project-standard`
 - `cc-refactoring-core`
+- `cc-rust-async`
+- `cc-rust-project-standard`
+- `cc-source-driven-development`
+- `cc-tauri-project-standard`
 - `cc-tdd-methodology`
+- `cc-technical-diagrams`
+- `cc-typescript-project-standard`
 
-`fec runtime check-migration codex --local --json`을 실행하고 [마이그레이션 가이드](../common-migration.md)를 확인하세요. CLI는 공유 파일 소유권과 제거 시 참조를 관리합니다. 네이티브 배포는 단일 제품의 완전한 리소스를 보장하며, 두 제품의 네이티브 중복 제거는 보장하지 않습니다.
+`fec runtime check-migration codex --local --json`을 실행하고 이전CLI로 공통 참조를 해제하여 보존된 편집을 처리한 뒤 일치하는 제품을 설치합니다. 다른 소비자나 알 수 없는 파일을 강제로 덮어쓰지 않습니다. CLI와 네이티브 채널은 배타적이며 두 제품의 네이티브 중복 제거는 보장하지 않습니다.
 
-공통 소스는 `@bovinphang/craft-common@1.0.1`로 고정됩니다. [구조와 유지 관리 범위(영어)](../project-structure.md), [개발 검증 안내(영어)](../../CONTRIBUTING.md)를 참고하세요.
+[마이그레이션](../common-migration.md) · [변경 기록](../../CHANGELOG.md) · [구조](../project-structure.md)

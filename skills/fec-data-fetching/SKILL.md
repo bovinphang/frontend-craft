@@ -60,3 +60,7 @@ Load [references/query-patterns.md](references/query-patterns.md) when it comes 
 ## Expected Output
 
 The data acquisition layer has loading/error/empty/data status, repeated requests are automatically deduplicated, the cache is correctly invalidated or rolled back after mutation, and the boundary between the API layer and the UI layer is clear.
+
+## Engineering practices
+
+Read the [local engineering decisions](references/engineering-practices.md) for this task and follow their links to relevant shared principles. Apply levels and exceptions against actual project contracts; product frontend/backend labels do not constrain language or role.

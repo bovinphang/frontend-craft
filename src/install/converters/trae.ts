@@ -1,14 +1,15 @@
 import path from "node:path";
 import fs from "node:fs";
 import type { InstallContext } from "../types.js";
-import { ensureDir, readUtf8, writeUtf8 } from "../shared/fs.js";
-
+import { createFileTools } from "../shared/fs.js";
 /**
  * @param {import('../types.js').InstallContext} ctx
  */
 export async function installTrae(ctx: InstallContext): Promise<void> {
   const { contentRoot, baseDir, dryRun, isGlobal } = ctx;
-  if (dryRun) return console.log(`[dry-run] trae -> ${baseDir}`);
+  if (dryRun && !ctx.session)
+    return console.log(`[dry-run] trae -> ${baseDir}`);
+  const { ensureDir, readUtf8, writeUtf8 } = createFileTools(ctx);
   const rulesDir = path.join(baseDir, isGlobal ? "user_rules" : "rules");
   ensureDir(rulesDir);
   const rulesSrc = path.join(contentRoot, "templates", "shared", "rules");

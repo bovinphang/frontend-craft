@@ -1,3 +1,10 @@
+import { writeLegacyManifest } from "./legacy-manifest-fixture.js";
+import { runProductLifecycle } from "@bovinphang/craft-common";
+import {
+  PRODUCT_DEFINITION,
+  toProductContext,
+} from "../../src/install/product-definition.js";
+import { MANIFEST_CODEC } from "../../src/install/manifest-codec.js";
 import test from "node:test";
 import assert from "node:assert/strict";
 import fs from "node:fs";
@@ -5,22 +12,53 @@ import os from "node:os";
 import path from "node:path";
 import type { InstallContext } from "../../src/install/types.js";
 import { INSTALLERS } from "../../src/install/registry.js";
+import { getRuntimeSkillsTarget } from "../../src/install/runtime-skill-targets.js";
 import {
   getInstallBaseDir,
   getGlobalConfigDir,
 } from "../../src/install/runtime-homes.js";
 import { agentMdToToml } from "../../src/install/codex-agents.js";
 import { initFrontendCraftWorkspace } from "../../src/openclaw/init-workspace.js";
-import {
-  beginManifestSession,
-  endManifestSession,
-  readInstallManifest,
-  writeUtf8,
-} from "../../src/install/shared/fs.js";
+import { readInstallManifest, writeUtf8 } from "../../src/install/shared/fs.js";
 import {
   uninstallManagedInstall,
   copyInstallToNewBase,
 } from "../../src/install/manifest-installs.js";
+
+test("local runtime targets match the captured installation contract", () => {
+  const contract = JSON.parse(
+    fs.readFileSync(
+      new URL("./fixtures/installation-contract.json", import.meta.url),
+      "utf8",
+    ),
+  ) as {
+    runtimes: Array<{ id: string; localDirectory: string; skills: string }>;
+  };
+  const cwd = path.resolve("contract-project");
+  for (const entry of contract.runtimes) {
+    const baseDir = getInstallBaseDir({
+      runtime: entry.id,
+      isGlobal: false,
+      cwd,
+    });
+    assert.equal(baseDir, path.join(cwd, entry.localDirectory));
+    const target = getRuntimeSkillsTarget({
+      runtime: entry.id,
+      isGlobal: false,
+      cwd,
+      baseDir,
+    } as InstallContext);
+    const expected =
+      entry.skills === "none"
+        ? undefined
+        : entry.skills === "agents"
+          ? path.join(cwd, ".agents", "skills")
+          : entry.skills === "workspace"
+            ? path.join(cwd, "skills")
+            : path.join(baseDir, "skills");
+    assert.equal(target, expected, entry.id);
+  }
+});
 
 function fixture(runtime: string, isGlobal = false) {
   const dir = fs.mkdtempSync(path.join(os.tmpdir(), "fec-compat-"));
@@ -342,15 +380,12 @@ test("OpenCode update retires unchanged legacy commands but preserves user edits
   try {
     const legacy = path.join(f.baseDir, "command/fec-init.md");
     const custom = path.join(f.baseDir, "command/custom.md");
-    beginManifestSession({ ...f.ctx, packageVersion: "2.9.0" });
     writeUtf8(legacy, "old command");
     writeUtf8(custom, "original");
-    endManifestSession();
+    writeLegacyManifest(f.ctx, [legacy, custom]);
     f.put(custom, "user edit");
     f.ctx.mode = "update";
-    beginManifestSession({ ...f.ctx, packageVersion: "2.9.0" });
     await INSTALLERS.opencode(f.ctx);
-    endManifestSession();
     assert.ok(!fs.existsSync(legacy));
     assert.equal(f.read(custom), "user edit");
     assert.ok(
@@ -375,12 +410,10 @@ for (const runtime of ["claude", "qoder"]) {
         },
       };
       f.put(dest, JSON.stringify(before));
-      beginManifestSession({ ...f.ctx, packageVersion: "2.9.0" });
       await INSTALLERS[runtime](f.ctx);
-      endManifestSession();
       const manifestPath = path.join(f.baseDir, "frontend-craft.manifest.json");
       const manifest = readInstallManifest(manifestPath)!;
-      uninstallManagedInstall({
+      await uninstallManagedInstall({
         install: {
           runtime,
           scope: "local",
@@ -479,23 +512,20 @@ test("Antigravity defaults to the current IDE global skills base", () => {
   }
 });
 
-test("global directory migration carries edited skills with their original ownership hashes", () => {
+test("global directory migration carries edited skills with their original ownership hashes", async () => {
   const f = fixture("antigravity", true);
   try {
     const source = path.join(f.baseDir, "old");
     const target = path.join(f.baseDir, "new");
     const file = "skills/fec-example/SKILL.md";
-    beginManifestSession({
-      ...f.ctx,
-      baseDir: source,
-      packageVersion: "2.9.0",
-    });
     writeUtf8(path.join(source, file), "original");
-    endManifestSession();
+    writeLegacyManifest({ ...f.ctx, baseDir: source }, [
+      path.join(source, file),
+    ]);
     f.put(path.join(source, file), "user edit");
     const manifestPath = path.join(source, "frontend-craft.manifest.json");
     const manifest = readInstallManifest(manifestPath)!;
-    copyInstallToNewBase(
+    const seed = copyInstallToNewBase(
       {
         runtime: "antigravity",
         scope: "global",
@@ -506,6 +536,14 @@ test("global directory migration carries edited skills with their original owner
       target,
       false,
     );
+    await runProductLifecycle({
+      action: "update",
+      definition: PRODUCT_DEFINITION,
+      context: toProductContext({ ...f.ctx, baseDir: target }),
+      codec: MANIFEST_CODEC,
+      seed,
+      adapter: { configurationFiles: () => [], async plan() {} },
+    });
     assert.equal(f.read(path.join(target, file)), "user edit");
     assert.deepEqual(
       readInstallManifest(path.join(target, "frontend-craft.manifest.json"))
@@ -567,15 +605,12 @@ for (const runtime of ["gemini", "openclaw"]) {
           : path.join(f.baseDir, "skills");
       const generated = path.join(oldRoot, "fec-example/SKILL.md");
       const edited = path.join(oldRoot, "custom/SKILL.md");
-      beginManifestSession({ ...f.ctx, packageVersion: "2.9.0" });
       writeUtf8(generated, "generated");
       writeUtf8(edited, "original");
-      endManifestSession();
+      writeLegacyManifest(f.ctx, [generated, edited]);
       f.put(edited, "user edit");
       f.ctx.mode = "update";
-      beginManifestSession({ ...f.ctx, packageVersion: "2.9.0" });
       await INSTALLERS[runtime](f.ctx);
-      endManifestSession();
       assert.ok(!fs.existsSync(generated));
       assert.equal(f.read(edited), "user edit");
       const newRoot = runtime === "gemini" ? f.baseDir : f.cwd;

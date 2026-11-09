@@ -6,15 +6,16 @@ import {
   getInstallBaseDir,
   getLegacyGlobalConfigDirs,
 } from "./runtime-homes.js";
-import { getManifestPath, hashFile, readInstallManifest } from "./shared/fs.js";
+import { getManifestPath, readInstallManifest } from "./shared/fs.js";
 import type { InstallManifest, ManifestRoot } from "./shared/fs.js";
-import { asRecord, readSettings } from "./shared/settings.js";
+
 import {
-  isPlanningWrites,
-  writeProductFile,
-  removeProductFile,
-  productFileExists,
-} from "./shared/product-write-plan.js";
+  safeProductPath,
+  type ProductInstallationSeed,
+} from "@bovinphang/craft-common";
+import { MANIFEST_CODEC } from "./manifest-codec.js";
+import { toProductContext } from "./product-definition.js";
+import type { InstallContext } from "./types.js";
 
 export type InstallScope = "global" | "local";
 
@@ -99,46 +100,53 @@ export function copyInstallToNewBase(
   install: DiscoveredInstall,
   baseDir: string,
   dryRun: boolean,
-): void {
-  if (dryRun) {
-    console.log(`[dry-run] migrate ${install.baseDir} -> ${baseDir}`);
-    return;
-  }
-  const manifestPath = getManifestPath(baseDir);
-  if (fs.existsSync(manifestPath)) return;
+): (ProductInstallationSeed & { legacyManifest: InstallManifest }) | undefined {
+  if (fs.existsSync(getManifestPath(baseDir))) return;
   const files = install.manifest.files.filter(
     (file) => !file.root || file.root === "baseDir",
   );
+  const mutations: ProductInstallationSeed["mutations"] = [];
   for (const file of files) {
-    const source = resolveManifestFile({
-      filePath: file.path,
-      root: "baseDir",
-      baseDir: install.baseDir,
-      cwd: install.baseDir,
+    const source = safeProductPath(path.join(install.baseDir, file.path), [
+      install.baseDir,
+    ]);
+    const dest = safeProductPath(path.join(baseDir, file.path), [baseDir]);
+    if (!fs.existsSync(source)) continue;
+    if (!fs.lstatSync(source).isFile())
+      throw new Error("Legacy migration source is not a regular file");
+    if (fs.existsSync(dest))
+      throw new Error(
+        "Legacy migration target already contains unknown files; existing files were preserved",
+      );
+    mutations.push({
+      path: dest,
+      beforeHash: null,
+      after: fs.readFileSync(source),
     });
-    const dest = resolveManifestFile({
-      filePath: file.path,
-      root: "baseDir",
-      baseDir,
-      cwd: baseDir,
-    });
-    if (
-      !source ||
-      !dest ||
-      !fs.existsSync(source) ||
-      !fs.statSync(source).isFile() ||
-      fs.existsSync(dest)
-    )
-      continue;
-    writeProductFile(dest, fs.readFileSync(source));
   }
-  writeProductFile(
-    manifestPath,
-    Buffer.from(`${JSON.stringify({ ...install.manifest, files }, null, 2)}\n`),
-  );
+  const legacyManifest = { ...install.manifest, files };
+  const ctx: InstallContext = {
+    pluginRoot: "",
+    contentRoot: "",
+    cwd: baseDir,
+    baseDir,
+    runtime: install.runtime,
+    isGlobal: install.scope === "global",
+    dryRun,
+    mode: "update",
+    language: install.manifest.language ?? "en",
+  };
   console.log(
-    `Migrated install to ${baseDir}; original files remain at ${install.baseDir}.`,
+    `${dryRun ? "[dry-run] " : ""}Planning migration ${install.baseDir} -> ${baseDir}; original files remain unchanged.`,
   );
+  return {
+    manifest: MANIFEST_CODEC.decode(
+      Buffer.from(JSON.stringify(legacyManifest)),
+      toProductContext(ctx),
+    ),
+    mutations,
+    legacyManifest,
+  };
 }
 
 export type UninstallOptions = {
@@ -154,78 +162,12 @@ export type UninstallResult = {
   missing: string[];
 };
 
-export function uninstallManagedInstall({
-  install,
-  cwd,
-  dryRun,
-  force,
-}: UninstallOptions): UninstallResult {
-  const result: UninstallResult = { removed: [], skipped: [], missing: [] };
-  const touchedDirs = new Set<string>();
-
-  for (const owned of install.manifest.settingsHooks ?? []) {
-    const file = resolveManifestFile({
-      filePath: owned.path,
-      root: owned.root ?? "baseDir",
-      baseDir: install.baseDir,
-      cwd,
-    });
-    if (!file || !productFileExists(file)) continue;
-    // Read before deleting scripts: malformed settings must not lose their dependencies.
-    const settings = readSettings(file);
-    const hooks = { ...asRecord(settings.hooks) };
-    for (const [event, entries] of Object.entries(owned.hooks)) {
-      if (!Array.isArray(hooks[event])) continue;
-      const ownedEntries = new Set(
-        entries.map((entry) => JSON.stringify(entry)),
-      );
-      const kept = (hooks[event] as unknown[]).filter(
-        (entry) => !ownedEntries.has(JSON.stringify(entry)),
-      );
-      if (kept.length) hooks[event] = kept;
-      else delete hooks[event];
-    }
-    if (Object.keys(hooks).length) settings.hooks = hooks;
-    else delete settings.hooks;
-    if (!dryRun)
-      writeProductFile(
-        file,
-        Buffer.from(`${JSON.stringify(settings, null, 2)}\n`),
-      );
-  }
-
-  for (const file of install.manifest.files) {
-    const absolutePath = resolveManifestFile({
-      filePath: file.path,
-      root: file.root ?? "baseDir",
-      baseDir: install.baseDir,
-      cwd,
-    });
-    if (!absolutePath) continue;
-
-    if (!fs.existsSync(absolutePath)) {
-      result.missing.push(file.path);
-      continue;
-    }
-
-    const isModified = hashFile(absolutePath) !== file.hash;
-    if (isModified && !force) {
-      result.skipped.push(file.path);
-      continue;
-    }
-
-    result.removed.push({ path: file.path, modified: isModified });
-    touchedDirs.add(path.dirname(absolutePath));
-    if (!dryRun) removeProductFile(absolutePath);
-  }
-
-  if (!dryRun && result.skipped.length === 0) {
-    removeProductFile(install.manifestPath);
-    if (!isPlanningWrites())
-      pruneEmptyDirs([...touchedDirs], [install.baseDir, cwd, os.homedir()]);
-  }
-
-  return result;
+export async function uninstallManagedInstall(
+  options: UninstallOptions,
+): Promise<UninstallResult> {
+  const { uninstallCommonAwareInstall } =
+    await import("./shared/common-install.js");
+  return uninstallCommonAwareInstall(options);
 }
 
 export function resolveManifestFile({
@@ -248,7 +190,7 @@ export function resolveManifestFile({
   return resolved;
 }
 
-function pruneEmptyDirs(dirs: string[], boundaries: string[]): void {
+export function pruneEmptyDirs(dirs: string[], boundaries: string[]): void {
   const resolvedBoundaries = boundaries.map((dir) => path.resolve(dir));
   for (const initialDir of dirs.sort((a, b) => b.length - a.length)) {
     let current = path.resolve(initialDir);

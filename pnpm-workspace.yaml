@@ -5,3 +5,5 @@ allowBuilds:
   protobufjs: false
   tree-sitter-bash: false
   minimumReleaseAgeExclude: '@bovinphang/*'
+minimumReleaseAgeExclude:
+  - '@bovinphang/craft-common@2.0.0'

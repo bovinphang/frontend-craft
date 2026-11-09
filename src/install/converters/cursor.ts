@@ -1,22 +1,21 @@
-import { copyProductSkills } from "../shared/fs.js";
+import { createFileTools } from "../shared/fs.js";
 import path from "node:path";
 import fs from "node:fs";
 import type { InstallContext } from "../types.js";
-import { ensureDir, readUtf8, writeUtf8 } from "../shared/fs.js";
-
 /**
  * @param {import('../types.js').InstallContext} ctx
  */
 export async function installCursor(ctx: InstallContext): Promise<void> {
   const { contentRoot, baseDir, dryRun, isGlobal } = ctx;
-  if (dryRun) {
+  if (dryRun && !ctx.session) {
     console.log(`[dry-run] cursor -> ${baseDir}`);
     return;
   }
+  const { ensureDir, copyProductSkills, readUtf8, writeUtf8 } =
+    createFileTools(ctx);
   ensureDir(baseDir);
   const skillsDest = path.join(baseDir, "skills");
   copyProductSkills(path.join(contentRoot, "skills"), skillsDest);
-
   const rulesSrc = path.join(contentRoot, "templates", "shared", "rules");
   const rulesDest = path.join(baseDir, "rules");
   if (!isGlobal && fs.existsSync(rulesSrc)) {

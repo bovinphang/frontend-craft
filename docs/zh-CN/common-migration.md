@@ -1,8 +1,8 @@
-# frontend-craft 3.0 公共能力迁移
+# frontend-craft3.0公共能力迁移
 
-3.x 尚未正式发布。3.0 直接使用 `cc-*` 公共入口，由 `@bovinphang/craft-common@1.0.1` 随产品自动交付，无需单独安装第三个插件。
+当前精确公共依赖为`@bovinphang/craft-common@2.0.0`，正式版本号已准备，尚未发布。frontend3.0.0与backend1.0.0继续未发布且版本号不变。路径、规划会话、所有权、锁和可恢复事务复用common；产品保留内容转换与自身CLI/原生渠道策略。
 
-1.0.1 修复较大事务日志恢复。前后端必须使用相同公共版本、语言及摘要。已有 1.0.0 安装应先由旧产品退出公共消费者，处理保留的用户修改，再安装依赖 1.0.1 的新产品；不要强制覆盖共享资源。干净公开源安装需等待该修复版发布。
+3.0交付53个前端和21个公共入口，共74项。公共1.0.1的事务恢复修复保留在2.0.0中；1.x或开发快照不能与2.0.0混用。先用各旧产品CLI退出全部旧公共引用并处理保留编辑，再安装匹配产品；不强制覆盖共享资源。公开安装须等待common及相应产品实际发布与源策略允许。
 
 | 原入口 | 3.0 用法 |
 | --- | --- |
@@ -42,3 +42,16 @@ fec runtime update codex --local
 同一产品清单路径不能切换 Runtime、local/global 作用域或公共目标；需要切换时先卸载原安装。全局旧配置目录迁入也先检查旧公共文件，用户修改会阻断，原目录保留。事务恢复针对本地主机进程中断，不承诺断电或跨主机共享文件系统协调。
 
 CLI 共享安装已纳入双消费者验收。Claude/OpenClaw 原生插件渠道交付完整公共快照，本期不承诺两个原生产品同时启用时的去重。公开 registry 的公共包发布是独立发布步骤，本次开发不自动执行发布。
+
+## 2026-11-08 coordinated2.0.0 upgrade / 当前协调升级
+
+Current source: common2.0.0 (release prepared, unpublished), frontend3.0.0/backend1.0.0 (unchanged, unreleased). 2.0.0同样要求版本、语言和摘要一致；不自动升级另一个产品。
+
+1. Back up user edits and inspect local/global/runtime identity. 备份修改，确认安装范围。
+2. With each OLD product CLI, uninstall its runtime resources and resolve preserved edits until both old common consumers exit. 使用各旧 CLI 退出旧公共引用，不用新 CLI 越权接管。
+3. Install both matching product builds using verified artifacts; public clean install must wait for common publication. 安装新匹配产品前执行 runtime check-migration。
+4. Managed unchanged legacy language entries retire in the same transaction as new cc deployment. Unknown files, edits, links or invalid ownership block the whole install; dry-run writes nothing. 原领域入口不建立假别名。
+
+Rename: fec-typescript-project-standard → cc-typescript-project-standard; bec-{rust,go,java,python,c,cpp}-project-standard → cc-*-project-standard; bec-{rust-async,go-concurrency,python-async,java-runtime,native-memory-safety} → cc-* equivalents. Frontend retains its earlier drawio/source-driven rename policy.
+
+Checks return 0 (nothing found), 1 (reviewable references/owned retired entries), 2 (invalid arguments, scan failure or retirement conflict). Reports show paths, IDs and line numbers, never full source lines. No-Skill hosts receive reference material rather than a fabricated native Skill alias. 双原生产品去重仍不在保证范围。

@@ -56,3 +56,7 @@ description: 用于设计或审查 Vue 3 + TypeScript 项目结构、SFC/组件�
 - 样式使用 scoped 隔离，关键行为有测试覆盖
 - 文件结构与项目约定一致（pages / features / components 分离）
 - 可复用 composable 的输入响应性、Pinia/Router 边界和异步组件测试策略已说明
+
+## 工程实践
+
+按当前任务读取[本入口工程细则](references/engineering-practices.md)，再按链接选择公共原则。规则级别与例外以实际项目契约为准；不因产品前后端标签限制语言或职责。

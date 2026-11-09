@@ -1,6 +1,6 @@
 # 项目结构
 
-`frontend-craft` 的目录布局。当前版本 3.0.0，使用 TypeScript、ESM 和 esbuild，测试使用 Node.js `node:test`。分发 14 个 Agent、61 个 Skill（54 个前端 + 7 个公共）和 11 个命令。
+`frontend-craft` 的目录布局。当前版本 3.0.0，使用 TypeScript、ESM 和 esbuild，测试使用 Node.js `node:test`。分发 14 个 Agent、74 个 Skill（53 个前端 + 21 个公共）和 11 个命令。
 
 ## 仓库布局
 
@@ -36,7 +36,7 @@ frontend-craft/
 |   |-- fec-validation-fix/            # lint、type-check、test、build 与修复
 |   |-- fec-performance-optimization/  # Core Web Vitals、包体、渲染、网络、内存
 |   |-- cc-source-driven-development/ # 官方来源、项目事实、版本敏感决策
-|   |-- fec-typescript-project-standard/   # TypeScript 配置、公开类型、声明文件、DTO 和泛型
+|   |-- cc-typescript-project-standard/   # TypeScript 配置、公开类型、声明文件、DTO 和泛型
 |   |-- fec-state-management/         # 状态归属、store 选型、URL/服务端/表单/本地边界
 |   |-- fec-tailwind-design-system/   # Tailwind token、组件变体、暗色模式和 class 治理
 |   |-- fec-responsive-layout/        # 移动优先布局、容器查询和触摸友好的响应式 UI
@@ -161,4 +161,6 @@ frontend-craft/
 
 [审核范围与技术图交付](review-and-diagram-workflows.md) — 范围规则、工具前提、导出命令与 QA 边界。
 
-公共 `cc-*` 与领域方法副本由 `craft-common@1.0.1` 生成；修改上游后运行 `pnpm run sync:common`，使用 `pnpm run check:common` 只读检查。不要手工编辑公共分发副本。领域内容的权威源在本仓库，中文镜像位于 `localized/zh-CN/`。
+公共 `cc-*` 与领域方法副本由 `craft-common@2.0.0` 生成；修改上游后运行 `pnpm run sync:common`，使用 `pnpm run check:common` 只读检查。不要手工编辑公共分发副本。领域内容的权威源在本仓库，中文镜像位于 `localized/zh-CN/`。
+
+`src/project/` keeps product framework declarations and inspect integration. Bounded discovery and task recommendation live in craft-common; backend retains the six-language validation projection. 产品不复制扫描器或公共安装算法。

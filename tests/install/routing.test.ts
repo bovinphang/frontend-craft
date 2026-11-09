@@ -1,3 +1,4 @@
+import { writeLegacyManifest } from "./legacy-manifest-fixture.js";
 import test from "node:test";
 import assert from "node:assert/strict";
 import fs from "node:fs";
@@ -6,27 +7,25 @@ import path from "node:path";
 import { main, describeResourceInstalls } from "../../src/install/cli.js";
 import { INSTALLERS } from "../../src/install/registry.js";
 import { discoverManifestInstalls } from "../../src/install/manifest-installs.js";
-import {
-  beginManifestSession,
-  endManifestSession,
-  discardManifestSession,
-  getManifestPath,
-} from "../../src/install/shared/fs.js";
+import { getManifestPath } from "../../src/install/shared/fs.js";
 
 test("resource descriptions include damaged manifest diagnostics and valid installs without failing the CLI stage", () => {
   const dir = fs.mkdtempSync(path.join(os.tmpdir(), "fec-description-"));
   const exitCode = process.exitCode;
   try {
-    beginManifestSession({
-      baseDir: path.join(dir, ".cursor"),
-      cwd: dir,
-      mode: "install",
-      packageVersion: "3.0.0",
-      runtime: "cursor",
-      isGlobal: false,
-      language: "en",
-    });
-    endManifestSession();
+    const validPath = getManifestPath(path.join(dir, ".cursor"));
+    fs.mkdirSync(path.dirname(validPath), { recursive: true });
+    fs.writeFileSync(
+      validPath,
+      JSON.stringify({
+        packageVersion: "3.0.0",
+        runtime: "cursor",
+        scope: "local",
+        language: "en",
+        installedAt: "2026-01-01",
+        files: [],
+      }),
+    );
     const damagedPath = getManifestPath(path.join(dir, ".codex"));
     fs.mkdirSync(path.dirname(damagedPath), { recursive: true });
     fs.writeFileSync(damagedPath, "{broken");
@@ -40,7 +39,6 @@ test("resource descriptions include damaged manifest diagnostics and valid insta
     );
     assert.equal(process.exitCode, 0);
   } finally {
-    discardManifestSession();
     process.exitCode = exitCode;
     fs.rmSync(dir, { recursive: true, force: true });
   }
@@ -90,16 +88,20 @@ for (const command of ["update", "uninstall"]) {
       const cursor = t.mock.method(INSTALLERS, "cursor", async () => {});
       try {
         process.chdir(dir);
-        beginManifestSession({
-          baseDir: path.join(dir, ".cursor"),
-          cwd: dir,
-          mode: "install",
-          packageVersion: "3.0.0",
-          runtime: "cursor",
-          isGlobal: false,
-          language: "en",
-        });
-        endManifestSession();
+        writeLegacyManifest(
+          {
+            pluginRoot: "",
+            contentRoot: "",
+            baseDir: path.join(dir, ".cursor"),
+            cwd: dir,
+            mode: "install",
+            packageVersion: "3.0.0",
+            runtime: "cursor",
+            isGlobal: false,
+            language: "en",
+          },
+          [],
+        );
         const damagedPath = getManifestPath(path.join(dir, ".codex"));
         fs.mkdirSync(path.dirname(damagedPath), { recursive: true });
         fs.writeFileSync(damagedPath, damaged);
@@ -115,7 +117,6 @@ for (const command of ["update", "uninstall"]) {
             false,
           );
       } finally {
-        discardManifestSession();
         process.chdir(cwd);
         process.exitCode = exitCode;
         fs.rmSync(dir, { recursive: true, force: true });
@@ -251,16 +252,20 @@ test("runtime update continues after an installer fails and discards its manifes
   try {
     process.chdir(dir);
     for (const runtime of ["codex", "cursor"]) {
-      beginManifestSession({
-        baseDir: path.join(dir, `.${runtime}`),
-        cwd: dir,
-        mode: "install",
-        packageVersion: "2.9.0",
-        runtime,
-        isGlobal: false,
-        language: "en",
-      });
-      endManifestSession();
+      writeLegacyManifest(
+        {
+          pluginRoot: "",
+          contentRoot: "",
+          baseDir: path.join(dir, `.${runtime}`),
+          cwd: dir,
+          mode: "install",
+          packageVersion: "2.9.0",
+          runtime,
+          isGlobal: false,
+          language: "en",
+        },
+        [],
+      );
     }
     const before = fs.readFileSync(
       getManifestPath(path.join(dir, ".codex")),
@@ -277,7 +282,6 @@ test("runtime update continues after an installer fails and discards its manifes
     assert.match(messages.join("\n"), /runtime update codex --local/);
     assert.match(messages.join("\n"), /injected failure/);
   } finally {
-    discardManifestSession();
     process.chdir(cwd);
     process.exitCode = previousExitCode;
     fs.rmSync(dir, { recursive: true, force: true });

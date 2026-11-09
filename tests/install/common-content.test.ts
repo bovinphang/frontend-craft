@@ -11,6 +11,7 @@ const commonRoot = path.resolve(
   path.dirname(fileURLToPath(import.meta.resolve("@bovinphang/craft-common"))),
   "..",
 );
+const pinnedCommonVersion = JSON.parse(fs.readFileSync(path.resolve(import.meta.dirname,"../../package.json"),"utf8")).dependencies["@bovinphang/craft-common"];
 function fixture(t: { after: (fn: () => void) => void }) {
   const root = fs.mkdtempSync(path.join(os.tmpdir(), "fec common space "));
   t.after(() => fs.rmSync(root, { recursive: true, force: true }));
@@ -23,9 +24,12 @@ function fixture(t: { after: (fn: () => void) => void }) {
 test("从固定公共包生成中英文快照且不依赖源码相邻目录", (t) => {
   const root = fixture(t);
   syncCommonContent({ productRoot: root, commonRoot, check: false });
-  assert.equal(readProductCommonCatalog(root, "en").skills.length, 7);
-  assert.equal(readProductCommonCatalog(root, "zh-CN").skills.length, 7);
-  assert.equal(readProductCommonCatalog(root, "en").packageVersion, "1.0.1");
+  assert.equal(readProductCommonCatalog(root, "en").skills.length, 21);
+  assert.equal(readProductCommonCatalog(root, "zh-CN").skills.length, 21);
+  assert.equal(
+    readProductCommonCatalog(root, "en").packageVersion,
+    pinnedCommonVersion,
+  );
   assert.equal(readProductCommonCatalog(root, "en").root, root);
   assert.ok(
     fs.existsSync(
