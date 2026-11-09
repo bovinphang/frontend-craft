@@ -1,6 +1,6 @@
 <div align="center">
 
-> 发布状态更新（2026-11-09）：craft-common 2.0.0 已发布至 npm。frontend 3.0.0、backend 1.0.0 继续未发布，产品版本号不变；下方原发布准备说明保留当时状态。
+> 发布状态更新：craft-common 2.0.0、frontend-craft 3.0.0、backend-craft 1.0.0 均已于2026-11-09（Asia/Shanghai）发布至 npm，版本号不变。
 
 
 <img src="assets/brand/frontend-craft.png" alt="frontend-craft logo" width="200" />
@@ -571,7 +571,7 @@ npx skills check                           # 预览可用更新
 
 ## 3.0 公共能力
 
-3.0 尚未正式发布，包含 53 个前端专属入口和 21 个公共入口，共 74 个 Skill。公共能力由精确版本的 craft-common 自动交付，无需额外安装插件；公共源码仅在 craft-common 维护。
+3.0.0已正式发布，包含 53 个前端专属入口和 21 个公共入口，共 74 个 Skill。公共能力由精确版本的 craft-common 自动交付，无需额外安装插件；公共源码仅在 craft-common 维护。
 
 - `cc-drawio-studio`
 - `cc-technical-diagrams`
@@ -590,7 +590,7 @@ CLI 管理共享安装及卸载引用；原生插件渠道本期保证单产品�
 
 `fec project inspect . --task-path apps/desktop/src-tauri/src/lib.rs --task-kind ipc --json` 只读清单证据并推荐已交付能力。角色（UI、桌面核心、原生库、服务、CLI）、语言和框架分别匹配，不执行构建脚本或安装工具。C、C++ 有独立公共入口，Tauri/Electron 为公共专项，React/Vue/Next/Nuxt/Vite 仍由前端产品维护；未指定任务时只给工程级候选。
 
-common使用正式版本号2.0.0，当前待发布；frontend3.0.0与backend1.0.0仍未发布。先用各旧产品 CLI 退出旧公共引用，再安装匹配的新产品。使用 `fec runtime check-migration [runtime] --local --json` 检查；未知或用户修改的旧目录会阻断整批安装。见[迁移指南](docs/zh-CN/common-migration.md)。
+craft-common 2.0.0、frontend-craft 3.0.0、backend-craft 1.0.0 均已于2026-11-09（Asia/Shanghai）发布至 npm，版本号不变。先用各旧产品 CLI 退出旧公共引用，再安装匹配的新产品。使用 `fec runtime check-migration [runtime] --local --json` 检查；未知或用户修改的旧目录会阻断整批安装。见[迁移指南](docs/zh-CN/common-migration.md)。
 
 <!-- engineering-practices-20261108 -->
 
@@ -602,4 +602,4 @@ common使用正式版本号2.0.0，当前待发布；frontend3.0.0与backend1.0.
 
 付款不能仅凭429/5xx/网络错误重试；须有服务端重放契约、同意图/同键和有界预算，否则核对待确认结果。公开源干净安装仍待common发布，[升级所有权保护](docs/common-migration.md)保持有效。
 
-common2.0.0发布准备见[当前未发布变更](CHANGELOG.zh-CN.md)；须先发布并核验common，本轮不发布frontend3.0.0。
+[3.0.0变更日志](CHANGELOG.zh-CN.md)。craft-common 2.0.0、frontend-craft 3.0.0、backend-craft 1.0.0 均已于2026-11-09（Asia/Shanghai）发布至 npm，版本号不变。

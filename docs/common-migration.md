@@ -1,6 +1,6 @@
 # Common capability migration in frontend-craft3.0
 
-The exact common dependency is`@bovinphang/craft-common@2.0.0`: a final version number prepared but not published. Frontend3.0.0 and backend 1.0.0 remain unreleased with unchanged product versions. Paths, explicit planning sessions, ownership, locks and recovery are shared; products retain conversion and their CLI/native-channel policies.
+The exact common dependency is`@bovinphang/craft-common@2.0.0`: a published release. Frontend 3.0.0 and backend 1.0.0 are also published. Paths, explicit planning sessions, ownership, locks and recovery are shared; products retain conversion and their CLI/native-channel policies.
 
 Version 3.0 delivers 53 frontend and 21 common entries, 74 in total. Version 2.0.0 retains 1.0.1 recovery repairs. Do not mix 1.x or development snapshots with 2.0.0: exit all old shared consumers using the old product CLIs and resolve retained edits before installing matching products. Public installation awaits actual common/product publication and the existing supply-chain policy window.
 
@@ -45,7 +45,7 @@ Dual-consumer CLI installation is verified. Claude/OpenClaw native packages incl
 
 ## 2026-11-08 coordinated2.0.0 upgrade / 当前协调升级
 
-Current source: common 2.0.0 (release prepared, unpublished), frontend 3.0.0/backend 1.0.0 (unchanged, unreleased). 2.0.0同样要求版本、语言和摘要一致；不自动升级另一个产品。
+Current releases: common 2.0.0, frontend 3.0.0 and backend 1.0.0; all published on npm. 2.0.0同样要求版本、语言和摘要一致；不自动升级另一个产品。
 
 1. Back up user edits and inspect local/global/runtime identity. 备份修改，确认安装范围。
 2. With each OLD product CLI, uninstall its runtime resources and resolve preserved edits until both old common consumers exit. 使用各旧 CLI 退出旧公共引用，不用新 CLI 越权接管。

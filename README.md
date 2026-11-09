@@ -1,6 +1,6 @@
 <div align="center">
 
-> Release status (2026-11-09): craft-common 2.0.0 is published on npm. Frontend 3.0.0 and backend 1.0.0 remain unreleased; product versions are unchanged. Earlier preparation notes describe the pre-publication state.
+> Release status: craft-common 2.0.0, frontend-craft 3.0.0 and backend-craft 1.0.0 were published to npm on 2026-11-09 (Asia/Shanghai). Package versions are unchanged.
 
 
 <img src="assets/brand/frontend-craft.png" alt="frontend-craft logo" width="200" />
@@ -571,7 +571,7 @@ To disable telemetry: `DISABLE_TELEMETRY=1`. Details: [skills.sh CLI docs](https
 
 ## Craft Common in 3.0
 
-Version 3.0 is unreleased. It delivers 53 frontend entries and 21 shared entries (74 skills total) from the pinned craft-common dependency, without a third manual plugin install. Common source is maintained only in craft-common.
+Version 3.0.0 is published on npm. It delivers 53 frontend entries and 21 shared entries (74 skills total) from the pinned craft-common dependency, without a third manual plugin install. Common source is maintained only in craft-common.
 
 - `cc-drawio-studio`
 - `cc-technical-diagrams`
@@ -590,7 +590,7 @@ Pinned common source: `@bovinphang/craft-common@2.0.0`. See [project structure a
 
 `fec project inspect . --task-path apps/desktop/src-tauri/src/lib.rs --task-kind ipc --json` reads bounded manifest evidence and recommends only delivered capabilities. Roles (UI, desktop core, native library, service, CLI), languages and frameworks are separate dimensions. It never runs build scripts or installs tools. Shared language entries include independent C and C++ standards; Tauri/Electron are common specialties. Next/React/Vue/Nuxt/Vite stay frontend specialties. No task argument means project-level candidates only.
 
-Common uses the final version number 2.0.0 and is prepared for publication; frontend 3.0.0 and backend 1.0.0 remain unreleased. Exit old common consumers with each old product CLI before installing matching product builds. Run `fec runtime check-migration [runtime] --local --json` first. Unknown or edited retired entries block installation. See [migration](docs/common-migration.md).
+craft-common 2.0.0, frontend-craft 3.0.0 and backend-craft 1.0.0 were published to npm on 2026-11-09 (Asia/Shanghai). Package versions are unchanged. Exit old common consumers with each old product CLI before installing matching product builds. Run `fec runtime check-migration [runtime] --local --json` first. Unknown or edited retired entries block installation. See [migration](docs/common-migration.md).
 
 <!-- engineering-practices-20261108 -->
 
@@ -602,4 +602,4 @@ The [React sample](skills/fec-react-project-standard/examples/engineering/README
 
 Payment writes are not retried solely because of429/5xx/network errors: require a server replay contract, same intent/key and bounded budget, otherwise reconcile the uncertain result. Public clean installation still awaits common publication; [upgrade ownership rules](docs/common-migration.md) remain in force.
 
-Common 2.0.0 release preparation: [current unreleased changes](CHANGELOG.md#300---unreleased). Publish and verify common first; this step does not publish frontend 3.0.0.
+Release notes: [frontend 3.0.0](CHANGELOG.md#300---2026-11-09). craft-common 2.0.0, frontend-craft 3.0.0 and backend-craft 1.0.0 were published to npm on 2026-11-09 (Asia/Shanghai). Package versions are unchanged.

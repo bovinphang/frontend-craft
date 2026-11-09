@@ -1,6 +1,6 @@
 # frontend-craft3.0公共能力迁移
 
-当前精确公共依赖为`@bovinphang/craft-common@2.0.0`，正式版本号已准备，尚未发布。frontend3.0.0与backend1.0.0继续未发布且版本号不变。路径、规划会话、所有权、锁和可恢复事务复用common；产品保留内容转换与自身CLI/原生渠道策略。
+当前精确公共依赖为`@bovinphang/craft-common@2.0.0`，craft-common 2.0.0、frontend-craft 3.0.0、backend-craft 1.0.0 均已于2026-11-09（Asia/Shanghai）发布至 npm，版本号不变。路径、规划会话、所有权、锁和可恢复事务复用common；产品保留内容转换与自身CLI/原生渠道策略。
 
 3.0交付53个前端和21个公共入口，共74项。公共1.0.1的事务恢复修复保留在2.0.0中；1.x或开发快照不能与2.0.0混用。先用各旧产品CLI退出全部旧公共引用并处理保留编辑，再安装匹配产品；不强制覆盖共享资源。公开安装须等待common及相应产品实际发布与源策略允许。
 
@@ -45,7 +45,7 @@ CLI 共享安装已纳入双消费者验收。Claude/OpenClaw 原生插件渠道
 
 ## 2026-11-08 coordinated2.0.0 upgrade / 当前协调升级
 
-Current source: common2.0.0 (release prepared, unpublished), frontend3.0.0/backend1.0.0 (unchanged, unreleased). 2.0.0同样要求版本、语言和摘要一致；不自动升级另一个产品。
+Current releases: common 2.0.0, frontend 3.0.0 and backend 1.0.0; all published on npm. 2.0.0同样要求版本、语言和摘要一致；不自动升级另一个产品。
 
 1. Back up user edits and inspect local/global/runtime identity. 备份修改，确认安装范围。
 2. With each OLD product CLI, uninstall its runtime resources and resolve preserved edits until both old common consumers exit. 使用各旧 CLI 退出旧公共引用，不用新 CLI 越权接管。

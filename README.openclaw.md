@@ -392,4 +392,4 @@ These common entries apply to libraries, CLI tools, desktop cores and services; 
 | `cc-tauri-project-standard` | Tauri application engineering |
 | `cc-electron-project-standard` | Electron application engineering |
 
-The common dependency is pinned exactly to craft-common 2.0.0, prepared for publication. Frontend3.0.0 and backend 1.0.0 remain unreleased with unchanged versions; publishing common does not publish or activate this native plugin.
+craft-common 2.0.0, frontend-craft 3.0.0 and backend-craft 1.0.0 were published to npm on 2026-11-09 (Asia/Shanghai). Package versions are unchanged. The native plugin uses the exact common 2.0.0 dependency; installation does not imply host activation.

@@ -392,4 +392,4 @@ MIT
 | `cc-tauri-project-standard` | Tauri 应用工程 |
 | `cc-electron-project-standard` | Electron 应用工程 |
 
-公共依赖精确固定为craft-common2.0.0，当前待发布；frontend3.0.0和backend1.0.0继续未发布，版本号不变。发布common不自动发布或启用本原生插件。
+craft-common 2.0.0、frontend-craft 3.0.0、backend-craft 1.0.0 均已于2026-11-09（Asia/Shanghai）发布至 npm，版本号不变。原生插件精确依赖common2.0.0；安装不代表宿主已激活。

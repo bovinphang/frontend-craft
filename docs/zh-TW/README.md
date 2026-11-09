@@ -557,7 +557,7 @@ npx skills check                           # 預覽可用更新
 
 ## 3.0 共用能力
 
-3.0.0仍未發布，包含53個前端專屬入口與21個共用入口，共74個Skill。公共來源精確固定為`@bovinphang/craft-common@2.0.0`；2.0.0為待發布的正式版本號，backend1.0.0也仍未發布。公共包先行發布並核驗，產品版本不變，不自動發布。
+frontend 3.0.0、backend 1.0.0、craft-common 2.0.0均已於2026-11-09（Asia/Shanghai）發佈至npm。前端53個專屬入口與21個公共入口，合計74項；公共依賴固定為`@bovinphang/craft-common@2.0.0`。
 
 語言、角色與框架分開選擇；C/C++有獨立入口，Tauri/Electron為共用桌面專項，不以產品前後端名稱限制語言。
 
