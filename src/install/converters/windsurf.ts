@@ -8,7 +8,7 @@ import type { InstallContext } from "../types.js";
 export async function installWindsurf(ctx: InstallContext): Promise<void> {
   const { contentRoot, baseDir, dryRun, isGlobal } = ctx;
   if (dryRun && !ctx.session) {
-    console.log(`[dry-run] windsurf -> ${baseDir}`);
+    (ctx.log ?? console.log)(`[dry-run] windsurf -> ${baseDir}`);
     return;
   }
   const {

@@ -167,8 +167,8 @@ importers:
   .:
     dependencies:
       '@bovinphang/craft-common':
-        specifier: 2.0.0
-        version: 2.0.0
+        specifier: 2.1.0
+        version: 2.1.0
     devDependencies:
       '@eslint/js':
         specifier: 9.39.5
@@ -267,8 +267,8 @@ packages:
   '@borewit/text-codec@0.2.3':
     resolution: {integrity: sha512-49CycTz1aAZmvFcwkeFyhud1HUmRIB5Tabf7ALV+VA4Iu85MTfz2cUwzPagMFAdVBvrWdkCxG67I30tUwwpKsw==}
 
-  '@bovinphang/craft-common@2.0.0':
-    resolution: {integrity: sha512-WX1ql10CdU6gz4w1+TZHG9w541GI/wOArxaEEPzc/+ylGJ1UDsj+hW/R1zNXzr+bTrJ2hwyXk+YohylHPL2gTA==}
+  '@bovinphang/craft-common@2.1.0':
+    resolution: {integrity: sha512-TJVYWcprj9uUV3tqqcOhF/YHMYXxkQvgNfLb13dhm/aHdndl6GKvuoRY6UIpJTnova4iG2lBbnPD3DlU6c6ICA==}
     engines: {node: '>=22.0.0'}
 
   '@clack/core@1.5.1':
@@ -2654,7 +2654,7 @@ snapshots:
 
   '@borewit/text-codec@0.2.3': {}
 
-  '@bovinphang/craft-common@2.0.0':
+  '@bovinphang/craft-common@2.1.0':
     dependencies:
       smol-toml: 1.9.1
       yaml: 2.9.0

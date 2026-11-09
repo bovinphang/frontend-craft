@@ -11,7 +11,7 @@ export async function installOpencodeFamily(
   const { contentRoot, baseDir, dryRun } = ctx;
   const cmdDest = path.join(baseDir, "commands");
   if (dryRun && !ctx.session) {
-    console.log(`[dry-run] opencode/kilo commands -> ${cmdDest}`);
+    (ctx.log ?? console.log)(`[dry-run] opencode/kilo commands -> ${cmdDest}`);
     return;
   }
   const {

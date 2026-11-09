@@ -7,7 +7,7 @@ import type { InstallContext } from "../types.js";
 export async function installAntigravity(ctx: InstallContext): Promise<void> {
   const { contentRoot, baseDir, dryRun } = ctx;
   if (dryRun && !ctx.session)
-    return console.log(`[dry-run] antigravity -> ${baseDir}`);
+    return (ctx.log ?? console.log)(`[dry-run] antigravity -> ${baseDir}`);
   const { ensureDir, copyProductSkills } = createFileTools(ctx);
   ensureDir(baseDir);
   copyProductSkills(
@@ -21,7 +21,7 @@ export async function installAntigravity(ctx: InstallContext): Promise<void> {
 export async function installAugment(ctx: InstallContext): Promise<void> {
   const { contentRoot, baseDir, dryRun } = ctx;
   if (dryRun && !ctx.session)
-    return console.log(`[dry-run] augment -> ${baseDir}`);
+    return (ctx.log ?? console.log)(`[dry-run] augment -> ${baseDir}`);
   const { ensureDir, copyProductSkills } = createFileTools(ctx);
   ensureDir(baseDir);
   copyProductSkills(
@@ -35,7 +35,7 @@ export async function installAugment(ctx: InstallContext): Promise<void> {
 export async function installCodebuddy(ctx: InstallContext): Promise<void> {
   const { contentRoot, baseDir, dryRun } = ctx;
   if (dryRun && !ctx.session)
-    return console.log(`[dry-run] codebuddy -> ${baseDir}`);
+    return (ctx.log ?? console.log)(`[dry-run] codebuddy -> ${baseDir}`);
   const { ensureDir, copyProductSkills } = createFileTools(ctx);
   ensureDir(baseDir);
   copyProductSkills(

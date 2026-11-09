@@ -584,7 +584,7 @@ Version 3.0.0 is published on npm. It delivers 53 frontend entries and 21 shared
 Run `fec runtime check-migration codex --local --json` and read [migration guide](docs/common-migration.md).
 CLI installation manages shared ownership and uninstall references. Native channels guarantee complete single-product payloads; native dual-product deduplication is not promised.
 
-Pinned common source: `@bovinphang/craft-common@2.0.0`. See [project structure and maintenance boundaries](docs/project-structure.md) and [contributor checks](CONTRIBUTING.md).
+Pinned common source: `@bovinphang/craft-common@2.1.0`. See [project structure and maintenance boundaries](docs/project-structure.md) and [contributor checks](CONTRIBUTING.md).
 
 ## Mixed-project inspection
 
@@ -603,3 +603,7 @@ The [React sample](skills/fec-react-project-standard/examples/engineering/README
 Payment writes are not retried solely because of429/5xx/network errors: require a server replay contract, same intent/key and bounded budget, otherwise reconcile the uncertain result. Public clean installation still awaits common publication; [upgrade ownership rules](docs/common-migration.md) remain in force.
 
 Release notes: [frontend 3.0.0](CHANGELOG.md#300---2026-11-09). craft-common 2.0.0, frontend-craft 3.0.0 and backend-craft 1.0.0 were published to npm on 2026-11-09 (Asia/Shanghai). Package versions are unchanged.
+
+## CLI management (unreleased)
+
+This source now pins craft-common 2.1.0; these changes are not published. See [CLI management](docs/cli-management.md) for self-management, interactive and batch operations, and installation defaults.

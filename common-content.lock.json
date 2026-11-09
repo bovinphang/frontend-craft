@@ -1,17 +1,17 @@
 {
   "schemaVersion": 1,
   "packageName": "@bovinphang/craft-common",
-  "packageVersion": "2.0.0",
+  "packageVersion": "2.1.0",
   "catalogs": {
     "en": {
       "schemaVersion": 1,
       "packageName": "@bovinphang/craft-common",
-      "packageVersion": "2.0.0",
+      "packageVersion": "2.1.0",
       "language": "en",
       "skills": [
         {
           "id": "cc-c-project-standard",
-          "version": "2.0.0",
+          "version": "2.1.0",
           "sourcePackage": "@bovinphang/craft-common",
           "repository": "https://github.com/bovinphang/craft-common",
           "files": [
@@ -59,7 +59,7 @@
         },
         {
           "id": "cc-cpp-project-standard",
-          "version": "2.0.0",
+          "version": "2.1.0",
           "sourcePackage": "@bovinphang/craft-common",
           "repository": "https://github.com/bovinphang/craft-common",
           "files": [
@@ -107,7 +107,7 @@
         },
         {
           "id": "cc-debug-methodology",
-          "version": "2.0.0",
+          "version": "2.1.0",
           "sourcePackage": "@bovinphang/craft-common",
           "repository": "https://github.com/bovinphang/craft-common",
           "files": [
@@ -123,7 +123,7 @@
         },
         {
           "id": "cc-doc-sync-core",
-          "version": "2.0.0",
+          "version": "2.1.0",
           "sourcePackage": "@bovinphang/craft-common",
           "repository": "https://github.com/bovinphang/craft-common",
           "files": [
@@ -139,7 +139,7 @@
         },
         {
           "id": "cc-drawio-studio",
-          "version": "2.0.0",
+          "version": "2.1.0",
           "sourcePackage": "@bovinphang/craft-common",
           "repository": "https://github.com/bovinphang/craft-common",
           "files": [
@@ -259,7 +259,7 @@
         },
         {
           "id": "cc-electron-project-standard",
-          "version": "2.0.0",
+          "version": "2.1.0",
           "sourcePackage": "@bovinphang/craft-common",
           "repository": "https://github.com/bovinphang/craft-common",
           "files": [
@@ -343,7 +343,7 @@
         },
         {
           "id": "cc-go-concurrency",
-          "version": "2.0.0",
+          "version": "2.1.0",
           "sourcePackage": "@bovinphang/craft-common",
           "repository": "https://github.com/bovinphang/craft-common",
           "files": [
@@ -375,7 +375,7 @@
         },
         {
           "id": "cc-go-project-standard",
-          "version": "2.0.0",
+          "version": "2.1.0",
           "sourcePackage": "@bovinphang/craft-common",
           "repository": "https://github.com/bovinphang/craft-common",
           "files": [
@@ -423,7 +423,7 @@
         },
         {
           "id": "cc-java-project-standard",
-          "version": "2.0.0",
+          "version": "2.1.0",
           "sourcePackage": "@bovinphang/craft-common",
           "repository": "https://github.com/bovinphang/craft-common",
           "files": [
@@ -467,7 +467,7 @@
         },
         {
           "id": "cc-java-runtime",
-          "version": "2.0.0",
+          "version": "2.1.0",
           "sourcePackage": "@bovinphang/craft-common",
           "repository": "https://github.com/bovinphang/craft-common",
           "files": [
@@ -499,7 +499,7 @@
         },
         {
           "id": "cc-native-memory-safety",
-          "version": "2.0.0",
+          "version": "2.1.0",
           "sourcePackage": "@bovinphang/craft-common",
           "repository": "https://github.com/bovinphang/craft-common",
           "files": [
@@ -531,7 +531,7 @@
         },
         {
           "id": "cc-python-async",
-          "version": "2.0.0",
+          "version": "2.1.0",
           "sourcePackage": "@bovinphang/craft-common",
           "repository": "https://github.com/bovinphang/craft-common",
           "files": [
@@ -563,7 +563,7 @@
         },
         {
           "id": "cc-python-project-standard",
-          "version": "2.0.0",
+          "version": "2.1.0",
           "sourcePackage": "@bovinphang/craft-common",
           "repository": "https://github.com/bovinphang/craft-common",
           "files": [
@@ -607,7 +607,7 @@
         },
         {
           "id": "cc-refactoring-core",
-          "version": "2.0.0",
+          "version": "2.1.0",
           "sourcePackage": "@bovinphang/craft-common",
           "repository": "https://github.com/bovinphang/craft-common",
           "files": [
@@ -623,7 +623,7 @@
         },
         {
           "id": "cc-rust-async",
-          "version": "2.0.0",
+          "version": "2.1.0",
           "sourcePackage": "@bovinphang/craft-common",
           "repository": "https://github.com/bovinphang/craft-common",
           "files": [
@@ -655,7 +655,7 @@
         },
         {
           "id": "cc-rust-project-standard",
-          "version": "2.0.0",
+          "version": "2.1.0",
           "sourcePackage": "@bovinphang/craft-common",
           "repository": "https://github.com/bovinphang/craft-common",
           "files": [
@@ -703,7 +703,7 @@
         },
         {
           "id": "cc-source-driven-development",
-          "version": "2.0.0",
+          "version": "2.1.0",
           "sourcePackage": "@bovinphang/craft-common",
           "repository": "https://github.com/bovinphang/craft-common",
           "files": [
@@ -719,7 +719,7 @@
         },
         {
           "id": "cc-tauri-project-standard",
-          "version": "2.0.0",
+          "version": "2.1.0",
           "sourcePackage": "@bovinphang/craft-common",
           "repository": "https://github.com/bovinphang/craft-common",
           "files": [
@@ -803,7 +803,7 @@
         },
         {
           "id": "cc-tdd-methodology",
-          "version": "2.0.0",
+          "version": "2.1.0",
           "sourcePackage": "@bovinphang/craft-common",
           "repository": "https://github.com/bovinphang/craft-common",
           "files": [
@@ -819,7 +819,7 @@
         },
         {
           "id": "cc-technical-diagrams",
-          "version": "2.0.0",
+          "version": "2.1.0",
           "sourcePackage": "@bovinphang/craft-common",
           "repository": "https://github.com/bovinphang/craft-common",
           "files": [
@@ -903,7 +903,7 @@
         },
         {
           "id": "cc-typescript-project-standard",
-          "version": "2.0.0",
+          "version": "2.1.0",
           "sourcePackage": "@bovinphang/craft-common",
           "repository": "https://github.com/bovinphang/craft-common",
           "files": [
@@ -966,17 +966,17 @@
           ]
         }
       ],
-      "digest": "d83ac343d010653039c3dcc1cd8e57af31cc37ed6318b18abdc558e1143b2ddd"
+      "digest": "dcc7446636ce32d49ae87b8eddef088eb0f5db4a1cc249242e1393a244758377"
     },
     "zh-CN": {
       "schemaVersion": 1,
       "packageName": "@bovinphang/craft-common",
-      "packageVersion": "2.0.0",
+      "packageVersion": "2.1.0",
       "language": "zh-CN",
       "skills": [
         {
           "id": "cc-c-project-standard",
-          "version": "2.0.0",
+          "version": "2.1.0",
           "sourcePackage": "@bovinphang/craft-common",
           "repository": "https://github.com/bovinphang/craft-common",
           "files": [
@@ -1024,7 +1024,7 @@
         },
         {
           "id": "cc-cpp-project-standard",
-          "version": "2.0.0",
+          "version": "2.1.0",
           "sourcePackage": "@bovinphang/craft-common",
           "repository": "https://github.com/bovinphang/craft-common",
           "files": [
@@ -1072,7 +1072,7 @@
         },
         {
           "id": "cc-debug-methodology",
-          "version": "2.0.0",
+          "version": "2.1.0",
           "sourcePackage": "@bovinphang/craft-common",
           "repository": "https://github.com/bovinphang/craft-common",
           "files": [
@@ -1088,7 +1088,7 @@
         },
         {
           "id": "cc-doc-sync-core",
-          "version": "2.0.0",
+          "version": "2.1.0",
           "sourcePackage": "@bovinphang/craft-common",
           "repository": "https://github.com/bovinphang/craft-common",
           "files": [
@@ -1104,7 +1104,7 @@
         },
         {
           "id": "cc-drawio-studio",
-          "version": "2.0.0",
+          "version": "2.1.0",
           "sourcePackage": "@bovinphang/craft-common",
           "repository": "https://github.com/bovinphang/craft-common",
           "files": [
@@ -1224,7 +1224,7 @@
         },
         {
           "id": "cc-electron-project-standard",
-          "version": "2.0.0",
+          "version": "2.1.0",
           "sourcePackage": "@bovinphang/craft-common",
           "repository": "https://github.com/bovinphang/craft-common",
           "files": [
@@ -1308,7 +1308,7 @@
         },
         {
           "id": "cc-go-concurrency",
-          "version": "2.0.0",
+          "version": "2.1.0",
           "sourcePackage": "@bovinphang/craft-common",
           "repository": "https://github.com/bovinphang/craft-common",
           "files": [
@@ -1340,7 +1340,7 @@
         },
         {
           "id": "cc-go-project-standard",
-          "version": "2.0.0",
+          "version": "2.1.0",
           "sourcePackage": "@bovinphang/craft-common",
           "repository": "https://github.com/bovinphang/craft-common",
           "files": [
@@ -1388,7 +1388,7 @@
         },
         {
           "id": "cc-java-project-standard",
-          "version": "2.0.0",
+          "version": "2.1.0",
           "sourcePackage": "@bovinphang/craft-common",
           "repository": "https://github.com/bovinphang/craft-common",
           "files": [
@@ -1432,7 +1432,7 @@
         },
         {
           "id": "cc-java-runtime",
-          "version": "2.0.0",
+          "version": "2.1.0",
           "sourcePackage": "@bovinphang/craft-common",
           "repository": "https://github.com/bovinphang/craft-common",
           "files": [
@@ -1464,7 +1464,7 @@
         },
         {
           "id": "cc-native-memory-safety",
-          "version": "2.0.0",
+          "version": "2.1.0",
           "sourcePackage": "@bovinphang/craft-common",
           "repository": "https://github.com/bovinphang/craft-common",
           "files": [
@@ -1496,7 +1496,7 @@
         },
         {
           "id": "cc-python-async",
-          "version": "2.0.0",
+          "version": "2.1.0",
           "sourcePackage": "@bovinphang/craft-common",
           "repository": "https://github.com/bovinphang/craft-common",
           "files": [
@@ -1528,7 +1528,7 @@
         },
         {
           "id": "cc-python-project-standard",
-          "version": "2.0.0",
+          "version": "2.1.0",
           "sourcePackage": "@bovinphang/craft-common",
           "repository": "https://github.com/bovinphang/craft-common",
           "files": [
@@ -1572,7 +1572,7 @@
         },
         {
           "id": "cc-refactoring-core",
-          "version": "2.0.0",
+          "version": "2.1.0",
           "sourcePackage": "@bovinphang/craft-common",
           "repository": "https://github.com/bovinphang/craft-common",
           "files": [
@@ -1588,7 +1588,7 @@
         },
         {
           "id": "cc-rust-async",
-          "version": "2.0.0",
+          "version": "2.1.0",
           "sourcePackage": "@bovinphang/craft-common",
           "repository": "https://github.com/bovinphang/craft-common",
           "files": [
@@ -1620,7 +1620,7 @@
         },
         {
           "id": "cc-rust-project-standard",
-          "version": "2.0.0",
+          "version": "2.1.0",
           "sourcePackage": "@bovinphang/craft-common",
           "repository": "https://github.com/bovinphang/craft-common",
           "files": [
@@ -1668,7 +1668,7 @@
         },
         {
           "id": "cc-source-driven-development",
-          "version": "2.0.0",
+          "version": "2.1.0",
           "sourcePackage": "@bovinphang/craft-common",
           "repository": "https://github.com/bovinphang/craft-common",
           "files": [
@@ -1684,7 +1684,7 @@
         },
         {
           "id": "cc-tauri-project-standard",
-          "version": "2.0.0",
+          "version": "2.1.0",
           "sourcePackage": "@bovinphang/craft-common",
           "repository": "https://github.com/bovinphang/craft-common",
           "files": [
@@ -1768,7 +1768,7 @@
         },
         {
           "id": "cc-tdd-methodology",
-          "version": "2.0.0",
+          "version": "2.1.0",
           "sourcePackage": "@bovinphang/craft-common",
           "repository": "https://github.com/bovinphang/craft-common",
           "files": [
@@ -1784,7 +1784,7 @@
         },
         {
           "id": "cc-technical-diagrams",
-          "version": "2.0.0",
+          "version": "2.1.0",
           "sourcePackage": "@bovinphang/craft-common",
           "repository": "https://github.com/bovinphang/craft-common",
           "files": [
@@ -1868,7 +1868,7 @@
         },
         {
           "id": "cc-typescript-project-standard",
-          "version": "2.0.0",
+          "version": "2.1.0",
           "sourcePackage": "@bovinphang/craft-common",
           "repository": "https://github.com/bovinphang/craft-common",
           "files": [
@@ -1931,7 +1931,7 @@
           ]
         }
       ],
-      "digest": "3075b10b665d35929cfa6dfbb395bd55f7978d2afacbbf5f7dc35b03351b1aa3"
+      "digest": "e5f4dc14f54862d7a8222e7ce6829c40afe0d49a817bb4af8b911f90269a9d4a"
     }
   },
   "files": [
@@ -2853,7 +2853,7 @@
     },
     {
       "relativePath": "localized/zh-CN/skills/metadata.json",
-      "hash": "6b60f4e5d5437300c5eb80b9a177ce6fc941a4b63ca82c2d874f80a47075defe"
+      "hash": "fe2f18f1acee13be906c393918804e6499c9394920339c993ca23abb0a6b3a18"
     },
     {
       "relativePath": "localized/zh-CN/skills/relations.json",
@@ -3781,7 +3781,7 @@
     },
     {
       "relativePath": "skills/metadata.json",
-      "hash": "8052162a662900fffaa956f0107ec95763767136c9da9be63e464a34de981fab"
+      "hash": "c14967fec5f7c15e3fc37e299d77de2c10f19a59dbf4bc4043406892251567ac"
     },
     {
       "relativePath": "skills/relations.json",

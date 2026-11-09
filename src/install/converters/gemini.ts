@@ -8,7 +8,7 @@ import type { InstallContext } from "../types.js";
 export async function installGemini(ctx: InstallContext): Promise<void> {
   const { contentRoot, baseDir, cwd, dryRun, isGlobal } = ctx;
   if (dryRun && !ctx.session) {
-    console.log(`[dry-run] gemini -> ${baseDir}`);
+    (ctx.log ?? console.log)(`[dry-run] gemini -> ${baseDir}`);
     return;
   }
   const {

@@ -9,7 +9,7 @@
       "standard"
     ],
     "summary": "C 工程规范",
-    "version": "2.0.0",
+    "version": "2.1.0",
     "license": "MIT",
     "homepage": "https://github.com/bovinphang/craft-common",
     "repository": "https://github.com/bovinphang/craft-common",
@@ -45,7 +45,7 @@
       "standard"
     ],
     "summary": "C++ 工程规范",
-    "version": "2.0.0",
+    "version": "2.1.0",
     "license": "MIT",
     "homepage": "https://github.com/bovinphang/craft-common",
     "repository": "https://github.com/bovinphang/craft-common",
@@ -81,7 +81,7 @@
       "root-cause"
     ],
     "summary": "证据驱动诊断",
-    "version": "2.0.0",
+    "version": "2.1.0",
     "license": "MIT",
     "homepage": "https://github.com/bovinphang/craft-common",
     "repository": "https://github.com/bovinphang/craft-common",
@@ -112,7 +112,7 @@
       "i18n"
     ],
     "summary": "文档事实同步",
-    "version": "2.0.0",
+    "version": "2.1.0",
     "license": "MIT",
     "homepage": "https://github.com/bovinphang/craft-common",
     "repository": "https://github.com/bovinphang/craft-common",
@@ -144,7 +144,7 @@
       "architecture"
     ],
     "summary": "可编辑技术图",
-    "version": "2.0.0",
+    "version": "2.1.0",
     "license": "MIT",
     "homepage": "https://github.com/bovinphang/craft-common",
     "repository": "https://github.com/bovinphang/craft-common",
@@ -176,7 +176,7 @@
       "ipc"
     ],
     "summary": "Electron 应用工程",
-    "version": "2.0.0",
+    "version": "2.1.0",
     "license": "MIT",
     "homepage": "https://github.com/bovinphang/craft-common",
     "repository": "https://github.com/bovinphang/craft-common",
@@ -225,7 +225,7 @@
       "concurrency"
     ],
     "summary": "Go 并发生命周期",
-    "version": "2.0.0",
+    "version": "2.1.0",
     "license": "MIT",
     "homepage": "https://github.com/bovinphang/craft-common",
     "repository": "https://github.com/bovinphang/craft-common",
@@ -260,7 +260,7 @@
       "standard"
     ],
     "summary": "Go 工程规范",
-    "version": "2.0.0",
+    "version": "2.1.0",
     "license": "MIT",
     "homepage": "https://github.com/bovinphang/craft-common",
     "repository": "https://github.com/bovinphang/craft-common",
@@ -296,7 +296,7 @@
       "standard"
     ],
     "summary": "Java 工程规范",
-    "version": "2.0.0",
+    "version": "2.1.0",
     "license": "MIT",
     "homepage": "https://github.com/bovinphang/craft-common",
     "repository": "https://github.com/bovinphang/craft-common",
@@ -331,7 +331,7 @@
       "runtime"
     ],
     "summary": "Java 运行时诊断",
-    "version": "2.0.0",
+    "version": "2.1.0",
     "license": "MIT",
     "homepage": "https://github.com/bovinphang/craft-common",
     "repository": "https://github.com/bovinphang/craft-common",
@@ -366,7 +366,7 @@
       "safety"
     ],
     "summary": "原生内存与 FFI 安全",
-    "version": "2.0.0",
+    "version": "2.1.0",
     "license": "MIT",
     "homepage": "https://github.com/bovinphang/craft-common",
     "repository": "https://github.com/bovinphang/craft-common",
@@ -408,7 +408,7 @@
       "async"
     ],
     "summary": "Python 异步生命周期",
-    "version": "2.0.0",
+    "version": "2.1.0",
     "license": "MIT",
     "homepage": "https://github.com/bovinphang/craft-common",
     "repository": "https://github.com/bovinphang/craft-common",
@@ -443,7 +443,7 @@
       "standard"
     ],
     "summary": "Python 工程规范",
-    "version": "2.0.0",
+    "version": "2.1.0",
     "license": "MIT",
     "homepage": "https://github.com/bovinphang/craft-common",
     "repository": "https://github.com/bovinphang/craft-common",
@@ -479,7 +479,7 @@
       "baseline"
     ],
     "summary": "保持行为的重构",
-    "version": "2.0.0",
+    "version": "2.1.0",
     "license": "MIT",
     "homepage": "https://github.com/bovinphang/craft-common",
     "repository": "https://github.com/bovinphang/craft-common",
@@ -509,7 +509,7 @@
       "async"
     ],
     "summary": "Rust 异步生命周期",
-    "version": "2.0.0",
+    "version": "2.1.0",
     "license": "MIT",
     "homepage": "https://github.com/bovinphang/craft-common",
     "repository": "https://github.com/bovinphang/craft-common",
@@ -544,7 +544,7 @@
       "standard"
     ],
     "summary": "Rust 工程规范",
-    "version": "2.0.0",
+    "version": "2.1.0",
     "license": "MIT",
     "homepage": "https://github.com/bovinphang/craft-common",
     "repository": "https://github.com/bovinphang/craft-common",
@@ -580,7 +580,7 @@
       "local-knowledge"
     ],
     "summary": "以事实来源驱动开发",
-    "version": "2.0.0",
+    "version": "2.1.0",
     "license": "MIT",
     "homepage": "https://github.com/bovinphang/craft-common",
     "repository": "https://github.com/bovinphang/craft-common",
@@ -611,7 +611,7 @@
       "ipc"
     ],
     "summary": "Tauri 应用工程",
-    "version": "2.0.0",
+    "version": "2.1.0",
     "license": "MIT",
     "homepage": "https://github.com/bovinphang/craft-common",
     "repository": "https://github.com/bovinphang/craft-common",
@@ -662,7 +662,7 @@
       "red-green-refactor"
     ],
     "summary": "测试驱动开发",
-    "version": "2.0.0",
+    "version": "2.1.0",
     "license": "MIT",
     "homepage": "https://github.com/bovinphang/craft-common",
     "repository": "https://github.com/bovinphang/craft-common",
@@ -694,7 +694,7 @@
       "png-qa"
     ],
     "summary": "结构化技术图表",
-    "version": "2.0.0",
+    "version": "2.1.0",
     "license": "MIT",
     "homepage": "https://github.com/bovinphang/craft-common",
     "repository": "https://github.com/bovinphang/craft-common",
@@ -728,7 +728,7 @@
       "declarations"
     ],
     "summary": "用于创建、配置、审查或调试前端应用、库、SDK、CLI、monorepo 包中的 TypeScript 项目规范，包括 tsconfig、strictness、module/moduleResolution、路径别名、project references、声明文件、package exports、公共 API 类型、DTO、高级泛型、判别联合、类型守卫、类型收窄或类型级回归。React/Vue/Next/Nuxt 组件架构优先使用框架项目 skill。",
-    "version": "2.0.0",
+    "version": "2.1.0",
     "license": "MIT",
     "homepage": "https://github.com/bovinphang/craft-common",
     "repository": "https://github.com/bovinphang/craft-common",

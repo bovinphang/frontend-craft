@@ -100,6 +100,7 @@ export function copyInstallToNewBase(
   install: DiscoveredInstall,
   baseDir: string,
   dryRun: boolean,
+  log: (text: string) => void = console.log,
 ): (ProductInstallationSeed & { legacyManifest: InstallManifest }) | undefined {
   if (fs.existsSync(getManifestPath(baseDir))) return;
   const files = install.manifest.files.filter(
@@ -136,7 +137,7 @@ export function copyInstallToNewBase(
     mode: "update",
     language: install.manifest.language ?? "en",
   };
-  console.log(
+  log(
     `${dryRun ? "[dry-run] " : ""}Planning migration ${install.baseDir} -> ${baseDir}; original files remain unchanged.`,
   );
   return {
@@ -150,6 +151,7 @@ export function copyInstallToNewBase(
 }
 
 export type UninstallOptions = {
+  log?: (text: string) => void;
   install: DiscoveredInstall;
   cwd: string;
   dryRun: boolean;

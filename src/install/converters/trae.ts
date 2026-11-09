@@ -8,7 +8,7 @@ import { createFileTools } from "../shared/fs.js";
 export async function installTrae(ctx: InstallContext): Promise<void> {
   const { contentRoot, baseDir, dryRun, isGlobal } = ctx;
   if (dryRun && !ctx.session)
-    return console.log(`[dry-run] trae -> ${baseDir}`);
+    return (ctx.log ?? console.log)(`[dry-run] trae -> ${baseDir}`);
   const { ensureDir, readUtf8, writeUtf8 } = createFileTools(ctx);
   const rulesDir = path.join(baseDir, isGlobal ? "user_rules" : "rules");
   ensureDir(rulesDir);

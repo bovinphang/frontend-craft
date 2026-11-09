@@ -1,5 +1,12 @@
 # Changelog
 
+## Unreleased — 2026-11-09
+
+- Share product CLI dispatch, prompts, package-manager ownership detection, self-management and Claude cache management.
+- Align backend basic commands with frontend; setup defaults local, ordinary noninteractive install defaults global; preserve backend validation and ownership.
+- Prepare common 2.1.0 without publishing or changing product versions.
+
+
 **简体中文:** [CHANGELOG.zh-CN.md](CHANGELOG.zh-CN.md)
 
 All notable changes to this project will be documented in this file.

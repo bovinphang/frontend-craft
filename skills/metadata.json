@@ -9,7 +9,7 @@
       "standard"
     ],
     "summary": "C project engineering",
-    "version": "2.0.0",
+    "version": "2.1.0",
     "license": "MIT",
     "homepage": "https://github.com/bovinphang/craft-common",
     "repository": "https://github.com/bovinphang/craft-common",
@@ -45,7 +45,7 @@
       "standard"
     ],
     "summary": "C++ project engineering",
-    "version": "2.0.0",
+    "version": "2.1.0",
     "license": "MIT",
     "homepage": "https://github.com/bovinphang/craft-common",
     "repository": "https://github.com/bovinphang/craft-common",
@@ -81,7 +81,7 @@
       "root-cause"
     ],
     "summary": "Evidence-driven diagnosis",
-    "version": "2.0.0",
+    "version": "2.1.0",
     "license": "MIT",
     "homepage": "https://github.com/bovinphang/craft-common",
     "repository": "https://github.com/bovinphang/craft-common",
@@ -112,7 +112,7 @@
       "i18n"
     ],
     "summary": "Documentation synchronization",
-    "version": "2.0.0",
+    "version": "2.1.0",
     "license": "MIT",
     "homepage": "https://github.com/bovinphang/craft-common",
     "repository": "https://github.com/bovinphang/craft-common",
@@ -144,7 +144,7 @@
       "architecture"
     ],
     "summary": "Editable technical diagrams",
-    "version": "2.0.0",
+    "version": "2.1.0",
     "license": "MIT",
     "homepage": "https://github.com/bovinphang/craft-common",
     "repository": "https://github.com/bovinphang/craft-common",
@@ -176,7 +176,7 @@
       "ipc"
     ],
     "summary": "Electron application engineering",
-    "version": "2.0.0",
+    "version": "2.1.0",
     "license": "MIT",
     "homepage": "https://github.com/bovinphang/craft-common",
     "repository": "https://github.com/bovinphang/craft-common",
@@ -225,7 +225,7 @@
       "concurrency"
     ],
     "summary": "Go concurrency lifecycle",
-    "version": "2.0.0",
+    "version": "2.1.0",
     "license": "MIT",
     "homepage": "https://github.com/bovinphang/craft-common",
     "repository": "https://github.com/bovinphang/craft-common",
@@ -260,7 +260,7 @@
       "standard"
     ],
     "summary": "Go project engineering",
-    "version": "2.0.0",
+    "version": "2.1.0",
     "license": "MIT",
     "homepage": "https://github.com/bovinphang/craft-common",
     "repository": "https://github.com/bovinphang/craft-common",
@@ -296,7 +296,7 @@
       "standard"
     ],
     "summary": "Java project engineering",
-    "version": "2.0.0",
+    "version": "2.1.0",
     "license": "MIT",
     "homepage": "https://github.com/bovinphang/craft-common",
     "repository": "https://github.com/bovinphang/craft-common",
@@ -331,7 +331,7 @@
       "runtime"
     ],
     "summary": "Java runtime diagnosis",
-    "version": "2.0.0",
+    "version": "2.1.0",
     "license": "MIT",
     "homepage": "https://github.com/bovinphang/craft-common",
     "repository": "https://github.com/bovinphang/craft-common",
@@ -366,7 +366,7 @@
       "safety"
     ],
     "summary": "Native memory and FFI safety",
-    "version": "2.0.0",
+    "version": "2.1.0",
     "license": "MIT",
     "homepage": "https://github.com/bovinphang/craft-common",
     "repository": "https://github.com/bovinphang/craft-common",
@@ -408,7 +408,7 @@
       "async"
     ],
     "summary": "Python async lifecycle",
-    "version": "2.0.0",
+    "version": "2.1.0",
     "license": "MIT",
     "homepage": "https://github.com/bovinphang/craft-common",
     "repository": "https://github.com/bovinphang/craft-common",
@@ -443,7 +443,7 @@
       "standard"
     ],
     "summary": "Python project engineering",
-    "version": "2.0.0",
+    "version": "2.1.0",
     "license": "MIT",
     "homepage": "https://github.com/bovinphang/craft-common",
     "repository": "https://github.com/bovinphang/craft-common",
@@ -479,7 +479,7 @@
       "baseline"
     ],
     "summary": "Behavior-preserving refactoring",
-    "version": "2.0.0",
+    "version": "2.1.0",
     "license": "MIT",
     "homepage": "https://github.com/bovinphang/craft-common",
     "repository": "https://github.com/bovinphang/craft-common",
@@ -509,7 +509,7 @@
       "async"
     ],
     "summary": "Rust async lifecycle",
-    "version": "2.0.0",
+    "version": "2.1.0",
     "license": "MIT",
     "homepage": "https://github.com/bovinphang/craft-common",
     "repository": "https://github.com/bovinphang/craft-common",
@@ -544,7 +544,7 @@
       "standard"
     ],
     "summary": "Rust project engineering",
-    "version": "2.0.0",
+    "version": "2.1.0",
     "license": "MIT",
     "homepage": "https://github.com/bovinphang/craft-common",
     "repository": "https://github.com/bovinphang/craft-common",
@@ -580,7 +580,7 @@
       "local-knowledge"
     ],
     "summary": "Source-driven development",
-    "version": "2.0.0",
+    "version": "2.1.0",
     "license": "MIT",
     "homepage": "https://github.com/bovinphang/craft-common",
     "repository": "https://github.com/bovinphang/craft-common",
@@ -611,7 +611,7 @@
       "ipc"
     ],
     "summary": "Tauri application engineering",
-    "version": "2.0.0",
+    "version": "2.1.0",
     "license": "MIT",
     "homepage": "https://github.com/bovinphang/craft-common",
     "repository": "https://github.com/bovinphang/craft-common",
@@ -662,7 +662,7 @@
       "red-green-refactor"
     ],
     "summary": "Test-driven development",
-    "version": "2.0.0",
+    "version": "2.1.0",
     "license": "MIT",
     "homepage": "https://github.com/bovinphang/craft-common",
     "repository": "https://github.com/bovinphang/craft-common",
@@ -694,7 +694,7 @@
       "png-qa"
     ],
     "summary": "Structured technical diagrams",
-    "version": "2.0.0",
+    "version": "2.1.0",
     "license": "MIT",
     "homepage": "https://github.com/bovinphang/craft-common",
     "repository": "https://github.com/bovinphang/craft-common",
@@ -728,7 +728,7 @@
       "declarations"
     ],
     "summary": "Universal TypeScript project standards for tsconfig, strictness, module resolution, declarations, package exports, public API types, DTOs, generics, and type narrowing.",
-    "version": "2.0.0",
+    "version": "2.1.0",
     "license": "MIT",
     "homepage": "https://github.com/bovinphang/craft-common",
     "repository": "https://github.com/bovinphang/craft-common",

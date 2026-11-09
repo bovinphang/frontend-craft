@@ -9,7 +9,7 @@ import { installCommandSkills } from "../shared/command-skills.js";
 export async function installOpenclaw(ctx: InstallContext): Promise<void> {
   const { contentRoot, baseDir, cwd, dryRun, isGlobal } = ctx;
   if (dryRun && !ctx.session)
-    return console.log(`[dry-run] openclaw -> ${baseDir}`);
+    return (ctx.log ?? console.log)(`[dry-run] openclaw -> ${baseDir}`);
   const { ensureDir, copyProductSkills, retireManagedTree, copyFile } =
     createFileTools(ctx);
   ensureDir(baseDir);

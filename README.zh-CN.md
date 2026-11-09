@@ -584,7 +584,7 @@ npx skills check                           # 预览可用更新
 迁移前运行 `fec runtime check-migration codex --local --json`，再参阅 [migration guide](docs/zh-CN/common-migration.md).
 CLI 管理共享安装及卸载引用；原生插件渠道本期保证单产品资源完整，不承诺双产品原生去重。
 
-公共源精确固定为 `@bovinphang/craft-common@2.0.0`。参见[项目结构与维护边界](docs/zh-CN/project-structure.md)及[贡献校验指引](CONTRIBUTING.zh-CN.md)。
+公共源精确固定为 `@bovinphang/craft-common@2.1.0`。参见[项目结构与维护边界](docs/zh-CN/project-structure.md)及[贡献校验指引](CONTRIBUTING.zh-CN.md)。
 
 ## 混合工程识别
 
@@ -603,3 +603,7 @@ craft-common 2.0.0、frontend-craft 3.0.0、backend-craft 1.0.0 均已于2026-11
 付款不能仅凭429/5xx/网络错误重试；须有服务端重放契约、同意图/同键和有界预算，否则核对待确认结果。公开源干净安装仍待common发布，[升级所有权保护](docs/common-migration.md)保持有效。
 
 [3.0.0变更日志](CHANGELOG.zh-CN.md)。craft-common 2.0.0、frontend-craft 3.0.0、backend-craft 1.0.0 均已于2026-11-09（Asia/Shanghai）发布至 npm，版本号不变。
+
+## CLI 管理（待发布）
+
+当前源码精确依赖 craft-common 2.1.0，尚未发布此轮改动。自管理、交互、批量操作和默认位置见 [CLI 管理指南](docs/cli-management.zh-CN.md)。

@@ -37,7 +37,9 @@ export function buildHooksJson(pluginRoot: string): string {
 export async function installClaude(ctx: InstallContext): Promise<void> {
   const { pluginRoot, contentRoot, baseDir, dryRun, cwd, isGlobal } = ctx;
   if (dryRun && !ctx.session) {
-    console.log(`[dry-run] would install Claude Code files into ${baseDir}`);
+    (ctx.log ?? console.log)(
+      `[dry-run] would install Claude Code files into ${baseDir}`,
+    );
     return;
   }
   const { ensureDir, copyProductSkills, copyDir, copyFile, retireManagedFile } =

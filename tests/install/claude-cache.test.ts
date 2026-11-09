@@ -16,6 +16,33 @@ const root = path.resolve(
 );
 const cli = path.join(root, "dist", "bin", "frontend-craft.js");
 
+test("invalid doctor arguments reject before deleting stale cache", () => {
+  const claudeHome = makeClaudeHome("2.3.1");
+  try {
+    makeCacheVersion(claudeHome, "2.1.2", {
+      missingDist: true,
+      packageVersion: "2.1.2",
+    });
+    for (const args of [
+      ["claude", "--fix-cache", "--wat"],
+      ["claude", "--fix-cache", "--local", "--global"],
+      ["claude", "--fix-cache", "codex"],
+    ]) {
+      assert.throws(() =>
+        execFileSync(process.execPath, [cli, "doctor", ...args], {
+          cwd: root,
+          encoding: "utf8",
+          stdio: "pipe",
+          env: { ...process.env, CLAUDE_CONFIG_DIR: claudeHome },
+        }),
+      );
+      assert.ok(fs.existsSync(cacheVersionPath(claudeHome, "2.1.2")));
+    }
+  } finally {
+    fs.rmSync(claudeHome, { recursive: true, force: true });
+  }
+});
+
 test("Claude cache report selects only stale frontend-craft native plugin versions", () => {
   const claudeHome = makeClaudeHome("2.3.1");
   try {

@@ -8,7 +8,7 @@ import { createFileTools } from "../shared/fs.js";
 export async function installCopilot(ctx: InstallContext): Promise<void> {
   const { contentRoot, baseDir, dryRun, isGlobal } = ctx;
   if (dryRun && !ctx.session) {
-    console.log(`[dry-run] copilot -> ${baseDir}`);
+    (ctx.log ?? console.log)(`[dry-run] copilot -> ${baseDir}`);
     return;
   }
   const { ensureDir, readUtf8, writeUtf8, retireManagedFile } =
@@ -37,7 +37,7 @@ export async function installCopilot(ctx: InstallContext): Promise<void> {
     if (!isGlobal || !fs.existsSync(dest)) writeUtf8(dest, parts.join(""));
   }
   if (isGlobal) {
-    console.log(
+    (ctx.log ?? console.log)(
       "Copilot global: installed CLI instructions; IDE prompt files require a local install.",
     );
     return;

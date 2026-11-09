@@ -8,7 +8,7 @@ import type { InstallContext } from "../types.js";
 export async function installCursor(ctx: InstallContext): Promise<void> {
   const { contentRoot, baseDir, dryRun, isGlobal } = ctx;
   if (dryRun && !ctx.session) {
-    console.log(`[dry-run] cursor -> ${baseDir}`);
+    (ctx.log ?? console.log)(`[dry-run] cursor -> ${baseDir}`);
     return;
   }
   const { ensureDir, copyProductSkills, readUtf8, writeUtf8 } =

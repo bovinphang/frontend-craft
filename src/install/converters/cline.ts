@@ -8,7 +8,7 @@ import { createFileTools } from "../shared/fs.js";
 export async function installCline(ctx: InstallContext): Promise<void> {
   const { contentRoot, baseDir, dryRun, isGlobal } = ctx;
   if (dryRun && !ctx.session)
-    return console.log(
+    return (ctx.log ?? console.log)(
       `[dry-run] cline -> ${path.join(baseDir, ".clinerules")}`,
     );
   const { readUtf8, forgetManagedFile, writeUtf8 } = createFileTools(ctx);
@@ -33,7 +33,7 @@ export async function installCline(ctx: InstallContext): Promise<void> {
     ctx.session!.stage(rulesPath, null);
     ctx.session!.stage(path.join(rulesPath, "legacy.md"), original);
     forgetManagedFile(rulesPath);
-    console.log(
+    (ctx.log ?? console.log)(
       `Cline: migrated legacy rules to ${path.join(rulesPath, "legacy.md")}; original retained at ${backup}.`,
     );
   }

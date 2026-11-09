@@ -3,6 +3,7 @@ import type { InstallLanguage } from "./language.js";
 import type { InstallSession } from "@bovinphang/craft-common";
 
 export interface InstallContext {
+  log?: (text: string) => void;
   session?: InstallSession;
   home?: string;
   pluginRoot: string;

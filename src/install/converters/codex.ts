@@ -16,7 +16,7 @@ export async function installCodex(ctx: InstallContext): Promise<void> {
     ? path.join(os.homedir(), ".agents", "skills")
     : path.join(cwd, ".agents", "skills");
   if (dryRun && !ctx.session) {
-    console.log(
+    (ctx.log ?? console.log)(
       `[dry-run] codex: ${baseDir}, agents -> ${codexAgents}, skills -> ${agentsDestGlobal}`,
     );
     return;

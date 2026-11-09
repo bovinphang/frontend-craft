@@ -19,7 +19,7 @@ const HOOK_SCRIPTS = [
 export async function installQoder(ctx: InstallContext): Promise<void> {
   const { pluginRoot, contentRoot, baseDir, dryRun, isGlobal } = ctx;
   if (dryRun && !ctx.session) {
-    console.log(`[dry-run] qoder -> ${baseDir}`);
+    (ctx.log ?? console.log)(`[dry-run] qoder -> ${baseDir}`);
     return;
   }
   const { ensureDir, copyProductSkills, copyDir } = createFileTools(ctx);

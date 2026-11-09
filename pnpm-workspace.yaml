@@ -7,3 +7,4 @@ allowBuilds:
   minimumReleaseAgeExclude: '@bovinphang/*'
 minimumReleaseAgeExclude:
   - '@bovinphang/craft-common@2.0.0'
+  - '@bovinphang/craft-common@2.1.0'

@@ -102,17 +102,20 @@ export async function runCommonAwareInstall(
     },
   });
   if (ctx.dryRun)
-    console.log(
+    (ctx.log ?? console.log)(
       `[dry-run] ${ctx.runtime}: ${ctx.baseDir}, ${result.changed.length} planned file changes`,
     );
   for (const file of result.preserved)
-    console.log("Skipped modified file: " + path.relative(ctx.baseDir, file));
+    (ctx.log ?? console.log)(
+      "Skipped modified file: " + path.relative(ctx.baseDir, file),
+    );
 }
 export async function uninstallCommonAwareInstall(
   options: UninstallOptions,
 ): Promise<UninstallResult> {
   const { install, cwd, dryRun, force } = options;
   const ctx: InstallContext = {
+    log: options.log,
     pluginRoot: "",
     contentRoot: "",
     cwd,
@@ -209,7 +212,7 @@ export async function uninstallCommonAwareInstall(
       context.allowedRoots,
     );
   if (dryRun)
-    console.log(
+    (ctx.log ?? console.log)(
       `[dry-run] ${ctx.runtime}: ${result.changed.length} planned file changes`,
     );
   return { removed, skipped, missing };

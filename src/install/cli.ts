@@ -5,6 +5,11 @@ import {
   commonRequest,
 } from "./shared/common-install.js";
 import {
+  createCraftCli,
+  type CliCommandResult,
+  type CliExitCode,
+  type CliIO,
+  type CliProductAdapter,
   planSharedDeployment,
   resolveSharedIdentity,
 } from "@bovinphang/craft-common";
@@ -15,7 +20,7 @@ import readline from "node:readline";
 import { ALL_RUNTIMES, INSTALLERS } from "./registry.js";
 import { readProductCommonCatalog } from "./shared/common-content.js";
 import { checkMigration, type MigrationReport } from "./migration.js";
-import { runCliLifecycle } from "./cli-lifecycle.js";
+import { createCliLifecycle } from "./cli-lifecycle.js";
 import {
   promptLanguage,
   promptLocation,
@@ -23,9 +28,7 @@ import {
 } from "./interactive.js";
 import {
   DEFAULT_LANGUAGE,
-  isInstallLanguage,
   resolveContentRoot,
-  resolveInstallLanguage,
   SUPPORTED_LANGUAGES,
   type InstallLanguage,
 } from "./language.js";
@@ -39,6 +42,7 @@ import { getManifestPath, readInstallManifest } from "./shared/fs.js";
 import {
   discoverManifestInstalls,
   copyInstallToNewBase,
+  type DiscoveredInstall,
 } from "./manifest-installs.js";
 import {
   cleanupClaudeFrontendCraftCache,
@@ -64,48 +68,8 @@ function readPkgVersion(pluginRoot: string): string {
   }
 }
 
-function parseInstallArgs(argv: string[]) {
-  let installLocation: "global" | "local" | null = null;
-  let hasGlobal = false;
-  let hasLocal = false;
-  let dryRun = false;
-  let force = false;
-  let all = false;
-  let language: string | undefined;
-  const rest: string[] = [];
-  for (let i = 0; i < argv.length; i++) {
-    const a = argv[i];
-    if (a === "--global" || a === "-g") {
-      hasGlobal = true;
-      installLocation = "global";
-    } else if (a === "--local" || a === "-l") {
-      hasLocal = true;
-      installLocation = "local";
-    } else if (a === "--dry-run") dryRun = true;
-    else if (a === "--force") force = true;
-    else if (a === "--all") all = true;
-    else if (a === "--lang") {
-      language = argv[++i] ?? "";
-    } else if (a.startsWith("--lang=")) {
-      language = a.slice("--lang=".length);
-    } else if (!a.startsWith("-")) rest.push(a);
-    else throw new Error(`Unknown option: ${a}`);
-  }
-  if (rest.length > 1) throw new Error(`Unexpected argument: ${rest[1]}`);
-  return {
-    runtime: rest[0],
-    installLocation,
-    dryRun,
-    force,
-    all,
-    hasGlobal,
-    hasLocal,
-    language,
-  };
-}
-
-function printHelp(): void {
-  console.log(`frontend-craft - universal installer
+function frontendHelp(): string {
+  return `frontend-craft - universal installer
 
 Usage:
   fec project inspect [path] [--task-path relative] [--task-kind kind] [--json]
@@ -151,367 +115,341 @@ Notes:
 
 Runtimes:
   ${ALL_RUNTIMES.join(", ")}
-`);
+`;
 }
 
-function isInstallInvocation(argv: string[]): boolean {
-  const first = argv[0];
-  return (
-    first == null ||
-    [
-      "--dry-run",
-      "--all",
-      "--global",
-      "-g",
-      "--local",
-      "-l",
-      "--lang",
-    ].includes(first) ||
-    first.startsWith("--lang=")
+interface ProductOutput {
+  log(text: string): void;
+  error(text: string): void;
+  fail(code?: CliExitCode): void;
+}
+
+async function runProductOperation(
+  operation: (output: ProductOutput) => Promise<void>,
+  io: CliIO,
+  captureOutput = false,
+  json = false,
+): Promise<CliCommandResult> {
+  const lines: string[] = [];
+  let code: CliExitCode = 0;
+  await operation({
+    log: (text) => {
+      if (captureOutput) lines.push(text);
+      else (json ? io.stderr : io.stdout)(text + "\n");
+    },
+    error: (text) => io.stderr(text + "\n"),
+    fail: (next = 1) => {
+      code = Math.max(code, next) as CliExitCode;
+    },
+  });
+  return { code, ...(captureOutput ? { text: lines.join("\n") } : {}) };
+}
+
+async function runFrontendCommand(
+  argv: string[],
+  io: CliIO,
+): Promise<CliCommandResult | undefined> {
+  const resourceCommand = argv[0] === "runtime";
+  const cmd = resourceCommand ? argv[1] : argv[0];
+  const cmdArgs = argv.slice(resourceCommand ? 2 : 1);
+  if (
+    !(resourceCommand && cmd === "check-migration") &&
+    !(
+      !resourceCommand &&
+      ["project", "matrix", "doctor", "sync-metadata"].includes(cmd ?? "")
+    )
+  )
+    return undefined;
+  const pluginRoot = io.productRoot;
+  const cwd = io.cwd;
+  if (cmd === "doctor" || cmd === "matrix" || cmd === "sync-metadata") {
+    const allowed = new Set(
+      cmd === "doctor"
+        ? [
+            "--json",
+            "--global",
+            "--local",
+            "-g",
+            "-l",
+            "--fix-cache",
+            "--dry-run",
+          ]
+        : cmd === "sync-metadata"
+          ? ["--json", "--check"]
+          : ["--json"],
+    );
+    const unknown = cmdArgs.find(
+      (arg) => arg.startsWith("-") && !allowed.has(arg),
+    );
+    if (unknown) throw new Error(`Unknown option: ${unknown}`);
+    const positional = cmdArgs.filter((arg) => !arg.startsWith("-"));
+    const maxPositionals = cmd === "doctor" ? 1 : 0;
+    if (positional.length > maxPositionals)
+      throw new Error(`Unexpected argument: ${positional[maxPositionals]}`);
+    if (cmd === "doctor") {
+      const global = cmdArgs.includes("--global") || cmdArgs.includes("-g");
+      const local = cmdArgs.includes("--local") || cmdArgs.includes("-l");
+      if (global && local)
+        throw new Error("--global and --local cannot be used together.");
+      const runtime = positional[0] ?? "claude";
+      if (!RUNTIME_CAPABILITIES[runtime])
+        throw new Error(`Unknown runtime: ${runtime}`);
+      if (cmdArgs.includes("--fix-cache") && runtime !== "claude")
+        throw new Error("--fix-cache is only supported for claude.");
+    }
+  }
+  const result = await runProductOperation(
+    async (output) => {
+      if (cmd === "project") {
+        try {
+          if (cmdArgs[0] !== "inspect")
+            throw new Error("Unknown project command");
+          output.log(
+            JSON.stringify(
+              runProjectInspect(cmdArgs.slice(1), pluginRoot, cwd),
+              null,
+              2,
+            ),
+          );
+        } catch (error) {
+          output.error(
+            error instanceof Error ? error.message : "Inspection failed",
+          );
+          output.fail(2);
+        }
+        return;
+      }
+      if (resourceCommand && cmd === "check-migration") {
+        const allowed = new Set(["--json", "--global", "--local", "-g", "-l"]);
+        const unknown = cmdArgs.filter(
+          (arg) => arg.startsWith("-") && !allowed.has(arg),
+        );
+        const positional = cmdArgs.filter((arg) => !arg.startsWith("-"));
+        const global = cmdArgs.includes("--global") || cmdArgs.includes("-g");
+        const local = cmdArgs.includes("--local") || cmdArgs.includes("-l");
+        const report: MigrationReport =
+          unknown.length || positional.length > 1 || (global && local)
+            ? {
+                findings: [],
+                errors: [
+                  "迁移检查参数无效；使用 [runtime] [--local|--global] [--json]",
+                ],
+                exitCode: 2,
+              }
+            : checkMigration({
+                cwd,
+                runtime: positional[0],
+                scope: global ? "global" : "local",
+              });
+        if (cmdArgs.includes("--json"))
+          output.log(JSON.stringify(report, null, 2));
+        else {
+          for (const finding of report.findings)
+            output.log(
+              `${finding.file}${finding.line ? `:${finding.line}` : ""} [${finding.kind}] ${finding.id}${finding.replacement ? ` -> ${finding.replacement}` : ""}: ${finding.message}`,
+            );
+          for (const error of report.errors) output.log(error);
+          if (!report.findings.length && !report.errors.length)
+            output.log("未发现待迁移的公共 Skill 引用或旧安装");
+        }
+        output.fail(report.exitCode);
+        return;
+      }
+      if (cmd === "matrix") {
+        output.log(renderRuntimeCapabilityMatrix(ALL_RUNTIMES));
+        return;
+      }
+      if (cmd === "doctor") {
+        const runtime = cmdArgs.find((arg) => !arg.startsWith("-")) ?? "claude";
+        const isGlobal = cmdArgs.includes("--global") || cmdArgs.includes("-g");
+        const fixCache = cmdArgs.includes("--fix-cache");
+        const dryRun = cmdArgs.includes("--dry-run");
+        const baseDir = getInstallBaseDir({ runtime, isGlobal, cwd });
+        const cap = RUNTIME_CAPABILITIES[runtime];
+        if (!cap) {
+          output.error(`Unknown runtime: ${runtime}`);
+          output.fail(1);
+          return;
+        }
+        output.log(
+          renderDoctorReport({
+            runtime,
+            baseDir,
+            cwd,
+            cap,
+            pluginRoot,
+            fixCache,
+            dryRun,
+            isGlobal,
+          }),
+        );
+        return;
+      }
+      if (cmd === "sync-metadata") {
+        const checkOnly = cmdArgs.includes("--check");
+        const result = checkPublicMetadata(pluginRoot);
+        if (result.length > 0) {
+          for (const issue of result) output.error(issue);
+          output.fail(1);
+          return;
+        }
+        output.log(
+          checkOnly
+            ? "metadata is synchronized"
+            : "metadata is synchronized; no changes needed",
+        );
+        return;
+      }
+    },
+    io,
+    true,
   );
+  if (
+    cmd === "project" ||
+    (cmd === "check-migration" && argv.includes("--json"))
+  ) {
+    if (result.text)
+      return { code: result.code, value: JSON.parse(result.text) as unknown };
+  }
+  if (argv.includes("--json"))
+    return { code: result.code, value: { report: result.text ?? "" } };
+  return result;
+}
+
+export function createFrontendCraftAdapter(json = false): CliProductAdapter {
+  return {
+    async discover(filter, io) {
+      return discoverManifestInstalls({
+        cwd: io.cwd,
+        ...filter,
+        onError: (error) => {
+          if (filter.onError) filter.onError(error);
+          else throw error;
+        },
+      }).map((install) => ({
+        runtime: install.runtime,
+        scope: install.scope,
+        language: install.manifest.language ?? DEFAULT_LANGUAGE,
+        manifestPath: install.manifestPath,
+        data: install,
+      }));
+    },
+    async resource(options, io) {
+      const result = await runProductOperation(
+        async (output) => {
+          if (options.action === "uninstall") {
+            const install = options.installation?.data as
+              DiscoveredInstall | undefined;
+            if (!install)
+              throw new Error("Uninstall requires a discovered installation");
+            if (
+              !(await uninstallResource(
+                install,
+                io.cwd,
+                options.dryRun,
+                options.force,
+                output,
+              ))
+            )
+              output.fail(1);
+          } else {
+            await runResourceInstaller(
+              {
+                rt: options.runtime,
+                mode: options.action,
+                isGlobal: options.scope === "global",
+                baseDir: getInstallBaseDir({
+                  runtime: options.runtime,
+                  isGlobal: options.scope === "global",
+                  cwd: io.cwd,
+                }),
+                pluginRoot: io.productRoot,
+                cwd: io.cwd,
+                dryRun: options.dryRun,
+                force: options.force,
+                canPrompt: options.canPrompt,
+                language: options.language,
+              },
+              output,
+            );
+          }
+        },
+        io,
+        false,
+        json,
+      );
+      return {
+        ...result,
+        ...(json
+          ? {
+              value: {
+                action: options.action,
+                runtime: options.runtime,
+                scope: options.scope,
+                language: options.language,
+                exitCode: result.code ?? 0,
+              },
+            }
+          : {}),
+      };
+    },
+    command: runFrontendCommand,
+    prompts: () => ({ promptRuntime, promptLocation, promptLanguage }),
+    async lifecycle(action, argv, io) {
+      const result = await runProductOperation(
+        (output) =>
+          createCliLifecycle({
+            log: output.log,
+            fail: () => output.fail(),
+            isTTY: io.isTTY,
+            env: io.env,
+          })(action, argv, {
+            pluginRoot: io.productRoot,
+            cwd: io.cwd,
+            purgeResources: (dryRun) =>
+              uninstallResources({ cwd: io.cwd, dryRun }, output),
+            describeResources: () => describeResourceInstalls(io.cwd),
+          }),
+        io,
+      );
+      return result.code ?? 0;
+    },
+  };
 }
 
 export async function main(argv: string[]): Promise<void> {
-  let cmd = isInstallInvocation(argv) ? "install" : argv[0];
-  let cmdArgs = isInstallInvocation(argv) ? argv : argv.slice(1);
-  if (argv.some((arg) => arg === "help" || arg === "--help" || arg === "-h")) {
-    printHelp();
-    return;
-  }
-  const resourceCommand = cmd === "runtime";
-  if (resourceCommand) {
-    cmd = cmdArgs[0];
-    cmdArgs = cmdArgs.slice(1);
-    if (
-      ![
-        "install",
-        "update",
-        "upgrade",
-        "uninstall",
-        "remove",
-        "check-migration",
-      ].includes(cmd ?? "")
-    ) {
-      console.error(`Unknown runtime command: ${cmd ?? "(missing)"}`);
-      printHelp();
-      process.exitCode = 1;
-      return;
-    }
-  }
-  const isSetup = cmd === "setup";
   const pluginRoot = resolvePluginRoot(import.meta.url);
-  const cwd = process.cwd();
-  if (cmd === "project") {
-    try {
-      if (cmdArgs[0] !== "inspect") throw new Error("Unknown project command");
-      console.log(
-        JSON.stringify(
-          runProjectInspect(cmdArgs.slice(1), pluginRoot, cwd),
-          null,
-          2,
-        ),
-      );
-    } catch (error) {
-      console.error(
-        error instanceof Error ? error.message : "Inspection failed",
-      );
-      process.exitCode = 2;
-    }
-    return;
-  }
-  if (resourceCommand && cmd === "check-migration") {
-    const allowed = new Set(["--json", "--global", "--local", "-g", "-l"]);
-    const unknown = cmdArgs.filter(
-      (arg) => arg.startsWith("-") && !allowed.has(arg),
-    );
-    const positional = cmdArgs.filter((arg) => !arg.startsWith("-"));
-    const global = cmdArgs.includes("--global") || cmdArgs.includes("-g");
-    const local = cmdArgs.includes("--local") || cmdArgs.includes("-l");
-    const report: MigrationReport =
-      unknown.length || positional.length > 1 || (global && local)
-        ? {
-            findings: [],
-            errors: [
-              "迁移检查参数无效；使用 [runtime] [--local|--global] [--json]",
-            ],
-            exitCode: 2,
-          }
-        : checkMigration({
-            cwd,
-            runtime: positional[0],
-            scope: global ? "global" : "local",
-          });
-    if (cmdArgs.includes("--json"))
-      console.log(JSON.stringify(report, null, 2));
-    else {
-      for (const finding of report.findings)
-        console.log(
-          `${finding.file}${finding.line ? `:${finding.line}` : ""} [${finding.kind}] ${finding.id}${finding.replacement ? ` -> ${finding.replacement}` : ""}: ${finding.message}`,
-        );
-      for (const error of report.errors) console.log(error);
-      if (!report.findings.length && !report.errors.length)
-        console.log("未发现待迁移的公共 Skill 引用或旧安装");
-    }
-    process.exitCode = report.exitCode;
-    return;
-  }
-  if (
-    !resourceCommand &&
-    ["update", "upgrade", "uninstall", "remove"].includes(cmd ?? "")
-  ) {
-    await runCliLifecycle(
-      cmd === "update" || cmd === "upgrade" ? "update" : "uninstall",
-      cmdArgs,
-      {
-        pluginRoot,
-        cwd,
-        purgeResources: (dryRun) => uninstallResources({ cwd, dryRun }),
-        describeResources: () => describeResourceInstalls(cwd),
-      },
-    );
-    return;
-  }
-
-  if (cmd === "version" || cmd === "-v" || cmd === "--version") {
-    console.log(readPkgVersion(pluginRoot));
-    return;
-  }
-  if (cmd === "list") {
-    ALL_RUNTIMES.forEach((r) => console.log(r));
-    return;
-  }
-  if (cmd === "matrix") {
-    console.log(renderRuntimeCapabilityMatrix(ALL_RUNTIMES));
-    return;
-  }
-  if (cmd === "doctor") {
-    const runtime = cmdArgs[0] ?? "claude";
-    const isGlobal = cmdArgs.includes("--global") || cmdArgs.includes("-g");
-    const fixCache = cmdArgs.includes("--fix-cache");
-    const dryRun = cmdArgs.includes("--dry-run");
-    const cwd = process.cwd();
-    const baseDir = getInstallBaseDir({ runtime, isGlobal, cwd });
-    const cap = RUNTIME_CAPABILITIES[runtime];
-    if (!cap) {
-      console.error(`Unknown runtime: ${runtime}`);
-      process.exitCode = 1;
-      return;
-    }
-    console.log(
-      renderDoctorReport({
-        runtime,
-        baseDir,
-        cwd,
-        cap,
-        pluginRoot,
-        fixCache,
-        dryRun,
-        isGlobal,
-      }),
-    );
-    return;
-  }
-  if (cmd === "sync-metadata") {
-    const checkOnly = cmdArgs.includes("--check");
-    const result = checkPublicMetadata(pluginRoot);
-    if (result.length > 0) {
-      for (const issue of result) console.error(issue);
-      process.exitCode = 1;
-      return;
-    }
-    console.log(
-      checkOnly
-        ? "metadata is synchronized"
-        : "metadata is synchronized; no changes needed",
-    );
-    return;
-  }
-  if (cmd === "help" || cmd === "-h" || cmd === "--help") {
-    printHelp();
-    return;
-  }
-  const mode = cmd === "update" || cmd === "upgrade" ? "update" : "install";
-  if (
-    cmd !== "install" &&
-    cmd !== "setup" &&
-    cmd !== "update" &&
-    cmd !== "upgrade" &&
-    cmd !== "uninstall" &&
-    cmd !== "remove"
-  ) {
-    console.error(`Unknown command: ${cmd}`);
-    printHelp();
-    process.exitCode = 1;
-    return;
-  }
-  if (cmdArgs.some((a) => a === "help" || a === "--help" || a === "-h")) {
-    printHelp();
-    return;
-  }
-
-  if (cmd === "install" && !resourceCommand && argv[0] === "install")
-    console.log(
-      'Deprecated: use "frontend-craft runtime install" instead of "frontend-craft install".',
-    );
-  let parsedInstallArgs: ReturnType<typeof parseInstallArgs>;
-  try {
-    parsedInstallArgs = parseInstallArgs(cmdArgs);
-  } catch (error) {
-    console.error(error instanceof Error ? error.message : String(error));
-    process.exitCode = 1;
-    return;
-  }
-  let runtime: string | undefined = parsedInstallArgs.runtime;
-  let all = parsedInstallArgs.all;
-  const { installLocation, dryRun, force, hasGlobal, hasLocal } =
-    parsedInstallArgs;
-  const requestedLanguage = parsedInstallArgs.language;
-  if (
-    requestedLanguage !== undefined &&
-    !isInstallLanguage(requestedLanguage)
-  ) {
-    console.error(
-      `Unsupported language: ${requestedLanguage || "(missing)"}. Supported languages: ${SUPPORTED_LANGUAGES.join(", ")}`,
-    );
-    process.exitCode = 1;
-    return;
-  }
-  const languageArg = requestedLanguage as InstallLanguage | undefined;
-  if (isSetup && runtime === "all") {
-    runtime = undefined;
-    all = true;
-  }
-  const effectiveInstallLocation =
-    installLocation ?? (isSetup ? "local" : null);
-  if (hasGlobal && hasLocal) {
-    console.error("--global and --local cannot be used together.");
-    process.exitCode = 1;
-    return;
-  }
-
-  if (cmd === "uninstall" || cmd === "remove") {
-    const scopes = getScopeFilter(hasLocal, hasGlobal);
-    const runtimes = runtime ? [runtime] : all ? ALL_RUNTIMES : undefined;
-    if (runtime && !INSTALLERS[runtime]) {
-      console.error(`Unknown runtime: ${runtime}`);
-      process.exitCode = 1;
-      return;
-    }
-    if (!(await uninstallResources({ cwd, dryRun, force, runtimes, scopes })))
-      process.exitCode = 1;
-    return;
-  }
-
-  const canPrompt =
-    Boolean(process.stdin.isTTY) ||
-    process.env.FRONTEND_CRAFT_FORCE_INTERACTIVE === "1";
-
-  if (mode === "update" && !runtime) {
-    const scopes = getScopeFilter(hasLocal, hasGlobal);
-    let discoveryFailed = false;
-    const installs = discoverManifestInstalls({
-      cwd,
-      runtimes: all ? ALL_RUNTIMES : undefined,
-      scopes,
-      onError: (error) => {
-        discoveryFailed = true;
-        console.error(error.message);
-        process.exitCode = 1;
-      },
-    });
-    if (installs.length === 0) {
-      if (!discoveryFailed)
-        console.log(renderNoInstallsFound("update", undefined, scopes));
-      return;
-    }
-    const updatedScopes = new Set<string>();
-    for (const install of installs) {
-      const scopeKey = `${install.runtime}:${install.scope}`;
-      if (updatedScopes.has(scopeKey)) continue;
-      updatedScopes.add(scopeKey);
-      const language =
-        languageArg ?? install.manifest.language ?? DEFAULT_LANGUAGE;
-      await runResourceInstaller({
-        rt: install.runtime,
-        mode,
-        isGlobal: install.scope === "global",
-        baseDir: getInstallBaseDir({
-          runtime: install.runtime,
-          isGlobal: install.scope === "global",
-          cwd,
-        }),
-        pluginRoot,
-        cwd,
-        dryRun,
-        language,
-      });
-    }
-    return;
-  }
-
-  let runtimes = all ? ALL_RUNTIMES : runtime ? [runtime] : [];
-  if (!runtimes.length) {
-    if (canPrompt) {
-      runtimes = await promptRuntime();
-    } else {
-      console.log(
-        "Non-interactive terminal detected, defaulting to claude runtime.",
-      );
-      runtimes = ["claude"];
-    }
-  }
-
-  let language: InstallLanguage | undefined = languageArg;
-  if (!language && mode === "install") {
-    if (canPrompt) {
-      language = await promptLanguage();
-    } else {
-      language = DEFAULT_LANGUAGE;
-    }
-  }
-
-  let isGlobal: boolean;
-  if (effectiveInstallLocation === "global") {
-    isGlobal = true;
-  } else if (effectiveInstallLocation === "local") {
-    isGlobal = false;
-  } else if (canPrompt) {
-    isGlobal = await promptLocation(runtimes);
-  } else {
-    console.log(
-      "Non-interactive terminal detected, defaulting to global install.",
-    );
-    isGlobal = true;
-  }
-
-  if (!language && mode === "update" && runtime) {
-    const baseDir = getInstallBaseDir({ runtime, isGlobal, cwd });
-    language =
-      readInstallManifest(getManifestPath(baseDir))?.language ??
-      DEFAULT_LANGUAGE;
-  }
-  language ??= resolveInstallLanguage(languageArg);
-
-  for (const rt of runtimes) {
-    if (!INSTALLERS[rt]) {
-      console.error(`Unknown runtime: ${rt}`);
-      process.exitCode = 1;
-      continue;
-    }
-    const baseDir = getInstallBaseDir({ runtime: rt, isGlobal, cwd });
-    await runResourceInstaller({
-      rt,
-      mode,
-      isGlobal,
-      baseDir,
-      pluginRoot,
-      cwd,
-      dryRun,
-      force,
-      canPrompt,
-      language,
-    });
-  }
+  const run = createCraftCli(
+    {
+      packageName: "@bovinphang/frontend-craft",
+      commandName: "frontend-craft",
+      binName: "fec",
+      version: readPkgVersion(pluginRoot),
+      runtimes: ALL_RUNTIMES,
+      help: frontendHelp(),
+    },
+    createFrontendCraftAdapter(argv.includes("--json")),
+  );
+  const code = await run(argv, {
+    cwd: process.cwd(),
+    home: os.homedir(),
+    productRoot: pluginRoot,
+    env: process.env,
+    stdout: (text) => {
+      console.log(text.replace(/\n$/, ""));
+    },
+    stderr: (text) => {
+      console.error(text.replace(/\n$/, ""));
+    },
+    isTTY:
+      Boolean(process.stdin.isTTY) ||
+      process.env.FRONTEND_CRAFT_FORCE_INTERACTIVE === "1",
+  });
+  // Frontend's historic resource errors use 1; project inspection uses 2.
+  process.exitCode =
+    code === 2 && argv[0] !== "project" && !argv.includes("check-migration")
+      ? 1
+      : code;
 }
 
 export function describeResourceInstalls(cwd: string): string[] {
@@ -528,19 +466,22 @@ export function describeResourceInstalls(cwd: string): string[] {
   ];
 }
 
-async function uninstallResources({
-  cwd,
-  dryRun,
-  force = false,
-  runtimes,
-  scopes = ["local", "global"],
-}: {
-  cwd: string;
-  dryRun: boolean;
-  force?: boolean;
-  runtimes?: string[];
-  scopes?: Array<"local" | "global">;
-}): Promise<boolean> {
+async function uninstallResources(
+  {
+    cwd,
+    dryRun,
+    force = false,
+    runtimes,
+    scopes = ["local", "global"],
+  }: {
+    cwd: string;
+    dryRun: boolean;
+    force?: boolean;
+    runtimes?: string[];
+    scopes?: Array<"local" | "global">;
+  },
+  output: ProductOutput,
+): Promise<boolean> {
   let succeeded = true;
   const installs = discoverManifestInstalls({
     cwd,
@@ -548,11 +489,11 @@ async function uninstallResources({
     scopes,
     onError: (error) => {
       succeeded = false;
-      console.error(error.message);
+      output.error(error.message);
     },
   });
   if (installs.length === 0 && succeeded)
-    console.log(
+    output.log(
       renderNoInstallsFound(
         "uninstall",
         runtimes?.length === 1 ? runtimes[0] : undefined,
@@ -560,45 +501,59 @@ async function uninstallResources({
       ),
     );
   for (const install of installs) {
-    try {
-      console.log(
-        `Uninstalling frontend-craft for "${install.runtime}" -> ${install.baseDir}${install.scope === "global" ? " (global)" : ""}`,
-      );
-      const result = await uninstallCommonAwareInstall({
-        install,
-        cwd,
-        dryRun,
-        force,
-      });
-      for (const file of result.removed) {
-        const action = dryRun ? "[dry-run] would remove" : "Removed";
-        console.log(
-          `${action}${file.modified ? " modified file" : " file"}: ${file.path}`,
-        );
-      }
-      for (const file of result.skipped)
-        console.log(`Skipped modified file: ${file}`);
-      for (const file of result.missing) console.log(`Missing file: ${file}`);
-      if (result.skipped.length > 0) {
-        console.log(
-          `Preserved manifest for modified files: ${install.manifestPath}`,
-        );
-        console.log(
-          `Recover with: npx @bovinphang/frontend-craft@latest runtime uninstall ${install.runtime} --${install.scope}`,
-        );
-      } else if (dryRun)
-        console.log(`[dry-run] would remove manifest: ${install.manifestPath}`);
-    } catch (error) {
+    if (!(await uninstallResource(install, cwd, dryRun, force, output)))
       succeeded = false;
-      reportResourceFailure(
-        "uninstall",
-        install.runtime,
-        install.scope === "global",
-        error,
-      );
-    }
   }
   return succeeded;
+}
+
+async function uninstallResource(
+  install: DiscoveredInstall,
+  cwd: string,
+  dryRun: boolean,
+  force: boolean,
+  output: ProductOutput,
+): Promise<boolean> {
+  try {
+    output.log(
+      `Uninstalling frontend-craft for "${install.runtime}" -> ${install.baseDir}${install.scope === "global" ? " (global)" : ""}`,
+    );
+    const result = await uninstallCommonAwareInstall({
+      log: output.log,
+      install,
+      cwd,
+      dryRun,
+      force,
+    });
+    for (const file of result.removed) {
+      const action = dryRun ? "[dry-run] would remove" : "Removed";
+      output.log(
+        `${action}${file.modified ? " modified file" : " file"}: ${file.path}`,
+      );
+    }
+    for (const file of result.skipped)
+      output.log(`Skipped modified file: ${file}`);
+    for (const file of result.missing) output.log(`Missing file: ${file}`);
+    if (result.skipped.length > 0) {
+      output.log(
+        `Preserved manifest for modified files: ${install.manifestPath}`,
+      );
+      output.log(
+        `Recover with: npx @bovinphang/frontend-craft@latest runtime uninstall ${install.runtime} --${install.scope}`,
+      );
+    } else if (dryRun)
+      output.log(`[dry-run] would remove manifest: ${install.manifestPath}`);
+  } catch (error) {
+    reportResourceFailure(
+      "uninstall",
+      install.runtime,
+      install.scope === "global",
+      error,
+      output,
+    );
+    return false;
+  }
+  return true;
 }
 
 function reportResourceFailure(
@@ -606,17 +561,19 @@ function reportResourceFailure(
   runtime: string,
   isGlobal: boolean,
   error: unknown,
+  output: ProductOutput,
 ): void {
-  console.error(
+  output.error(
     `Failed ${action} for ${runtime} (${isGlobal ? "global" : "local"}): ${error instanceof Error ? error.message : String(error)}`,
   );
-  console.error(
+  output.error(
     `Retry: frontend-craft runtime ${action} ${runtime} --${isGlobal ? "global" : "local"}`,
   );
 }
 
 async function runResourceInstaller(
   options: Parameters<typeof runInstaller>[0],
+  output: ProductOutput,
 ): Promise<void> {
   try {
     if (options.mode === "update")
@@ -628,45 +585,57 @@ async function runResourceInstaller(
           throw error;
         },
       });
-    await runInstaller(options);
+    await runInstaller(options, output);
   } catch (error) {
-    reportResourceFailure(options.mode, options.rt, options.isGlobal, error);
-    process.exitCode = 1;
+    reportResourceFailure(
+      options.mode,
+      options.rt,
+      options.isGlobal,
+      error,
+      output,
+    );
+    output.fail(1);
   }
 }
 
-async function runInstaller({
-  rt,
-  mode,
-  isGlobal,
-  baseDir,
-  pluginRoot,
-  cwd,
-  dryRun,
-  force,
-  canPrompt,
-  language,
-}: {
-  rt: string;
-  mode: "install" | "update";
-  isGlobal: boolean;
-  baseDir: string;
-  pluginRoot: string;
-  cwd: string;
-  dryRun: boolean;
-  force?: boolean;
-  canPrompt?: boolean;
-  language: InstallLanguage;
-}): Promise<void> {
-  const resolved = await resolveClaudeInstallConflict({
+async function runInstaller(
+  {
     rt,
     mode,
     isGlobal,
+    baseDir,
+    pluginRoot,
     cwd,
     dryRun,
-    force: Boolean(force),
-    canPrompt: Boolean(canPrompt),
-  });
+    force,
+    canPrompt,
+    language,
+  }: {
+    rt: string;
+    mode: "install" | "update";
+    isGlobal: boolean;
+    baseDir: string;
+    pluginRoot: string;
+    cwd: string;
+    dryRun: boolean;
+    force?: boolean;
+    canPrompt?: boolean;
+    language: InstallLanguage;
+  },
+  output: ProductOutput,
+): Promise<void> {
+  const resolved = await resolveClaudeInstallConflict(
+    {
+      rt,
+      mode,
+      isGlobal,
+      cwd,
+      dryRun,
+      force: Boolean(force),
+      canPrompt: Boolean(canPrompt),
+    },
+    output,
+  );
   if (!resolved) return;
   if (resolved.redirect) {
     isGlobal = resolved.redirect.isGlobal;
@@ -684,11 +653,12 @@ async function runInstaller({
     );
     if (legacy) {
       beforeManifest = (preview = dryRun) =>
-        copyInstallToNewBase(legacy, baseDir, preview);
+        copyInstallToNewBase(legacy, baseDir, preview, output.log);
       mode = "update";
     }
   }
   const ctx: InstallContext = {
+    log: output.log,
     pluginRoot,
     contentRoot: resolveContentRoot(pluginRoot, language),
     cwd,
@@ -701,16 +671,16 @@ async function runInstaller({
     capabilities: RUNTIME_CAPABILITIES[rt],
   };
   if (mode === "install") {
-    console.log(
+    output.log(
       `Installing frontend-craft for "${rt}" -> ${baseDir}${isGlobal ? " (global)" : ""}`,
     );
     if (!dryRun && fs.existsSync(getManifestPath(baseDir))) {
-      console.log(
+      output.log(
         `Existing frontend-craft manifest found; use "frontend-craft runtime update ${rt}" to refresh managed files.`,
       );
     }
   } else {
-    console.log(
+    output.log(
       `Updating frontend-craft for "${rt}" -> ${baseDir}${isGlobal ? " (global)" : ""}`,
     );
   }
@@ -721,32 +691,35 @@ async function runInstaller({
   );
 }
 
-async function resolveClaudeInstallConflict({
-  rt,
-  isGlobal,
-  cwd,
-  dryRun,
-  force,
-  canPrompt,
-}: {
-  rt: string;
-  mode: "install" | "update";
-  isGlobal: boolean;
-  cwd: string;
-  dryRun: boolean;
-  force: boolean;
-  canPrompt: boolean;
-}): Promise<{ redirect?: { isGlobal: boolean; baseDir: string } } | undefined> {
+async function resolveClaudeInstallConflict(
+  {
+    rt,
+    isGlobal,
+    cwd,
+    dryRun,
+    force,
+    canPrompt,
+  }: {
+    rt: string;
+    mode: "install" | "update";
+    isGlobal: boolean;
+    cwd: string;
+    dryRun: boolean;
+    force: boolean;
+    canPrompt: boolean;
+  },
+  output: ProductOutput,
+): Promise<{ redirect?: { isGlobal: boolean; baseDir: string } } | undefined> {
   if (rt !== "claude") return {};
 
   const sourceReport = getClaudeInstallSourceReport({ cwd });
   if (sourceReport.native.length > 0) {
-    console.log("Claude Code Marketplace install detected for frontend-craft.");
-    console.log(renderClaudeInstallSourceReport(sourceReport));
-    console.log(
+    output.log("Claude Code Marketplace install detected for frontend-craft.");
+    output.log(renderClaudeInstallSourceReport(sourceReport));
+    output.log(
       "Update frontend-craft through Claude Code Marketplace. CLI install/update is disabled while Marketplace is active.",
     );
-    process.exitCode = 1;
+    output.fail(1);
     return undefined;
   }
 
@@ -756,44 +729,48 @@ async function resolveClaudeInstallConflict({
   );
   if (conflicts.length === 0) {
     if (sourceReport.hasMultipleActiveSources)
-      console.log(renderClaudeInstallSourceReport(sourceReport));
+      output.log(renderClaudeInstallSourceReport(sourceReport));
     return {};
   }
 
   const existing = conflicts[0];
   const existingSource = toClaudeCliSource(existing);
-  console.log(
+  output.log(
     `${formatClaudeInstallSource(existingSource)} install detected for frontend-craft.`,
   );
-  console.log(renderClaudeInstallSourceReport(sourceReport));
+  output.log(renderClaudeInstallSourceReport(sourceReport));
 
   if (dryRun) {
-    console.log(
+    output.log(
       `[dry-run] resolve the existing ${formatClaudeInstallSource(existingSource)} source before using ${formatClaudeInstallSource(targetSource)}.`,
     );
-    process.exitCode = 1;
+    output.fail(1);
     return undefined;
   }
 
   if (!canPrompt) {
-    printClaudeCliConflictGuidance(existingSource, targetSource);
-    process.exitCode = 1;
+    printClaudeCliConflictGuidance(existingSource, targetSource, output);
+    output.fail(1);
     return undefined;
   }
 
   const choice = await promptClaudeCliConflictChoice(
     existingSource,
     targetSource,
+    output,
   );
   if (choice === "switch") {
-    const removed = await uninstallConflictingClaudeCliSources({
-      installs: conflicts,
-      cwd,
-      dryRun,
-      force,
-    });
+    const removed = await uninstallConflictingClaudeCliSources(
+      {
+        installs: conflicts,
+        cwd,
+        dryRun,
+        force,
+      },
+      output,
+    );
     if (!removed) {
-      process.exitCode = 1;
+      output.fail(1);
       return undefined;
     }
     return {};
@@ -812,17 +789,20 @@ async function resolveClaudeInstallConflict({
   };
 }
 
-async function uninstallConflictingClaudeCliSources({
-  installs,
-  cwd,
-  dryRun,
-  force,
-}: {
-  installs: ClaudeCliInstall[];
-  cwd: string;
-  dryRun: boolean;
-  force: boolean;
-}): Promise<boolean> {
+async function uninstallConflictingClaudeCliSources(
+  {
+    installs,
+    cwd,
+    dryRun,
+    force,
+  }: {
+    installs: ClaudeCliInstall[];
+    cwd: string;
+    dryRun: boolean;
+    force: boolean;
+  },
+  output: ProductOutput,
+): Promise<boolean> {
   for (const cliInstall of installs) {
     const install = discoverManifestInstalls({
       cwd,
@@ -830,10 +810,11 @@ async function uninstallConflictingClaudeCliSources({
       scopes: [cliInstall.scope],
     })[0];
     if (!install) continue;
-    console.log(
+    output.log(
       `Uninstalling existing ${formatClaudeInstallSource(toClaudeCliSource(cliInstall))} install before switching source.`,
     );
     const result = await uninstallCommonAwareInstall({
+      log: output.log,
       install,
       cwd,
       dryRun,
@@ -841,15 +822,15 @@ async function uninstallConflictingClaudeCliSources({
     });
     for (const file of result.removed) {
       const action = dryRun ? "[dry-run] would remove" : "Removed";
-      console.log(
+      output.log(
         `${action}${file.modified ? " modified file" : " file"}: ${file.path}`,
       );
     }
     for (const file of result.skipped)
-      console.log(`Skipped modified file: ${file}`);
-    for (const file of result.missing) console.log(`Missing file: ${file}`);
+      output.log(`Skipped modified file: ${file}`);
+    for (const file of result.missing) output.log(`Missing file: ${file}`);
     if (result.skipped.length > 0) {
-      console.log(
+      output.log(
         "Resolve skipped modified files or rerun with --force before switching Claude CLI install source.",
       );
       return false;
@@ -861,13 +842,14 @@ async function uninstallConflictingClaudeCliSources({
 function printClaudeCliConflictGuidance(
   existingSource: ClaudeCliSource,
   targetSource: ClaudeCliSource,
+  output: ProductOutput,
 ): void {
   const existingFlag = sourceScopeFlag(existingSource);
   const targetFlag = sourceScopeFlag(targetSource);
-  console.log(
+  output.log(
     `Keep the existing source updated with: frontend-craft runtime update claude ${existingFlag}`,
   );
-  console.log(
+  output.log(
     `Or switch sources with: frontend-craft runtime uninstall claude ${existingFlag} && frontend-craft runtime install claude ${targetFlag}`,
   );
 }
@@ -875,12 +857,13 @@ function printClaudeCliConflictGuidance(
 async function promptClaudeCliConflictChoice(
   existingSource: ClaudeCliSource,
   targetSource: ClaudeCliSource,
+  output: ProductOutput,
 ): Promise<"keep" | "switch"> {
-  console.log("Choose how to resolve the Claude CLI install source conflict:");
-  console.log(
+  output.log("Choose how to resolve the Claude CLI install source conflict:");
+  output.log(
     `  1. Keep ${formatClaudeInstallSource(existingSource)} and update it`,
   );
-  console.log(
+  output.log(
     `  2. Uninstall ${formatClaudeInstallSource(existingSource)} and install ${formatClaudeInstallSource(targetSource)}`,
   );
   const answer = (await ask("Choice [1]: ")).trim();
@@ -920,15 +903,6 @@ function formatClaudeInstallSource(source: ClaudeInstallSource): string {
 
 function sourceScopeFlag(source: ClaudeCliSource): "--global" | "--local" {
   return source === "cli-global" ? "--global" : "--local";
-}
-
-function getScopeFilter(
-  hasLocal: boolean,
-  hasGlobal: boolean,
-): Array<"local" | "global"> {
-  if (hasLocal) return ["local"];
-  if (hasGlobal) return ["global"];
-  return ["local", "global"];
 }
 
 function renderNoInstallsFound(

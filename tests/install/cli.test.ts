@@ -29,6 +29,43 @@ test("version prints semver", () => {
   assert.match(out, /^\d+\.\d+\.\d+/);
 });
 
+test("shared dispatcher emits a JSON runtime list", () => {
+  const out = execFileSync(process.execPath, [cli, "list", "--json"], {
+    encoding: "utf8",
+  });
+  const runtimes: unknown = JSON.parse(out);
+  assert.ok(Array.isArray(runtimes));
+  assert.ok(runtimes.includes("claude"));
+  assert.ok(runtimes.includes("codex"));
+});
+
+test("JSON setup keeps installer diagnostics outside stdout and preserves dry-run", () => {
+  const project = fs.mkdtempSync(path.join(os.tmpdir(), "fc-json-setup-"));
+  try {
+    const out = execFileSync(
+      process.execPath,
+      [cli, "setup", "codex", "--dry-run", "--json", "--lang", "zh-CN"],
+      {
+        cwd: project,
+        encoding: "utf8",
+        env: isolatedRuntimeEnv(project),
+        stdio: "pipe",
+      },
+    );
+    assert.deepEqual(JSON.parse(out), {
+      action: "install",
+      runtime: "codex",
+      scope: "local",
+      language: "zh-CN",
+      exitCode: 0,
+    });
+    assert.equal(fs.existsSync(path.join(project, ".codex")), false);
+    assert.equal(fs.existsSync(path.join(project, ".agents")), false);
+  } finally {
+    fs.rmSync(project, { recursive: true, force: true });
+  }
+});
+
 test("top-level version and help flags keep their command behavior", () => {
   const version = execFileSync(
     process.execPath,
@@ -295,6 +332,33 @@ test("doctor reports local install health", () => {
   assert.match(out, /frontend-craft doctor: claude/);
   assert.match(out, /skills:/);
   assert.match(out, /commands:/);
+});
+
+test("product commands reject unsupported arguments", () => {
+  for (const args of [
+    ["matrix", "--wat"],
+    ["matrix", "claude"],
+    ["sync-metadata", "--wat"],
+    ["sync-metadata", "claude"],
+    ["doctor", "codex", "--fix-cache"],
+  ]) {
+    assert.throws(() =>
+      execFileSync(process.execPath, [cli, ...args], {
+        cwd: root,
+        encoding: "utf8",
+        stdio: "pipe",
+      }),
+    );
+  }
+});
+
+test("doctor accepts flags while defaulting to Claude", () => {
+  const out = execFileSync(process.execPath, [cli, "doctor", "--json"], {
+    cwd: root,
+    encoding: "utf8",
+  });
+  const report = JSON.parse(out) as { report: string };
+  assert.match(report.report, /frontend-craft doctor: claude/);
 });
 
 test("doctor reports qoder health fields", () => {
