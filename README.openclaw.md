@@ -22,7 +22,7 @@
 
 `frontend-craft` ships the OpenClaw-native package for [frontend-craft](https://github.com/bovinphang/frontend-craft): workflow skills, markdown commands, OpenClaw workspace templates, typed hooks, a design MCP reference, and the optional `frontend_craft_init_workspace` tool.
 
-The native package includes **74 workflow skills** and **11 commands exposed through skills (same-name workflows reuse the full skill)**. The 14 specialized agents belong to other runtime adapters and are not native OpenClaw agents.
+The native package includes **74 workflow skills** (53 frontend skills and 21 shared skills). OpenClaw exposes **11 command workflows** through skills. Nine are generated from the bundled Markdown commands, and two reuse same-name workflow skills.
 
 **Requirements:** Node.js **>= 22**, OpenClaw plugin API **>= 2026.4.20**.
 
@@ -32,19 +32,19 @@ The native package includes **74 workflow skills** and **11 commands exposed thr
 
 ### 1. Install
 
-From ClawHub (recommended when published there):
+For a package available on ClawHub, use its ClawHub identifier.
 
 ```bash
 openclaw plugins install clawhub:frontend-craft
 ```
 
-From npm:
+To install the native plugin from npm, use its unscoped package name.
 
 ```bash
 openclaw plugins install frontend-craft
 ```
 
-From a local tarball built from the main repository:
+To install the current source, build the native package from the repository root. In the install command, replace `<version>` with the version in the generated tarball name.
 
 ```bash
 pnpm install --frozen-lockfile
@@ -52,15 +52,15 @@ pnpm run pack:openclaw
 openclaw plugins install ./npm-packages/openclaw/frontend-craft-<version>.tgz
 ```
 
-For local development, link the package directory:
+For local development, run the same build and link the staging directory from the repository root.
 
 ```bash
-openclaw plugins install -l /path/to/frontend-craft/npm-packages/openclaw
+openclaw plugins install -l ./npm-packages/openclaw
 ```
 
 ### 2. Enable The Plugin
 
-The npm package name and plugin id are both `frontend-craft`.
+The npm package name and plugin ID are both `frontend-craft`. Merge this entry into the gateway configuration and add the ID to the existing allowlist if you use one.
 
 ```json5
 {
@@ -124,7 +124,9 @@ Pixso uses the local MCP URL shown in `.mcp.json`. MockingBot has no MCP integra
 frontend-craft/
 |-- dist/                  # Bundled OpenClaw plugin entry
 |-- skills/                # Workflow skills
-|-- commands/              # Source command specs; converted skills are under skills/
+|-- commands/              # Source command specs
+|-- localized/             # Simplified Chinese resource mirror
+|-- common-content.lock.json # Shared resource versions and hashes
 |-- templates/openclaw/    # OpenClaw AGENTS.md and config notes
 |-- templates/shared/      # Shared frontend rules
 |-- .mcp.json              # Design MCP reference
@@ -222,7 +224,7 @@ The OpenClaw package includes all 74 public workflow skills from `skills/`, grou
 
 Technical diagram quality: `cc-technical-diagrams` prefers local Mermaid for standard sequence/workflow diagrams and the draw.io workflow for editable architecture, with JSON/HTML fallback when tools are unavailable. Export a browser-measured manifest scaled to the PNG, run QA and inspect the final image. Preserve complete text, explicit layout and relationships; repair the source for at most two automatic rounds and report unresolved issues. Reproducible fixtures are in `skills/cc-technical-diagrams/assets/quality-examples/`.
 
-[Review and technical diagram guide](docs/review-and-diagram-workflows.md).
+[Review and technical diagram guide](https://github.com/bovinphang/frontend-craft/blob/main/docs/review-and-diagram-workflows.md).
 
 **Legacy migration**
 
@@ -249,7 +251,7 @@ Technical diagram quality: `cc-technical-diagrams` prefers local Mermaid for sta
 
 Skills live under `skills/<id>/SKILL.md`. OpenClaw exposes them as plugin skill roots (`openclaw.plugin.json` lists `skills`; command workflows are converted during packaging). The harness typically **auto-selects** a workflow when your plain-language request matches a skill’s frontmatter `description`; exact behavior depends on your OpenClaw / agent setup. You do **not** need to know internal skill ids—describe the outcome you want. (Power users may still mention an id if they know it.)
 
-This section is a quick OpenClaw-oriented sample, not the full prompt catalog. For complete scenario-based prompts across skills, agents, commands, design workflows, testing, maintenance, and runtime setup, see [docs/example-prompts.md](docs/example-prompts.md).
+This section is a quick OpenClaw-oriented sample, not the full prompt catalog. For complete scenario-based prompts across skills, agents, commands, design workflows, testing, maintenance, and runtime setup, see [docs/example-prompts.md](https://github.com/bovinphang/frontend-craft/blob/main/docs/example-prompts.md).
 
 **Tips**
 
@@ -290,9 +292,9 @@ This section is a quick OpenClaw-oriented sample, not the full prompt catalog. F
 | Build a recordable web presentation        | `fec-web-video-presentation`     | “Turn this product demo script into a 16:9 browser presentation with script beats, chapter steps, theme tokens, and recording guidance.”          |
 | Optimize Vite build config                 | `fec-vite-project-standard`      | “Audit our `vite.config.ts` for HMR, dev proxy, env variable safety, and library mode best practices.”                                           |
 
-**Slash commands (markdown under `commands/`)**
+**Command workflows (Markdown in `commands/`)**
 
-These are loaded as command specs; use them when you want a **fixed checklist** instead of free-form matching. In chat, describe what you want—the agent can follow the matching command doc without you naming it. The complete command prompt set is in [docs/example-prompts.md](docs/example-prompts.md#power-user-prompts).
+The package preserves the source command documents and exposes their workflows as skills. Describe the task in chat to use the matching workflow. The complete command prompt set is in [docs/example-prompts.md](https://github.com/bovinphang/frontend-craft/blob/main/docs/example-prompts.md#power-user-prompts).
 
 | Command doc              | When to use                                                                                                 | Example (plain language)                                                                                                     |
 | ------------------------ | ----------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------- |
@@ -331,12 +333,12 @@ These are loaded as command specs; use them when you want a **fixed checklist** 
 From the main `frontend-craft` repository:
 
 ```bash
-npm install
-npm run typecheck:openclaw
-npm run pack:openclaw
+pnpm install --frozen-lockfile
+pnpm run typecheck:openclaw
+pnpm run pack:openclaw
 ```
 
-`npm run pack:openclaw` builds and verifies the OpenClaw bundle, refreshes `npm-packages/openclaw`, and writes `frontend-craft-<version>.tgz` to the `npm-packages/openclaw/` directory.
+`pnpm run pack:openclaw` builds and verifies the OpenClaw bundle and writes `frontend-craft-<version>.tgz` under `npm-packages/openclaw/`.
 
 ---
 
@@ -360,7 +362,7 @@ Dependency directories, build outputs, caches, generated files and third-party c
 
 ## Common capabilities
 
-Shared capabilities are delivered from craft-common with this product:
+The package bundles the shared skill snapshot and `common-content.lock.json` for provenance.
 
 - `cc-debug-methodology`
 - `cc-doc-sync-core`
@@ -388,8 +390,7 @@ These common entries apply to libraries, CLI tools, desktop cores and services; 
 | `cc-rust-async` | Rust async lifecycle |
 | `cc-rust-project-standard` | Rust project engineering |
 | `cc-typescript-project-standard` | TypeScript project specifications |
-
 | `cc-tauri-project-standard` | Tauri application engineering |
 | `cc-electron-project-standard` | Electron application engineering |
 
-craft-common 2.0.0, frontend-craft 3.0.0 and backend-craft 1.0.0 were published to npm on 2026-11-09 (Asia/Shanghai). Package versions are unchanged. The native plugin uses the exact common 2.0.0 dependency; installation does not imply host activation.
+See the [changelog](https://github.com/bovinphang/frontend-craft/blob/main/CHANGELOG.md) for release notes.

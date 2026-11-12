@@ -116,6 +116,16 @@ npx @bovinphang/frontend-craft@latest list
 
 完整步驟見 [docs/runtimes/claude.zh-CN.md](../runtimes/claude.zh-CN.md) · [English](../runtimes/claude.md)。
 
+### 從原始碼建置
+
+在儲存庫根目錄建置目前的程式碼，並列出支援的執行環境。
+
+```bash
+pnpm install --frozen-lockfile
+pnpm run build
+node dist/bin/frontend-craft.js list --json
+```
+
 ---
 
 ## 快速開始
@@ -140,6 +150,8 @@ npx @bovinphang/frontend-craft@latest list
 ```
 
 下文斜線指令以 **Claude Code** 為例；其他執行時透過各自的指令系統提供同等能力（詳見 [`docs/runtimes/`](../runtimes/)）。
+
+混合專案可先執行 `fec project inspect . --json`，以唯讀方式辨識專案並推薦適用的技能。依任務篩選的用法請參閱[專案辨識](../cli-management.zh-CN.md#工程识别)。
 
 ---
 
@@ -193,9 +205,11 @@ npx @bovinphang/frontend-craft@latest list
 
 ### 技能（Skills，自動啟用）
 
+[技能目錄](../../skills/)共有 74 個 Skill，其中 53 個為前端專屬，21 個為隨產品提供的共用 Skill。
+
 技能是根據檔案模式、框架或任務上下文**自動啟用**的工作流定義，編碼了審查維度、輸出約定和報告格式。
 
-下方按使用場景分組列出全部自動啟用的技能，便於快速找到專案規範、實作、測試、審查、設計、遷移、專案演進和文件維護能力。
+下方按使用場景列出常用技能，便於快速找到專案規範、實作、測試、審查、設計、遷移、專案演進和文件維護能力。
 
 **專案規範** — 偵測到對應框架時自動生效：
 
@@ -460,7 +474,9 @@ $env:MODAO_TOKEN = "your-modao-token"
 
 ## 更新與移除
 
-### CLI 自身管理（3.0）
+升級既有安裝前，執行 `fec runtime check-migration codex --local --json`，並依實際的執行環境與安裝範圍調整指令。共用資源的相容條件和衝突處理請參閱[遷移指南](../zh-CN/common-migration.md)。
+
+### CLI 自身管理
 
 `fec update`（別名 `upgrade`）透過原 npm/pnpm 將全域 CLI 升級至原 registry 的 `latest`，再啟動新版 CLI 更新目前專案及使用者全域的託管資源；已是最新版也會更新。不掃描其他專案，不管理 Marketplace。CLI 升級失敗即停止；資源部分失敗會分階段回報，不回復 CLI，可執行 `fec runtime update` 重試。
 
@@ -474,13 +490,9 @@ fec uninstall --purge --yes
 
 暫時 npx 執行不建立全域 CLI，也不支援自身解除安裝。npx 頂層 `update` 僅在目前版本等於 registry `latest` 時更新資源，否則使用 `npx @bovinphang/frontend-craft@latest runtime update`。
 
-| 2.x 資源命令 | 3.0 替代命令 |
-| --- | --- |
-| `fec update [runtime] [options]` | `fec runtime update [runtime] [options]` |
-| `fec uninstall [runtime] [options]` | `fec runtime uninstall [runtime] [options]` |
-| `fec install [runtime] [options]` | `fec runtime install [runtime] [options]` |
+安裝預設值、批次操作和診斷指令請參閱 [CLI 管理指南](../cli-management.zh-CN.md)。
 
-頂層 update/uninstall 在修改前拒絕舊 runtime 參數及 `--global` 等資源選項。`setup` 保留；頂層 `install` 為已棄用的相容入口。資源選項及 `runtime upgrade/remove` 別名保留。`runtime update` 僅使用目前 CLI 套件內容，不連網取得新套件。
+`runtime update` 使用目前執行的 CLI 套件更新資源。`runtime upgrade` 和 `runtime remove` 分別是 `runtime update` 和 `runtime uninstall` 的別名。
 
 `fec` 是 `frontend-craft` 的短命令。未全域安裝 CLI 時，資源操作使用 `npx @bovinphang/frontend-craft@latest runtime update`（或 `runtime install/uninstall`）。
 
@@ -514,7 +526,7 @@ CLI 會在 runtime 目錄寫入 `frontend-craft.manifest.json`。不傳 runtime 
 
 ---
 
-## 舊版 Skills CLI
+## 僅安裝 Skill
 
 如果團隊已在使用獨立的 [Skills CLI](https://skills.sh/docs/cli)，它仍然可以只安裝 [`skills/`](../../skills/) 下的工作流技能包：
 
@@ -541,48 +553,10 @@ npx skills check                           # 預覽可用更新
 - [變更日誌](../../CHANGELOG.md) — 版本說明（[简体中文](../../CHANGELOG.zh-CN.md)）
 - [專案結構](../project-structure.md) — 完整目錄佈局與檔案職責
 
+**如果 frontend-craft 幫助了你的團隊，[請給它一個 Star](https://github.com/bovinphang/frontend-craft)。**
+
 ---
 
 ## 授權條款
 
 [MIT](../../LICENSE) — 自由使用、依需求修改，歡迎回饋。
-
----
-
-<div align="center">
-
-**如果 frontend-craft 幫助了你的團隊，[請給它一個 Star](https://github.com/bovinphang/frontend-craft)。**
-
-</div>
-
-## 3.0 共用能力
-
-frontend 3.0.0、backend 1.0.0、craft-common 2.0.0均已於2026-11-09（Asia/Shanghai）發佈至npm。前端53個專屬入口與21個公共入口，合計74項；公共依賴固定為`@bovinphang/craft-common@2.0.0`。
-
-語言、角色與框架分開選擇；C/C++有獨立入口，Tauri/Electron為共用桌面專項，不以產品前後端名稱限制語言。
-
-- `cc-c-project-standard`
-- `cc-cpp-project-standard`
-- `cc-debug-methodology`
-- `cc-doc-sync-core`
-- `cc-drawio-studio`
-- `cc-electron-project-standard`
-- `cc-go-concurrency`
-- `cc-go-project-standard`
-- `cc-java-project-standard`
-- `cc-java-runtime`
-- `cc-native-memory-safety`
-- `cc-python-async`
-- `cc-python-project-standard`
-- `cc-refactoring-core`
-- `cc-rust-async`
-- `cc-rust-project-standard`
-- `cc-source-driven-development`
-- `cc-tauri-project-standard`
-- `cc-tdd-methodology`
-- `cc-technical-diagrams`
-- `cc-typescript-project-standard`
-
-執行`fec runtime check-migration codex --local --json`，先以舊CLI退出舊公共引用並處理保留編輯，再安裝匹配產品；不強制覆蓋另一消費者或未知檔案。CLI與原生渠道互斥，雙原生產品去重仍不在保證範圍。
-
-[遷移指南](../zh-CN/common-migration.md) · [變更日誌](../../CHANGELOG.zh-CN.md) · [專案結構](../zh-CN/project-structure.md)

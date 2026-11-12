@@ -12,7 +12,18 @@ Both products use craft-common's command dispatcher, interactive prompts, npm/pn
 
 Use `--dry-run` to preview resource changes and self-management without mutation. CLI update may query its registry during preview. `list` enumerates supported runtimes; `matrix` describes capabilities; `doctor [runtime]` defaults to Claude. `doctor claude --fix-cache [--dry-run]` only considers this product's stale Claude cache, protects current installs and refuses deletion without reliable native metadata. CLI and native Marketplace sources remain mutually exclusive. `sync-metadata --check` checks metadata consistency without editing it.
 
-Backend-only `validate`, `project inspect`, existing JSON outputs and `runtime list` remain supported. JSON output is a single JSON value; diagnostics go to stderr.
+`validate` and `runtime list` are backend CLI commands. For commands with JSON output, stdout contains a single JSON value and diagnostics go to stderr.
+
+## Project inspection
+
+From a mixed project’s root, run the following commands. The first returns project-level recommendations. The second adds an IPC task and a path relative to the project root. Use an existing path in your project.
+
+```bash
+fec project inspect . --json
+fec project inspect . --task-path apps/desktop/src-tauri/src/lib.rs --task-kind ipc --json
+```
+
+Inspection reads project evidence and recommends skills available in the product. It evaluates application roles, languages and frameworks separately. The command runs without building the project or installing tools.
 
 ## Coordinated common upgrade
 

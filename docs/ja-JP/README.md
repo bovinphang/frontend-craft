@@ -116,6 +116,16 @@ Marketplace が既にインストールされている場合、CLI は `--force`
 
 完全な Claude 固有の手順は [docs/runtimes/claude.md](../runtimes/claude.md) · [简体中文](../runtimes/claude.zh-CN.md) にあります。
 
+### ソースからビルド
+
+リポジトリのルートで現在のソースをビルドし、対応ランタイムを確認します。
+
+```bash
+pnpm install --frozen-lockfile
+pnpm run build
+node dist/bin/frontend-craft.js list --json
+```
+
 ---
 
 ## クイックスタート
@@ -140,6 +150,8 @@ Marketplace が既にインストールされている場合、CLI は `--force`
 ```
 
 以下のスラッシュコマンドは **Claude Code** を例に示しています。他のランタイムも各自のコマンドシステムで同等の機能を提供します（[`docs/runtimes/`](../runtimes/) を参照）。
+
+複数の技術領域を含むプロジェクトでは、`fec project inspect . --json` で読み取り専用の調査を行い、適したスキルを確認できます。タスク単位の指定は[プロジェクト調査](../cli-management.md#project-inspection)を参照してください。
 
 ---
 
@@ -192,6 +204,8 @@ Marketplace が既にインストールされている場合、CLI は `--force`
 依存関係のディレクトリ、ビルド成果物、キャッシュ、生成ファイル、第三者コードは既定で除外します。レポートにはモード、対象範囲、レビュー済み・未レビューのファイルやモジュール、除外項目、完了状態、検証結果を記録します。未完了なら部分完了と明記します。呼び出し元の参照や全体の lint・型チェックは手動レビューの完了を意味しません。変更レビューはマージ判断、指定範囲・全体レビューは確認済み範囲のリスク評価を示します。バックエンド監査を代替せず、修正の依頼がなければ業務コードを変更しません。
 
 ### スキル（自動起動）
+
+[スキル一覧](../../skills/)には、フロントエンド専用の 53 個と同梱の共通スキル 21 個、計 74 個のスキルがあります。
 
 スキルはファイルパターン、フレームワーク、タスクコンテキストに基づいて**自動起動**するワークフロー定義です。レビュー観点、出力規約、レポート形式をエンコードしています。
 
@@ -460,7 +474,9 @@ $env:MODAO_TOKEN = "your-modao-token"
 
 ## アップデートと削除
 
-### CLI 自体の管理（3.0）
+既存の環境をアップグレードする前に、利用中のランタイムとインストール範囲を指定して `fec runtime check-migration codex --local --json` を実行してください。共通リソースの互換性と競合への対処は[移行ガイド](../common-migration.md)を参照してください。
+
+### CLI 自体の管理
 
 `fec update`（別名 `upgrade`）は元の npm/pnpm と registry の `latest` でグローバル CLI を更新し、新しい CLI で現在のプロジェクトとユーザー全体の管理リソースを更新します。最新版でもリソースを更新します。他のプロジェクトの走査や Marketplace の管理は行いません。CLI 更新失敗時は停止し、リソースの部分失敗は段階別に報告します。CLI はロールバックせず、`fec runtime update` で再試行できます。
 
@@ -474,13 +490,9 @@ fec uninstall --purge --yes
 
 一時的な npx 実行ではグローバル CLI を作成せず、CLI の削除もできません。npx のトップレベル `update` は実行中のバージョンが registry の `latest` と一致する場合のみリソースを更新します。一致しなければ `npx @bovinphang/frontend-craft@latest runtime update` を使用してください。
 
-| 2.x リソースコマンド | 3.0 の代替 |
-| --- | --- |
-| `fec update [runtime] [options]` | `fec runtime update [runtime] [options]` |
-| `fec uninstall [runtime] [options]` | `fec runtime uninstall [runtime] [options]` |
-| `fec install [runtime] [options]` | `fec runtime install [runtime] [options]` |
+インストールの既定値、一括操作、診断は [CLI 管理ガイド](../cli-management.md)を参照してください。
 
-トップレベル update/uninstall は旧 runtime 引数と `--global` などのリソースオプションを変更前に拒否します。`setup` は継続し、トップレベル `install` は非推奨の互換エイリアスです。リソースオプションと `runtime upgrade/remove` の別名は維持されます。`runtime update` は実行中の CLI パッケージのみを使用し、新しいパッケージをネットから取得しません。
+`runtime update` は実行中の CLI パッケージからリソースを更新します。`runtime upgrade` と `runtime remove` はそれぞれ `runtime update` と `runtime uninstall` の別名です。
 
 `fec` は `frontend-craft` の短いコマンドです。グローバル CLI がない場合、リソース操作には `npx @bovinphang/frontend-craft@latest runtime update`（または `runtime install/uninstall`）を使用してください。
 
@@ -514,7 +526,7 @@ CLI はランタイムディレクトリに `frontend-craft.manifest.json` を�
 
 ---
 
-## レガシー Skills CLI
+## Skill のみインストール
 
 チームがすでにスタンドアロンの [Skills CLI](https://skills.sh/docs/cli) を使用している場合、[`skills/`](../../skills/) 配下のワークフロースキルパッケージのみをインストールできます：
 
@@ -541,48 +553,10 @@ npx skills check                           # 利用可能なアップデート�
 - [変更履歴](../../CHANGELOG.md) — リリースノート（[简体中文](../../CHANGELOG.zh-CN.md)）
 - [プロジェクト構造](../project-structure.md) — 完全なディレクトリレイアウトとファイルの責務
 
+**frontend-craft がチームの助けになったら、[Star をお願いします](https://github.com/bovinphang/frontend-craft)。**
+
 ---
 
 ## ライセンス
 
 [MIT](../../LICENSE) — 自由に使用し、必要に応じて修正し、可能であれば貢献してください。
-
----
-
-<div align="center">
-
-**frontend-craft がチームの助けになったら、[Star をお願いします](https://github.com/bovinphang/frontend-craft)。**
-
-</div>
-
-## 3.0 の共通機能
-
-frontend 3.0.0、backend 1.0.0、craft-common 2.0.0は2026-11-09（Asia/Shanghai）にnpmで公開されました。フロントエンド専用53個と共通21個、合計74個のSkillを提供し、共通依存を`@bovinphang/craft-common@2.0.0`に固定します。
-
-言語・役割・フレームワークを別々に選びます。C/C++には独立した入口があり、Tauri/Electronは共通のデスクトップ専門機能です。製品名で言語を制限しません。
-
-- `cc-c-project-standard`
-- `cc-cpp-project-standard`
-- `cc-debug-methodology`
-- `cc-doc-sync-core`
-- `cc-drawio-studio`
-- `cc-electron-project-standard`
-- `cc-go-concurrency`
-- `cc-go-project-standard`
-- `cc-java-project-standard`
-- `cc-java-runtime`
-- `cc-native-memory-safety`
-- `cc-python-async`
-- `cc-python-project-standard`
-- `cc-refactoring-core`
-- `cc-rust-async`
-- `cc-rust-project-standard`
-- `cc-source-driven-development`
-- `cc-tauri-project-standard`
-- `cc-tdd-methodology`
-- `cc-technical-diagrams`
-- `cc-typescript-project-standard`
-
-`fec runtime check-migration codex --local --json`を実行し、旧CLIで旧共通参照を解除して保存された編集を処理してから、一致する製品を導入します。別の利用者や不明なファイルを強制上書きしません。CLIとネイティブ配布は排他的で、二製品のネイティブ重複排除は保証しません。
-
-[移行](../common-migration.md) · [変更履歴](../../CHANGELOG.md) · [構成](../project-structure.md)

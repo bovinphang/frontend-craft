@@ -1,30 +1,23 @@
 # 变更日志
 
-## 未发布 — 2026-11-09
+[English](CHANGELOG.md)
 
-- 共享产品 CLI 调度、交互、包管理器来源识别、自升级/自卸载与 Claude 缓存管理。
-- 后端基础命令对齐前端；setup 默认本地，普通非交互安装默认全局；保留后端验证和资源所有权保护。
-- 公共包准备 2.1.0，产品版本不变，本轮不发布。
+## 未发布
 
+### 变更
 
-> **English:** [CHANGELOG.md](CHANGELOG.md)
-
-本文件为 [CHANGELOG.md](CHANGELOG.md) 的简体中文镜像，便于中文读者阅读；版本与条目与英文版保持一致。
-
-格式参考 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/)，版本号遵循 [语义化版本](https://semver.org/lang/zh-CN/)。
-
-自 **2.0.0** 起，面向发布的说明以英文 `CHANGELOG.md` 为权威来源；历史条目可能保留最初撰写语言。
+- `fec list --json` 以 JSON 输出支持的宿主列表。`fec setup --json` 将安装诊断写入 stderr。
+- `fec doctor` 在只传选项时仍默认检查 Claude，并在清理缓存前拒绝无效参数。
+- 公共资源改用 `@bovinphang/craft-common@2.1.0`。从 2.0.0 升级前，请先用各已安装产品退出旧公共资源引用。参见[协调升级指南](docs/cli-management.zh-CN.md)。
 
 ## [3.0.0] - 2026-11-09
 
 ### 公共能力抽取
 
-3.0.0已于2026-11-09（Asia/Shanghai）发布。新增分层工程实践、独立React状态案例及真实来源/分发校验，使用已发布的common2.0.0。
-
-- 公共能力由精确依赖craft-common2.0.0交付：21个cc入口与53个前端入口，共74项；C/C++语言基础及Tauri/Electron专项由两产品共同复用。
+- 新增分层工程实践和独立的 React 状态示例。
+- 通过精确依赖 `@bovinphang/craft-common@2.0.0` 交付 21 个公共入口和 53 个前端入口。公共入口包括 C/C++ 语言基础及 Tauri/Electron 专项。
 - 增加共享所有权、版本/语言冲突保护、事务恢复及只读迁移检查。
 - [迁移指南](docs/zh-CN/common-migration.md)说明旧入口处理与独立卸载规则。
-
 
 ### 破坏性变更与迁移
 
@@ -35,35 +28,26 @@
 
 ### 新增
 
-- 验证 npm/pnpm 全局安装归属、复用原包管理器、新入口续跑、分阶段失败报告及只读 `--dry-run`。已是最新版仍刷新资源；CLI 升级失败停止资源操作。资源部分失败不回滚新版 CLI，可通过 `fec runtime update` 重试。
+- 自升级会验证 npm/pnpm 安装归属，复用原包管理器，并支持只读 `--dry-run`。CLI 已是最新版时仍会刷新资源。CLI 升级失败会停止资源更新。部分资源更新失败时，已升级的 CLI 会保留，可用 `fec runtime update` 重试。
 - 临时 npx 更新检查 registry `latest`，不创建全局安装；当前版本不匹配时提示最新版 runtime 命令。npx 不支持自身卸载。源码链接、项目依赖、未知来源及含其他包的 pnpm 共享安装组均在修改前拒绝自动自身管理。
-
-以下条目记录 2.x 历史行为；当前资源命令请使用上述 `runtime` 分组。
 
 ## [2.9.0] - 2026-09-26
 
 ### 新增
 
 - **技术图工具**：新增可选本地 Mermaid 适配器及可复现的时序图、流程图和架构图样例。
-- **文档**：新增中英文审核范围与技术图交付指南。
 - **保持行为的重构子系统**：新增 `fec-refactoring-expert`、`/fec-smell`、`/fec-refactor-plan`、`/fec-refactor`，以及 11 个重构技能，将坏味道诊断、只读规划、受控执行、行为验证、目录选择和 7 类重构手法拆分为清晰能力。
 - **完整重构知识覆盖**：以用户提供的《重构：改善既有代码的设计（第 2 版）》JavaScript 版材料为知识基线，归一化 24 种代码坏味道和第 6～12 章 61 个标准重构手法，建立稳定的 `SMELL-*` / `RF-*` 标识、选择指南、组合关系和渐进式 Reference。
 - **前端专项适配**：补充 TypeScript、React、Vue、hooks/composables、状态管理、路由、异步/生命周期、公开 API、SSR/hydration 与动态引用场景，同时避免把现代前端机械改写为 class hierarchy。
 - **简体中文重构镜像**：在 `localized/zh-CN` 和 `docs/refactoring` 中新增自然中文的 Agent、Command、Skill、目录、坏味道矩阵与导航文档。
 
-- **内容完整性工具**：新增共享 YAML frontmatter 类型校验、中英文能力引用与结构检查，以及 `tests/**/*.test.ts` 自动发现。
-
 ### 变更
 
 - **技术图质量**：通过内容驱动布局、避障连线、可见自调用和增强 QA 保留完整 Unicode 标签。
-- **文档**：同步运行时入口及多语言 README 能力章节，说明工具前提与 QA 边界。
-- **审核范围**：代码、TypeScript 和安全审核流程支持全项目（默认）、指定文件或目录、明确改动或 PR/提交上下文的增量审核。报告记录覆盖范围、排除项、未覆盖范围和部分完成状态；指定范围及全项目审核不要求 Git 差异，输出风险评估。同步多语言 README、运行时指南和提示词示例。
-
+- 代码、TypeScript 和安全审核默认覆盖全项目，也支持指定文件或目录，以及针对明确改动、PR 或提交的增量审核。报告记录覆盖范围、排除项、未审核范围和部分完成状态。全项目和指定范围审核无需 Git 差异。
 - **重构安全模型**：纯重构统一采用 `GREEN → REFACTOR → GREEN`，一次只做一个主要结构变换，每步验证；新增“先回滚再修复”、`SAFE/CAUTION/DANGER` 风险分级、差异预算，以及 `PASS/PARTIAL/NOT PROVEN` 行为保持证明等级。
 - **工作流边界**：新增行为和行为变化型缺陷仍由 TDD 负责；原因未知的失败仍由调试框架负责；已证明的死代码仍由 `fec-refactor-clean` 负责；一般 PR 合并就绪性仍由代码评审负责。
-- **公开能力数量**：README、OpenClaw 文档与 Marketplace 元数据同步为 14 个 Agent、56 个 Skill、11 个 Command。
-
-- **贡献者工具链**：开发与 CI 统一使用 pnpm 12.4.1、冻结锁文件、ESLint、内容 lint 和只读格式检查；版本同步不再自动暂存文件。
+- 本版本包含 14 个 Agent、56 个 Skill 和 11 个 Command。
 - **验证 Hook**：根据项目声明和锁文件选择 npm、pnpm、yarn 或 bun，避免重复执行验证阶段。
 
 ### 修复
@@ -71,13 +55,8 @@
 - **技术图导出**：修复独立 SVG 样式、真实浏览器 PNG 几何测量及与导出图片缩放一致的 manifest。
 - **内容解析与转换**：修复 Agent/Command 的非法 YAML 和过时 reviewer 引用；转换器使用解码后的描述，并安全转义 Codex TOML 指令。同名原始技能继续优先于转换后的命令。
 - **发布 CLI 启动**：内置 YAML 解析器及其 Node 模块桥接，确保隔离 npm 包无需仓库开发依赖即可安装 Codex 和 OpenClaw 内容。
-- **中文内容与重构链接**：同步图表工作流边界、能力标签及关键词，修复目录链接并完善技能摘要。
+- 修复重构目录中的失效链接，完善本地化技能摘要。
 - **受管文件归属**：加强 manifest 路径校验，避免安装或更新操作将受管内容之外的路径纳入管理。
-
-### Chore
-
-- **确定性重构验收**：新增安装级完整性检查，覆盖 24 种坏味道、61 个手法、7 个 family 数量、root/zh-CN 对齐、metadata/relations/eval 注册、命令模式、公开文档与版本同步。
-- **发布验证**：扩充解析、转换、测试发现、Hook 包管理器选择和隔离包安装回归；完整测试共 242 项，打包检查覆盖 OpenClaw 和全部 56 个独立技能包。
 
 ## [2.8.0] - 2026-06-25
 
@@ -98,20 +77,12 @@
 - **`fec-drawio-studio` 质量工作流**：强化手写 draw.io XML 指南，覆盖网格对齐、标签换行、`&#xa;` 换行、可读字号、容器留白平衡，以及 flowchart、architecture、sequence、class、ERD、mindmap、network topology 等图表模式。
 - **`diagram-lint` draw.io warning**：新增 literal `\n` 标签、缺少 wrapping/html 样式、字号过小、顶点未对齐网格、页面越界与重叠 warning，最终交付可用 `--strict` 作为更强质量门。
 - **draw.io shape index 打包**：源 shape index 现在以格式化的 `shape-index.json` 保存，不再使用 gzip JSON；独立技能包在打包时会压缩 data JSON，从而保持发布产物体积紧凑。
-- **OpenClaw 包与文档**：OpenClaw README 现在按使用场景列出全部 45 个 bundled skills 和所有 command docs，语言链接指向 OpenClaw 专用 README 组合，并且 OpenClaw 打包产物命名为 `frontend-craft`。
-- **`typecheck:skill-scripts`**：现在覆盖新增的 `fec-image-generation` 图表渲染、交互服务器与导出脚本。
+- OpenClaw 分发包从 `@bovinphang/frontend-craft` 更名为 `frontend-craft`。
 
 ### 修复
 
 - **OpenClaw README 语言链接**：修复 OpenClaw 文档链接，使英文与简体中文版本指向 `README.openclaw.md` 与 `README.openclaw.zh-CN.md`，不再跳到根 README。
 - **本地化更新行为**：当用户未传入新的 `--lang` 选项时，更新流程会从 `frontend-craft.manifest.json` 保留此前安装的内容语言。
-
-### Chore
-
-- **本地化回归覆盖**：新增 metadata consistency 校验，确保根内容保持英文、简体中文本地化内容是自然中文，并验证本地化 metadata / relations / eval prompts 含有翻译后的正文。
-- **安装器语言测试**：扩展 CLI 与 update 测试，覆盖 `--lang`、不支持语言报错、manifest language 记录、简体中文内容安装与 update 语言复用。
-- **图表工作流测试**：扩展 image-generation 与 draw.io 安装测试，覆盖 HTML 技术图渲染、语义图校验、live diagram server 命令、导出路径、draw.io export dry-run、更严格 lint warning，以及 strict mode 下的重叠失败。
-- **技能打包测试**：新增独立技能包 data JSON 压缩测试，确保打包后压缩 JSON，同时保持源 JSON 语义不变。
 
 ## [2.7.0] - 2026-06-10
 
@@ -122,34 +93,22 @@
 - **`fec-backend-requirements-handoff` 技能**：前端→后端需求交接，描述 UI 数据需求、用户操作、状态、权限、业务规则、不确定点和需要后端澄清的问题，不规定实现方式。
 - **`fec-web-video-presentation` 技能**：将文章、口播稿、课程和 demo 转为可录屏的 16:9 步进式网页演示，包含精简参考文档、starter theme 数据和跨平台 Vite/React 脚手架 helper。
 - **参考文档模块化拆分**：将多个技能的单体参考文档拆分为聚焦模块——`fec-e2e-testing`（e2e-ci-reporting / e2e-special-scenarios / e2e-visual-regression）、`fec-legacy-to-modern-migration`（migration-execution-checklist / migration-strategy-and-mapping）、`fec-performance-optimization`（framework-performance-patterns）、`fec-react-project-standard`（react-project-structure / react-runtime-patterns / react-quality-patterns / react-performance-patterns）、`fec-vue3-project-standard`（vue3-project-structure / vue3-composables-routing / vue3-state-api-quality / vue3-performance-patterns）；各 `SKILL.md` 同步指向新的聚焦参考。
-- **新技能的安装覆盖**：新增 `tests/install/image-generation-skill.test.ts`、`tests/install/drawio-studio-skill.test.ts`，并扩展 `tests/install/ui-design-intelligence.test.ts`（designRead、designDials、按页面意图拨盘行为）和 `tests/install/end-to-end.test.ts`（新技能 id、taxonomy、relations）。
 
 ### 变更
 
-- **BREAKING — `fec-typescript-type-safety` 重命名为 `fec-typescript-project-standard`**：技能目录、id 与 metadata 条目已统一重命名；原 type-safety 内容作为 `references/type-safety.md` 收纳到新技能下，并新增顶层 `SKILL.md` 覆盖 TypeScript 项目规范（配置、对外 API 类型、声明文件、DTO、泛型）。`agents/fec-typescript-reviewer.md`、`skills/metadata.json`、`skills/relations.json` 中的引用已同步更新。**迁移指引**：将所有 `fec-typescript-type-safety` 引用（agent / skill frontmatter、`relations.json`、评测样例、自定义文档）替换为 `fec-typescript-project-standard`。
-- **Skill 分类 — `project-standard` 类别落地**：2.6.0 已在 metadata 中声明 `project-standard` 分类，本版本正式将重命名后的 TypeScript 技能归入该类，并同步各语言 README 技能表。原有 7 个分类保持不变。
-- **技能数量**：41 → 45，已同步到各语言 README（en / zh-CN / zh-TW / ja-JP / ko-KR）、`skills/metadata.json`、`.claude-plugin/marketplace.json` 描述与 `skills/eval_queries.json` 触发评测样例。README 文案、项目结构文档、示例提示表对每个能力条目按类型（skill / agent / cmd）重新打标。
-- **`fec-ui-design` 增强**：新增产品语境读取、设计拨盘（`visualTension`、`motionIntensity`、`informationDensity`、`mediaAuthenticity`、`contentPersuasion`）、反通用化 UI 引导与视觉参考策略；扩展 `design-system.mjs` 脚本、`style-archetypes.json`、`ux-quality-rules.json`、`design-intelligence.md` 与 `pre-delivery-checklist.md` 数据；同步更新多语言 README 与项目结构文档。
+- **破坏性变更。** `fec-typescript-type-safety` 更名为 `fec-typescript-project-standard`，覆盖 TypeScript 配置、公开 API 类型、声明、DTO 和泛型。请将自定义引用更新为新技能 ID。原类型安全指南位于新技能的 `references/type-safety.md`。
+- 更名后的 TypeScript 技能归入 `project-standard` 分类。
+- 技能目录从 41 项增至 45 项。
+- `fec-ui-design` 新增产品上下文识别、视觉方向、设计拨盘、避免通用化 UI 的指导和视觉参考策略。设计拨盘包括 `visualTension`、`motionIntensity`、`informationDensity`、`mediaAuthenticity` 和 `contentPersuasion`。
 - **`fec-motion-interaction` 增强**：新增 context-aware motion intensity 引导，与 `fec-ui-design` 设计拨盘对齐。
 - **`fec-implement-from-design` 增强**：在原有 Figma / Sketch / MasterGo / Pixso / 墨刀 / 摹客 基础上，新增 screenshot / section-level 视觉参考输入。
-- **`fec-drawio-studio` lint 强化**：`diagram-lint` 禁止 XML 注释、未转义 `&` 与尖括号、自闭合边单元格、缺失根 / 图层单元格，并对顶点标签内未带 `html=1` 样式的 HTML 内容发出警告。安装测试覆盖 `diagram-url` 与 `diagram-lint`。
+- `diagram-lint` 拒绝 XML 注释、未转义的 `&` 和尖括号、自闭合边单元格，以及缺失的根或图层单元格。顶点标签缺少 `html=1` 时会给出警告。
 - **`fec-legacy-to-modern-migration`、`fec-tailwind-design-system`、`fec-responsive-layout`**：补充 Playwright 等效的验证指引，要求迁移与视觉敏感类任务构建前后行为清单并按风险选择合适的验证层（Playwright / 视觉 diff / typecheck / 单测）。
 - **Shared rules 精简**：`templates/shared/rules/fec-*.md` 收敛为项目常驻的硬约束；UI 设计、Tailwind 设计系统、响应式布局、TypeScript 建模、错误处理框架内部细节、渲染模式等产品化内容转由对应技能承载；`fec-i18n.md`、`fec-responsive-design.md`、`fec-typescript.md`、`fec-state-management.md`、`fec-design-system.md`、`fec-rendering-patterns.md`、`fec-error-handling.md`、`fec-ci-cd.md`、`fec-refactoring.md` 同步精简。
-- **多语言 README 同步**：在 5 个语言版本中补齐 `fec-drawio-studio` 的「XML/Mermaid/CSV URL 交付」描述与 `fec-ui-design` 的设计拨盘表述；将已移除的 `/fec-build-fix` 斜杠命令与 `fec-build-fixer` agent 引用替换为 `/fec-debug` 与 `fec-debugger`；`docs/example-prompts.md` 及其 zh-CN 镜像已覆盖全部 45 个技能。
-- **Marketplace 元数据**：`marketplace.json` 描述与 `package.json` keywords 同步反映 45 个技能面，并按仓库 prettier 配置重新缩进。
-- **`fec-doc-sync` 范围**：继续保持对 env 说明、脚本、API / 路由说明与部署事实的覆盖；示例提示、`/fec-doc-sync` 命令文档与 `skills/metadata.json` 已对齐。
 
 ### 移除
 
 - **`fec-typescript-type-safety` 技能目录**：原目录已移除；其内容迁移至 `fec-typescript-project-standard` 的 `references/type-safety.md`。如自定义规则、agent、skill 引用了旧 id，请同步更新。
-
-### Chore
-
-- **JSON 元数据重排**：`marketplace.json` 与 `skills/metadata.json` 缩进与末尾换行风格统一。
-- **项目结构文档**：`docs/project-structure.md` 及其 `zh-CN` 镜像同步列举新技能与重组后的参考模块。
-- **安装测试覆盖**：新增 `tests/install/image-generation-skill.test.ts`、`tests/install/drawio-studio-skill.test.ts`；现有 end-to-end 与 metadata-consistency 测试同步更新以断言新技能 id、taxonomy 与 relations。
-- **技能脚本类型检查**：`typecheck:skill-scripts` 同时覆盖 `skills/fec-image-generation/scripts/png-qa.mjs`。
-
 
 ## [2.6.0] - 2026-06-07
 
@@ -157,39 +116,24 @@
 
 - **`fec-alchemy` 技能**：新增「项目吸收与原创化融合」工作流，从参考系统提取可借鉴的设计并以项目原生方式重构为原创能力；随附 `SKILL.md`、intake / absorption-plan 模板，以及涵盖方法论、原创性、许可证的参考文档。
 - **`fec setup all` 子命令**：一键为所有受支持的 runtime 安装 frontend-craft，默认安装到当前项目，除非显式传入 `--global`；帮助文本现在区分终端 `fec setup` 命令与 AI 助手内的 `/fec-init` 斜杠命令。
-- **README 技能表补全 `fec-debug-framework`**：该技能此前已在 `skills/` 中提供，现统一收录到各语言 README 技能表与 marketplace 元数据中。
-- **`scripts/sync-version.ts`**：将 `package.json` 的版本号同步到 `.claude-plugin/plugin.json`、`.claude-plugin/marketplace.json`（包含 npm source 钉版）、`openclaw.plugin.json`，以及 `skills/metadata.json` 的每条技能记录。可通过 `npm run sync:version` 执行；已接入 `version` 生命周期脚本。
 - **技能打包脚本压缩**：`pack-skills.ts` 与 `skill-packaging.ts` 在构建期通过 esbuild 压缩，输出到 `skill-packages/` 的独立技能包体积更小。
 - **关键技能参考文档**：为 `fec-debug-framework`、`fec-performance-optimization`、`fec-refactor-clean`、`fec-validation-fix` 新增独立参考文档，从各 `SKILL.md` 本地化后的「详细参考」一节链接。
 
 ### 变更
 
-- **`fec-doc-sync` 同步范围扩展**：文档同步工作流与技能描述现在覆盖环境变量说明、脚本、接口/路由说明与部署文档，不再局限于面向用户的文档；示例提示词、`/fec-doc-sync` 命令文档以及 `skills/metadata.json` 同步更新。
-- **技能分类新增 `project-evolution`**：在原 `implementation-capability` / `testing` / `review-quality` / `design-ui` / `legacy-migration` / `maintenance-docs` 之外新增 `project-evolution`，`fec-alchemy` 归入此类；各语言 README 技能表、marketplace 关键词以及 `tests/install/metadata-consistency.test.ts` 白名单同步更新。
-- **技能数量**：40 → 41，已同步到各语言 README 与 `skills/metadata.json`。
-- **README 安装章节重构**：en / zh-CN / zh-TW / ja-JP / ko-KR 五种语言的 README 重新组织为 3 个安装选项（从 4 个收敛），步骤编号 1–6，并补充 `--local` / `--global` 两种场景下的 `install --all` 示例，新增「Preview / query」步骤展示 `dry-run` 与 `fec list`。「选项 1」改为「全局安装 fec CLI」，使 `npm install -g` 步骤不再有歧义；Claude Code Marketplace 下移至「选项 3」。
-- **CLI setup 帮助文本**：明确说明 `npm install -g` 仅安装终端 `fec` 命令，若要写入 AI 工具的全局配置需额外传 `--global`；脚本化的全 runtime 安装必须使用 `install --all`，不能使用 `install all`。
-- **`SKILL.md` References 本地化**：每份 `SKILL.md` 的「References」章节标题统一为「详细参考」，与既有中文优先的文档约定一致。
-- **`pnpm-lock.yaml` 纳入版本控制**：pnpm 已成为仓库规范化的包管理器。
-- **Marketplace 插件 source 钉版**：`marketplace.json` 的 source 字段现由 `sync-version.ts` 与 `package.json` 保持一致，无需手工修改。
-- **CLI 项目 setup 命令重命名**：终端里的项目初始化快捷命令从 `fec init` / `frontend-craft init` 重命名为 `fec setup` / `frontend-craft setup`；AI 助手内的 `/fec-init` 斜杠命令保持不变。`src/install/cli.ts` 的帮助文本、命令分发与默认安装位置同步更新；`tests/install/cli.test.ts` 已断言新 `setup` 命令并校验旧 `init` 会被拒绝。
+- `fec-doc-sync` 新增环境说明、脚本、API 和路由说明以及部署文档的同步范围。
+- 技能目录新增 `project-evolution` 分类，其中包含 `fec-alchemy`。
+- 技能目录从 40 项增至 41 项。
+- 终端项目初始化命令从 `fec init` / `frontend-craft init` 更名为 `fec setup` / `frontend-craft setup`。助手内的 `/fec-init` 命令继续可用。
+- 脚本中可用 `install --all` 安装到所有宿主。传入 `--global` 可写入各宿主的全局配置。
 
 ### 修复
 
-- **插件安装命令作用域**：README、runtime 文档与 marketplace 描述现在统一引用 `@bovinphang/frontend-craft` npm 作用域；先前未带作用域的 `@frontend-craft` 引用已修正。
+- npm 包名改为 `@bovinphang/frontend-craft`。请更新仍使用旧作用域的安装命令。
 
 ### 移除
 
 - **CLI `init` 命令**：终端 CLI 不再接受 `init`，遇到时直接退出并提示「Unknown command: init」；本地项目 setup 请改用 `setup`。
-
-### 工程
-
-- **`SKILL.md` BOM 清理**：从 23 份 `SKILL.md` 的首行移除 UTF-8 字节顺序标记（BOM, U+FEFF），避免部分编辑器与工具把首字符渲染为不可识别字形。
-- **JSON 元数据格式统一**：`sync-version.ts` 迁移后，统一 `marketplace.json` 与 `skills/metadata.json` 的缩进与末尾换行规范。
-- **`CONTRIBUTING` 贡献指南**：补充分场景的检查指引（技能编写、安装器变更、runtime 模板变更、OpenClaw 打包），让贡献者在提 PR 前明确应执行哪些命令。
-- **Runtime 文档**：在 `docs/runtimes/` 的各 runtime 安装文档中补充构建与 Marketplace 排错说明。
-- **npm 包作用域迁移**：发布包更名为 `@bovinphang/frontend-craft`；安装命令、`pack:skills` 输出路径、README 徽标与 OpenClaw staging 路径同步刷新。
-
 
 ## [2.5.0] - 2026-06-01
 
@@ -204,24 +148,13 @@
 
 - **Runtime 安装源冲突**：新增检测与交互式解决机制，当同一 runtime 从不同来源（如 Marketplace 与 CLI）安装时，防止意外覆盖并引导用户完成冲突解决。
 
-### 变更
-
-- **安装文档**：更新所有 5 种语言的 README 安装章节，补充 runtime 选择选项、卸载/移除命令文档和源冲突指引。
-- **README 同步**：同步所有 README 翻译中的 Agent 名称、设计工具、规则文件数量、徽章和措辞。
-
-### 工程
-
-- **类型安全**：为 `design-system.mjs` 补充 JSDoc 类型注解，并扩展 `typecheck` 脚本以覆盖 skill 脚本。
-- **元数据格式**：统一 marketplace 和 skills 元数据文件的 JSON 格式。
-
 ## [2.4.0] - 2026-05-29
 
 ### 新增
 
-- **调试工作流**：新增 `/fec-debug` 斜杠命令（按类型自动路由）、`fec-debugger` agent（复杂诊断场景）和 `fec-debug-framework` skill（5 步诊断方法论）。
+- 新增 `fec-performance-optimization`（Core Web Vitals、内存泄漏、性能预算）、`fec-source-driven-development`（证据驱动决策）、`fec-state-management`、`fec-typescript-project-standard`、`fec-dependency-upgrade`、`fec-responsive-layout` 和 `fec-tailwind-design-system`。
 - **6 个新技能**：`fec-performance-optimization`（Core Web Vitals、内存泄漏、性能预算）、`fec-source-driven-development`（基于官方文档验证的证据驱动决策）、`fec-state-management`（状态架构模式）、`fec-typescript-project-standard`（TypeScript 项目规范与类型安全）、`fec-dependency-upgrade`（依赖升级规划）、`fec-responsive-layout`（响应式布局策略）和 `fec-tailwind-design-system`（基于 Tailwind 的设计系统实现）。
 - **2 个新集成技能**：`fec-api-integration` 和 `fec-motion-interaction`。
-- **示例提示库**：新增 `docs/example-prompts.md` 和 `docs/zh-CN/example-prompts.md`，涵盖技能、Agent、命令、设计工作流、测试、维护和运行时配置等场景化提示目录；已在所有 README 变体中添加链接。
 - **UI 设计系统生成器**：新增 `design-system.mjs` 生成器，包含产品规则、风格原型、UX 质量和 Stack UI 规则数据包；支持 `--persist` 和 `--page` 标志生成 `MASTER.md` 和页面覆盖。
 
 ### 变更
@@ -229,10 +162,10 @@
 - **Agent 重命名**：将 8 个 Agent 从 `fec-frontend-*` 重命名为更短的 `fec-*` 前缀；将 `fec-frontend-code-review` 技能替换为 `fec-code-review`。
 - **技能合并**：将 `fec-interface-polish` 和 `fec-ui-design-direction` 合并为统一的 `fec-ui-design` 技能，同时覆盖产品级视觉方向和细节级打磨。
 - **UI 设计增强**：为 `fec-ui-design` 新增设计系统生成、Master/Page 覆盖、图表 UX、色彩韵律、视觉纹理、反泛化打磨和视觉识别检查。
-- **技能分类**：从 4 个类别细化为 7 个——`implementation-capability`、`testing`、`review-quality`、`design-ui`、`legacy-migration`、`maintenance-docs`；已同步更新 5 种语言的 README 表格。
-- **统一规划入口**：将 `/fec-test-plan` 合并到 `/fec-plan`，根据用户意图自动分流到实施规划或测试策略规划；已更新所有 README 变体、openclaw 文档、示例提示、项目结构和 Marketplace 元数据（9 → 8 个命令）。
-- **规则命名**：所有模板共享规则统一添加 `fec-` 前缀；已更新 README、CHANGELOG、Agent、命令、技能、安装器和测试。
-- **技能描述**：优化技能描述、提示示例和 README 排版；明确 `fec-storybook-component-doc` 的范围为组件文档、设计系统展示和隔离状态预览。
+- 技能分类从四类扩展为七类。
+- `/fec-plan` 现同时处理实施规划和测试策略，测试规划请从 `/fec-test-plan` 迁移到 `/fec-plan`。
+- 共享规则模板统一采用 `fec-` 前缀。
+- `fec-storybook-component-doc` 覆盖组件文档、设计系统展示和隔离状态预览。
 
 ### 修复
 
@@ -250,14 +183,11 @@
 
 - **Claude 缓存清理 hook**：新增 `fec-cleanup-claude-cache` hook，用于在会话启动时自动管理 Claude 缓存。
 - **缓存诊断**：为 `frontend-craft doctor claude` 新增 `--fix-cache` 和 `--dry-run` 参数，用于检查和清理过期缓存条目。
-- **新模块**：`src/install/claude-cache.ts`，提供缓存报告生成、清理逻辑和结果渲染。
-- **Hook 注册**：在 `hooks/hooks.json` 和 `scripts/build-dist.ts` 中注册 `fec-cleanup-claude-cache`。
 
 ### 变更
 
 - **Doctor 命令**：扩展 `doctor` 报告，当 runtime 为 `claude` 时自动显示 Claude 缓存状态。
-- **安装文档**：明确 Claude Code Marketplace 作为 Claude Code 用户的首选单一安装来源；记录 CLI install/update 即使带 `--force` 也会拒绝 Marketplace 管理的 Claude 安装，并说明 CLI local/global 冲突需保持已安装来源更新，或先卸载再切换。
-- **测试覆盖**：新增 `tests/install/claude-cache.test.ts`；扩展 end-to-end、metadata 一致性及 update 测试覆盖。
+- CLI 安装和更新会拒绝 Marketplace 管理的 Claude 安装，传入 `--force` 时亦然。切换 CLI 的本地或全局安装范围时，可继续更新现有范围，或先卸载再切换。
 
 ## [2.3.0] - 2026-05-22
 
@@ -266,16 +196,12 @@
 - 新增工作流能力：`fec-tdd-workflow`、`fec-refactor-clean`、`fec-doc-sync`、`/fec-plan`、`/fec-tdd`、`/fec-build-fix`、`/fec-refactor-clean`、`/fec-doc-sync`，以及 `fec-build-fixer`、`fec-refactor-cleaner`、`fec-doc-updater`。
 - 新增 agent workflow 与 working modes 共享规则，并扩展 testing、performance、refactoring、git、comment 规则，补充 TDD、增量验证、清理和文档同步指导。
 - **更新/升级命令**：新增 `frontend-craft update` 和 `frontend-craft upgrade`，基于 manifest 文件保护机制，支持安全就地更新而不会覆盖用户已修改的文件。
-- **esbuild 压缩**：在构建流水线中新增 esbuild 压缩步骤，使 `dist/` 编译产物更小。
-- **版本同步脚本**：新增 `scripts/sync-version.ts`，在 `package.json`、`openclaw.json` 及 skill manifest 之间自动传播版本号，保持各元数据文件一致。
+- npm 包包含体积更小的编译后 JavaScript 产物。
 
 ### 变更
 
 - 增强 `fec-validation-fix` 的增量 build-fix 行为，并在 Node 安全 hook 中加入跨平台长命令日志提示。
-- **构建流水线重构**：将 hook 脚本从 `hooks/` 迁移至 `src/hooks/`，构建流水线切换为 tsx 编译，CLI 入口打包至 `dist/bin/`，npm 发布包不再包含 `dist/src/`。
-- **安装模块类型注解**：为安装模块补充完整的 TypeScript 类型标注，提升类型安全与编辑器体验。
-- **README 布局**：将详细目录树替换为简要摘要与完整项目结构文档的链接。
-- **CONTRIBUTING 文档**：更新 `CONTRIBUTING.md` 与 `CONTRIBUTING.zh-CN.md`，反映 tsx 构建流水线及 hook 脚本迁移至 `src/hooks/` 的变更。
+- npm 包现在从 `dist/` 交付打包后的 CLI 和编译后的 Hook，移除了 `dist/src/`。
 
 ### 修复
 
@@ -285,41 +211,33 @@
 
 ### 新增
 
-- **Qoder runtime 支持**：新增 `qoder` 安装器、runtime 文档、能力元数据、README 说明和 Marketplace 关键词。通用安装器现在记录并支持 15 个 AI coding runtime。
+- 新增 Qoder 支持，安装器现覆盖 15 个 AI 编程宿主。
 - **测试策略工作流**：新增 `fec-test-planner`、`/fec-test-plan` 和 `fec-testing-strategy`，用于按风险规划前端测试层级，覆盖静态检查、单元、组件、集成、E2E、视觉、无障碍、安全与性能等维度。
 - **新前端工作流技能**：新增 `fec-ui-design-direction`、`fec-interface-polish` 和 `fec-vite-project-standard`；原验证修复流程改为 `fec-validation-fix`。
 - **独立 skill 发布管线**：新增 `scripts/pack-skills.ts`、`scripts/check-skills-publish.ts`、共享 skill 打包工具，以及 `npm run pack:skills`、`npm run check:skills-publish`、`npm run pack:all`，可为每个 skill 生成并校验独立可发布包。
 - **CLI 诊断与 metadata 检查**：新增 `frontend-craft matrix`、`frontend-craft doctor <runtime>` 和 `frontend-craft sync-metadata --check`，用于查看 runtime 能力矩阵、安装健康状态与公开 metadata 一致性。
-- **Skill 评估数据集**：新增 `skills/eval_queries.json`，用于验证 skill 发现与路由质量。
 
 ### 变更
 
-- **TypeScript 迁移**：将通用 CLI、安装器、runtime 转换器、hook 脚本、OpenClaw 打包脚本和测试从 `.mjs` 迁移到 TypeScript，并通过 `dist/` 下的编译产物作为运行入口。
-- **Agentskills 兼容的 skill 布局**：所有 skill 目录统一为 `fec-*` 命名，补充 frontmatter 与 references 文件结构，将 `skills/metadata.json` 扩展至 28 个 skills，并同步英文、简体中文、繁体中文、日文和韩文 README 的技能目录树。
+- 技能目录采用 Agent Skills 布局和 `fec-*` 前缀。本版本包含 28 个技能。
 - **Runtime 能力模型**：新增显式的 runtime 能力分层，覆盖 skills、agents、commands、hooks、rules、templates、MCP、reports 与 init 行为，使安装器输出和文档能准确反映不同 runtime 的支持范围。
-- **Claude/OpenClaw 打包元数据**：刷新插件描述、支持的 runtime 关键词与 hook 命令示例，使其匹配 TypeScript 构建产物以及当前 10 agents / 28 skills / 4 commands 的能力范围。
 - **发布产物布局**：`pack:skills` 现在将独立 skill 发布包写入根目录 `skill-packages/`，不再写入 `dist/skill-packages/`，让独立发布包与 TypeScript 构建产物分离。
-- **干净的 TypeScript 构建**：`npm run build` 现在会在编译前清理 `dist/`，避免历史生成的 JavaScript 文件混入后续打包产物。
+- `npm run build` 在编译前清理 `dist/`，避免陈旧的 JavaScript 混入新包。
 
 ### 修复
 
 - **根 npm 包内容**：收紧 npm `files` 清单，`npm pack` 只发布编译后的 `dist/` 运行时代码和插件资产，不再泄漏 `bin/`、`src/`、`scripts/` 下的 TypeScript 源码。
-- **打包回归测试**：新增 npm pack 校验，防止 TypeScript 源码泄漏、无对应源码的陈旧编译文件残留，以及根 npm 包误包含独立 `skill-packages/`。
 
 ### 移除
 
 - 迁移到 `fec-*` 布局后，移除旧的无前缀 skill 目录。
-- 移除已不匹配当前包结构的旧迁移文档与 skills fusion 评估文档。
 
 ## [2.1.2] - 2026-05-20
 
 ### 变更
 
-- **CONTRIBUTING 文档**：完善 `CONTRIBUTING.md` 与 `CONTRIBUTING.zh-CN.md`，新增项目结构概览、本地开发与调试指南、测试说明（Node.js `node:test`、单文件运行、通过 `FRONTEND_CRAFT_FORCE_INTERACTIVE=1` 测试交互模式）、OpenClaw 构建管线（`build`/`typecheck`/`pack`）、`scripts/` 目录参考表，以及安装器架构关系图。
-
-- **OpenClaw 包重命名**：`frontend-craft-openclaw` → `frontend-craft`。npm 包名、tarball 文件名及 README 引用全部更新。打包产物改写入 `npm-packages/openclaw/` 而非仓库根目录。影响 `scripts/openclaw/pack-openclaw.ts`、`README.md`、`README.zh-CN.md`、`README.openclaw.md`、`README.openclaw.zh-CN.md` 及 `docs/MIGRATION-FROM-LEGACY-REPOS.md`。CHANGELOG 中 2.0.0/2.0.1 历史条目也已同步修正。
-
-- **交互式安装向导**：将数字选择提示升级为 TTY 交互式可选 prompt 系统，支持 ↑↓ 导航、Space 切换、Backspace 删除、搜索过滤和分页。影响 `src/install/interactive.ts`，并在 `tests/install/cli.test.ts` 中新增测试覆盖。
+- OpenClaw 包从 `frontend-craft-openclaw` 更名为 `frontend-craft`。归档文件改为输出到 `npm-packages/openclaw/`。
+- 交互式安装器将数字选项替换为方向键导航、空格切换、退格移除、搜索过滤及分页。
 
 ## [2.1.1] - 2026-05-19
 
@@ -327,15 +245,13 @@
 
 - **11 个新技能**：`fec-data-fetching`（TanStack Query）、`fec-form-handling`（React Hook Form + Zod）、`fec-browser-storage`（客户端持久化）、`fec-route-protection`（权限路由）、`fec-component-testing`（RTL / Vue Test Utils）、`fec-storybook-component-doc`（Storybook 文档）、`fec-list-virtualization`（react-window / TanStack Virtual）、`fec-pwa-implementation`（PWA）、`fec-web-workers`（Web Worker）、`fec-canvas-threejs`（Canvas/Three.js/R3F）、`fec-svg-animation`（SVG 动画）。
 - **共享规则**：`responsive-design.md`、`rendering-patterns.md` — 通过 `/fec-init` 部署。
-- **metadata 一致性测试**：`tests/install/metadata-consistency.test.ts` 校验 `skills/metadata.json`、README 表格与 Marketplace 描述保持同步。
 
 ### 变更
 
 - **Agent 行为（`fec-code-reviewer`）**：默认只输出评审报告，不再修改业务文件，除非用户明确要求。
 - **Skill 结构**：React、Vue、Next.js、Nuxt、Monorepo、legacy-web、legacy-migration、implement-from-design 等技能统一为五段式结构：Purpose / When to Use / Procedure / Constraints / Expected Output。
 - **脚手架模板**：修正 React CSS import（`import './<Name>.styles.css'` 替代模块化导入）；Vue 模板使用 `<slot />` 替代裸组件标签。
-- **Marketplace 描述**：skills 数量从 13 → 24，补充新能力（组件测试、路由保护、PWA、Web Workers、Canvas/Three.js、SVG 动画）。
-- **Skills 融合评估报告**（`docs/skills-fusion-assessment.md`）：从 399 行精简为 64 行结论版，附覆盖矩阵。
+- 技能目录从 13 项增至 24 项。
 
 ## [2.0.1] - 2026-05-14
 
@@ -343,30 +259,23 @@
 
 - **Claude Code 插件 hooks：** `hooks/hooks.json` 中引用内置 `dist/scripts/*.js` 时使用 **`${CLAUDE_PLUGIN_ROOT}`**，以便在 Marketplace 与 **`--plugin-dir`** 加载时由 Claude Code 正确替换插件根路径。运行时**不会**替换 **`${FRONTEND_CRAFT_ROOT}`**，在 **Windows + Git Bash** 下可能导致 hook 解析到 Git 安装目录下的错误路径。
 
-### 变更
-
-- **版本号：** 根 npm 包、`.claude-plugin` 清单、`openclaw.plugin.json` 以及 `npm-packages/openclaw/` 中的 **`frontend-craft`** 暂存包均升至 **2.0.1**。
-
 ## [2.0.0] - 2026-05-14
 
 ### 新增
 
 - **通用 CLI** `frontend-craft`：`install`、`list`、`version`、`uninstall`（卸载仅为提示）；支持 runtime：Claude Code、Codex、Cursor、Windsurf、OpenCode、Kilo、Gemini CLI、Copilot、Antigravity、Augment、Trae、CodeBuddy、Cline、OpenClaw（`src/install/`、`bin/frontend-craft.ts`）。在 TTY 下执行 `npx frontend-craft` / 无 runtime 的 `install` 可进入交互向导；支持 `--local` / `-l` 安装到当前项目。
-- **根目录 `package.json`**：Node 22+ `engines`、npm `files` 清单、通过 `node --test` 运行的测试。
+- 根 npm 包要求 Node.js 22 或更高版本。
 - **`templates/shared/rules`** 与 **`templates/claude/`** 布局；Codex 模板在 **`templates/codex/`**；OpenClaw 模板在 **`templates/openclaw/`**。
-- **`openclaw.plugin.json`** 与 **`src/openclaw/`** TypeScript 插件（由原 `frontend-craft-openclaw` 合并）；`npm run build:openclaw` 构建，`npm run pack:openclaw` 在 **`npm-packages/openclaw/`** 生成 **`frontend-craft-<version>.tgz`**（打包过程会暂存至 `npm-packages/openclaw/`）。
-- **`docs/runtimes/*.md`** 各 runtime 安装摘要（含非交互场景下 `--local` / `--global` 提示）。
+- OpenClaw 插件并入 `frontend-craft`。运行 `npm run build:openclaw` 构建插件，再运行 `npm run pack:openclaw` 在 `npm-packages/openclaw/` 生成 `frontend-craft-<version>.tgz`。
 - **`LICENSE`**（MIT）。
-- **开源治理**：英文 `CONTRIBUTING.md`、简体中文 **CONTRIBUTING.zh-CN.md**、`SECURITY.md` / **SECURITY.zh-CN.md**、`CODE_OF_CONDUCT.md` / **CODE_OF_CONDUCT.zh-CN.md**、**CHANGELOG.zh-CN.md**、GitHub Issue 模板、PR 模板与 CI 工作流。
 
 ### 变更
 
-- **CLI 安装体验：** 非交互终端在缺少 runtime 或缺少安装范围时，默认 **全局 `claude`** 并打印提示；TTY 下可询问 Global / Local，除非已传入 `--global` / `--local`；`install` 参数中的 `--help` / `-h` / `help` 仅打印帮助，不执行安装。
-- **Hooks** 与文档中的脚本路径改用 **`${FRONTEND_CRAFT_ROOT}`**（安装器仍会将旧占位符 `${CLAUDE_PLUGIN_ROOT}` 展开以兼容）。
+- 非交互模式下，缺省宿主和安装范围分别为 Claude 和全局安装。交互终端未指定 `--global` 或 `--local` 时会提示选择范围。`install --help`、`-h` 和 `help` 只显示用法。
+- Hook 脚本路径改用 `${FRONTEND_CRAFT_ROOT}`。安装器仍会展开旧配置中的 `${CLAUDE_PLUGIN_ROOT}`。
 - **斜杠命令** 采用防冲突的 **`/fec-*`** 前缀：`/fec-init`、`/fec-review`、`/fec-scaffold`。旧根命令（`/init`、`/review`、`/scaffold`）及 `/frontend-craft:*` 名称不再发布。
-- **`commands/fec-init.md`** 已按新模板路径更新。
+- `/fec-init` 改用新的模板路径。
 - **`scripts/sync-codex-agents-toml.ts`** 需要 **`CODEX_AGENTS_DIR`**（默认不再写入本仓库）。
-- **README** 已补充贡献、安全、行为准则与 CI 状态链接，便于国际贡献者。
 
 ### 移除
 
@@ -383,8 +292,6 @@
 - `fec-monorepo-project-standard` skill — Monorepo 项目规范
 - `rules/fec-ci-cd.md` 模板 — CI/CD 流水线规范
 - `rules/fec-refactoring.md` 模板 — 重构项目约束（图片、样式、功能等价）
-- CONTRIBUTING.md — 贡献指南
-- CHANGELOG.md — 版本变更记录
 
 ### 变更
 
@@ -405,5 +312,4 @@
 - Hooks：SessionStart、PreToolUse、PostToolUse、Stop、Notification
 - 11 个规则模板：CLAUDE.md、settings.json、vue、react、design-system、testing、git-conventions、i18n、performance、api-layer、state-management、error-handling、naming-conventions
 - MCP 集成：Figma、Sketch、MasterGo、Pixso、墨刀
-- 多语言 README：English、简体中文、繁體中文、日本語、한국어
 - 报告自动保存为 Markdown 至 `reports/` 目录

@@ -1,8 +1,22 @@
-# frontend-craft3.0公共能力迁移
+# 公共能力迁移
 
-当前精确公共依赖为`@bovinphang/craft-common@2.0.0`，craft-common 2.0.0、frontend-craft 3.0.0、backend-craft 1.0.0 均已于2026-11-09（Asia/Shanghai）发布至 npm，版本号不变。路径、规划会话、所有权、锁和可恢复事务复用common；产品保留内容转换与自身CLI/原生渠道策略。
+## 当前兼容要求
 
-3.0交付53个前端和21个公共入口，共74项。公共1.0.1的事务恢复修复保留在2.0.0中；1.x或开发快照不能与2.0.0混用。先用各旧产品CLI退出全部旧公共引用并处理保留编辑，再安装匹配产品；不强制覆盖共享资源。公开安装须等待common及相应产品实际发布与源策略允许。
+多个产品共用同一 Skill 目标时，公共依赖版本、语言和内容摘要必须一致。升级前先运行 `fec runtime check-migration codex --local --json`，并按实际宿主和作用域调整命令。发现旧引用或所有权冲突时，按 [CLI 管理指南](../cli-management.zh-CN.md) 的协调升级步骤处理。
+
+## CLI 命令迁移
+
+| 2.x 资源命令 | 3.0 替代命令 |
+| --- | --- |
+| `fec update [runtime] [options]` | `fec runtime update [runtime] [options]` |
+| `fec uninstall [runtime] [options]` | `fec runtime uninstall [runtime] [options]` |
+| `fec install [runtime] [options]` | `fec runtime install [runtime] [options]` |
+
+## 公共内容迁移背景
+
+Frontend Craft 3.0 的公共能力迁移使用精确依赖 `@bovinphang/craft-common@2.0.0`。路径、规划会话、所有权、锁和可恢复事务复用common；产品保留内容转换与自身CLI/原生渠道策略。
+
+3.0交付53个前端和21个公共入口，共74项。公共1.0.1的事务恢复修复保留在2.0.0中；1.x或开发快照不能与2.0.0混用。先用各旧产品CLI退出全部旧公共引用并处理保留编辑，再安装匹配产品；不强制覆盖共享资源。
 
 | 原入口 | 3.0 用法 |
 | --- | --- |
@@ -43,13 +57,13 @@ fec runtime update codex --local
 
 CLI 共享安装已纳入双消费者验收。Claude/OpenClaw 原生插件渠道交付完整公共快照，本期不承诺两个原生产品同时启用时的去重。公开 registry 的公共包发布是独立发布步骤，本次开发不自动执行发布。
 
-## 2026-11-08 coordinated2.0.0 upgrade / 当前协调升级
+## craft-common 2.0.0 历史升级记录
 
-Current releases: common 2.0.0, frontend 3.0.0 and backend 1.0.0; all published on npm. 2.0.0同样要求版本、语言和摘要一致；不自动升级另一个产品。
+此历史流程对应 common 2.0.0、frontend 3.0.0 和 backend 1.0.0。共享安装要求版本、语言和摘要一致。请分别升级各产品。
 
 1. Back up user edits and inspect local/global/runtime identity. 备份修改，确认安装范围。
 2. With each OLD product CLI, uninstall its runtime resources and resolve preserved edits until both old common consumers exit. 使用各旧 CLI 退出旧公共引用，不用新 CLI 越权接管。
-3. Install both matching product builds using verified artifacts; public clean install must wait for common publication. 安装新匹配产品前执行 runtime check-migration。
+3. 运行 `fec runtime check-migration`，再安装公共依赖匹配的产品构建。
 4. Managed unchanged legacy language entries retire in the same transaction as new cc deployment. Unknown files, edits, links or invalid ownership block the whole install; dry-run writes nothing. 原领域入口不建立假别名。
 
 Rename: fec-typescript-project-standard → cc-typescript-project-standard; bec-{rust,go,java,python,c,cpp}-project-standard → cc-*-project-standard; bec-{rust-async,go-concurrency,python-async,java-runtime,native-memory-safety} → cc-* equivalents. Frontend retains its earlier drawio/source-driven rename policy.

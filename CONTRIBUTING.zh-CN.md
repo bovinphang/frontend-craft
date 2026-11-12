@@ -54,7 +54,7 @@ pnpm run typecheck:openclaw       # OpenClaw 变更
 
 ```bash
 # 1. 安装依赖
-pnpm install
+pnpm install --frozen-lockfile
 
 # 2. 构建 dist/bin 与 dist/hooks
 pnpm run build
@@ -63,16 +63,18 @@ pnpm run build
 node dist/bin/frontend-craft.js runtime install claude --local --dry-run  # 先 dry-run 预览
 node dist/bin/frontend-craft.js runtime install claude --local            # 实际安装
 
-# 4. 安装到所有 runtime
-node dist/bin/frontend-craft.js runtime install --all --dry-run
+# 4. 预览当前项目中所有 runtime 的安装
+node dist/bin/frontend-craft.js runtime install --all --local --dry-run
 
 # 5. 列出所有支持的 runtime
 node dist/bin/frontend-craft.js list
 ```
 
+请在测试用的检出目录执行实际安装示例，配置会写入该目录的 `.claude/`。所有 runtime 的预览也以当前项目为目标。
+
 `pnpm run build` 会依次运行 `clean`、`typecheck` 和 `scripts/build-dist.ts`。本地使用 `dist/bin/frontend-craft.js` 或打包后的 hook 脚本前，请先运行它。
 
-源码检出不支持 CLI 自身管理。使用 `node dist/bin/frontend-craft.js runtime update --dry-run` 预览包内资源更新；顶层 update/uninstall 应通过隔离的 npm/pnpm 全局安装、假包管理器及临时 HOME 验证。顶层 `--dry-run` 必须保持只读。3.0 命令迁移见 README 迁移表。
+源码检出不支持 CLI 自身管理。使用 `node dist/bin/frontend-craft.js runtime update claude --local --dry-run` 预览包内资源更新；顶层 update/uninstall 应通过隔离的 npm/pnpm 全局安装、假包管理器及临时 HOME 验证。顶层 `--dry-run` 必须保持只读。旧命令的替换方式见 [CLI 命令迁移](docs/zh-CN/common-migration.md#cli-命令迁移)。
 
 ## 测试指南
 
@@ -86,22 +88,26 @@ pnpm test
 node --import tsx --test tests/install/cli.test.ts
 
 # 运行安装器相关测试
-node --import tsx --test tests/install/*.test.ts
+node --import tsx --test --test-concurrency=1 'tests/install/*.test.ts'
 
 # 运行转换器相关测试
-node --import tsx --test tests/converters/*.test.ts
+node --import tsx --test 'tests/converters/*.test.ts'
 
 # 运行全 runtime dry-run 测试
 node --import tsx --test tests/install/all-runtimes-dry.test.ts
 ```
 
-测试交互式安装向导时，设置 `FRONTEND_CRAFT_FORCE_INTERACTIVE=1` 环境变量：
+交互式向导测试会为子进程启用交互模式并提供输入。构建 CLI 后运行以下命令。
 
 ```bash
-FRONTEND_CRAFT_FORCE_INTERACTIVE=1 node --import tsx --test tests/install/cli.test.ts
+node --import tsx --test --test-name-pattern 'interactive install selects|enters interactive|prompts for install location' tests/install/end-to-end.test.ts
 ```
 
 `pnpm test` 会先运行 `pnpm run build`，再递归发现 `tests/**/*.test.ts`，通过 Node.js `node:test` 串行执行全部测试。已有构建时可使用 `pnpm run test:only`。
+
+### 工程实践示例
+
+[React 异步状态示例](localized/zh-CN/skills/fec-react-project-standard/examples/engineering/README.md)验证过期结果处理和自有资源清理。在仓库根目录运行 `pnpm run verify:engineering -- --prepare` 准备锁定的示例依赖并验证示例。后续直接运行 `pnpm run verify:engineering`。
 
 ## OpenClaw 构建流程
 
@@ -115,7 +121,7 @@ pnpm run pack:openclaw           # 完整构建 + 验证 + 打包
 ```
 
 源码路径：`src/openclaw/`（TypeScript）→ `dist/openclaw/index.js`（打包后的 ESM）。
-TypeScript 配置：`tsconfig.openclaw.json`。
+TypeScript 配置为 `tsconfig.openclaw.json`。单独运行 `pnpm run check:openclaw-dist` 前，请先运行 `pnpm run build:openclaw`。
 
 ## 独立 Skill 发布包
 
@@ -126,6 +132,8 @@ pnpm run pack:skills            # 为每个 skill 生成独立发布包
 pnpm run check:skills-publish   # 校验包元数据、索引和引用文件
 pnpm run pack:all               # 构建 + 测试 + OpenClaw 包 + 独立 skill 包
 ```
+
+单独运行 `pnpm run check:skills-publish` 前，请先运行 `pnpm run pack:skills`。`pnpm run pack:all` 会按顺序生成和校验产物。
 
 `pnpm run pack:skills` 会生成 `skill-packages/<skill-id>/`，其中包含 `SKILL.md`、实际引用的 `references/` 及运行所需的 scripts、assets、data、styles 等资源、`metadata.json`、`package.json`、`README.md` 和 `LICENSE`。同时会生成 `skill-packages/index.json`，供平台索引或发布自动化使用。
 
@@ -159,7 +167,7 @@ pnpm run pack:all               # 构建 + 测试 + OpenClaw 包 + 独立 skill 
 | `pnpm run check:openclaw-dist`  | 校验生成的 OpenClaw dist 输出。                                            |
 | `pnpm run pack:openclaw`        | 构建、校验并打包 OpenClaw 插件。                                           |
 | `pnpm run pack:skills`          | 先构建，再在 `skill-packages/` 下生成独立 skill 包。                       |
-| `pnpm run check:skills-publish` | 先构建，再校验独立 skill 包元数据与复制文件。                              |
+| `pnpm run check:skills-publish` | 校验已生成的独立 skill 包元数据和复制文件。                              |
 | `pnpm run pack:all`             | 构建、运行测试、打包 OpenClaw、打包 skills，并校验 skill 产物。             |
 | `pnpm run sync:version`         | 同步发布清单中的 package 版本元数据。                                      |
 | `pnpm run version`              | 运行 `sync:version` 同步版本元数据，不自动暂存文件。                       |
@@ -380,4 +388,4 @@ skills:
 
 ## 公共内容维护
 
-`cc-*` Skill 和内嵌公共方法由精确依赖 `@bovinphang/craft-common@2.0.0` 生成，禁止直接修改分发副本。先在 craft-common 修改并准备对应包，再运行 `pnpm run sync:common`，审阅 `common-content.lock.json` 与中英文快照，最后运行 `pnpm run check:common` 和 `pnpm lint`。前端领域 Skill、元数据及中文镜像仍在本仓库维护。完整目录和维护边界见[项目结构](docs/zh-CN/project-structure.md)与[公共能力迁移](docs/zh-CN/common-migration.md)。
+`cc-*` Skill 和内嵌公共方法由精确依赖 `@bovinphang/craft-common@2.1.0` 生成，禁止直接修改分发副本。先在 craft-common 修改并准备对应包，再运行 `pnpm run sync:common`，审阅 `common-content.lock.json` 与中英文快照，最后运行 `pnpm run check:common` 和 `pnpm lint`。前端领域 Skill、元数据及中文镜像仍在本仓库维护。完整目录和维护边界见[项目结构](docs/zh-CN/project-structure.md)与[公共能力迁移](docs/zh-CN/common-migration.md)。

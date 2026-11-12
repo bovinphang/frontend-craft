@@ -1,8 +1,5 @@
 <div align="center">
 
-> 发布状态更新：craft-common 2.0.0、frontend-craft 3.0.0、backend-craft 1.0.0 均已于2026-11-09（Asia/Shanghai）发布至 npm，版本号不变。
-
-
 <img src="assets/brand/frontend-craft.png" alt="frontend-craft logo" width="200" />
 
 # frontend-craft
@@ -119,6 +116,16 @@ npx @bovinphang/frontend-craft@latest list
 
 完整步骤见 [docs/runtimes/claude.zh-CN.md](docs/runtimes/claude.zh-CN.md) · [English](docs/runtimes/claude.md)。
 
+### 从源码构建
+
+在仓库根目录构建当前检出，并列出其支持的宿主。
+
+```bash
+pnpm install --frozen-lockfile
+pnpm run build
+node dist/bin/frontend-craft.js list --json
+```
+
 ---
 
 ## 快速开始
@@ -146,6 +153,8 @@ npx @bovinphang/frontend-craft@latest list
 ```
 
 下文斜杠命令以 **Claude Code** 为例；其他运行时通过各自的命令系统提供同等能力（详见 [`docs/runtimes/`](docs/runtimes/)）。
+
+混合工程可以先运行 `fec project inspect . --json`。该命令只读识别工程，并推荐适用的技能。按任务筛选的用法见[工程识别](docs/cli-management.zh-CN.md#工程识别)。
 
 ---
 
@@ -202,9 +211,11 @@ npx @bovinphang/frontend-craft@latest list
 
 ### 技能（Skills，自动激活）
 
+[技能目录](skills/)包含 74 个 Skill，其中 53 个为前端专属，21 个为随产品交付的公共 Skill。
+
 技能是根据文件模式、框架或任务上下文**自动激活**的工作流定义，编码了评审维度、输出约定和报告格式。
 
-下方按使用场景分组列出全部自动激活的技能，便于快速找到项目规范、实现、测试、评审、设计、迁移、项目演进和文档维护能力。
+下方按使用场景列出常用技能，便于快速找到项目规范、实现、测试、评审、设计、迁移、项目演进和文档维护能力。
 
 **项目规范** — 检测到对应框架时自动生效：
 
@@ -474,7 +485,9 @@ $env:MODAO_TOKEN = "your-modao-token"
 
 ## 更新与移除
 
-### CLI 自身管理（3.0）
+升级已有安装前，运行 `fec runtime check-migration codex --local --json`，并按实际宿主和作用域调整命令。共享资源的兼容条件和冲突处理见[迁移指南](docs/zh-CN/common-migration.md)。
+
+### CLI 自身管理
 
 `fec update`（别名 `upgrade`）通过原 npm/pnpm 升级全局 CLI 到原 registry 的 `latest`，再启动新版 CLI 刷新当前项目及用户全局的托管资源；已是最新版也会刷新。不扫描其他项目，不管理 Marketplace 安装。CLI 升级失败即停止；独立资源安装的失败会分阶段报告且不回滚 CLI，可用 `fec runtime update` 重试资源刷新。
 
@@ -488,13 +501,9 @@ fec uninstall --purge --yes
 
 临时 npx 运行不会创建全局 CLI，且不支持自身卸载。npx 顶层 `update` 仅在当前包版本等于 registry `latest` 时刷新资源，否则提示使用 `npx @bovinphang/frontend-craft@latest runtime update`。
 
-| 2.x 资源命令 | 3.0 替代命令 |
-| --- | --- |
-| `fec update [runtime] [options]` | `fec runtime update [runtime] [options]` |
-| `fec uninstall [runtime] [options]` | `fec runtime uninstall [runtime] [options]` |
-| `fec install [runtime] [options]` | `fec runtime install [runtime] [options]` |
+安装默认值、批量操作和诊断命令见 [CLI 管理指南](docs/cli-management.zh-CN.md)。
 
-顶层 update/uninstall 会在修改前拒绝旧 runtime 位置参数及 `--global` 等资源选项。`setup` 保留，顶层 `install` 为弃用兼容入口；`runtime upgrade/remove` 分别为 `runtime update/uninstall` 的别名。资源选项保留。`runtime update` 只使用当前运行的 CLI 包内容，不联网获取新包。
+`runtime update` 使用当前运行的 CLI 包刷新资源。`runtime upgrade` 和 `runtime remove` 分别是 `runtime update` 和 `runtime uninstall` 的别名。
 
 `fec` 是 `frontend-craft` 的短命令。未全局安装 CLI 时，资源操作使用 `npx @bovinphang/frontend-craft@latest runtime update`（或 `runtime install/uninstall`）。
 
@@ -528,7 +537,7 @@ CLI 会在 runtime 目录写入 `frontend-craft.manifest.json`。不传 runtime 
 
 ---
 
-## 旧版 Skills CLI
+## 仅安装 Skill
 
 如果团队已在使用独立的 [Skills CLI](https://skills.sh/docs/cli)，它仍然可以只安装 [`skills/`](skills/) 下的工作流技能包：
 
@@ -555,55 +564,10 @@ npx skills check                           # 预览可用更新
 - [变更日志](CHANGELOG.zh-CN.md) — 版本说明（[English](CHANGELOG.md)）
 - [项目结构](docs/zh-CN/project-structure.md) — 完整目录布局与文件职责（[English](docs/project-structure.md)）
 
+**如果 frontend-craft 帮助了你的团队，[请给它一个 Star](https://github.com/bovinphang/frontend-craft)。**
+
 ---
 
 ## 许可证
 
 [MIT](LICENSE) — 自由使用，按需修改，如果可以请回馈社区。
-
----
-
-<div align="center">
-
-**如果 frontend-craft 帮助了你的团队，[请给它一个 Star](https://github.com/bovinphang/frontend-craft)。**
-
-</div>
-
-## 3.0 公共能力
-
-3.0.0已正式发布，包含 53 个前端专属入口和 21 个公共入口，共 74 个 Skill。公共能力由精确版本的 craft-common 自动交付，无需额外安装插件；公共源码仅在 craft-common 维护。
-
-- `cc-drawio-studio`
-- `cc-technical-diagrams`
-- `cc-source-driven-development`
-- `cc-doc-sync-core`
-- `cc-debug-methodology`
-- `cc-refactoring-core`
-- `cc-tdd-methodology`
-
-迁移前运行 `fec runtime check-migration codex --local --json`，再参阅 [migration guide](docs/zh-CN/common-migration.md).
-CLI 管理共享安装及卸载引用；原生插件渠道本期保证单产品资源完整，不承诺双产品原生去重。
-
-公共源精确固定为 `@bovinphang/craft-common@2.1.0`。参见[项目结构与维护边界](docs/zh-CN/project-structure.md)及[贡献校验指引](CONTRIBUTING.zh-CN.md)。
-
-## 混合工程识别
-
-`fec project inspect . --task-path apps/desktop/src-tauri/src/lib.rs --task-kind ipc --json` 只读清单证据并推荐已交付能力。角色（UI、桌面核心、原生库、服务、CLI）、语言和框架分别匹配，不执行构建脚本或安装工具。C、C++ 有独立公共入口，Tauri/Electron 为公共专项，React/Vue/Next/Nuxt/Vite 仍由前端产品维护；未指定任务时只给工程级候选。
-
-craft-common 2.0.0、frontend-craft 3.0.0、backend-craft 1.0.0 均已于2026-11-09（Asia/Shanghai）发布至 npm，版本号不变。先用各旧产品 CLI 退出旧公共引用，再安装匹配的新产品。使用 `fec runtime check-migration [runtime] --local --json` 检查；未知或用户修改的旧目录会阻断整批安装。见[迁移指南](docs/zh-CN/common-migration.md)。
-
-<!-- engineering-practices-20261108 -->
-
-## 按条件适用的工程实践
-
-八个既有前端入口将公共原则落到React/Vue生命期、API安全重放、查询所有权、评审证据、测试、安全和依赖兼容。按入口本地工程参考读取条件及例外。两产品仍交付全部21个公共入口；UI、桌面、库或服务职责不限制语言能力，企业指南不授权升级工具链。
-
-[React样例](skills/fec-react-project-standard/examples/engineering/README.md)用真实React/Testing Library/JSDOM验证旧结果拒绝和自有资源清理，精确依赖独立锁定。源码仓维护者显式运行`pnpm run verify:engineering -- --prepare`，后续不带--prepare复用匹配准备；这不是新增的已安装CLI命令。DOM模拟不证明浏览器E2E、远端回滚或桌面GUI。
-
-付款不能仅凭429/5xx/网络错误重试；须有服务端重放契约、同意图/同键和有界预算，否则核对待确认结果。公开源干净安装仍待common发布，[升级所有权保护](docs/common-migration.md)保持有效。
-
-[3.0.0变更日志](CHANGELOG.zh-CN.md)。craft-common 2.0.0、frontend-craft 3.0.0、backend-craft 1.0.0 均已于2026-11-09（Asia/Shanghai）发布至 npm，版本号不变。
-
-## CLI 管理（待发布）
-
-当前源码精确依赖 craft-common 2.1.0，尚未发布此轮改动。自管理、交互、批量操作和默认位置见 [CLI 管理指南](docs/cli-management.zh-CN.md)。

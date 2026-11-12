@@ -8,7 +8,18 @@
 - `bec uninstall/remove` 默认仅卸载 CLI，`--purge` 先清理本产品资源。非交互必须传 `--yes/-y`；保留用户修改，清理错误时保留 CLI。
 - `bec runtime update/upgrade [runtime]` 使用当前包内容；省略 Runtime 自动发现本地及全局安装，沿用各安装语言。`runtime uninstall/remove [runtime]` 清理清单托管资源，`--force` 仅允许删除本产品已修改的私有文件，不接管其他产品或公共资源。支持 `--all` 和作用域筛选。
 - `--dry-run` 只读预览；自升级预览可能查询 registry。`list` 列出支持的 Runtime，`matrix` 查看能力，`doctor [runtime]` 默认 Claude。`doctor claude --fix-cache [--dry-run]` 仅清理本产品过期缓存，保护当前安装，元数据不足时拒绝清理。CLI 与原生 Marketplace 渠道互斥。
-- `sync-metadata --check` 只检查元数据。后端 `validate`、`project inspect`、既有 JSON 和 `runtime list` 保留。JSON stdout 为单个值，诊断走 stderr。
+- `sync-metadata --check` 只检查元数据。`validate` 和 `runtime list` 属于后端 CLI。命令输出 JSON 时，stdout 包含一个 JSON 值，诊断写入 stderr。
+
+## 工程识别
+
+在混合工程的根目录运行以下命令。第一条给出工程级候选，第二条按 IPC 任务和具体文件缩小推荐范围。请将示例路径换成工程内实际存在的相对路径。
+
+```bash
+fec project inspect . --json
+fec project inspect . --task-path apps/desktop/src-tauri/src/lib.rs --task-kind ipc --json
+```
+
+工程识别只读工程证据，并从随产品交付的技能中推荐适用项。它分别识别应用角色、语言和框架，全程无需构建工程或安装工具。
 
 ## 公共资源协调升级
 

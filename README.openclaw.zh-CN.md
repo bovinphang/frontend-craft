@@ -22,7 +22,7 @@
 
 `frontend-craft` 是 [frontend-craft](https://github.com/bovinphang/frontend-craft) 的 OpenClaw 原生打包产物，包含工作流技能、Markdown 命令、OpenClaw 工作区模板、typed hooks、设计工具 MCP 参考配置，以及可选的 `frontend_craft_init_workspace` 初始化工具。
 
-该原生包提供 **74 个工作流技能**，并将 **11 个命令工作流通过技能提供（同名工作流复用完整技能）**。14 个专业 Agent 属于其他运行时适配器，不是 OpenClaw 原生 Agent。
+原生包包含 **74 个工作流技能**，其中 53 个为前端专属技能，21 个为公共技能。OpenClaw 通过技能提供 **11 个命令工作流**，其中 9 个由随包的 Markdown 命令生成，2 个复用同名工作流技能。
 
 **环境要求：** Node.js **>= 22**，OpenClaw plugin API **>= 2026.4.20**。
 
@@ -32,19 +32,19 @@
 
 ### 1. 安装
 
-从 ClawHub 安装（发布后推荐）：
+如果在 ClawHub 找到该插件，可使用 ClawHub 标识安装。
 
 ```bash
 openclaw plugins install clawhub:frontend-craft
 ```
 
-从 npm 安装：
+从 npm 安装原生插件时，使用不带作用域的包名。
 
 ```bash
 openclaw plugins install frontend-craft
 ```
 
-从主仓库构建出的本地 tarball 安装：
+如需安装当前源码，请在仓库根目录构建原生包。运行安装命令前，将 `<version>` 替换为生成的压缩包文件名中的版本号。
 
 ```bash
 pnpm install --frozen-lockfile
@@ -52,15 +52,15 @@ pnpm run pack:openclaw
 openclaw plugins install ./npm-packages/openclaw/frontend-craft-<version>.tgz
 ```
 
-本地开发时可链接包目录：
+本地开发时，完成同样的构建后可在仓库根目录链接打包目录。
 
 ```bash
-openclaw plugins install -l /path/to/frontend-craft/npm-packages/openclaw
+openclaw plugins install -l ./npm-packages/openclaw
 ```
 
 ### 2. 启用插件
 
-npm 包名和 OpenClaw 插件 id 均为 `frontend-craft`。
+npm 包名和 OpenClaw 插件 ID 均为 `frontend-craft`。将以下插件条目合并到网关配置。若已配置插件允许列表，将该 ID 加入现有列表。
 
 ```json5
 {
@@ -124,7 +124,9 @@ Pixso 使用 `.mcp.json` 中的本地 MCP URL。摹客暂无 MCP 集成，请使
 frontend-craft/
 |-- dist/                  # 打包后的 OpenClaw 插件入口
 |-- skills/                # 工作流技能
-|-- commands/              # 命令源文件；转换后的技能位于 skills/
+|-- commands/              # Markdown 命令源文件
+|-- localized/             # 简体中文资源镜像
+|-- common-content.lock.json # 公共资源版本和哈希
 |-- templates/openclaw/    # OpenClaw AGENTS.md 与配置说明
 |-- templates/shared/      # 共享前端规则
 |-- .mcp.json              # 设计工具 MCP 参考配置
@@ -222,7 +224,7 @@ OpenClaw 包包含 `skills/` 下全部 74 个公开工作流技能，按使用�
 
 技术图质量工作流：`cc-technical-diagrams` 的标准时序/流程图优先本地 Mermaid，架构图复用 draw.io 工作流，工具缺失时使用 JSON/HTML。导出 PNG 时生成实际测量且与缩放一致的 manifest，再运行 QA 并检查最终 PNG；保留完整文字、显式布局与关系，最多自动修复两轮，未解决问题需明确报告。可复现样例位于 `skills/cc-technical-diagrams/assets/quality-examples/`。
 
-[审核范围与技术图交付指南](docs/zh-CN/review-and-diagram-workflows.md).
+[审核范围与技术图交付指南](https://github.com/bovinphang/frontend-craft/blob/main/docs/zh-CN/review-and-diagram-workflows.md).
 
 **遗留迁移**
 
@@ -249,7 +251,7 @@ OpenClaw 包包含 `skills/` 下全部 74 个公开工作流技能，按使用�
 
 技能定义在 `skills/<id>/SKILL.md`。本插件在 `openclaw.plugin.json` 中将 `skills` 注册为技能根；命令工作流在打包时转换为技能。运行时一般会按各技能前置元数据里的 **description** 与当前任务做 **自动匹配**；具体行为取决于你的 OpenClaw / Agent 配置。**普通用户不必知道内部技能 id**，用自然语言说明目标即可；熟悉仓库的人若知道 id 也可以显式写出。
 
-本节是面向 OpenClaw 的快速示例，不是完整提示词清单。完整的按场景组织的提示词库覆盖 skills、agents、commands、设计工作流、测试、维护和 runtime 初始化，见 [docs/zh-CN/example-prompts.md](docs/zh-CN/example-prompts.md)。
+本节是面向 OpenClaw 的快速示例，不是完整提示词清单。完整的按场景组织的提示词库覆盖 skills、agents、commands、设计工作流、测试、维护和 runtime 初始化，见 [docs/zh-CN/example-prompts.md](https://github.com/bovinphang/frontend-craft/blob/main/docs/zh-CN/example-prompts.md)。
 
 **使用建议**
 
@@ -290,9 +292,9 @@ OpenClaw 包包含 `skills/` 下全部 74 个公开工作流技能，按使用�
 | 构建可录屏网页演示           | `fec-web-video-presentation`     | 「把这段产品 demo 口播稿转成 16:9 浏览器演示：拆口播节拍、章节 step、主题 token，并给出录屏指引。」                                    |
 | 优化 Vite 构建配置           | `fec-vite-project-standard`      | 「请审计 `vite.config.ts` 的 HMR、开发代理、环境变量安全和库模式最佳实践。」                                                           |
 
-**斜杠命令（`commands/` 下的 Markdown）**
+**命令工作流（`commands/` 下的 Markdown）**
 
-作为**固定步骤**的命令说明加载。对话里用自然语言描述要做的事即可，代理可按对应命令文档执行，**无需**说出命令文件名。完整命令提示词见 [docs/zh-CN/example-prompts.md](docs/zh-CN/example-prompts.md#高级用户提示词)。
+原生包保留命令源文件，并通过技能提供对应工作流。在对话里描述任务即可匹配相应工作流。完整命令提示词见 [docs/zh-CN/example-prompts.md](https://github.com/bovinphang/frontend-craft/blob/main/docs/zh-CN/example-prompts.md#高级用户提示词)。
 
 | 命令文档                 | 适用时机                                                                                 | 示例（自然语言）                                                                                                  |
 | ------------------------ | ---------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------- |
@@ -331,12 +333,12 @@ OpenClaw 包包含 `skills/` 下全部 74 个公开工作流技能，按使用�
 在主 `frontend-craft` 仓库中执行：
 
 ```bash
-npm install
-npm run typecheck:openclaw
-npm run pack:openclaw
+pnpm install --frozen-lockfile
+pnpm run typecheck:openclaw
+pnpm run pack:openclaw
 ```
 
-`npm run pack:openclaw` 会构建并校验 OpenClaw bundle，刷新 `npm-packages/openclaw`，并在 `npm-packages/openclaw/` 目录下写出 `frontend-craft-<version>.tgz`。
+`pnpm run pack:openclaw` 构建并校验 OpenClaw 插件，在 `npm-packages/openclaw/` 下生成 `frontend-craft-<version>.tgz`。
 
 ---
 
@@ -360,7 +362,7 @@ MIT
 
 ## 公共能力
 
-公共能力由 craft-common 随产品提供：
+原生包内附公共技能快照，并通过 `common-content.lock.json` 记录来源。
 
 - `cc-debug-methodology`
 - `cc-doc-sync-core`
@@ -388,8 +390,7 @@ MIT
 | `cc-rust-async` | Rust 异步生命周期 |
 | `cc-rust-project-standard` | Rust 工程规范 |
 | `cc-typescript-project-standard` | TypeScript 项目规范 |
-
 | `cc-tauri-project-standard` | Tauri 应用工程 |
 | `cc-electron-project-standard` | Electron 应用工程 |
 
-craft-common 2.0.0、frontend-craft 3.0.0、backend-craft 1.0.0 均已于2026-11-09（Asia/Shanghai）发布至 npm，版本号不变。原生插件精确依赖common2.0.0；安装不代表宿主已激活。
+发布记录见[变更日志](https://github.com/bovinphang/frontend-craft/blob/main/CHANGELOG.zh-CN.md)。

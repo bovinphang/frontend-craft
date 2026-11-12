@@ -1,8 +1,5 @@
 <div align="center">
 
-> Release status: craft-common 2.0.0, frontend-craft 3.0.0 and backend-craft 1.0.0 were published to npm on 2026-11-09 (Asia/Shanghai). Package versions are unchanged.
-
-
 <img src="assets/brand/frontend-craft.png" alt="frontend-craft logo" width="200" />
 
 # frontend-craft
@@ -119,6 +116,16 @@ If Marketplace is already installed, the CLI will not install or update a second
 
 Full Claude-specific steps are in [docs/runtimes/claude.md](docs/runtimes/claude.md) · [简体中文](docs/runtimes/claude.zh-CN.md).
 
+### Build from source
+
+From the repository root, build the current checkout and list its supported runtimes.
+
+```bash
+pnpm install --frozen-lockfile
+pnpm run build
+node dist/bin/frontend-craft.js list --json
+```
+
 ---
 
 ## Quick start
@@ -146,6 +153,8 @@ You: "/fec-refactor src/features/compose"
 ```
 
 All slash commands below are shown for **Claude Code**; other runtimes expose the same capabilities through their own command systems (see [`docs/runtimes/`](docs/runtimes/)).
+
+For a mixed project, run `fec project inspect . --json` to identify the project and get skill recommendations without changing files. See [project inspection](docs/cli-management.md#project-inspection) for task-specific options.
 
 ---
 
@@ -201,6 +210,8 @@ Examples: `/fec-review`,`/fec-review review recent changes`,  `/fec-review revie
 Dependency directories, build outputs, caches, generated files and third-party code are excluded by default. Reports record the mode, target scope, reviewed and unreviewed files/modules, exclusions, completion status and verification results. Limited coverage is marked partial; reading callers or running project-wide lint/typecheck does not establish manual review coverage. Change reviews retain merge recommendations; targeted/project reviews assess risk within reviewed scope. The frontend review does not replace a backend audit, and reviewers do not edit business code unless repairs are requested.
 
 ### Skills (auto-activated)
+
+The [skill catalog](skills/) includes 74 skills, with 53 frontend-specific skills and 21 shared skills shipped with the product.
 
 Skills are workflow definitions that activate automatically based on file patterns, frameworks, or task context. They encode review dimensions, output conventions, and report formats.
 
@@ -474,7 +485,9 @@ Every review, analysis, and evaluation writes a timestamped Markdown report to `
 
 ## Update and Remove
 
-### CLI lifecycle (3.0)
+Before upgrading an existing installation, run `fec runtime check-migration codex --local --json` with the runtime and scope you use. See the [migration guide](docs/common-migration.md) for shared-resource compatibility and conflict handling.
+
+### CLI lifecycle
 
 `fec update` (`upgrade`) upgrades an npm/pnpm global CLI to the original registry's `latest`, then starts the new CLI to refresh managed resources in the current project and user-global scope, even when already latest. Other projects and Marketplace installs are not scanned or managed. CLI upgrade failure stops refresh; independent resource failures are reported by phase without rolling back the CLI. Retry those resources with `fec runtime update`.
 
@@ -488,13 +501,9 @@ fec uninstall --purge --yes
 
 Temporary npx runs never create a global CLI install and cannot uninstall the CLI. Top-level npx `update` refreshes resources only if its package version equals registry `latest`; otherwise use `npx @bovinphang/frontend-craft@latest runtime update`.
 
-| 2.x resource command | 3.0 replacement |
-| --- | --- |
-| `fec update [runtime] [options]` | `fec runtime update [runtime] [options]` |
-| `fec uninstall [runtime] [options]` | `fec runtime uninstall [runtime] [options]` |
-| `fec install [runtime] [options]` | `fec runtime install [runtime] [options]` |
+See [CLI management](docs/cli-management.md) for install defaults, bulk operations and diagnostics.
 
-Top-level update/uninstall reject old runtime arguments and resource options such as `--global` before making changes. `setup` remains available; top-level `install` is a deprecated compatibility alias. `runtime upgrade/remove` alias `runtime update/uninstall`. Resource options remain available. `runtime update` uses only the currently running CLI package, without fetching a new package from the network.
+`runtime update` refreshes resources from the running CLI package. `runtime upgrade` and `runtime remove` are aliases for `runtime update` and `runtime uninstall`.
 
 `fec` is the short command for `frontend-craft`. For resource operations without a global CLI, use `npx @bovinphang/frontend-craft@latest runtime update` (or `runtime install/uninstall`).
 
@@ -528,7 +537,7 @@ For **Claude Code Marketplace** or **submodule** installs, see [docs/runtimes/cl
 
 ---
 
-## Legacy Skills CLI
+## Skills-only installation
 
 If your team already uses the standalone [Skills CLI](https://skills.sh/docs/cli), it can still install just the workflow skill packages from [`skills/`](skills/):
 
@@ -555,55 +564,10 @@ To disable telemetry: `DISABLE_TELEMETRY=1`. Details: [skills.sh CLI docs](https
 - [Changelog](CHANGELOG.md) — release notes ([简体中文](CHANGELOG.zh-CN.md))
 - [Project structure](docs/project-structure.md) — full directory layout and file responsibilities ([简体中文](docs/zh-CN/project-structure.md))
 
+**If frontend-craft helps your team ship better code, [give it a Star](https://github.com/bovinphang/frontend-craft).**
+
 ---
 
 ## License
 
 [MIT](LICENSE) — use freely, modify as needed, contribute back if you can.
-
----
-
-<div align="center">
-
-**If frontend-craft helps your team ship better code, [give it a Star](https://github.com/bovinphang/frontend-craft).**
-
-</div>
-
-## Craft Common in 3.0
-
-Version 3.0.0 is published on npm. It delivers 53 frontend entries and 21 shared entries (74 skills total) from the pinned craft-common dependency, without a third manual plugin install. Common source is maintained only in craft-common.
-
-- `cc-drawio-studio`
-- `cc-technical-diagrams`
-- `cc-source-driven-development`
-- `cc-doc-sync-core`
-- `cc-debug-methodology`
-- `cc-refactoring-core`
-- `cc-tdd-methodology`
-
-Run `fec runtime check-migration codex --local --json` and read [migration guide](docs/common-migration.md).
-CLI installation manages shared ownership and uninstall references. Native channels guarantee complete single-product payloads; native dual-product deduplication is not promised.
-
-Pinned common source: `@bovinphang/craft-common@2.1.0`. See [project structure and maintenance boundaries](docs/project-structure.md) and [contributor checks](CONTRIBUTING.md).
-
-## Mixed-project inspection
-
-`fec project inspect . --task-path apps/desktop/src-tauri/src/lib.rs --task-kind ipc --json` reads bounded manifest evidence and recommends only delivered capabilities. Roles (UI, desktop core, native library, service, CLI), languages and frameworks are separate dimensions. It never runs build scripts or installs tools. Shared language entries include independent C and C++ standards; Tauri/Electron are common specialties. Next/React/Vue/Nuxt/Vite stay frontend specialties. No task argument means project-level candidates only.
-
-craft-common 2.0.0, frontend-craft 3.0.0 and backend-craft 1.0.0 were published to npm on 2026-11-09 (Asia/Shanghai). Package versions are unchanged. Exit old common consumers with each old product CLI before installing matching product builds. Run `fec runtime check-migration [runtime] --local --json` first. Unknown or edited retired entries block installation. See [migration](docs/common-migration.md).
-
-<!-- engineering-practices-20261108 -->
-
-## Conditional engineering practices
-
-Eight existing frontend entries now connect shared principles to React/Vue lifecycle, API replay safety, query ownership, review evidence, testing, security and dependency compatibility. Read the entry's local engineering reference for conditions and exceptions. Both products still deliver all21 common entries; language capability is independent of UI, desktop, library or service role. Company guidance does not authorize a toolchain migration.
-
-The [React sample](skills/fec-react-project-standard/examples/engineering/README.md) uses real React/Testing Library/JSDOM to verify stale-result rejection and owned cleanup. Its locked dependencies are isolated. Repository maintenance: explicitly run `pnpm run verify:engineering -- --prepare`, then omit --prepare to reuse only matching preparation. This is a source-repository maintenance task, not a new installed CLI command. DOM simulation does not prove browser E2E, remote rollback or desktop GUI.
-
-Payment writes are not retried solely because of429/5xx/network errors: require a server replay contract, same intent/key and bounded budget, otherwise reconcile the uncertain result. Public clean installation still awaits common publication; [upgrade ownership rules](docs/common-migration.md) remain in force.
-
-Release notes: [frontend 3.0.0](CHANGELOG.md#300---2026-11-09). craft-common 2.0.0, frontend-craft 3.0.0 and backend-craft 1.0.0 were published to npm on 2026-11-09 (Asia/Shanghai). Package versions are unchanged.
-
-## CLI management (unreleased)
-
-This source now pins craft-common 2.1.0; these changes are not published. See [CLI management](docs/cli-management.md) for self-management, interactive and batch operations, and installation defaults.

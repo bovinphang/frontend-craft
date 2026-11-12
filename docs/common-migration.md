@@ -1,8 +1,22 @@
-# Common capability migration in frontend-craft3.0
+# Shared capability migration
 
-The exact common dependency is`@bovinphang/craft-common@2.0.0`: a published release. Frontend 3.0.0 and backend 1.0.0 are also published. Paths, explicit planning sessions, ownership, locks and recovery are shared; products retain conversion and their CLI/native-channel policies.
+## Current compatibility
 
-Version 3.0 delivers 53 frontend and 21 common entries, 74 in total. Version 2.0.0 retains 1.0.1 recovery repairs. Do not mix 1.x or development snapshots with 2.0.0: exit all old shared consumers using the old product CLIs and resolve retained edits before installing matching products. Public installation awaits actual common/product publication and the existing supply-chain policy window.
+Products that share a Skill target must use the same common dependency version, language and content digest. Before upgrading, run `fec runtime check-migration codex --local --json` with the appropriate runtime and scope. For old references or ownership conflicts, follow the coordinated upgrade steps in the [CLI management guide](cli-management.md).
+
+## CLI command migration
+
+| 2.x resource command | 3.0 replacement |
+| --- | --- |
+| `fec update [runtime] [options]` | `fec runtime update [runtime] [options]` |
+| `fec uninstall [runtime] [options]` | `fec runtime uninstall [runtime] [options]` |
+| `fec install [runtime] [options]` | `fec runtime install [runtime] [options]` |
+
+## Background for the shared-content migration
+
+The migration to Frontend Craft 3.0 used `@bovinphang/craft-common@2.0.0`. Paths, explicit planning sessions, ownership, locks and recovery are shared; products retain conversion and their CLI/native-channel policies.
+
+Version 3.0 delivers 53 frontend and 21 common entries, 74 in total. Version 2.0.0 retains 1.0.1 recovery repairs. Do not mix 1.x or development snapshots with 2.0.0: exit all old shared consumers using the old product CLIs and resolve retained edits before installing matching products.
 
 | Previous entry | Version 3.0 |
 | --- | --- |
@@ -43,13 +57,13 @@ The same product manifest path cannot change runtime, local/global scope or comm
 
 Dual-consumer CLI installation is verified. Claude/OpenClaw native packages include complete common snapshots; cross-product native-plugin deduplication is outside this release's guarantee. Public registry publication remains a separate release step and is not performed automatically during development.
 
-## 2026-11-08 coordinated2.0.0 upgrade / 当前协调升级
+## Historical upgrade to craft-common 2.0.0
 
-Current releases: common 2.0.0, frontend 3.0.0 and backend 1.0.0; all published on npm. 2.0.0同样要求版本、语言和摘要一致；不自动升级另一个产品。
+This historical workflow applies to common 2.0.0, frontend 3.0.0 and backend 1.0.0. Shared installs require matching versions, languages and digests. Upgrade each product explicitly.
 
 1. Back up user edits and inspect local/global/runtime identity. 备份修改，确认安装范围。
 2. With each OLD product CLI, uninstall its runtime resources and resolve preserved edits until both old common consumers exit. 使用各旧 CLI 退出旧公共引用，不用新 CLI 越权接管。
-3. Install both matching product builds using verified artifacts; public clean install must wait for common publication. 安装新匹配产品前执行 runtime check-migration。
+3. Run `fec runtime check-migration` before installing the matching product builds.
 4. Managed unchanged legacy language entries retire in the same transaction as new cc deployment. Unknown files, edits, links or invalid ownership block the whole install; dry-run writes nothing. 原领域入口不建立假别名。
 
 Rename: fec-typescript-project-standard → cc-typescript-project-standard; bec-{rust,go,java,python,c,cpp}-project-standard → cc-*-project-standard; bec-{rust-async,go-concurrency,python-async,java-runtime,native-memory-safety} → cc-* equivalents. Frontend retains its earlier drawio/source-driven rename policy.

@@ -56,7 +56,7 @@ See the Development Scripts section and Pull Request Checklist for complete scen
 
 ```bash
 # 1. Install dependencies
-pnpm install
+pnpm install --frozen-lockfile
 
 # 2. Build dist/bin and dist/hooks
 pnpm run build
@@ -65,16 +65,18 @@ pnpm run build
 node dist/bin/frontend-craft.js runtime install claude --local --dry-run  # preview first
 node dist/bin/frontend-craft.js runtime install claude --local            # actual install
 
-# 4. Install to all runtimes
-node dist/bin/frontend-craft.js runtime install --all --dry-run
+# 4. Preview installation to all runtimes in the current project
+node dist/bin/frontend-craft.js runtime install --all --local --dry-run
 
 # 5. List all supported runtimes
 node dist/bin/frontend-craft.js list
 ```
 
+Run the actual install example in a test checkout so it writes to that checkout’s `.claude/` directory. The all-runtime preview also targets the current project.
+
 `pnpm run build` runs `clean`, `typecheck`, and `scripts/build-dist.ts`. Run it before using `dist/bin/frontend-craft.js` or the bundled hook scripts locally.
 
-Local source checkouts intentionally do not support CLI self-management. Use `node dist/bin/frontend-craft.js runtime update --dry-run` to preview bundled resource updates; test top-level update/uninstall only against isolated npm/pnpm global installations with fake package managers and temporary HOME directories. Top-level `--dry-run` must remain read-only. See the README migration table for the 3.0 command split.
+Local source checkouts intentionally do not support CLI self-management. Use `node dist/bin/frontend-craft.js runtime update claude --local --dry-run` to preview bundled resource updates; test top-level update/uninstall only against isolated npm/pnpm global installations with fake package managers and temporary HOME directories. Top-level `--dry-run` must remain read-only. See the [CLI command migration table](docs/common-migration.md#cli-command-migration).
 
 ## Testing
 
@@ -88,22 +90,26 @@ pnpm test
 node --import tsx --test tests/install/cli.test.ts
 
 # Run installer tests
-node --import tsx --test tests/install/*.test.ts
+node --import tsx --test --test-concurrency=1 'tests/install/*.test.ts'
 
 # Run converter tests
-node --import tsx --test tests/converters/*.test.ts
+node --import tsx --test 'tests/converters/*.test.ts'
 
 # Run all-runtimes dry-run test
 node --import tsx --test tests/install/all-runtimes-dry.test.ts
 ```
 
-For testing the interactive installation wizard, set `FRONTEND_CRAFT_FORCE_INTERACTIVE=1`:
+The interactive wizard tests supply input and enable interactive mode in the child process. Run them after building the CLI.
 
 ```bash
-FRONTEND_CRAFT_FORCE_INTERACTIVE=1 node --import tsx --test tests/install/cli.test.ts
+node --import tsx --test --test-name-pattern 'interactive install selects|enters interactive|prompts for install location' tests/install/end-to-end.test.ts
 ```
 
 `pnpm test` runs `pnpm run build` first, then recursively discovers every `tests/**/*.test.ts` file and executes them serially with Node.js `node:test`. `pnpm run test:only` runs that suite against an existing build.
+
+### Engineering example
+
+The [React async state example](skills/fec-react-project-standard/examples/engineering/README.md) covers stale results and cleanup of owned resources. From the repository root, run `pnpm run verify:engineering -- --prepare` to prepare its locked dependencies and verify the example. Subsequent runs use `pnpm run verify:engineering`.
 
 ## OpenClaw Build
 
@@ -117,9 +123,11 @@ pnpm run pack:openclaw           # Full build + verify + package
 ```
 
 Source: `src/openclaw/` (TypeScript) → `dist/openclaw/index.js` (bundled ESM).
-TypeScript config: `tsconfig.openclaw.json`.
+TypeScript config: `tsconfig.openclaw.json`. Run `pnpm run build:openclaw` before running `pnpm run check:openclaw-dist` on its own.
 
 ## Standalone Skill Packages
+
+Run `pnpm run pack:skills` before running `pnpm run check:skills-publish` on its own. `pnpm run pack:all` generates and checks the packages in order.
 
 The canonical skill sources live under `skills/<skill-id>/`. Do not edit generated files under `skill-packages/` by hand.
 
@@ -378,4 +386,4 @@ When changing review or diagram capabilities, synchronize scope defaults, natura
 
 ## Maintaining common content
 
-`cc-*` skills and embedded common methods are generated from the exact `@bovinphang/craft-common@2.0.0` dependency. Change the upstream common package first, prepare its corresponding package, then run `pnpm run sync:common`. Review `common-content.lock.json` and both language snapshots, then run `pnpm run check:common` and `pnpm lint`. Do not edit generated common content directly. Frontend domain skills, metadata and Chinese mirrors remain maintained here. See [project structure](docs/project-structure.md) and [common migration](docs/common-migration.md).
+`cc-*` skills and embedded common methods are generated from the exact `@bovinphang/craft-common@2.1.0` dependency. Change the upstream common package first, prepare its corresponding package, then run `pnpm run sync:common`. Review `common-content.lock.json` and both language snapshots, then run `pnpm run check:common` and `pnpm lint`. Do not edit generated common content directly. Frontend domain skills, metadata and Chinese mirrors remain maintained here. See [project structure](docs/project-structure.md) and [common migration](docs/common-migration.md).
