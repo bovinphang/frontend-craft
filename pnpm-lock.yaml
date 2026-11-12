@@ -190,7 +190,7 @@ importers:
         version: 17.12.0
       openclaw:
         specifier: ^2026.4.20
-        version: 2026.11.2(supports-color@7.2.0)
+        version: 2026.11.3(supports-color@7.2.0)
       prettier:
         specifier: ^3.5.0
         version: 3.9.10
@@ -268,7 +268,7 @@ packages:
     resolution: {integrity: sha512-49CycTz1aAZmvFcwkeFyhud1HUmRIB5Tabf7ALV+VA4Iu85MTfz2cUwzPagMFAdVBvrWdkCxG67I30tUwwpKsw==}
 
   '@bovinphang/craft-common@2.1.0':
-    resolution: {integrity: sha512-TJVYWcprj9uUV3tqqcOhF/YHMYXxkQvgNfLb13dhm/aHdndl6GKvuoRY6UIpJTnova4iG2lBbnPD3DlU6c6ICA==}
+    resolution: {integrity: sha512-xrF1Xb96d5zEGjik9wCWmRpLtSFOMJ65+CDI4td5Gi9N9ye0ZY7WgxzkuDj9iEtaM5AOMoof6I9dHjj77NCU2g==}
     engines: {node: '>=22.0.0'}
 
   '@clack/core@1.5.1':
@@ -610,8 +610,8 @@ packages:
     resolution: {integrity: sha512-juG5VWh4qAivzTAeMzvY9xs9HY5rAcr2E4I7tiSSCokRFi7XIZCAu92ZkSTsIj1OPceCifL3cpfteP3pDT9/QQ==}
     engines: {node: '>=14.0.0'}
 
-  '@openclaw/ai@2026.11.2':
-    resolution: {integrity: sha512-ONDzpAJaw037W5aVnlQ84DKW7+gtcBLRvrlQMJxZ0i1BmBLGQfr89bcRlOs8w6pKBRy+7J3cGovSYoGXrk8CFg==}
+  '@openclaw/ai@2026.11.3':
+    resolution: {integrity: sha512-NNLfm1BSiVGfDW2M3wbTimtXQ5E4jdn87Fl+mAks9j2o4vQ1LZb86dC9K5kcKNJDciQZ0T1JlExK1rnldLU8IA==}
     engines: {node: '>=22.19.0'}
 
   '@openclaw/fs-safe-darwin-arm64@0.26.5':
@@ -1432,8 +1432,8 @@ packages:
     resolution: {integrity: sha512-ge98qjkRK4IB7tL7Ju/6qmm5LHoH1eEMt5FNZrz3f4UIYhF28lggX20z3FaX1sgc67msLEn0N0BscOs29iuwyw==}
     engines: {node: '>=22'}
 
-  express-rate-limit@8.7.3:
-    resolution: {integrity: sha512-zPLqDI2f0gV2WmGnacLf9XSSqn4VldRyP5LCzOwx0BKH40mO6+2PCFkoSsRO2jePx87/Kf6NUF6P2QOTKXHbQA==}
+  express-rate-limit@8.7.4:
+    resolution: {integrity: sha512-LKBXzX700wz3zAGNNmVnjRI5mEbYkLv7UbMI4+9Xa+JPcg2UZh6AgY/2CZh9RrJjFM5ttC/N1lD+KzyFoZITCw==}
     engines: {node: '>= 16'}
     peerDependencies:
       express: '>= 4.11'
@@ -1720,8 +1720,8 @@ packages:
     resolution: {integrity: sha512-AC/7JofJvZGrrneWNaEnJeOLUx+JlGt7tNa0wZiRPT4MY1wmfKjt2+6O2p2uz2+skll8OZZmJMNqeke7kKbNgQ==}
     hasBin: true
 
-  jose@6.2.15:
-    resolution: {integrity: sha512-qdF6ewcZARtef63fJ9AKKZPgxw+t7USH6HLXYcD4CrdmSvDp79rpJSPFEKc90QBeGS63u1KQtN2MZQHC0yDIzA==}
+  jose@6.2.17:
+    resolution: {integrity: sha512-wOuK9V1yujQFH5S0ZWmLcDZN7+IKh9bUCC2ZPCf2HDlol3WWHy+PPyNjEI75FXRLMp3vDKQcupP59xhVU95hcg==}
 
   js-tokens@10.0.0:
     resolution: {integrity: sha512-lM/UBzQmfJRo9ABXbPWemivdCW8V2G8FHaHdypQaIy523snUjog0W71ayWXTjiR+ixeMyVHN2XcpnTd/liPg/Q==}
@@ -2015,8 +2015,8 @@ packages:
       zod:
         optional: true
 
-  openclaw@2026.11.2:
-    resolution: {integrity: sha512-SgBml4WLp8V1DdAYkrTPLzVdA/iYo3iuHCtm4788GjaG83QZdd1VeOTlue0HBJGdn3SbFE06b6uPs+AM5ShMgg==}
+  openclaw@2026.11.3:
+    resolution: {integrity: sha512-FBq/q0TCaoA2b7qfdV0q81fHhI6RBB1zAQfJQREc1u2TlK5khVgCUsAlXskLWthyVqRz5PWEj+oOmfYgK58dHg==}
     engines: {node: '>=24.16.0 <25 || >=26.1.0'}
     hasBin: true
     bundledDependencies:
@@ -2917,9 +2917,9 @@ snapshots:
       eventsource: 3.0.7
       eventsource-parser: 3.1.1
       express: 5.2.1(supports-color@7.2.0)
-      express-rate-limit: 8.7.3(express@5.2.1(supports-color@7.2.0))(supports-color@7.2.0)
+      express-rate-limit: 8.7.4(express@5.2.1(supports-color@7.2.0))(supports-color@7.2.0)
       hono: 4.13.17
-      jose: 6.2.15
+      jose: 6.2.17
       json-schema-typed: 8.0.2
       pkce-challenge: 5.0.1
       raw-body: 3.0.2
@@ -2930,7 +2930,7 @@ snapshots:
 
   '@mozilla/readability@0.6.0': {}
 
-  '@openclaw/ai@2026.11.2(@modelcontextprotocol/sdk@1.32.1(supports-color@7.2.0)(zod@4.6.5))(supports-color@7.2.0)(undici@8.12.2)(ws@8.22.0)(zod@4.6.5)':
+  '@openclaw/ai@2026.11.3(@modelcontextprotocol/sdk@1.32.1(supports-color@7.2.0)(zod@4.6.5))(supports-color@7.2.0)(undici@8.12.2)(ws@8.22.0)(zod@4.6.5)':
     dependencies:
       '@anthropic-ai/sdk': 0.131.0(zod@4.6.5)
       '@google/genai': 2.27.0(@modelcontextprotocol/sdk@1.32.1(supports-color@7.2.0)(zod@4.6.5))(supports-color@7.2.0)
@@ -3700,7 +3700,7 @@ snapshots:
       which-command: 0.1.0
       yoctocolors: 2.2.0
 
-  express-rate-limit@8.7.3(express@5.2.1(supports-color@7.2.0))(supports-color@7.2.0):
+  express-rate-limit@8.7.4(express@5.2.1(supports-color@7.2.0))(supports-color@7.2.0):
     dependencies:
       debug: 4.4.3(supports-color@7.2.0)
       express: 5.2.1(supports-color@7.2.0)
@@ -4008,7 +4008,7 @@ snapshots:
 
   jiti@2.7.0: {}
 
-  jose@6.2.15: {}
+  jose@6.2.17: {}
 
   js-tokens@10.0.0: {}
 
@@ -4187,7 +4187,7 @@ snapshots:
       ws: 8.22.0
       zod: 4.6.5
 
-  openclaw@2026.11.2(supports-color@7.2.0):
+  openclaw@2026.11.3(supports-color@7.2.0):
     dependencies:
       '@agentclientprotocol/sdk': 1.7.0(zod@4.6.5)
       '@anthropic-ai/sdk': 0.131.0(zod@4.6.5)
@@ -4204,7 +4204,7 @@ snapshots:
       '@mistralai/mistralai': 2.7.0
       '@modelcontextprotocol/sdk': 1.32.1(supports-color@7.2.0)(zod@4.6.5)
       '@mozilla/readability': 0.6.0
-      '@openclaw/ai': 2026.11.2(@modelcontextprotocol/sdk@1.32.1(supports-color@7.2.0)(zod@4.6.5))(supports-color@7.2.0)(undici@8.12.2)(ws@8.22.0)(zod@4.6.5)
+      '@openclaw/ai': 2026.11.3(@modelcontextprotocol/sdk@1.32.1(supports-color@7.2.0)(zod@4.6.5))(supports-color@7.2.0)(undici@8.12.2)(ws@8.22.0)(zod@4.6.5)
       '@openclaw/fs-safe': 0.26.5
       '@openclaw/proc-safe': 0.4.2
       '@openclaw/proxyline': 0.4.0(undici@8.12.2)
