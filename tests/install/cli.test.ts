@@ -134,19 +134,27 @@ test("setup defaults to local project installation", () => {
   }
 });
 
-test("setup uses local runtime directory unless global is explicit", () => {
+test("setup uses local runtime directory unless global is explicit", (t) => {
+  const runtimeHome = fs.mkdtempSync(
+    path.join(os.tmpdir(), "fc-setup-codex-home-"),
+  );
+  t.after(() => fs.rmSync(runtimeHome, { recursive: true, force: true }));
+  const project = path.join(runtimeHome, "project");
+  fs.mkdirSync(project);
+  const env = isolatedRuntimeEnv(runtimeHome);
   const local = execFileSync(
     process.execPath,
     [cli, "setup", "codex", "--dry-run"],
     {
-      cwd: root,
+      cwd: project,
       encoding: "utf8",
+      env,
     },
   );
   assert.match(
     local,
     new RegExp(
-      `Installing frontend-craft for "codex" -> ${escapeRegExp(path.join(root, ".codex"))}`,
+      `Installing frontend-craft for "codex" -> ${escapeRegExp(path.join(project, ".codex"))}`,
     ),
   );
   assert.doesNotMatch(local, /\(global\)/);
@@ -155,13 +163,16 @@ test("setup uses local runtime directory unless global is explicit", () => {
     process.execPath,
     [cli, "setup", "codex", "--global", "--dry-run"],
     {
-      cwd: root,
+      cwd: project,
       encoding: "utf8",
+      env,
     },
   );
   assert.match(
     global,
-    /Installing frontend-craft for "codex" -> .+\.codex \(global\)/,
+    new RegExp(
+      `Installing frontend-craft for "codex" -> ${escapeRegExp(path.join(runtimeHome, "codex"))} \\(global\\)`,
+    ),
   );
 });
 

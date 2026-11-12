@@ -10,6 +10,7 @@ import { getManifestPath, readInstallManifest } from "./shared/fs.js";
 import type { InstallManifest, ManifestRoot } from "./shared/fs.js";
 
 import {
+  canonicalProductPath,
   safeProductPath,
   type ProductInstallationSeed,
 } from "@bovinphang/craft-common";
@@ -189,7 +190,7 @@ export function resolveManifestFile({
   const resolved = path.resolve(resolvedRoot, filePath);
   const relative = path.relative(resolvedRoot, resolved);
   if (relative.startsWith("..") || path.isAbsolute(relative)) return undefined;
-  return resolved;
+  return path.resolve(canonicalProductPath(resolvedRoot), relative);
 }
 
 export function pruneEmptyDirs(dirs: string[], boundaries: string[]): void {

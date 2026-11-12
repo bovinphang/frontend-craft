@@ -1,5 +1,6 @@
 import path from "node:path";
 import {
+  canonicalProductPath,
   runProductLifecycle,
   resolveSharedIdentity,
   currentProductHash,
@@ -105,9 +106,10 @@ export async function runCommonAwareInstall(
     (ctx.log ?? console.log)(
       `[dry-run] ${ctx.runtime}: ${ctx.baseDir}, ${result.changed.length} planned file changes`,
     );
+  const baseDir = canonicalProductPath(ctx.baseDir);
   for (const file of result.preserved)
     (ctx.log ?? console.log)(
-      "Skipped modified file: " + path.relative(ctx.baseDir, file),
+      "Skipped modified file: " + path.relative(baseDir, file),
     );
 }
 export async function uninstallCommonAwareInstall(
@@ -183,6 +185,7 @@ export async function uninstallCommonAwareInstall(
       async plan() {},
     },
   });
+  const baseDir = canonicalProductPath(ctx.baseDir);
   for (const file of result.preserved) {
     if (
       !skipped.some(
@@ -195,7 +198,7 @@ export async function uninstallCommonAwareInstall(
           ) === file,
       )
     )
-      skipped.push(path.relative(ctx.baseDir, file).split(path.sep).join("/"));
+      skipped.push(path.relative(baseDir, file).split(path.sep).join("/"));
   }
   if (!dryRun)
     pruneEmptyDirs(

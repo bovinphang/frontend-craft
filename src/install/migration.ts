@@ -1,6 +1,7 @@
 import { MANIFEST_CODEC } from "./manifest-codec.js";
 import { toProductContext } from "./product-definition.js";
 import { LEGACY_SKILL_IDS } from "./product-definition.js";
+import { canonicalProductPath, productPathKey } from "@bovinphang/craft-common";
 export type MigrationFinding = {
   file: string;
   line?: number;
@@ -191,13 +192,18 @@ export function inspectLegacyCommonInstall({
       cwd,
     });
     if (!resolved) throw new Error(`旧安装清单路径越界：${file.path}`);
-    owned.set(resolved, file.hash);
+    owned.set(productPathKey(resolved), file.hash);
   }
+  const canonicalSkillsDir = canonicalProductPath(skillsDir);
+  const plannedFiles = new Map(
+    pending.map((mutation) => [productPathKey(mutation.path), mutation]),
+  );
   const findings: MigrationFinding[] = [],
     retiredFiles: string[] = [];
   for (const [id, replacement] of Object.entries(renamed)) {
     const dir = path.join(skillsDir, id);
-    const files = new Set<string>();
+    const canonicalDir = path.join(canonicalSkillsDir, id);
+    const files = new Map<string, string>();
     let invalid = false;
     const walk = (file: string): void => {
       const stat = fs.lstatSync(file);
@@ -208,8 +214,10 @@ export function inspectLegacyCommonInstall({
       if (stat.isDirectory())
         for (const name of fs.readdirSync(file).sort())
           walk(path.join(file, name));
-      else if (stat.isFile()) files.add(file);
-      else invalid = true;
+      else if (stat.isFile()) {
+        const canonicalFile = path.join(canonicalDir, path.relative(dir, file));
+        files.set(productPathKey(canonicalFile), file);
+      } else invalid = true;
     };
     let present = false;
     try {
@@ -219,26 +227,26 @@ export function inspectLegacyCommonInstall({
       if ((error as NodeJS.ErrnoException).code !== "ENOENT") throw error;
     }
     if (present) walk(dir);
-    for (const planned of pending) {
-      const relative = path.relative(dir, planned.path);
+    for (const [key, planned] of plannedFiles) {
+      const relative = path.relative(canonicalDir, planned.path);
       if (
         relative &&
         relative !== ".." &&
         !relative.startsWith(`..${path.sep}`) &&
         !path.isAbsolute(relative)
       ) {
-        if (planned.after === null) files.delete(planned.path);
-        else files.add(planned.path);
+        if (planned.after === null) files.delete(key);
+        else files.set(key, planned.path);
       }
     }
     if (!invalid && !files.size) continue;
     if (
       !manifest ||
       invalid ||
-      [...files].some((file) => {
-        const planned = pending.find((entry) => entry.path === file);
+      [...files].some(([key, file]) => {
+        const planned = plannedFiles.get(key);
         return (
-          owned.get(file) !==
+          owned.get(key) !==
           (planned?.after ? hashContent(planned.after) : hashFile(file))
         );
       })
@@ -259,7 +267,7 @@ export function inspectLegacyCommonInstall({
         kind: "legacy-install",
         message: "旧公共 Skill 全部由本产品托管且未修改，可随安装事务退役",
       });
-      retiredFiles.push(...files);
+      retiredFiles.push(...files.values());
     }
   }
   return { findings, retiredFiles };

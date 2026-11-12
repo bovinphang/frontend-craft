@@ -1,5 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
+import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
 import { hashBytes, type ProductContext } from "@bovinphang/craft-common";
@@ -40,6 +41,10 @@ const legacy = {
   ],
 };
 test("legacy frontend manifest roundtrip preserves optional roots, hooks and language fallback", () => {
+  const canonicalBase = path.join(
+    fs.realpathSync.native(os.tmpdir()),
+    path.basename(base),
+  );
   const state = MANIFEST_CODEC.decode(
     Buffer.from(JSON.stringify(legacy)),
     context,
@@ -47,7 +52,7 @@ test("legacy frontend manifest roundtrip preserves optional roots, hooks and lan
   assert.equal(state.language, "en");
   assert.equal(
     state.files[0].path,
-    path.join(context.baseDir, "agents/fec-test.md"),
+    path.join(canonicalBase, ".claude/agents/fec-test.md"),
   );
   assert.equal(state.sharedEntries.length, 1);
   const raw = JSON.parse(MANIFEST_CODEC.encode(state, context).toString());
