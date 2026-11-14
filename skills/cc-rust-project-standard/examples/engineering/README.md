@@ -1,5 +1,0 @@
-# Result and resource boundary — EP-RS-01
-
-Copy this directory to a writable location. With an already installed supported Rust toolchain run `cargo test --offline --locked --no-run` first. Then run `cargo test --offline --locked` with `CRAFT_ENGINEERING_DEFECTIVE=1`: `failure_releases_and_preserves_cause` must fail at the release-count assertion. Run with `=0` (the default) and both tests must pass. PowerShell: assign `$env:CRAFT_ENGINEERING_DEFECTIVE='1'` or `'0'` before the same command.
-
-No external crates or parent source are needed. The deliberate `forget` branch demonstrates a failure-path leak; it is inactive by default. The observed cause is the real wrapped I/O error and Drop changes the caller-owned counter. This proves the sample's Result/RAII behavior, not async cancellation, unsafe/FFI soundness or GUI operation. Keep `target` and logs in the writable copy or set `CARGO_TARGET_DIR` there. The declared MSRV is checked separately; do not infer minimum-version validation from a newer toolchain run.

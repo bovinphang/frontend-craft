@@ -4,7 +4,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import { transform } from "esbuild";
-import { resolvePluginRoot } from "../src/install/shared/resolve-plugin-root.js";
+import { resolvePluginRoot, resolveSourceRoot } from "../src/install/shared/resolve-plugin-root.js";
 import {
   assertStandaloneSkillBody,
   assertSkillRelation,
@@ -33,7 +33,7 @@ type SkillPackageIndexEntry = {
 
 const root = resolvePluginRoot(import.meta.url);
 const skillsDir = path.join(root, "skills");
-const packageRoot = path.join(root, "skill-packages");
+const packageRoot = path.join(resolveSourceRoot(import.meta.url), "skill-packages");
 const pkg = readJsonFile<RootPackage>(path.join(root, "package.json"));
 const metadata = readJsonFile<SkillMetadata[]>(
   path.join(skillsDir, "metadata.json"),

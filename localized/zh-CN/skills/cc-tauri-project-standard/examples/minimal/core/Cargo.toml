@@ -1,9 +1,0 @@
-[package]
-name = "document-core"
-version = "0.1.0"
-edition = "2021"
-publish = false
-
-[features]
-# 显式缺陷教学模式，应用不得启用。
-defective = []

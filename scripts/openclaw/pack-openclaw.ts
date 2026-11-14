@@ -10,11 +10,15 @@ import {
 } from "node:fs";
 import path from "node:path";
 import { execSync } from "node:child_process";
-import { resolvePluginRoot } from "../../src/install/shared/resolve-plugin-root.js";
+import {
+  resolvePluginRoot,
+  resolveSourceRoot,
+} from "../../src/install/shared/resolve-plugin-root.js";
 import { installCommandSkills } from "../../src/install/shared/command-skills.js";
 
 const root = resolvePluginRoot(import.meta.url);
-const packRoot = path.join(root, "npm-packages", "openclaw");
+const sourceRoot = resolveSourceRoot(import.meta.url);
+const packRoot = path.join(sourceRoot, "npm-packages", "openclaw");
 const sourceDist = path.join(root, "dist", "openclaw");
 
 rmSync(packRoot, { recursive: true, force: true });
@@ -95,11 +99,11 @@ cpSync(
   path.join(packRoot, "openclaw.plugin.json"),
 );
 copyOpenClawReadme(
-  path.join(root, "README.openclaw.md"),
+  path.join(sourceRoot, "README.openclaw.md"),
   path.join(packRoot, "README.md"),
 );
 copyOpenClawReadme(
-  path.join(root, "README.openclaw.zh-CN.md"),
+  path.join(sourceRoot, "README.openclaw.zh-CN.md"),
   path.join(packRoot, "README.zh-CN.md"),
 );
 cpSync(path.join(root, "LICENSE"), path.join(packRoot, "LICENSE"));

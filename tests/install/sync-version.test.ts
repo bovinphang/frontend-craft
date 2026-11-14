@@ -4,9 +4,9 @@ import { execFileSync } from "node:child_process";
 import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
-import { resolvePluginRoot } from "../../src/install/shared/resolve-plugin-root.js";
+import { resolveSourceRoot } from "../../src/install/shared/resolve-plugin-root.js";
 
-const root = resolvePluginRoot(import.meta.url);
+const root = resolveSourceRoot(import.meta.url);
 
 interface VersionedObject {
   version: string;

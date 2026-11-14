@@ -571,3 +571,5 @@ To disable telemetry: `DISABLE_TELEMETRY=1`. Details: [skills.sh CLI docs](https
 ## License
 
 [MIT](LICENSE) — use freely, modify as needed, contribute back if you can.
+
+Common content is maintained in craft-common. This source repository stores domain skills; `pnpm run build` assembles the complete bilingual product in `dist/package/`. Local development and Git submodules load `--plugin-dir <repository>/dist/package`. Build release archives with `pnpm run pack:all`; see CONTRIBUTING.md.

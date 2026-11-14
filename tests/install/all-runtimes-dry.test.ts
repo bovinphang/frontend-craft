@@ -11,7 +11,7 @@ const root = path.resolve(
   path.dirname(fileURLToPath(import.meta.url)),
   "../..",
 );
-const cli = path.join(root, "dist", "bin", "frontend-craft.js");
+const cli = path.join(root, "dist/package/dist", "bin", "frontend-craft.js");
 
 for (const rt of ALL_RUNTIMES) {
   test(`dry-run install ${rt}`, () => {

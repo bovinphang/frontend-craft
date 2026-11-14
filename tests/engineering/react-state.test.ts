@@ -4,10 +4,12 @@ import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
 import { pnpmEntry } from "../../scripts/verify-engineering.js";
-const root = path.resolve(import.meta.dirname, "../..");
+const root = path.resolve(import.meta.dirname, "../../dist/package");
 test("engineering maintainer exists before paired evidence can be accepted", () => {
   assert.ok(
-    fs.existsSync(path.join(root, "scripts/verify-engineering.ts")),
+    fs.existsSync(
+      path.resolve(import.meta.dirname, "../../scripts/verify-engineering.ts"),
+    ),
     "missing isolated UI maintainer",
   );
 });

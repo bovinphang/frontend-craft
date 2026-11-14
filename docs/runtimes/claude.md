@@ -123,7 +123,7 @@ cd frontend-craft
 pnpm install --frozen-lockfile
 pnpm run build
 cd ..
-claude --plugin-dir ./frontend-craft
+claude --plugin-dir ./frontend-craft/dist/package
 ```
 
 When using `--plugin-dir` for development, run `pnpm run build` after changing hook or CLI sources because Claude executes the compiled files under `dist/`. Disable or avoid a Marketplace install of the same plugin in that session so you know which copy is running.
@@ -142,12 +142,16 @@ After cloning, team members run:
 
 ```bash
 git submodule update --init --recursive
+cd .claude/plugins/frontend-craft
+pnpm install --frozen-lockfile
+pnpm run build
+cd ../../..
 ```
 
 Then load with `--plugin-dir`:
 
 ```bash
-claude --plugin-dir .claude/plugins/frontend-craft
+claude --plugin-dir .claude/plugins/frontend-craft/dist/package
 ```
 
 ---

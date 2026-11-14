@@ -62,21 +62,21 @@ pnpm install --frozen-lockfile
 pnpm run build
 
 # 3. Install to a specific runtime (e.g., claude)
-node dist/bin/frontend-craft.js runtime install claude --local --dry-run  # preview first
-node dist/bin/frontend-craft.js runtime install claude --local            # actual install
+node dist/package/dist/bin/frontend-craft.js runtime install claude --local --dry-run  # preview first
+node dist/package/dist/bin/frontend-craft.js runtime install claude --local            # actual install
 
 # 4. Preview installation to all runtimes in the current project
-node dist/bin/frontend-craft.js runtime install --all --local --dry-run
+node dist/package/dist/bin/frontend-craft.js runtime install --all --local --dry-run
 
 # 5. List all supported runtimes
-node dist/bin/frontend-craft.js list
+node dist/package/dist/bin/frontend-craft.js list
 ```
 
 Run the actual install example in a test checkout so it writes to that checkout’s `.claude/` directory. The all-runtime preview also targets the current project.
 
-`pnpm run build` runs `clean`, `typecheck`, and `scripts/build-dist.ts`. Run it before using `dist/bin/frontend-craft.js` or the bundled hook scripts locally.
+`pnpm run build` runs `clean`, `typecheck`, and `scripts/build-dist.ts`. Run it before using `dist/package/dist/bin/frontend-craft.js` or the bundled hook scripts locally.
 
-Local source checkouts intentionally do not support CLI self-management. Use `node dist/bin/frontend-craft.js runtime update claude --local --dry-run` to preview bundled resource updates; test top-level update/uninstall only against isolated npm/pnpm global installations with fake package managers and temporary HOME directories. Top-level `--dry-run` must remain read-only. See the [CLI command migration table](docs/common-migration.md#cli-command-migration).
+Local source checkouts intentionally do not support CLI self-management. Use `node dist/package/dist/bin/frontend-craft.js runtime update claude --local --dry-run` to preview bundled resource updates; test top-level update/uninstall only against isolated npm/pnpm global installations with fake package managers and temporary HOME directories. Top-level `--dry-run` must remain read-only. See the [CLI command migration table](docs/common-migration.md#cli-command-migration).
 
 ## Testing
 
@@ -338,7 +338,7 @@ skills:
 
 ## Universal Installer
 
-- Entry point: `bin/frontend-craft.ts` (compiled to `dist/bin/frontend-craft.js`).
+- Entry point: `bin/frontend-craft.ts` (compiled to `dist/package/dist/bin/frontend-craft.js`).
 - Implementation: `src/install/` (converters, registry, path helpers).
 - Interactive prompts and input parsing: `src/install/interactive.ts` (tests may set `FRONTEND_CRAFT_FORCE_INTERACTIVE=1` to exercise stdin-fed prompts).
 - Register a new runtime in `src/install/registry.ts`.
@@ -387,3 +387,11 @@ When changing review or diagram capabilities, synchronize scope defaults, natura
 ## Maintaining common content
 
 `cc-*` skills and embedded common methods are generated from the exact `@bovinphang/craft-common@2.1.0` dependency. Change the upstream common package first, prepare its corresponding package, then run `pnpm run sync:common`. Review `common-content.lock.json` and both language snapshots, then run `pnpm run check:common` and `pnpm lint`. Do not edit generated common content directly. Frontend domain skills, metadata and Chinese mirrors remain maintained here. See [project structure](docs/project-structure.md) and [common migration](docs/common-migration.md).
+
+## Build-time common content
+
+Maintain common skills and methods in craft-common. Product source skills and bilingual indexes contain domain-owned entries. `pnpm run prepare:content` assembles the complete bilingual product in `dist/package/`; `pnpm run check:common` verifies that output without writing. `pnpm run build` also compiles executable entries.
+
+For local development and Git submodules, install dependencies and build before loading `--plugin-dir <repository>/dist/package`. Use `pnpm run pack:all` to produce complete release archives. Publish a verified archive or the assembled directory. Packing or publishing the source root fails with a workflow hint. Generated common resources and the provenance lock belong exclusively to build output.
+
+Assembly uses `dist/.content.lock` to prevent concurrent replacement. After a forcibly terminated build, inspect any lock and `.package-previous` backup, confirm no build is active, restore the previous complete output if needed, then remove stale temporary state and retry.

@@ -60,21 +60,21 @@ pnpm install --frozen-lockfile
 pnpm run build
 
 # 3. 本地安装到指定 runtime（如 claude）
-node dist/bin/frontend-craft.js runtime install claude --local --dry-run  # 先 dry-run 预览
-node dist/bin/frontend-craft.js runtime install claude --local            # 实际安装
+node dist/package/dist/bin/frontend-craft.js runtime install claude --local --dry-run  # 先 dry-run 预览
+node dist/package/dist/bin/frontend-craft.js runtime install claude --local            # 实际安装
 
 # 4. 预览当前项目中所有 runtime 的安装
-node dist/bin/frontend-craft.js runtime install --all --local --dry-run
+node dist/package/dist/bin/frontend-craft.js runtime install --all --local --dry-run
 
 # 5. 列出所有支持的 runtime
-node dist/bin/frontend-craft.js list
+node dist/package/dist/bin/frontend-craft.js list
 ```
 
 请在测试用的检出目录执行实际安装示例，配置会写入该目录的 `.claude/`。所有 runtime 的预览也以当前项目为目标。
 
-`pnpm run build` 会依次运行 `clean`、`typecheck` 和 `scripts/build-dist.ts`。本地使用 `dist/bin/frontend-craft.js` 或打包后的 hook 脚本前，请先运行它。
+`pnpm run build` 会依次运行 `clean`、`typecheck` 和 `scripts/build-dist.ts`。本地使用 `dist/package/dist/bin/frontend-craft.js` 或打包后的 hook 脚本前，请先运行它。
 
-源码检出不支持 CLI 自身管理。使用 `node dist/bin/frontend-craft.js runtime update claude --local --dry-run` 预览包内资源更新；顶层 update/uninstall 应通过隔离的 npm/pnpm 全局安装、假包管理器及临时 HOME 验证。顶层 `--dry-run` 必须保持只读。旧命令的替换方式见 [CLI 命令迁移](docs/zh-CN/common-migration.md#cli-命令迁移)。
+源码检出不支持 CLI 自身管理。使用 `node dist/package/dist/bin/frontend-craft.js runtime update claude --local --dry-run` 预览包内资源更新；顶层 update/uninstall 应通过隔离的 npm/pnpm 全局安装、假包管理器及临时 HOME 验证。顶层 `--dry-run` 必须保持只读。旧命令的替换方式见 [CLI 命令迁移](docs/zh-CN/common-migration.md#cli-命令迁移)。
 
 ## 测试指南
 
@@ -389,3 +389,13 @@ skills:
 ## 公共内容维护
 
 `cc-*` Skill 和内嵌公共方法由精确依赖 `@bovinphang/craft-common@2.1.0` 生成，禁止直接修改分发副本。先在 craft-common 修改并准备对应包，再运行 `pnpm run sync:common`，审阅 `common-content.lock.json` 与中英文快照，最后运行 `pnpm run check:common` 和 `pnpm lint`。前端领域 Skill、元数据及中文镜像仍在本仓库维护。完整目录和维护边界见[项目结构](docs/zh-CN/project-structure.md)与[公共能力迁移](docs/zh-CN/common-migration.md)。
+
+## 构建时组合公共内容
+
+公共技能和方法在 craft-common 维护。本仓库的 skills 和 localized/zh-CN/skills 仅维护领域内容及领域索引。
+
+运行 `pnpm run prepare:content` 在 `dist/package/` 生成完整双语产品，运行 `pnpm run check:common` 只读验证生成结果。`pnpm run build` 同时编译运行入口。生成目录已由 dist 的忽略规则覆盖。
+
+本地开发及 Git 子模块需先安装依赖并构建，再通过 `--plugin-dir <仓库>/dist/package` 加载。`pnpm run pack:all` 从组合目录生成完整归档；正式发布应使用验证过的归档或组合目录。源码根目录直接 pack/publish 会报错，避免交付缺失公共内容的包。公共生成文件和来源锁只能存在于产物目录。
+
+构建使用 `dist/.content.lock` 阻止并发替换。进程被强制终止后，如存在锁或 `.package-previous`，先确认没有构建进程并检查备份，恢复上一份完整产物后清理遗留锁和临时目录，再重试。

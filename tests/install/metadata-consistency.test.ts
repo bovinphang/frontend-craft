@@ -4,7 +4,7 @@ import fs from "node:fs";
 import path from "node:path";
 import os from "node:os";
 import { fileURLToPath } from "node:url";
-import { resolvePluginRoot } from "../../src/install/shared/resolve-plugin-root.js";
+import { resolvePluginRoot, resolveSourceRoot } from "../../src/install/shared/resolve-plugin-root.js";
 import {
   parseAgentDocument,
   parseSkillDocument,
@@ -12,6 +12,7 @@ import {
 import { auditContent } from "../../src/install/shared/content-audit.js";
 
 const root = resolvePluginRoot(import.meta.url);
+const sourceRoot = resolveSourceRoot(import.meta.url);
 test("machine anchors and prepared caches are separate from localized prose", () => {
   assert.equal(
     containsLikelyEnglishInstruction(
@@ -701,7 +702,7 @@ test("README skill tree uses fec-prefixed public skill directories", () => {
   ];
 
   for (const doc of docs) {
-    const body = fs.readFileSync(path.join(root, doc), "utf8");
+    const body = fs.readFileSync(path.join(sourceRoot, doc), "utf8");
     for (const legacyName of legacyNames) {
       assert.doesNotMatch(
         body,
@@ -726,7 +727,7 @@ test("OpenClaw READMEs mention every bundled skill and command doc", () => {
   const docs = ["README.openclaw.md", "README.openclaw.zh-CN.md"];
 
   for (const doc of docs) {
-    const body = fs.readFileSync(path.join(root, doc), "utf8");
+    const body = fs.readFileSync(path.join(sourceRoot, doc), "utf8");
     for (const skillId of skillIds) {
       assert.match(
         body,
@@ -753,7 +754,7 @@ test("Claude docs describe one active plugin source instead of recommending dual
   ];
 
   for (const doc of docs) {
-    const body = fs.readFileSync(path.join(root, doc), "utf8");
+    const body = fs.readFileSync(path.join(sourceRoot, doc), "utf8");
     assert.doesNotMatch(
       body,
       /instead of \(or in addition to\) the CLI/,

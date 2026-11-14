@@ -121,7 +121,7 @@ cd frontend-craft
 pnpm install --frozen-lockfile
 pnpm run build
 cd ..
-claude --plugin-dir ./frontend-craft
+claude --plugin-dir ./frontend-craft/dist/package
 ```
 
 使用 `--plugin-dir` 做开发调试时，修改 hooks 或 CLI 源码后需要重新执行 `pnpm run build`，因为 Claude 会运行 `dist/` 下的已编译文件。请避免在同一会话里同时启用 Marketplace 版本，这样才能确定当前运行的是哪一份代码。
@@ -140,12 +140,16 @@ git commit -m "feat: add frontend-craft as shared Claude Code plugin"
 
 ```bash
 git submodule update --init --recursive
+cd .claude/plugins/frontend-craft
+pnpm install --frozen-lockfile
+pnpm run build
+cd ../../..
 ```
 
 再使用 `--plugin-dir` 加载：
 
 ```bash
-claude --plugin-dir .claude/plugins/frontend-craft
+claude --plugin-dir .claude/plugins/frontend-craft/dist/package
 ```
 
 ---

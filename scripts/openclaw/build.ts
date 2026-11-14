@@ -2,12 +2,12 @@ import { existsSync } from "node:fs";
 import { mkdir } from "node:fs/promises";
 import path from "node:path";
 import { build } from "esbuild";
-import { resolvePluginRoot } from "../../src/install/shared/resolve-plugin-root.js";
+import { resolveSourceRoot } from "../../src/install/shared/resolve-plugin-root.js";
 
-const root = resolvePluginRoot(import.meta.url);
+const root = resolveSourceRoot(import.meta.url);
 
 async function main() {
-  const outDir = path.join(root, "dist", "openclaw");
+  const outDir = path.join(root, "dist/package/dist/openclaw");
   const outfile = path.join(outDir, "index.js");
   await mkdir(outDir, { recursive: true });
 

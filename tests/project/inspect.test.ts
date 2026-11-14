@@ -12,7 +12,7 @@ test("frontend inspect CLI returns delivered task candidates, stays read-only an
     '{"dependencies":{"react":"^19","@angular/core":"^20"},"devDependencies":{"typescript":"^5"}}',
   );
   fs.writeFileSync(path.join(root, "view.tsx"), "");
-  const cli = path.resolve("dist/bin/frontend-craft.js");
+  const cli = path.resolve("dist/package/dist/bin/frontend-craft.js");
   const call = (...args: string[]) =>
     execFileSync(process.execPath, [cli, "project", "inspect", root, ...args], {
       encoding: "utf8",

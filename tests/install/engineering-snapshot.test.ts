@@ -4,7 +4,7 @@ import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { readContentCatalog } from "@bovinphang/craft-common";
-const root=path.resolve(import.meta.dirname,"../..");
+const root=path.resolve(import.meta.dirname,"../../dist/package");
 const installed=path.resolve(path.dirname(fileURLToPath(import.meta.resolve("@bovinphang/craft-common"))),"..");
 const targets=["fec-react-project-standard","fec-vue3-project-standard","fec-api-integration","fec-data-fetching","fec-code-review","fec-testing-strategy","fec-security-review","fec-dependency-upgrade"];
 test("eight frontend entries consume exact installed core bytes and the full 21-entry common snapshot",()=>{

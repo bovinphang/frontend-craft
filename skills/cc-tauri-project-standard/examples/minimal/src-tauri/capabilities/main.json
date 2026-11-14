@@ -1,6 +1,0 @@
-{
-  "identifier": "main",
-  "description": "Local main window document access",
-  "windows": ["main"],
-  "permissions": ["allow-read-document"]
-}

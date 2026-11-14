@@ -2,13 +2,13 @@ import { existsSync } from "node:fs";
 import { mkdir, rm } from "node:fs/promises";
 import path from "node:path";
 import { build, type BuildOptions } from "esbuild";
-import { resolvePluginRoot } from "../src/install/shared/resolve-plugin-root.js";
+import { resolveSourceRoot } from "../src/install/shared/resolve-plugin-root.js";
 import { syncCommonContent } from "./sync-common.js";
 import { fileURLToPath } from "node:url";
 
-const root = resolvePluginRoot(import.meta.url);
+const root = resolveSourceRoot(import.meta.url);
 syncCommonContent({
-  productRoot: root,
+  productRoot: path.join(root, "dist/package"),
   commonRoot: path.resolve(
     path.dirname(
       fileURLToPath(import.meta.resolve("@bovinphang/craft-common")),
@@ -17,7 +17,8 @@ syncCommonContent({
   ),
   check: true,
 });
-const cliOutfile = path.join(root, "dist", "bin", "frontend-craft.js");
+const outputRoot = path.join(root, "dist/package");
+const cliOutfile = path.join(outputRoot, "dist", "bin", "frontend-craft.js");
 
 const hookEntries = [
   [
@@ -31,9 +32,12 @@ const hookEntries = [
   ["src/hooks/session-start.ts", "dist/hooks/fec-session-start.js"],
 ] as const;
 
-await mkdir(path.join(root, "dist", "bin"), { recursive: true });
-await rm(path.join(root, "dist", "hooks"), { recursive: true, force: true });
-await mkdir(path.join(root, "dist", "hooks"), { recursive: true });
+await mkdir(path.join(outputRoot, "dist", "bin"), { recursive: true });
+await rm(path.join(outputRoot, "dist", "hooks"), {
+  recursive: true,
+  force: true,
+});
+await mkdir(path.join(outputRoot, "dist", "hooks"), { recursive: true });
 
 await bundle({
   entryPoint: "bin/frontend-craft.ts",
@@ -68,7 +72,7 @@ async function bundle({
     legalComments: "none",
     logLevel: "silent",
     minify: true,
-    outfile,
+    outfile: path.join(outputRoot, outfile),
     packages: entryPoint === "bin/frontend-craft.ts" ? "bundle" : "external",
     banner:
       entryPoint === "bin/frontend-craft.ts"

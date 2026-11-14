@@ -4,9 +4,10 @@ import { execSync, spawnSync } from "node:child_process";
 import fs from "node:fs";
 import path from "node:path";
 import os from "node:os";
-import { resolvePluginRoot } from "../../src/install/shared/resolve-plugin-root.js";
+import { resolvePluginRoot, resolveSourceRoot } from "../../src/install/shared/resolve-plugin-root.js";
 
 const root = resolvePluginRoot(import.meta.url);
+const sourceRoot = resolveSourceRoot(import.meta.url);
 
 test("published CLI installs parsed content without repository node_modules", () => {
   const temp = fs.mkdtempSync(path.join(os.tmpdir(), "fec-published-"));
@@ -141,7 +142,7 @@ test("npm pack publishes compiled runtime files without TypeScript sources", () 
             .replace(/^dist\/hooks\/fec-/, "src/hooks/")
             .replace(/\.js$/, ".ts")
         : file.replace(/^dist\//, "").replace(/\.js$/, ".ts");
-      return !fs.existsSync(path.join(root, sourcePath));
+      return !fs.existsSync(path.join(sourceRoot, sourcePath));
     });
   assert.deepEqual(staleCompiledFiles, []);
 });
@@ -182,7 +183,7 @@ test("build output only contains bundled publish runtime directories", () => {
 
 test("OpenClaw dist check does not clean the bundle it verifies", () => {
   const pkg = JSON.parse(
-    fs.readFileSync(path.join(root, "package.json"), "utf8"),
+    fs.readFileSync(path.join(sourceRoot, "package.json"), "utf8"),
   );
   assert.equal(
     pkg.scripts["check:openclaw-dist"],

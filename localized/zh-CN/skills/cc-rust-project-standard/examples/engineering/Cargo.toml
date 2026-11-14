@@ -1,8 +1,0 @@
-[package]
-name = "engineering-resource-boundary"
-version = "0.0.0"
-edition = "2021"
-rust-version = "1.70"
-
-[lib]
-path = "src/lib.rs"

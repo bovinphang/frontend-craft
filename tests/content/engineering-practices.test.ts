@@ -3,7 +3,7 @@ import assert from "node:assert/strict";
 import fs from "node:fs";
 import path from "node:path";
 import { parseFrontmatter } from "../../src/install/shared/frontmatter.js";
-const root = path.resolve(import.meta.dirname, "../..");
+const root = path.resolve(import.meta.dirname, "../../dist/package");
 const targets: ReadonlyArray<readonly [string, readonly string[]]> = [
   ["fec-react-project-standard", ["effect-cleanup", "stale-results"]],
   ["fec-vue3-project-standard", ["watcher-cleanup", "stale-results"]],

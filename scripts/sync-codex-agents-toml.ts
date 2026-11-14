@@ -5,9 +5,9 @@
 import fs from "node:fs";
 import path from "node:path";
 import { agentMdToToml } from "../src/install/codex-agents.js";
-import { resolvePluginRoot } from "../src/install/shared/resolve-plugin-root.js";
+import { resolveSourceRoot } from "../src/install/shared/resolve-plugin-root.js";
 
-const root = resolvePluginRoot(import.meta.url);
+const root = resolveSourceRoot(import.meta.url);
 const agentsDir = path.join(root, "agents");
 const outDir = process.env.CODEX_AGENTS_DIR;
 

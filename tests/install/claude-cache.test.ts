@@ -14,7 +14,7 @@ const root = path.resolve(
   path.dirname(fileURLToPath(import.meta.url)),
   "../..",
 );
-const cli = path.join(root, "dist", "bin", "frontend-craft.js");
+const cli = path.join(root, "dist/package/dist", "bin", "frontend-craft.js");
 
 test("invalid doctor arguments reject before deleting stale cache", () => {
   const claudeHome = makeClaudeHome("2.3.1");

@@ -14,7 +14,7 @@ const root = path.resolve(
   path.dirname(fileURLToPath(import.meta.url)),
   "../..",
 );
-const cli = path.join(root, "dist", "bin", "frontend-craft.js");
+const cli = path.join(root, "dist/package/dist", "bin", "frontend-craft.js");
 
 test("ensureDir is a no-op for an existing filesystem root", () => {
   assert.doesNotThrow(() => ensureDir(path.parse(process.cwd()).root));

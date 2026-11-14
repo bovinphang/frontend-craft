@@ -571,3 +571,5 @@ npx skills check                           # 预览可用更新
 ## 许可证
 
 [MIT](LICENSE) — 自由使用，按需修改，如果可以请回馈社区。
+
+公共内容在 craft-common 统一维护。本源码仓库仅保存领域技能；`pnpm run build` 在 `dist/package/` 生成完整双语产品。开发及 Git 子模块使用 `--plugin-dir <仓库>/dist/package`。发行归档通过 `pnpm run pack:all` 生成，具体步骤见 CONTRIBUTING.zh-CN.md。

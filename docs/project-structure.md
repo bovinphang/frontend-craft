@@ -164,3 +164,5 @@ Technical diagram quality: `cc-technical-diagrams` prefers local Mermaid for sta
 Shared `cc-*` entries and embedded method copies are generated from `craft-common@2.0.0`. Run `pnpm run sync:common` after upstream changes and `pnpm run check:common` for a read-only comparison. Do not edit generated common snapshots. Frontend domain content is maintained here, with Chinese mirrors in `localized/zh-CN/`.
 
 `src/project/` keeps product framework declarations and inspect integration. Bounded discovery and task recommendation live in craft-common; backend retains the six-language validation projection. 产品不复制扫描器或公共安装算法。
+
+Generated common skills, embedded references, merged indexes and provenance locks live in the assembled `dist/package/` directory. Source indexes contain domain-owned entries. Inspect the assembled directory for the complete release layout.

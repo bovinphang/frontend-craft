@@ -1,3 +1,4 @@
+import { prepareContent, checkSourceContent } from "./prepare-content.js";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { syncProductSnapshot } from "@bovinphang/craft-common";
@@ -26,14 +27,15 @@ if (
         )
       : args[rootIndex + 1];
   if (!commonRoot) throw new Error("--common-root 需要包目录");
-  syncCommonContent({
-    productRoot: path.resolve(
-      path.dirname(fileURLToPath(import.meta.url)),
-      "..",
-    ),
-    commonRoot,
-    check: args.includes("--check"),
-  });
+  const sourceRoot = path.resolve(import.meta.dirname, "..");
+  if (args.includes("--check")) {
+    checkSourceContent(sourceRoot);
+    syncCommonContent({
+      productRoot: path.join(sourceRoot, "dist/package"),
+      commonRoot,
+      check: true,
+    });
+  } else prepareContent({ sourceRoot, commonRoot });
   console.log(
     args.includes("--check") ? "公共内容快照一致" : "已同步公共内容快照",
   );

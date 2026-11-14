@@ -3,7 +3,10 @@ import assert from "node:assert/strict";
 import { execFileSync } from "node:child_process";
 import fs from "node:fs";
 import path from "node:path";
-import { resolvePluginRoot } from "../../src/install/shared/resolve-plugin-root.js";
+import {
+  resolvePluginRoot,
+  resolveSourceRoot,
+} from "../../src/install/shared/resolve-plugin-root.js";
 import {
   assertStandaloneSkillBody,
   extractReferencedFiles,
@@ -17,15 +20,16 @@ import {
 } from "../../scripts/skill-packaging.js";
 
 const root = resolvePluginRoot(import.meta.url);
+const sourceRoot = resolveSourceRoot(import.meta.url);
 const skillsDir = path.join(root, "skills");
-const packageRoot = path.join(root, "skill-packages");
+const packageRoot = path.join(sourceRoot, "skill-packages");
 const distPackageRoot = path.join(root, "dist", "skill-packages");
-const tsxCli = path.join(root, "node_modules", "tsx", "dist", "cli.mjs");
+const tsxCli = path.join(sourceRoot, "node_modules", "tsx", "dist", "cli.mjs");
 
 test("pack:skills creates one standalone publish package per skill", () => {
   execFileSync(
     process.execPath,
-    [tsxCli, path.join(root, "scripts", "pack-skills.ts")],
+    [tsxCli, path.join(sourceRoot, "scripts", "pack-skills.ts")],
     {
       cwd: root,
       encoding: "utf8",
@@ -242,7 +246,7 @@ test("pack:skills creates one standalone publish package per skill", () => {
 test("check:skills-publish validates generated standalone packages", () => {
   execFileSync(
     process.execPath,
-    [tsxCli, path.join(root, "scripts", "check-skills-publish.ts")],
+    [tsxCli, path.join(sourceRoot, "scripts", "check-skills-publish.ts")],
     {
       cwd: root,
       encoding: "utf8",

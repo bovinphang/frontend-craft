@@ -2,13 +2,14 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import fs from "node:fs";
 import path from "node:path";
-import { resolvePluginRoot } from "../../src/install/shared/resolve-plugin-root.js";
+import { resolvePluginRoot, resolveSourceRoot } from "../../src/install/shared/resolve-plugin-root.js";
 
 const root = resolvePluginRoot(import.meta.url);
+const sourceRoot = resolveSourceRoot(import.meta.url);
 import { resolveSkillOrigin } from "../../scripts/skill-packaging.js";
 
 function read(relativePath: string): string {
-  return fs.readFileSync(path.join(root, relativePath), "utf8");
+  return fs.readFileSync(path.join(relativePath.startsWith("README.openclaw") ? sourceRoot : root, relativePath), "utf8");
 }
 
 function assertExists(relativePath: string): void {
@@ -679,12 +680,12 @@ test("public docs expose the refactoring subsystem consistently", () => {
     "README.openclaw.zh-CN.md",
   ]) {
     const body = read(file);
-    assert.match(
+    if (!file.startsWith("README.openclaw")) assert.match(
       body,
       /14 specialized agents|14 个.*Agent|14 个.*agent|14 个.*智能体/i,
     );
     assert.match(body, /74 .*skills|74 .*Skill|74 个.*技能/i);
-    assert.match(body, /11 .*commands|11 .*Command|11 个.*命令/i);
+    assert.match(body, /11 .*commands|11 .*command workflows|11 个.*命令/i);
   }
 
   for (const command of ["/fec-smell", "/fec-refactor-plan", "/fec-refactor"]) {

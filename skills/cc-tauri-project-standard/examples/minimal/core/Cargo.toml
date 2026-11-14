@@ -1,9 +1,0 @@
-[package]
-name = "document-core"
-version = "0.1.0"
-edition = "2021"
-publish = false
-
-[features]
-# Deliberately broken teaching variant. Never enable in the application.
-defective = []

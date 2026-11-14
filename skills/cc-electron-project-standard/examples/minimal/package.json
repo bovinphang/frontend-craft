@@ -1,9 +1,0 @@
-{
-  "name": "craft-electron-boundary-example",
-  "version": "0.1.0",
-  "private": true,
-  "main": "main.cjs",
-  "scripts": { "test": "node --test boundary.test.cjs", "start": "electron ." },
-  "peerDependencies": { "electron": ">=30" },
-  "peerDependenciesMeta": { "electron": { "optional": true } }
-}

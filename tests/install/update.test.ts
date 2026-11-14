@@ -50,7 +50,7 @@ const root = path.resolve(
   path.dirname(fileURLToPath(import.meta.url)),
   "../..",
 );
-const cli = path.join(root, "dist", "bin", "frontend-craft.js");
+const cli = path.join(root, "dist/package/dist", "bin", "frontend-craft.js");
 
 test("install writes a frontend-craft manifest for the runtime scope", () => {
   const dir = fs.mkdtempSync(path.join(os.tmpdir(), "fc-manifest-"));
@@ -171,11 +171,11 @@ test("install with Simplified Chinese writes localized content and manifest lang
 
 test("Simplified Chinese image generation scripts match English script filenames", () => {
   const sourceScripts = listMjsFiles(
-    path.join(root, "skills", "fec-image-generation", "scripts"),
+    path.join(root, "dist/package/skills", "fec-image-generation", "scripts"),
   );
   const localizedScripts = listMjsFiles(
     path.join(
-      root,
+      path.join(root, "dist/package"),
       "localized",
       "zh-CN",
       "skills",
@@ -184,6 +184,7 @@ test("Simplified Chinese image generation scripts match English script filenames
     ),
   );
 
+  assert.ok(sourceScripts.length > 0);
   assert.deepEqual(localizedScripts, sourceScripts);
 });
 

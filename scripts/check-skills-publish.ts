@@ -3,7 +3,7 @@
  */
 import fs from "node:fs";
 import path from "node:path";
-import { resolvePluginRoot } from "../src/install/shared/resolve-plugin-root.js";
+import { resolvePluginRoot, resolveSourceRoot } from "../src/install/shared/resolve-plugin-root.js";
 import {
   assertStandaloneSkillBody,
   assertSkillRelation,
@@ -20,7 +20,7 @@ import {
 
 const root = resolvePluginRoot(import.meta.url);
 const skillsDir = path.join(root, "skills");
-const packageRoot = path.join(root, "skill-packages");
+const packageRoot = path.join(resolveSourceRoot(import.meta.url), "skill-packages");
 const metadata = readJsonFile<SkillMetadata[]>(
   path.join(skillsDir, "metadata.json"),
 );
