@@ -32,6 +32,19 @@ Frontend Craft 将前端规范、设计实现、代码评审和测试工作流�
 
 各运行时安装其支持的能力子集。使用 `fec matrix` 查看能力矩阵，资源路径与启用步骤见 [Runtime 指南](docs/runtimes/)。
 
+## 为什么选择 frontend-craft？
+
+| 痛点                                          | frontend-craft 的解法                                                 |
+| --------------------------------------------- | --------------------------------------------------------------------- |
+| AI 助手写出的前端代码风格不一、缺类型、不安全 | **74 个 skill** 将团队规范编码为可自动激活的工作流                    |
+| 每款 AI 工具都有自己的插件格式                | **一条 CLI 命令** 把相同的规则、agent 和 hook 安装到 15 个运行时      |
+| 设计稿到代码的交接总有信息损失                | **MCP 集成** 从 Figma、Figma Desktop、Sketch、MasterGo、Pixso、墨刀引入更完整设计上下文 |
+| 代码评审随意、浅层                            | **14 个 agent** 输出分级报告：代码、安全、无障碍、性能、TS、UI 还原度 |
+| 没人记得跑 lint 和测试                        | **事件驱动 hook** 在保存和会话结束时自动校验                          |
+| 新项目每次都从零开始                          | **`/fec-init`** 几秒内脚手架化 CLAUDE.md、规则和 settings             |
+
+---
+
 ## 核心能力
 
 - 通过专项 Skill 应用架构、组件、状态、API 和测试规范。
@@ -49,28 +62,40 @@ Skill 提供工程规范与方法，Agent 执行专项任务，命令工作流�
 ### 1. 安装并接入助手
 
 ```sh
+# 1. 全局安装 fec 命令
 npm install -g @bovinphang/frontend-craft@latest
+
+# 2. 进入你的前端项目
 cd your-frontend-project
+
+# 3. 交互选择要接入的 AI 运行时
 fec setup
 ```
 
 将 `your-frontend-project` 替换为实际项目目录。在交互终端中，`fec setup` 会先让你选择一个或多个运行时，再选择英文或简体中文资源。方向键移动，空格勾选或取消，回车确认。初始勾选 Claude，只接入其他助手时先取消该选项。资源默认安装到**当前项目**。
 
-需要跳过交互或编写脚本时，显式指定运行时、范围和语言。以下以 Codex 为例。
+需要跳过交互或编写脚本时，显式指定运行时、范围和语言。以下以 Codex 和 Claude Code 为例。
 
 ```sh
+# 接入当前项目
 fec setup codex --local --lang zh-CN
+fec setup claude --local --lang zh-CN
 ```
+
+如果需接入全部运行时，则可使用命令：`fec setup all --local --lang zh-CN`
 
 ### 2. 检查安装结果
 
 ```sh
 fec doctor codex --local
+fec doctor claude --local
 ```
 
 在同一项目目录执行检查，将 `codex` 替换为实际选择的运行时标识，多选时逐个检查。`ok` 表示预期资源已找到，`missing` 表示需要排查的缺失资源，`not expected` 表示该适配器的能力范围无需此资源。缺失项的处理见 [Runtime 指南](docs/runtimes/)。
 
 ### 3. 完成首次任务
+
+安装完成后，你在每一次 AI 会话中都拥有一套完整的前端工程工具箱。
 
 刷新或重启助手，打开项目并新建会话，确认助手发现了资源，并完成宿主要求的信任或启用操作。对于支持 Skill 的助手，将 `src/features/account` 替换为实际存在的模块路径后发送以下请求。
 
@@ -80,7 +105,24 @@ fec doctor codex --local
 列出问题位置、影响及修复建议，没有发现问题时明确说明。
 ```
 
-预期得到包含问题位置与修复建议的评审结果，或明确的无问题结论。Claude Code 也提供 `/fec-review`，各宿主的资源形式以 Runtime 指南为准。更多任务见[示例提示词](docs/zh-CN/example-prompts.md)。
+预期得到包含问题位置与修复建议的评审结果，或明确的无问题结论。Claude Code 也提供 `/fec-review`。
+
+### 4. 部分示例提示词
+
+下文斜杠命令以 **Claude Code** 为例，其他运行时通过各自的命令系统提供同等能力，各宿主的资源形式以 Runtime 指南为准（详见 [`docs/runtimes/`](docs/runtimes/)）。
+
+```text
+你：「合并前请评审我最近的改动。重点看架构、类型安全、渲染行为、样式、无障碍和缺失测试。」
+你：「先不要写代码，请规划账号账单功能：路由结构、组件边界、数据流、状态归属、校验流程和上线风险。」
+你：「请构建多步注册表单：根据项目框架选择表单与 schema 校验方案，包含文件上传、条件字段、异步校验和可访问错误提示。」
+你：「请按 Figma 节点 123:456 实现 UI。复用现有 design token 和组件，匹配间距与响应式状态，并说明假设。」
+你：「`/fec-refactor-clean` 请清理这个模块里的死代码。」
+你：「`/fec-smell` 请诊断这个模块的结构坏味道，先不要改代码。」
+你：「`/fec-refactor-plan` 请生成保持行为的小步重构计划。」
+你：「`/fec-refactor` 请保持可观察行为不变地重构这个模块。」
+```
+
+完整的按场景组织的提示词库见 [docs/zh-CN/example-prompts.md](docs/zh-CN/example-prompts.md)。
 
 ## 其他安装方式
 
@@ -90,8 +132,33 @@ fec doctor codex --local
 
 ```sh
 cd your-frontend-project
+
+# 1. 交互向导
+npx @bovinphang/frontend-craft@latest
 npx @bovinphang/frontend-craft@latest setup
+
+# 2. 接入当前项目
+# 仅codex
+npx @bovinphang/frontend-craft@latest runtime install --local codex
+# 仅claude
+npx @bovinphang/frontend-craft@latest runtime install --local claude
+# 全部运行时
+npx @bovinphang/frontend-craft@latest runtime install --all --local
+
+# 3. 全局接入，适用于所有项目
+# 仅codex
+npx @bovinphang/frontend-craft@latest runtime install --global codex
+# 仅claude
+npx @bovinphang/frontend-craft@latest runtime install --global claude
+# 全部运行时
+npx @bovinphang/frontend-craft@latest runtime install --all --global
+
+# 4. 预览 / 查询
+npx @bovinphang/frontend-craft@latest runtime install --all --dry-run --global
+npx @bovinphang/frontend-craft@latest list
 ```
+
+不想全局安装 `fec` 命令时使用 `npx`。不带参数会进入交互向导：先选择一个或多个运行时，再决定接入全局还是当前项目。脚本化安装全部 runtime 时使用 `install --all --local` 或 `install --all --global`，不要写成 `install all`。CI / 脚本场景请始终带上 `--global` / `-g` 或 `--local` / `-l`；非 TTY 且未指定时，CLI 默认安装到 `claude --global`。
 
 ### Claude Code Marketplace
 
@@ -105,10 +172,17 @@ npx @bovinphang/frontend-craft@latest setup
 
 ### 用户级全局接入
 
-需要跨项目使用时选择 `--global`。以下 Codex 示例显式指定全部选项。批量接入与默认值见 [CLI 管理](docs/cli-management.zh-CN.md)。
+需要跨项目使用时选择 `--global`。以下 Codex 和 Claude Code示例显式指定全部选项。批量接入与默认值见 [CLI 管理](docs/cli-management.zh-CN.md)。
 
 ```sh
+# 全局接入，适用于所有项目
 fec setup codex --global --lang zh-CN
+fec setup claude --global --lang zh-CN
+fec setup all --global --lang zh-CN
+
+# 预览 / 查询
+fec runtime install --all --dry-run --global
+fec list
 ```
 
 ### 独立 Skill 包
@@ -224,7 +298,6 @@ fec setup codex --global --lang zh-CN
 | `fec-motion-interaction`      | 场景化动效强度、页面转场、滚动动画、reduced-motion       |
 | `fec-implement-from-design`   | 基于设计工具、截图或分区级视觉参考实现 UI                |
 | `fec-storybook-component-doc` | Storybook 组件文档、设计系统呈现、隔离状态预览           |
-
 
 [审核范围与技术图交付指南](docs/zh-CN/review-and-diagram-workflows.md).
 

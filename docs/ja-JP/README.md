@@ -32,6 +32,19 @@ Frontend Craft はフロントエンドの規約、デザイン実装、レビ�
 
 ランタイムごとに対応する機能をインストールします。`fec matrix` で対応表を確認し、パスと有効化手順は[ランタイムガイド](../../docs/runtimes/)を参照してください。
 
+## frontend-craft を選ぶ理由
+
+| 課題 | frontend-craft の解決策 |
+| --- | --- |
+| AI が生成するコードの規約・型・安全性が不統一 | **74 のスキル**でチーム規約を自動適用するワークフローに変換 |
+| AI ツールごとにプラグイン形式が異なる | **1 つの CLI コマンド**で規則、エージェント、フックを 15 のランタイムに導入 |
+| デザインの引き継ぎで情報が欠落 | **MCP 統合**で Figma、Figma Desktop、Sketch、MasterGo、Pixso、Modao の情報を取得 |
+| レビューが場当たり的で浅い | **14 のエージェント**がコード、安全性、アクセシビリティ、性能、TS、UI 再現度の重要度付きレポートを作成 |
+| lint とテストの実行を忘れる | **イベント駆動フック**が保存時とセッション終了時に検証 |
+| 新規プロジェクトを毎回ゼロから準備 | **`/fec-init`** が CLAUDE.md、規則、settings を素早く生成 |
+
+---
+
 ## 主な機能
 
 - スキルで設計、コンポーネント、状態、API、テストの規約を適用します。
@@ -56,21 +69,26 @@ fec setup
 
 `your-frontend-project` を実際のディレクトリに置き換えます。対話式ターミナルの `fec setup` でランタイムを 1 つ以上選び、英語または簡体字中国語のリソースを選びます。矢印キーで移動、Space で選択・解除、Enter で確定します。最初は Claude が選択されています。他のアシスタントだけを使う場合は解除してください。既定では**現在のプロジェクト**にインストールします。
 
-対話を省略する場合やスクリプトではランタイム、範囲、言語を指定します。Codex の例です。
+対話を省略する場合やスクリプトではランタイム、範囲、言語を指定します。Codex、Claude Code、全ランタイムの例です。
 
 ```sh
 fec setup codex --local --lang en
+fec setup claude --local --lang en
+fec setup all --local --lang en
 ```
 
 ### 2. インストールの確認
 
 ```sh
 fec doctor codex --local
+fec doctor claude --local
 ```
 
 同じプロジェクトで実行し、`codex` を選択した識別子に置き換えて各ランタイムを確認します。`ok` は想定するリソースの存在、`missing` は要調査の不足、`not expected` は対応機能の範囲に含まれない項目を示します。[ランタイムガイド](../../docs/runtimes/)を参照してください。
 
 ### 3. 最初のタスク
+
+インストール後は、毎回の AI セッションでフロントエンド開発のツール一式を利用できます。
 
 アシスタントを更新または再起動し、プロジェクトで新しい会話を開始します。リソースの検出を確認し、ホストの信頼・有効化手順を完了してください。スキル対応のアシスタントで `src/features/account` を実在するモジュールに置き換え、次を依頼します。
 
@@ -82,6 +100,23 @@ fec-code-review で src/features/account の全コードを読み取り専用で
 
 問題の場所と修正案、または問題なしという結果を確認します。Claude Code は `/fec-review` も提供します。ホスト別の形式はランタイムガイド、その他のタスクは[プロンプト例](../../docs/example-prompts.md)を参照してください。
 
+### 4. プロンプト例
+
+以下は **Claude Code** のスラッシュコマンドです。他のランタイムでは各ホストのコマンドシステムを使います。リソース形式は[ランタイムガイド](../../docs/runtimes/)を参照してください。
+
+```text
+マージ前に最近の変更をレビューしてください。設計、型安全性、描画、スタイル、アクセシビリティ、テストの不足を確認してください。
+コードを書く前にアカウントの請求機能を計画してください。ルート、コンポーネント境界、データフロー、状態の所有、検証、リリースリスクを含めてください。
+複数ステップの登録フォームを作成してください。フレームワークに合うフォームとスキーマ検証を選び、アップロード、条件付き項目、非同期検証、アクセシブルなエラーを含めてください。
+Figma ノード 123:456 の UI を実装してください。既存のトークンとコンポーネントを再利用し、余白とレスポンシブ状態を合わせ、前提を説明してください。
+/fec-refactor-clean このモジュールの未使用コードを削除してください。
+/fec-smell コードを変更せず構造上のコードスメルを診断してください。
+/fec-refactor-plan 振る舞いを保持する小さなステップのリファクタリング計画を作成してください。
+/fec-refactor 観測可能な振る舞いを保持してリファクタリングしてください。
+```
+
+シナリオ別の例は[プロンプト集](../../docs/example-prompts.md)を参照してください。
+
 ## その他のインストール方法
 
 ### npx による一時実行
@@ -90,8 +125,20 @@ npx から同じ設定ウィザードを実行できます。以降の CLI コ�
 
 ```sh
 cd your-frontend-project
+npx @bovinphang/frontend-craft@latest
 npx @bovinphang/frontend-craft@latest setup
+
+npx @bovinphang/frontend-craft@latest runtime install --local codex
+npx @bovinphang/frontend-craft@latest runtime install --local claude
+npx @bovinphang/frontend-craft@latest runtime install --all --local
+npx @bovinphang/frontend-craft@latest runtime install --global codex
+npx @bovinphang/frontend-craft@latest runtime install --global claude
+npx @bovinphang/frontend-craft@latest runtime install --all --global
+npx @bovinphang/frontend-craft@latest runtime install --all --dry-run --global
+npx @bovinphang/frontend-craft@latest list
 ```
+
+`fec` をグローバルにインストールせずに使う場合は `npx` を利用します。引数なしではランタイムを選択し、次にグローバルまたは現在のプロジェクトを選びます。全ランタイムのスクリプト導入には `install --all --local` または `install --all --global` を使用します。CI やスクリプトでは `--global` / `-g` または `--local` / `-l` を指定してください。非 TTY で指定がない場合は `claude --global` が既定です。
 
 ### Claude Code Marketplace
 
@@ -105,10 +152,15 @@ Claude Code のネイティブプラグインはアシスタント内で次を�
 
 ### ユーザー全体へのインストール
 
-プロジェクト間で共用する場合は `--global` を使います。Codex の例はすべての選択肢を指定しています。一括操作と既定値は [CLI 管理](../../docs/cli-management.md)を参照してください。
+プロジェクト間で共用する場合は `--global` を使います。Codex と Claude Code の例はすべての選択肢を指定しています。一括操作と既定値は [CLI 管理](../../docs/cli-management.md)を参照してください。
 
 ```sh
 fec setup codex --global --lang en
+fec setup claude --global --lang en
+fec setup all --global --lang en
+
+fec runtime install --all --dry-run --global
+fec list
 ```
 
 ### 独立スキルパッケージ
@@ -143,6 +195,8 @@ fec setup codex --global --lang en
 
 
 以下のスキルはユースケース別に分類されているため、プロジェクト標準、実装、テスト、レビュー、デザイン、移行、プロジェクト進化、ドキュメント保守のワークフローをすばやく見つけられます。
+
+スキルは**タスクに応じて使う**ワークフロー定義で、レビュー観点、出力規約、レポート形式を定めます。以下は規約、実装、テスト、レビュー、デザイン、移行、プロジェクト改善、文書保守の分類です。
 
 **プロジェクト標準** — プロジェクトのフレームワークに応じて使用：
 

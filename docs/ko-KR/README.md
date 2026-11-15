@@ -32,6 +32,19 @@ Frontend Craft는 프론트엔드 규칙, 디자인 구현, 검토와 테스트 
 
 런타임마다 지원하는 기능을 설치합니다. `fec matrix`로 기능을 확인하고 경로와 활성화 절차는 [런타임 가이드](../../docs/runtimes/)를 참조하세요.
 
+## frontend-craft를 선택하는 이유
+
+| 과제 | frontend-craft의 해결 방법 |
+| --- | --- |
+| AI 생성 코드의 스타일, 타입과 보안이 일관되지 않음 | **스킬 74개**로 팀 규칙을 자동 활성화 워크플로로 구현 |
+| AI 도구마다 다른 플러그인 형식 | **CLI 명령 하나**로 규칙, 에이전트와 훅을 런타임 15개에 설치 |
+| 디자인 인계 과정에서 정보 손실 | **MCP 통합**으로 Figma, Figma Desktop, Sketch, MasterGo, Pixso, Modao의 디자인 맥락 확보 |
+| 즉흥적이고 얕은 코드 검토 | **에이전트 14개**가 코드, 보안, 접근성, 성능, TS와 UI 재현도에 대한 심각도별 보고서 작성 |
+| lint와 테스트 실행을 잊음 | **이벤트 기반 훅**으로 저장 및 세션 종료 시 자동 검증 |
+| 새 프로젝트를 매번 처음부터 준비 | **`/fec-init`**으로 CLAUDE.md, 규칙과 settings를 빠르게 생성 |
+
+---
+
 ## 핵심 기능
 
 - 스킬로 아키텍처, 컴포넌트, 상태, API와 테스트 규칙을 적용합니다.
@@ -56,21 +69,26 @@ fec setup
 
 `your-frontend-project`를 실제 경로로 바꾸세요. 대화형 터미널의 `fec setup`에서 런타임을 하나 이상 선택한 다음 영어 또는 중국어 간체 리소스를 선택합니다. 방향키로 이동하고 Space로 선택·해제하며 Enter로 확정합니다. 처음에는 Claude가 선택되어 있으므로 다른 도우미만 사용하려면 해제하세요. 기본적으로 **현재 프로젝트**에 설치합니다.
 
-대화형 선택을 생략하거나 스크립트에서 실행하려면 런타임, 범위와 언어를 지정하세요. 다음은 Codex 예시입니다.
+대화형 선택을 생략하거나 스크립트에서 실행하려면 런타임, 범위와 언어를 지정하세요. 다음은 Codex, Claude Code와 전체 런타임 예시입니다.
 
 ```sh
 fec setup codex --local --lang en
+fec setup claude --local --lang en
+fec setup all --local --lang en
 ```
 
 ### 2. 설치 확인
 
 ```sh
 fec doctor codex --local
+fec doctor claude --local
 ```
 
 같은 프로젝트에서 실행하고 `codex`를 실제 런타임 식별자로 바꿔 각각 확인하세요. `ok`는 예상 리소스가 있음을, `missing`은 조사할 누락 항목을, `not expected`는 어댑터 지원 범위에 해당하지 않는 항목을 뜻합니다. [런타임 가이드](../../docs/runtimes/)를 참조하세요.
 
 ### 3. 첫 작업 실행
+
+설치 후에는 모든 AI 세션에서 프론트엔드 엔지니어링 도구 모음을 사용할 수 있습니다.
 
 도우미를 새로 고치거나 다시 시작하고 프로젝트에서 새 대화를 여세요. 리소스 검색을 확인하고 필요한 호스트 신뢰·활성화 절차를 완료하세요. 스킬 지원 도우미에서 `src/features/account`를 실제 모듈 경로로 바꾼 뒤 다음을 요청하세요.
 
@@ -82,6 +100,23 @@ fec-code-review로 src/features/account의 전체 코드를 읽기 전용으로 
 
 문제 위치와 수정 제안 또는 문제가 없다는 결과를 확인하세요. Claude Code는 `/fec-review`도 제공합니다. 호스트별 리소스 형식은 런타임 가이드, 추가 작업은 [프롬프트 예시](../../docs/example-prompts.md)를 참조하세요.
 
+### 4. 프롬프트 예시
+
+아래 슬래시 명령은 **Claude Code** 기준입니다. 다른 런타임은 각 호스트의 명령 시스템을 사용합니다. 리소스 형식은 [런타임 가이드](../../docs/runtimes/)를 참조하세요.
+
+```text
+병합 전에 최근 변경을 검토하세요. 아키텍처, 타입 안전성, 렌더링, 스타일, 접근성과 누락된 테스트를 확인하세요.
+코드를 작성하기 전에 계정 청구 기능을 계획하세요. 라우트, 컴포넌트 경계, 데이터 흐름, 상태 소유권, 검증과 배포 위험을 포함하세요.
+다단계 가입 폼을 만드세요. 프레임워크에 맞는 폼과 스키마 검증 도구를 선택하고 업로드, 조건부 필드, 비동기 검증과 접근성 있는 오류 안내를 포함하세요.
+Figma 노드 123:456의 UI를 구현하세요. 기존 토큰과 컴포넌트를 재사용하고 간격과 반응형 상태를 맞추며 가정을 설명하세요.
+/fec-refactor-clean 이 모듈의 사용하지 않는 코드를 정리하세요.
+/fec-smell 코드를 변경하기 전에 구조적 코드 냄새를 진단하세요.
+/fec-refactor-plan 동작을 보존하는 작은 단계의 리팩터링 계획을 작성하세요.
+/fec-refactor 관찰 가능한 동작을 보존하며 리팩터링하세요.
+```
+
+전체 시나리오는 [프롬프트 모음](../../docs/example-prompts.md)을 참조하세요.
+
 ## 다른 설치 방법
 
 ### npx로 임시 실행
@@ -90,8 +125,20 @@ npx로 같은 설정 마법사를 실행할 수 있습니다. 이후 CLI 명령�
 
 ```sh
 cd your-frontend-project
+npx @bovinphang/frontend-craft@latest
 npx @bovinphang/frontend-craft@latest setup
+
+npx @bovinphang/frontend-craft@latest runtime install --local codex
+npx @bovinphang/frontend-craft@latest runtime install --local claude
+npx @bovinphang/frontend-craft@latest runtime install --all --local
+npx @bovinphang/frontend-craft@latest runtime install --global codex
+npx @bovinphang/frontend-craft@latest runtime install --global claude
+npx @bovinphang/frontend-craft@latest runtime install --all --global
+npx @bovinphang/frontend-craft@latest runtime install --all --dry-run --global
+npx @bovinphang/frontend-craft@latest list
 ```
+
+`fec`를 전역 설치하지 않으려면 `npx`를 사용하세요. 인수 없이 실행하면 런타임을 선택한 다음 전역 또는 현재 프로젝트 설치를 선택합니다. 전체 런타임을 스크립트로 설치할 때는 `install --all --local` 또는 `install --all --global`을 사용하세요. CI와 스크립트에서는 `--global` / `-g` 또는 `--local` / `-l`을 지정하세요. 비 TTY에서 선택을 생략하면 기본값은 `claude --global`입니다.
 
 ### Claude Code Marketplace
 
@@ -105,10 +152,15 @@ Claude Code 네이티브 플러그인은 도우미 안에서 다음 명령으로
 
 ### 사용자 전역 설치
 
-프로젝트 간 공유는 `--global`을 사용하세요. 다음 Codex 예시는 모든 선택을 지정합니다. 일괄 작업과 기본값은 [CLI 관리](../../docs/cli-management.md)를 참조하세요.
+프로젝트 간 공유는 `--global`을 사용하세요. 다음 Codex와 Claude Code 예시는 모든 선택을 지정합니다. 일괄 작업과 기본값은 [CLI 관리](../../docs/cli-management.md)를 참조하세요.
 
 ```sh
 fec setup codex --global --lang en
+fec setup claude --global --lang en
+fec setup all --global --lang en
+
+fec runtime install --all --dry-run --global
+fec list
 ```
 
 ### 독립 스킬 패키지
@@ -143,6 +195,8 @@ fec setup codex --global --lang en
 
 
 아래 스킬은 사용 사례별로 묶여 있어 프로젝트 표준, 구현, 테스트, 리뷰, 디자인, 마이그레이션, 프로젝트 진화, 문서 유지보수 워크플로를 빠르게 찾을 수 있습니다.
+
+스킬은 **작업에 따라 사용하는 워크플로 정의**로 검토 관점, 출력 규칙과 보고서 형식을 담습니다. 아래는 프로젝트 규칙, 구현, 테스트, 검토, 디자인, 마이그레이션, 프로젝트 개선과 문서 유지보수별 분류입니다.
 
 **프로젝트 표준** — 프로젝트 프레임워크에 맞게 사용:
 

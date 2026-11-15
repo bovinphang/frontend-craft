@@ -32,6 +32,19 @@ The assembled product includes **74 skills** (53 frontend and 21 shared engineer
 
 Each runtime installs a supported subset of these resources. Check the capability matrix with `fec matrix` and the [runtime guides](docs/runtimes/) for paths and activation steps.
 
+## Why choose frontend-craft?
+
+| Challenge | frontend-craft solution |
+| --- | --- |
+| Inconsistent, untyped or unsafe AI-generated frontend code | **74 skills** encode team conventions as automatically activated workflows |
+| Each AI tool has its own plugin format | **One CLI command** installs shared rules, agents and hooks into 15 runtimes |
+| Design-to-code handoffs lose context | **MCP integration** brings richer context from Figma, Figma Desktop, Sketch, MasterGo, Pixso and Modao |
+| Ad hoc, shallow code reviews | **14 agents** produce graded reports for code, security, accessibility, performance, TS and UI fidelity |
+| Lint and tests are easily forgotten | **Event-driven hooks** validate on saves and session completion |
+| Every new project starts from scratch | **`/fec-init`** scaffolds CLAUDE.md, rules and settings in seconds |
+
+---
+
 ## Core capabilities
 
 - Apply project conventions with task-specific skills for architecture, components, state, APIs and testing.
@@ -56,21 +69,26 @@ fec setup
 
 Replace `your-frontend-project` with your project directory. In an interactive terminal, `fec setup` selects one or more runtimes and then English or Simplified Chinese resources. Use Up/Down to navigate, Space to select or deselect, and Enter to confirm. Claude is initially selected. Deselect it when choosing another assistant alone. Setup installs into the **current project** by default.
 
-For scripts or to skip the prompts, specify the runtime, scope and language. This example connects Codex.
+For scripts or to skip the prompts, specify the runtime, scope and language. These examples connect Codex and Claude Code, or all runtimes.
 
 ```sh
 fec setup codex --local --lang en
+fec setup claude --local --lang en
+fec setup all --local --lang en
 ```
 
 ### 2. Check the installation
 
 ```sh
 fec doctor codex --local
+fec doctor claude --local
 ```
 
 Run the check from the same project directory. Replace `codex` with your selected runtime identifier and check each selection. `ok` means the expected artifact was found, `missing` identifies an expected artifact to investigate, and `not expected` reflects the adapter's supported subset. Consult the [runtime guide](docs/runtimes/) for missing items.
 
 ### 3. Run your first task
+
+After installation, every AI session has a complete frontend engineering toolkit.
 
 Refresh or restart the assistant, open the project and start a new conversation. Confirm resources are discovered and complete any host trust or activation steps. For an assistant supporting skills, replace `src/features/account` with an existing module and send this request.
 
@@ -82,6 +100,23 @@ List findings with file locations, impact and suggested fixes, or explicitly sta
 
 Expect findings with file locations and suggested fixes, or an explicit no-findings result. Claude Code also provides `/fec-review`. Supported resource forms vary by runtime. See [example prompts](docs/example-prompts.md) for further tasks.
 
+### 4. Example prompts
+
+The slash commands below use **Claude Code** syntax. Other runtimes expose equivalent capabilities through their command systems. See the [runtime guides](docs/runtimes/) for host-specific resource forms.
+
+```text
+Review my recent changes before merging. Focus on architecture, type safety, rendering, styles, accessibility and missing tests.
+Plan the account billing feature before writing code, covering routes, component boundaries, data flow, state ownership, validation and rollout risks.
+Build a multi-step signup form. Choose form and schema validation tools for this framework, including uploads, conditional fields, async validation and accessible errors.
+Implement the UI from Figma node 123:456. Reuse existing design tokens and components, match spacing and responsive states, and state assumptions.
+/fec-refactor-clean Clean up dead code in this module.
+/fec-smell Diagnose structural code smells in this module before changing code.
+/fec-refactor-plan Create a small-step behavior-preserving refactoring plan.
+/fec-refactor Refactor this module while preserving observable behavior.
+```
+
+See the full scenario-based [prompt library](docs/example-prompts.md).
+
 ## Other installation options
 
 ### Temporary npx execution
@@ -90,8 +125,20 @@ Use the same setup wizard through npx. Prefix subsequent CLI commands with `npx 
 
 ```sh
 cd your-frontend-project
+npx @bovinphang/frontend-craft@latest
 npx @bovinphang/frontend-craft@latest setup
+
+npx @bovinphang/frontend-craft@latest runtime install --local codex
+npx @bovinphang/frontend-craft@latest runtime install --local claude
+npx @bovinphang/frontend-craft@latest runtime install --all --local
+npx @bovinphang/frontend-craft@latest runtime install --global codex
+npx @bovinphang/frontend-craft@latest runtime install --global claude
+npx @bovinphang/frontend-craft@latest runtime install --all --global
+npx @bovinphang/frontend-craft@latest runtime install --all --dry-run --global
+npx @bovinphang/frontend-craft@latest list
 ```
+
+Use `npx` to run without globally installing `fec`. With no arguments, the wizard selects runtimes and then global or current-project installation. For scripted installation of every runtime, use `install --all --local` or `install --all --global`. Always specify `--global` / `-g` or `--local` / `-l` in CI and scripts. In a non-TTY environment without an explicit selection, the CLI defaults to `claude --global`.
 
 ### Claude Code Marketplace
 
@@ -105,10 +152,15 @@ For native Claude Code installation, run these commands inside the assistant. Ch
 
 ### User-wide installation
 
-Select `--global` to share resources across projects. This Codex example specifies all choices. Batch setup and installation defaults are in [CLI management](docs/cli-management.md).
+Select `--global` to share resources across projects. These Codex and Claude Code examples specify all choices. Batch setup and installation defaults are in [CLI management](docs/cli-management.md).
 
 ```sh
 fec setup codex --global --lang en
+fec setup claude --global --lang en
+fec setup all --global --lang en
+
+fec runtime install --all --dry-run --global
+fec list
 ```
 
 ### Skills-only packages
@@ -140,6 +192,8 @@ Reviews support the full project, a selected file/directory, or an explicit diff
 ### Skills
 
 The assembled product contains 74 skills. The repository maintains 53 frontend skills, and craft-common supplies 21 shared skills during the build. Skill discovery and activation depend on the assistant and task context.
+
+Skills are **task-driven workflow definitions** that encode review dimensions, output conventions and report formats. The following groups cover project standards, implementation, testing, review, design, migration, project evolution and documentation.
 
 **Project standards** — guidance for the matching project framework:
 

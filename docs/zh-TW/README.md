@@ -32,6 +32,19 @@ Frontend Craft 將前端規範、設計實作、程式碼審查與測試工作�
 
 各執行環境安裝其支援的能力子集。使用 `fec matrix` 查看能力矩陣，資源路徑與啟用步驟見 [Runtime 指南](../../docs/runtimes/)。
 
+## 為什麼選擇 frontend-craft？
+
+| 痛點 | frontend-craft 的解法 |
+| --- | --- |
+| AI 產生的前端程式碼風格不一、缺乏型別或安全性 | **74 個 Skill** 將團隊規範編碼為可自動啟用的工作流程 |
+| 每款 AI 工具有自己的外掛格式 | **一條 CLI 指令**將相同規則、Agent 和 Hook 安裝至 15 個執行環境 |
+| 設計稿交接容易遺失資訊 | **MCP 整合**從 Figma、Figma Desktop、Sketch、MasterGo、Pixso、墨刀取得完整設計脈絡 |
+| 程式碼審查隨意且淺層 | **14 個 Agent** 輸出程式碼、安全、無障礙、效能、TS 與 UI 還原度分級報告 |
+| 容易忘記執行 lint 和測試 | **事件驅動 Hook** 在儲存及對話結束時自動驗證 |
+| 新專案每次從零開始 | **`/fec-init`** 快速建立 CLAUDE.md、規則及 settings |
+
+---
+
 ## 核心能力
 
 - 透過專項 Skill 套用架構、元件、狀態、API 與測試規範。
@@ -56,21 +69,26 @@ fec setup
 
 將 `your-frontend-project` 替換為實際專案目錄。在互動終端中，`fec setup` 先讓你選擇一個或多個執行環境，再選擇英文或簡體中文資源。方向鍵移動，空白鍵勾選或取消，Enter 確認。初始勾選 Claude，只接入其他助手時先取消該選項。資源預設安裝到**目前專案**。
 
-需要跳過互動或編寫指令碼時，明確指定執行環境、範圍與語言。以下以 Codex 為例。
+需要跳過互動或編寫指令碼時，明確指定執行環境、範圍與語言。以下以 Codex、Claude Code 及全部執行環境為例。
 
 ```sh
 fec setup codex --local --lang zh-CN
+fec setup claude --local --lang zh-CN
+fec setup all --local --lang zh-CN
 ```
 
 ### 2. 檢查安裝結果
 
 ```sh
 fec doctor codex --local
+fec doctor claude --local
 ```
 
 在同一專案目錄執行檢查，將 `codex` 替換為實際選擇的執行環境識別碼，多選時逐個檢查。`ok` 表示已找到預期資源，`missing` 表示需要排查的缺失資源，`not expected` 表示該適配器的能力範圍無需此資源。處理方式見 [Runtime 指南](../../docs/runtimes/)。
 
 ### 3. 完成首次任務
+
+安裝完成後，每次 AI 對話都能使用完整的前端工程工具箱。
 
 重新整理或重新啟動助手，開啟專案並建立新對話，確認助手發現了資源，完成宿主要求的信任或啟用操作。對於支援 Skill 的助手，將 `src/features/account` 替換為實際模組路徑後傳送以下請求。
 
@@ -82,6 +100,23 @@ fec doctor codex --local
 
 預期取得包含問題位置與修復建議的審查結果，或明確的無問題結論。Claude Code 也提供 `/fec-review`，各宿主資源形式以 Runtime 指南為準。更多任務見[範例提示詞](../../docs/zh-CN/example-prompts.md)。
 
+### 4. 範例提示詞
+
+以下斜線指令以 **Claude Code** 為例，其他執行環境透過各自指令系統提供對應能力。宿主資源形式見 [Runtime 指南](../../docs/runtimes/)。
+
+```text
+合併前請審查最近的改動，重點檢查架構、型別安全、渲染、樣式、無障礙及缺少的測試。
+先不要寫程式碼，請規劃帳號帳單功能，包含路由、元件邊界、資料流、狀態歸屬、驗證及上線風險。
+請建立多步驟註冊表單，依框架選擇表單與 schema 驗證方案，包含上傳、條件欄位、非同步驗證及無障礙錯誤提示。
+請按 Figma 節點 123:456 實作 UI，重用既有設計 Token 與元件，符合間距及響應式狀態並說明假設。
+/fec-refactor-clean 請清理此模組的死碼。
+/fec-smell 請診斷此模組的結構壞味道，先不要修改程式碼。
+/fec-refactor-plan 請產生保持行為的小步重構計畫。
+/fec-refactor 請保持可觀察行為不變地重構此模組。
+```
+
+完整情境提示詞見[提示詞庫](../../docs/zh-CN/example-prompts.md)。
+
 ## 其他安裝方式
 
 ### 臨時 npx 執行
@@ -90,8 +125,20 @@ fec doctor codex --local
 
 ```sh
 cd your-frontend-project
+npx @bovinphang/frontend-craft@latest
 npx @bovinphang/frontend-craft@latest setup
+
+npx @bovinphang/frontend-craft@latest runtime install --local codex
+npx @bovinphang/frontend-craft@latest runtime install --local claude
+npx @bovinphang/frontend-craft@latest runtime install --all --local
+npx @bovinphang/frontend-craft@latest runtime install --global codex
+npx @bovinphang/frontend-craft@latest runtime install --global claude
+npx @bovinphang/frontend-craft@latest runtime install --all --global
+npx @bovinphang/frontend-craft@latest runtime install --all --dry-run --global
+npx @bovinphang/frontend-craft@latest list
 ```
+
+不想全域安裝 `fec` 時可使用 `npx`。不帶參數會進入互動精靈，先選執行環境，再選全域或目前專案。指令碼安裝全部執行環境時使用 `install --all --local` 或 `install --all --global`。CI 與指令碼請明確指定 `--global` / `-g` 或 `--local` / `-l`。非 TTY 且未指定時，CLI 預設為 `claude --global`。
 
 ### Claude Code Marketplace
 
@@ -105,10 +152,15 @@ npx @bovinphang/frontend-craft@latest setup
 
 ### 使用者級全域接入
 
-跨專案使用時選擇 `--global`。以下 Codex 範例明確指定全部選項。批次接入與預設值見 [CLI 管理](../../docs/cli-management.zh-CN.md)。
+跨專案使用時選擇 `--global`。以下 Codex 和 Claude Code 範例明確指定全部選項。批次接入與預設值見 [CLI 管理](../../docs/cli-management.zh-CN.md)。
 
 ```sh
 fec setup codex --global --lang zh-CN
+fec setup claude --global --lang zh-CN
+fec setup all --global --lang zh-CN
+
+fec runtime install --all --dry-run --global
+fec list
 ```
 
 ### 獨立 Skill 套件
@@ -140,6 +192,8 @@ fec setup codex --global --lang zh-CN
 ### 技能（Skills）
 
 完整產品包含 74 個 Skill。倉庫維護 53 個前端 Skill，建置時從 craft-common 組合 21 個共用 Skill。技能發現與啟用取決於助手和任務脈絡。
+
+Skill 是**按任務使用**的工作流程定義，包含審查維度、輸出約定及報告格式。以下依情境列出專案規範、實作、測試、審查、設計、遷移、專案演進與文件維護能力。
 
 **依任務使用**的工作流定義，編碼了審查維度、輸出約定和報告格式。
 
