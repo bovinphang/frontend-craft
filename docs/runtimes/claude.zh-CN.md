@@ -14,7 +14,7 @@ npx @bovinphang/frontend-craft@latest runtime install --global claude
 
 同一个 Claude 作用域请只选择一个激活来源：Marketplace/原生插件、CLI 安装或 `--plugin-dir`。它们技术上可以共存，但不推荐在同一个 Claude 会话里同时启用多份完整插件，否则 commands、skills、agents 与 hooks 可能重复。
 
-CLI 3.0 的顶层 `fec update` 会升级受支持的 npm/pnpm 全局 CLI，再刷新其托管资源。仅操作资源请使用下述 `runtime` 分组；`runtime update` 只使用当前包内容，不获取新版包。顶层 `fec uninstall` 卸载 CLI 本体；`fec runtime uninstall claude --local`（或 `--global`）移除托管的 Claude 资源。迁移表见 [README](../../README.zh-CN.md)。
+CLI 3.0 的顶层 `fec update` 会升级受支持的 npm/pnpm 全局 CLI，再刷新其托管资源。仅操作资源请使用下述 `runtime` 分组；`runtime update` 只使用当前包内容，不获取新版包。顶层 `fec uninstall` 卸载 CLI 本体；`fec runtime uninstall claude --local`（或 `--global`）移除托管的 Claude 资源。命令细节见 [CLI 管理](../cli-management.zh-CN.md)。
 
 CLI 会对 Marketplace 安装执行单一来源保护：如果已经由 Claude Code Marketplace 管理 `frontend-craft`，`frontend-craft runtime install/update claude` 会停止，并提示改用 Marketplace 更新。`--force` 不会覆盖 Marketplace 安装。
 

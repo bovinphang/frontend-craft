@@ -4,7 +4,7 @@
 
 # frontend-craft
 
-### 하나의 툴킷. 모든 AI 코딩 어시스턴트. 프로덕션 수준의 프론트엔드 표준.
+### AI 코딩 도우미에 프론트엔드 규칙과 워크플로를 연결하세요.
 
 [![Stars](https://img.shields.io/github/stars/bovinphang/frontend-craft?style=flat)](https://github.com/bovinphang/frontend-craft/stargazers)
 [![CI](https://github.com/bovinphang/frontend-craft/actions/workflows/ci.yml/badge.svg)](https://github.com/bovinphang/frontend-craft/actions/workflows/ci.yml)
@@ -22,158 +22,104 @@
 
 </div>
 
-
-[런타임 호환성 및 업그레이드](../runtimes/compatibility.md)
-
----
-
-`frontend-craft`는 다음 **15개의 AI 코딩 어시스턴트**에 통일된 프론트엔드 엔지니어링 표준을 제공하는 **범용 프론트엔드 플러그인**입니다:
+Frontend Craft는 프론트엔드 규칙, 디자인 구현, 검토와 테스트 워크플로를 **15개 AI 코딩 도우미**에 제공합니다.
 
 `claude` `codex` `cursor` `windsurf` `opencode`
 `kilo` `gemini` `copilot` `antigravity` `augment`
 `trae` `codebuddy` `cline` `openclaw` `qoder`
 
-각 런타임의 경로와 주의사항은 [`docs/runtimes/`](../runtimes/)에 있습니다.
+전체 제품에는 **스킬 74개**(프론트엔드 53개, 공통 21개), **에이전트 14개**, **명령 워크플로 11개**, **Claude 훅 이벤트 5종**, **디자인 도구 엔드포인트 6개의 MCP 설정**이 포함됩니다. React, Vue, Next.js, Nuxt를 다룹니다. README는 5개 언어이며 설치 리소스는 영어와 중국어 간체를 지원합니다.
 
-**14개의 전문 에이전트**, **61개의 자동 활성화 스킬**, **11개의 슬래시 명령어**, **5개의 이벤트 기반 훅**, 6개 디자인 도구 엔드포인트를 위한 **MCP 통합**, 그리고 완전한 **규칙 라이브러리**를 하나의 설치 가능한 패키지로 묶었습니다. 명령어 하나만 실행하면, 팀의 모든 AI 세션이 React, Vue, Next.js, Nuxt를 같은 방식으로 작성합니다 — 타입 안전하고, 접근성 있고, 안전하며, 일관성 있게.
+런타임마다 지원하는 기능을 설치합니다. `fec matrix`로 기능을 확인하고 경로와 활성화 절차는 [런타임 가이드](../../docs/runtimes/)를 참조하세요.
 
----
+## 핵심 기능
 
-## 왜 frontend-craft인가?
+- 스킬로 아키텍처, 컴포넌트, 상태, API와 테스트 규칙을 적용합니다.
+- 지원 호스트에서 전문 에이전트로 코드, 보안, 접근성, 성능, TypeScript와 UI를 검토합니다.
+- 설정한 MCP 서비스로 디자인 맥락을 읽고 기존 컴포넌트와 토큰을 재사용합니다.
+- Claude와 Qoder는 지원 훅을 사용하며 OpenClaw 네이티브 패키지는 별도의 typed hooks를 제공합니다.
+- `fec project inspect . --json`으로 프로젝트를 읽기 전용으로 조사하고 적합한 스킬을 확인합니다.
 
-| 문제점                                                                       | frontend-craft의 해결책                                                                                     |
-| ---------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------- |
-| AI 어시스턴트가 일관성 없고, 타입 없고, 안전하지 않은 프론트엔드 코드를 작성 | **61개 스킬**이 팀 표준을 인코딩 — 해당 파일을 건드릴 때 자동 활성화                                        |
-| AI 도구마다 플러그인 형식이 다름                                             | **하나의 CLI**로 동일한 규칙, 에이전트, 훅을 15개 런타임에 설치                                             |
-| 디자인에서 코드로의 전달 과정에서 정보 손실                                  | **MCP 통합**이 Figma, Figma Desktop, Sketch, MasterGo, Pixso, 墨刀에서 더 풍부한 디자인 컨텍스트를 가져오기 |
-| 리뷰가 즉흥적이고 얕음                                                       | **14개 에이전트**가 등급별 보고서 출력: 코드, 보안, 접근성, 성능, TS, UI 충실도                             |
-| 아무도 lint와 테스트 실행을 기억하지 못함                                    | **이벤트 기반 훅**이 저장 시와 세션 종료 시 자동 검증                                                       |
-| 새 프로젝트가 매번 처음부터 시작                                             | **`/fec-init`**이 몇 초 만에 CLAUDE.md, 규칙, 설정을 스캐폴드                                               |
-
----
-
-## 설치
-
-**Node.js 22+**가 필요합니다. **Windows, macOS, Linux**에서 동작합니다(모든 훅과 스크립트는 Node.js로 구현).
-
-### 방법 1: fec CLI 전역 설치 (권장)
-
-```bash
-# 1. fec 명령어를 전역으로 설치
-npm install -g @bovinphang/frontend-craft@latest
-
-# 2. 프론트엔드 프로젝트로 이동
-cd your-project
-
-# 3. 연결할 AI 런타임을 대화형으로 선택
-fec setup
-
-# 4. 현재 프로젝트에 연결
-fec setup codex
-fec setup claude
-fec setup all
-
-# 5. 전역 연결, 모든 프로젝트에서 사용
-fec setup codex --global
-fec setup claude --global
-fec setup all --global
-
-# 6. 미리보기 / 조회
-fec runtime install --all --dry-run --global
-fec list
-```
-
-`npm install -g`는 `fec` 터미널 명령어만 설치합니다. `fec setup`은 frontend-craft를 프로젝트에 연결하는 터미널 CLI 명령어이며, AI 어시스턴트 안의 `/fec-init` 슬래시 명령어와는 다릅니다. 대화형 터미널에서 인자 없는 `fec setup`은 runtime 선택을 먼저 요청합니다. `fec setup <runtime>`과 `fec setup all`은 기본적으로 현재 프로젝트에 연결합니다. `--global`을 전달할 때만 선택한 AI 도구의 전역 설정 디렉터리에 연결되어 모든 프로젝트에서 사용할 수 있습니다.
-
-### 방법 2: npx로 임시 실행 (전역 fec 불필요)
-
-```bash
-# 1. 대화형 마법사
-npx @bovinphang/frontend-craft@latest
-
-# 2. 현재 프로젝트에 연결
-npx @bovinphang/frontend-craft@latest runtime install --local codex
-npx @bovinphang/frontend-craft@latest runtime install --local claude
-npx @bovinphang/frontend-craft@latest runtime install --all --local
-
-# 3. 전역 연결, 모든 프로젝트에서 사용
-npx @bovinphang/frontend-craft@latest runtime install --global codex
-npx @bovinphang/frontend-craft@latest runtime install --global claude
-npx @bovinphang/frontend-craft@latest runtime install --all --global
-
-# 4. 미리보기 / 조회
-npx @bovinphang/frontend-craft@latest runtime install --all --dry-run --global
-npx @bovinphang/frontend-craft@latest list
-```
-
-전역 `fec` 명령어를 설치하고 싶지 않을 때는 `npx`를 사용합니다. 인자 없이 실행하면 대화형 마법사가 열립니다. 먼저 하나 이상의 런타임을 선택한 다음, 전역 또는 현재 프로젝트에 연결할지 결정합니다. 모든 runtime을 스크립트로 설치할 때는 `install --all --local` 또는 `install --all --global`을 사용하고, `install all`이라고 쓰지 않습니다. CI / 스크립트 환경에서는 항상 `--global` / `-g` 또는 `--local` / `-l`을 지정하세요. TTY가 아니고 미지정 시, CLI는 `claude --global`을 기본값으로 합니다.
-
-### 방법 3: Claude Code Marketplace
-
-Claude Code 사용자라면 **Claude Code Marketplace**를 단일 소스 설치 방식으로 권장합니다. CLI를 Claude에 사용하는 것은 교차 런타임 설치, 스크립트/오프라인 파일 복사, 또는 비 Marketplace 환경이 필요한 경우에만 사용하세요.
-
-Marketplace가 이미 설치된 경우, `--force`를 사용해도 CLI는 두 번째 Claude 사본을 설치하거나 업데이트하지 않습니다. 대신 Claude Code Marketplace를 통해 업데이트하세요. 다른 스코프에 CLI 관리 Claude 설치본이 이미 있는 경우, 대화형 터미널에서는 해당 소스를 최신으로 유지할지, 제거 후 전환할지 묻습니다. 비대화형 터미널은 중단하고 실행할 `runtime update`, `runtime uninstall`, `runtime install` 명령어를 정확히 출력합니다.
-
-전체 Claude 전용 단계는 [docs/runtimes/claude.md](../runtimes/claude.md) · [简体中文](../runtimes/claude.zh-CN.md)에 있습니다.
-
-### 소스에서 빌드
-
-저장소 루트에서 현재 소스를 빌드하고 지원 런타임을 확인합니다.
-
-```bash
-pnpm install --frozen-lockfile
-pnpm run build
-node dist/bin/frontend-craft.js list --json
-```
-
----
+스킬은 개발 규칙과 방법을 제공하고 에이전트는 전문 작업을 수행하며 명령 워크플로는 호스트별 호출 진입점을 제공합니다. 터미널의 `fec setup`으로 리소스를 연결하고 Claude Code의 `/fec-init`으로 프로젝트 설정을 준비합니다.
 
 ## 빠른 시작
 
-설치 후, 모든 AI 세션에서 완전한 프론트엔드 엔지니어링 툴킷을 사용할 수 있습니다:
+**Node.js 22+**, 설치된 AI 코딩 도우미와 기존 프론트엔드 프로젝트를 준비하세요. CLI는 Windows, macOS, Linux를 지원합니다.
 
-```text
-사용자: "Review my recent changes"
-→ fec-code-reviewer 에이전트가 실행되어 reports/code-review-*.md 출력
+### 1. 설치 및 도우미 연결
 
-사용자: "/fec-review"
-→ 아키텍처, 타입, 렌더링, 스타일, 접근성 관점에서 구조화된 리뷰 실행
-
-사용자: "이 Figma 링크로 결제 페이지를 구현해줘"
-→ fec-figma-implementer 에이전트가 MCP를 통해 디자인을 읽고 컴포넌트와 보고서 출력
-
-사용자: "/fec-scaffold dashboard feature"
-→ 프로젝트 규칙에 따라 page / feature / component 디렉토리 트리 생성
-
-사용자: "/fec-refactor-clean"
-→ 데드 코드, 미사용 export, 스타일, 의존성을 분류하고 안전하게 제거
+```sh
+npm install -g @bovinphang/frontend-craft@latest
+cd your-frontend-project
+fec setup
 ```
 
-아래 슬래시 명령어는 **Claude Code**를 예로 든 것입니다; 다른 런타임도 각자의 명령어 시스템으로 동일한 기능을 제공합니다([`docs/runtimes/`](../runtimes/) 참조).
+`your-frontend-project`를 실제 경로로 바꾸세요. 대화형 터미널의 `fec setup`에서 런타임을 하나 이상 선택한 다음 영어 또는 중국어 간체 리소스를 선택합니다. 방향키로 이동하고 Space로 선택·해제하며 Enter로 확정합니다. 처음에는 Claude가 선택되어 있으므로 다른 도우미만 사용하려면 해제하세요. 기본적으로 **현재 프로젝트**에 설치합니다.
 
-여러 기술 영역이 섞인 프로젝트에서는 `fec project inspect . --json`으로 파일을 변경하지 않고 프로젝트를 분석해 적합한 스킬을 추천받을 수 있습니다. 작업별 옵션은 [프로젝트 분석](../cli-management.md#project-inspection)을 참고하세요.
+대화형 선택을 생략하거나 스크립트에서 실행하려면 런타임, 범위와 언어를 지정하세요. 다음은 Codex 예시입니다.
 
----
-
-## 예시 프롬프트
-
-시나리오별 전체 프롬프트 모음은 [docs/example-prompts.md](../example-prompts.md)를 참고하세요.
-
-```text
-사용자: "병합 전에 최근 변경사항을 리뷰해줘. 아키텍처, 타입 안전성, 렌더링 동작, 스타일, 접근성, 누락된 테스트를 중점적으로 봐줘."
-사용자: "코딩하기 전에 계정 결제 기능을 계획해줘: 라우트 구조, 컴포넌트 경계, 데이터 흐름, 상태 소유권, 검증 흐름, 출시 리스크까지."
-사용자: "다단계 등록 폼을 만들어줘. 프로젝트 프레임워크에 맞는 폼과 schema 검증 방식을 선택하고, 파일 업로드, 조건부 필드, 비동기 검증, 접근 가능한 오류를 포함해줘."
-사용자: "Figma 노드 123:456을 기준으로 UI를 구현해줘. 기존 design token과 컴포넌트를 재사용하고, 간격과 반응형 상태를 맞추고, 가정도 문서화해줘."
-사용자: "`/fec-refactor-clean` 이 모듈의 데드 코드를 정리해줘."
+```sh
+fec setup codex --local --lang en
 ```
 
----
+### 2. 설치 확인
 
-## 구성 내용
+```sh
+fec doctor codex --local
+```
+
+같은 프로젝트에서 실행하고 `codex`를 실제 런타임 식별자로 바꿔 각각 확인하세요. `ok`는 예상 리소스가 있음을, `missing`은 조사할 누락 항목을, `not expected`는 어댑터 지원 범위에 해당하지 않는 항목을 뜻합니다. [런타임 가이드](../../docs/runtimes/)를 참조하세요.
+
+### 3. 첫 작업 실행
+
+도우미를 새로 고치거나 다시 시작하고 프로젝트에서 새 대화를 여세요. 리소스 검색을 확인하고 필요한 호스트 신뢰·활성화 절차를 완료하세요. 스킬 지원 도우미에서 `src/features/account`를 실제 모듈 경로로 바꾼 뒤 다음을 요청하세요.
+
+```text
+fec-code-review로 src/features/account의 전체 코드를 읽기 전용으로 검토하고 파일은 수정하지 마세요.
+저장소 규칙에 따라 타입, 렌더링, 상태, 접근성과 테스트를 확인하세요.
+문제 위치, 영향과 수정 제안을 제시하고 문제가 없으면 명시하세요.
+```
+
+문제 위치와 수정 제안 또는 문제가 없다는 결과를 확인하세요. Claude Code는 `/fec-review`도 제공합니다. 호스트별 리소스 형식은 런타임 가이드, 추가 작업은 [프롬프트 예시](../../docs/example-prompts.md)를 참조하세요.
+
+## 다른 설치 방법
+
+### npx로 임시 실행
+
+npx로 같은 설정 마법사를 실행할 수 있습니다. 이후 CLI 명령에도 `npx @bovinphang/frontend-craft@latest`를 붙이세요.
+
+```sh
+cd your-frontend-project
+npx @bovinphang/frontend-craft@latest setup
+```
+
+### Claude Code Marketplace
+
+Claude Code 네이티브 플러그인은 도우미 안에서 다음 명령으로 설치합니다. Claude의 활성 설치 경로를 하나 선택하세요. 활성화, 전환과 프로젝트 초기화는 [Claude 가이드](../../docs/runtimes/claude.md)를 참조하세요.
+
+```text
+/plugin marketplace add bovinphang/frontend-craft
+/plugin install frontend-craft@frontend-craft
+/reload-plugins
+```
+
+### 사용자 전역 설치
+
+프로젝트 간 공유는 `--global`을 사용하세요. 다음 Codex 예시는 모든 선택을 지정합니다. 일괄 작업과 기본값은 [CLI 관리](../../docs/cli-management.md)를 참조하세요.
+
+```sh
+fec setup codex --global --lang en
+```
+
+### 독립 스킬 패키지
+
+소스 `skills/`는 프론트엔드 스킬 53개를 관리하고 빌드 시 공통 스킬 21개를 조합합니다. `pnpm run pack:skills`는 전체 제품에서 독립 패키지를 생성합니다. 절차는 [기여 안내](../../CONTRIBUTING.md)를 참조하세요. Skills CLI로 저장소 스킬을 사용하는 팀은 공식 가이드를 참고하세요.[Skills CLI](https://skills.sh/docs/cli)
+
+## 기능 목록
 
 ### 명령어
 
-슬래시 명령어는 구조화된 워크플로의 주요 진입점입니다. 대부분 `reports/`에 타임스탬프가 찍힌 Markdown 보고서를 출력합니다.
+다음 명령 이름은 Claude Code 문법입니다. 다른 호스트는 어댑터가 지원하는 형태를 사용합니다. 보고서는 워크플로 규칙에 따라 `reports/`에 저장합니다.
 
 | 명령어                | 용도                                                                 | 보고서                                             |
 | --------------------- | -------------------------------------------------------------------- | -------------------------------------------------- |
@@ -189,29 +135,16 @@ node dist/bin/frontend-craft.js list --json
 | `/fec-refactor` | Execute validated behavior-preserving refactoring | `refactoring/refactoring-*.md` |
 | `/fec-doc-sync`       | README, docs, 환경 변수, 스크립트, API/라우트 설명, 배포 문서 동기화 | —                                                  |
 
-### 리뷰 범위
+전체 프로젝트, 지정 파일·디렉터리, 명시적인 변경 범위를 검토합니다. 단독 `/fec-review`는 전체 프로젝트를 대상으로 합니다. 첫 작업은 범위를 지정하세요. 전체 규칙은 [검토 및 다이어그램 가이드](../../docs/review-and-diagram-workflows.md)를 참조하세요.
 
-`/fec-review`, 코드 / TypeScript / 보안 리뷰 에이전트와 스킬은 세 가지 모드를 사용합니다.
+### 스킬
 
-- **변경 리뷰**: 최근 변경, 이번 수정, 스테이징 변경, PR/커밋을 명시하거나 현재 작업에서 변경 범위가 확정된 경우 리뷰합니다. 변경이 없으면 이를 알리고 최근 커밋으로 자동 전환하지 않습니다.
-- **지정 범위 리뷰**: 파일이나 디렉터리를 지정하면 변경되지 않은 기존 코드도 리뷰합니다. Git diff가 필요하지 않습니다.
-- **전체 프로젝트 리뷰(기본)**: 범위나 변경 맥락이 없거나 전체 프로젝트를 요청하면 프로젝트 소유 프런트엔드 코드, 관련 테스트, 설정, 의존성 선언을 목록화하고 모듈별로 리뷰합니다.
+전체 제품에는 스킬 74개가 포함됩니다. 소스는 프론트엔드 스킬 53개를 관리하며 빌드 시 craft-common의 공통 스킬 21개를 조합합니다. 검색과 활성화는 도우미와 작업 맥락에 따릅니다.
 
-파일/디렉터리만 지정하면 전체 내용을 리뷰합니다. 차이만 리뷰하려면 변경을 명시하세요. 변경이 있어도 `/fec-review`만 호출하면 전체 프로젝트를 리뷰합니다. 시작 시 모드와 범위를 알리고 수정 후 자동 위임에는 이번 변경 범위를 명시합니다.
-
-예: `/fec-review`,`/fec-review 최근 변경 리뷰`,  `/fec-review src/components/Button.tsx 리뷰`, `/fec-review src/features/ 리뷰`, `/fec-review 전체 프로젝트 리뷰`. 이는 자연어 지시이며 CLI 옵션이 아닙니다. 명시한 범위가 기본 모드보다 우선합니다.
-
-의존성 디렉터리, 빌드 산출물, 캐시, 생성 파일, 외부 코드는 기본적으로 제외합니다. 보고서에 모드, 대상 범위, 리뷰한 파일/모듈, 제외 항목, 미검토 범위, 완료 상태, 검증 결과를 기록합니다. 범위가 남으면 부분 완료로 표시합니다. 호출 코드 참조나 전체 lint/타입 검사는 수동 리뷰 완료를 의미하지 않습니다. 변경 리뷰는 병합 권고를, 지정 범위와 전체 리뷰는 검토한 범위의 위험 평가를 제공합니다. 백엔드 감사를 대체하지 않으며 수정 요청 없이는 비즈니스 코드를 변경하지 않습니다.
-
-### 스킬 (자동 활성화)
-
-[스킬 목록](../../skills/)에는 프런트엔드 전용 스킬 53개와 제품에 포함된 공통 스킬 21개, 총 74개의 스킬이 있습니다.
-
-스킬은 파일 패턴, 프레임워크, 또는 작업 컨텍스트에 기반하여 **자동으로 활성화**되는 워크플로 정의입니다. 리뷰 관점, 출력 규칙, 보고서 형식을 인코딩합니다.
 
 아래 스킬은 사용 사례별로 묶여 있어 프로젝트 표준, 구현, 테스트, 리뷰, 디자인, 마이그레이션, 프로젝트 진화, 문서 유지보수 워크플로를 빠르게 찾을 수 있습니다.
 
-**프로젝트 표준** — 해당 프레임워크가 감지되면 자동 적용:
+**프로젝트 표준** — 프로젝트 프레임워크에 맞게 사용:
 
 | 스킬                              | 범위                                                         |
 | --------------------------------- | ------------------------------------------------------------ |
@@ -318,7 +251,7 @@ node dist/bin/frontend-craft.js list --json
 
 ### 에이전트
 
-에이전트는 메인 어시스턴트에서 호출되는 전문 서브 에이전트로, 특정 작업에 집중하여 구조화된 보고서를 반환합니다.
+Claude, Codex, Qoder는 에이전트 설치를 지원합니다. 다음은 전문 역할 목록입니다.
 
 | 에이전트                    | 초점                                                              | 보고서                       |
 | --------------------------- | ----------------------------------------------------------------- | ---------------------------- |
@@ -337,213 +270,59 @@ node dist/bin/frontend-craft.js list --json
 | `fec-figma-implementer`     | Figma/Sketch/MasterGo/Pixso/墨刀 디자인에서 정확한 UI 구현        | `design-implementation-*.md` |
 | `fec-design-token-mapper`   | 디자인 변수를 프로젝트 Design Token에 매핑                        | `token-mapping-*.md`         |
 
-### 훅 (이벤트 기반)
+### 훅, 디자인 도구와 프로젝트 템플릿
 
-훅은 AI 어시스턴트 이벤트에서 **자동 실행**됩니다. 호출 불필요.
+Claude와 Qoder 어댑터는 지원 훅을 설치하고 Codex는 스킬, 에이전트, 규칙과 템플릿을 설치합니다. MCP는 호스트에 맞게 설정하며 OpenClaw 네이티브 패키지는 별도 typed hooks를 제공합니다. [설정 가이드](../../docs/configuration.md)와 [런타임 가이드](../../docs/runtimes/)를 참조하세요.
 
-| 이벤트                    | 동작                                                              |
-| ------------------------- | ----------------------------------------------------------------- |
-| `SessionStart`            | Claude 캐시를 정리한 뒤 프로젝트 프레임워크 및 패키지 매니저 감지 |
-| `PreToolUse(Bash)`        | 위험한 명령어 차단 (`rm -rf`, force push 등)                      |
-| `PostToolUse(Write/Edit)` | 변경된 파일에 자동 Prettier 실행                                  |
-| `Stop`                    | 세션 종료 시 lint, type-check, test, build 실행                   |
-| `Notification`            | 크로스 플랫폼 데스크톱 알림 (macOS / Linux / Windows)             |
+## 설정 및 보고서
 
-### MCP 통합
+호스트에 맞게 디자인 도구 MCP와 훅을 설정하세요. [설정 가이드](../../docs/configuration.md)에서 토큰 변수, 훅 동작과 보고서 파일명을 확인할 수 있습니다. 워크플로는 규칙에 따라 `reports/`에 타임스탬프 Markdown 보고서를 기록합니다. 버전 관리 여부는 팀에서 결정하세요.
 
-AI 어시스턴트를 디자인 도구에 연결하여 더 풍부한 디자인 컨텍스트를 갖춘 디자인→코드 워크플로를 구현합니다.
+## 업데이트 및 제거
 
-| 서비스            | 기능                                                |
-| ----------------- | --------------------------------------------------- |
-| **Figma**         | 디자인 컨텍스트 및 변수 정의 읽기                   |
-| **Figma Desktop** | Figma 데스크톱 클라이언트 통합                      |
-| **Sketch**        | 디자인 선택 스크린샷 읽기                           |
-| **MasterGo**      | DSL 구조, 컴포넌트 계층, 스타일 읽기                |
-| **Pixso**         | 로컬 MCP: 프레임 데이터, 코드 스니펫, 이미지 리소스 |
-| **墨刀**          | 프로토타입 데이터, 디자인 설명, HTML 가져오기       |
-| **摹客**          | 스크린샷/주석/CSS 내보내기 워크플로 (MCP 없음)      |
+`fec update`는 출처를 확인한 npm/pnpm 전역 CLI와 현재 프로젝트 및 사용자 전역의 관리 리소스를 업데이트합니다. `fec runtime update`는 실행 중인 패키지를 사용하며 각 설치의 언어와 사용자 변경을 보호합니다.
 
-### 프로젝트 템플릿 (`/fec-init`)
-
-`/fec-init`을 실행하면 즉시 사용 가능한 규칙 라이브러리와 프로젝트 설정을 `.claude/`에 스캐폴드합니다:
-
-<details>
-<summary>전체 20개 템플릿 파일 보기</summary>
-
-| 파일                                     | 용도                                                                  |
-| ---------------------------------------- | --------------------------------------------------------------------- |
-| `CLAUDE.md`                              | 프로젝트 설명, 명령어, 작업 원칙, 보안                                |
-| `settings.json`                          | 권한 화이트리스트/블랙리스트, 환경 변수                               |
-| `rules/fec-vue.md`                       | Vue 3 컴포넌트 기준 및 안티패턴                                       |
-| `rules/fec-react.md`                     | React 컴포넌트 기준 및 안티패턴                                       |
-| `rules/fec-design-system.md`             | 디자인 시스템, 토큰, 접근성                                           |
-| `rules/fec-testing.md`                   | 테스트 및 검증 규칙                                                   |
-| `rules/fec-git-conventions.md`           | Conventional Commits                                                  |
-| `rules/fec-i18n.md`                      | 국제화 카피 기준                                                      |
-| `rules/fec-performance.md`               | 프론트엔드 성능 최적화 규칙                                           |
-| `rules/fec-rendering-patterns.md`        | 렌더링 라이프사이클, hydration, SSR/CSR, 업데이트 패턴                |
-| `rules/fec-responsive-design.md`         | 반응형 레이아웃, 브레이크포인트, 터치 대상, viewport 동작             |
-| `rules/fec-source-driven-development.md` | Source-driven decisions, official docs, version-sensitive assumptions |
-| `rules/fec-api-layer.md`                 | API 계층 타입화 및 오류 처리                                          |
-| `rules/fec-state-management.md`          | 상태 분류, 전략, 안티패턴                                             |
-| `rules/fec-error-handling.md`            | 오류 계층화, Error Boundary, 폴백 UI, 보고                            |
-| `rules/fec-naming-conventions.md`        | 파일, 컴포넌트, 변수, 라우트, API, CSS 통일 명명                      |
-| `rules/fec-code-comments.md`             | 프론트엔드 주석 작성 시점과 방법                                      |
-| `rules/fec-ci-cd.md`                     | CI/CD 파이프라인 단계, GitHub Actions / GitLab CI, 시크릿             |
-| `rules/fec-refactoring.md`               | 리팩토링 제약 및 기능 동등성 요구사항                                 |
-| `rules/fec-agent-workflow.md`            | 에이전트 간 협업 경계 및 위임                                         |
-| `rules/fec-working-modes.md`             | 조사, 계획, 개발, 리뷰, 마무리 모드 가이드                            |
-
-</details>
-
----
-
-## 설정
-
-### 사전 요구사항
-
-- **Node.js 22+**
-- **npm, pnpm, 또는 yarn**
-- **Git Bash 또는 호환 셸** (Windows만, AI 런타임이 셸 명령을 호출하는 경우)
-
-### MCP 디자인 도구 토큰
-
-팀에서 사용하는 디자인 도구에 따라 환경 변수를 설정합니다:
-
-| 환경 변수        | 도구                  | 획득 방법                                |
-| ---------------- | --------------------- | ---------------------------------------- |
-| `FIGMA_API_KEY`  | Figma / Figma Desktop | Figma 계정 설정 → Personal Access Tokens |
-| `SKETCH_API_KEY` | Sketch                | Sketch 개발자 설정                       |
-| `MG_MCP_TOKEN`   | MasterGo              | MasterGo 계정 설정 → 보안 → 토큰 생성    |
-| `MODAO_TOKEN`    | 墨刀                  | 墨刀 AI 기능 페이지 → 액세스 토큰        |
-
-> **Pixso**는 로컬 MCP 서버를 사용합니다 — Pixso 클라이언트에서 MCP를 활성화하면 되며, 환경 변수는 필요 없습니다.
-> **摹客**은 MCP 통합이 없습니다 — 스크린샷과 CSS 내보내기로 작업합니다.
-
-셸 설정에 추가하여 영속화합니다:
-
-```bash
-# macOS / Linux — ~/.bashrc 또는 ~/.zshrc에 추가
-export FIGMA_API_KEY="your-figma-api-key"
-export SKETCH_API_KEY="your-sketch-api-key"
-export MG_MCP_TOKEN="your-mastergo-token"
-export MODAO_TOKEN="your-modao-token"
-```
-
-```powershell
-# Windows — 시스템 환경 변수로 설정, 또는 PowerShell에서 임시 설정:
-$env:FIGMA_API_KEY = "your-figma-api-key"
-$env:SKETCH_API_KEY = "your-sketch-api-key"
-$env:MG_MCP_TOKEN = "your-mastergo-token"
-$env:MODAO_TOKEN = "your-modao-token"
-```
-
----
-
-## 보고서
-
-모든 리뷰, 분석, 평가는 `reports/`에 타임스탬프가 찍힌 Markdown 보고서로 작성됩니다. 이는 감사 추적 및 PR 산출물로 기능합니다.
-
-<details>
-<summary>전체 16개 보고서 유형 보기</summary>
-
-| 보고서 유형          | 파일명 패턴                                  | 생성 출처                                                           |
-| -------------------- | -------------------------------------------- | ------------------------------------------------------------------- |
-| 코드 리뷰            | `code-review-YYYY-MM-DD-HHmmss.md`           | `/fec-review`, `fec-code-review`, `fec-code-reviewer`               |
-| 디버그 진단          | `debug-YYYY-MM-DD-HHmmss.md`                 | `/fec-debug`, `fec-debug-framework`, `fec-debugger`                 |
-| TypeScript / JS 리뷰 | `typescript-review-YYYY-MM-DD-HHmmss.md`     | `fec-typescript-reviewer`                                           |
-| 보안 리뷰            | `security-review-YYYY-MM-DD-HHmmss.md`       | `fec-security-review`, `fec-security-reviewer`                      |
-| 접근성               | `accessibility-review-YYYY-MM-DD-HHmmss.md`  | `fec-accessibility-check`                                           |
-| 성능                 | `performance-review-YYYY-MM-DD-HHmmss.md`    | `fec-performance-optimizer`                                         |
-| 아키텍처             | `architecture-proposal-YYYY-MM-DD-HHmmss.md` | `fec-architect`                                                     |
-| 디자인 충실도        | `ui-fidelity-review-YYYY-MM-DD-HHmmss.md`    | `fec-ui-checker`                                                    |
-| 디자인 구현          | `design-implementation-YYYY-MM-DD-HHmmss.md` | `fec-figma-implementer`                                             |
-| 토큰 매핑            | `token-mapping-YYYY-MM-DD-HHmmss.md`         | `fec-design-token-mapper`                                           |
-| 디자인 계획          | `design-plan-YYYY-MM-DD-HHmmss.md`           | `fec-implement-from-design`                                         |
-| 테스트 계획          | `test-plan-YYYY-MM-DD-HHmmss.md`             | `/fec-plan`, `fec-testing-strategy`, `fec-test-planner`             |
-| 검증 수정            | `validation-fix-YYYY-MM-DD-HHmmss.md`        | `fec-validation-fix`                                                |
-| 리팩토링 정리        | `refactor-clean-YYYY-MM-DD-HHmmss.md`        | `/fec-refactor-clean`, `fec-refactor-clean`, `fec-refactor-cleaner` |
-| E2E 실행 요약        | `e2e-summary-YYYY-MM-DD-HHmmss.md`           | `fec-e2e-runner` (선택)                                             |
-| 마이그레이션 계획    | `migration-plan-YYYY-MM-DD-HHmmss.md`        | `fec-legacy-to-modern-migration`                                    |
-
-</details>
-
-> **팁:** `.gitignore`에 `reports/`를 추가하여 자동 생성 보고서를 버전 관리에서 제외하거나, 팀의 리뷰 이력으로 커밋을 유지하세요.
-
----
-
-## 업데이트와 제거
-
-기존 설치를 업그레이드하기 전에 사용 중인 런타임과 설치 범위에 맞춰 `fec runtime check-migration codex --local --json`을 실행하세요. 공통 리소스의 호환 조건과 충돌 해결 방법은 [마이그레이션 가이드](../common-migration.md)를 참고하세요.
-
-### CLI 자체 관리
-
-`fec update`(별칭 `upgrade`)는 원래 npm/pnpm과 registry의 `latest`로 전역 CLI를 업그레이드한 뒤 새 CLI로 현재 프로젝트와 사용자 전역의 관리 리소스를 갱신합니다. 이미 최신 버전이어도 갱신합니다. 다른 프로젝트를 검색하거나 Marketplace를 관리하지 않습니다. CLI 업그레이드 실패 시 중단하며, 리소스 일부 실패는 단계별로 보고합니다. CLI를 롤백하지 않으며 `fec runtime update`로 리소스를 재시도할 수 있습니다.
-
-`fec uninstall`(별칭 `remove`)은 기본적으로 CLI만 제거합니다. `--purge`는 먼저 관리 리소스를 정리하며 사용자 수정은 보존합니다. 정리 오류가 발생하면 CLI를 유지합니다. 대화형 터미널에서는 확인하며 비대화형 실행에는 `--yes`가 필요합니다. 소유권을 검증한 npm/pnpm registry 전역 설치만 지원합니다. 소스 링크, 프로젝트 의존성, 알 수 없는 출처 및 다른 패키지가 포함된 pnpm 공유 그룹은 변경 전에 거부합니다. 공유 그룹은 원래 패키지 관리자로 직접 관리하세요. `--dry-run`은 읽기 전용 미리 보기이며 설치, 삭제, 후속 갱신을 실행하지 않습니다.
-
-```bash
+```sh
+fec update --dry-run
 fec update
-fec uninstall --dry-run
-fec uninstall --purge --yes
+fec runtime update codex --local
+fec runtime uninstall codex --local --dry-run
+fec runtime uninstall codex --local
+fec uninstall --yes
 ```
 
-임시 npx 실행은 전역 CLI를 생성하지 않으며 CLI 자체 제거를 지원하지 않습니다. npx 최상위 `update`는 현재 패키지 버전이 registry `latest`와 같을 때만 리소스를 갱신합니다. 다르면 `npx @bovinphang/frontend-craft@latest runtime update`를 사용하세요.
+`fec runtime uninstall`은 매니페스트 관리 리소스를 제거하며 기본적으로 사용자 변경을 보존합니다. `fec uninstall --yes`는 전역 CLI를 제거합니다. `--purge`를 추가하면 발견된 관리 리소스를 먼저 정리합니다. [CLI 관리](../../docs/cli-management.md)와 [마이그레이션 가이드](../../docs/common-migration.md)를 참조하세요.
 
-설치 기본값, 일괄 작업, 진단은 [CLI 관리 가이드](../cli-management.md)를 참고하세요.
+## 문서
 
-`runtime update`는 실행 중인 CLI 패키지의 리소스를 적용합니다. `runtime upgrade`와 `runtime remove`는 각각 `runtime update`와 `runtime uninstall`의 별칭입니다.
+- [런타임 가이드](../../docs/runtimes/)
+- [CLI 관리](../../docs/cli-management.md)
+- [프롬프트 예시](../../docs/example-prompts.md)
+- [설정 및 보고서](../../docs/configuration.md)
+- [검토 및 다이어그램](../../docs/review-and-diagram-workflows.md)
+- [리팩터링](../../docs/refactoring/README.md)
+- [공통 리소스 마이그레이션](../../docs/common-migration.md)
+- [전체 문서](../../docs/README.md)
 
-`fec`는 `frontend-craft`의 짧은 명령어입니다. 전역 CLI 없이 리소스를 관리하려면 `npx @bovinphang/frontend-craft@latest runtime update`(또는 `runtime install/uninstall`)를 사용하세요.
+## 소스 개발 및 기여
 
-### 리소스 업데이트
+이 저장소는 프론트엔드 스킬, 에이전트와 워크플로를 관리합니다. 공통 `cc-*` 스킬과 방법은 [craft-common](https://github.com/bovinphang/craft-common)에서 관리하며 `pnpm build`가 영어·중국어 간체 제품을 `dist/package/`에 생성합니다. Node.js 22+와 `package.json`에 지정된 pnpm을 사용하고 의존성은 `pnpm-lock.yaml`을 따릅니다.
 
-```bash
-fec runtime update                              # 발견된 모든 CLI 관리 설치 업데이트
-fec runtime update <runtime> --local            # 로컬 CLI 관리 설치 하나 업데이트
-fec runtime update <runtime> --global           # 전역 CLI 관리 설치 하나 업데이트
-fec runtime upgrade <runtime> --global          # `upgrade`는 `update`의 별칭
+```sh
+git clone https://github.com/bovinphang/frontend-craft.git
+cd frontend-craft
+pnpm install --frozen-lockfile
+pnpm build
+node dist/package/dist/bin/frontend-craft.js list --json
 ```
 
-### 리소스 제거
+저장소 루트에서 생성된 Claude 플러그인을 불러오세요.
 
-```bash
-fec runtime uninstall                           # 발견된 모든 CLI 관리 설치 제거
-fec runtime remove                              # `remove`는 `uninstall`의 별칭
-fec runtime uninstall <runtime>                 # 특정 runtime 설치 제거
-fec runtime remove <runtime>                    # 별칭으로 특정 runtime 제거
-fec runtime uninstall --global                  # 발견된 전역 설치만 제거
-fec runtime remove --local                      # 발견된 로컬 설치만 제거
-fec runtime uninstall <runtime> --dry-run       # 제거 내용을 미리 보기
-fec runtime uninstall <runtime> --force         # 수정된 관리 파일도 제거
+```sh
+claude --plugin-dir ./dist/package
 ```
 
-CLI는 런타임 디렉토리에 `frontend-craft.manifest.json`을 작성합니다. runtime을 지정하지 않으면 `runtime update`가 이 manifest를 자동으로 발견하고 **로컬에서 수정한 파일을 건너뜁니다** — 커스터마이징은 업데이트 후에도 유지됩니다.
-
-`runtime uninstall`/`runtime remove`는 manifest에 기록된 파일만 삭제합니다. 수정된 파일은 기본적으로 건너뛰며, 수정된 관리 파일까지 제거하려는 경우에만 `--force`를 추가하세요. `--force`는 Claude Code Marketplace 설치를 덮어쓰지 않습니다.
-
-**Claude Code Marketplace** 또는 **submodule** 설치의 업데이트 방법은 [docs/runtimes/claude.md](../runtimes/claude.md) · [简体中文](../runtimes/claude.zh-CN.md)를 참조하세요. `/fec-init`은 프로젝트 설정만 초기화하며, 두 번째 플러그인 설치가 아닙니다.
-
----
-
-## Skill만 설치
-
-팀이 이미 독립형 [Skills CLI](https://skills.sh/docs/cli)를 사용 중인 경우, [`skills/`](../../skills/) 아래의 워크플로 스킬 패키지만 설치할 수 있습니다:
-
-```bash
-npx skills add bovinphang/frontend-craft   # 프롬프트에 따르거나 -g로 전역 설치
-npx skills update                          # 최신 버전으로 업데이트
-npx skills check                           # 사용 가능한 업데이트 미리보기
-```
-
-| CLI                              | 설치 내용                                             |
-| -------------------------------- | ----------------------------------------------------- |
-| `npx @bovinphang/frontend-craft` | 스킬 + 런타임 전용 에이전트, 명령어, 훅, 규칙, 템플릿 |
-| `npx skills`                     | 스킬만 (기존 Skills CLI 워크플로용)                   |
-
-텔레메트리 비활성화: `DISABLE_TELEMETRY=1`. 자세한 내용은 [skills.sh CLI 문서](https://skills.sh/docs/cli) 참조.
-
----
+개발 검사, 번역과 배포 아카이브(`pnpm run pack:all`)는 [기여 안내](../../CONTRIBUTING.md)를 참조하세요.
 
 ## 커뮤니티
 
@@ -555,8 +334,6 @@ npx skills check                           # 사용 가능한 업데이트 미�
 
 **frontend-craft가 팀에 도움이 되었다면, [Star를 눌러주세요](https://github.com/bovinphang/frontend-craft).**
 
----
-
 ## 라이선스
 
-[MIT](../../LICENSE) — 자유롭게 사용하고, 필요에 따라 수정하고, 가능하면 기여해 주세요.
+[MIT](../../LICENSE) © bovinphang.

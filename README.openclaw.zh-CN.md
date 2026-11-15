@@ -1,5 +1,7 @@
 # frontend-craft
 
+[项目首页](README.zh-CN.md) · [文档索引](docs/README.zh-CN.md) · [配置与报告](docs/zh-CN/configuration.md)
+
 [![Stars](https://img.shields.io/github/stars/bovinphang/frontend-craft?style=flat)](https://github.com/bovinphang/frontend-craft/stargazers)
 [![CI](https://github.com/bovinphang/frontend-craft/actions/workflows/ci.yml/badge.svg)](https://github.com/bovinphang/frontend-craft/actions/workflows/ci.yml)
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
@@ -342,11 +344,7 @@ pnpm run pack:openclaw
 
 ---
 
-## License
-
-MIT
-
-### 审核范围
+## 审核范围
 
 代码和安全审核 skill 采用三种模式。在 OpenClaw 中使用自然语言提出请求；以下斜杠命令示例适用于提供 `/fec-review` 的运行时：
 
@@ -394,3 +392,7 @@ MIT
 | `cc-electron-project-standard` | Electron 应用工程 |
 
 发布记录见[变更日志](https://github.com/bovinphang/frontend-craft/blob/main/CHANGELOG.zh-CN.md)。
+
+## License
+
+MIT

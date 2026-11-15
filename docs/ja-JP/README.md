@@ -4,7 +4,7 @@
 
 # frontend-craft
 
-### ひとつのツールキット。すべての AI コーディングアシスタント。本番品質のフロントエンド標準。
+### AI コーディングアシスタントにフロントエンドの規約とワークフローを。
 
 [![Stars](https://img.shields.io/github/stars/bovinphang/frontend-craft?style=flat)](https://github.com/bovinphang/frontend-craft/stargazers)
 [![CI](https://github.com/bovinphang/frontend-craft/actions/workflows/ci.yml/badge.svg)](https://github.com/bovinphang/frontend-craft/actions/workflows/ci.yml)
@@ -22,158 +22,104 @@
 
 </div>
 
-
-[ランタイム互換性とアップグレード](../runtimes/compatibility.md)
-
----
-
-`frontend-craft` は、以下の **15 の AI コーディングアシスタント**に統一されたフロントエンドエンジニアリング標準をもたらす**汎用フロントエンドプラグイン**です：
+Frontend Craft はフロントエンドの規約、デザイン実装、レビュー、テストのワークフローを **15 の AI コーディングアシスタント**に提供します。
 
 `claude` `codex` `cursor` `windsurf` `opencode`
 `kilo` `gemini` `copilot` `antigravity` `augment`
 `trae` `codebuddy` `cline` `openclaw` `qoder`
 
-各ランタイムのパスと注意事項は [`docs/runtimes/`](../runtimes/) にあります。
+製品全体には **74 のスキル**（フロントエンド 53、共通 21）、**14 のエージェント**、**11 のコマンドワークフロー**、**5 種の Claude フックイベント**、**6 つのデザインツール接続先の MCP 設定**が含まれます。React、Vue、Next.js、Nuxt を対象とします。README は 5 言語、インストールするリソースは英語と簡体字中国語に対応します。
 
-**14 の専門エージェント**、**61 の自動起動スキル**、**11 のスラッシュコマンド**、**5 のイベント駆動フック**、6 つのデザインツールエンドポイント向け **MCP 統合**、そして完全な**ルールライブラリ**をひとつのパッケージにまとめています。コマンドひとつ実行するだけで、チームのすべての AI セッションが React、Vue、Next.js、Nuxt を同じように書きます——型安全で、アクセシブルで、セキュアで、一貫性を持って。
+ランタイムごとに対応する機能をインストールします。`fec matrix` で対応表を確認し、パスと有効化手順は[ランタイムガイド](../../docs/runtimes/)を参照してください。
 
----
+## 主な機能
 
-## なぜ frontend-craft なのか？
+- スキルで設計、コンポーネント、状態、API、テストの規約を適用します。
+- 対応ホストのエージェントでコード、安全性、アクセシビリティ、性能、TypeScript、UI をレビューします。
+- 設定済み MCP サービスからデザイン情報を読み取り、既存のコンポーネントとトークンを再利用します。
+- Claude と Qoder は対応フックを使用し、OpenClaw ネイティブパッケージは独自の typed hooks を提供します。
+- `fec project inspect . --json` でプロジェクトを読み取り専用で調査し、適切なスキルを確認します。
 
-| 課題                                                                          | frontend-craft の解決策                                                                                        |
-| ----------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------- |
-| AI アシスタントが一貫性のない、型なしの、安全でないフロントエンドコードを書く | **61 のスキル**がチーム標準をエンコード——該当ファイルに触れると自動起動                                        |
-| AI ツールごとにプラグイン形式が異なる                                         | **ひとつの CLI** で同じルール、エージェント、フックを 15 のランタイムにインストール                            |
-| デザインからコードへの受け渡しで情報が失われる                                | **MCP 統合**が Figma、Figma Desktop、Sketch、MasterGo、Pixso、墨刀からより豊富なデザインコンテキストを取り込み |
-| レビューが場当たり的で浅い                                                    | **14 のエージェント**がグレード付きレポートを出力：コード、セキュリティ、a11y、パフォーマンス、TS、UI 忠実度   |
-| 誰も lint やテストを実行するのを忘れる                                        | **イベント駆動フック**が保存時とセッション終了時に自動検証                                                     |
-| 新規プロジェクトが毎回ゼロから始まる                                          | **`/fec-init`** が CLAUDE.md、ルール、設定を数秒でスキャフォールド                                             |
-
----
-
-## インストール
-
-**Node.js 22+** が必要です。**Windows、macOS、Linux** で動作します（すべてのフックとスクリプトは Node.js で実装）。
-
-### 方法 1：fec CLI をグローバルインストール（推奨）
-
-```bash
-# 1. fec コマンドをグローバルにインストール
-npm install -g @bovinphang/frontend-craft@latest
-
-# 2. フロントエンドプロジェクトへ移動
-cd your-project
-
-# 3. 接続する AI ランタイムを対話的に選択
-fec setup
-
-# 4. 現在のプロジェクトに接続
-fec setup codex
-fec setup claude
-fec setup all
-
-# 5. グローバル接続、すべてのプロジェクトで利用
-fec setup codex --global
-fec setup claude --global
-fec setup all --global
-
-# 6. プレビュー / 確認
-fec runtime install --all --dry-run --global
-fec list
-```
-
-`npm install -g` は `fec` ターミナルコマンドだけをインストールします。`fec setup` は frontend-craft をプロジェクトに接続するターミナル CLI コマンドで、AI アシスタント内の `/fec-init` スラッシュコマンドとは別です。対話型ターミナルでは、引数なしの `fec setup` が runtime の選択を求めます。`fec setup <runtime>` と `fec setup all` は既定で現在のプロジェクトに接続します。`--global` を渡した場合だけ、選択した AI ツールのグローバル設定ディレクトリに接続され、すべてのプロジェクトで利用できます。
-
-### 方法 2：npx で一時実行（グローバル fec 不要）
-
-```bash
-# 1. 対話ウィザード
-npx @bovinphang/frontend-craft@latest
-
-# 2. 現在のプロジェクトに接続
-npx @bovinphang/frontend-craft@latest runtime install --local codex
-npx @bovinphang/frontend-craft@latest runtime install --local claude
-npx @bovinphang/frontend-craft@latest runtime install --all --local
-
-# 3. グローバル接続、すべてのプロジェクトで利用
-npx @bovinphang/frontend-craft@latest runtime install --global codex
-npx @bovinphang/frontend-craft@latest runtime install --global claude
-npx @bovinphang/frontend-craft@latest runtime install --all --global
-
-# 4. プレビュー / 確認
-npx @bovinphang/frontend-craft@latest runtime install --all --dry-run --global
-npx @bovinphang/frontend-craft@latest list
-```
-
-グローバルな `fec` コマンドをインストールしたくない場合は `npx` を使います。引数なしでは対話ウィザードを開きます。まず 1 つ以上のランタイムを選択し、次にグローバルまたは現在のプロジェクトへ接続するかを決定します。すべての runtime をスクリプトでインストールする場合は `install --all --local` または `install --all --global` を使い、`install all` とは書きません。CI / スクリプト環境では常に `--global` / `-g` または `--local` / `-l` を指定してください。TTY でなく未指定の場合、CLI は `claude --global` をデフォルトとします。
-
-### 方法 3：Claude Code Marketplace
-
-Claude Code ユーザーには、**Claude Code Marketplace** からの单一ソースでのインストールを推奨します。CLI を Claude 用に使うのは、クロスランタイムインストール、スクリプト/オフラインのファイルコピー、または非 Marketplace 環境の場合に限ってください。
-
-Marketplace が既にインストールされている場合、CLI は `--force` を付けても 2 つ目の Claude コピーをインストールまたはアップデートしません。代わりに Claude Code Marketplace からアップデートしてください。他のスコープに CLI 管理の Claude インストールが既に存在する場合、対話型ターミナルではそのソースを最新に保つか、アンインストールしてから切り替えるかを確認します。非対話型ターミナルでは停止し、実行すべき `runtime update`、`runtime uninstall`、`runtime install` コマンドを正確に表示します。
-
-完全な Claude 固有の手順は [docs/runtimes/claude.md](../runtimes/claude.md) · [简体中文](../runtimes/claude.zh-CN.md) にあります。
-
-### ソースからビルド
-
-リポジトリのルートで現在のソースをビルドし、対応ランタイムを確認します。
-
-```bash
-pnpm install --frozen-lockfile
-pnpm run build
-node dist/bin/frontend-craft.js list --json
-```
-
----
+スキルは規約と手法、エージェントは専門タスク、コマンドワークフローはホスト別の呼び出し入口を提供します。ターミナルの `fec setup` で接続し、Claude Code の `/fec-init` でプロジェクト設定を準備します。
 
 ## クイックスタート
 
-インストール後、すべての AI セッションで完全なフロントエンドエンジニアリングツールキットを利用できます：
+**Node.js 22+**、インストール済みの AI アシスタント、既存のフロントエンドプロジェクトを用意してください。CLI は Windows、macOS、Linux に対応します。
 
-```text
-あなた："Review my recent changes"
-→ fec-code-reviewer エージェントが起動し、reports/code-review-*.md を出力
+### 1. インストールと接続
 
-あなた："/fec-review"
-→ アーキテクチャ、型、レンダリング、スタイル、a11y の観点で構造化レビューを実行
-
-あなた："この Figma リンクからチェックアウトページを実装して"
-→ fec-figma-implementer エージェントが MCP 経由でデザインを読み取り、コンポーネントとレポートを出力
-
-あなた："/fec-scaffold dashboard feature"
-→ プロジェクト規約に従い page / feature / component のディレクトリツリーを作成
-
-あなた："/fec-refactor-clean"
-→ デッドコード、未使用 export、スタイル、依存関係を分類して安全に削除
+```sh
+npm install -g @bovinphang/frontend-craft@latest
+cd your-frontend-project
+fec setup
 ```
 
-以下のスラッシュコマンドは **Claude Code** を例に示しています。他のランタイムも各自のコマンドシステムで同等の機能を提供します（[`docs/runtimes/`](../runtimes/) を参照）。
+`your-frontend-project` を実際のディレクトリに置き換えます。対話式ターミナルの `fec setup` でランタイムを 1 つ以上選び、英語または簡体字中国語のリソースを選びます。矢印キーで移動、Space で選択・解除、Enter で確定します。最初は Claude が選択されています。他のアシスタントだけを使う場合は解除してください。既定では**現在のプロジェクト**にインストールします。
 
-複数の技術領域を含むプロジェクトでは、`fec project inspect . --json` で読み取り専用の調査を行い、適したスキルを確認できます。タスク単位の指定は[プロジェクト調査](../cli-management.md#project-inspection)を参照してください。
+対話を省略する場合やスクリプトではランタイム、範囲、言語を指定します。Codex の例です。
 
----
-
-## プロンプト例
-
-シナリオ別の完全なプロンプト集は [docs/example-prompts.md](../example-prompts.md) を参照してください。
-
-```text
-あなた：「マージ前に最近の変更をレビューして。アーキテクチャ、型安全性、レンダリング挙動、スタイル、アクセシビリティ、足りないテストを重点的に見て。」
-あなた：「コードを書く前に、アカウント請求機能を計画して。ルート構成、コンポーネント境界、データフロー、状態の所有、バリデーションフロー、リリースリスクを含めて。」
-あなた：「複数ステップ登録フォームを作って。プロジェクトのフレームワークに合うフォームと schema バリデーションの方針を選び、ファイルアップロード、条件付きフィールド、非同期バリデーション、アクセシブルなエラーを含めて。」
-あなた：「Figma ノード 123:456 に基づいて UI を実装して。既存の design token とコンポーネントを再利用し、余白とレスポンシブ状態を合わせ、前提も記録して。」
-あなた：「`/fec-refactor-clean` このモジュールのデッドコードを整理して。」
+```sh
+fec setup codex --local --lang en
 ```
 
----
+### 2. インストールの確認
 
-## 内容
+```sh
+fec doctor codex --local
+```
+
+同じプロジェクトで実行し、`codex` を選択した識別子に置き換えて各ランタイムを確認します。`ok` は想定するリソースの存在、`missing` は要調査の不足、`not expected` は対応機能の範囲に含まれない項目を示します。[ランタイムガイド](../../docs/runtimes/)を参照してください。
+
+### 3. 最初のタスク
+
+アシスタントを更新または再起動し、プロジェクトで新しい会話を開始します。リソースの検出を確認し、ホストの信頼・有効化手順を完了してください。スキル対応のアシスタントで `src/features/account` を実在するモジュールに置き換え、次を依頼します。
+
+```text
+fec-code-review で src/features/account の全コードを読み取り専用でレビューしてください。
+規約に従い、型、描画、状態、アクセシビリティ、テストを確認してください。
+問題の場所、影響、修正案を示し、問題がなければ明記してください。
+```
+
+問題の場所と修正案、または問題なしという結果を確認します。Claude Code は `/fec-review` も提供します。ホスト別の形式はランタイムガイド、その他のタスクは[プロンプト例](../../docs/example-prompts.md)を参照してください。
+
+## その他のインストール方法
+
+### npx による一時実行
+
+npx から同じ設定ウィザードを実行できます。以降の CLI コマンドにも `npx @bovinphang/frontend-craft@latest` を付けます。
+
+```sh
+cd your-frontend-project
+npx @bovinphang/frontend-craft@latest setup
+```
+
+### Claude Code Marketplace
+
+Claude Code のネイティブプラグインはアシスタント内で次を実行します。Claude の有効なインストール経路を 1 つ選びます。有効化、切り替え、初期設定は [Claude ガイド](../../docs/runtimes/claude.md)を参照してください。
+
+```text
+/plugin marketplace add bovinphang/frontend-craft
+/plugin install frontend-craft@frontend-craft
+/reload-plugins
+```
+
+### ユーザー全体へのインストール
+
+プロジェクト間で共用する場合は `--global` を使います。Codex の例はすべての選択肢を指定しています。一括操作と既定値は [CLI 管理](../../docs/cli-management.md)を参照してください。
+
+```sh
+fec setup codex --global --lang en
+```
+
+### 独立スキルパッケージ
+
+ソースの `skills/` は 53 のフロントエンドスキルを管理し、ビルド時に共通スキル 21 個を組み合わせます。`pnpm run pack:skills` は製品全体から独立パッケージを生成します。手順は[貢献ガイド](../../CONTRIBUTING.md)を参照してください。Skills CLI でリポジトリのスキルを利用する場合は公式ガイドを参照してください。[Skills CLI](https://skills.sh/docs/cli)
+
+## 機能一覧
 
 ### コマンド
 
-スラッシュコマンドは構造化ワークフローの主要なエントリーポイントです。ほとんどが `reports/` にタイムスタンプ付き Markdown レポートを出力します。
+以下のコマンド名は Claude Code の構文です。他のホストはアダプター対応の形式を使います。レポートは各ワークフローの規約に従って `reports/` に保存します。
 
 | コマンド              | 用途                                                                   | レポート                                             |
 | --------------------- | ---------------------------------------------------------------------- | ---------------------------------------------------- |
@@ -189,29 +135,16 @@ node dist/bin/frontend-craft.js list --json
 | `/fec-refactor` | Execute validated behavior-preserving refactoring | `refactoring/refactoring-*.md` |
 | `/fec-doc-sync`       | README、docs、環境変数、スクリプト、API/ルート説明、デプロイ文書を同期 | —                                                    |
 
-### レビュー範囲
+全プロジェクト、指定ファイル・ディレクトリ、明示的な差分のレビューに対応します。単独の `/fec-review` は全プロジェクトが対象です。最初のタスクでは範囲を指定してください。詳細は[レビューと図表のガイド](../../docs/review-and-diagram-workflows.md)を参照してください。
 
-`/fec-review`、コード / TypeScript / セキュリティのレビューエージェントとスキルは、次の3つのモードを使用します。
+### スキル
 
-- **変更レビュー**：最近の変更、今回の編集、ステージ済み変更、PR・コミットを明示的に指定した場合、または現在のタスクで変更範囲が明確な場合にレビューします。変更がなければその旨を報告し、最近のコミットに自動で切り替えません。
-- **指定範囲レビュー**：ファイルまたはディレクトリを指定し、未変更のコードもレビューします。Git の差分は不要です。
-- **プロジェクト全体レビュー（既定）**：範囲や変更の文脈を指定しない場合、または全体を依頼した場合、プロジェクト所有のフロントエンドコード、関連テスト、設定、依存関係の宣言を一覧化し、モジュールごとにレビューします。
+製品全体は 74 のスキルを含みます。ソースは 53 のフロントエンドスキルを管理し、ビルド時に craft-common の 21 の共通スキルを組み合わせます。検出と起動はアシスタントとタスクに依存します。
 
-ファイル・ディレクトリの指定は全内容のレビューです。変更のみを確認する場合は明示してください。変更があっても `/fec-review` 単独は全体レビューです。開始時にモードと範囲を示し、編集後の自動委任には今回の変更範囲を明示します。
-
-例：`/fec-review`、`/fec-review 最近の変更をレビュー`、`/fec-review src/components/Button.tsx をレビュー`、`/fec-review src/features/ をレビュー`、`/fec-review プロジェクト全体をレビュー`。これは自然言語の指示であり、CLI オプションではありません。明示された範囲を優先します。
-
-依存関係のディレクトリ、ビルド成果物、キャッシュ、生成ファイル、第三者コードは既定で除外します。レポートにはモード、対象範囲、レビュー済み・未レビューのファイルやモジュール、除外項目、完了状態、検証結果を記録します。未完了なら部分完了と明記します。呼び出し元の参照や全体の lint・型チェックは手動レビューの完了を意味しません。変更レビューはマージ判断、指定範囲・全体レビューは確認済み範囲のリスク評価を示します。バックエンド監査を代替せず、修正の依頼がなければ業務コードを変更しません。
-
-### スキル（自動起動）
-
-[スキル一覧](../../skills/)には、フロントエンド専用の 53 個と同梱の共通スキル 21 個、計 74 個のスキルがあります。
-
-スキルはファイルパターン、フレームワーク、タスクコンテキストに基づいて**自動起動**するワークフロー定義です。レビュー観点、出力規約、レポート形式をエンコードしています。
 
 以下のスキルはユースケース別に分類されているため、プロジェクト標準、実装、テスト、レビュー、デザイン、移行、プロジェクト進化、ドキュメント保守のワークフローをすばやく見つけられます。
 
-**プロジェクト標準** — 該当フレームワークが検出されると自動適用：
+**プロジェクト標準** — プロジェクトのフレームワークに応じて使用：
 
 | スキル                            | 範囲                                                                    |
 | --------------------------------- | ----------------------------------------------------------------------- |
@@ -318,7 +251,7 @@ node dist/bin/frontend-craft.js list --json
 
 ### エージェント
 
-エージェントはメインアシスタントから起動される専門サブエージェントで、特定のタスクに集中して構造化レポートを返します。
+Claude、Codex、Qoder はエージェントのインストールに対応します。以下は専門ロールの一覧です。
 
 | エージェント                | 焦点                                                                                 | レポート                     |
 | --------------------------- | ------------------------------------------------------------------------------------ | ---------------------------- |
@@ -337,213 +270,59 @@ node dist/bin/frontend-craft.js list --json
 | `fec-figma-implementer`     | Figma/Sketch/MasterGo/Pixso/墨刀 デザインからの正確な UI 実装                        | `design-implementation-*.md` |
 | `fec-design-token-mapper`   | デザイン変数をプロジェクトの Design Token にマッピング                               | `token-mapping-*.md`         |
 
-### フック（イベント駆動）
+### フック、デザインツール、テンプレート
 
-フックは AI アシスタントのイベントで**自動実行**されます。呼び出し不要です。
+Claude と Qoder は対応フックをインストールします。Codex はスキル、エージェント、ルール、テンプレートをインストールします。MCP はホスト別に設定し、OpenClaw ネイティブパッケージは独自の typed hooks を使います。[設定ガイド](../../docs/configuration.md)と[ランタイムガイド](../../docs/runtimes/)を参照してください。
 
-| イベント                  | 動作                                                                                                  |
-| ------------------------- | ----------------------------------------------------------------------------------------------------- |
-| `SessionStart`            | Claude キャッシュをクリーンアップしてから、プロジェクトのフレームワークとパッケージマネージャーを検出 |
-| `PreToolUse(Bash)`        | 危険なコマンド（`rm -rf`、force push など）をブロック                                                 |
-| `PostToolUse(Write/Edit)` | 変更されたファイルに自動で Prettier を実行                                                            |
-| `Stop`                    | セッション終了時に lint、type-check、test、build を実行                                               |
-| `Notification`            | クロスプラットフォームのデスクトップ通知（macOS / Linux / Windows）                                   |
+## 設定とレポート
 
-### MCP 統合
+ホストに応じて MCP 接続とフックを設定します。[設定ガイド](../../docs/configuration.md)にトークン変数、フック動作、レポート名をまとめています。ワークフローは規約に従い `reports/` に日時付き Markdown を出力します。履歴管理の方針はチームで選択してください。
 
-AI アシスタントをデザインツールに接続し、より豊富なデザインコンテキストを使ったデザイン→コードワークフローを実現します。
+## 更新とアンインストール
 
-| サービス          | 機能                                                                |
-| ----------------- | ------------------------------------------------------------------- |
-| **Figma**         | デザインコンテキストと変数定義の読み取り                            |
-| **Figma Desktop** | Figma デスクトップクライアント統合                                  |
-| **Sketch**        | デザイン選択スクリーンショットの読み取り                            |
-| **MasterGo**      | DSL 構造、コンポーネント階層、スタイルの読み取り                    |
-| **Pixso**         | ローカル MCP：フレームデータ、コードスニペット、画像リソース        |
-| **墨刀**          | プロトタイプデータ、デザイン説明、HTML インポート                   |
-| **摹客**          | スクリーンショット／注釈／CSS エクスポート ワークフロー（MCP なし） |
+`fec update` は出所を確認した npm/pnpm グローバル CLI を更新し、現在のプロジェクトとユーザー全体の管理対象リソースを更新します。`fec runtime update` は実行中パッケージを使い、各インストールの言語とユーザーの変更を保護します。
 
-### プロジェクトテンプレート（`/fec-init`）
-
-`/fec-init` を実行すると、すぐに使えるルールライブラリとプロジェクト設定を `.claude/` にスキャフォールドします：
-
-<details>
-<summary>全 20 テンプレートファイルを表示</summary>
-
-| ファイル                                 | 用途                                                                  |
-| ---------------------------------------- | --------------------------------------------------------------------- |
-| `CLAUDE.md`                              | プロジェクト説明、コマンド、作業原則、セキュリティ                    |
-| `settings.json`                          | 権限ホワイトリスト／ブラックリスト、環境変数                          |
-| `rules/fec-vue.md`                       | Vue 3 コンポーネント基準とアンチパターン                              |
-| `rules/fec-react.md`                     | React コンポーネント基準とアンチパターン                              |
-| `rules/fec-design-system.md`             | デザインシステム、トークン、アクセシビリティ                          |
-| `rules/fec-testing.md`                   | テストと検証のルール                                                  |
-| `rules/fec-git-conventions.md`           | Conventional Commits                                                  |
-| `rules/fec-i18n.md`                      | 国際化コピー基準                                                      |
-| `rules/fec-performance.md`               | フロントエンドパフォーマンス最適化ルール                              |
-| `rules/fec-rendering-patterns.md`        | レンダリングライフサイクル、hydration、SSR/CSR、更新パターン          |
-| `rules/fec-responsive-design.md`         | レスポンシブレイアウト、ブレークポイント、タッチターゲット、viewport  |
-| `rules/fec-source-driven-development.md` | Source-driven decisions, official docs, version-sensitive assumptions |
-| `rules/fec-api-layer.md`                 | API 層の型付けとエラーハンドリング                                    |
-| `rules/fec-state-management.md`          | 状態分類、戦略、アンチパターン                                        |
-| `rules/fec-error-handling.md`            | エラー階層化、Error Boundary、フォールバック UI、報告                 |
-| `rules/fec-naming-conventions.md`        | ファイル、コンポーネント、変数、ルート、API、CSS の統一命名           |
-| `rules/fec-code-comments.md`             | フロントエンドコメントの書き方とタイミング                            |
-| `rules/fec-ci-cd.md`                     | CI/CD パイプライン段階、GitHub Actions / GitLab CI、シークレット      |
-| `rules/fec-refactoring.md`               | リファクタリング制約と機能同等性の要件                                |
-| `rules/fec-agent-workflow.md`            | エージェント間の協業境界と委任                                        |
-| `rules/fec-working-modes.md`             | 調査、計画、開発、レビュー、完了モードのガイダンス                    |
-
-</details>
-
----
-
-## 設定
-
-### 前提条件
-
-- **Node.js 22+**
-- **npm、pnpm、または yarn**
-- **Git Bash または互換シェル**（Windows のみ、AI ランタイムがシェルコマンドを呼び出す場合）
-
-### MCP デザイントールトークン
-
-チームで使用するデザインツールに応じて環境変数を設定します：
-
-| 環境変数         | ツール                | 取得方法                                              |
-| ---------------- | --------------------- | ----------------------------------------------------- |
-| `FIGMA_API_KEY`  | Figma / Figma Desktop | Figma アカウント設定 → Personal Access Tokens         |
-| `SKETCH_API_KEY` | Sketch                | Sketch 開発者設定                                     |
-| `MG_MCP_TOKEN`   | MasterGo              | MasterGo アカウント設定 → セキュリティ → トークン生成 |
-| `MODAO_TOKEN`    | 墨刀                  | 墨刀 AI 機能ページ → アクセストークン                 |
-
-> **Pixso** はローカル MCP サーバーを使用 — Pixso クライアントで MCP を有効化すればよく、環境変数は不要です。
-> **摹客** は MCP 統合なし — スクリーンショットと CSS エクスポートで対応します。
-
-シェル設定に追加して永続化します：
-
-```bash
-# macOS / Linux — ~/.bashrc または ~/.zshrc に追加
-export FIGMA_API_KEY="your-figma-api-key"
-export SKETCH_API_KEY="your-sketch-api-key"
-export MG_MCP_TOKEN="your-mastergo-token"
-export MODAO_TOKEN="your-modao-token"
-```
-
-```powershell
-# Windows — システム環境変数として設定、または PowerShell で一時的に設定：
-$env:FIGMA_API_KEY = "your-figma-api-key"
-$env:SKETCH_API_KEY = "your-sketch-api-key"
-$env:MG_MCP_TOKEN = "your-mastergo-token"
-$env:MODAO_TOKEN = "your-modao-token"
-```
-
----
-
-## レポート
-
-すべてのレビュー、分析、評価は `reports/` にタイムスタンプ付き Markdown レポートとして書き出されます。これらは監査証跡および PR の成果物として機能します。
-
-<details>
-<summary>全 16 レポートタイプを表示</summary>
-
-| レポートタイプ           | ファイル名パターン                           | 生成元                                                              |
-| ------------------------ | -------------------------------------------- | ------------------------------------------------------------------- |
-| コードレビュー           | `code-review-YYYY-MM-DD-HHmmss.md`           | `/fec-review`、`fec-code-review`、`fec-code-reviewer`               |
-| デバッグ診断             | `debug-YYYY-MM-DD-HHmmss.md`                 | `/fec-debug`、`fec-debug-framework`、`fec-debugger`                 |
-| TypeScript / JS レビュー | `typescript-review-YYYY-MM-DD-HHmmss.md`     | `fec-typescript-reviewer`                                           |
-| セキュリティレビュー     | `security-review-YYYY-MM-DD-HHmmss.md`       | `fec-security-review`、`fec-security-reviewer`                      |
-| アクセシビリティ         | `accessibility-review-YYYY-MM-DD-HHmmss.md`  | `fec-accessibility-check`                                           |
-| パフォーマンス           | `performance-review-YYYY-MM-DD-HHmmss.md`    | `fec-performance-optimizer`                                         |
-| アーキテクチャ           | `architecture-proposal-YYYY-MM-DD-HHmmss.md` | `fec-architect`                                                     |
-| デザイン忠実度           | `ui-fidelity-review-YYYY-MM-DD-HHmmss.md`    | `fec-ui-checker`                                                    |
-| デザイン実装             | `design-implementation-YYYY-MM-DD-HHmmss.md` | `fec-figma-implementer`                                             |
-| トークンマッピング       | `token-mapping-YYYY-MM-DD-HHmmss.md`         | `fec-design-token-mapper`                                           |
-| デザイン計画             | `design-plan-YYYY-MM-DD-HHmmss.md`           | `fec-implement-from-design`                                         |
-| テスト計画               | `test-plan-YYYY-MM-DD-HHmmss.md`             | `/fec-plan`、`fec-testing-strategy`、`fec-test-planner`             |
-| 検証修復                 | `validation-fix-YYYY-MM-DD-HHmmss.md`        | `fec-validation-fix`                                                |
-| リファクタリングクリーン | `refactor-clean-YYYY-MM-DD-HHmmss.md`        | `/fec-refactor-clean`、`fec-refactor-clean`、`fec-refactor-cleaner` |
-| E2E 実行サマリー         | `e2e-summary-YYYY-MM-DD-HHmmss.md`           | `fec-e2e-runner`（任意）                                            |
-| 移行計画                 | `migration-plan-YYYY-MM-DD-HHmmss.md`        | `fec-legacy-to-modern-migration`                                    |
-
-</details>
-
-> **ヒント：** `.gitignore` に `reports/` を追加して自動生成レポートをバージョン管理から除外するか、チームのレビュー履歴としてコミットを保持してください。
-
----
-
-## アップデートと削除
-
-既存の環境をアップグレードする前に、利用中のランタイムとインストール範囲を指定して `fec runtime check-migration codex --local --json` を実行してください。共通リソースの互換性と競合への対処は[移行ガイド](../common-migration.md)を参照してください。
-
-### CLI 自体の管理
-
-`fec update`（別名 `upgrade`）は元の npm/pnpm と registry の `latest` でグローバル CLI を更新し、新しい CLI で現在のプロジェクトとユーザー全体の管理リソースを更新します。最新版でもリソースを更新します。他のプロジェクトの走査や Marketplace の管理は行いません。CLI 更新失敗時は停止し、リソースの部分失敗は段階別に報告します。CLI はロールバックせず、`fec runtime update` で再試行できます。
-
-`fec uninstall`（別名 `remove`）は既定で CLI だけを削除します。`--purge` は先に管理リソースを削除し、ユーザーの変更を保持します。削除処理が失敗すると CLI を保持します。対話端末では確認し、非対話実行では `--yes` が必要です。検証済みの npm/pnpm registry グローバルインストールのみ対応します。ソースリンク、プロジェクト依存、未知の配布元、他のパッケージを含む pnpm 共有グループは変更前に拒否します。共有グループは元のパッケージマネージャーで手動管理してください。`--dry-run` は読み取り専用で、インストール、削除、後続更新を実行しません。
-
-```bash
+```sh
+fec update --dry-run
 fec update
-fec uninstall --dry-run
-fec uninstall --purge --yes
+fec runtime update codex --local
+fec runtime uninstall codex --local --dry-run
+fec runtime uninstall codex --local
+fec uninstall --yes
 ```
 
-一時的な npx 実行ではグローバル CLI を作成せず、CLI の削除もできません。npx のトップレベル `update` は実行中のバージョンが registry の `latest` と一致する場合のみリソースを更新します。一致しなければ `npx @bovinphang/frontend-craft@latest runtime update` を使用してください。
+`fec runtime uninstall` はマニフェスト管理のリソースを削除し、既定ではユーザーの変更を保持します。`fec uninstall --yes` はグローバル CLI を削除します。先に管理対象リソースを削除する場合は `--purge` を追加します。[CLI 管理](../../docs/cli-management.md)と[移行ガイド](../../docs/common-migration.md)を参照してください。
 
-インストールの既定値、一括操作、診断は [CLI 管理ガイド](../cli-management.md)を参照してください。
+## ドキュメント
 
-`runtime update` は実行中の CLI パッケージからリソースを更新します。`runtime upgrade` と `runtime remove` はそれぞれ `runtime update` と `runtime uninstall` の別名です。
+- [ランタイム](../../docs/runtimes/)
+- [CLI 管理](../../docs/cli-management.md)
+- [プロンプト例](../../docs/example-prompts.md)
+- [設定とレポート](../../docs/configuration.md)
+- [レビューと図表](../../docs/review-and-diagram-workflows.md)
+- [リファクタリング](../../docs/refactoring/README.md)
+- [共通リソースの移行](../../docs/common-migration.md)
+- [全ドキュメント](../../docs/README.md)
 
-`fec` は `frontend-craft` の短いコマンドです。グローバル CLI がない場合、リソース操作には `npx @bovinphang/frontend-craft@latest runtime update`（または `runtime install/uninstall`）を使用してください。
+## ソース開発と貢献
 
-### リソースのアップデート
+フロントエンドのスキル、エージェント、ワークフローをこのリポジトリで管理します。共通 `cc-*` スキルと手法は [craft-common](https://github.com/bovinphang/craft-common) で管理し、`pnpm build` で英語・簡体字中国語の製品を `dist/package/` に生成します。Node.js 22+ と `package.json` 指定の pnpm を使い、依存関係は `pnpm-lock.yaml` に従います。
 
-```bash
-fec runtime update                              # 検出された CLI 管理インストールをすべてアップデート
-fec runtime update <runtime> --local            # ローカルの CLI 管理インストールを 1 つアップデート
-fec runtime update <runtime> --global           # グローバルの CLI 管理インストールを 1 つアップデート
-fec runtime upgrade <runtime> --global          # `upgrade` は `update` のエイリアス
+```sh
+git clone https://github.com/bovinphang/frontend-craft.git
+cd frontend-craft
+pnpm install --frozen-lockfile
+pnpm build
+node dist/package/dist/bin/frontend-craft.js list --json
 ```
 
-### リソースの削除
+リポジトリルートから生成した Claude プラグインを読み込みます。
 
-```bash
-fec runtime uninstall                           # 検出された CLI 管理インストールをすべて削除
-fec runtime remove                              # `remove` は `uninstall` のエイリアス
-fec runtime uninstall <runtime>                 # 指定 runtime のインストールを削除
-fec runtime remove <runtime>                    # エイリアスで指定 runtime を削除
-fec runtime uninstall --global                  # 検出されたグローバルインストールだけを削除
-fec runtime remove --local                      # 検出されたローカルインストールだけを削除
-fec runtime uninstall <runtime> --dry-run       # 削除内容をプレビュー
-fec runtime uninstall <runtime> --force         # 変更済みの管理ファイルも削除
+```sh
+claude --plugin-dir ./dist/package
 ```
 
-CLI はランタイムディレクトリに `frontend-craft.manifest.json` を書き込みます。runtime を指定しない場合、`runtime update` はこれらの manifest を自動検出し、**ローカルで修正したファイルをスキップ**します——カスタマイズはアップデート後も保持されます。
-
-`runtime uninstall`/`runtime remove` は manifest に記録されたファイルだけを削除します。変更済みファイルは既定でスキップされます。変更済みの管理ファイルも削除したい場合のみ `--force` を追加してください。`--force` は Claude Code Marketplace インストールを上書きしません。
-
-**Claude Code Marketplace** または **submodule** インストールのアップデート方法は [docs/runtimes/claude.md](../runtimes/claude.md) · [简体中文](../runtimes/claude.zh-CN.md) を参照してください。`/fec-init` はプロジェクト設定を初期化するだけであり、2 回目のプラグインインストールではありません。
-
----
-
-## Skill のみインストール
-
-チームがすでにスタンドアロンの [Skills CLI](https://skills.sh/docs/cli) を使用している場合、[`skills/`](../../skills/) 配下のワークフロースキルパッケージのみをインストールできます：
-
-```bash
-npx skills add bovinphang/frontend-craft   # プロンプトに従う、または -g でグローバル
-npx skills update                          # 最新版にアップデート
-npx skills check                           # 利用可能なアップデートをプレビュー
-```
-
-| CLI                              | インストール内容                                                              |
-| -------------------------------- | ----------------------------------------------------------------------------- |
-| `npx @bovinphang/frontend-craft` | スキル + ランタイム固有のエージェント、コマンド、フック、ルール、テンプレート |
-| `npx skills`                     | スキルのみ（既存の Skills CLI ワークフロー向け）                              |
-
-テレメトリを無効化：`DISABLE_TELEMETRY=1`。詳細は [skills.sh CLI ドキュメント](https://skills.sh/docs/cli) を参照。
-
----
+開発チェック、翻訳、配布アーカイブ（`pnpm run pack:all`）は[貢献ガイド](../../CONTRIBUTING.md)を参照してください。
 
 ## コミュニティ
 
@@ -555,8 +334,6 @@ npx skills check                           # 利用可能なアップデート�
 
 **frontend-craft がチームの助けになったら、[Star をお願いします](https://github.com/bovinphang/frontend-craft)。**
 
----
-
 ## ライセンス
 
-[MIT](../../LICENSE) — 自由に使用し、必要に応じて修正し、可能であれば貢献してください。
+[MIT](../../LICENSE) © bovinphang.

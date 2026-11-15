@@ -1,5 +1,7 @@
 # frontend-craft
 
+[Project home](README.md) · [Documentation](docs/README.md) · [Configuration and reports](docs/configuration.md)
+
 [![Stars](https://img.shields.io/github/stars/bovinphang/frontend-craft?style=flat)](https://github.com/bovinphang/frontend-craft/stargazers)
 [![CI](https://github.com/bovinphang/frontend-craft/actions/workflows/ci.yml/badge.svg)](https://github.com/bovinphang/frontend-craft/actions/workflows/ci.yml)
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
@@ -342,11 +344,7 @@ pnpm run pack:openclaw
 
 ---
 
-## License
-
-MIT
-
-### Review scope
+## Review scope
 
 Code and security review skills use three modes. In OpenClaw, request them in natural language; the slash-command examples below apply to runtimes that expose `/fec-review`:
 
@@ -394,3 +392,7 @@ These common entries apply to libraries, CLI tools, desktop cores and services; 
 | `cc-electron-project-standard` | Electron application engineering |
 
 See the [changelog](https://github.com/bovinphang/frontend-craft/blob/main/CHANGELOG.md) for release notes.
+
+## License
+
+MIT

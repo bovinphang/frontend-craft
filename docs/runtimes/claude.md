@@ -10,11 +10,11 @@ npx @bovinphang/frontend-craft@latest runtime install --local claude
 npx @bovinphang/frontend-craft@latest runtime install --global claude
 ```
 
-> **Non-interactive:** append `--local` or `--global` to skip install-location prompts. See the repository README **Universal Install** for interactive vs. scripted behavior.
+> **Non-interactive:** append `--local` or `--global` to skip install-location prompts. See the [quick start](../../README.md#quick-start) for interactive setup and [CLI management](../cli-management.md) for scripted commands.
 
 Choose one active source of truth for the same Claude scope: Marketplace/native plugin, CLI install, or `--plugin-dir`. They can technically coexist, but running multiple complete copies in the same Claude session can duplicate commands, skills, agents, and hooks.
 
-In CLI 3.0, top-level `fec update` upgrades a supported npm/pnpm global CLI and then refreshes its managed resources. Use the `runtime` group below for resource-only operations; `runtime update` uses the running package contents without fetching a newer package. Top-level `fec uninstall` removes the CLI itself; `fec runtime uninstall claude --local` (or `--global`) removes the managed Claude resources. See the [3.0 migration table](../../README.md#update-and-remove).
+In CLI 3.0, top-level `fec update` upgrades a supported npm/pnpm global CLI and then refreshes its managed resources. Use the `runtime` group below for resource-only operations; `runtime update` uses the running package contents without fetching a newer package. Top-level `fec uninstall` removes the CLI itself; `fec runtime uninstall claude --local` (or `--global`) removes the managed Claude resources. See [CLI management](../cli-management.md) for command details.
 
 The CLI enforces this for Marketplace installs: if Claude Code Marketplace already manages `frontend-craft`, `frontend-craft runtime install/update claude` stops and tells you to update through Marketplace instead. `--force` does not override a Marketplace install.
 

@@ -4,7 +4,7 @@
 
 # frontend-craft
 
-### One toolkit. Every AI coding assistant. Production-grade frontend standards.
+### Frontend engineering workflows for your AI coding assistant.
 
 [![Stars](https://img.shields.io/github/stars/bovinphang/frontend-craft?style=flat)](https://github.com/bovinphang/frontend-craft/stargazers)
 [![CI](https://github.com/bovinphang/frontend-craft/actions/workflows/ci.yml/badge.svg)](https://github.com/bovinphang/frontend-craft/actions/workflows/ci.yml)
@@ -22,164 +22,104 @@
 
 </div>
 
-
-[Runtime compatibility and upgrade notes](docs/runtimes/compatibility.md)
-
----
-
-`frontend-craft` is a **universal frontend plugin** that brings the same opinionated engineering standards to all **15 AI coding assistants** listed below:
+Frontend Craft brings frontend conventions, design implementation, reviews and testing workflows to **15 AI coding assistants**.
 
 `claude` `codex` `cursor` `windsurf` `opencode`
 `kilo` `gemini` `copilot` `antigravity` `augment`
 `trae` `codebuddy` `cline` `openclaw` `qoder`
 
-Per-runtime paths and caveats live in [`docs/runtimes/`](docs/runtimes/).
+The assembled product includes **74 skills** (53 frontend and 21 shared engineering skills), **14 specialized agents**, **11 command workflows**, **5 Claude hook events** and MCP configuration for **6 design-tool endpoints**. Guidance covers React, Vue, Next.js and Nuxt. README translations are available in five languages. Installable resources support English and Simplified Chinese.
 
-It bundles **14 specialized agents**, **74 auto-activated skills**, **11 slash commands**, **5 event-driven hooks**, **MCP integrations** for 6 design-tool endpoints, and a complete **rules library** into a single installable package. Run one command, and every AI session on your team writes React, Vue, Next.js, or Nuxt the same way — typed, accessible, secure, and consistent.
+Each runtime installs a supported subset of these resources. Check the capability matrix with `fec matrix` and the [runtime guides](docs/runtimes/) for paths and activation steps.
 
----
+## Core capabilities
 
-## Why frontend-craft?
+- Apply project conventions with task-specific skills for architecture, components, state, APIs and testing.
+- Use specialized agents for code, security, accessibility, performance, TypeScript and UI reviews where supported.
+- Read design context through configured MCP services and reuse existing components and design tokens.
+- Use Claude/Qoder hooks where supported, with separate typed hooks in the native OpenClaw package.
+- Inspect projects with `fec project inspect . --json` and generate task-specific recommendations.
 
-| Problem                                                              | What frontend-craft does                                                                       |
-| -------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------- |
-| AI assistants write inconsistent, untyped, or insecure frontend code | **74 skills** encode team standards — auto-activated when the assistant touches matching files |
-| Each AI tool has its own plugin format                               | **One CLI** installs the same rules, agents, and hooks into 15 runtimes                        |
-| Design-to-code handoff is lossy                                      | **MCP integrations** bring in richer context from Figma, Figma Desktop, Sketch, MasterGo, Pixso, and 墨刀 |
-| Reviews are ad-hoc and shallow                                       | **14 agents** produce graded reports: code, security, a11y, performance, TS, UI fidelity       |
-| No one remembers to run lint/tests                                   | **Event-driven hooks** validate on save and session end — automatically                        |
-| New projects start from scratch every time                           | **`/fec-init`** scaffolds CLAUDE.md, rules, and settings in seconds                            |
-
----
-
-## Install
-
-Requires **Node.js 22+**. Works on **Windows, macOS, and Linux**.
-
-### Option 1 - Install the fec CLI globally (recommended)
-
-```bash
-# 1. Install the fec command globally
-npm install -g @bovinphang/frontend-craft@latest
-
-# 2. Go to your frontend project
-cd your-project
-
-# 3. Choose the AI runtime(s) interactively
-fec setup
-
-# 4. Connect the current project
-fec setup codex
-fec setup claude
-fec setup all
-
-# 5. Connect globally, available across all projects
-fec setup codex --global
-fec setup claude --global
-fec setup all --global
-
-# 6. Preview / query
-fec runtime install --all --dry-run --global
-fec list
-```
-
-`npm install -g` only installs the `fec` terminal command. `fec setup` is the terminal CLI command for connecting frontend-craft to a project; it is not the in-assistant `/fec-init` slash command. In an interactive terminal, running only `fec setup` asks you to choose runtimes. `fec setup <runtime>` and `fec setup all` connect frontend-craft to the current project by default. Only pass `--global` when you want to connect frontend-craft to the selected AI tool's global config directory so it is available across projects.
-
-### Option 2 — Temporary npx run (no global fec command)
-
-```bash
-# 1. Interactive wizard
-npx @bovinphang/frontend-craft@latest
-
-# 2. Connect the current project
-npx @bovinphang/frontend-craft@latest runtime install --local codex
-npx @bovinphang/frontend-craft@latest runtime install --local claude
-npx @bovinphang/frontend-craft@latest runtime install --all --local
-
-# 3. Connect globally, available across all projects
-npx @bovinphang/frontend-craft@latest runtime install --global codex
-npx @bovinphang/frontend-craft@latest runtime install --global claude
-npx @bovinphang/frontend-craft@latest runtime install --all --global
-
-# 4. Preview / query
-npx @bovinphang/frontend-craft@latest runtime install --all --dry-run --global
-npx @bovinphang/frontend-craft@latest list
-```
-
-Use `npx` when you do not want to install a global `fec` command. Without arguments, it opens the interactive wizard: choose one or more runtimes, then choose whether to connect globally or into the current project. For scripted all-runtime installs, use `install --all --local` or `install --all --global`; do not write `install all`. For CI / scripts, always pass `--global` / `-g` or `--local` / `-l`; in non-TTY environments without an explicit location, the CLI defaults to `claude --global`.
-
-### Option 3 — Claude Code Marketplace
-
-For Claude Code users, **Claude Code Marketplace** is the preferred single-source install. Use the CLI for Claude only when you need cross-runtime installs, scripted/offline file copies, or non-Marketplace environments.
-
-If Marketplace is already installed, the CLI will not install or update a second Claude copy, even with `--force`; update through Claude Code Marketplace instead. If a CLI-managed Claude install already exists in the other scope, interactive terminals ask whether to keep that source updated or uninstall it before switching. Non-interactive terminals stop and print the exact `runtime update`, `runtime uninstall`, and `runtime install` commands to run.
-
-Full Claude-specific steps are in [docs/runtimes/claude.md](docs/runtimes/claude.md) · [简体中文](docs/runtimes/claude.zh-CN.md).
-
-### Build from source
-
-From the repository root, build the current checkout and list its supported runtimes.
-
-```bash
-pnpm install --frozen-lockfile
-pnpm run build
-node dist/bin/frontend-craft.js list --json
-```
-
----
+Skills provide engineering guidance, agents perform focused tasks, and command workflows provide host-specific entry points. The terminal command `fec setup` connects resources. Inside Claude Code, `/fec-init` prepares project guidance.
 
 ## Quick start
 
-Once installed, you have a full frontend engineering toolkit available in every AI session:
+Prepare **Node.js 22+**, an installed AI coding assistant and an existing frontend project. The CLI supports Windows, macOS and Linux.
 
-```text
-You: "Review my recent changes"
-→ The fec-code-reviewer agent is dispatched, produces reports/code-review-*.md
+### 1. Install and connect your assistant
 
-You: "/fec-review"
-→ Runs a structured review across architecture, types, rendering, styles, a11y
-
-You: "Implement the checkout page from this Figma link"
-→ The fec-figma-implementer agent reads the design via MCP, emits components and a report
-
-You: "/fec-scaffold dashboard feature"
-→ Creates a page / feature / component directory tree following project conventions
-
-You: "/fec-refactor-clean"
-→ Classifies and safely removes dead code, unused exports, styles, and deps
-
-You: "/fec-refactor src/features/compose"
-→ Diagnoses structural smells, builds a small-step plan, refactors one behavior-preserving step at a time, and validates every step
+```sh
+npm install -g @bovinphang/frontend-craft@latest
+cd your-frontend-project
+fec setup
 ```
 
-All slash commands below are shown for **Claude Code**; other runtimes expose the same capabilities through their own command systems (see [`docs/runtimes/`](docs/runtimes/)).
+Replace `your-frontend-project` with your project directory. In an interactive terminal, `fec setup` selects one or more runtimes and then English or Simplified Chinese resources. Use Up/Down to navigate, Space to select or deselect, and Enter to confirm. Claude is initially selected. Deselect it when choosing another assistant alone. Setup installs into the **current project** by default.
 
-For a mixed project, run `fec project inspect . --json` to identify the project and get skill recommendations without changing files. See [project inspection](docs/cli-management.md#project-inspection) for task-specific options.
+For scripts or to skip the prompts, specify the runtime, scope and language. This example connects Codex.
 
----
-
-## Example prompts
-
-For a complete scenario-based prompt library, see [docs/example-prompts.md](docs/example-prompts.md).
-
-```text
-You: "Review my recent changes before merge. Focus on architecture, type safety, rendering behavior, styles, accessibility, and missing tests."
-You: "Before coding, plan the account billing feature: route structure, component boundaries, data flow, state ownership, validation flow, and rollout risks."
-You: "Build a multi-step registration form; choose the right form and schema validation approach for this project, with file upload, conditional fields, async validation, and accessible errors."
-You: "Implement the UI from Figma node 123:456. Use existing design tokens and components, match spacing and responsive states, and document assumptions."
-You: "`/fec-refactor-clean` Clean up dead code in this module."
-You: "`/fec-smell` Diagnose structural smells in this module without editing."
-You: "`/fec-refactor-plan` Build a behavior-preserving small-step refactoring plan."
-You: "`/fec-refactor` Refactor this module without changing observable behavior."
+```sh
+fec setup codex --local --lang en
 ```
 
----
+### 2. Check the installation
 
-## What’s inside
+```sh
+fec doctor codex --local
+```
+
+Run the check from the same project directory. Replace `codex` with your selected runtime identifier and check each selection. `ok` means the expected artifact was found, `missing` identifies an expected artifact to investigate, and `not expected` reflects the adapter's supported subset. Consult the [runtime guide](docs/runtimes/) for missing items.
+
+### 3. Run your first task
+
+Refresh or restart the assistant, open the project and start a new conversation. Confirm resources are discovered and complete any host trust or activation steps. For an assistant supporting skills, replace `src/features/account` with an existing module and send this request.
+
+```text
+Use fec-code-review to review all code in src/features/account without changing files.
+Follow the repository conventions and check types, rendering, state, accessibility and test coverage.
+List findings with file locations, impact and suggested fixes, or explicitly state that no issues were found.
+```
+
+Expect findings with file locations and suggested fixes, or an explicit no-findings result. Claude Code also provides `/fec-review`. Supported resource forms vary by runtime. See [example prompts](docs/example-prompts.md) for further tasks.
+
+## Other installation options
+
+### Temporary npx execution
+
+Use the same setup wizard through npx. Prefix subsequent CLI commands with `npx @bovinphang/frontend-craft@latest`.
+
+```sh
+cd your-frontend-project
+npx @bovinphang/frontend-craft@latest setup
+```
+
+### Claude Code Marketplace
+
+For native Claude Code installation, run these commands inside the assistant. Choose one active installation channel for Claude. Activation, source switching and project initialization are covered in the [Claude guide](docs/runtimes/claude.md).
+
+```text
+/plugin marketplace add bovinphang/frontend-craft
+/plugin install frontend-craft@frontend-craft
+/reload-plugins
+```
+
+### User-wide installation
+
+Select `--global` to share resources across projects. This Codex example specifies all choices. Batch setup and installation defaults are in [CLI management](docs/cli-management.md).
+
+```sh
+fec setup codex --global --lang en
+```
+
+### Skills-only packages
+
+The source `skills/` directory contains 53 frontend skills. Building assembles those with 21 shared skills. `pnpm run pack:skills` produces standalone packages from the assembled product. See [Contributing](CONTRIBUTING.md) for packaging. Teams using Skills CLI can discover the repository's frontend skills through its [CLI documentation](https://skills.sh/docs/cli).
+
+## Capability catalog
 
 ### Commands
 
-Slash commands are the primary entry points for structured workflows. Most produce a timestamped Markdown report under `reports/`.
+The following command names use Claude Code syntax. Other hosts provide the command/workflow forms supported by their adapter. Reports are written under `reports/` according to the workflow.
 
 | Command               | Purpose                                                                | Report                                           |
 | --------------------- | ---------------------------------------------------------------------- | ------------------------------------------------ |
@@ -195,29 +135,13 @@ Slash commands are the primary entry points for structured workflows. Most produ
 | `/fec-refactor`       | Execute one validated behavior-preserving refactoring step at a time       | `refactoring/refactoring-*.md`                 |
 | `/fec-doc-sync`       | Sync READMEs, docs, env notes, scripts, API/route notes, and deploy docs | —                                                |
 
-### Review scope
+Reviews support the full project, a selected file/directory, or an explicit diff. Bare `/fec-review` reviews the full project. Choose a scope explicitly for your first task. The complete rules are in [review scope and diagram workflows](docs/review-and-diagram-workflows.md).
 
-`/fec-review`, the code/TypeScript/security review agents, and their review skills use three modes:
+### Skills
 
-- **Change review:** explicitly request recent/current/staged changes, a PR or a commit, or use an established change context. With no changes, report that there is nothing to review; do not automatically review recent commits.
-- **Targeted review:** specify a file or directory to review existing code, including unchanged code, without requiring a Git diff.
-- **Project review (default):** with no scope or change context, or when the entire project is requested, inventory project-owned frontend code, related tests, configuration and dependency declarations, then review by module.
+The assembled product contains 74 skills. The repository maintains 53 frontend skills, and craft-common supplies 21 shared skills during the build. Skill discovery and activation depend on the assistant and task context.
 
-A file/directory request reviews its full contents; add "recent changes" to review only its diff. Bare `/fec-review` reviews the project even when changes exist. State mode and scope before review. Automatic review after edits must pass the current change scope explicitly.
-
-Examples: `/fec-review`,`/fec-review review recent changes`,  `/fec-review review src/components/Button.tsx`, `/fec-review review src/features/`, and `/fec-review review the entire project`. These are natural-language instructions, not CLI flags. Explicit scope takes precedence over the default.
-
-Dependency directories, build outputs, caches, generated files and third-party code are excluded by default. Reports record the mode, target scope, reviewed and unreviewed files/modules, exclusions, completion status and verification results. Limited coverage is marked partial; reading callers or running project-wide lint/typecheck does not establish manual review coverage. Change reviews retain merge recommendations; targeted/project reviews assess risk within reviewed scope. The frontend review does not replace a backend audit, and reviewers do not edit business code unless repairs are requested.
-
-### Skills (auto-activated)
-
-The [skill catalog](skills/) includes 74 skills, with 53 frontend-specific skills and 21 shared skills shipped with the product.
-
-Skills are workflow definitions that activate automatically based on file patterns, frameworks, or task context. They encode review dimensions, output conventions, and report formats.
-
-The skills below are grouped by use case so you can quickly find project standards, implementation, testing, review, design, migration, project evolution, and documentation workflows.
-
-**Project standards** — conventions enforced whenever matching frameworks are detected:
+**Project standards** — guidance for the matching project framework:
 
 | Skill                           | Scope                                                                 |
 | ------------------------------- | --------------------------------------------------------------------- |
@@ -297,7 +221,6 @@ The skills below are grouped by use case so you can quickly find project standar
 | `fec-implement-from-design`   | Build UI from design tools, screenshots, or section-level visual references   |
 | `fec-storybook-component-doc` | Storybook component docs, design-system presentation, isolated state previews |
 
-Technical diagram quality: `cc-technical-diagrams` prefers local Mermaid for standard sequence/workflow diagrams and the draw.io workflow for editable architecture, with JSON/HTML fallback when tools are unavailable. Export a browser-measured manifest scaled to the PNG, run QA and inspect the final image. Preserve complete text, explicit layout and relationships; repair the source for at most two automatic rounds and report unresolved issues. Reproducible fixtures are in `skills/cc-technical-diagrams/assets/quality-examples/`.
 
 [Review and technical diagram guide](docs/review-and-diagram-workflows.md).
 
@@ -324,7 +247,7 @@ Technical diagram quality: `cc-technical-diagrams` prefers local Mermaid for sta
 
 ### Agents
 
-Agents are specialized sub-agents dispatched by the main assistant to handle a focused task. Each returns a structured report.
+Agent installation is supported for Claude, Codex and Qoder. The table describes the available agent roles.
 
 | Agent                       | Focus                                                                      | Report                       |
 | --------------------------- | -------------------------------------------------------------------------- | ---------------------------- |
@@ -343,218 +266,59 @@ Agents are specialized sub-agents dispatched by the main assistant to handle a f
 | `fec-figma-implementer`     | Precise UI implementation from Figma/Sketch/MasterGo/Pixso/墨刀 designs    | `design-implementation-*.md` |
 | `fec-design-token-mapper`   | Map design variables to project Design Tokens                              | `token-mapping-*.md`         |
 
-### Hooks (event-driven)
+### Hooks, design tools and project templates
 
-Hooks run automatically on AI assistant events — no invocation needed.
+Claude and Qoder adapters install supported hooks. Codex installs skills, agents, rules and templates. MCP configuration and credentials depend on the selected host. The native OpenClaw package has its own typed hooks. See [configuration and reports](docs/configuration.md) and the [runtime guides](docs/runtimes/) for setup.
 
-| Event                     | Behavior                                                       |
-| ------------------------- | -------------------------------------------------------------- |
-| `SessionStart`            | Clean Claude cache, then detect project framework and package manager |
-| `PreToolUse(Bash)`        | Block dangerous commands (`rm -rf`, force push, etc.)          |
-| `PostToolUse(Write/Edit)` | Auto-format modified files with Prettier                       |
-| `Stop`                    | Run available validation scripts once, report failures, and block only when configured |
-| `Notification`            | Cross-platform desktop notifications (macOS / Linux / Windows) |
+## Configuration and reports
 
-Stop validation is advisory by default: failures are reported without blocking the session. Set `FRONTEND_CRAFT_VALIDATION_MODE=blocking` to return a failure status. The hook uses `packageManager` from `package.json` when present, otherwise a single lockfile; conflicting lockfiles default to npm.
+Configure design-tool MCP connections and hooks for the selected host. The [configuration guide](docs/configuration.md) covers token variables, hook behavior and report filenames. Workflows use timestamped Markdown reports under `reports/`. Choose whether to retain them in version control according to your team practices.
 
-### MCP integration
+## Update and uninstall
 
-Plug your AI assistant into design tools for design-to-code workflows with richer design context.
+`fec update` upgrades a verified npm/pnpm global CLI and refreshes current-project and user-global managed resources. `fec runtime update` refreshes resources from the running package and preserves each installation's language. Updates preserve user-modified resources.
 
-| Service           | Capabilities                                         |
-| ----------------- | ---------------------------------------------------- |
-| **Figma**         | Read design context and variable definitions         |
-| **Figma Desktop** | Figma desktop client integration                     |
-| **Sketch**        | Read design selection screenshots                    |
-| **MasterGo**      | Read DSL structure, component hierarchy, styles      |
-| **Pixso**         | Local MCP: frame data, code snippets, image assets   |
-| **墨刀**          | Prototype data, design descriptions, HTML import     |
-| **摹客**          | Screenshot/annotation/exported-CSS workflow (no MCP) |
-
-### Project templates (`/fec-init`)
-
-Run `/fec-init` to scaffold a ready-to-use rules library and project config into `.claude/`:
-
-<details>
-<summary>Click to see all 20 template files</summary>
-
-| File                                     | Purpose                                                               |
-| ---------------------------------------- | --------------------------------------------------------------------- |
-| `CLAUDE.md`                              | Project description, commands, working principles, security           |
-| `settings.json`                          | Permission whitelist/blacklist, environment variables                 |
-| `rules/fec-vue.md`                       | Vue 3 component standards and anti-patterns                           |
-| `rules/fec-react.md`                     | React component standards and anti-patterns                           |
-| `rules/fec-design-system.md`             | Design system, tokens, accessibility                                  |
-| `rules/fec-testing.md`                   | Testing and validation rules                                          |
-| `rules/fec-git-conventions.md`           | Conventional Commits                                                  |
-| `rules/fec-i18n.md`                      | Internationalization copy standards                                   |
-| `rules/fec-performance.md`               | Frontend performance rules                                            |
-| `rules/fec-rendering-patterns.md`        | Rendering lifecycle, hydration, SSR/CSR, and update patterns          |
-| `rules/fec-responsive-design.md`         | Responsive layout, breakpoints, touch targets, and viewport behavior  |
-| `rules/fec-source-driven-development.md` | Source-driven decisions, official docs, version-sensitive assumptions |
-| `rules/fec-api-layer.md`                 | API layer typing and error handling                                   |
-| `rules/fec-state-management.md`          | State classification, strategy, anti-patterns                         |
-| `rules/fec-error-handling.md`            | Error layering, Error Boundary, fallback UI, reporting                |
-| `rules/fec-naming-conventions.md`        | Unified naming for files, components, variables, routes, API, CSS     |
-| `rules/fec-code-comments.md`             | When and how to write frontend comments                               |
-| `rules/fec-ci-cd.md`                     | CI/CD pipeline stages, GitHub Actions / GitLab CI, secrets            |
-| `rules/fec-refactoring.md`               | Refactoring constraints and feature-parity requirements               |
-| `rules/fec-agent-workflow.md`            | Agent collaboration boundaries and delegation                         |
-| `rules/fec-working-modes.md`             | Research, planning, development, review, finishing modes              |
-
-</details>
-
----
-
-## Configuration
-
-### Prerequisites
-
-- **Node.js 22+**
-- **npm, pnpm, or yarn**
-- **Git Bash or a compatible shell** (Windows only, when your AI runtime invokes shell-based commands)
-
-### MCP design-tool tokens
-
-Set the environment variable for whichever design tool your team uses:
-
-| Variable         | Tool                  | How to get                                            |
-| ---------------- | --------------------- | ----------------------------------------------------- |
-| `FIGMA_API_KEY`  | Figma / Figma Desktop | Figma account settings → Personal Access Tokens       |
-| `SKETCH_API_KEY` | Sketch                | Sketch developer settings                             |
-| `MG_MCP_TOKEN`   | MasterGo              | MasterGo account settings → Security → Generate Token |
-| `MODAO_TOKEN`    | 墨刀                  | 墨刀 AI feature page → access token                   |
-
-> **Pixso** uses a local MCP server — enable MCP in the Pixso client, no env var needed.
-> **摹客** has no MCP integration; works via screenshots and exported CSS.
-
-Add to your shell config for persistence:
-
-```bash
-# macOS / Linux — append to ~/.bashrc or ~/.zshrc
-export FIGMA_API_KEY="your-figma-api-key"
-export SKETCH_API_KEY="your-sketch-api-key"
-export MG_MCP_TOKEN="your-mastergo-token"
-export MODAO_TOKEN="your-modao-token"
-```
-
-```powershell
-# Windows — set as system environment variables, or in PowerShell:
-$env:FIGMA_API_KEY = "your-figma-api-key"
-$env:SKETCH_API_KEY = "your-sketch-api-key"
-$env:MG_MCP_TOKEN = "your-mastergo-token"
-$env:MODAO_TOKEN = "your-modao-token"
-```
-
----
-
-## Reports
-
-Every review, analysis, and evaluation writes a timestamped Markdown report to `reports/`. These serve as an audit trail and a handoff artifact for PRs.
-
-<details>
-<summary>Click to see all 19 report types</summary>
-
-| Report type            | Filename pattern                             | Produced by                                                         |
-| ---------------------- | -------------------------------------------- | ------------------------------------------------------------------- |
-| Code review            | `code-review-YYYY-MM-DD-HHmmss.md`           | `/fec-review`, `fec-code-review`, `fec-code-reviewer`               |
-| Debug diagnostics      | `debug-YYYY-MM-DD-HHmmss.md`                 | `/fec-debug`, `fec-debug-framework`, `fec-debugger`                 |
-| TypeScript / JS review | `typescript-review-YYYY-MM-DD-HHmmss.md`     | `fec-typescript-reviewer`                                           |
-| Security review        | `security-review-YYYY-MM-DD-HHmmss.md`       | `fec-security-review`, `fec-security-reviewer`                      |
-| Accessibility          | `accessibility-review-YYYY-MM-DD-HHmmss.md`  | `fec-accessibility-check`                                           |
-| Performance            | `performance-review-YYYY-MM-DD-HHmmss.md`    | `fec-performance-optimizer`                                         |
-| Architecture           | `architecture-proposal-YYYY-MM-DD-HHmmss.md` | `fec-architect`                                                     |
-| Design fidelity        | `ui-fidelity-review-YYYY-MM-DD-HHmmss.md`    | `fec-ui-checker`                                                    |
-| Design implementation  | `design-implementation-YYYY-MM-DD-HHmmss.md` | `fec-figma-implementer`                                             |
-| Token mapping          | `token-mapping-YYYY-MM-DD-HHmmss.md`         | `fec-design-token-mapper`                                           |
-| Design plan            | `design-plan-YYYY-MM-DD-HHmmss.md`           | `fec-implement-from-design`                                         |
-| Test plan              | `test-plan-YYYY-MM-DD-HHmmss.md`             | `/fec-plan`, `fec-testing-strategy`, `fec-test-planner`             |
-| Validation fix         | `validation-fix-YYYY-MM-DD-HHmmss.md`        | `fec-validation-fix`                                                |
-| Refactor clean         | `refactor-clean-YYYY-MM-DD-HHmmss.md`        | `/fec-refactor-clean`, `fec-refactor-clean`, `fec-refactor-cleaner` |
-| Smell diagnosis       | `refactoring/smell-YYYY-MM-DD-HHmmss.md`     | `/fec-smell`, `fec-code-smells`                                  |
-| Refactoring plan      | `refactoring/plan-YYYY-MM-DD-HHmmss.md`      | `/fec-refactor-plan`, `fec-refactoring`                           |
-| Refactoring execution | `refactoring/refactoring-YYYY-MM-DD-HHmmss.md` | `/fec-refactor`, `fec-refactoring`, `fec-refactoring-expert`    |
-| E2E run summary        | `e2e-summary-YYYY-MM-DD-HHmmss.md`           | `fec-e2e-runner` (optional)                                         |
-| Migration plan         | `migration-plan-YYYY-MM-DD-HHmmss.md`        | `fec-legacy-to-modern-migration`                                    |
-
-</details>
-
-> **Tip:** add `reports/` to `.gitignore` to keep the auto-generated reports out of version control — or commit them to preserve a team review history.
-
----
-
-## Update and Remove
-
-Before upgrading an existing installation, run `fec runtime check-migration codex --local --json` with the runtime and scope you use. See the [migration guide](docs/common-migration.md) for shared-resource compatibility and conflict handling.
-
-### CLI lifecycle
-
-`fec update` (`upgrade`) upgrades an npm/pnpm global CLI to the original registry's `latest`, then starts the new CLI to refresh managed resources in the current project and user-global scope, even when already latest. Other projects and Marketplace installs are not scanned or managed. CLI upgrade failure stops refresh; independent resource failures are reported by phase without rolling back the CLI. Retry those resources with `fec runtime update`.
-
-`fec uninstall` (`remove`) removes only the global CLI by default. `--purge` first removes discovered managed resources while preserving user modifications; cleanup errors keep the CLI installed. A terminal prompts for confirmation; non-interactive runs require `--yes`. Self-management supports verified npm/pnpm global registry installs only; source links, project dependencies, unknown sources and pnpm groups shared with other packages are refused before changes. Use the original package manager manually for shared groups. `--dry-run` only previews; it never installs, deletes or starts the refresh process.
-
-```bash
+```sh
+fec update --dry-run
 fec update
-fec uninstall --dry-run
-fec uninstall --purge --yes
+fec runtime update codex --local
+fec runtime uninstall codex --local --dry-run
+fec runtime uninstall codex --local
+fec uninstall --yes
 ```
 
-Temporary npx runs never create a global CLI install and cannot uninstall the CLI. Top-level npx `update` refreshes resources only if its package version equals registry `latest`; otherwise use `npx @bovinphang/frontend-craft@latest runtime update`.
+`fec runtime uninstall` removes manifest-managed resources, preserving user edits by default. `fec uninstall --yes` removes the global CLI. Add `--purge` to clean discovered managed resources first. See [CLI management](docs/cli-management.md) for source requirements, previews and failure recovery, and [migration](docs/common-migration.md) for shared-resource conflicts.
 
-See [CLI management](docs/cli-management.md) for install defaults, bulk operations and diagnostics.
+## Documentation
 
-`runtime update` refreshes resources from the running CLI package. `runtime upgrade` and `runtime remove` are aliases for `runtime update` and `runtime uninstall`.
+- [Runtime guides](docs/runtimes/)
+- [CLI management](docs/cli-management.md)
+- [Example prompts](docs/example-prompts.md)
+- [Configuration and reports](docs/configuration.md)
+- [Review scope and diagrams](docs/review-and-diagram-workflows.md)
+- [Refactoring](docs/refactoring/README.md)
+- [Common resource migration](docs/common-migration.md)
+- [Full documentation index](docs/README.md)
 
-`fec` is the short command for `frontend-craft`. For resource operations without a global CLI, use `npx @bovinphang/frontend-craft@latest runtime update` (or `runtime install/uninstall`).
+## Source development and contributing
 
-### Resource update
+Frontend skills, agents and workflows are maintained here. Shared `cc-*` skills and methods are maintained in [craft-common](https://github.com/bovinphang/craft-common). `pnpm build` assembles the complete English and Simplified Chinese product in `dist/package/`. Use Node.js 22+ and the pnpm version declared in `package.json`. Dependency versions follow `package.json` and `pnpm-lock.yaml`.
 
-```bash
-fec runtime update                              # Update all discovered CLI-managed installs
-fec runtime update <runtime> --local            # Update one local CLI-managed install
-fec runtime update <runtime> --global           # Update one global CLI-managed install
-fec runtime upgrade <runtime> --global          # `upgrade` is an alias for `update`
+```sh
+git clone https://github.com/bovinphang/frontend-craft.git
+cd frontend-craft
+pnpm install --frozen-lockfile
+pnpm build
+node dist/package/dist/bin/frontend-craft.js list --json
 ```
 
-### Resource removal
+Load the assembled Claude plugin from the repository root with the following command.
 
-```bash
-fec runtime uninstall                           # Remove all discovered CLI-managed installs
-fec runtime remove                              # `remove` is an alias for `uninstall`
-fec runtime uninstall <runtime>                 # Remove a specific runtime install
-fec runtime remove <runtime>                    # Same removal through the alias
-fec runtime uninstall --global                  # Remove discovered global installs only
-fec runtime remove --local                      # Remove discovered local installs only
-fec runtime uninstall <runtime> --dry-run       # Preview removals
-fec runtime uninstall <runtime> --force         # Remove modified managed files too
+```sh
+claude --plugin-dir ./dist/package
 ```
 
-The CLI writes `frontend-craft.manifest.json` into the runtime directory. `runtime update` discovers those manifests automatically when no runtime is provided and **skips files you’ve modified locally**, so customizations survive updates.
-
-`runtime uninstall`/`runtime remove` only deletes files recorded in the manifest. It skips modified files by default; add `--force` only when you want to remove modified managed files too. `--force` does not override a Claude Code Marketplace install.
-
-For **Claude Code Marketplace** or **submodule** installs, see [docs/runtimes/claude.md](docs/runtimes/claude.md) · [简体中文](docs/runtimes/claude.zh-CN.md). `/fec-init` only initializes project config; it is not a second plugin install.
-
----
-
-## Skills-only installation
-
-If your team already uses the standalone [Skills CLI](https://skills.sh/docs/cli), it can still install just the workflow skill packages from [`skills/`](skills/):
-
-```bash
-npx skills add bovinphang/frontend-craft   # follow prompts, or add -g for global
-npx skills update                          # update to latest
-npx skills check                           # preview available updates
-```
-
-| CLI                  | Installs                                                            |
-| -------------------- | ------------------------------------------------------------------- |
-| `npx @bovinphang/frontend-craft` | Skills + runtime-specific agents, commands, hooks, rules, templates |
-| `npx skills`         | Skills only (for existing Skills CLI workflows)                     |
-
-To disable telemetry: `DISABLE_TELEMETRY=1`. Details: [skills.sh CLI docs](https://skills.sh/docs/cli).
-
----
+Development checks, localization and release archives (`pnpm run pack:all`) are documented in [Contributing](CONTRIBUTING.md).
 
 ## Community
 
@@ -566,10 +330,6 @@ To disable telemetry: `DISABLE_TELEMETRY=1`. Details: [skills.sh CLI docs](https
 
 **If frontend-craft helps your team ship better code, [give it a Star](https://github.com/bovinphang/frontend-craft).**
 
----
-
 ## License
 
-[MIT](LICENSE) — use freely, modify as needed, contribute back if you can.
-
-Common content is maintained in craft-common. This source repository stores domain skills; `pnpm run build` assembles the complete bilingual product in `dist/package/`. Local development and Git submodules load `--plugin-dir <repository>/dist/package`. Build release archives with `pnpm run pack:all`; see CONTRIBUTING.md.
+[MIT](LICENSE) © bovinphang.

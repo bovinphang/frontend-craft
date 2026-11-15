@@ -4,7 +4,7 @@
 
 # frontend-craft
 
-### 一套工具，適配所有 AI 程式設計助手，落地生產級前端規範。
+### 將前端工程規範與工作流程接入你的 AI 程式設計助手。
 
 [![Stars](https://img.shields.io/github/stars/bovinphang/frontend-craft?style=flat)](https://github.com/bovinphang/frontend-craft/stargazers)
 [![CI](https://github.com/bovinphang/frontend-craft/actions/workflows/ci.yml/badge.svg)](https://github.com/bovinphang/frontend-craft/actions/workflows/ci.yml)
@@ -22,158 +22,104 @@
 
 </div>
 
-
-[執行環境相容性與升級說明](../runtimes/compatibility.md)
-
----
-
-`frontend-craft` 是一個**通用前端插件**，為以下 **15 款 AI 程式設計助手**注入統一的前端工程規範：
+Frontend Craft 將前端規範、設計實作、程式碼審查與測試工作流程接入 **15 款 AI 程式設計助手**。
 
 `claude` `codex` `cursor` `windsurf` `opencode`
 `kilo` `gemini` `copilot` `antigravity` `augment`
 `trae` `codebuddy` `cline` `openclaw` `qoder`
 
-各執行時的路徑與注意事項詳見 [`docs/runtimes/`](../runtimes/)。
+完整產品提供 **74 個 Skill**（53 個前端 Skill 和 21 個共用工程 Skill）、**14 個 Agent**、**11 個命令工作流程**、**5 類 Claude Hook 事件**及 **6 個設計工具端點的 MCP 設定**，涵蓋 React、Vue、Next.js 和 Nuxt。README 提供五種語言，安裝資源支援英文與簡體中文。
 
-它將 **14 個專業 agent**、**61 個自動啟用 skill**、**11 個斜線指令**、**5 個事件驅動 hook**、面向 6 個設計工具端點的 **MCP 整合**以及一整套**規則庫**打包為一個可安裝單元。執行一條指令，團隊裡的每一次 AI 會話都將以相同的方式編寫 React、Vue、Next.js 或 Nuxt——型別安全、可存取、安全、一致。
+各執行環境安裝其支援的能力子集。使用 `fec matrix` 查看能力矩陣，資源路徑與啟用步驟見 [Runtime 指南](../../docs/runtimes/)。
 
----
+## 核心能力
 
-## 為什麼選擇 frontend-craft？
+- 透過專項 Skill 套用架構、元件、狀態、API 與測試規範。
+- 在支援 Agent 的宿主中進行程式碼、安全、無障礙、效能、TypeScript 與 UI 審查。
+- 透過已設定的 MCP 服務讀取設計脈絡，重用既有元件和設計 Token。
+- 在 Claude、Qoder 中使用適配的 Hook，OpenClaw 原生套件提供獨立 typed hooks。
+- 使用 `fec project inspect . --json` 唯讀識別專案並取得任務相關能力建議。
 
-| 痛點                                            | frontend-craft 的解法                                                                   |
-| ----------------------------------------------- | --------------------------------------------------------------------------------------- |
-| AI 助手寫出的前端程式碼風格不一、缺型別、不安全 | **61 個 skill** 將團隊規範編碼為可自動啟用的工作流                                      |
-| 每款 AI 工具都有自己的插件格式                  | **一條 CLI 指令** 把相同的規則、agent 和 hook 安裝到 15 個執行時                        |
-| 設計稿到程式碼的交接總有資訊損失                | **MCP 整合** 從 Figma、Figma Desktop、Sketch、MasterGo、Pixso、墨刀引入更完整設計上下文 |
-| 程式碼審查隨意、淺層                            | **14 個 agent** 輸出分級報告：程式碼、安全、無障礙、效能、TS、UI 還原度                 |
-| 沒人記得跑 lint 和測試                          | **事件驅動 hook** 在儲存和會話結束時自動校驗                                            |
-| 新專案每次都從零開始                            | **`/fec-init`** 幾秒內腳手架化 CLAUDE.md、規則和 settings                               |
-
----
-
-## 安裝
-
-需要 **Node.js 22+**。完整支援 **Windows、macOS 和 Linux**（所有鉤子和腳本均使用 Node.js 實作）。
-
-### 方式一：全域安裝 fec CLI（推薦）
-
-```bash
-# 1. 全域安裝 fec 指令
-npm install -g @bovinphang/frontend-craft@latest
-
-# 2. 進入你的前端專案
-cd your-project
-
-# 3. 互動選擇要接入的 AI 執行時
-fec setup
-
-# 4. 接入目前專案
-fec setup codex
-fec setup claude
-fec setup all
-
-# 5. 全域接入，適用於所有專案
-fec setup codex --global
-fec setup claude --global
-fec setup all --global
-
-# 6. 預覽 / 查詢
-fec runtime install --all --dry-run --global
-fec list
-```
-
-`npm install -g` 只是安裝 `fec` 終端機指令。`fec setup` 是終端機中的 CLI 專案接入指令，不是 AI 助手內的 `/fec-init` 斜線指令。在互動式終端機中，不帶參數的 `fec setup` 會先讓你選擇 runtime；`fec setup <runtime>` 和 `fec setup all` 會預設接入目前專案。只有傳入 `--global` 時，才會接入對應 AI 工具的全域設定目錄，適用於所有專案。
-
-### 方式二：用 npx 臨時執行（免全域安裝 fec）
-
-```bash
-# 1. 互動精靈
-npx @bovinphang/frontend-craft@latest
-
-# 2. 接入目前專案
-npx @bovinphang/frontend-craft@latest runtime install --local codex
-npx @bovinphang/frontend-craft@latest runtime install --local claude
-npx @bovinphang/frontend-craft@latest runtime install --all --local
-
-# 3. 全域接入，適用於所有專案
-npx @bovinphang/frontend-craft@latest runtime install --global codex
-npx @bovinphang/frontend-craft@latest runtime install --global claude
-npx @bovinphang/frontend-craft@latest runtime install --all --global
-
-# 4. 預覽 / 查詢
-npx @bovinphang/frontend-craft@latest runtime install --all --dry-run --global
-npx @bovinphang/frontend-craft@latest list
-```
-
-不想全域安裝 `fec` 指令時使用 `npx`。不帶參數會進入互動精靈：先選擇一個或多個執行時，再決定接入全域還是目前專案。腳本化安裝全部 runtime 時使用 `install --all --local` 或 `install --all --global`，不要寫成 `install all`。CI / 腳本場景請務必帶上 `--global` / `-g` 或 `--local` / `-l`；非 TTY 且未指定時，CLI 預設安裝到 `claude --global`。
-
-### 方式三：Claude Code Marketplace
-
-對 Claude Code 用戶，**Claude Code Marketplace** 是推薦的單一來源安裝方式。只有在需要跨執行時安裝、腳本化/離線複製檔案，或非 Marketplace 環境時，才建議對 Claude 使用 CLI。
-
-如果已經透過 Marketplace 安裝，CLI 不會再安裝或更新第二份 Claude 副本，即使傳入 `--force` 也不會覆蓋；請透過 Claude Code Marketplace 更新。如果已存在另一個作用域的 CLI 管理安裝，互動式終端會詢問是保持已安裝來源並更新，還是解除安裝後切換至當前來源；非互動式終端會停止並列印明確的 `runtime update`、`runtime uninstall`、`runtime install` 命令。
-
-完整步驟見 [docs/runtimes/claude.zh-CN.md](../runtimes/claude.zh-CN.md) · [English](../runtimes/claude.md)。
-
-### 從原始碼建置
-
-在儲存庫根目錄建置目前的程式碼，並列出支援的執行環境。
-
-```bash
-pnpm install --frozen-lockfile
-pnpm run build
-node dist/bin/frontend-craft.js list --json
-```
-
----
+Skill 提供工程規範與方法，Agent 執行專項任務，命令工作流程提供宿主支援的呼叫入口。終端中的 `fec setup` 接入資源，Claude Code 中的 `/fec-init` 準備專案指導設定。
 
 ## 快速開始
 
-安裝完成後，你在每一次 AI 會話中都擁有一套完整的前端工程工具箱：
+準備 **Node.js 22+**、已安裝的 AI 程式設計助手及既有前端專案。CLI 支援 Windows、macOS 和 Linux。
 
-```text
-你："Review my recent changes"
-→ fec-code-reviewer agent 被調度，輸出 reports/code-review-*.md
+### 1. 安裝並接入助手
 
-你："/fec-review"
-→ 按架構、型別、渲染、樣式、可存取性等維度執行結構化審查
-
-你："根據這個 Figma 連結實現結算頁"
-→ fec-figma-implementer agent 透過 MCP 讀取設計稿，輸出元件和報告
-
-你："/fec-scaffold dashboard feature"
-→ 依專案約定建立 page / feature / component 標準目錄結構
-
-你："/fec-refactor-clean"
-→ 分類並安全清理死程式碼、未使用匯出、樣式和依賴
+```sh
+npm install -g @bovinphang/frontend-craft@latest
+cd your-frontend-project
+fec setup
 ```
 
-下文斜線指令以 **Claude Code** 為例；其他執行時透過各自的指令系統提供同等能力（詳見 [`docs/runtimes/`](../runtimes/)）。
+將 `your-frontend-project` 替換為實際專案目錄。在互動終端中，`fec setup` 先讓你選擇一個或多個執行環境，再選擇英文或簡體中文資源。方向鍵移動，空白鍵勾選或取消，Enter 確認。初始勾選 Claude，只接入其他助手時先取消該選項。資源預設安裝到**目前專案**。
 
-混合專案可先執行 `fec project inspect . --json`，以唯讀方式辨識專案並推薦適用的技能。依任務篩選的用法請參閱[專案辨識](../cli-management.zh-CN.md#工程识别)。
+需要跳過互動或編寫指令碼時，明確指定執行環境、範圍與語言。以下以 Codex 為例。
 
----
-
-## 範例提示詞
-
-完整的按場景組織提示詞庫請參考 [docs/example-prompts.md](../example-prompts.md)。
-
-```text
-你：「合併前請審查我最近的改動。重點看架構、型別安全、渲染行為、樣式、可存取性和缺失測試。」
-你：「先不要寫程式碼，請規劃帳號帳單功能：路由結構、元件邊界、資料流、狀態歸屬、驗證流程和上線風險。」
-你：「請建構多步註冊表單：依專案框架選擇表單與 schema 驗證方案，包含檔案上傳、條件欄位、非同步驗證和可存取錯誤提示。」
-你：「請按 Figma 節點 123:456 實作 UI。複用現有 design token 和元件，匹配間距與響應式狀態，並說明假設。」
-你：「`/fec-refactor-clean` 請清理這個模組裡的死程式碼。」
+```sh
+fec setup codex --local --lang zh-CN
 ```
 
----
+### 2. 檢查安裝結果
 
-## 裡面有什麼
+```sh
+fec doctor codex --local
+```
+
+在同一專案目錄執行檢查，將 `codex` 替換為實際選擇的執行環境識別碼，多選時逐個檢查。`ok` 表示已找到預期資源，`missing` 表示需要排查的缺失資源，`not expected` 表示該適配器的能力範圍無需此資源。處理方式見 [Runtime 指南](../../docs/runtimes/)。
+
+### 3. 完成首次任務
+
+重新整理或重新啟動助手，開啟專案並建立新對話，確認助手發現了資源，完成宿主要求的信任或啟用操作。對於支援 Skill 的助手，將 `src/features/account` 替換為實際模組路徑後傳送以下請求。
+
+```text
+使用 fec-code-review 對 src/features/account 中的全部程式碼做唯讀審查，不修改檔案。
+遵循倉庫慣例，檢查型別、渲染、狀態、無障礙與測試涵蓋率。
+列出問題位置、影響及修復建議，沒有發現問題時明確說明。
+```
+
+預期取得包含問題位置與修復建議的審查結果，或明確的無問題結論。Claude Code 也提供 `/fec-review`，各宿主資源形式以 Runtime 指南為準。更多任務見[範例提示詞](../../docs/zh-CN/example-prompts.md)。
+
+## 其他安裝方式
+
+### 臨時 npx 執行
+
+透過 npx 使用同一接入精靈。後續 CLI 命令同樣加上 `npx @bovinphang/frontend-craft@latest` 前綴。
+
+```sh
+cd your-frontend-project
+npx @bovinphang/frontend-craft@latest setup
+```
+
+### Claude Code Marketplace
+
+使用 Claude Code 原生外掛時，在助手內執行以下命令，為 Claude 選擇一個啟用管道。啟用、切換與專案初始化見 [Claude 指南](../../docs/runtimes/claude.zh-CN.md)。
+
+```text
+/plugin marketplace add bovinphang/frontend-craft
+/plugin install frontend-craft@frontend-craft
+/reload-plugins
+```
+
+### 使用者級全域接入
+
+跨專案使用時選擇 `--global`。以下 Codex 範例明確指定全部選項。批次接入與預設值見 [CLI 管理](../../docs/cli-management.zh-CN.md)。
+
+```sh
+fec setup codex --global --lang zh-CN
+```
+
+### 獨立 Skill 套件
+
+原始碼 `skills/` 維護 53 個前端 Skill，建置時組合另外 21 個共用 Skill。`pnpm run pack:skills` 從完整產物產生獨立技能套件，流程見[貢獻指南](../../CONTRIBUTING.zh-CN.md)。使用 Skills CLI 的團隊可依其文件發現倉庫中的前端 Skill。[Skills CLI 文件](https://skills.sh/docs/cli)
+
+## 能力目錄
 
 ### 指令（Commands）
 
-斜線指令是結構化工作流的主入口，多數會輸出帶時間戳記的 Markdown 報告到 `reports/`。
+下表命令採用 Claude Code 語法。其他宿主使用適配器支援的命令或工作流程形式，報告按各工作流程慣例寫入 `reports/`。
 
 | 指令                  | 用途                                                        | 報告                                             |
 | --------------------- | ----------------------------------------------------------- | ------------------------------------------------ |
@@ -189,29 +135,17 @@ node dist/bin/frontend-craft.js list --json
 | `/fec-refactor` | Execute validated behavior-preserving refactoring | `refactoring/refactoring-*.md` |
 | `/fec-doc-sync`       | 同步 README、docs、環境變數、腳本、API/路由說明和部署文件   | —                                                |
 
-### 審查範圍
+審查支援全專案、指定檔案或目錄，以及明確的變更範圍。單獨呼叫 `/fec-review` 預設全專案，首次任務請明確指定範圍。完整規則見[審查範圍與圖表工作流程](../../docs/zh-CN/review-and-diagram-workflows.md)。
 
-`/fec-review`、程式碼 / TypeScript / 安全審查 agent 及其 skill 採用三種模式：
+### 技能（Skills）
 
-- **變更審查**：明確要求最近變更、本次修改、暫存區、PR 或提交，或目前任務已明確這些變更範圍。沒有變更時說明情況，不自動審查最近提交。
-- **指定範圍審查**：指定檔案或目錄，審查其中現有程式碼，包括未變更程式碼，不要求 Git 差異。
-- **全專案審查（預設）**：未指定範圍或變更脈絡，或明確要求審查整個專案時，先建立專案自有前端程式碼、相關測試、設定與相依宣告清單，再按模組審查。
+完整產品包含 74 個 Skill。倉庫維護 53 個前端 Skill，建置時從 craft-common 組合 21 個共用 Skill。技能發現與啟用取決於助手和任務脈絡。
 
-指定檔案或目錄預設審查全部程式碼；明確要求本次變更才僅審查差異。即使有變更，單獨呼叫 `/fec-review` 仍預設全專案。開始時說明模式與範圍，修改後自動委託須明確傳入本次變更範圍。
-
-範例：`/fec-review`、`/fec-review 審查最近變更`、`/fec-review 審查 src/components/Button.tsx`、`/fec-review 審查 src/features/`、`/fec-review 審查整個專案`。這些是自然語言指令，不是 CLI 參數；明確指定的範圍優先於預設模式。
-
-預設排除相依目錄、建置產物、快取、生成檔案與第三方程式碼。報告記錄模式、目標範圍、已審查及未涵蓋檔案或模組、排除項目、完成狀態與驗證結果；涵蓋不足時標記部分完成。讀取呼叫端或執行全專案 lint/型別檢查不等於完成人工審查。變更審查保留合併建議，指定範圍與全專案審查評估已審查範圍的風險。前端審查不取代後端專項審查；未要求修復時不修改業務程式碼。
-
-### 技能（Skills，自動啟用）
-
-[技能目錄](../../skills/)共有 74 個 Skill，其中 53 個為前端專屬，21 個為隨產品提供的共用 Skill。
-
-技能是根據檔案模式、框架或任務上下文**自動啟用**的工作流定義，編碼了審查維度、輸出約定和報告格式。
+**依任務使用**的工作流定義，編碼了審查維度、輸出約定和報告格式。
 
 下方按使用場景列出常用技能，便於快速找到專案規範、實作、測試、審查、設計、遷移、專案演進和文件維護能力。
 
-**專案規範** — 偵測到對應框架時自動生效：
+**專案規範** — 依專案框架選用：
 
 | 技能                              | 範圍                                                  |
 | --------------------------------- | ----------------------------------------------------- |
@@ -318,7 +252,7 @@ node dist/bin/frontend-craft.js list --json
 
 ### 代理（Agents）
 
-代理是由主助手調度的專業子代理，專注處理單一任務並返回結構化報告。
+Claude、Codex 和 Qoder 支援安裝 Agent，下表列出可用角色。
 
 | 代理                        | 聚焦領域                                                  | 報告                         |
 | --------------------------- | --------------------------------------------------------- | ---------------------------- |
@@ -337,213 +271,59 @@ node dist/bin/frontend-craft.js list --json
 | `fec-figma-implementer`     | 依 Figma/Sketch/MasterGo/Pixso/墨刀設計稿精確實作 UI      | `design-implementation-*.md` |
 | `fec-design-token-mapper`   | 將設計變數對應至專案 Design Token                         | `token-mapping-*.md`         |
 
-### 鉤子（Hooks，事件驅動）
+### Hook、設計工具與專案範本
 
-鉤子在 AI 助手事件觸發時**自動執行**，無需手動呼叫。
+Claude 和 Qoder 適配器安裝支援的 Hook，Codex 安裝 Skill、Agent、規則與範本。MCP 設定及憑證按宿主接入，OpenClaw 原生套件有獨立 typed hooks。步驟見[設定與報告指南](../../docs/zh-CN/configuration.md)及 [Runtime 指南](../../docs/runtimes/)。
 
-| 事件                      | 行為                                                 |
-| ------------------------- | ---------------------------------------------------- |
-| `SessionStart`            | 清理 Claude 快取，然後自動偵測專案框架與套件管理工具 |
-| `PreToolUse(Bash)`        | 攔截危險指令（`rm -rf`、force push 等）              |
-| `PostToolUse(Write/Edit)` | 對修改的檔案自動執行 Prettier                        |
-| `Stop`                    | 會話結束時執行 lint、type-check、test、build         |
-| `Notification`            | 跨平台桌面通知（macOS / Linux / Windows）            |
+## 設定與報告
 
-### MCP 整合
+依宿主設定設計工具 MCP 與 Hook。[設定指南](../../docs/zh-CN/configuration.md)介紹權杖變數、Hook 行為與報告檔名。工作流程依慣例在 `reports/` 寫入含時間戳記的 Markdown 報告，是否提交由團隊決定。
 
-將 AI 助手接入設計工具，建構帶有更完整設計上下文的設計轉程式碼工作流。
+## 更新與解除安裝
 
-| 服務              | 能力                                   |
-| ----------------- | -------------------------------------- |
-| **Figma**         | 讀取設計上下文與變數定義               |
-| **Figma Desktop** | Figma 桌面端整合                       |
-| **Sketch**        | 讀取設計選區截圖                       |
-| **MasterGo**      | 讀取 DSL 結構、元件層級與樣式          |
-| **Pixso**         | 本地 MCP：幀資料、程式碼片段、圖片資源 |
-| **墨刀**          | 原型資料、設計描述、HTML 匯入          |
-| **摹客**          | 截圖／標註／匯出 CSS 工作流（無 MCP）  |
+`fec update` 升級經來源驗證的 npm/pnpm 全域 CLI，並更新目前專案與使用者全域的受管資源。`fec runtime update` 使用目前套件更新資源，預設保留各安裝的語言。資源更新保護使用者修改。
 
-### 專案範本（`/fec-init`）
-
-執行 `/fec-init` 即可將一套開箱即用的規則庫和專案設定腳手架化到 `.claude/`：
-
-<details>
-<summary>查看全部 20 個範本檔案</summary>
-
-| 檔案                                     | 用途                                                                  |
-| ---------------------------------------- | --------------------------------------------------------------------- |
-| `CLAUDE.md`                              | 專案說明、常用指令、工作原則、安全要求                                |
-| `settings.json`                          | 權限白名單／黑名單、環境變數                                          |
-| `rules/fec-vue.md`                       | Vue 3 元件規範與反模式                                                |
-| `rules/fec-react.md`                     | React 元件規範與反模式                                                |
-| `rules/fec-design-system.md`             | 設計系統、Token、可存取性規則                                         |
-| `rules/fec-testing.md`                   | 測試與校驗規則                                                        |
-| `rules/fec-git-conventions.md`           | Conventional Commits 提交規範                                         |
-| `rules/fec-i18n.md`                      | 國際化文案規範                                                        |
-| `rules/fec-performance.md`               | 前端效能最佳化規則                                                    |
-| `rules/fec-rendering-patterns.md`        | 渲染生命週期、hydration、SSR/CSR 與更新模式                           |
-| `rules/fec-responsive-design.md`         | 響應式佈局、斷點、觸控目標與視口行為                                  |
-| `rules/fec-source-driven-development.md` | Source-driven decisions, official docs, version-sensitive assumptions |
-| `rules/fec-api-layer.md`                 | API 層型別化與錯誤處理規範                                            |
-| `rules/fec-state-management.md`          | 狀態分類、管理策略與反模式                                            |
-| `rules/fec-error-handling.md`            | 錯誤分層、Error Boundary、降級 UI、上報規範                           |
-| `rules/fec-naming-conventions.md`        | 檔案、元件、變數、路由、API、CSS 統一命名                             |
-| `rules/fec-code-comments.md`             | 何時以及如何寫前端註釋                                                |
-| `rules/fec-ci-cd.md`                     | CI/CD 流水線階段、GitHub Actions / GitLab CI、金鑰管理                |
-| `rules/fec-refactoring.md`               | 重構約束與功能等價要求                                                |
-| `rules/fec-agent-workflow.md`            | 子代理協作邊界與委託規則                                              |
-| `rules/fec-working-modes.md`             | 調研、計畫、開發、評審、收尾模式指引                                  |
-
-</details>
-
----
-
-## 設定
-
-### 前置條件
-
-- **Node.js 22+**
-- **npm、pnpm 或 yarn**
-- **Git Bash 或相容 shell**（僅 Windows，當 AI 執行時需要呼叫 shell 指令時）
-
-### MCP 設計工具令牌
-
-根據團隊使用的設計工具設定對應環境變數：
-
-| 環境變數         | 工具                  | 取得方式                                  |
-| ---------------- | --------------------- | ----------------------------------------- |
-| `FIGMA_API_KEY`  | Figma / Figma Desktop | Figma 帳戶設定 → Personal Access Tokens   |
-| `SKETCH_API_KEY` | Sketch                | Sketch 開發者設定                         |
-| `MG_MCP_TOKEN`   | MasterGo              | MasterGo 帳戶設定 → 安全設定 → 產生 Token |
-| `MODAO_TOKEN`    | 墨刀                  | 墨刀 AI 功能頁面 → 存取權杖               |
-
-> **Pixso** 使用本地 MCP 服務 — 在 Pixso 用戶端中啟用即可，無需額外環境變數。
-> **摹客** 暫無 MCP 整合 — 透過截圖和匯出 CSS 方式工作。
-
-加入 shell 設定檔以持久化：
-
-```bash
-# macOS / Linux — 追加到 ~/.bashrc 或 ~/.zshrc
-export FIGMA_API_KEY="your-figma-api-key"
-export SKETCH_API_KEY="your-sketch-api-key"
-export MG_MCP_TOKEN="your-mastergo-token"
-export MODAO_TOKEN="your-modao-token"
-```
-
-```powershell
-# Windows — 設為系統環境變數，或在 PowerShell 中臨時設定：
-$env:FIGMA_API_KEY = "your-figma-api-key"
-$env:SKETCH_API_KEY = "your-sketch-api-key"
-$env:MG_MCP_TOKEN = "your-mastergo-token"
-$env:MODAO_TOKEN = "your-modao-token"
-```
-
----
-
-## 報告輸出
-
-每一次審查、分析和評估都會輸出帶時間戳記的 Markdown 報告到 `reports/`，可作為稽核記錄和 PR 交付物。
-
-<details>
-<summary>查看全部 16 種報告類型</summary>
-
-| 報告類型       | 檔名模式                                     | 來源                                                                |
-| -------------- | -------------------------------------------- | ------------------------------------------------------------------- |
-| 程式碼審查     | `code-review-YYYY-MM-DD-HHmmss.md`           | `/fec-review`、`fec-code-review`、`fec-code-reviewer`               |
-| 除錯診斷       | `debug-YYYY-MM-DD-HHmmss.md`                 | `/fec-debug`、`fec-debug-framework`、`fec-debugger`                 |
-| TS/JS 專項審查 | `typescript-review-YYYY-MM-DD-HHmmss.md`     | `fec-typescript-reviewer`                                           |
-| 安全審查       | `security-review-YYYY-MM-DD-HHmmss.md`       | `fec-security-review`、`fec-security-reviewer`                      |
-| 無障礙檢查     | `accessibility-review-YYYY-MM-DD-HHmmss.md`  | `fec-accessibility-check`                                           |
-| 效能分析       | `performance-review-YYYY-MM-DD-HHmmss.md`    | `fec-performance-optimizer`                                         |
-| 架構方案       | `architecture-proposal-YYYY-MM-DD-HHmmss.md` | `fec-architect`                                                     |
-| 設計還原度     | `ui-fidelity-review-YYYY-MM-DD-HHmmss.md`    | `fec-ui-checker`                                                    |
-| 設計實現       | `design-implementation-YYYY-MM-DD-HHmmss.md` | `fec-figma-implementer`                                             |
-| Token 對應     | `token-mapping-YYYY-MM-DD-HHmmss.md`         | `fec-design-token-mapper`                                           |
-| 設計計畫       | `design-plan-YYYY-MM-DD-HHmmss.md`           | `fec-implement-from-design`                                         |
-| 測試計畫       | `test-plan-YYYY-MM-DD-HHmmss.md`             | `/fec-plan`、`fec-testing-strategy`、`fec-test-planner`             |
-| 驗證修復       | `validation-fix-YYYY-MM-DD-HHmmss.md`        | `fec-validation-fix`                                                |
-| 重構清理       | `refactor-clean-YYYY-MM-DD-HHmmss.md`        | `/fec-refactor-clean`、`fec-refactor-clean`、`fec-refactor-cleaner` |
-| E2E 執行摘要   | `e2e-summary-YYYY-MM-DD-HHmmss.md`           | `fec-e2e-runner`（可選）                                            |
-| 遷移計畫       | `migration-plan-YYYY-MM-DD-HHmmss.md`        | `fec-legacy-to-modern-migration`                                    |
-
-</details>
-
-> **建議：** 在 `.gitignore` 中加入 `reports/` 以避免將自動產生的報告提交至程式碼倉庫，或保留提交以便團隊檢視歷史審查記錄。
-
----
-
-## 更新與移除
-
-升級既有安裝前，執行 `fec runtime check-migration codex --local --json`，並依實際的執行環境與安裝範圍調整指令。共用資源的相容條件和衝突處理請參閱[遷移指南](../zh-CN/common-migration.md)。
-
-### CLI 自身管理
-
-`fec update`（別名 `upgrade`）透過原 npm/pnpm 將全域 CLI 升級至原 registry 的 `latest`，再啟動新版 CLI 更新目前專案及使用者全域的託管資源；已是最新版也會更新。不掃描其他專案，不管理 Marketplace。CLI 升級失敗即停止；資源部分失敗會分階段回報，不回復 CLI，可執行 `fec runtime update` 重試。
-
-`fec uninstall`（別名 `remove`）預設僅解除安裝 CLI；`--purge` 先清理託管資源並保留使用者修改，清理失敗則保留 CLI。互動終端需要確認，非互動終端必須加 `--yes`。僅支援已驗證歸屬的 npm/pnpm registry 全域安裝；原始碼連結、專案依賴、未知來源及含其他套件的 pnpm 共用安裝群組均在修改前拒絕，請透過原套件管理器手動管理。`--dry-run` 僅唯讀預覽，不安裝、刪除或啟動後續更新。
-
-```bash
+```sh
+fec update --dry-run
 fec update
-fec uninstall --dry-run
-fec uninstall --purge --yes
+fec runtime update codex --local
+fec runtime uninstall codex --local --dry-run
+fec runtime uninstall codex --local
+fec uninstall --yes
 ```
 
-暫時 npx 執行不建立全域 CLI，也不支援自身解除安裝。npx 頂層 `update` 僅在目前版本等於 registry `latest` 時更新資源，否則使用 `npx @bovinphang/frontend-craft@latest runtime update`。
+`fec runtime uninstall` 移除清單管理的資源，預設保留使用者修改。`fec uninstall --yes` 解除安裝全域 CLI，加上 `--purge` 可先清理發現的受管資源。來源要求、預覽與失敗復原見 [CLI 管理](../../docs/cli-management.zh-CN.md)，共用資源衝突見[遷移指南](../../docs/zh-CN/common-migration.md)。
 
-安裝預設值、批次操作和診斷指令請參閱 [CLI 管理指南](../cli-management.zh-CN.md)。
+## 文件導覽
 
-`runtime update` 使用目前執行的 CLI 套件更新資源。`runtime upgrade` 和 `runtime remove` 分別是 `runtime update` 和 `runtime uninstall` 的別名。
+- [Runtime 指南](../../docs/runtimes/)
+- [CLI 管理](../../docs/cli-management.zh-CN.md)
+- [範例提示詞](../../docs/zh-CN/example-prompts.md)
+- [設定與報告](../../docs/zh-CN/configuration.md)
+- [審查範圍與圖表](../../docs/zh-CN/review-and-diagram-workflows.md)
+- [重構指南](../../docs/refactoring/README.md)
+- [共用資源遷移](../../docs/zh-CN/common-migration.md)
+- [完整文件索引](../../docs/README.zh-CN.md)
 
-`fec` 是 `frontend-craft` 的短命令。未全域安裝 CLI 時，資源操作使用 `npx @bovinphang/frontend-craft@latest runtime update`（或 `runtime install/uninstall`）。
+## 原始碼開發與貢獻
 
-### 資源更新
+本倉庫維護前端 Skill、Agent 與工作流程，共用 `cc-*` Skill 與工程方法在 [craft-common](https://github.com/bovinphang/craft-common) 統一維護。`pnpm build` 在 `dist/package/` 產生完整英文與簡體中文產品。使用 Node.js 22+ 和 `package.json` 指定的 pnpm，相依版本以 `package.json` 與 `pnpm-lock.yaml` 為準。
 
-```bash
-fec runtime update                              # 更新自動發現到的所有 CLI 管理安裝
-fec runtime update <runtime> --local            # 更新一個本地 CLI 管理安裝
-fec runtime update <runtime> --global           # 更新一個全域 CLI 管理安裝
-fec runtime upgrade <runtime> --global          # `upgrade` 是 `update` 的別名
+```sh
+git clone https://github.com/bovinphang/frontend-craft.git
+cd frontend-craft
+pnpm install --frozen-lockfile
+pnpm build
+node dist/package/dist/bin/frontend-craft.js list --json
 ```
 
-### 資源移除
+在倉庫根目錄執行以下命令，載入組合後的 Claude 外掛。
 
-```bash
-fec runtime uninstall                           # 移除自動發現到的所有 CLI 管理安裝
-fec runtime remove                              # `remove` 是 `uninstall` 的別名
-fec runtime uninstall <runtime>                 # 移除指定 runtime 安裝
-fec runtime remove <runtime>                    # 使用別名移除指定 runtime
-fec runtime uninstall --global                  # 只移除發現到的全域安裝
-fec runtime remove --local                      # 只移除發現到的本地安裝
-fec runtime uninstall <runtime> --dry-run       # 預覽將移除的檔案
-fec runtime uninstall <runtime> --force         # 連同已修改的託管檔案一起移除
+```sh
+claude --plugin-dir ./dist/package
 ```
 
-CLI 會在 runtime 目錄寫入 `frontend-craft.manifest.json`。不傳 runtime 時，`runtime update` 會自動發現這些 manifest，並**跳過你本地修改過的檔案**——自訂內容在更新後依然保留。
-
-`runtime uninstall`/`runtime remove` 只刪除 manifest 記錄的檔案，預設跳過已修改檔案；只有確認要移除修改過的託管檔案時才加 `--force`。`--force` 不會覆蓋 Claude Code Marketplace 安裝。
-
-**Claude Code Marketplace** 或 **submodule** 安裝的更新方式見 [docs/runtimes/claude.zh-CN.md](../runtimes/claude.zh-CN.md) · [English](../runtimes/claude.md)。`/fec-init` 只初始化專案設定，不是第二次安裝插件本體。
-
----
-
-## 僅安裝 Skill
-
-如果團隊已在使用獨立的 [Skills CLI](https://skills.sh/docs/cli)，它仍然可以只安裝 [`skills/`](../../skills/) 下的工作流技能包：
-
-```bash
-npx skills add bovinphang/frontend-craft   # 按提示操作，加 -g 可全域安裝
-npx skills update                          # 更新至最新版本
-npx skills check                           # 預覽可用更新
-```
-
-| CLI                              | 安裝內容                                      |
-| -------------------------------- | --------------------------------------------- |
-| `npx @bovinphang/frontend-craft` | 技能 + 執行時專屬代理、指令、鉤子、規則、範本 |
-| `npx skills`                     | 僅技能（適用於已有 Skills CLI 工作流）        |
-
-關閉遙測：`DISABLE_TELEMETRY=1`。詳見 [skills.sh CLI 文件](https://skills.sh/docs/cli)。
-
----
+開發檢查、多語言維護及發行封存檔（`pnpm run pack:all`）見[貢獻指南](../../CONTRIBUTING.zh-CN.md)。
 
 ## 社群
 
@@ -555,8 +335,6 @@ npx skills check                           # 預覽可用更新
 
 **如果 frontend-craft 幫助了你的團隊，[請給它一個 Star](https://github.com/bovinphang/frontend-craft)。**
 
----
-
 ## 授權條款
 
-[MIT](../../LICENSE) — 自由使用、依需求修改，歡迎回饋。
+[MIT](../../LICENSE) © bovinphang。
