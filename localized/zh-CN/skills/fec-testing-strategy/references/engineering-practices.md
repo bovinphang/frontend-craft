@@ -14,7 +14,7 @@ practiceCards:
 
 # 本入口工程决策
 
-先定位项目角色、工具链及已有约定，再按需读取[公共原则](common/engineering-practices.md)。下列条件仅约束当前语言/场景；结构检查不证明全部语义或实际运行。
+先定位项目角色、工具链及已有约定，再按需读取[公共原则](https://github.com/bovinphang/craft-common/blob/v2.1.0/localized/zh-CN/methods/engineering-practices.md)。下列条件仅约束当前语言/场景；结构检查不证明全部语义或实际运行。
 
 <a id="fec-testing-strategy:risk-layer"></a>
 ## 选择能观察风险的最小层
@@ -40,7 +40,7 @@ practiceCards:
 证明测试能因目标bug失败、修复后通过；仅有新风险、失败或未解关注才扩大。
 
 ### 来源
-ms-playbook, ms-faults — [来源与适用限制](common/engineering-practices.sources.json).
+ms-playbook, ms-faults — [来源与适用限制](https://github.com/bovinphang/craft-common/blob/v2.1.0/localized/zh-CN/methods/engineering-practices.sources.json).
 
 证据标识: EP-UI-01; review-only.  执行状态及覆盖范围见实际记录；关联ID不证明该卡全部语义。
 
@@ -68,6 +68,6 @@ JSDOM不是浏览器E2E，Node handler不是Electron GUI，真实HTTP进程不�
 检查原始日志和归档/输入hash，确认非零真实测试，分平台记录；不能为宣称提升制造旧模型失败。
 
 ### 来源
-ms-faults, react-act — [来源与适用限制](common/engineering-practices.sources.json).
+ms-faults, react-act — [来源与适用限制](https://github.com/bovinphang/craft-common/blob/v2.1.0/localized/zh-CN/methods/engineering-practices.sources.json).
 
 证据标识: EP-UI-01, EP-IPC-01; review-only.  执行状态及覆盖范围见实际记录；关联ID不证明该卡全部语义。

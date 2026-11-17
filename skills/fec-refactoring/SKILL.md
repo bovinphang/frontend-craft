@@ -5,7 +5,7 @@ description: Use when restructuring existing frontend code while preserving obse
 
 # Frontend behavior-preserving refactoring
 
-Follow the [common refactoring method](references/common/refactoring.md): GREEN → REFACTOR → GREEN. Its shared contract defines Behavior Preservation, Green Baseline First, One Refactoring at a Time, Verify Every Step, Revert Before Repairing, and the Diff Budget.
+Follow the [common refactoring method](https://github.com/bovinphang/craft-common/blob/v2.1.0/methods/refactoring.md): GREEN → REFACTOR → GREEN. Its shared contract defines Behavior Preservation, Green Baseline First, One Refactoring at a Time, Verify Every Step, Revert Before Repairing, and the Diff Budget.
 
 ## Frontend observable boundaries
 

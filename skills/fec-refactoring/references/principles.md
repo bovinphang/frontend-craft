@@ -1,6 +1,6 @@
 # Frontend refactoring contracts
 
-Shared behavior preservation, baseline, risk and diff-budget rules live in the [common method](common/refactoring.md).
+Shared behavior preservation, baseline, risk and diff-budget rules live in the [common method](https://github.com/bovinphang/craft-common/blob/v2.1.0/methods/refactoring.md).
 
 Additional frontend evidence covers:
 

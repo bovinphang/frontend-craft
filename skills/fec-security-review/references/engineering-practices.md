@@ -14,7 +14,7 @@ practiceCards:
 
 # Local engineering decisions
 
-Locate the actual role, toolchain and existing conventions, then read relevant [shared principles](common/engineering-practices.md). These conditions apply to this entry, not every project. Structure checks do not prove all semantics or execution.
+Locate the actual role, toolchain and existing conventions, then read relevant [shared principles](https://github.com/bovinphang/craft-common/blob/v2.1.0/methods/engineering-practices.md). These conditions apply to this entry, not every project. Structure checks do not prove all semantics or execution.
 
 <a id="fec-security-review:input-trust"></a>
 ## The UI is not the authority for privileged operations
@@ -40,7 +40,7 @@ Better: trusted main/server validates caller and scope before the effect. Worse:
 Exercise allowed/denied and malformed calls with zero effects after rejection. Related handler/input samples do not prove every project’s authentication.
 
 ### Sources
-electron-security, tauri-permissions — [registry and limits](common/engineering-practices.sources.json).
+electron-security, tauri-permissions — [registry and limits](https://github.com/bovinphang/craft-common/blob/v2.1.0/methods/engineering-practices.sources.json).
 
 Evidence IDs: EP-IPC-01, EP-TS-01; review-only.  Execution status and scope require actual records; a related ID does not prove every decision on this card.
 
@@ -68,6 +68,6 @@ Better: main returns a restricted public result. Worse: expose process.env or an
 Inspect the actual authorized artifact/boundary and redaction paths using synthetic data. This is project policy informed by boundary guidance, not a claim that every corporate guide defines the same secret rules.
 
 ### Sources
-electron-security, google-review — [registry and limits](common/engineering-practices.sources.json).
+electron-security, google-review — [registry and limits](https://github.com/bovinphang/craft-common/blob/v2.1.0/methods/engineering-practices.sources.json).
 
 Evidence IDs: EP-IPC-01; review-only.  Execution status and scope require actual records; a related ID does not prove every decision on this card.

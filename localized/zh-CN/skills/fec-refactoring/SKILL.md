@@ -5,7 +5,7 @@ description: 用于在不改变可观察行为的前提下重组既有前端代�
 
 # 前端行为保持重构
 
-执行[公共重构方法](references/common/refactoring.md)，保持 GREEN → REFACTOR → GREEN。公共方法规定行为保持、绿色基线、单步变换、立即验证、回归时只撤回当前步骤，以及差异预算。
+执行[公共重构方法](https://github.com/bovinphang/craft-common/blob/v2.1.0/localized/zh-CN/methods/refactoring.md)，保持 GREEN → REFACTOR → GREEN。公共方法规定行为保持、绿色基线、单步变换、立即验证、回归时只撤回当前步骤，以及差异预算。
 
 ## 前端观察边界
 

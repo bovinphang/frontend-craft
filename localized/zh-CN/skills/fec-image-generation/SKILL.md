@@ -11,6 +11,6 @@ description: 用于生成或编辑前端 UI 样机、产品图、海报、品牌
 
 保留原图，编辑默认另存新文件。不要将占位图或概念稿当作最终产品图。明确品牌、文案、可访问替代描述和授权约束；有现成图片时优先定向编辑。
 
-每次 PNG 交付前检查实际图像，核验主体渲染、文字截断、构图、透明背景和品牌。使用[公共来源的 PNG 检查工具](scripts/png-qa.mjs)；默认最多两轮修复，按 [PNG 修复说明](references/png-qa-autofix.md) 修改源文件、提示词或布局，不直接破坏性修改输出像素。
+每次 PNG 交付前检查实际图像，核验主体渲染、文字截断、构图、透明背景和品牌。使用[公共来源的 PNG 检查工具](https://github.com/bovinphang/craft-common/blob/v2.1.0/localized/zh-CN/skills/cc-technical-diagrams/scripts/png-qa.mjs)；默认最多两轮修复，按 [PNG 修复说明](https://github.com/bovinphang/craft-common/blob/v2.1.0/localized/zh-CN/skills/cc-technical-diagrams/references/png-qa-autofix.md) 修改源文件、提示词或布局，不直接破坏性修改输出像素。
 
 报告源文件、结果路径、生成路由、QA 轮次与剩余风险。结构化技术图表使用独立公共技术图表能力；此入口不再维护图表渲染器。

@@ -396,6 +396,8 @@ skills:
 
 运行 `pnpm run prepare:content` 在 `dist/package/` 生成完整双语产品，运行 `pnpm run check:common` 只读验证生成结果。`pnpm run build` 同时编译运行入口。生成目录已由 dist 的忽略规则覆盖。
 
+更新 `@bovinphang/craft-common` 的锁定版本时，请同步更新 Markdown 公共资源链接中的 GitHub 标签。源码链接指向公共仓库的对应语言文件。组合产物会将这些链接转为包内相对路径，供离线使用。
+
 本地开发及 Git 子模块需先安装依赖并构建，再通过 `--plugin-dir <仓库>/dist/package` 加载。`pnpm run pack:all` 从组合目录生成完整归档；正式发布应使用验证过的归档或组合目录。源码根目录直接 pack/publish 会报错，避免交付缺失公共内容的包。公共生成文件和来源锁只能存在于产物目录。
 
 构建使用 `dist/.content.lock` 阻止并发替换。进程被强制终止后，如存在锁或 `.package-previous`，先确认没有构建进程并检查备份，恢复上一份完整产物后清理遗留锁和临时目录，再重试。

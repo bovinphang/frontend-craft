@@ -1,6 +1,6 @@
 # 前端重构验证
 
-执行顺序、失败回退和证明等级见[公共方法](common/refactoring.md)。
+执行顺序、失败回退和证明等级见[公共方法](https://github.com/bovinphang/craft-common/blob/v2.1.0/localized/zh-CN/methods/refactoring.md)。
 
 按风险逐步选择：局部类型/静态检查 → utils/hooks/组件测试 → Router/Provider/Store 轻量集成 → 全量 lint、类型和测试 → 构建与受影响的 SSR、E2E、无障碍、视觉或性能验证。
 

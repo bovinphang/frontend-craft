@@ -14,7 +14,7 @@ practiceCards:
 
 # 本入口工程决策
 
-先定位项目角色、工具链及已有约定，再按需读取[公共原则](common/engineering-practices.md)。下列条件仅约束当前语言/场景；结构检查不证明全部语义或实际运行。
+先定位项目角色、工具链及已有约定，再按需读取[公共原则](https://github.com/bovinphang/craft-common/blob/v2.1.0/localized/zh-CN/methods/engineering-practices.md)。下列条件仅约束当前语言/场景；结构检查不证明全部语义或实际运行。
 
 <a id="fec-react-project-standard:effect-cleanup"></a>
 ## Effect清理自己真实拥有的资源
@@ -40,7 +40,7 @@ setup与cleanup配对，向所属任务传播取消，清理可重复；使用�
 运行本地真实React/DOM卸载测试；变更组件实际拥有订阅/定时器或Strict Mode行为时补对应检查。
 
 ### 来源
-react-effects, react-act — [来源与适用限制](common/engineering-practices.sources.json).
+react-effects, react-act — [来源与适用限制](https://github.com/bovinphang/craft-common/blob/v2.1.0/localized/zh-CN/methods/engineering-practices.sources.json).
 
 证据标识: EP-UI-01; case. [本入口可运行案例](../examples/engineering/README.md)。 执行状态及覆盖范围见实际记录；关联ID不证明该卡全部语义。
 
@@ -68,6 +68,6 @@ react-effects, react-act — [来源与适用限制](common/engineering-practice
 本地可控A/B Promise测试实际渲染React；实际拥有者再补迟到错误/loading及共享缓存，不把DOM模拟称浏览器E2E。
 
 ### 来源
-react-effects, react-act — [来源与适用限制](common/engineering-practices.sources.json).
+react-effects, react-act — [来源与适用限制](https://github.com/bovinphang/craft-common/blob/v2.1.0/localized/zh-CN/methods/engineering-practices.sources.json).
 
 证据标识: EP-UI-01; case. [本入口可运行案例](../examples/engineering/README.md)。 执行状态及覆盖范围见实际记录；关联ID不证明该卡全部语义。

@@ -5,7 +5,7 @@ description: 用于诊断前端构建失败、运行时错误、UI 异常、API/
 
 # 前端诊断框架
 
-先遵循[公共五步诊断方法](references/common/debug.md)，再按以下前端模块采集证据。
+先遵循[公共五步诊断方法](https://github.com/bovinphang/craft-common/blob/v2.1.0/localized/zh-CN/methods/debug.md)，再按以下前端模块采集证据。
 
 ## 诊断模块
 

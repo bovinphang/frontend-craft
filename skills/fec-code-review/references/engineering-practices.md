@@ -14,7 +14,7 @@ practiceCards:
 
 # Local engineering decisions
 
-Locate the actual role, toolchain and existing conventions, then read relevant [shared principles](common/engineering-practices.md). These conditions apply to this entry, not every project. Structure checks do not prove all semantics or execution.
+Locate the actual role, toolchain and existing conventions, then read relevant [shared principles](https://github.com/bovinphang/craft-common/blob/v2.1.0/methods/engineering-practices.md). These conditions apply to this entry, not every project. Structure checks do not prove all semantics or execution.
 
 <a id="fec-code-review:evidence-severity"></a>
 ## Severity follows demonstrated user impact
@@ -40,7 +40,7 @@ Better: explain how staleA replaces B and show the missing guard. Worse: block a
 Run available focused checks or state what was not run. Related examples illustrate evidence quality and do not constitute a review of arbitrary code.
 
 ### Sources
-google-review — [registry and limits](common/engineering-practices.sources.json).
+google-review — [registry and limits](https://github.com/bovinphang/craft-common/blob/v2.1.0/methods/engineering-practices.sources.json).
 
 Evidence IDs: EP-UI-01, EP-TS-01; review-only.  Execution status and scope require actual records; a related ID does not prove every decision on this card.
 
@@ -68,6 +68,6 @@ Better: compare against the recorded task baseline including new files. Worse: a
 Check baseline/diff completeness and run risk-appropriate verification; independent final review remains distinct from author self-review.
 
 ### Sources
-google-review, ms-playbook — [registry and limits](common/engineering-practices.sources.json).
+google-review, ms-playbook — [registry and limits](https://github.com/bovinphang/craft-common/blob/v2.1.0/methods/engineering-practices.sources.json).
 
 Evidence IDs: EP-TS-01; review-only.  Execution status and scope require actual records; a related ID does not prove every decision on this card.

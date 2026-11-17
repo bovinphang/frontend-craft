@@ -14,7 +14,7 @@ practiceCards:
 
 # 本入口工程决策
 
-先定位项目角色、工具链及已有约定，再按需读取[公共原则](common/engineering-practices.md)。下列条件仅约束当前语言/场景；结构检查不证明全部语义或实际运行。
+先定位项目角色、工具链及已有约定，再按需读取[公共原则](https://github.com/bovinphang/craft-common/blob/v2.1.0/localized/zh-CN/methods/engineering-practices.md)。下列条件仅约束当前语言/场景；结构检查不证明全部语义或实际运行。
 
 <a id="fec-data-fetching:mutation-retry"></a>
 ## Mutation恢复遵循提交语义
@@ -40,7 +40,7 @@ practiceCards:
 在负责query层控制提交后失败和重试/取消，相关样例不证明默认次数或跨系统保证。
 
 ### 来源
-aws-idempotency, aws-retry — [来源与适用限制](common/engineering-practices.sources.json).
+aws-idempotency, aws-retry — [来源与适用限制](https://github.com/bovinphang/craft-common/blob/v2.1.0/localized/zh-CN/methods/engineering-practices.sources.json).
 
 证据标识: EP-UI-01, EP-SVC-01; review-only.  执行状态及覆盖范围见实际记录；关联ID不证明该卡全部语义。
 
@@ -68,6 +68,6 @@ query身份包含逻辑输入及允许范围，不含秘密；仅向匹配活跃
 相关时检查换key乱序、错误、多订阅者及登出/范围切换；React样例只覆盖其当前视图。
 
 ### 来源
-react-effects, vue-watchers — [来源与适用限制](common/engineering-practices.sources.json).
+react-effects, vue-watchers — [来源与适用限制](https://github.com/bovinphang/craft-common/blob/v2.1.0/localized/zh-CN/methods/engineering-practices.sources.json).
 
 证据标识: EP-UI-01; review-only.  执行状态及覆盖范围见实际记录；关联ID不证明该卡全部语义。

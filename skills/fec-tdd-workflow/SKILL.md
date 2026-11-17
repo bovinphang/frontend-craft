@@ -5,7 +5,7 @@ description: Use when implementing new observable frontend behavior or fixing a 
 
 # Frontend test-driven development
 
-Follow the [common TDD method](references/common/tdd.md). Use RED → GREEN → REFACTOR for new behavior and GREEN → REFACTOR → GREEN for pure structural refactoring.
+Follow the [common TDD method](https://github.com/bovinphang/craft-common/blob/v2.1.0/methods/tdd.md). Use RED → GREEN → REFACTOR for new behavior and GREEN → REFACTOR → GREEN for pure structural refactoring.
 
 ## Frontend observable contracts
 

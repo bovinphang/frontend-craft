@@ -3,6 +3,7 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { SNAPSHOT_DECLARATIONS } from "../src/install/shared/snapshot-declarations.js";
 import { syncCommonContent } from "./sync-common.js";
+import { localizeCommonLinks } from "./localize-common-links.js";
 
 export function installedCommonRoot(): string {
   return path.resolve(
@@ -110,6 +111,7 @@ export function prepareContent(input: {
     );
     syncCommonContent({ productRoot: temporary, commonRoot, check: false });
     syncCommonContent({ productRoot: temporary, commonRoot, check: true });
+    localizeCommonLinks(temporary, SNAPSHOT_DECLARATIONS);
     if (fs.existsSync(output)) fs.renameSync(output, backup);
     try {
       fs.renameSync(temporary, output);

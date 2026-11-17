@@ -5,7 +5,7 @@ description: 用于根据 package.json、lockfile、配置、env 示例、路由
 
 # 前端文档同步
 
-遵循[公共文档同步方法](references/common/doc-sync.md)，处理证据、多语言一致性和交付记录。
+遵循[公共文档同步方法](https://github.com/bovinphang/craft-common/blob/v2.1.0/localized/zh-CN/methods/doc-sync.md)，处理证据、多语言一致性和交付记录。
 
 ## 前端事实来源
 

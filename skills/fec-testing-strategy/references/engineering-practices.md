@@ -14,7 +14,7 @@ practiceCards:
 
 # Local engineering decisions
 
-Locate the actual role, toolchain and existing conventions, then read relevant [shared principles](common/engineering-practices.md). These conditions apply to this entry, not every project. Structure checks do not prove all semantics or execution.
+Locate the actual role, toolchain and existing conventions, then read relevant [shared principles](https://github.com/bovinphang/craft-common/blob/v2.1.0/methods/engineering-practices.md). These conditions apply to this entry, not every project. Structure checks do not prove all semantics or execution.
 
 <a id="fec-testing-strategy:risk-layer"></a>
 ## Choose the smallest layer that observes the risk
@@ -40,7 +40,7 @@ Better: control A/B Promise order and assert actual DOM state. Worse: assert sou
 Verify the test can fail for the intended bug, then passes after repair; broaden only for changed risk, failures or remaining concerns.
 
 ### Sources
-ms-playbook, ms-faults — [registry and limits](common/engineering-practices.sources.json).
+ms-playbook, ms-faults — [registry and limits](https://github.com/bovinphang/craft-common/blob/v2.1.0/methods/engineering-practices.sources.json).
 
 Evidence IDs: EP-UI-01; review-only.  Execution status and scope require actual records; a related ID does not prove every decision on this card.
 
@@ -68,6 +68,6 @@ Better: a named behavioral assertion fails, then the same group passes. Worse: g
 Inspect raw logs and artifact/source hashes, confirm nonzero real tests and separate platform evidence. Do not manufacture a failing old model answer to claim improvement.
 
 ### Sources
-ms-faults, react-act — [registry and limits](common/engineering-practices.sources.json).
+ms-faults, react-act — [registry and limits](https://github.com/bovinphang/craft-common/blob/v2.1.0/methods/engineering-practices.sources.json).
 
 Evidence IDs: EP-UI-01, EP-IPC-01; review-only.  Execution status and scope require actual records; a related ID does not prove every decision on this card.

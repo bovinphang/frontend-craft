@@ -14,7 +14,7 @@ practiceCards:
 
 # Local engineering decisions
 
-Locate the actual role, toolchain and existing conventions, then read relevant [shared principles](common/engineering-practices.md). These conditions apply to this entry, not every project. Structure checks do not prove all semantics or execution.
+Locate the actual role, toolchain and existing conventions, then read relevant [shared principles](https://github.com/bovinphang/craft-common/blob/v2.1.0/methods/engineering-practices.md). These conditions apply to this entry, not every project. Structure checks do not prove all semantics or execution.
 
 <a id="fec-api-integration:retry-safety"></a>
 ## A retryable failure is not permission to repeat a write
@@ -40,7 +40,7 @@ Better: same key/intent retrieves the committed result. Worse: any429/5xx/networ
 Inject post-commit response failure, intent mismatch and bounded recovery. The service case proves a local HTTP contract, not a distributed payment guarantee.
 
 ### Sources
-aws-retry, aws-idempotency — [registry and limits](common/engineering-practices.sources.json).
+aws-retry, aws-idempotency — [registry and limits](https://github.com/bovinphang/craft-common/blob/v2.1.0/methods/engineering-practices.sources.json).
 
 Evidence IDs: EP-UI-01, EP-SVC-01; review-only.  Execution status and scope require actual records; a related ID does not prove every decision on this card.
 
@@ -68,6 +68,6 @@ Better: invalid data fails before a domain effect and the UI can recover. Worse:
 Run the existing client/consumer checks for malformed, empty, valid and failure results; generic TS input evidence does not cover every HTTP protocol.
 
 ### Sources
-typescript-publishing, google-review — [registry and limits](common/engineering-practices.sources.json).
+typescript-publishing, google-review — [registry and limits](https://github.com/bovinphang/craft-common/blob/v2.1.0/methods/engineering-practices.sources.json).
 
 Evidence IDs: EP-TS-01; review-only.  Execution status and scope require actual records; a related ID does not prove every decision on this card.

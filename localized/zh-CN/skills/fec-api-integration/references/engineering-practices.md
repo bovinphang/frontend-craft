@@ -14,7 +14,7 @@ practiceCards:
 
 # 本入口工程决策
 
-先定位项目角色、工具链及已有约定，再按需读取[公共原则](common/engineering-practices.md)。下列条件仅约束当前语言/场景；结构检查不证明全部语义或实际运行。
+先定位项目角色、工具链及已有约定，再按需读取[公共原则](https://github.com/bovinphang/craft-common/blob/v2.1.0/localized/zh-CN/methods/engineering-practices.md)。下列条件仅约束当前语言/场景；结构检查不证明全部语义或实际运行。
 
 <a id="fec-api-integration:retry-safety"></a>
 ## 可恢复错误不等于可重复写
@@ -40,7 +40,7 @@ practiceCards:
 注入提交后响应失败、意图冲突及有界恢复；服务案例仅证明本地HTTP契约，不是分布式付款保证。
 
 ### 来源
-aws-retry, aws-idempotency — [来源与适用限制](common/engineering-practices.sources.json).
+aws-retry, aws-idempotency — [来源与适用限制](https://github.com/bovinphang/craft-common/blob/v2.1.0/localized/zh-CN/methods/engineering-practices.sources.json).
 
 证据标识: EP-UI-01, EP-SVC-01; review-only.  执行状态及覆盖范围见实际记录；关联ID不证明该卡全部语义。
 
@@ -68,6 +68,6 @@ aws-retry, aws-idempotency — [来源与适用限制](common/engineering-practi
 用现有客户端/消费者检查畸形、空值、有效和失败结果，通用TS输入证据不覆盖所有HTTP协议。
 
 ### 来源
-typescript-publishing, google-review — [来源与适用限制](common/engineering-practices.sources.json).
+typescript-publishing, google-review — [来源与适用限制](https://github.com/bovinphang/craft-common/blob/v2.1.0/localized/zh-CN/methods/engineering-practices.sources.json).
 
 证据标识: EP-TS-01; review-only.  执行状态及覆盖范围见实际记录；关联ID不证明该卡全部语义。

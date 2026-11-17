@@ -14,7 +14,7 @@ practiceCards:
 
 # 本入口工程决策
 
-先定位项目角色、工具链及已有约定，再按需读取[公共原则](common/engineering-practices.md)。下列条件仅约束当前语言/场景；结构检查不证明全部语义或实际运行。
+先定位项目角色、工具链及已有约定，再按需读取[公共原则](https://github.com/bovinphang/craft-common/blob/v2.1.0/localized/zh-CN/methods/engineering-practices.md)。下列条件仅约束当前语言/场景；结构检查不证明全部语义或实际运行。
 
 <a id="fec-dependency-upgrade:compatibility"></a>
 ## 按有证据的兼容需求升级
@@ -40,7 +40,7 @@ practiceCards:
 现有lint/类型/构建/测试配合受影响消费者及实际归档检查，不隐藏未支持环境。
 
 ### 来源
-google-review, typescript-publishing — [来源与适用限制](common/engineering-practices.sources.json).
+google-review, typescript-publishing — [来源与适用限制](https://github.com/bovinphang/craft-common/blob/v2.1.0/localized/zh-CN/methods/engineering-practices.sources.json).
 
 证据标识: EP-TS-01; review-only.  执行状态及覆盖范围见实际记录；关联ID不证明该卡全部语义。
 
@@ -68,6 +68,6 @@ workspace可用可能掩盖缺声明、样例、锁或运行时文件。
 运行真实打包/消费、对照源字节并在迁移中保护用户编辑；React样例通过不证明全部分发形式。
 
 ### 来源
-typescript-publishing, ms-playbook — [来源与适用限制](common/engineering-practices.sources.json).
+typescript-publishing, ms-playbook — [来源与适用限制](https://github.com/bovinphang/craft-common/blob/v2.1.0/localized/zh-CN/methods/engineering-practices.sources.json).
 
 证据标识: EP-TS-01, EP-UI-01; review-only.  执行状态及覆盖范围见实际记录；关联ID不证明该卡全部语义。

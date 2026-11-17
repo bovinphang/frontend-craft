@@ -1,6 +1,6 @@
 # Frontend refactoring validation
 
-Execution order, rollback and proof verdicts follow the [common method](common/refactoring.md).
+Execution order, rollback and proof verdicts follow the [common method](https://github.com/bovinphang/craft-common/blob/v2.1.0/methods/refactoring.md).
 
 Choose checks by risk: nearest types/static checks → utilities/hooks/components → Router/Provider/Store integration → full lint/types/tests → build and affected SSR, E2E, accessibility, visual or performance checks.
 

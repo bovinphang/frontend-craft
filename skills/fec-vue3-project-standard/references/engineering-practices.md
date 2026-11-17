@@ -14,7 +14,7 @@ practiceCards:
 
 # Local engineering decisions
 
-Locate the actual role, toolchain and existing conventions, then read relevant [shared principles](common/engineering-practices.md). These conditions apply to this entry, not every project. Structure checks do not prove all semantics or execution.
+Locate the actual role, toolchain and existing conventions, then read relevant [shared principles](https://github.com/bovinphang/craft-common/blob/v2.1.0/methods/engineering-practices.md). These conditions apply to this entry, not every project. Structure checks do not prove all semantics or execution.
 
 <a id="fec-vue3-project-standard:watcher-cleanup"></a>
 ## Register cleanup under the actual watcher owner
@@ -40,7 +40,7 @@ Better: invalidation cancels this watcher’s request. Worse: register cleanup o
 Run the consuming project’s real Vue watcher/unmount tests with controlled completion. The React case is related evidence, not Vue runtime validation.
 
 ### Sources
-vue-watchers — [registry and limits](common/engineering-practices.sources.json).
+vue-watchers — [registry and limits](https://github.com/bovinphang/craft-common/blob/v2.1.0/methods/engineering-practices.sources.json).
 
 Evidence IDs: EP-UI-01; review-only.  Execution status and scope require actual records; a related ID does not prove every decision on this card.
 
@@ -68,6 +68,6 @@ Better: B survives a late A completion after invalidation. Worse: a generic canc
 Use actual Vue utilities to control A/B order, error and unmount. Structural cards and React tests do not substitute for Vue execution.
 
 ### Sources
-vue-watchers, react-effects — [registry and limits](common/engineering-practices.sources.json).
+vue-watchers, react-effects — [registry and limits](https://github.com/bovinphang/craft-common/blob/v2.1.0/methods/engineering-practices.sources.json).
 
 Evidence IDs: EP-UI-01; review-only.  Execution status and scope require actual records; a related ID does not prove every decision on this card.

@@ -14,7 +14,7 @@ practiceCards:
 
 # 本入口工程决策
 
-先定位项目角色、工具链及已有约定，再按需读取[公共原则](common/engineering-practices.md)。下列条件仅约束当前语言/场景；结构检查不证明全部语义或实际运行。
+先定位项目角色、工具链及已有约定，再按需读取[公共原则](https://github.com/bovinphang/craft-common/blob/v2.1.0/localized/zh-CN/methods/engineering-practices.md)。下列条件仅约束当前语言/场景；结构检查不证明全部语义或实际运行。
 
 <a id="fec-vue3-project-standard:watcher-cleanup"></a>
 ## 在真实watcher拥有者下登记清理
@@ -40,7 +40,7 @@ onWatcherCleanup要求Vue3.5+且同步登记；较旧Vue3采用支持的回调�
 在消费项目用可控完成运行真实Vue watcher/卸载测试；React例是关联证据，不证明Vue运行时。
 
 ### 来源
-vue-watchers — [来源与适用限制](common/engineering-practices.sources.json).
+vue-watchers — [来源与适用限制](https://github.com/bovinphang/craft-common/blob/v2.1.0/localized/zh-CN/methods/engineering-practices.sources.json).
 
 证据标识: EP-UI-01; review-only.  执行状态及覆盖范围见实际记录；关联ID不证明该卡全部语义。
 
@@ -68,6 +68,6 @@ Abort可能被忽略，旧异步回调仍可能向新状态发布。
 用真实Vue工具控制A/B、错误及卸载；结构卡和React测试不替代Vue执行。
 
 ### 来源
-vue-watchers, react-effects — [来源与适用限制](common/engineering-practices.sources.json).
+vue-watchers, react-effects — [来源与适用限制](https://github.com/bovinphang/craft-common/blob/v2.1.0/localized/zh-CN/methods/engineering-practices.sources.json).
 
 证据标识: EP-UI-01; review-only.  执行状态及覆盖范围见实际记录；关联ID不证明该卡全部语义。

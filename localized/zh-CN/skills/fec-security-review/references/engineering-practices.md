@@ -14,7 +14,7 @@ practiceCards:
 
 # 本入口工程决策
 
-先定位项目角色、工具链及已有约定，再按需读取[公共原则](common/engineering-practices.md)。下列条件仅约束当前语言/场景；结构检查不证明全部语义或实际运行。
+先定位项目角色、工具链及已有约定，再按需读取[公共原则](https://github.com/bovinphang/craft-common/blob/v2.1.0/localized/zh-CN/methods/engineering-practices.md)。下列条件仅约束当前语言/场景；结构检查不证明全部语义或实际运行。
 
 <a id="fec-security-review:input-trust"></a>
 ## UI不是特权操作授权方
@@ -40,7 +40,7 @@ API/IPC/外部数据影响特权行为时适用，按真实应用角色和平台
 检查允许/拒绝/畸形输入及拒绝零副作用；handler/输入样例不证明所有项目认证。
 
 ### 来源
-electron-security, tauri-permissions — [来源与适用限制](common/engineering-practices.sources.json).
+electron-security, tauri-permissions — [来源与适用限制](https://github.com/bovinphang/craft-common/blob/v2.1.0/localized/zh-CN/methods/engineering-practices.sources.json).
 
 证据标识: EP-IPC-01, EP-TS-01; review-only.  执行状态及覆盖范围见实际记录；关联ID不证明该卡全部语义。
 
@@ -68,6 +68,6 @@ electron-security, tauri-permissions — [来源与适用限制](common/engineer
 用合成数据检查真实获准归档/边界及脱敏路径；这是参考边界思想的项目政策，不冒称全部企业指南同一秘密规则。
 
 ### 来源
-electron-security, google-review — [来源与适用限制](common/engineering-practices.sources.json).
+electron-security, google-review — [来源与适用限制](https://github.com/bovinphang/craft-common/blob/v2.1.0/localized/zh-CN/methods/engineering-practices.sources.json).
 
 证据标识: EP-IPC-01; review-only.  执行状态及覆盖范围见实际记录；关联ID不证明该卡全部语义。

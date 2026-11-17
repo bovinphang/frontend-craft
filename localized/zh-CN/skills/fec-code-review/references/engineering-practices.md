@@ -14,7 +14,7 @@ practiceCards:
 
 # 本入口工程决策
 
-先定位项目角色、工具链及已有约定，再按需读取[公共原则](common/engineering-practices.md)。下列条件仅约束当前语言/场景；结构检查不证明全部语义或实际运行。
+先定位项目角色、工具链及已有约定，再按需读取[公共原则](https://github.com/bovinphang/craft-common/blob/v2.1.0/localized/zh-CN/methods/engineering-practices.md)。下列条件仅约束当前语言/场景；结构检查不证明全部语义或实际运行。
 
 <a id="fec-code-review:evidence-severity"></a>
 ## 严重度依据已证实的用户影响
@@ -40,7 +40,7 @@ practiceCards:
 运行可用定向检查或明确未执行，相关案例仅示范证据质量，不构成任意代码评审。
 
 ### 来源
-google-review — [来源与适用限制](common/engineering-practices.sources.json).
+google-review — [来源与适用限制](https://github.com/bovinphang/craft-common/blob/v2.1.0/localized/zh-CN/methods/engineering-practices.sources.json).
 
 证据标识: EP-UI-01, EP-TS-01; review-only.  执行状态及覆盖范围见实际记录；关联ID不证明该卡全部语义。
 
@@ -68,6 +68,6 @@ google-review — [来源与适用限制](common/engineering-practices.sources.j
 核对基线/diff完整并按风险验证，独立最终评审与作者自审分开。
 
 ### 来源
-google-review, ms-playbook — [来源与适用限制](common/engineering-practices.sources.json).
+google-review, ms-playbook — [来源与适用限制](https://github.com/bovinphang/craft-common/blob/v2.1.0/localized/zh-CN/methods/engineering-practices.sources.json).
 
 证据标识: EP-TS-01; review-only.  执行状态及覆盖范围见实际记录；关联ID不证明该卡全部语义。

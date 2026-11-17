@@ -14,7 +14,7 @@ practiceCards:
 
 # Local engineering decisions
 
-Locate the actual role, toolchain and existing conventions, then read relevant [shared principles](common/engineering-practices.md). These conditions apply to this entry, not every project. Structure checks do not prove all semantics or execution.
+Locate the actual role, toolchain and existing conventions, then read relevant [shared principles](https://github.com/bovinphang/craft-common/blob/v2.1.0/methods/engineering-practices.md). These conditions apply to this entry, not every project. Structure checks do not prove all semantics or execution.
 
 <a id="fec-react-project-standard:effect-cleanup"></a>
 ## Effects release the resources they actually own
@@ -40,7 +40,7 @@ Better: cleanup aborts this component’s load and removes its listener. Worse: 
 Run the local real React/DOM unmount test; add actual subscriptions/timers and Strict Mode behavior where the changed component owns them.
 
 ### Sources
-react-effects, react-act — [registry and limits](common/engineering-practices.sources.json).
+react-effects, react-act — [registry and limits](https://github.com/bovinphang/craft-common/blob/v2.1.0/methods/engineering-practices.sources.json).
 
 Evidence IDs: EP-UI-01; case. [Local runnable example](../examples/engineering/README.md). Execution status and scope require actual records; a related ID does not prove every decision on this card.
 
@@ -68,6 +68,6 @@ Better: B remains visible after A arrives late. Worse: only the success handler 
 The local controlled A/B Promise test renders real React. Add late-error/loading and shared-cache cases in the actual owner; DOM simulation is not browser E2E.
 
 ### Sources
-react-effects, react-act — [registry and limits](common/engineering-practices.sources.json).
+react-effects, react-act — [registry and limits](https://github.com/bovinphang/craft-common/blob/v2.1.0/methods/engineering-practices.sources.json).
 
 Evidence IDs: EP-UI-01; case. [Local runnable example](../examples/engineering/README.md). Execution status and scope require actual records; a related ID does not prove every decision on this card.

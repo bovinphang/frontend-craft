@@ -24,7 +24,7 @@ function fixture(t: { after(fn: () => void): void }) {
     JSON.stringify({
       name: "@bovinphang/frontend-craft",
       version: "1.0.0",
-      files: ["skills", "localized"],
+      files: ["skills", "localized", "docs"],
       scripts: { prepack: "exit 1" },
       dependencies: { "@bovinphang/craft-common": common.version },
     }),
@@ -149,4 +149,100 @@ test("组合锁阻止并发替换且保留现有产物", (t) => {
     lock,
   );
   assert.equal(fs.readFileSync(active, "utf8"), "active build");
+});
+
+test("组合将双语公共链接改为包内相对路径，保留源码和示例", (t) => {
+  const sourceRoot = fixture(t);
+  const repository = "https://github.com/bovinphang/craft-common/blob/v2.1.0/";
+  const cases = [
+    {
+      document: "skills/fec-debug-framework/SKILL.md",
+      source: "methods/debug.md",
+      local: "references/common/debug.md",
+    },
+    {
+      document: "localized/zh-CN/skills/fec-debug-framework/SKILL.md",
+      source: "localized/zh-CN/methods/debug.md",
+      local: "references/common/debug.md",
+    },
+    {
+      document:
+        "skills/fec-api-integration/references/engineering-practices.md",
+      source: "methods/engineering-practices.sources.json",
+      local: "common/engineering-practices.sources.json",
+    },
+
+    {
+      document: "docs/zh-CN/review-and-diagram-workflows.md",
+      source:
+        "localized/zh-CN/skills/cc-technical-diagrams/references/diagram-workflows.md",
+      local:
+        "../../localized/zh-CN/skills/cc-technical-diagrams/references/diagram-workflows.md",
+    },
+  ];
+
+  for (const { document, source } of cases) {
+    const file = path.join(sourceRoot, document);
+    fs.mkdirSync(path.dirname(file), { recursive: true });
+    const link = "[公共资源](" + repository + source + "#section)";
+    const example = "~~~md\n" + link + "\n~~~\n";
+    const external = "[外链](https://example.com/methods/debug.md)\n";
+    fs.writeFileSync(file, link + "\n" + example + external);
+  }
+
+  const output = prepareContent({ sourceRoot, commonRoot });
+  for (const { document, source, local } of cases) {
+    const original = fs.readFileSync(path.join(sourceRoot, document), "utf8");
+    const artifact = path.join(output, document);
+    assert.equal(
+      fs.readFileSync(artifact, "utf8"),
+      original.replace(repository + source, local),
+    );
+    assert.ok(original.startsWith("[公共资源](" + repository + source));
+    assert.ok(
+      fs.statSync(path.resolve(path.dirname(artifact), local)).isFile(),
+    );
+  }
+
+  prepareContent({ sourceRoot, commonRoot });
+  for (const { document, local } of cases) {
+    assert.ok(
+      fs
+        .readFileSync(path.join(output, document), "utf8")
+        .startsWith("[公共资源](" + local + "#section)"),
+    );
+  }
+});
+
+test("公共链接缺少目标或版本不符时保留上次组合", (t) => {
+  const sourceRoot = fixture(t);
+  const document = "skills/fec-debug-framework/SKILL.md";
+  const file = path.join(sourceRoot, document);
+  fs.mkdirSync(path.dirname(file), { recursive: true });
+  const repository = "https://github.com/bovinphang/craft-common/blob/";
+  fs.writeFileSync(file, "[公共资源](" + repository + "v2.1.0/methods/debug.md)\n");
+  const output = prepareContent({ sourceRoot, commonRoot });
+  const artifact = path.join(output, document);
+  const previous = fs.readFileSync(artifact);
+  const lock = fs.readFileSync(path.join(output, "common-content.lock.json"));
+  for (const source of [
+    "v2.1.0/methods/missing.md",
+    "v0.0.0/methods/debug.md",
+  ]) {
+    const link = repository + source;
+    fs.writeFileSync(file, "[公共资源](" + link + ")\n");
+    assert.throws(
+      () => prepareContent({ sourceRoot, commonRoot }),
+      (error: Error) =>
+        error.message.includes(document) && error.message.includes(link),
+    );
+    assert.deepEqual(
+      fs.readFileSync(path.join(output, "common-content.lock.json")),
+      lock,
+    );
+    assert.deepEqual(fs.readFileSync(artifact), previous);
+    assert.deepEqual(fs.readdirSync(path.join(sourceRoot, "dist")), [
+      "package",
+    ]);
+  }
 });

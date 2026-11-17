@@ -5,7 +5,7 @@ description: Use when diagnosing frontend build failures, runtime errors, UI ano
 
 # Frontend diagnosis
 
-Follow the [common five-step diagnostic method](references/common/debug.md), then collect evidence using these frontend modules.
+Follow the [common five-step diagnostic method](https://github.com/bovinphang/craft-common/blob/v2.1.0/methods/debug.md), then collect evidence using these frontend modules.
 
 ## Diagnostic module
 

@@ -5,7 +5,7 @@ description: 用于实现新前端行为、修复 bug 或重构可先由测试�
 
 # 前端测试驱动开发
 
-遵循[公共 TDD 方法](references/common/tdd.md)。新增行为使用 RED → GREEN → REFACTOR；纯重构使用 GREEN → REFACTOR → GREEN。
+遵循[公共 TDD 方法](https://github.com/bovinphang/craft-common/blob/v2.1.0/localized/zh-CN/methods/tdd.md)。新增行为使用 RED → GREEN → REFACTOR；纯重构使用 GREEN → REFACTOR → GREEN。
 
 ## 前端可观察契约
 

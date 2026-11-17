@@ -14,7 +14,7 @@ practiceCards:
 
 # Local engineering decisions
 
-Locate the actual role, toolchain and existing conventions, then read relevant [shared principles](common/engineering-practices.md). These conditions apply to this entry, not every project. Structure checks do not prove all semantics or execution.
+Locate the actual role, toolchain and existing conventions, then read relevant [shared principles](https://github.com/bovinphang/craft-common/blob/v2.1.0/methods/engineering-practices.md). These conditions apply to this entry, not every project. Structure checks do not prove all semantics or execution.
 
 <a id="fec-dependency-upgrade:compatibility"></a>
 ## Upgrade against evidenced compatibility needs
@@ -40,7 +40,7 @@ Better: pin a compatible DOM test environment in its own example. Worse: upgrade
 Use current lint/type/build tests plus affected consumers and actual artifact checks; record unsupported environments rather than hiding them.
 
 ### Sources
-google-review, typescript-publishing — [registry and limits](common/engineering-practices.sources.json).
+google-review, typescript-publishing — [registry and limits](https://github.com/bovinphang/craft-common/blob/v2.1.0/methods/engineering-practices.sources.json).
 
 Evidence IDs: EP-TS-01; review-only.  Execution status and scope require actual records; a related ID does not prove every decision on this card.
 
@@ -68,6 +68,6 @@ Better: both products consume the same immutable common archive/SRI. Worse: a fi
 Run real packaging/consumer checks, compare source bytes and preserve user edits through migration. A passing React sample alone does not prove all distribution formats.
 
 ### Sources
-typescript-publishing, ms-playbook — [registry and limits](common/engineering-practices.sources.json).
+typescript-publishing, ms-playbook — [registry and limits](https://github.com/bovinphang/craft-common/blob/v2.1.0/methods/engineering-practices.sources.json).
 
 Evidence IDs: EP-TS-01, EP-UI-01; review-only.  Execution status and scope require actual records; a related ID does not prove every decision on this card.

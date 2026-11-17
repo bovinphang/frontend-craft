@@ -1,6 +1,6 @@
 # 前端重构观察契约
 
-通用行为保持原则、基线、风险和差异预算遵循[公共方法](common/refactoring.md)。
+通用行为保持原则、基线、风险和差异预算遵循[公共方法](https://github.com/bovinphang/craft-common/blob/v2.1.0/localized/zh-CN/methods/refactoring.md)。
 
 前端需要额外确认：
 

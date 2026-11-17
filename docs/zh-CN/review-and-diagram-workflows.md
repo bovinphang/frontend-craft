@@ -34,6 +34,6 @@ node skills/cc-technical-diagrams/scripts/png-qa.mjs --png workflow.png --manife
 
 保留完整 Unicode 标签、显式几何布局、连线方向、时序顺序与自调用；独立 SVG 应包含自身样式。几何 QA 和浏览器测量辅助视觉检查，不证明语义正确，也不等同于完成人工视觉审核。缺少测量或仅部分覆盖时必须说明。最多自动修复源文件两轮，之后报告未解决缺陷。
 
-交付可编辑源文件、请求的导出文件和 QA/覆盖结果。参见[可复现样例](../../localized/zh-CN/skills/cc-technical-diagrams/assets/quality-examples/README.md)、[图表工作流](../../localized/zh-CN/skills/cc-technical-diagrams/references/diagram-workflows.md)及 [PNG QA](../../localized/zh-CN/skills/cc-technical-diagrams/references/png-qa-autofix.md)。
+交付可编辑源文件、请求的导出文件和 QA/覆盖结果。参见[可复现样例](https://github.com/bovinphang/craft-common/blob/v2.1.0/localized/zh-CN/skills/cc-technical-diagrams/assets/quality-examples/README.md)、[图表工作流](https://github.com/bovinphang/craft-common/blob/v2.1.0/localized/zh-CN/skills/cc-technical-diagrams/references/diagram-workflows.md)及 [PNG QA](https://github.com/bovinphang/craft-common/blob/v2.1.0/localized/zh-CN/skills/cc-technical-diagrams/references/png-qa-autofix.md)。
 
 [English](../review-and-diagram-workflows.md)

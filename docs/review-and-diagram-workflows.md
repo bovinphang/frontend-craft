@@ -34,6 +34,6 @@ node skills/cc-technical-diagrams/scripts/png-qa.mjs --png workflow.png --manife
 
 Preserve complete Unicode labels, explicit geometry, edge direction, sequence order, and self calls. Keep exported SVG styles self-contained. Geometry QA and browser measurement support visual inspection; neither proves semantic correctness nor completes a human visual review. Missing measurements or partial coverage must be disclosed. Repair the editable source for at most two automatic rounds, then report unresolved defects.
 
-Deliver editable source, the requested export, and QA/coverage results. See [reproducible examples](../skills/cc-technical-diagrams/assets/quality-examples/README.md), [diagram workflows](../skills/cc-technical-diagrams/references/diagram-workflows.md), and [PNG QA](../skills/cc-technical-diagrams/references/png-qa-autofix.md).
+Deliver editable source, the requested export, and QA/coverage results. See [reproducible examples](https://github.com/bovinphang/craft-common/blob/v2.1.0/skills/cc-technical-diagrams/assets/quality-examples/README.md), [diagram workflows](https://github.com/bovinphang/craft-common/blob/v2.1.0/skills/cc-technical-diagrams/references/diagram-workflows.md), and [PNG QA](https://github.com/bovinphang/craft-common/blob/v2.1.0/skills/cc-technical-diagrams/references/png-qa-autofix.md).
 
 [简体中文](zh-CN/review-and-diagram-workflows.md)

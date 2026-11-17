@@ -14,7 +14,7 @@ practiceCards:
 
 # Local engineering decisions
 
-Locate the actual role, toolchain and existing conventions, then read relevant [shared principles](common/engineering-practices.md). These conditions apply to this entry, not every project. Structure checks do not prove all semantics or execution.
+Locate the actual role, toolchain and existing conventions, then read relevant [shared principles](https://github.com/bovinphang/craft-common/blob/v2.1.0/methods/engineering-practices.md). These conditions apply to this entry, not every project. Structure checks do not prove all semantics or execution.
 
 <a id="fec-data-fetching:mutation-retry"></a>
 ## Mutation recovery follows commit semantics
@@ -40,7 +40,7 @@ Better: a timed-out mutation remains pending confirmation until reconciled. Wors
 Control post-commit failure and retry/cancel paths in the owning query layer. No default count or cross-system guarantee is inferred from the related sample.
 
 ### Sources
-aws-idempotency, aws-retry — [registry and limits](common/engineering-practices.sources.json).
+aws-idempotency, aws-retry — [registry and limits](https://github.com/bovinphang/craft-common/blob/v2.1.0/methods/engineering-practices.sources.json).
 
 Evidence IDs: EP-UI-01, EP-SVC-01; review-only.  Execution status and scope require actual records; a related ID does not prove every decision on this card.
 
@@ -68,6 +68,6 @@ Better: filterB remains current when filterA completes late. Worse: one componen
 Exercise changed-key ordering, errors, multiple subscribers and logout/scope transitions where applicable. The React sample covers its own current view only.
 
 ### Sources
-react-effects, vue-watchers — [registry and limits](common/engineering-practices.sources.json).
+react-effects, vue-watchers — [registry and limits](https://github.com/bovinphang/craft-common/blob/v2.1.0/methods/engineering-practices.sources.json).
 
 Evidence IDs: EP-UI-01; review-only.  Execution status and scope require actual records; a related ID does not prove every decision on this card.

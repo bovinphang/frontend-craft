@@ -5,7 +5,7 @@ description: Use when synchronizing frontend project documentation with source-o
 
 # Frontend documentation synchronization
 
-Follow the [common documentation method](references/common/doc-sync.md) for evidence, multilingual consistency and delivery records.
+Follow the [common documentation method](https://github.com/bovinphang/craft-common/blob/v2.1.0/methods/doc-sync.md) for evidence, multilingual consistency and delivery records.
 
 ## Frontend facts
 

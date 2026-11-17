@@ -392,6 +392,8 @@ When changing review or diagram capabilities, synchronize scope defaults, natura
 
 Maintain common skills and methods in craft-common. Product source skills and bilingual indexes contain domain-owned entries. `pnpm run prepare:content` assembles the complete bilingual product in `dist/package/`; `pnpm run check:common` verifies that output without writing. `pnpm run build` also compiles executable entries.
 
+When changing the pinned `@bovinphang/craft-common` version, update the GitHub tag in Markdown links to its shared resources. Source links open the corresponding language in the public repository. Content preparation converts them to relative paths for offline use in the package.
+
 For local development and Git submodules, install dependencies and build before loading `--plugin-dir <repository>/dist/package`. Use `pnpm run pack:all` to produce complete release archives. Publish a verified archive or the assembled directory. Packing or publishing the source root fails with a workflow hint. Generated common resources and the provenance lock belong exclusively to build output.
 
 Assembly uses `dist/.content.lock` to prevent concurrent replacement. After a forcibly terminated build, inspect any lock and `.package-previous` backup, confirm no build is active, restore the previous complete output if needed, then remove stale temporary state and retry.
